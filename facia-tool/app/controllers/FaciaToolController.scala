@@ -1,48 +1,47 @@
 package controllers
 
-import model._
-import model.UpdateList
+import frontsapi.model._
+import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
-import scala.concurrent.Future
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
-  def index() = Authenticated { request =>
+  def index() = ExpiringAuthentication { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
-  def admin() = Authenticated { request =>
+  def admin() = ExpiringAuthentication { request =>
     Redirect("/")
   }
 
-  def listCollections = Authenticated { request =>
+  def listCollections = ExpiringAuthentication { request =>
     Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
-  def listConfigs = Authenticated { request =>
+  def listConfigs = ExpiringAuthentication { request =>
     Ok(Json.toJson(S3FrontsApi.listConfigsIds))
   }
 
-  def readBlock(id: String) = Authenticated { request =>
+  def readBlock(id: String) = ExpiringAuthentication { request =>
     S3FrontsApi.getBlock(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def getConfig(id: String) = Authenticated { request =>
+  def getConfig(id: String) = ExpiringAuthentication { request =>
     S3FrontsApi.getConfig(id) map {json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
 
-  def updateBlock(id: String): Action[AnyContent] = Authenticated { request =>
+  def updateBlock(id: String): Action[AnyContent] = ExpiringAuthentication { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
@@ -74,13 +73,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = Authenticated { request =>
+  def updateTrail(id: String, trailId: String) = ExpiringAuthentication { request =>
     request.body.asJson.map{ json =>
     }
     Ok
   }
 
-  def deleteTrail(id: String) = Authenticated { request =>
+  def deleteTrail(id: String) = ExpiringAuthentication { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get

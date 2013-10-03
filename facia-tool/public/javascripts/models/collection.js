@@ -204,7 +204,7 @@ define([
             var group;
 
             // FAKE a group - for testing.
-            item.group = Math.max(0, 2 - Math.floor(index/2));
+            //item.group = Math.max(0, 2 - Math.floor(index/2));
 
             group = _.find(groups, function(g){ return g.group === item.group; }) || groups[0];
             group.articles.push(new Article(item));

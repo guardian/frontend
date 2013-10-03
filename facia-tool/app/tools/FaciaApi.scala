@@ -1,6 +1,6 @@
 package tools
 
-import model.{Trail, Block}
+import frontsapi.model.{Trail, Block}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import services.S3FrontsApi

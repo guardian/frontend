@@ -319,7 +319,6 @@ a.list-header__status__control:visited {
     cursor: pointer;
     z-index: 99;
     border-radius: 2px;
-
 }
 
 .collection .trail:hover .trail__remove {

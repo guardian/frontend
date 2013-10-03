@@ -1,4 +1,4 @@
-@(page: Page, filtersMap: Map[String, Seq[CompetitionFilter]], fixtures: Seq[TeamFixture])(implicit request: RequestHeader)
+@(page: model.Page, filtersMap: Map[String, Seq[CompetitionFilter]], fixtures: Seq[TeamFixture])(implicit request: RequestHeader)
 @import support._
 @import org.joda.time.DateTime
 
@@ -24,7 +24,7 @@
 </div>
 
 <div class="box-indent article-zone-no-indent">
-    @fragments.footballNav("/football")
+    @fragments.footballNav(page)
 
     @fragments.mostPopularPlaceholder("sport")
 </div>

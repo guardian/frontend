@@ -161,7 +161,7 @@ object VideoEmbedCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -169,13 +169,16 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
-          Option(img.attr("width")).filter(_.isInt) foreach { width =>
-            fig.addClass(width.toInt match {
+
+          asset.foreach { image =>
+            fig.addClass(image.width match {
               case width if width <= 220 => "img-base inline-image"
               case width if width < 460 => "img-median inline-image"
               case width => "img-extended"
@@ -192,6 +195,10 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
       }
     }
     body
+  }
+
+  def findImageFromId(id:String): Option[ImageAsset] = {
+    contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
   }
 }
 
@@ -304,6 +311,8 @@ object OmnitureAnalyticsData {
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
     val publication = data.get("publication").getOrElse("")
+    val registrationEvent = data.get("registrationEvent").getOrElse("")
+    val registrationType = data.get("registrationType").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -334,8 +343,11 @@ object OmnitureAnalyticsData {
       ("v19", platform),
       ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
-      ("c56", jsSupport)
+      ("c56", jsSupport),
+      ("event", registrationEvent),
+      ("v23", registrationType)
     )
+
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString ("&"))
   }

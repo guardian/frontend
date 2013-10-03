@@ -1,0 +1,2057 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":85864,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":8587,
+    "orderBy":"newest",
+    "edition":{
+      "id":"uk/commentisfree",
+      "webTitle":"Comment is free",
+      "webUrl":"http://www.theguardian.com/uk/commentisfree",
+      "apiUrl":"http://content.guardianapis.com/uk/commentisfree",
+      "code":"uk"
+    },
+    "section":{
+      "id":"commentisfree",
+      "webTitle":"Comment is free",
+      "webUrl":"http://www.theguardian.com/commentisfree",
+      "apiUrl":"http://content.guardianapis.com/commentisfree",
+      "editions":[{
+        "id":"commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree",
+        "code":"default"
+      },{
+        "id":"uk/commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/uk/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/uk/commentisfree",
+        "code":"uk"
+      },{
+        "id":"us/commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/us/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/us/commentisfree",
+        "code":"us"
+      },{
+        "id":"au/commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/au/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/au/commentisfree",
+        "code":"au"
+      }]
+    },
+    "results":[{
+      "id":"commentisfree/2013/oct/02/mature-student-masters-birkbeck",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T14:41:49Z",
+      "webTitle":"As a wannabe mature student, I discovered I'm older, but not wiser | Mary Kenny",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/mature-student-masters-birkbeck",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/mature-student-masters-birkbeck",
+      "fields":{
+        "trailText":"<strong>Mary Kenny:</strong> Some brilliant oldies gain PhDs, but having been turned down twice for a drama MA at Birkbeck twice, should I just accept that I left my dream too late?",
+        "headline":"As a wannabe mature student, I discovered I'm older, but not wiser",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8bv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722623589/elderly-woman-at-computer-003.jpg",
+        "wordcount":"729",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"education/higher-education",
+        "type":"keyword",
+        "webTitle":"Higher education",
+        "webUrl":"http://www.theguardian.com/education/higher-education",
+        "apiUrl":"http://content.guardianapis.com/education/higher-education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/marykenny",
+        "type":"contributor",
+        "webTitle":"Mary Kenny",
+        "webUrl":"http://www.theguardian.com/profile/marykenny",
+        "apiUrl":"http://content.guardianapis.com/profile/marykenny",
+        "bio":"<p>Mary Kenny is the author of Goodbye to Catholic Ireland, and Crown and<br />Shamrock - Love and Hate between Ireland and the British Monarchy</p>",
+        "r2ContributorId":"22879",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/28/mary_kenny_140x140.jpg",
+        "references":[]
+      },{
+        "id":"education/mature-students",
+        "type":"keyword",
+        "webTitle":"Mature students",
+        "webUrl":"http://www.theguardian.com/education/mature-students",
+        "apiUrl":"http://content.guardianapis.com/education/mature-students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/dramaanddance",
+        "type":"keyword",
+        "webTitle":"Drama and dance",
+        "webUrl":"http://www.theguardian.com/education/dramaanddance",
+        "apiUrl":"http://content.guardianapis.com/education/dramaanddance",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/birkbeckuniversityoflondon",
+        "type":"keyword",
+        "webTitle":"Birkbeck, University of London",
+        "webUrl":"http://www.theguardian.com/education/birkbeckuniversityoflondon",
+        "apiUrl":"http://content.guardianapis.com/education/birkbeckuniversityoflondon",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418862254",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722620952/elderly-woman-at-computer-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"54",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722622431/elderly-woman-at-computer-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"130",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722623589/elderly-woman-at-computer-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"84",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722624544/elderly-woman-at-computer-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"132",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722625557/elderly-woman-at-computer-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"168",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722626542/elderly-woman-at-computer-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"180",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722627513/elderly-woman-at-computer-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"228",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722628503/elderly-woman-at-computer-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"276",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722628503/elderly-woman-at-computer-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"276",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418862255",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380722623589/elderly-woman-at-computer-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Garry Weaser",
+            "altText":"elderly woman at computer",
+            "height":"84",
+            "credit":"Garry Weaser/Guardian",
+            "caption":"'And so I have dreamed of dedicating my senior years to pursuing academic studies that eluded me in youth.' Photograph: Garry Weaser for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/health-insurance-exchanges-real-people-experience",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T13:30:00Z",
+      "webTitle":"Real people's stories from day one of the US health insurance exchanges | Panel",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/health-insurance-exchanges-real-people-experience",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/health-insurance-exchanges-real-people-experience",
+      "fields":{
+        "trailText":"<p><strong>People's panel:</strong> What matters more than what any pundit says are real Americans' experiences with Obamacare. The debut wasn't ideal</p>",
+        "headline":"Real people's stories from day one of the US health insurance exchanges",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7zz",
+        "wordcount":"1222",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/healthcare",
+        "type":"keyword",
+        "webTitle":"US healthcare",
+        "webUrl":"http://www.theguardian.com/world/healthcare",
+        "apiUrl":"http://content.guardianapis.com/world/healthcare",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/heather-long",
+        "type":"contributor",
+        "webTitle":"Heather Long",
+        "webUrl":"http://www.theguardian.com/profile/heather-long",
+        "apiUrl":"http://content.guardianapis.com/profile/heather-long",
+        "bio":"<p>Heather Long is assistant editor for Comment is free US. She was formerly opinions editor of The Patriot-News, which won the 2012 Pulitzer Prize for its coverage of the Jerry Sandusky scandal. Heather is also a Rhodes Scholar. Follow her on Twitter: <a href=\"https://twitter.com/byHeatherLong\">@byHeatherLong</a> Email: heather.long<br />@theguardian.com</p>",
+        "r2ContributorId":"54950",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/4/1360008484901/HeatherLong_140x140correct.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418801214",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380657228578/New-York-state-of-health-010.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"New York state of health",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"The New York website to enroll in the public health insurance exchange. ",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418801215",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363384950526/Jimmy-LaSalvia_140x140.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Jimmy-LaSalvia",
+            "height":"140",
+            "credit":"Public domain",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418801216",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667244049/kaisa_140.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Kaisa Dum",
+            "height":"140",
+            "credit":"Public domain",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418801217",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380665660328/Briston-Ashe_140.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Briston Ashe",
+            "height":"140",
+            "credit":"Public domain",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/jimmy-savile-one-year-prevent-child-abuse",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T13:00:00Z",
+      "webTitle":"Jimmy Savile scandal: one year on, we must focus on preventing child abuse | Peter Wanless",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/jimmy-savile-one-year-prevent-child-abuse",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/jimmy-savile-one-year-prevent-child-abuse",
+      "fields":{
+        "trailText":"<strong>Peter Wanless: </strong>Big improvements have been made in terms of taking child abuse seriously and supporting victims. But stopping another Savile must be the priority",
+        "headline":"Jimmy Savile scandal: one year on, we must focus on preventing child abuse",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j86e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/11/1357903019573/Jimmy-Savile-005.jpg",
+        "wordcount":"776",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/jimmy-savile",
+        "type":"keyword",
+        "webTitle":"Jimmy Savile",
+        "webUrl":"http://www.theguardian.com/media/jimmy-savile",
+        "apiUrl":"http://content.guardianapis.com/media/jimmy-savile",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"society/childprotection",
+        "type":"keyword",
+        "webTitle":"Child protection",
+        "webUrl":"http://www.theguardian.com/society/childprotection",
+        "apiUrl":"http://content.guardianapis.com/society/childprotection",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/children",
+        "type":"keyword",
+        "webTitle":"Children",
+        "webUrl":"http://www.theguardian.com/society/children",
+        "apiUrl":"http://content.guardianapis.com/society/children",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/social-care",
+        "type":"keyword",
+        "webTitle":"Social care",
+        "webUrl":"http://www.theguardian.com/society/social-care",
+        "apiUrl":"http://content.guardianapis.com/society/social-care",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/peter-wanless",
+        "type":"contributor",
+        "webTitle":"Peter Wanless",
+        "webUrl":"http://www.theguardian.com/profile/peter-wanless",
+        "apiUrl":"http://content.guardianapis.com/profile/peter-wanless",
+        "bio":"<p>Peter Wanless is the chief executive of the NSPCC. He was previously the Big Lottery Fund's chief executive and worked at the Department for Children, Schools and Families</p>",
+        "r2ContributorId":"58927",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714507771/Peter-Wanless.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418846813",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/11/1357903026073/Jimmy-Savile-010.jpg",
+          "typeData":{
+            "source":"Redferns/Getty Images",
+            "photographer":"Eamonn Mccabe",
+            "altText":"Jimmy Savile",
+            "height":"276",
+            "credit":"Eamonn Mccabe/Redferns/Getty Images",
+            "caption":"We have to stop another Savile developing into a sex offender in the first place and, if he does, stop him after his first attack, not his 500th. Photograph: Eamonn Mccabe/Redferns/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418846814",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/11/1357903019573/Jimmy-Savile-005.jpg",
+          "typeData":{
+            "source":"Redferns/Getty Images",
+            "photographer":"Eamonn Mccabe",
+            "altText":"Jimmy Savile",
+            "height":"84",
+            "credit":"Eamonn Mccabe/Redferns/Getty Images",
+            "caption":"The Jimmy Savile report found his victims were aged from eight to 47 at the time of the sexual abuse. Photograph: Eamonn Mccabe/Redferns/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/obamacare-ted-cruz-doesnt-get-it",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T12:30:00Z",
+      "webTitle":"Ted Cruz and Obamacare critics clearly don't get it | Chris Arnade",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/obamacare-ted-cruz-doesnt-get-it",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/obamacare-ted-cruz-doesnt-get-it",
+      "fields":{
+        "trailText":"<p><strong>Chris Arnade:</strong> Opponents of reform don't see how lucky they are to have easy access to healthcare. For homeless addicts, it's a different reality</p>",
+        "headline":"Ted Cruz and Obamacare critics clearly don't get it",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6qy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380563808287/Drug-Addiction-001.jpg",
+        "wordcount":"766",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/the-other-1-percent",
+        "type":"series",
+        "webTitle":"The other 1%",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/the-other-1-percent",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/the-other-1-percent",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/chris-arnade",
+        "type":"contributor",
+        "webTitle":"Chris Arnade",
+        "webUrl":"http://www.theguardian.com/profile/chris-arnade",
+        "apiUrl":"http://content.guardianapis.com/profile/chris-arnade",
+        "bio":"<p>Chris Arnade received his PhD in physics from Johns Hopkins University in 1992. He spent the next 20 years working as a trader on Wall Street. He left trading in 2012 to focus on photography. His <a href=\"http://www.flickr.com/photos/arnade/sets/72157627894114489/\">\"Faces of Addiction\"</a> series explores addiction in the south Bronx neighbourhood in New York City.</p>",
+        "r2ContributorId":"58545",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/6/1378486914464/Chris-Arnade.jpg",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/homelessness",
+        "type":"keyword",
+        "webTitle":"Homelessness",
+        "webUrl":"http://www.theguardian.com/society/homelessness",
+        "apiUrl":"http://content.guardianapis.com/society/homelessness",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/drugs",
+        "type":"keyword",
+        "webTitle":"Drugs",
+        "webUrl":"http://www.theguardian.com/society/drugs",
+        "apiUrl":"http://content.guardianapis.com/society/drugs",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/us-crime",
+        "type":"keyword",
+        "webTitle":"US crime",
+        "webUrl":"http://www.theguardian.com/world/us-crime",
+        "apiUrl":"http://content.guardianapis.com/world/us-crime",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/healthcare",
+        "type":"keyword",
+        "webTitle":"Healthcare industry",
+        "webUrl":"http://www.theguardian.com/business/healthcare",
+        "apiUrl":"http://content.guardianapis.com/business/healthcare",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418786862",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380563204103/Sonya-addiction.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Drug ",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"Homeless drug addicts fall through the cracks in America's healthcare system. Photograph: Chris Arnade",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418786863",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380563808287/Drug-Addiction-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Arnade",
+            "altText":"Drug Addiction",
+            "height":"84",
+            "credit":"Chris Arnade/Guardian",
+            "caption":"A homeless heroin addict in Bonx, New York.  Photograph: Chris Arnade for the Guardian",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418786864",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363384680662/Ted_Cruz_140x140.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Ted Cruz",
+            "height":"140",
+            "credit":"AP",
+            "caption":"US Senator Ted Cruz",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/david-cameron-speech-conservative-conference-verdict",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T12:18:26Z",
+      "webTitle":"David Cameron's speech: panel verdict",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/david-cameron-speech-conservative-conference-verdict",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/david-cameron-speech-conservative-conference-verdict",
+      "fields":{
+        "trailText":"<p><strong>Dominic Raab, Andrew Rawnsley, Melissa Kite, Phillip Inman, David Skelton and Sarah Wollaston:</strong> How did David Cameron's speech to the Conservative party conference go down? Our writers deliver their verdict</p>",
+        "headline":"David Cameron's speech: panel verdict",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j83h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380715199689/David-Cameron-at-conferen-003.jpg",
+        "wordcount":"1919",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/thepanel",
+        "type":"series",
+        "webTitle":"The panel",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/thepanel",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/thepanel",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"politics/conservative-conference-2013",
+        "type":"keyword",
+        "webTitle":"Conservative conference 2013",
+        "webUrl":"http://www.theguardian.com/politics/conservative-conference-2013",
+        "apiUrl":"http://content.guardianapis.com/politics/conservative-conference-2013",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/toryconference",
+        "type":"keyword",
+        "webTitle":"Conservative conference",
+        "webUrl":"http://www.theguardian.com/politics/toryconference",
+        "apiUrl":"http://content.guardianapis.com/politics/toryconference",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/dominic-raab",
+        "type":"contributor",
+        "webTitle":"Dominic Raab",
+        "webUrl":"http://www.theguardian.com/profile/dominic-raab",
+        "apiUrl":"http://content.guardianapis.com/profile/dominic-raab",
+        "bio":"<p>Dominic Raab is Conservative MP for Esher and Walton and a member of the joint committee on human rights</p>",
+        "r2ContributorId":"41974",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/1/6/1294331626075/Dominic-Raab.jpg",
+        "references":[]
+      },{
+        "id":"profile/melissa-kite",
+        "type":"contributor",
+        "webTitle":"Melissa Kite",
+        "webUrl":"http://www.theguardian.com/profile/melissa-kite",
+        "apiUrl":"http://content.guardianapis.com/profile/melissa-kite",
+        "bio":"<p>Melissa Kite is contributing editor of The Spectator. She is the author of the book Real Life, published by Constable. She was deputy political editor of the Sunday Telegraph until 2011. Her alter ego is Tamzin Lightwater, who recounted life at Tory HQ in the anonymous Spectator satirical column, Diary of a Notting Hill Nobody</p>",
+        "r2ContributorId":"55456",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/7/1362680618594/Melissa-Kite.jpg",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/andrewrawnsley",
+        "type":"contributor",
+        "webTitle":"Andrew Rawnsley",
+        "webUrl":"http://www.theguardian.com/profile/andrewrawnsley",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewrawnsley",
+        "bio":"<p>Andrew Rawnsley is the Observer's award-winning chief political commentator. He is also a critically acclaimed broadcaster and author</p>",
+        "rcsId":"GNL017889",
+        "r2ContributorId":"15372",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/20/1316534141038/AndrewRawnsley.jpg",
+        "references":[]
+      },{
+        "id":"profile/david-skelton",
+        "type":"contributor",
+        "webTitle":"David Skelton",
+        "webUrl":"http://www.theguardian.com/profile/david-skelton",
+        "apiUrl":"http://content.guardianapis.com/profile/david-skelton",
+        "bio":"<p>David Skelton is director of Renewal - a campaign group to broaden the appeal of the Conservative Party to working class and ethnic minority voters. He is former deputy director of Policy Exchange  </p>",
+        "r2ContributorId":"46963",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/15/1358273141925/David_skelton.jpg",
+        "references":[]
+      },{
+        "id":"politics/economy",
+        "type":"keyword",
+        "webTitle":"Economic policy",
+        "webUrl":"http://www.theguardian.com/politics/economy",
+        "apiUrl":"http://content.guardianapis.com/politics/economy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/phillipinman",
+        "type":"contributor",
+        "webTitle":"Phillip Inman",
+        "webUrl":"http://www.theguardian.com/profile/phillipinman",
+        "apiUrl":"http://content.guardianapis.com/profile/phillipinman",
+        "bio":"<p>Phillip Inman is economics correspondent of the Guardian and Observer. He is the author of Managing Your Debt, a Which? essential guide</p>",
+        "rcsId":"GNL359331",
+        "r2ContributorId":"16288",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/phillip_inman_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/sarah-wollaston",
+        "type":"contributor",
+        "webTitle":"Sarah Wollaston",
+        "webUrl":"http://www.theguardian.com/profile/sarah-wollaston",
+        "apiUrl":"http://content.guardianapis.com/profile/sarah-wollaston",
+        "bio":"<p>Sarah Wollaston is Conservative MP for Totnes and a former GP. She is on the health select committee, and is married to an NHS psychiatrist</p>",
+        "r2ContributorId":"41906",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/12/30/1293726486645/sarah_wollaston.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418856506",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380715206627/David-Cameron-at-conferen-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Stefan Rousseau",
+            "altText":"David Cameron at conference",
+            "height":"276",
+            "credit":"Stefan Rousseau/PA",
+            "caption":"David Cameron waves after making his keynote speech on the final day of the Conservative conference in Manchester. Photograph: Stefan Rousseau/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418856507",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380715199689/David-Cameron-at-conferen-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Stefan Rousseau",
+            "altText":"David Cameron at conference",
+            "height":"84",
+            "credit":"Stefan Rousseau/PA",
+            "caption":"David Cameron waves after making his keynote speech on the final day of the Conservative conference in Manchester. Photograph: Stefan Rousseau/PA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418856508",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/1/6/1294331626075/Dominic-Raab.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Dominic Raab",
+            "height":"140",
+            "credit":"guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418856509",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/20/1316534141038/AndrewRawnsley.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Andrew Rawnsley",
+            "height":"140",
+            "credit":"guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418856510",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/7/1362680618594/Melissa-Kite.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Melissa Kite",
+            "height":"140",
+            "credit":"guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418856511",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/15/1358273141925/David_skelton.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"David Skelton",
+            "height":"140",
+            "credit":"guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418856512",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/12/30/1293726486645/sarah_wollaston.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Sarah Wollaston",
+            "height":"140",
+            "credit":"guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418856513",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/12/1/1322756876629/Phillip-Inman-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Phillip Inman",
+            "height":"140",
+            "credit":"guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/alastair-campbell-mail-terrifying-brilliant-immigrant",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T12:03:00Z",
+      "webTitle":"Alastair Campbell's attack on the Mail was terrifying – and brilliant | Alex Andreou",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/alastair-campbell-mail-terrifying-brilliant-immigrant",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/alastair-campbell-mail-terrifying-brilliant-immigrant",
+      "fields":{
+        "trailText":"<strong>First thoughts: Alex Andreou:</strong> Campbell's bravura performance took on the Mail's venomous world view, which is that, as an immigrant, you are only ever tolerated",
+        "headline":"Alastair Campbell's attack on the Mail was terrifying – and brilliant",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j87a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380673679459/Alastair-Campbell-Newsnig-003.jpg",
+        "wordcount":"779",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/first-thoughts",
+        "type":"series",
+        "webTitle":"First thoughts",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/first-thoughts",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/first-thoughts",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/dailymail",
+        "type":"keyword",
+        "webTitle":"Daily Mail",
+        "webUrl":"http://www.theguardian.com/media/dailymail",
+        "apiUrl":"http://content.guardianapis.com/media/dailymail",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"profile/alex-andreou",
+        "type":"contributor",
+        "webTitle":"Alex Andreou",
+        "webUrl":"http://www.theguardian.com/profile/alex-andreou",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-andreou",
+        "bio":"<p>Greek-born, Alex Andreou has a background in law and economics. He runs the Sturdy Beggars Theatre Company and blogs at <a href=\"http://sturdyblog.wordpress.com/\">Sturdyblog</a>. <br />Twitter: <a href=\"http://twitter.com/sturdyalex\">@sturdyalex</a></p>",
+        "r2ContributorId":"52077",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/7/27/1343391526273/Alex-Andreou.jpg",
+        "references":[]
+      },{
+        "id":"politics/edmiliband",
+        "type":"keyword",
+        "webTitle":"Ed Miliband",
+        "webUrl":"http://www.theguardian.com/politics/edmiliband",
+        "apiUrl":"http://content.guardianapis.com/politics/edmiliband",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/ralph-miliband",
+        "type":"keyword",
+        "webTitle":"Ralph Miliband",
+        "webUrl":"http://www.theguardian.com/politics/ralph-miliband",
+        "apiUrl":"http://content.guardianapis.com/politics/ralph-miliband",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"media/pressandpublishing",
+        "type":"keyword",
+        "webTitle":"Newspapers & magazines",
+        "webUrl":"http://www.theguardian.com/media/pressandpublishing",
+        "apiUrl":"http://content.guardianapis.com/media/pressandpublishing",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/national-newspapers",
+        "type":"keyword",
+        "webTitle":"National newspapers",
+        "webUrl":"http://www.theguardian.com/media/national-newspapers",
+        "apiUrl":"http://content.guardianapis.com/media/national-newspapers",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"politics/alastaircampbell",
+        "type":"keyword",
+        "webTitle":"Alastair Campbell",
+        "webUrl":"http://www.theguardian.com/politics/alastaircampbell",
+        "apiUrl":"http://content.guardianapis.com/politics/alastaircampbell",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418848230",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380673679459/Alastair-Campbell-Newsnig-003.jpg",
+          "typeData":{
+            "source":"BBC",
+            "altText":"Alastair Campbell Newsnight",
+            "height":"84",
+            "credit":"BBC",
+            "caption":"Alastair Campbell accused Mail deputy editor Jon Steafel of being an emissary for the editor, Paul Dacre. Photograph: BBC",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-418822169",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002Newsnight-16x9.mp4",
+          "typeData":{
+            "source":"BBC Newsnight",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Newsnight_8143671.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Newsnight_8143671.jpg",
+            "width":"480",
+            "durationSeconds":"59"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002Newsnight_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"BBC Newsnight",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Newsnight_8143671.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Newsnight_8143671.jpg",
+            "width":"480",
+            "durationSeconds":"59"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002Newsnight_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"BBC Newsnight",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Newsnight_8143671.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Newsnight_8143671.jpg",
+            "width":"480",
+            "durationSeconds":"59"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002Newsnight/131002Newsnight.m3u8",
+          "typeData":{
+            "source":"BBC Newsnight",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Newsnight_8143671.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Newsnight_8143671.jpg",
+            "width":"480",
+            "durationSeconds":"59"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002Newsnight_vpx.webm",
+          "typeData":{
+            "source":"BBC Newsnight",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Newsnight_8143671.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Newsnight_8143671.jpg",
+            "width":"480",
+            "durationSeconds":"59"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/jewish-americans-vote-democratic",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T11:45:00Z",
+      "webTitle":"Why Jewish Americans vote Democratic | Harry J Enten",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/jewish-americans-vote-democratic",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/jewish-americans-vote-democratic",
+      "fields":{
+        "trailText":"<p><strong>Harry J Enten:</strong> A striking aspect of the new Pew survey on Jewish Americans is how liberal Jews are. Is it good for the Democrats? You bet</p>",
+        "headline":"Why Jewish Americans vote Democratic",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7ng",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/10/31/oet.jpg",
+        "wordcount":"886",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/harry-enten-on-polling-and-politics",
+        "type":"series",
+        "webTitle":"Harry Enten: On polling and politics",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/harry-enten-on-polling-and-politics",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/harry-enten-on-polling-and-politics",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/judaism",
+        "type":"keyword",
+        "webTitle":"Judaism",
+        "webUrl":"http://www.theguardian.com/world/judaism",
+        "apiUrl":"http://content.guardianapis.com/world/judaism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/harry-j-enten",
+        "type":"contributor",
+        "webTitle":"Harry J Enten",
+        "webUrl":"http://www.theguardian.com/profile/harry-j-enten",
+        "apiUrl":"http://content.guardianapis.com/profile/harry-j-enten",
+        "bio":"<p>Harry J Enten blogs about political and electoral statistics at <a href=\"http://marginoferror.org/\">Margin of Error</a>. A graduate in government from Dartmouth College, he has interned at the NBC political unit in Washington, DC and Pollster.com, and contributed to Taegan Goddard's Political Wire. Follow Harry on Twitter <a href=\"https://twitter.com/#!/ForecasterEnten\">@ForecasterEnten</a></p>",
+        "r2ContributorId":"48592",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/23/1332536737254/harryenten_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/israel",
+        "type":"keyword",
+        "webTitle":"Israel",
+        "webUrl":"http://www.theguardian.com/world/israel",
+        "apiUrl":"http://content.guardianapis.com/world/israel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/republicans",
+        "type":"keyword",
+        "webTitle":"Republicans",
+        "webUrl":"http://www.theguardian.com/world/republicans",
+        "apiUrl":"http://content.guardianapis.com/world/republicans",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/democrats",
+        "type":"keyword",
+        "webTitle":"Democrats",
+        "webUrl":"http://www.theguardian.com/world/democrats",
+        "apiUrl":"http://content.guardianapis.com/world/democrats",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"commentisfree/belief",
+        "type":"blog",
+        "webTitle":"Cif belief",
+        "webUrl":"http://www.theguardian.com/commentisfree/belief",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/belief",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418788458",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/10/31/oe4.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alex Brandon",
+            "altText":"Rahm Emanuel with Democratic presidential candidate Barack Obama",
+            "height":"276",
+            "credit":"Alex Brandon/AP",
+            "caption":"Rahm Emanuel, now mayor of Chicago, with Democratic presidential candidate Barack Obama. Photograph: Alex Brandon/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418788459",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/10/31/oet.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alex Brandon",
+            "altText":"Rahm Emanuel with Democratic presidential candidate Barack Obama",
+            "height":"84",
+            "credit":"Alex Brandon/AP",
+            "caption":"Rahm Emanuel with Democratic presidential candidate Barack Obama. Photograph: Alex Brandon/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/britain-accent-sound-foreign-snobs",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T11:09:51Z",
+      "webTitle":"Is Britain becoming a nation of accent snobs? | Erica Buist",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/britain-accent-sound-foreign-snobs",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/britain-accent-sound-foreign-snobs",
+      "fields":{
+        "trailText":"<p><strong>Erica Buist: </strong>As an accent coach I increasingly hear from people sidelined because they sound foreign. Yet few Britons take the trouble to pronounce bruschetta correctly</p>",
+        "headline":"Is Britain becoming a nation of accent snobs?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j83c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709179168/Bruschetta-at-Italian-res-003.jpg",
+        "wordcount":"695",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"science/language",
+        "type":"keyword",
+        "webTitle":"Language",
+        "webUrl":"http://www.theguardian.com/science/language",
+        "apiUrl":"http://content.guardianapis.com/science/language",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"education/languages",
+        "type":"keyword",
+        "webTitle":"Languages",
+        "webUrl":"http://www.theguardian.com/education/languages",
+        "apiUrl":"http://content.guardianapis.com/education/languages",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/erica-buist",
+        "type":"contributor",
+        "webTitle":"Erica Buist",
+        "webUrl":"http://www.theguardian.com/profile/erica-buist",
+        "apiUrl":"http://content.guardianapis.com/profile/erica-buist",
+        "bio":"<p>Erica Buist is a journalist, photographer and freelance accent coach based in London</p>",
+        "r2ContributorId":"58928",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380716812168/Erica-Buist.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418845154",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709176622/Bruschetta-at-Italian-res-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"54",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709178106/Bruschetta-at-Italian-res-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"130",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709179168/Bruschetta-at-Italian-res-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"84",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709180214/Bruschetta-at-Italian-res-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"132",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709181352/Bruschetta-at-Italian-res-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"168",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709182445/Bruschetta-at-Italian-res-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"180",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709183517/Bruschetta-at-Italian-res-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"228",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709184605/Bruschetta-at-Italian-res-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"276",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can’t even properly pronounce the food we eat (bruschetta is “bru-SKET-a”. We must stop saying “bru-shet-a” – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709184605/Bruschetta-at-Italian-res-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"276",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"If you're an accent snob, you might want to make sure you know how to pronounce bruschetta. Photograph: Stuart Kelly/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418845155",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380709179168/Bruschetta-at-Italian-res-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Stuart Kelly/Alamy",
+            "altText":"Bruschetta at Italian restaurant, Bologna, Italy",
+            "height":"84",
+            "credit":"Stuart Kelly/Alamy/Alamy",
+            "caption":"'Many of us can't even properly pronounce the food we eat (bruschetta is \"bru-SKET-a\". We must stop saying \"bru-shet-a\" – it drives Italians crazy).' Photograph: Stuart Kelly/Alamy/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/chile-salvador-allende-coup-youth-protest-pinochet",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T11:04:14Z",
+      "webTitle":"Chile: a model to follow | Oscar Guardiola-Rivera",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/chile-salvador-allende-coup-youth-protest-pinochet",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/chile-salvador-allende-coup-youth-protest-pinochet",
+      "fields":{
+        "trailText":"<p><strong>Oscar Guardiola-Rivera:</strong> Forty years after Salvador Allende was deposed by Pinochet's army in a violent coup, Chile's youth are reviving his legacy through protest and politics</p>",
+        "headline":"Chile: a model to follow",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j84b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711008668/Chile-protestor-003.jpg",
+        "wordcount":"1056",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/chile",
+        "type":"keyword",
+        "webTitle":"Chile",
+        "webUrl":"http://www.theguardian.com/world/chile",
+        "apiUrl":"http://content.guardianapis.com/world/chile",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/oscar-guardiola-rivera",
+        "type":"contributor",
+        "webTitle":"Oscar Guardiola-Rivera",
+        "webUrl":"http://www.theguardian.com/profile/oscar-guardiola-rivera",
+        "apiUrl":"http://content.guardianapis.com/profile/oscar-guardiola-rivera",
+        "bio":"<p>Oscar Guardiola-Rivera is a senior lecturer in law at Birkbeck, University of London and author of What If Latin America Ruled the World?</p>",
+        "r2ContributorId":"54543",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720811905/Oscar-Guardiola-Rivera.jpg",
+        "references":[]
+      },{
+        "id":"world/americas",
+        "type":"keyword",
+        "webTitle":"Americas",
+        "webUrl":"http://www.theguardian.com/world/americas",
+        "apiUrl":"http://content.guardianapis.com/world/americas",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.theguardian.com/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/youngpeople",
+        "type":"keyword",
+        "webTitle":"Young people",
+        "webUrl":"http://www.theguardian.com/society/youngpeople",
+        "apiUrl":"http://content.guardianapis.com/society/youngpeople",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418847994",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711006187/Chile-protestor-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"54",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711007615/Chile-protestor-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"130",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711008668/Chile-protestor-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"84",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711009664/Chile-protestor-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"132",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711010667/Chile-protestor-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"168",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711011667/Chile-protestor-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"180",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711012677/Chile-protestor-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"228",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711013679/Chile-protestor-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"276",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711013679/Chile-protestor-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"276",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418847995",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711008668/Chile-protestor-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Roberto Candia",
+            "altText":"Chile protestor",
+            "height":"84",
+            "credit":"Roberto Candia/AP",
+            "caption":"A demonstrator holds up a picture of the former Chilean president Salvador Allende during a protest in Santiago on the 35th anniversary of Pinochet's coup. Photograph: Roberto Candia/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/02/you-tell-us",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-02T10:52:51Z",
+      "webTitle":"Ideas for 2-3 October",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/you-tell-us",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/you-tell-us",
+      "fields":{
+        "trailText":"<p>Post your suggestions for subjects you'd like us to cover on Comment is free</p>",
+        "headline":"Ideas for 2-3 October",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j85v",
+        "wordcount":"58",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"commentisfree/series/you-tell-us",
+        "type":"series",
+        "webTitle":"You tell us",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/you-tell-us",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/you-tell-us",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/bella-mackie",
+        "type":"contributor",
+        "webTitle":"Bella Mackie",
+        "webUrl":"http://www.theguardian.com/profile/bella-mackie",
+        "apiUrl":"http://content.guardianapis.com/profile/bella-mackie",
+        "bio":"<p>Bella Mackie is Comment is free's community co-ordinator. She doesn't like fashion magazines</p>",
+        "r2ContributorId":"39037",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/8/1365417288729/Isabella-Mackie.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

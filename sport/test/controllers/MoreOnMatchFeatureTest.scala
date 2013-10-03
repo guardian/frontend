@@ -2,7 +2,7 @@ package test
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import controllers.MoreOnMatchController
+import football.controllers.MoreOnMatchController
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
 
