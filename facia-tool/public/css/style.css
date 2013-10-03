@@ -28,6 +28,7 @@ input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
+    clear: left;
     width: 50%;
     padding: 15px 15px 10px 0;
     border-right: 1px solid #CCCCCC;
@@ -44,13 +45,16 @@ input[type=text] {
 }
 
 .tool-title {
+    float: left;
+    margin: 0 5px 0 0;
     font-size: 18px;
     text-transform: uppercase;
 }
 
-.finder__title {
+.title {
     font-size: 14px;
     font-weight: bold;
+    color: #666666;
 }
 
 .list-tool {
@@ -192,7 +196,10 @@ a.list-header__status__control:visited {
     margin: 0 2px 0 0;
 }
 
-#list-picker,
+#list-picker {
+    float: right;
+}
+
 #collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -215,7 +222,7 @@ a.list-header__status__control:visited {
 }
 
 .collection:first-child {
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .trail {
@@ -225,8 +232,6 @@ a.list-header__status__control:visited {
     cursor: move;
     padding: 1px 3px 4px 4px;
     position: relative;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
     border-radius: 2px;
     background-color: #FFFFFF;
 }
@@ -320,8 +325,6 @@ a.list-header__status__control:visited {
     padding: 0px 3px;
     cursor: pointer;
     z-index: 99;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
     border-radius: 2px;
 }
 
@@ -359,6 +362,7 @@ select:disabled {
 
 button {
     height: 30px;
+    padding: 0 10px;
 }
 
 .strong {
@@ -452,3 +456,26 @@ button {
     right: 33px;
 }
 
+.frames {
+    position: relative;
+    float: left;
+    clear: both;
+    display: block;
+    width: 100%;
+    padding: 5px 0 0 0;
+}
+
+.frame {
+    padding: 0 0 20px 0;
+    position: absolute;
+    -webkit-transition:left 0.4s;
+       -moz-transition:left 0.4s;
+            transition:left 0.4s;
+}
+
+iframe {
+    margin: 10px 0 0 0;
+    border: 1px solid #999999;
+    border-radius: 5px;
+    box-shadow: 1px 1px 7px #666666;
+}

@@ -7,6 +7,14 @@ define([
 ) {
     return {
         config: {
+            breakpoints: [
+                { width:  320,  height: 480,  name: "Mobile" },
+                { width:  1295, height: 1024, name: "Desktop" },
+                { width:  768,  height: 1024, name: "Tablet portrait" },
+                { width:  1024, height: 768,  name: "Tablet landscape" }
+            ],
+            previewUrl: 'http://www.theguardian.com',
+
             searchPageSize:        50,
             sectionSearches: {
                 "default": "news|uk|uk-news|world",
@@ -41,7 +49,11 @@ define([
 
             ammendedQueryStr: function(key, val) {
                 var qp = this.queryParams();
-                qp[key] = val;
+                if (_.isUndefined(val)) {
+                    delete qp[key];
+                } else {
+                    qp[key] = val;
+                }
                 return _.pairs(qp)
                     .filter(function(p){ return !!p[0]; })
                     .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
