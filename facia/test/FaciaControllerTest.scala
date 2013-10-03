@@ -22,11 +22,11 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.FaciaController.renderFront("")(responsiveRequest.withHeaders("X-GU-Edition" -> "US"))
     status(result) should be(303)
     //TODO: Fronts returns /us this returns us
-    header("Location", result) should be (Some("us"))
+    header("Location", result) should be (Some("/us"))
 
     val result2 = controllers.FaciaController.renderFront("culture")(responsiveRequest.withHeaders("X-GU-Edition" -> "AU"))
     status(result2) should be(303)
-    header("Location", result2) should be (Some("au/culture"))
+    header("Location", result2) should be (Some("/au/culture"))
 
   }
 
