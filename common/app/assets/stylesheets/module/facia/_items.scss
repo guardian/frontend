@@ -30,7 +30,7 @@ $meta: #767676;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .section--news .collection__title {
+    .has-localnav .collection--news .collection__title {
         display: none;
     }
 }

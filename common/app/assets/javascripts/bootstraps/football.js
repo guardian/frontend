@@ -45,7 +45,7 @@ define([
                 prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
                     attachMethod = 'append';
                 common.mediator.on('modules:footballfixtures:render', function() {
-                    var container = common.$g('.section--news', context)
+                    var container = common.$g('.collection--news', context)
                         .first()[0];
                     // toggle class
                     common.$g('.items', container)
