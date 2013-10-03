@@ -42,10 +42,7 @@ define([
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
-                '<div class="d-actions">' +
-                '<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
-                    'Want our fully featured commenting experience? Head to our old site.</a>' +
-                '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
+                                    '<div class="d-actions"><a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
             user                  = Id.getUserFromCookie(),
@@ -63,6 +60,8 @@ define([
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
                         self.mediaPrimaryNode        = context.querySelector(mediaPrimary);
+                        self.discussionClosed        = (self.discussionContainerNode.getAttribute('data-discusison-closed') === 'true');
+                        self.showCommentBox          = !self.discussionClosed && user;
 
                         if (self.discussionContainerNode.isInitialised) {
                             return;
@@ -145,8 +144,8 @@ define([
                         loadingInProgress = false;
 
                         // We do this onload here as to only jump the page around once
-                        if (true || !commentsHaveLoaded && config.switches.discussionPostComment) {
-                            self.renderCommentBoxes();
+                        if (config.switches.discussionPostComment && !commentsHaveLoaded && !self.showCommentBox) {
+                            self.renderCommentBar();
                         }
 
                         RecommendComments.init(context, { apiRoot: apiRoot });
@@ -197,13 +196,12 @@ define([
 
             },
 
-            renderCommentBoxes: function() {
-                var closed = (self.discussionContainerNode.getAttribute('data-discusison-closed') === 'true'),
-                    discussionElem = bonzo(this.discussionContainerNode),
+            renderCommentBar: function() {
+                var discussionElem = bonzo(this.discussionContainerNode),
                     showMoreBtnElem = bonzo(this.showMoreBtnNode),
                     showElem;
 
-                if (closed) {
+                if (self.discussionClosed) {
                     showElem = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
                     discussionElem.prepend(showElem);
                     return;
@@ -216,22 +214,23 @@ define([
                     showMoreBtnElem.after(showElem);
                     return;
                 }
-
-                else {
-                    ajax({
-                        url: '/discussion/comment-box.json'
-                    }).then(this.setupCommentBoxes.bind(this));
-                }
             },
 
-            setupCommentBoxes: function(resp) {
+            getCommentBox: function() {
+                ajax({
+                    url: '/discussion/comment-box.json'
+                }).then(self.renderCommentBoxes);
+            },
+
+            renderCommentBoxes: function(resp) {
                 var html = resp.html,
                     topBox, bottomBox,
-                    topBoxElem = bonzo.create(html),
-                    bottomBoxElem = bonzo.create(html);
+                    discussionElem = bonzo(self.discussionContainerNode),
+                    topBoxElem = bonzo(bonzo.create(html)),
+                    bottomBoxElem = bonzo(bonzo.create(html));
 
-                bonzo(this.discussionContainerNode).prepend(topBoxElem);
-                bonzo(this.showMoreBtnNode).after(bottomBoxElem);
+                discussionElem.before(topBoxElem);
+                discussionElem.after(bottomBoxElem);
 
                 topBox = new CommentBox(context, {
                     apiRoot: apiRoot,
@@ -239,20 +238,23 @@ define([
                     condensed: true
                 });
                 topBox.attachTo(topBoxElem[0]);
-                topBox.on('posted', this.addComment.bind(this, false));
+                topBox.on('posted', self.addComment.bind(self, false));
 
                 bottomBox = new CommentBox(context, {
                     apiRoot: apiRoot,
                     discussionId: discussionId
                 });
                 bottomBox.attachTo(bottomBoxElem[0]);
-                bottomBox.on('posted', this.addComment.bind(this, true));
+                bottomBox.on('posted', self.addComment.bind(self, true));
+
+                bottomBoxElem.after('<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
+                    'Want our fully featured commenting experience? Head to our old site.</a>');
             },
 
             addComment: function(takeToTop, resp) {
                 // TODO (jamesgorrie): this is weird, but we don't have templating
-                var thread = bonzo(qwery('.d-thread', this.discussionContainerNode)[0]),
-                    comment = bonzo(qwery('.d-comment', this.discussionContainerNode)[0]).clone().removeClass('d-comment--blocked'),
+                var thread = bonzo(qwery('.d-thread', self.discussionContainerNode)[0]),
+                    comment = bonzo(qwery('.d-comment', self.discussionContainerNode)[0]).clone().removeClass('d-comment--blocked'),
                     actions = bonzo(comment[0].querySelector('.d-comment__actions')),
                     datetime = bonzo(comment[0].querySelector('time')),
                     author = bonzo(comment[0].querySelector('.d-comment__author')),
@@ -325,6 +327,9 @@ define([
                     if (!commentsHaveLoaded) {
                         // Don't request again if we've already done it
                         self.loadDiscussion();
+                        if (config.switches.discussionPostComment && self.showCommentBox) {
+                            self.getCommentBox();
+                        }
                     }
 
                     common.mediator.emit('modules:discussion:show');
