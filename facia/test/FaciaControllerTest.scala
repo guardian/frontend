@@ -3,14 +3,46 @@ package test
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FlatSpec
+import org.scalatest.{BeforeAndAfterAll, FlatSpec}
+import common.{AkkaAsync, FrontMetrics, Jobs}
+import controllers.front.Front
+import concurrent.duration._
 
-class FaciaControllerTest extends FlatSpec with ShouldMatchers {
+class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAfterAll {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
+
+  override def beforeAll() = {
+    running(FakeApplication()) {
+      Jobs.deschedule("FrontRefreshJob")
+      Jobs.schedule("FrontRefreshJob", "0 * * * * ?", FrontMetrics.FrontLoadTimingMetric) {
+        // stagger refresh jobs to avoid dogpiling the api
+        Front.refreshJobs().zipWithIndex.foreach{ case (job, index) =>
+          val sec = (index * 2) % 60
+          AkkaAsync.after(sec.seconds){
+              job()
+          }
+        }
+      }
+
+      Front.refresh()
+
+      val start = System.currentTimeMillis
+
+      //Our tests use things from uk, us and au. Lets wait for these three fronts (60 seconds)
+      while (!Front.hasItems("uk") || !Front.hasItems("us") || !Front.hasItems("au")) {
+        // ensure we don't get in an endless loop if test data changes
+        if (System.currentTimeMillis - start > 60000) throw new RuntimeException("front should have loaded by now")
+      }
+    }
+  }
+
+  override def afterAll() = {
+    Jobs.deschedule("FrontsRefreshJob")
+  }
 
   "Facia Controller" should "200 when content type is front" in Fake {
     val result = controllers.FaciaController.renderEditionFront("uk")(TestRequest())
