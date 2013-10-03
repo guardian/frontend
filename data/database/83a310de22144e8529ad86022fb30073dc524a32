@@ -1,0 +1,2681 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":54032,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":5404,
+    "orderBy":"newest",
+    "edition":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "code":"default"
+    },
+    "section":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "editions":[{
+        "id":"books",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books",
+        "apiUrl":"http://content.guardianapis.com/books",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"books/booksblog/2013/oct/02/women-trousers-fiction-breech-of-etiquette",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-02T12:07:18Z",
+      "webTitle":"Women in trousers: fiction's sartorial trailblazers",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/oct/02/women-trousers-fiction-breech-of-etiquette",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/oct/02/women-trousers-fiction-breech-of-etiquette",
+      "fields":{
+        "trailText":"<p>From Agatha Christie to Bridget Jones women wearing trousers has been a developing story in the world of fiction. Who were the pioneers of the pant?</p>",
+        "headline":"Women in trousers: fiction's sartorial trailblazers",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8xh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707151145/Women-wearing-trousers-005.jpg",
+        "wordcount":"1315",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"books/helenfielding",
+        "type":"keyword",
+        "webTitle":"Helen Fielding",
+        "webUrl":"http://www.theguardian.com/books/helenfielding",
+        "apiUrl":"http://content.guardianapis.com/books/helenfielding",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/agathachristie",
+        "type":"keyword",
+        "webTitle":"Agatha Christie",
+        "webUrl":"http://www.theguardian.com/books/agathachristie",
+        "apiUrl":"http://content.guardianapis.com/books/agathachristie",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418848566",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707146915/Women-wearing-trousers-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"54",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707148300/Women-wearing-trousers-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"340",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707149713/Women-wearing-trousers-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"130",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707151145/Women-wearing-trousers-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"84",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707152688/Women-wearing-trousers-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"132",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707154119/Women-wearing-trousers-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"168",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707155652/Women-wearing-trousers-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"180",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707157094/Women-wearing-trousers-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"228",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707158729/Women-wearing-trousers-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"276",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707160223/Women-wearing-trousers-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"372",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707158729/Women-wearing-trousers-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"276",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707286887/trousersbigpic.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Women in trousers",
+            "height":"550",
+            "credit":"PR",
+            "caption":"Women in trousers",
+            "width":"423"
+          }
+        }]
+      },{
+        "id":"gu-image-418848568",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380707151145/Women-wearing-trousers-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Fox Photos",
+            "altText":"Women wearing trousers",
+            "height":"84",
+            "credit":"Fox Photos/Getty Images",
+            "caption":"Trew love … women in trousers. Photograph: Fox Photos/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/02/david-goliath-malcolm-gladwell-review",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-02T11:00:01Z",
+      "webTitle":"David and Goliath: Underdogs, Misfits and the Art of Battling Giants by Malcolm Gladwell – review ",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/02/david-goliath-malcolm-gladwell-review",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/02/david-goliath-malcolm-gladwell-review",
+      "fields":{
+        "trailText":"Gladwell's manifesto for the underdog is flawed, argues <strong>David Runciman </strong>",
+        "headline":"David and Goliath: Underdogs,&nbsp;Misfits and the&nbsp;Art&nbsp;of&nbsp;Battling Giants by Malcolm Gladwell – review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6fq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540949104/david-and-goliath-003.jpg",
+        "wordcount":"1546",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/malcolm-gladwell",
+        "type":"keyword",
+        "webTitle":"Malcolm Gladwell",
+        "webUrl":"http://www.theguardian.com/books/malcolm-gladwell",
+        "apiUrl":"http://content.guardianapis.com/books/malcolm-gladwell",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/scienceandnature",
+        "type":"keyword",
+        "webTitle":"Science and nature",
+        "webUrl":"http://www.theguardian.com/books/scienceandnature",
+        "apiUrl":"http://content.guardianapis.com/books/scienceandnature",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/david-runciman",
+        "type":"contributor",
+        "webTitle":"David Runciman",
+        "webUrl":"http://www.theguardian.com/profile/david-runciman",
+        "apiUrl":"http://content.guardianapis.com/profile/david-runciman",
+        "r2ContributorId":"49032",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418662353",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540945411/david-and-goliath-001.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"54",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540947618/david-and-goliath-002.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"130",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540949104/david-and-goliath-003.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"84",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540950611/david-and-goliath-004.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"132",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540951759/david-and-goliath-005.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"168",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540952958/david-and-goliath-006.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"180",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540954108/david-and-goliath-007.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"228",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540955265/david-and-goliath-008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"276",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540955265/david-and-goliath-008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"276",
+            "credit":"Corbis",
+            "caption":"Detail from Caravaggio’s David with the Head of Goliath. Photograph: Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418662354",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380540949104/david-and-goliath-003.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "altText":"david and goliath",
+            "height":"84",
+            "credit":"Corbis",
+            "caption":"Gladwell's reading of the David and Goliath story reframes the giant's size as his weakness Photograph: Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/02/beatles-tune-in-mark-lewisohn-review",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-02T08:00:00Z",
+      "webTitle":"The Beatles – All These Years: Volume One: Tune in by Mark Lewisohn – review",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/02/beatles-tune-in-mark-lewisohn-review",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/02/beatles-tune-in-mark-lewisohn-review",
+      "fields":{
+        "trailText":"<p>The first volume of the long-awaited and definitive biography by the 'Beatles oracle' takes the band up to 1962. By <strong>John Harris </strong></p>",
+        "headline":"The Beatles – All These Years: Volume One: Tune in by Mark Lewisohn – review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7j8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380646846716/the-Beatles-005.jpg",
+        "wordcount":"2522",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/books/music",
+        "apiUrl":"http://content.guardianapis.com/books/music",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/series/bookoftheweek",
+        "type":"series",
+        "webTitle":"Book of the week",
+        "webUrl":"http://www.theguardian.com/books/series/bookoftheweek",
+        "apiUrl":"http://content.guardianapis.com/books/series/bookoftheweek",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"music/thebeatles",
+        "type":"keyword",
+        "webTitle":"The Beatles",
+        "webUrl":"http://www.theguardian.com/music/thebeatles",
+        "apiUrl":"http://content.guardianapis.com/music/thebeatles",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"profile/johnharris",
+        "type":"contributor",
+        "webTitle":"John Harris",
+        "webUrl":"http://www.theguardian.com/profile/johnharris",
+        "apiUrl":"http://content.guardianapis.com/profile/johnharris",
+        "bio":"<p>John Harris is a journalist and author, who writes regularly for the Guardian about a range of subjects built around politics, popular culture and music</p>",
+        "r2ContributorId":"20410",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/2/13/1329144525760/John_Harris.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418827629",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643552021/the-beatles-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"54",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643553183/the-beatles-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"340",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"479"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643554445/the-beatles-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"130",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643555728/the-beatles-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643557158/the-beatles-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"132",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643558377/the-beatles-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"168",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643559586/the-beatles-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"180",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643560802/the-beatles-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"228",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643562057/the-beatles-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643563387/the-beatles-011.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the beatles",
+            "height":"372",
+            "credit":"PR",
+            "caption":"Marathon men … the Beatles played punishingly long sets at the Indra, Hamburg, in 1960",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380646853384/the-Beatles-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the Beatles",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Close harmony … (from left) George Harrison, Paul McCartney and John Lennon at Hulme Hall, Port Sunlight, in 1962\r\n\r\n\r\n",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418827630",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380646846716/the-Beatles-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the Beatles",
+            "height":"84",
+            "credit":"PR",
+            "caption":"the Beatles",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/02/solo-james-bond-william-boyd-review",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-02T06:00:02Z",
+      "webTitle":"Solo by William Boyd – review",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/02/solo-james-bond-william-boyd-review",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/02/solo-james-bond-william-boyd-review",
+      "fields":{
+        "trailText":"A Bond book is a tough gig, but Boyd's authentically written attempt entertains more than it exasperates, says <strong>Richard Williams</strong>",
+        "headline":"Solo by William Boyd – review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6kq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551321463/Daniel-Craig-james-bond-003.jpg",
+        "wordcount":"971",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/william-boyd",
+        "type":"keyword",
+        "webTitle":"William Boyd",
+        "webUrl":"http://www.theguardian.com/books/william-boyd",
+        "apiUrl":"http://content.guardianapis.com/books/william-boyd",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/ian-fleming",
+        "type":"keyword",
+        "webTitle":"Ian Fleming",
+        "webUrl":"http://www.theguardian.com/books/ian-fleming",
+        "apiUrl":"http://content.guardianapis.com/books/ian-fleming",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/jamesbond",
+        "type":"keyword",
+        "webTitle":"James Bond",
+        "webUrl":"http://www.theguardian.com/film/jamesbond",
+        "apiUrl":"http://content.guardianapis.com/film/jamesbond",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/richardwilliams",
+        "type":"contributor",
+        "webTitle":"Richard Williams",
+        "webUrl":"http://www.theguardian.com/profile/richardwilliams",
+        "apiUrl":"http://content.guardianapis.com/profile/richardwilliams",
+        "bio":"<p>Richard Williams is a former chief sports writer for the Guardian. His previous jobs include chief sports writer of the Independent, assistant editor of the Times, editor of Time Out and Melody Maker and head of artists and repertoire at Island Records</p>",
+        "rcsId":"GNL042351",
+        "r2ContributorId":"16336",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2011/2/1/1296557949182/Richard-Williams-003.jpg",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418653529",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551316496/Daniel-Craig-james-bond-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"54",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551320145/Daniel-Craig-james-bond-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"130",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551321463/Daniel-Craig-james-bond-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"84",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551322849/Daniel-Craig-james-bond-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"132",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551324291/Daniel-Craig-james-bond-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"168",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551325729/Daniel-Craig-james-bond-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"180",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551327234/Daniel-Craig-james-bond-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"228",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551328773/Daniel-Craig-james-bond-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"276",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551328773/Daniel-Craig-james-bond-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"276",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418653530",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/9/30/1380551321463/Daniel-Craig-james-bond-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Francois Duhamel",
+            "altText":"Daniel Craig james bond",
+            "height":"84",
+            "credit":"Francois Duhamel/AP",
+            "caption":"Ticking the right boxes … Daniel Craig as James Bond. Photograph: Francois Duhamel/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/01/drysalter-wins-forward-poetry-prize",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-01T20:02:00Z",
+      "webTitle":"Michael Symmons Roberts wins Forward poetry prize",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/01/drysalter-wins-forward-poetry-prize",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/01/drysalter-wins-forward-poetry-prize",
+      "fields":{
+        "trailText":"<p>Champion of spirituality and self takes £10,000 prize for collection of 15-line metaphysical poems </p>",
+        "headline":"Michael Symmons Roberts wins Forward poetry prize",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7na",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654775964/Michael-Symmons-Roberts-003.jpg",
+        "wordcount":"488",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/forward-prize-for-poetry-2013",
+        "type":"keyword",
+        "webTitle":"Forward prize for poetry 2013",
+        "webUrl":"http://www.theguardian.com/books/forward-prize-for-poetry-2013",
+        "apiUrl":"http://content.guardianapis.com/books/forward-prize-for-poetry-2013",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/poetry",
+        "type":"keyword",
+        "webTitle":"Poetry",
+        "webUrl":"http://www.theguardian.com/books/poetry",
+        "apiUrl":"http://content.guardianapis.com/books/poetry",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/forwardprizeforpoetry",
+        "type":"keyword",
+        "webTitle":"Forward prize for poetry",
+        "webUrl":"http://www.theguardian.com/books/forwardprizeforpoetry",
+        "apiUrl":"http://content.guardianapis.com/books/forwardprizeforpoetry",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/charlottehiggins",
+        "type":"contributor",
+        "webTitle":"Charlotte Higgins",
+        "webUrl":"http://www.theguardian.com/profile/charlottehiggins",
+        "apiUrl":"http://content.guardianapis.com/profile/charlottehiggins",
+        "bio":"<p>Charlotte Higgins is the chief arts writer of the Guardian. She contributes to the Guardian's news, features, op-ed, literary and arts sections, and writes the <a href=\"http://www.guardian.co.uk/culture/charlottehigginsblog\">Charlotte Higgins on Culture blog</a></p>",
+        "rcsId":"GNL465906",
+        "r2ContributorId":"15476",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/29/1285761872647/charlotte_higgins_140x140.jpg",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418811013",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654773699/Michael-Symmons-Roberts-001.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"54",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654774966/Michael-Symmons-Roberts-002.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"130",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654775964/Michael-Symmons-Roberts-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"84",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654777029/Michael-Symmons-Roberts-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"132",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654778053/Michael-Symmons-Roberts-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"168",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654779081/Michael-Symmons-Roberts-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"180",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654780090/Michael-Symmons-Roberts-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"228",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654781120/Michael-Symmons-Roberts-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"276",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654781120/Michael-Symmons-Roberts-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"276",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418811014",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380654775964/Michael-Symmons-Roberts-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sutton-Hibbert",
+            "altText":"Michael Symmons Roberts",
+            "height":"84",
+            "credit":"Sutton-Hibbert/Rex Features",
+            "caption":"Michael Symmons Roberts' Drysalter 'turns religion to good purpose', said judge Jeanette Winterson. Photograph: Sutton-Hibbert/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/01/self-publishing-showcase-off-life",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-01T16:35:32Z",
+      "webTitle":"Daniel Humphry: 'There's no way we'd have grown to the size we have without the comic community'",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/01/self-publishing-showcase-off-life",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/01/self-publishing-showcase-off-life",
+      "fields":{
+        "trailText":"<p>The founder of OFF LIFE, a free bi-monthly comic anthology, explains why independence is the key to its success </p><p>• OFF LIFE was <a href=\"http://www.theguardian.com/books/2013/sep/25/self-publishing-showcase-james-lloyd\">recommended by author James Lloyd</a>. Scroll down to recommend your own favourite self-published books</p>",
+        "headline":"Daniel Humphry: 'There's no way we'd have grown to the size we have without the comic community'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j77e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380623158523/OFF-LIFE-001.jpg",
+        "wordcount":"609",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/series/self-publishing-showcase",
+        "type":"series",
+        "webTitle":"Self-publishing showcase",
+        "webUrl":"http://www.theguardian.com/books/series/self-publishing-showcase",
+        "apiUrl":"http://content.guardianapis.com/books/series/self-publishing-showcase",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/self-publishing",
+        "type":"keyword",
+        "webTitle":"Self-publishing",
+        "webUrl":"http://www.theguardian.com/books/self-publishing",
+        "apiUrl":"http://content.guardianapis.com/books/self-publishing",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418767693",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380623165192/OFF-LIFE-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"OFF LIFE",
+            "altText":"OFF LIFE",
+            "height":"276",
+            "credit":"OFF LIFE/PR",
+            "caption":"OFF LIFE Photograph: OFF LIFE",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418767694",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380623158523/OFF-LIFE-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"OFF LIFE",
+            "altText":"OFF LIFE",
+            "height":"84",
+            "credit":"OFF LIFE/PR",
+            "caption":"OFF LIFE Photograph: OFF LIFE",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418767695",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380623425748/OFF-LIFE-Naked--010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Ana Galvan",
+            "altText":"OFF LIFE Naked ",
+            "height":"276",
+            "credit":"Ana Galvan/PR",
+            "caption":"OFF LIFE Naked. Illustration: Ana Galvan",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418767696",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380623668930/Off-LIFE-cover-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"OFF LIFE",
+            "altText":"Off LIFE cover",
+            "height":"276",
+            "credit":"OFF LIFE/PR",
+            "caption":"Off LIFE cover. Photograph: OFF LIFE",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/01/nobel-literature-bets-jon-fosse-odds-slashed",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-01T15:59:13Z",
+      "webTitle":"Nobel literature prize: odds slashed on Jon Fosse following surge in bets",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/01/nobel-literature-bets-jon-fosse-odds-slashed",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/01/nobel-literature-bets-jon-fosse-odds-slashed",
+      "fields":{
+        "trailText":"<p>'Bigger than average' punts on 100/1 Norwegian author forces bookies to suspend betting, writes <strong>Liz Bury</strong></p>",
+        "headline":"Nobel literature prize: odds slashed on Jon Fosse following surge in bets",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7g3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642629828/Jon-Fosse-of-Norway-005.jpg",
+        "wordcount":"406",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/nobel-prize-literature",
+        "type":"keyword",
+        "webTitle":"Nobel prize for literature",
+        "webUrl":"http://www.theguardian.com/books/nobel-prize-literature",
+        "apiUrl":"http://content.guardianapis.com/books/nobel-prize-literature",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/sweden",
+        "type":"keyword",
+        "webTitle":"Sweden",
+        "webUrl":"http://www.theguardian.com/world/sweden",
+        "apiUrl":"http://content.guardianapis.com/world/sweden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/gambling",
+        "type":"keyword",
+        "webTitle":"Gambling",
+        "webUrl":"http://www.theguardian.com/society/gambling",
+        "apiUrl":"http://content.guardianapis.com/society/gambling",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"business/ladbrokes",
+        "type":"keyword",
+        "webTitle":"Ladbrokes",
+        "webUrl":"http://www.theguardian.com/business/ladbrokes",
+        "apiUrl":"http://content.guardianapis.com/business/ladbrokes",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"books/harukimurakami",
+        "type":"keyword",
+        "webTitle":"Haruki Murakami",
+        "webUrl":"http://www.theguardian.com/books/harukimurakami",
+        "apiUrl":"http://content.guardianapis.com/books/harukimurakami",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/joyce-carol-oates",
+        "type":"keyword",
+        "webTitle":"Joyce Carol Oates",
+        "webUrl":"http://www.theguardian.com/books/joyce-carol-oates",
+        "apiUrl":"http://content.guardianapis.com/books/joyce-carol-oates",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/liz-bury",
+        "type":"contributor",
+        "webTitle":"Liz Bury",
+        "webUrl":"http://www.theguardian.com/profile/liz-bury",
+        "apiUrl":"http://content.guardianapis.com/profile/liz-bury",
+        "r2ContributorId":"57417",
+        "references":[]
+      },{
+        "id":"business/williamhill",
+        "type":"keyword",
+        "webTitle":"William Hill",
+        "webUrl":"http://www.theguardian.com/business/williamhill",
+        "apiUrl":"http://content.guardianapis.com/business/williamhill",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"books/solzhenitsyn",
+        "type":"keyword",
+        "webTitle":"Aleksandr Solzhenitsyn",
+        "webUrl":"http://www.theguardian.com/books/solzhenitsyn",
+        "apiUrl":"http://content.guardianapis.com/books/solzhenitsyn",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418764622",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642625150/Jon-Fosse-of-Norway-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"54",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642626725/Jon-Fosse-of-Norway-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"340",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"479"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642628332/Jon-Fosse-of-Norway-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"130",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642629828/Jon-Fosse-of-Norway-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"84",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642631344/Jon-Fosse-of-Norway-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"132",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642632895/Jon-Fosse-of-Norway-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"168",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642634428/Jon-Fosse-of-Norway-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"180",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642635947/Jon-Fosse-of-Norway-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"228",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642637689/Jon-Fosse-of-Norway-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"276",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642639574/Jon-Fosse-of-Norway-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"372",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642637689/Jon-Fosse-of-Norway-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"276",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418764623",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642629828/Jon-Fosse-of-Norway-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Sean Gallup",
+            "altText":"Jon Fosse of Norway",
+            "height":"84",
+            "credit":"Sean Gallup/Getty Images",
+            "caption":"Norwegian author Jon Fosse: attracting home support for Nobel recognition. Photograph: Sean Gallup/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/01/collected-ghost-stories-mr-james-review",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-01T15:38:51Z",
+      "webTitle":"Collected Ghost&nbsp;Stories by MR James – review",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/01/collected-ghost-stories-mr-james-review",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/01/collected-ghost-stories-mr-james-review",
+      "fields":{
+        "trailText":"<strong>Nicholas Lezard's paperback of the week:</strong> spooky tales from a 'weird fictionist of the very first rank'",
+        "headline":"Collected Ghost&nbsp;Stories by MR James – review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7fz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638187648/Old-religious-books-005.jpg",
+        "wordcount":"623",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/series/nicholas-lezard-choice",
+        "type":"series",
+        "webTitle":"Nicholas Lezard's choice",
+        "webUrl":"http://www.theguardian.com/books/series/nicholas-lezard-choice",
+        "apiUrl":"http://content.guardianapis.com/books/series/nicholas-lezard-choice",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/short-stories",
+        "type":"keyword",
+        "webTitle":"Short stories",
+        "webUrl":"http://www.theguardian.com/books/short-stories",
+        "apiUrl":"http://content.guardianapis.com/books/short-stories",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/classics",
+        "type":"keyword",
+        "webTitle":"Classics",
+        "webUrl":"http://www.theguardian.com/books/classics",
+        "apiUrl":"http://content.guardianapis.com/books/classics",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/nicholaslezard",
+        "type":"contributor",
+        "webTitle":"Nicholas Lezard",
+        "webUrl":"http://www.theguardian.com/profile/nicholaslezard",
+        "apiUrl":"http://content.guardianapis.com/profile/nicholaslezard",
+        "bio":"<p>Nicholas Lezard is a literary critic for the Guardian</p>",
+        "rcsId":"GNL034660",
+        "r2ContributorId":"16172",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/19/1374241286766/Nicholas-Lezard.jpg",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/paperbacks",
+        "type":"keyword",
+        "webTitle":"Paperbacks",
+        "webUrl":"http://www.theguardian.com/books/paperbacks",
+        "apiUrl":"http://content.guardianapis.com/books/paperbacks",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418758419",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638183382/Old-religious-books-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638184990/Old-religious-books-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"479"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638186378/Old-religious-books-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638187648/Old-religious-books-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638188863/Old-religious-books-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638190085/Old-religious-books-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638191331/Old-religious-books-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638192603/Old-religious-books-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638193871/Old-religious-books-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638195191/Old-religious-books-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638193871/Old-religious-books-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418758420",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380638187648/Old-religious-books-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Old religious books",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Evil resides within the pages … old religious books are often the starting point for MR James's ghost stories.  Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/oct/01/david-bowie-books-kerouac-milligan",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-01T14:00:00Z",
+      "webTitle":"David Bowie's must-read books revealed",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/01/david-bowie-books-kerouac-milligan",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/01/david-bowie-books-kerouac-milligan",
+      "fields":{
+        "trailText":"<p>Jack Kerouac, Spike Milligan and Sarah Waters among star's favourite authors, revealed at exhibition in Ontario</p>",
+        "headline":"David Bowie's must-read books revealed",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7a2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380627128561/David-Bowie-in-1973-005.jpg",
+        "wordcount":"891",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"music/davidbowie",
+        "type":"keyword",
+        "webTitle":"David Bowie",
+        "webUrl":"http://www.theguardian.com/music/davidbowie",
+        "apiUrl":"http://content.guardianapis.com/music/davidbowie",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/books/music",
+        "apiUrl":"http://content.guardianapis.com/books/music",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"artanddesign/exhibition",
+        "type":"keyword",
+        "webTitle":"Exhibitions",
+        "webUrl":"http://www.theguardian.com/artanddesign/exhibition",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/exhibition",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/liz-bury",
+        "type":"contributor",
+        "webTitle":"Liz Bury",
+        "webUrl":"http://www.theguardian.com/profile/liz-bury",
+        "apiUrl":"http://content.guardianapis.com/profile/liz-bury",
+        "r2ContributorId":"57417",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"books/jackkerouac",
+        "type":"keyword",
+        "webTitle":"Jack Kerouac",
+        "webUrl":"http://www.theguardian.com/books/jackkerouac",
+        "apiUrl":"http://content.guardianapis.com/books/jackkerouac",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/ianmcewan",
+        "type":"keyword",
+        "webTitle":"Ian McEwan",
+        "webUrl":"http://www.theguardian.com/books/ianmcewan",
+        "apiUrl":"http://content.guardianapis.com/books/ianmcewan",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/truman-capote",
+        "type":"keyword",
+        "webTitle":"Truman Capote",
+        "webUrl":"http://www.theguardian.com/books/truman-capote",
+        "apiUrl":"http://content.guardianapis.com/books/truman-capote",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/sarahwaters",
+        "type":"keyword",
+        "webTitle":"Sarah Waters",
+        "webUrl":"http://www.theguardian.com/books/sarahwaters",
+        "apiUrl":"http://content.guardianapis.com/books/sarahwaters",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/anthonyburgess",
+        "type":"keyword",
+        "webTitle":"Anthony Burgess",
+        "webUrl":"http://www.theguardian.com/books/anthonyburgess",
+        "apiUrl":"http://content.guardianapis.com/books/anthonyburgess",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/vladimirnabokov",
+        "type":"keyword",
+        "webTitle":"Vladimir Nabokov",
+        "webUrl":"http://www.theguardian.com/books/vladimirnabokov",
+        "apiUrl":"http://content.guardianapis.com/books/vladimirnabokov",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/georgeorwell",
+        "type":"keyword",
+        "webTitle":"George Orwell",
+        "webUrl":"http://www.theguardian.com/books/georgeorwell",
+        "apiUrl":"http://content.guardianapis.com/books/georgeorwell",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/orlando-figes",
+        "type":"keyword",
+        "webTitle":"Orlando Figes",
+        "webUrl":"http://www.theguardian.com/books/orlando-figes",
+        "apiUrl":"http://content.guardianapis.com/books/orlando-figes",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/bruce-chatwin",
+        "type":"keyword",
+        "webTitle":"Bruce Chatwin",
+        "webUrl":"http://www.theguardian.com/books/bruce-chatwin",
+        "apiUrl":"http://content.guardianapis.com/books/bruce-chatwin",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/michael-chabon",
+        "type":"keyword",
+        "webTitle":"Michael Chabon",
+        "webUrl":"http://www.theguardian.com/books/michael-chabon",
+        "apiUrl":"http://content.guardianapis.com/books/michael-chabon",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/rupert-thomson",
+        "type":"keyword",
+        "webTitle":"Rupert Thomson",
+        "webUrl":"http://www.theguardian.com/books/rupert-thomson",
+        "apiUrl":"http://content.guardianapis.com/books/rupert-thomson",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418793245",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380627135250/David-Bowie-in-1973-010.jpg",
+          "typeData":{
+            "source":"The David Bowie Archive",
+            "photographer":"Masayoshi Sukita",
+            "altText":"David Bowie in 1973",
+            "height":"276",
+            "credit":"Masayoshi Sukita/The David Bowie Archive",
+            "caption":"Well red … David Bowie in 1973. Photograph: Masayoshi Sukita",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418793246",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380627128561/David-Bowie-in-1973-005.jpg",
+          "typeData":{
+            "source":"The David Bowie Archive",
+            "photographer":"Masayoshi Sukita",
+            "altText":"David Bowie in 1973",
+            "height":"84",
+            "credit":"Masayoshi Sukita/The David Bowie Archive",
+            "caption":"David Bowie in 1973. Photograph: Masayoshi Sukita/The David Bowie Archive",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/oct/01/under-the-volcano-malcolm-lowry-online-resources",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-01T11:28:46Z",
+      "webTitle":"Under the Volcano: fuelling a thirst for Malcolm Lowry",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/oct/01/under-the-volcano-malcolm-lowry-online-resources",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/oct/01/under-the-volcano-malcolm-lowry-online-resources",
+      "fields":{
+        "trailText":"<strong>Sam Jordison:</strong> This book has whetted an appetite for more Lowry – luckily there are some fantastic online resources to aid further study",
+        "headline":"Under the Volcano: fuelling a thirst for Malcolm Lowry",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j75g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619026520/Volcano-005.jpg",
+        "wordcount":"508",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/series/reading-group",
+        "type":"series",
+        "webTitle":"Reading group",
+        "webUrl":"http://www.theguardian.com/books/series/reading-group",
+        "apiUrl":"http://content.guardianapis.com/books/series/reading-group",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/malcolm-lowry",
+        "type":"keyword",
+        "webTitle":"Malcolm Lowry",
+        "webUrl":"http://www.theguardian.com/books/malcolm-lowry",
+        "apiUrl":"http://content.guardianapis.com/books/malcolm-lowry",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/samjordison",
+        "type":"contributor",
+        "webTitle":"Sam Jordison",
+        "webUrl":"http://www.theguardian.com/profile/samjordison",
+        "apiUrl":"http://content.guardianapis.com/profile/samjordison",
+        "bio":"<p>Sam Jordison is the author of Sod That: 103 Things Not to Do Before You Die and co-editor of Crap Towns. He still hasn't written a novel.</p>",
+        "rcsId":"GNL033531",
+        "r2ContributorId":"16395",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/7/1336387144696/Sam-Jordison.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418717281",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619022827/Volcano-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"54",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619024065/Volcano-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"340",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"479"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619025303/Volcano-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"130",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619026520/Volcano-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"84",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619027737/Volcano-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"132",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619028967/Volcano-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"168",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619030177/Volcano-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"180",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619031852/Volcano-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"228",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619033133/Volcano-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"276",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619034422/Volcano-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"372",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619033133/Volcano-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"276",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418717282",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380619026520/Volcano-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Claudio Santana",
+            "altText":"Volcano",
+            "height":"84",
+            "credit":"Claudio Santana/AFP/Getty Images",
+            "caption":"Fuelling the Lowry fire … Under the Volcano. Photograph: Claudio Santana/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

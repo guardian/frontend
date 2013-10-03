@@ -3,20 +3,18 @@
 }
 
 .article-zone {
-    padding: 13px 0 14px;
+    padding: $baseline 0 $baseline*4;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
+    margin-bottom: 0;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
     }
     font-weight: bolder;
     line-height: 1;
-    border-bottom: 1px solid $mushroom;
-
-    @include mq(tablet) {
-        border-top: none;
-    }
+    border-bottom: 1px solid $c-neutral5;
+    border-top: 2px solid $c-neutral5;
 
     .article__popular & {
         border-bottom: none;
@@ -72,7 +70,7 @@
     padding-top: $baseline;
     padding-right: gs-span(1);
     margin-bottom: $baseline*3;
-    border-top: 1px dotted $c-neutral3;
+    border-top: 1px dotted $c-neutral5;
     color: $c-neutral2;
 
     .article__meta-container & {
@@ -81,7 +79,7 @@
 
     time {
         display: inline-block;
-        width: 85%;
+        width: 80%;
     }
 
     i {
@@ -123,13 +121,13 @@
 }
 
 .article__standfirst {
-    @include fs-bodyCopy(3, true);
+    @include fs-headline(1, true);
     text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
     margin-bottom: $baseline*3;
+    color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
+        @include fs-headline(2, true);
         -webkit-font-smoothing: antialiased;
         margin-bottom: $baseline*4;
     }
@@ -166,11 +164,12 @@
 
 .byline {
     font-weight: bold;
-    border-top: 1px dotted $c-neutral3;
-    border-bottom: 1px dotted $c-neutral3;
+    border-top: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted $c-neutral5;
     margin-bottom: $baseline*2;
     min-height: 20px;
     padding: $baseline - 1 0 $baseline*3 - 1 0;
+    color: $c-neutral2;
 
     article & {
         @include mq(tablet, leftCol) {
@@ -256,7 +255,7 @@ video {
         width: $gs-column-width - 1px;
         height: $gs-column-height - 1px;
         padding: $baseline 0 0 $baseline;
-        border-left: 1px dotted $c-neutral3;
+        border-left: 1px dotted $c-neutral5;
     }
 }
 
@@ -270,7 +269,7 @@ video {
     @include fs-headline(2);
     padding-top: $baseline;
     padding-bottom: $baseline*4;
-    border-top: 1px dotted $c-neutral3;
+    border-top: 1px dotted $c-neutral5;
 }
 
 /* Layout changes across devices
@@ -409,7 +408,7 @@ video {
             display: block;
             padding-top: $baseline;
             margin-bottom: $baseline*3;
-            border-top: 1px dotted $c-neutral3;
+            border-top: 1px dotted $c-neutral5;
         }
     }
 }

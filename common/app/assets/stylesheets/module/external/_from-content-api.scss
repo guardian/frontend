@@ -8,7 +8,8 @@
 /* Core elements
    ========================================================================== */
 
-.from-content-api {
+.from-content-api,
+.from-content-api .block-elements {
 
     @include fs-bodyCopy(3);
     color: #333333;
@@ -18,7 +19,6 @@
     }
 
     > p,
-    > blockquote,
     ul,
     ol,
     address {
@@ -90,17 +90,6 @@
                 text-indent: 28px;
                 text-indent: 2.8rem;
             }
-
-            .bullet {
-                text-indent: 0;
-                margin-left: -24px;
-                margin-left: -2.4rem;
-
-                @include mq(tablet) {
-                    margin-left: -28px;
-                    margin-left: -2.8rem;
-                }
-            }
         }
     }
     > p,
@@ -117,6 +106,9 @@
             margin-top: $baseline*3;
         }
     }
+}
+.no-indent {
+    text-indent: 0 !important;
 }
 
 .from-content-api--small {
@@ -154,8 +146,13 @@
             line-height: 24px;
             line-height: 2.4rem;
             font-style: normal;
-            text-indent: 40px;
             color: $c-neutral2;
+            margin-bottom: 0;
+            text-indent: 24px;
+
+            &:first-child {
+                text-indent: 40px;
+            }
         }
     }
 
@@ -165,7 +162,11 @@
             @include fs-headline(2, true);
             line-height: 28px;
             line-height: 2.8rem;
-            text-indent: 42px;
+            text-indent: 28px;
+
+            &:first-child {
+                text-indent: 42px;
+            }
         }
     }
 }
@@ -177,11 +178,11 @@
 .caption,
 figcaption,
 .main-caption {
-    @include fs-data(2);
-    color: #666666;
+    @include fs-data(1);
+    color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-data(3, true);
+        @include fs-data(2, true);
     }
 }
 
@@ -224,10 +225,10 @@ figure {
     &.img--portrait {
         figcaption {
             background-color: $c-neutral7;
-            padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+            padding: $baseline 6px $baseline*6 6px;
 
             @include mq(wide) {
-                padding-bottom: $gs-column-height;
+                padding: $baseline*1.5 8px $gs-column-height 8px;
             }
         }
     }

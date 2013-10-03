@@ -32,6 +32,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
 
     val stage = apply("STAGE", "unknown")
+
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
   }
 
   object switches {
@@ -50,6 +52,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object debug {
     lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
+    lazy val beaconUrl: String = configuration.getStringProperty("beacon.url").getOrElse("")
   }
 
   override def toString(): String = configuration.toString
@@ -82,6 +85,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object site {
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
+  }
+
+  object cookies {
+    lazy val lastSeenKey: String = "lastseen"
+    lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
   }
 
   object proxy {

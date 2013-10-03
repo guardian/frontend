@@ -19,7 +19,7 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   }
 
   private def findBlogFor(edition: Edition) = {
-    val tag = s"football/series/saturday-clockwatch|tone/minutebyminute,(${ContentApi.supportedTypes})"
+    val tag = "football/series/saturday-clockwatch|tone/minutebyminute"
     log.info(s"Fetching football blogs with tag: $tag")
     ContentApi.item("/football", edition)
       .tag(tag)
