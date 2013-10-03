@@ -37,20 +37,20 @@ $trailblockImgWidthLarge: 140px;
 @import 'layout/_grid-system';
 
 // Article breakpoints
-$a-leftCol-width:    gs-span(2);
-$a-leftCol-trigger:  gs-span(13) + $gutter*2;
 $a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11) + $gutter*2;
+$a-rightCol-trigger: gs-span(11) + $gs-gutter*2; // 900px
+$a-leftCol-width:    gs-span(2); // Grows to 3 columns on wide viewports
+$a-leftCol-trigger:  gs-span(13) + $gs-gutter*2; // 1060px
 
 $mq-breakpoints: (
-    (mobile  gs-span(4) + $gutter*2)  // 340px
-    (tablet  gs-span(8) + $gutter*2)  // 660px
-    (desktop gs-span(12) + $gutter*2) // 980px
-    (wide    gs-span(16) + $gutter*2) // 1300px
+    (mobile  gs-span(4)  + $gs-gutter)   // 320px
+    (tablet  gs-span(8)  + $gs-gutter*2) // 660px
+    (desktop gs-span(12) + $gs-gutter*2) // 980px
+    (wide    gs-span(16) + $gs-gutter*2) // 1300px
 
     // Tweakpoints
+    (mobileLandscape gs-span(6) + $gs-gutter) // 480px
     (desktopAd 810px)
-    (mobileLandscape 480px)
 
     // Article layout
     (rightCol $a-rightCol-trigger)
@@ -61,10 +61,55 @@ $mq-breakpoints: (
 /* Fonts
    ========================================================================== */
 
-$sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
 
+// Font scale
+// Usage:
+// font-size (px) line-height (px) // level
+$fs-headers: (
+    16 20, // 1
+    18 24, // 2
+    20 28, // 3
+    22 28, // 4
+    24 28  // 5
+);
+
+$fs-headlines: (
+    16 20, // 1
+    20 24, // 2
+    24 28, // 3
+    28 32, // 4
+    32 36, // 5
+    36 40, // 6
+    40 44, // 7
+    44 48, // 8
+    48 52  // 9
+);
+
+$fs-bodyHeadings: (
+    14 22, // 1
+    16 24, // 2
+    18 28, // 3
+    20 28  // 4
+);
+
+$fs-bodyCopy: (
+    14 20, // 1
+    14 22, // 2
+    16 24, // 3
+    18 28  // 4
+);
+
+$fs-data: (
+    11 14, // 1
+    12 14, // 2
+    13 16, // 3
+    14 18, // 4
+    16 20, // 5
+    18 22  // 6
+);
 
 /* Colours
    ========================================================================== */
@@ -74,7 +119,7 @@ $serifheadline: "EgyptianHeadline", georgia, serif;
  */
 $blue: #214583;
 $darkBlue: #152E5F;
-$lightBlue: #95B2CB;
+$lightBlue: #4490CE;
 $linkBlue: #005689;
 $mushroom: #F4F4EE;
 $medianMushroom: #EDEDE7;
@@ -82,13 +127,31 @@ $darkMushroom: #E3E3DB;
 $grey: #B3B3B4;
 $darkGrey: #676767;
 
+$c-neutral1: #333333;
+$c-neutral2: #676767;
+$c-neutral3: #929497;
+$c-neutral4: #b3b3b4;
+$c-neutral5: #cfcfcd;
+$c-neutral6: #edede7;
+$c-neutral7: #f4f4ee;
+
+
+/* Tones
+   ========================================================================== */
+$c-newsDefault: #005689;
+$c-newsAccent: #4BC6DF;
+
+$c-featureDefault: #951C55;
+$c-featureAccent: #F66980;
+
+$c-commentDefault: #E6711B;
+$c-commentAccent: #FFBB00;
 
 
 /* Zones
    ========================================================================== */
 
 /**
- * (be sure to update the styleguide when changing these)
  * note: try to at least alphabetise these within sections
  */
 $articleOrange: #e47a39; //Used for live-blogging

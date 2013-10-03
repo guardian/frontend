@@ -21,6 +21,12 @@
     margin-right: 0;
 }
 
+.form__note {
+    font-family: $sans-serif;
+    font-size: 12px;
+    font-size: 1.2rem;
+}
+
 .form-fields {
     margin: $baseline*6 0;
     padding: 0;
@@ -63,6 +69,20 @@
     font-size: 12px;
     font-size: 1.2rem;
     margin-bottom: 12px;
+}
+
+.form-field__note--below {
+    margin-bottom: 0;
+    margin-top: 6px;
+}
+
+.form-field__note--left {
+    float: left;
+}
+
+.form-field__note--right {
+    float: right;
+    margin-left: $gutter;
 }
 
 .label {

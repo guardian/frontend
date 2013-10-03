@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
+define(['common', 'ajax', 'modules/related', 'helpers/fixtures'], function(common, ajax, Related, fixtures) {
 
     describe("Related", function() {
 
@@ -14,17 +14,22 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            fixtures.render({
+                id: 'related-fixtures',
+                fixtures: ['<div class="js-related"></div>']
+            });
         });
 
         afterEach(function() {
             if (appendTo) appendTo.innerHTML = "";
             server.restore();
+            fixtures.clean('related-fixtures');
         });
 
         // json test needs to be run asynchronously
         it("should request the related links and graft them on to the dom", function(){
 
-            var pageId = 'some/news'
+            var pageId = 'some/news';
 
             server.respondWith('/related/' + pageId + '.json?_edition=UK', [200, {}, '{ "html": "<b>1</b>" }']);
 

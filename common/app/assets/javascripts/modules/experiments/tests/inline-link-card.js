@@ -38,7 +38,7 @@ function (
                                     context: context
                                 };
                             if (config.page.isLiveBlog) {
-                                options.linksHolders = '.js-live-blog-blocks > .block';
+                                options.linksHolders = '.block-elements > p';
                             }
                             var card = new LeftHandCard(options);
                         }
@@ -55,7 +55,7 @@ function (
                                     context: context
                                 };
                             if (config.page.isLiveBlog) {
-                                options.linksHolders = '.js-live-blog-blocks > .block';
+                                options.linksHolders = '.block-elements > p';
                             }
                             var card = new LeftHandCard(options);
                         }

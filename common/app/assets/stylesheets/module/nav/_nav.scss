@@ -19,17 +19,16 @@
         width: 100%;
         margin: 0;
     }
-}
-
-    .nav > li,
-    .nav > li > a {
+    > li,
+    > li > a {
         display: inline-block;
         zoom: 1;
     }
 
-    .nav li.is-active {
+    li.is-active {
         font-weight: bold;
     }
+}
 
 /* ==========================================================================
    Nav Modifiers
@@ -38,51 +37,44 @@
 /* Stacked
    ========================================================================== */
 
-    .nav--stacked > li {
-        display: list-item;
+.nav--stacked > li {
+    display: list-item;
 
-        a {
-            display: block;
-        }
+    a {
+        display: block;
     }
+}
 
 
 /* Columns
    ========================================================================== */
 
-// First, define a reusable structural rule
-.nav--two-columns {
-    padding: $baseline*2 $gs-gutter/2 $baseline;
+.nav--columns {
+    padding: $baseline $gs-gutter/2;
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
     > .nav__item {
-        width: 46%;
-        margin-right: 3%;
-        display: inline-block; // doing this instead of float to prevent mixed item height float collision
-        vertical-align: top;
+        float: left;
+        width: 50%;
+        @include box-sizing(border-box);
+        padding-right: $gs-gutter/2;
 
         &:nth-child(even) {
-            float: right; // this aligns right edge correctly
-            margin-right: 0%;
-            margin-left: 3%;
+            padding-right: 0;
+            padding-left: $gs-gutter/2;
         }
     }
-}
-
-// Then, skin
-.nav--columns {
-    @extend .nav--two-columns;
 
     .nav__link {
-        font-weight: 200;
-        font-family: $serifheadline;
+        display: block;
         padding: 3px 0 $baseline*4;
         border-top: 1px solid $mushroom;
-        display: block;
         height: auto;
         background-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        @include font-size(14, 20);
     }
 }
 
@@ -91,8 +83,7 @@
 }
 
 
-.nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
-.nav--stacked.nav--top-border-off > li:nth-child(1) a {
+.nav--top-border-off > .nav__item:nth-child(-n+2) .nav__link {
     border-top: none;
     padding-top: 0;
 }
@@ -104,10 +95,13 @@
 .nav-popup--small .nav--section-divider {
     margin: 0;
     background-color: $mushroom;
-    padding: $baseline*2 $gs-gutter/2;
+    padding: 0 $gs-gutter/2 $baseline*2;
 
-    > .nav__item {
-        border-bottom: 0;
+    .nav .nav__item + .nav__item {
+        .nav__link {
+            border-bottom: 0;
+            border-top: 1px solid $darkMushroom;
+        }
     }
 
     @include mq(mobileLandscape) {
@@ -130,19 +124,6 @@
         @include mq(tablet) {
             border-left: 0;
         }
-    }
-
-
-/* Footer navigation
-   ========================================================================== */
-
-.nav--footer {
-    
-}
-
-    .nav--footer .nav__link {
-        color: #fff;
-        border-top: 1px solid #4490ce;
     }
 
 
@@ -190,12 +171,12 @@
             position: absolute;
             bottom: -2px;
             margin-left: -10px;
-            left:50%;
+            left: 50%;
         }
     }
 
     .nav__link {
-        color: #333333; // This is here because the below selectors are too specific for zone-color to work
+        color: $c-neutral1; // This is here because the below selectors are too specific for zone-color to work
     }
 
     .nav__link,
@@ -205,18 +186,18 @@
         display: block;
         margin: 10px 0 $baseline*3;
         padding: 2px 9px 0 9px;
-        font-family: $serif !important;
-        font-size: 14px;
+        @include font-size(14, 19);
         text-decoration: none;
-
     }
 
     .is-active .nav__link {
+        color: $c-neutral1;
         font-weight: bold;
+        border-color: $c-neutral1;
     }
 
-        .nav__item:first-child .nav__link { padding-left: 0; }
-        .nav__item:last-child .nav__link { border-right: none; }
+    .nav__item:first-child .nav__link { padding-left: 0; }
+    .nav__item:last-child .nav__link { border-right: none; }
 }
 
 /* Local navigation
@@ -291,28 +272,31 @@
 
     .localnav__cta {
         float: right;
-        width: 50px;
-        height: 37px;
-        margin-right: $gs-gutter / -2;
+        width: $gs-column-width;
+        height: $baseline*7;
+        margin: $baseline*2 $gs-gutter/2 0 0;
         padding: 0;
         background-color: #ffffff;
+        border-left: 1px solid $c-neutral5;
+
+        i {
+            margin-top: -4px;
+        }
 
         &.is-active i {
             @include rotate(180deg);
         }
-    }
 
-    .i-nav-divider {
-        margin: 4px 0 0 0;
-        background-color: #ffffff;
-        border-left: 0;
+        &:hover {
+            background-color: #ffffff;
+        }
     }
-
 }
 
 .localnav__inner {
-    border-bottom: 1px solid $medianMushroom;
-    margin: 0 $gs-gutter / 2;
+    border-top: $baseline solid $c-newsAccent;
+    margin: 0;
+    padding-bottom: $baseline*2;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
@@ -323,7 +307,6 @@
 .localnav__title {
     @extend .section-head;
     float: left;
-    padding: 17px 0 12px 0 !important;
     border: 0 !important;
     margin: 0 !important;
 }
@@ -362,6 +345,6 @@
 /* Faded link colors
    ========================================================================== */
 
-.nav .nav__link--faded {
+.nav .nav__item .nav__link--faded {
     color: #9DBBD4;
 }

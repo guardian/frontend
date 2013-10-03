@@ -44,16 +44,10 @@ var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
 var cssbasepath = phantom.args[9];
 var generatesvg = phantom.args[10];
-var styleguidepath = phantom.args[11];
-var styleguidefilename = phantom.args[12];
 
 var sprite = require( "webpage" ).create();
     sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
-
-var tableOpeningHTML = '<table class="styleguide-table styleguide-table-two-col sprite-table"><thead><tr><th class="type-11">CSS selector</th><th class="type-11">Output</th></tr></thead><tbody>';
-var outputHTML = [];
-var tableClosingHTML = '</tbody></table>';
 
 // add a single reference to the sprite background
 pngcssrules.push(".i { background-repeat: no-repeat; display: inline-block; }");
@@ -82,16 +76,11 @@ function finishUp(){
     // write CSS files
     fs.write( cssOutputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
     if(generatesvg) { fs.write( cssOutputdir + datacss, '@if ($svg-support) {' + "\n" + datacssrules.join( "\n\n" ) + "\n" + '}' ); }
-
-    // write HTML file
-    var tableHTML = tableOpeningHTML + outputHTML.join( "\n" ) + tableClosingHTML;
-    fs.write( styleguidepath + styleguidefilename,  tableHTML);
 }
 
 // process an svg file from the source directory
 function processFile() {
     var theFile = files[ currfile ];
-    var tableRowHTML = '';
 
     if( theFile ){
         // only parse svg files
@@ -123,10 +112,6 @@ function processFile() {
                     datacssrules.push( "    .svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; background-repeat: no-repeat; }\n    .svg ." + cssprefix + filenamenoext + " { @extend .svg-" + cssprefix + filenamenoext +"; }" );
                 }
 
-                // build HTML table for style guide
-                tableRowHTML = '<tr><td class="type-9">.' + cssprefix + filenamenoext + '</td><td class="sprite-cell"><i class="i ' + cssprefix + filenamenoext + '"></i></td></tr>';
-                outputHTML.push(tableRowHTML);
-
                 // set page viewport size to svg dimensions
                 page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
 
@@ -140,12 +125,18 @@ function processFile() {
                         var placeholder = document.createElement('div');
                         placeholder.style.display = 'block';
                         placeholder.style.float = 'left';
+                        placeholder.style.margin = '1px 1px 0 0'; // prevents the sprite icons from leaking
                         placeholder.innerHTML = svgdata;
                         var svgel = placeholder.querySelector('svg');
 
                         document.getElementById('container').appendChild(placeholder);
 
-                        return { x: placeholder.offsetLeft, y: placeholder.offsetTop, w: svgel.getAttribute('width'), h: svgel.getAttribute('height') };
+                        return {
+                            x: placeholder.offsetLeft,
+                            y: placeholder.offsetTop,
+                            w: Math.round(svgel.getAttribute('width')),
+                            h: Math.round(svgel.getAttribute('height'))
+                        };
 
                     }, svgdata);
 

@@ -89,6 +89,7 @@ The AMD module must return an object with the following properties,
 - expiry: The date on which this test is due to stop running. Expressed as a string parsable by the JavaScript Date obejct.
 - audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
 - description: A plain English summary of the test.
+- events: Values of data-link-name attributes whose elements should listen for events to record for the test.
 - canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.)
 - variants: An array of two functions - the first representing the _control_ group, the second the variant.
 

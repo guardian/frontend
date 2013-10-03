@@ -1,8 +1,9 @@
+package test
+
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
-import test.`package`._
 
 class cricketMatchControllerTest extends FlatSpec with ShouldMatchers {
 

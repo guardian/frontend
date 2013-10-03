@@ -1,22 +1,22 @@
 @(block: Trailblock, page: FrontPage, index: Int)(implicit request: RequestHeader)
 @import model.Trailblock
 
-<section 
-    class="front-section zone-@block.description.section" 
+<section
+    class="front-section zone-@block.description.section"
     data-link-name="block | @block.description.name"
     @defining(Edition(request).id.toLowerCase()) { edition =>
     data-link-context="@if(block.description.section == "news"){@edition}else{@edition/@block.description.section}">
     }
 
     @if(block.description.id != "") {
-	    @if(index == 0 && !page.isNetworkFront) {
+        @if(index == 0 && !page.isNetworkFront) {
            @fragments.headers.sectionHead(block.description.name)
-	    } else {
-	       @fragments.headers.frontSectionHead(block.description, page.isNetworkFront, Some(Edition(request)))
-        } 
-	}
+        } else {
+           @fragments.headers.frontSectionHead(block.description, page.isNetworkFront, Some(Edition(request)))
+        }
+    }
 
-    <div class="trailblock front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
+    <div class="trailblock @if(page.isNetworkFront){trailblock--no-border} front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
         data-count="@block.description.numItemsVisible"
         data-section-id="@block.description.id">
 

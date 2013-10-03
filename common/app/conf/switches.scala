@@ -46,6 +46,10 @@ object Switches extends Collections {
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = Off)
 
+  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
+    "If this switch is on then (parts of) the application will use the Elastic Search content api",
+    safeState = Off)
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -88,6 +92,10 @@ object Switches extends Collections {
 
   val ShortDiscussionSwitch = Switch("Discussion", "short-discussion",
     "If this switch is on, only 10 top level comments are requested from discussion api.",
+    safeState = Off)
+
+  val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
+    "If this switch is on, users can recommend comments",
     safeState = Off)
 
 
@@ -151,6 +159,10 @@ object Switches extends Collections {
 
   val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
     "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
+    safeState = Off)
+
+  val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
+    "If this is switched on then unsupported embeds will be included in article bodies.",
     safeState = Off)
 
   // A/B Test Switches
@@ -265,7 +277,9 @@ object Switches extends Collections {
     ABRightHandCard,
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
-    ABMostPopularFromFacebook
+    ABMostPopularFromFacebook,
+    ElasticSearchSwitch,
+    ShowUnsupportedEmbedsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -299,6 +313,8 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
     Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
       refresh()
     }
+
+    refresh()
   }
 
   override def onStop() {

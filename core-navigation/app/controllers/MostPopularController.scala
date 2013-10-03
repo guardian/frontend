@@ -2,12 +2,15 @@ package controllers
 
 import common._
 import conf._
+import feed.{ MostPopularExpandableAgent, MostPopularAgent }
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import feed.{MostPopularExpandableAgent, MostPopularAgent}
-
-import concurrent.Future
+import play.api.libs.json._
+import play.api.libs.json.Json
+import scala.concurrent.Future
 import scala.util.Random
+import views.support.{cleanTrailText, ImgSrc, FrontItem, FrontItemMain}
+
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
 
@@ -18,52 +21,62 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "GFE:Most Read"
   )
 
-  def render(path: String) = Action { implicit request =>
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
-    val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
-    Async {
-      promiseOfSectionPopular.map {
-        sectionPopular =>
-          sectionPopular :+ globalPopular match {
-            case Nil => NotFound
-            case popular => {
-              Cached(900){
-                if (request.isJson)
-                  JsonComponent(
-                    "html" -> views.html.fragments.mostPopular(popular, 5),
-                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+    val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
+
+    sectionPopular.map { sectionPopular =>
+      sectionPopular :+ globalPopular match {
+        case Nil => NotFound
+        case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
+        case popular => Cached(900) {
+          JsonComponent(
+            "html" -> views.html.fragments.mostPopular(popular, 5),
+            "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url),
+            "fullTrails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map{ trail =>
+              Json.obj(
+                "url" -> trail.url,
+                "headline" -> trail.headline,
+                "trailText" -> trail.trailText.map{ text =>
+                  cleanTrailText(text)(Edition(request)).toString()
+                },
+                "mainPicture" -> trail.mainPicture.map{ mainPicture =>
+                  Json.obj(
+                    "item" -> ImgSrc(mainPicture, FrontItem),
+                    "itemMain" -> ImgSrc(mainPicture, FrontItemMain)
                   )
-                else
-                  Ok(views.html.mostPopular(page, popular))
-              }
-            }
-          }
+                },
+                "published" ->Json.obj(
+                  "unix" -> trail.webPublicationDate.getMillis,
+                  "datetime" -> trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ"),
+                  ("datetimeShort", trail.webPublicationDate.toString("d MMM y"))
+                )
+              )
+            })
+          )
+        }
       }
     }
   }
 
-  def renderExpandable(path: String) = Action { implicit request =>
+  def renderExpandableJson(path: String) = renderExpandable(path)
+  def renderExpandable(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularExpandableAgent.mostPopular(edition))
-    val promiseOfSectionPopular = if (path.nonEmpty) lookupExpandable(edition, path).map(_.toList) else Future(Nil)
-    Async {
-      promiseOfSectionPopular.map {
-        sectionPopular =>
-          sectionPopular :+ globalPopular match {
-            case Nil => NotFound
-            case popular => {
-              Cached(900){
-                if (request.isJson)
-                  JsonComponent(
-                    "html" -> views.html.fragments.mostPopularExpandable(popular, 5),
-                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
-                  )
-                else
-                  Ok(views.html.mostPopular(page, popular))
-              }
-            }
-          }
+    val sectionPopular = if (path.nonEmpty) lookupExpandable(edition, path).map(_.toList) else Future(Nil)
+
+    sectionPopular.map { sectionPopular =>
+      sectionPopular :+ globalPopular match {
+        case Nil => NotFound
+        case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
+        case popular => Cached(900) {
+          JsonComponent(
+            "html" -> views.html.fragments.mostPopularExpandable(popular, 5),
+            "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+          )
+        }
       }
     }
   }
@@ -86,8 +99,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showMostViewed(true)
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-          val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
-
+          val popular = response.mostViewed map { Content(_) } take (10)
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }
   }
@@ -100,7 +112,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-      val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
+      val popular = response.mostViewed map { Content(_) } take (10)
 
       if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }

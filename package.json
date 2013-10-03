@@ -16,7 +16,11 @@
     "casperjs": "git://github.com/smlgbl/casperjs.git#feature/makeUsableByNPM",
     "grunt-casperjs": "git://github.com/guardian/grunt-casperjs.git#upgrade",
     "grunt-contrib-jasmine": "~0.5.1",
-    "grunt-template-jasmine-requirejs": "~0.1.5"
+    "grunt-template-jasmine-requirejs": "~0.1.5",
+    "grunt-s3": "~0.2.0-alpha.2",
+    "moment": "~2.1.0",
+    "grunt-mkdir": "~0.1.1",
+    "grunt-contrib-imagemin": "~0.3.0"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

@@ -64,6 +64,10 @@ ul {
     background-color: yellow;
 }
 
+li.Not.running {
+    background-color: lightgrey;
+}
+
 h2 {
     font-family: Georgia, serif;
     color: #999;

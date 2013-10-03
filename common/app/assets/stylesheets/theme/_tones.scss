@@ -1,0 +1,39 @@
+@mixin tone($tone, $colour) {
+    .tone-#{$tone} {
+        .tone-colour {
+            &,
+            &:active,
+            &:focus,
+            &:hover {
+                color: $colour;
+            }
+        }
+        .tone-border { border-color: $colour; }
+
+        .tone-background { background-color: $colour; }
+
+        .is-summary > .block-title {
+            color: $colour;
+        }
+
+        .commentcount {
+            i {
+                @extend .i-comment-#{$tone};
+            }
+        }
+    }
+}
+
+/* News
+   ========================================================================== */
+@include tone(news, $c-newsDefault);
+
+/* Comment
+   ========================================================================== */
+@include tone(comment, $c-commentDefault);
+
+/* Feature
+   ========================================================================== */
+@include tone(feature, $c-featureDefault);
+
+

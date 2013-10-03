@@ -1,0 +1,33 @@
+@(model: MatchesPage, isLive: String = "false")(implicit request: RequestHeader)
+
+@model.days.map{ day =>
+    @if(isLive != "live") { <h2 class="competitions-date type-7">@day.date.toString("EEEE d MMMM yyyy")</h2>}
+    <ol class="competitions unstyled" data-link-name="matches">
+        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
+
+            <li class="competition" data-link-name="competition | @comp.fullName" data-competition-id="@comp.id">
+                <a class="competition-title football-table-link zone-color type-7" href="@LinkTo{@comp.url}" data-link-name="view competition">
+                    @comp.fullName
+                    <i class="i i-sport-arrow"></i>
+                </a>
+
+                <ol class="matches unstyled">
+                    @* sort matches by start time, then alphabet *@
+                    @comp.matches.map{ theMatch =>
+                        @renderMatch(theMatch)
+                    }
+                </ol>
+                @* Shows the live blog (if there is one) after the first competition *@
+                @if(row.isFirst){
+                    @model.blog.map{ blog =>
+                        @fragments.trails.thumbnail(blog, row.rowNum, element = "div")
+                    }
+                }
+           </li>
+        }
+    </ol>
+}
+
+@if(!model.days) {
+    <p class="type-7">There are no matches being played today. Why not check out upcoming <a href="/football/fixtures">fixtures</a> or previous <a href="/football/results">results</a>?</p>
+}

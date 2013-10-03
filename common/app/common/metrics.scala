@@ -88,7 +88,26 @@ object ContentApiMetrics {
     "Content api calls that timeout"
   )
 
-  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
+  object ElasticHttpTimingMetric extends TimingMetric(
+    "performance",
+    "elastic-content-api-calls",
+    "Elastic Content API calls",
+    "Elastic outgoing requests to content api"
+  ) with TimingMetricLogging
+
+  object ElasticHttpTimeoutCountMetric extends CountMetric(
+    "timeout",
+    "elastic-content-api-timeouts",
+    "Elastic Content API timeouts",
+    "Elastic Content api calls that timeout"
+  )
+
+  val all: Seq[Metric] = Seq(
+    HttpTimingMetric,
+    HttpTimeoutCountMetric,
+    ElasticHttpTimeoutCountMetric,
+    ElasticHttpTimingMetric
+  )
 }
 
 object PaMetrics {
@@ -230,6 +249,11 @@ object FootballMetrics {
   )
 }
 
+object FaciaToolMetrics {
+
+  val all: Seq[Metric] = Nil
+}
+
 
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
@@ -239,6 +263,7 @@ object Metrics {
 
   lazy val discussion = DiscussionMetrics.all
   lazy val admin = AdminMetrics.all
+  lazy val faciaTool = FaciaToolMetrics.all
   lazy val porter = PorterMetrics.all
   lazy val coreNavigation = CoreNavivationMetrics.all
   lazy val front = FrontMetrics.all

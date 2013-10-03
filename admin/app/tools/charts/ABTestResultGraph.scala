@@ -41,9 +41,26 @@ trait ABTestResultGraph extends Chart with implicits.Dates {
    */
   def buildDataset(data: List[(Int, String, Double)]) = {
 
-    val groupedData = data groupBy {
+    val dataByDay = data groupBy {
       case (day, _, _) => day
-    } mapValues {
+    }
+
+    val allVariants = extractLabels(data) filterNot (_ == "Date")
+
+    val missingData = for {
+      variant <- allVariants
+      day <- dataByDay.keys
+      variantsForDay = dataByDay.get(day).get.map(_._2)
+      if !variantsForDay.contains(variant)
+    } yield (day, variant)
+
+    val filledInData = missingData.foldLeft(dataByDay)((acc, missingDatum) => {
+      val day = missingDatum._1
+      val variant = missingDatum._2
+      acc - day + (day -> (acc.get(day).get :+(day, variant, 0.0)))
+    })
+
+    val groupedData = filledInData mapValues {
       _.sortWith {
         case ((_, variant1, _), (_, variant2, _)) => compareVariants(variant1, variant2)
       }.map {
@@ -51,7 +68,9 @@ trait ABTestResultGraph extends Chart with implicits.Dates {
       }
     }
 
-    groupedData.toList map {
+    groupedData.toList.sortBy {
+      case (day, _) => day
+    } map {
       case (dayOfEpoch, durations) => DataPoint(Epoch.day(dayOfEpoch).toString("dd/MM"), durations)
     }
   }
@@ -81,4 +100,12 @@ object SwipeAvgSessionDurationGraph extends ABTestResultGraph {
   val name = "Swipe Average Session Duration"
   override val yAxis = Some("Avg duration / session (s)")
   val dataLocation = s"${Configuration.environment.stage.toUpperCase}/analytics/ab-test-results/swipe-avg-session-durations-by-day-by-variant.csv"
+}
+
+
+object FacebookMostReadPageViewsPerSessionGraph extends ABTestResultGraph {
+
+  val name = "Facebook Most Read Page Views per Session"
+  override val yAxis = Some("Avg pvs / session")
+  val dataLocation = s"${Configuration.environment.stage.toUpperCase}/analytics/ab-test-results/fb-most-read-session-page-views-by-day-by-variant.csv"
 }

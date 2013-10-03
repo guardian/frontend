@@ -19,7 +19,6 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/edition-switch',
-    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/toggles',
     'modules/relativedates',
@@ -31,7 +30,6 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/experiments/left-hand-card',
     'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
@@ -59,7 +57,6 @@ define([
     Search,
 
     EditionSwitch,
-    PlatformSwitch,
     Tabs,
     Toggles,
     RelativeDates,
@@ -71,7 +68,6 @@ define([
     AdvertsAnalytics,
     Debug,
     ab,
-    LeftHandCard,
     swipeNav,
     VideoAdvert,
     CommentCount,
@@ -104,7 +100,6 @@ define([
                 sections = new Sections(config),
                 search = new Search(config),
                 editions = new EditionSwitch(),
-                platforms = new PlatformSwitch(),
                 header = document.body,
                 profile;
 
@@ -260,17 +255,6 @@ define([
 
         },
 
-        externalLinksCards: function (config) {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.switches && config.switches.externalLinksCards) {
-                    var card = new LeftHandCard({
-                        origin: 'all',
-                        context: context
-                    });
-                }
-            });
-        },
-
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
@@ -409,7 +393,6 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage(config);
-            modules.externalLinksCards();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

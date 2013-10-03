@@ -5,7 +5,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
 
         var c = config || {},
             isDev = (c.isDev !== undefined) ? c.isDev : false,
-            url = "//beacon." + window.location.hostname,
+            url = config.beaconUrl,
             path = '/px.gif',
             cons = c.console || window.console,
             win = c.window || window,

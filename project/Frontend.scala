@@ -1,3 +1,5 @@
+package com.gu
+
 import sbt._
 import sbt.Keys._
 import play.Project._
@@ -7,9 +9,8 @@ object Frontend extends Build with Prototypes {
 
   val common = grunt("common").settings(
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.26",
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.6",
+      "com.gu.openplatform" %% "content-api-client" % "2.7",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -25,9 +26,9 @@ object Frontend extends Build with Prototypes {
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
-      "commons-io" % "commons-io" % "2.4",
       "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
-    )
+    ),
+    (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:common"))
   )
   val commonWithTests = common % "test->test;compile->compile"
 
@@ -36,14 +37,14 @@ object Frontend extends Build with Prototypes {
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val interactive = application("interactive").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
-  val football = application("football").dependsOn(commonWithTests).aggregate(common).settings(
+  val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
       "pa._",
-      "feed._"
+      "feed._",
+      "football.controllers._"
     )
   )
-  val sport = application("sport").dependsOn(commonWithTests).aggregate(common)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
   val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -57,22 +58,19 @@ object Frontend extends Build with Prototypes {
     templatesImport ++= Seq("discussion._")
   )
 
-  val router = application("router").dependsOn(commonWithTests).aggregate(common)
-  val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
+  val router = application("router")
+
+  val diagnostics = application("diagnostics").settings(
     libraryDependencies ++= Seq(
       "net.sf.uadetector" % "uadetector-resources" % "2013.04",
       "net.sf.opencsv" % "opencsv" % "2.3"
     )
   )
 
-  val styleGuide = application("style-guide").dependsOn(commonWithTests).aggregate(common)
-
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
-    ),
     (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
   )
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
   val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
@@ -92,7 +90,6 @@ object Frontend extends Build with Prototypes {
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
       "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
-      "org.mockito" % "mockito-all" % "1.9.5" % "test",
       "org.slf4j" % "slf4j-ext" % "1.7.5"
     )
   )
@@ -125,30 +122,32 @@ object Frontend extends Build with Prototypes {
     unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "test" / "resources")
   )
 
-  val dev = base("dev-build").dependsOn(
+  val dev = application("dev-build").dependsOn(
     front,
     facia,
     article,
     applications,
     interactive,
-    football,
     sport,
     coreNavigation,
     image,
     discussion,
     router,
     diagnostics,
-    styleGuide,
     identity)
 
   val faciaDev = application("facia-dev-build").dependsOn(
     facia,
     article,
     applications,
-    football,
+    interactive,
+    sport,
     coreNavigation,
     image,
-    discussion)
+    discussion,
+    router,
+    diagnostics,
+    identity)
 
   val main = root().aggregate(
     common,
@@ -157,14 +156,12 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     interactive,
-    football,
     sport,
     coreNavigation,
     image,
     discussion,
     router,
     diagnostics,
-    styleGuide,
     admin,
     porter,
     identity

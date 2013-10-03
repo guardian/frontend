@@ -4,16 +4,19 @@
 <header id="header" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="header__inner gs-container u-cf">
         <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-        <a href="@LinkTo{/}" id="logo" class="i i-guardian-logo" data-link-name="site logo" itemprop="url">The Guardian</a>
+        <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
+            <span class="h">The Guardian</span>
+            <i class="i i-guardian-logo"></i>
+        </a>
 
         <span class="release">Alpha</span>
 
         <div class="nav-container">
             <ul class="nav nav--global" data-link-name="Sections">
             @Edition(request).navigation(page).map{ nav =>
-                <li class="nav__item @if(nav.currentFor(page)){is-active zone-border}">
+                <li class="nav__item @if(nav.currentFor(page)){is-active}">
                     <a href="@LinkTo{@nav.name.href}" data-link-name="@nav.name.linkName"
-                       class="nav__link @if(nav.currentFor(page)){zone-color}">@nav.name.title</a>
+                       class="nav__link">@nav.name.title</a>
                 </li>
             }
             </ul>

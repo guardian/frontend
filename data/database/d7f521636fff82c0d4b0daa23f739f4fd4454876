@@ -1,0 +1,2320 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5956,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":596,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/rugbyleague",
+      "type":"keyword",
+      "webTitle":"Rugby league",
+      "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+      "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/oct/02/wigan-paul-wood-grand-final-warrington",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-02T13:59:06Z",
+      "webTitle":"Warrington's Paul Wood set for Grand Final gain after last year's loss",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/02/wigan-paul-wood-grand-final-warrington",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/02/wigan-paul-wood-grand-final-warrington",
+      "fields":{
+        "trailText":"Losing a testicle in the hours after last year's Grand Final triggered a downward spiral, Paul Wood tells Andy Wilson, and which ended with the prop needing treatment at the Priory",
+        "headline":"Warrington's Paul Wood set for Grand Final gain after last year's loss",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8bx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722117613/Paul-Wood-004.jpg",
+        "wordcount":"852",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/warrington",
+        "type":"keyword",
+        "webTitle":"Warrington",
+        "webUrl":"http://www.theguardian.com/sport/warrington",
+        "apiUrl":"http://content.guardianapis.com/sport/warrington",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.theguardian.com/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418864313",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722110163/Paul-Wood-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"130",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722112998/Paul-Wood-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"720",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722115306/Paul-Wood-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"1536",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722117613/Paul-Wood-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"84",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722119438/Paul-Wood-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"132",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722121082/Paul-Wood-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"168",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722123051/Paul-Wood-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"180",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722124787/Paul-Wood-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"228",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722126567/Paul-Wood-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"276",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722128417/Paul-Wood-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"372",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722130535/Paul-Wood-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"1116",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722134353/Paul-Wood-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"1536",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722126567/Paul-Wood-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"276",
+            "credit":"Dave Howarth/PA",
+            "caption":"Warrington's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final. Photograph: Dave Howarth/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418864314",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722117613/Paul-Wood-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Paul Wood",
+            "height":"84",
+            "credit":"Dave Howarth/PA",
+            "caption":"Wigan's Paul Wood said this season has been one of the most enjoyable for 10 years before Saturday's Grand Final against Warrington. Photograph: Dave Howarth/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/02/cooper-cronk-dally-m-medal-winner",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-01T23:33:29Z",
+      "webTitle":"Cooper Cronk wins Dally M Medal",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/02/cooper-cronk-dally-m-medal-winner",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/02/cooper-cronk-dally-m-medal-winner",
+      "fields":{
+        "trailText":"<p>Melbourne Storm's Cooper Cronk has secured his first Dally M Medal in one of the closest finishes in the award's history</p>",
+        "headline":"Cooper Cronk wins Dally M Medal",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j7p8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380670367690/Cooper-Cronk--003.jpg",
+        "wordcount":"431",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/melbourne-storm",
+        "type":"keyword",
+        "webTitle":"Melbourne Storm",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418793689",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380670386292/Cooper-Cronk--008.jpg",
+          "typeData":{
+            "source":"AAP Image ",
+            "photographer":"Paul Miller",
+            "altText":"Cooper Cronk ",
+            "height":"276",
+            "credit":"Paul Miller/AAP Image ",
+            "caption":"Cooper Cronk with the Dally M Medal.  Photograph: Paul Miller/AAP Image ",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418793690",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380670367690/Cooper-Cronk--003.jpg",
+          "typeData":{
+            "source":"AAP Image ",
+            "photographer":"Paul Miller",
+            "altText":"Cooper Cronk ",
+            "height":"84",
+            "credit":"Paul Miller/AAP Image ",
+            "caption":"Cooper Cronk with the Dally M Medal.  Photograph: Paul Miller/AAP Image ",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/01/england-burgess-brothers-world-cup",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-01T11:12:15Z",
+      "webTitle":"England name three Burgess brothers in Rugby League World Cup squad",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/england-burgess-brothers-world-cup",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/england-burgess-brothers-world-cup",
+      "fields":{
+        "trailText":"George, Tom and Sam Burgess have been included in England's 24-man squad for the Rugby League World Cup",
+        "headline":"England name three Burgess brothers in Rugby League World Cup squad",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j79m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625905439/The-Burgess-brothers-are--006.jpg",
+        "wordcount":"885",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/steve-mcnamara",
+        "type":"keyword",
+        "webTitle":"Steve McNamara",
+        "webUrl":"http://www.theguardian.com/sport/steve-mcnamara",
+        "apiUrl":"http://content.guardianapis.com/sport/steve-mcnamara",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418733380",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625895629/The-Burgess-brothers-are--001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"54",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625897672/The-Burgess-brothers-are--002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"340",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625899354/The-Burgess-brothers-are--003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"130",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625901086/The-Burgess-brothers-are--004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"720",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625903162/The-Burgess-brothers-are--005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"1536",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625905439/The-Burgess-brothers-are--006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"84",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625906991/The-Burgess-brothers-are--007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"132",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625908561/The-Burgess-brothers-are--008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"168",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625910164/The-Burgess-brothers-are--009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"180",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625911804/The-Burgess-brothers-are--010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"228",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625913394/The-Burgess-brothers-are--011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"276",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625915004/The-Burgess-brothers-are--012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"372",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625916835/The-Burgess-brothers-are--013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"1116",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625919490/The-Burgess-brothers-are--014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"1536",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625913394/The-Burgess-brothers-are--011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"276",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418733381",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380625905439/The-Burgess-brothers-are--006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"The Burgess brothers are in England's World Cup squad, with the exception of Luke, second right",
+            "height":"84",
+            "credit":"Mark Metcalfe/Getty Images",
+            "caption":"The Burgess brothers have been included in England's World Cup squad, with the exception of Luke, second from right Photograph: Mark Metcalfe/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/01/north-queensland-cowboys-new-coach-paul-green",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-01T06:08:22Z",
+      "webTitle":"North Queensland Cowboys appoint Paul Green as new coach",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/north-queensland-cowboys-new-coach-paul-green",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/north-queensland-cowboys-new-coach-paul-green",
+      "fields":{
+        "trailText":"<p>North Queensland have confirmed Paul Green as the NRL club's new head coach</p>",
+        "headline":"North Queensland Cowboys appoint Paul Green as new coach",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j73z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380607616533/North-Queensland-Cowboys-003.jpg",
+        "wordcount":"219",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/north-queensland-cowboys",
+        "type":"keyword",
+        "webTitle":"North Queensland Cowboys",
+        "webUrl":"http://www.theguardian.com/sport/north-queensland-cowboys",
+        "apiUrl":"http://content.guardianapis.com/sport/north-queensland-cowboys",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418702587",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380607633571/North-Queensland-Cowboys-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"North Queensland Cowboys",
+            "height":"276",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"North Queensland Cowboys were controversislly knocked out of the NRL finals by Cronulla.  Photograph: Renee McKay/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418702588",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380607616533/North-Queensland-Cowboys-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"North Queensland Cowboys",
+            "height":"84",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"North Queensland Cowboys were controversislly knocked out of the NRL finals by Cronulla.  Photograph: Renee McKay/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/01/nrl-grand-final-referees-shayne-hayne",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-01T00:43:42Z",
+      "webTitle":"Shayne Hayne and Ben Cummins to referee NRL grand final",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/nrl-grand-final-referees-shayne-hayne",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/nrl-grand-final-referees-shayne-hayne",
+      "fields":{
+        "trailText":"<p>Shayne Hayne and Ben Cummins will referee Sunday's NRL grand final, it was announced on Tuesday</p>",
+        "headline":"Shayne Hayne and Ben Cummins to referee NRL grand final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j73v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380588053430/Shayne-Hayne--003.jpg",
+        "wordcount":"75",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418692278",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380588069900/Shayne-Hayne--008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Shayne Hayne ",
+            "height":"276",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Shayne Hayne (left) will referee his third grand final.  Photograph: Colin Whelan/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418692279",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380588053430/Shayne-Hayne--003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Shayne Hayne ",
+            "height":"84",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Shayne Hayne (left) will referee his third grand final.  Photograph: Colin Whelan/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/01/rugby-league-grand-finals-joy-of-six",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-01T00:26:48Z",
+      "webTitle":"The Joy of Six: rugby league grand finals",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/rugby-league-grand-finals-joy-of-six",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/rugby-league-grand-finals-joy-of-six",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly:</strong> From a Balmain no-show to Newcastle's redemption song, half-a-dozen memorable end of season showdowns</p>",
+        "headline":"The Joy of Six: rugby league grand finals",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j72z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380524955552/NRL-grand-final-1965-003.jpg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/joyofsix",
+        "type":"series",
+        "webTitle":"The Joy of Six",
+        "webUrl":"http://www.theguardian.com/sport/series/joyofsix",
+        "apiUrl":"http://content.guardianapis.com/sport/series/joyofsix",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-47b63fb1-b9c7-4fbb-9d0c-b43868c6e859",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380524969256/NRL-grand-final-1965-008.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380524969256/NRL-grand-final-1965-008.jpg",
+            "source":"Public domain",
+            "altText":"Grand final 1965",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"The players make their way out for the 1965 grand final",
+            "mediaId":"gu-fc-47b63fb1-b9c7-4fbb-9d0c-b43868c6e859",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/01/danny-brough-huddersfield-super-league-man-steel",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-30T23:03:32Z",
+      "webTitle":"Danny Brough of Huddersfield Giants crowned Super League Man of Steel",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/danny-brough-huddersfield-super-league-man-steel",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/danny-brough-huddersfield-super-league-man-steel",
+      "fields":{
+        "trailText":"Danny Brough has been crowned Super League's Man of Steel, fuelling the controversy over his omission from the England World Cup squad",
+        "headline":"Danny Brough of Huddersfield Giants crowned Super League Man of Steel",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j72g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582067858/Huddersfield-Giants-v-Wig-003.jpg",
+        "wordcount":"167",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.theguardian.com/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.theguardian.com/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418686542",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582065138/Huddersfield-Giants-v-Wig-001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"54",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582066796/Huddersfield-Giants-v-Wig-002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"130",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582067858/Huddersfield-Giants-v-Wig-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"84",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582069019/Huddersfield-Giants-v-Wig-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"132",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582070118/Huddersfield-Giants-v-Wig-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"168",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582071236/Huddersfield-Giants-v-Wig-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"180",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582072499/Huddersfield-Giants-v-Wig-007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"228",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582073832/Huddersfield-Giants-v-Wig-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"276",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582073832/Huddersfield-Giants-v-Wig-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"276",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough will represent Scotland at the World Cup after England looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418686543",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/1/1380582067858/Huddersfield-Giants-v-Wig-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Huddersfield Giants v Wigan Warriors - Super League Qualifying Play-Off",
+            "height":"84",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Huddersfield's Danny Brough has opted to represent Scotland at the World Cup after the England coach Steve McNamara looked elsewhere. Photograph: Jason Cairnduff/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/30/andy-powell-world-cup-wales-squad",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-30T10:26:12Z",
+      "webTitle":"Andy Powell ruled out of World Cup as Wales name 23-man squad",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/30/andy-powell-world-cup-wales-squad",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/30/andy-powell-world-cup-wales-squad",
+      "fields":{
+        "trailText":"The Wigan prop has been denied the chance to return to the Millennium Stadium with Wales on the opening day of the World Cup",
+        "headline":"Andy Powell ruled out of World Cup as Wales name 23-man squad",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6cb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535226570/Andy-Powell-003.jpg",
+        "wordcount":"494",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wales-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Wales rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/wales-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/wales-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418620310",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535223571/Andy-Powell-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"54",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535225327/Andy-Powell-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"130",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535226570/Andy-Powell-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"84",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535227837/Andy-Powell-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"132",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535229116/Andy-Powell-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"168",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535230362/Andy-Powell-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"180",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535231590/Andy-Powell-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"228",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535232835/Andy-Powell-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"276",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535232835/Andy-Powell-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"276",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418620311",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535226570/Andy-Powell-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"84",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-29T21:48:00Z",
+      "webTitle":"NRL: what we learned this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>Muscles aren't everything; don't believe the hype; the NRL needs to find where its public has gone</p>",
+        "headline":"NRL: what we learned this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j62m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380451023700/Glenn-Stewart-of-Manly-002.jpg",
+        "wordcount":"1169",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nrl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"NRL: what we learned this weekend",
+        "webUrl":"http://www.theguardian.com/sport/series/nrl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/south-sydney-rabbitohs",
+        "type":"keyword",
+        "webTitle":"South Sydney Rabbitohs",
+        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
+        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418592813",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380450944195/Glenn-Stewart-of-Manly-002.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Glenn Stewart of Manly",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Glenn Stewart: like a very, very athletic George Costanza.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418592814",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380451023700/Glenn-Stewart-of-Manly-002.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Glenn Stewart of Manly",
+            "height":"84",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Glenn Stewart  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/28/wigan-warrington-super-league-grand-final",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-28T19:27:09Z",
+      "webTitle":"Warrington and Wigan bring clash of styles to Super League Grand Final",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/28/wigan-warrington-super-league-grand-final",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/28/wigan-warrington-super-league-grand-final",
+      "fields":{
+        "trailText":"A young Wigan Warriors side who are chasing a rare double will face a veteran Warrington Wolves at Old Trafford in the Super League Grand Final",
+        "headline":"Warrington and Wigan bring clash of styles to Super League Grand Final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6x4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380390072441/Joel-Monaghan-003.jpg",
+        "wordcount":"686",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.theguardian.com/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/warrington",
+        "type":"keyword",
+        "webTitle":"Warrington",
+        "webUrl":"http://www.theguardian.com/sport/warrington",
+        "apiUrl":"http://content.guardianapis.com/sport/warrington",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418536884",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380390078161/Joel-Monaghan-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Joel Monaghan",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Joel Monaghan is one of a number of thritysomethings in the Warrington side that will face Wigan in the Super League Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418536885",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380390072441/Joel-Monaghan-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Joel Monaghan",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Joel Monaghan is one of a number of thritysomethings in the Warrington side that will face Wigan in the Super League Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-12T12:28:37Z",
+      "webTitle":"Australian doping investigators look at six rugby league clubs - video",
+      "webUrl":"http://www.theguardian.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "fields":{
+        "trailText":"<p>National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting</p>",
+        "headline":"Australian doping investigators look at six rugby league clubs - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3dm52",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-403913910",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670916587/Australian-doping-probe-s-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"230",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670918097/Australian-doping-probe-s-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"90",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670919487/Australian-doping-probe-s-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"225",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670920754/Australian-doping-probe-s-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670925668/Australian-doping-probe-s-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"54",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670927255/Australian-doping-probe-s-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"340",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670928656/Australian-doping-probe-s-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"130",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670931876/Australian-doping-probe-s-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"132",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670933195/Australian-doping-probe-s-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"168",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670934454/Australian-doping-probe-s-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"180",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670935828/Australian-doping-probe-s-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"228",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670937108/Australian-doping-probe-s-015.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"276",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670938599/Australian-doping-probe-s-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"372",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/2/12/130212Ausdope_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/2/12/130212Ausdope_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/2/12/130212Ausdope-720.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130212Ausdope/130212Ausdope.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        }]
+      },{
+        "id":"gu-image-403914887",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

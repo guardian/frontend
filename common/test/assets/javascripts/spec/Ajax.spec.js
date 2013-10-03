@@ -10,8 +10,12 @@ define(['common', 'ajax'], function (common, ajax) {
     describe("AJAX Wrapper", function () {
 
         beforeEach(function () {
-            ajax.reqwest = sinon.stub();
+            sinon.stub(ajax, 'reqwest');
             ajax.init(config);
+        });
+
+        afterEach(function () {
+            ajax.reqwest.restore();
         });
 
         it("should add the edition as an additional query parameter to the url", function () {
@@ -44,6 +48,13 @@ define(['common', 'ajax'], function (common, ajax) {
                 url: "http://apis.guardian.co.uk/test-url"
             });
             expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://apis.guardian.co.uk/test-url?_edition=UK");
+        });
+
+        it("should not touch a url that is already absolute (https)", function () {
+            ajax({
+                url: "https://apis.guardian.co.uk/test-url"
+            });
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("https://apis.guardian.co.uk/test-url?_edition=UK");
         });
     });
 

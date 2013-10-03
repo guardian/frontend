@@ -1,46 +1,54 @@
 @(page: VideoPage)(implicit request: RequestHeader)
 
 @defining(page.video){ video =>
-    <div class="article-wrapper monocolumn-wrapper">
-        <div class="article__main-column">
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(video)">
+        <div class="article-v2__inner">
             <h2 class="article-zone type-1">
-                <a class="zone-color" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName)</a>
+                <a class="tone-colour" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName)</a>
             </h2>
         </div>
 
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
-            <div class="article__main-column">
+            <div class="article-v2__inner">
                 <header class="article__head">
-                    @fragments.dateline(video.webPublicationDate, video.isLive)
                     @fragments.headline(video.headline)
+
+                    @fragments.article.dateline(video.webPublicationDate, video.isLive)
                 </header>
             </div>
-            <div class="article__main-column">
-                <div class="article__secondary-column" aria-hidden="true">
-                    @fragments.social(video, "next to content")
-                </div>
-                <div class="player">
-                    <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
-                        @video.encodings.map{ encoding =>
-                            <source src="@encoding.url" />
-                        }
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
+            <div class="article-v2__columning-wrapper">
+                <div class="article-v2__main-column">
 
-                <div class="gallery-byline">
-                    @fragments.byline(video.byline, video)
+                    <div class="player media-content">
+                        <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
+                            @video.encodings.map{ encoding =>
+                                <source src="@encoding.url" />
+                            }
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <div class="article__meta-container">
+                        @fragments.byline(video.byline, video)
+                        @fragments.article.dateline(video.webPublicationDate, secondary=true)
+                        <div class="js-comment-count"></div>
+                    </div>
+
+                    <div class="video-standfirst">
+                        @fragments.standfirst(video)
+                    </div>
+                    <div class="social-wrapper">
+                        @fragments.social(video)
+                    </div>
                 </div>
-                <div class="video-standfirst">
-                    @fragments.standfirst(video)
-                </div>
-                <div class="social-wrapper">
-                    @fragments.social(video)
+                <div class="article-v2__secondary-column" aria-hidden="true">
+                    <h2 class="article__meta-heading tone-colour">Share this video</h2>
+                    @fragments.social(video, "next to content")
                 </div>
             </div>
         </article>
-        <div class="article__main-column">
+        <div class="article-v2__inner">
             @if(page.storyPackage.nonEmpty) {
                 <aside role="complementary">
                     @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)
