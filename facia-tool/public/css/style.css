@@ -106,8 +106,6 @@ input[type=text] {
 .list-header__display {
     font-size: 16px;
     font-weight: bold;
-}
-.list-header__display--is-set {
     color: #000000;
 }
 

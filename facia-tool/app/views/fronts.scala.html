@@ -86,11 +86,10 @@
 
                     <a class="list-header__display" data-bind="
                         visible: typeof configMeta.displayName() === 'undefined',
-                        css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
                         text: collectionMeta.displayName() || 'Set title for ' + configMeta.roleName(),
                         click: toggleEditingConfig"></a>
 
-                    <span class="list-header__display list-header__display--is-set" data-bind="
+                    <span class="list-header__display" data-bind="
                         visible: typeof configMeta.displayName() !== 'undefined',
                         text: configMeta.displayName"></span>
 
