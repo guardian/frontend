@@ -1,4 +1,4 @@
-package controllers
+package controllers.admin
 
 import conf.Configuration
 import play.api.mvc.{ Action, Controller }
