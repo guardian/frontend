@@ -88,7 +88,7 @@ object FindStyle {
     )),
     ("us", Map(
       ("us/news/regular-stories", Container("news", showMore = true)),
-      ("us/regular-stories", Container("sport", showMore = true)),
+      ("us/sport/regular-stories", Container("sport", showMore = true)),
       ("us/commentisfree/regular-stories", Container("comments", showMore = true)),
       ("us/culture/regular-stories", Container("culture", showMore = true)),
       ("us/business/regular-stories", SectionZone()),
