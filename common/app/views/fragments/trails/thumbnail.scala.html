@@ -1,6 +1,6 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<@element class="trail trail--thumbnail t@rowNum @if(trail.mainPicture(width=220).nonEmpty) { has-image}" data-link-name="trail"
+<@element class="trail trail--thumbnail t@rowNum  @if(trail.mainPicture(width=220).nonEmpty) { has-image}" data-link-name="trail"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
 
@@ -28,6 +28,5 @@
         }
     }
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
-    <div class="trail__break"></div>
 
 </@element>

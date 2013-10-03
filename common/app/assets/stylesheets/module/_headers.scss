@@ -8,7 +8,7 @@
     border-top: $baseline/2 solid $c-newsAccent;
 
     h1 {
-        @include fs-header(5);
+        @include fs-header(3);
         height: $gs-column-height;
         margin-bottom: 0;
         line-height: 1;
@@ -45,8 +45,8 @@
     -webkit-font-smoothing: antialiased;
     line-height: 1;
     font-weight: bolder;
-    padding: $baseline 0 $baseline*2;
-    margin: 0 $gs-gutter/2;
+    padding: $baseline $gs-gutter/2 $baseline*4 $gs-gutter/2;
+    margin: 0;
     border-top: $baseline/2 solid $c-newsAccent;
     @include box-sizing(border-box);
 

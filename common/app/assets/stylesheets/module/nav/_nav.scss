@@ -273,11 +273,15 @@
     .localnav__cta {
         float: right;
         width: $gs-column-width;
-        height: $gs-column-height;
-        margin: 0 $gs-gutter / -2 0 0;
+        height: $baseline*7;
+        margin: $baseline*2 $gs-gutter/2 0 0;
         padding: 0;
         background-color: #ffffff;
-        border-left: 1px dotted $c-neutral5;
+        border-left: 1px solid $c-neutral5;
+
+        i {
+            margin-top: -4px;
+        }
 
         &.is-active i {
             @include rotate(180deg);
@@ -291,7 +295,8 @@
 
 .localnav__inner {
     border-top: $baseline/2 solid $c-newsAccent;
-    margin: 0 $gs-gutter / 2;
+    margin: 0;
+    padding-bottom: $baseline*2;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;

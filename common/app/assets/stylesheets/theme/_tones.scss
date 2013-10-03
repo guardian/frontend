@@ -9,7 +9,8 @@
             }
         }
         .tone-background { background-color: $colour; }
-        .commentcount {
+        .commentcount,
+        .trail__count--commentcount {
             i {
                 @extend .i-comment-#{$tone};
             }

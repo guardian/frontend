@@ -6,14 +6,14 @@
     position: relative;
     overflow: hidden;
     margin: 0;
-    padding: $baseline 0 $baseline*3;
-
+    padding: $baseline 0 $baseline*6;
     .relative-timestamp {
         display: inline-block;
     }
 }
+
 .trail + .trail {
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid $medianMushroom;
 }
 
 .trail--gallery,
@@ -24,6 +24,7 @@
 
 .trail__headline {
     @include fs-headline(2);
+    margin-top: $baseline;
     margin-bottom: $baseline*6 - 3px;
     @include mq(tablet) {
         @include fs-headline(3, true);
@@ -88,12 +89,16 @@
 }
 
 .trail__count {
+
+    position: absolute;
+    top: $baseline;
+    right: 0;
+
     a,
     a:hover,
     a:focus,
     a:active {
         display: inline-block;
-        margin: 0 0 0 $gutter/2;
     }
 
     i {
@@ -106,18 +111,12 @@
     }
 }
 
-.trail:first-child .trail__count { top: 12px; }
-
 .trail__count--commentcount {
     a,
     a:hover,
     a:focus,
     a:active {
-        color: $c-neutral2;
-    }
-
-    i {
-        @extend .i-comment-grey;
+        color: inherit;
     }
 }
 
@@ -138,16 +137,13 @@
 
 .trail--featured {
     .trail__headline {
-        @include fs-headline(4);
+        @include fs-headline(3);
         margin-bottom: $baseline*6;
 
         @include mq(tablet) {
             @include fs-headline(5, true);
             margin-bottom: $baseline*8;
         }
-    }
-    .trail__img {
-        margin-bottom: $baseline*4;
     }
 }
 
@@ -174,13 +170,17 @@
             margin-bottom: 0;
         }
     }
-    .trail__img,
-    .trail__text {
-        margin-bottom: $baseline;
-    }
+
     .trail__break {
         clear: both;
         margin-bottom: $baseline*5;
+    }
+}
+
+.trail--headline {
+    .trail__headline {
+        @include fs-headline(1, true);
+        margin-bottom: 0;
     }
 }
 
