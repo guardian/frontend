@@ -6,7 +6,7 @@
 GET     /assets/*file                                                                           controllers.Assets.at(path="/public", file)
 
 # Discussion
-GET     /discussion/commentBox                                                                  controllers.DiscussionApp.commentBox()
+GET     /discussion/comment-box                                                                  controllers.DiscussionApp.commentBox()
 GET     /discussion/comment-counts                                                              controllers.DiscussionApp.commentCount(shortUrls: String)
 GET     /discussion/comment-counts.json                                                         controllers.DiscussionApp.commentCountJson(shortUrls: String)
 GET     /discussion/*shortUrl.json                                                              controllers.DiscussionApp.commentPageJson(shortUrl)
