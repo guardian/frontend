@@ -25,7 +25,7 @@ object Au extends Edition(
   val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)){
 
     val promiseOfCulture: Future[ItemResponse] = ContentApi.item("culture", AU)
-      .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")
+      .tag("-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography")
       .response
 
     EditorsPicsOrLeadContentAndLatest(promiseOfCulture)

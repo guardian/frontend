@@ -1,0 +1,2105 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":105925,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":10593,
+    "orderBy":"newest",
+    "edition":{
+      "id":"uk-news",
+      "webTitle":"UK news",
+      "webUrl":"http://www.theguardian.com/uk-news",
+      "apiUrl":"http://content.guardianapis.com/uk-news",
+      "code":"default"
+    },
+    "section":{
+      "id":"uk-news",
+      "webTitle":"UK news",
+      "webUrl":"http://www.theguardian.com/uk-news",
+      "apiUrl":"http://content.guardianapis.com/uk-news",
+      "editions":[{
+        "id":"uk-news",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk-news",
+        "apiUrl":"http://content.guardianapis.com/uk-news",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"uk-news/2013/oct/02/mark-bridger-face-slashed-prison-inmate-over-april-jones-remains",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T14:16:25Z",
+      "webTitle":"Mark Bridger's face cut by inmate who wanted him to say where April Jones is",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/mark-bridger-face-slashed-prison-inmate-over-april-jones-remains",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/mark-bridger-face-slashed-prison-inmate-over-april-jones-remains",
+      "fields":{
+        "trailText":"Juvinal Ferreira slashed Mark Bridger's face from temple to chin in bid to make him reveal where he left April Jones' body",
+        "headline":"Mark Bridger's face cut by inmate who wanted him to say where April Jones is",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j8ae",
+        "wordcount":"621",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/april-jones",
+        "type":"keyword",
+        "webTitle":"April Jones",
+        "webUrl":"http://www.theguardian.com/uk/april-jones",
+        "apiUrl":"http://content.guardianapis.com/uk/april-jones",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418862889",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722824774/April-Jones-murderer-Mark-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dyfed-Powys Police",
+            "altText":"April Jones murderer Mark Bridger",
+            "height":"168",
+            "credit":"Dyfed-Powys Police/PA",
+            "caption":"Mark Bridger's face was slashed by a fellow inmate, Juvinal Ferreira, who wanted to know where April Jones' remains are. Photograph: Dyfed-Powys Police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722826117/April-Jones-murderer-Mark-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dyfed-Powys Police",
+            "altText":"April Jones murderer Mark Bridger",
+            "height":"180",
+            "credit":"Dyfed-Powys Police/PA",
+            "caption":"Mark Bridger's face was slashed by a fellow inmate, Juvinal Ferreira, who wanted to know where April Jones' remains are. Photograph: Dyfed-Powys Police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722827101/April-Jones-murderer-Mark-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dyfed-Powys Police",
+            "altText":"April Jones murderer Mark Bridger",
+            "height":"228",
+            "credit":"Dyfed-Powys Police/PA",
+            "caption":"Mark Bridger's face was slashed by a fellow inmate, Juvinal Ferreira, who wanted to know where April Jones' remains are. Photograph: Dyfed-Powys Police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722828187/April-Jones-murderer-Mark-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dyfed-Powys Police",
+            "altText":"April Jones murderer Mark Bridger",
+            "height":"276",
+            "credit":"Dyfed-Powys Police/PA",
+            "caption":"Mark Bridger's face was slashed by a fellow inmate, Juvinal Ferreira, who wanted to know where April Jones' remains are. Photograph: Dyfed-Powys Police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380722828187/April-Jones-murderer-Mark-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dyfed-Powys Police",
+            "altText":"April Jones murderer Mark Bridger",
+            "height":"276",
+            "credit":"Dyfed-Powys Police/PA",
+            "caption":"Mark Bridger's face was slashed by a fellow inmate, Juvinal Ferreira, who fashioned a weapon out of a prison-issue razor. Photograph: Dyfed-Powys Police/PA",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/davehillblog/2013/oct/02/lse-report-london-poverty-inequality",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T13:23:00Z",
+      "webTitle":"As London gets richer its poorest are poorer - and everywhere",
+      "webUrl":"http://www.theguardian.com/uk-news/davehillblog/2013/oct/02/lse-report-london-poverty-inequality",
+      "apiUrl":"http://content.guardianapis.com/uk-news/davehillblog/2013/oct/02/lse-report-london-poverty-inequality",
+      "fields":{
+        "trailText":"<p>Research from the London School of Economics shows that poverty in the capital has deepened dramatically and spread across the Greater London area</p>",
+        "headline":"As London gets richer its poorest are poorer - and everywhere",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/24het",
+        "wordcount":"554",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/davehillblog",
+        "type":"blog",
+        "webTitle":"Dave Hill's London blog",
+        "webUrl":"http://www.theguardian.com/uk/davehillblog",
+        "apiUrl":"http://content.guardianapis.com/uk/davehillblog",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/davehill",
+        "type":"contributor",
+        "webTitle":"Dave Hill",
+        "webUrl":"http://www.theguardian.com/profile/davehill",
+        "apiUrl":"http://content.guardianapis.com/profile/davehill",
+        "bio":"<p>Dave Hill is a novelist, blogger, occasional broadcaster and long-standing writer for the Guardian. Read <a href=\"http://www.guardian.co.uk/uk/davehillblog\">Dave Hill's London blog </a> here</p>",
+        "rcsId":"GNL064289",
+        "r2ContributorId":"21999",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/02/29/Dave_Hill.jpg",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/london",
+        "type":"keyword",
+        "webTitle":"London politics",
+        "webUrl":"http://www.theguardian.com/politics/london",
+        "apiUrl":"http://content.guardianapis.com/politics/london",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/housing",
+        "type":"keyword",
+        "webTitle":"Housing",
+        "webUrl":"http://www.theguardian.com/society/housing",
+        "apiUrl":"http://content.guardianapis.com/society/housing",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418856861",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720143292/LuptonFigCrop.jpg",
+          "typeData":{
+            "source":"London School of Economics",
+            "photographer":"London School of Economics",
+            "altText":"London poverty graph",
+            "height":"276",
+            "credit":"London School of Economics/London School of Economics",
+            "caption":"Graph from LSE report",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T13:02:00Z",
+      "webTitle":"Christina Edkins killing: man pleads guilty to stabbing schoolgirl on bus",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "fields":{
+        "trailText":"Phillip Simelane, who has mental health issues, is detained indefinitely after admitting random attack during rush hour",
+        "headline":"Christina Edkins killing: man pleads guilty to stabbing schoolgirl on bus",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j83b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+        "wordcount":"1131",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418847474",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710128901/Phillip-Simelane-case-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"54",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710130280/Phillip-Simelane-case-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"130",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"84",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710132212/Phillip-Simelane-case-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"132",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710133171/Phillip-Simelane-case-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"168",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710134153/Phillip-Simelane-case-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"180",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710135146/Phillip-Simelane-case-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"228",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710136267/Phillip-Simelane-case-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"276",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710136267/Phillip-Simelane-case-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"276",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands police/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418847475",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"84",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/drug-dealer-ban-phone-boxes",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T12:52:28Z",
+      "webTitle":"Notorious drug dealer faces ban on using phone boxes",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/drug-dealer-ban-phone-boxes",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/drug-dealer-ban-phone-boxes",
+      "fields":{
+        "trailText":"Serious Organised Crime Agency applies to high court for restrictions on former Liverpool bouncer Curtis Warren",
+        "headline":"Notorious drug dealer faces ban on using phone boxes",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j886",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717718244/Curtis-Warren-004.jpg",
+        "wordcount":"420",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/owenbowcott",
+        "type":"contributor",
+        "webTitle":"Owen Bowcott",
+        "webUrl":"http://www.theguardian.com/profile/owenbowcott",
+        "apiUrl":"http://content.guardianapis.com/profile/owenbowcott",
+        "bio":"<p>Owen Bowcott is legal affairs correspondent. He was formerly the Guardian's <a href=\"http://www.guardian.co.uk/world/ireland\">Ireland</a> correspondent and also worked on the foreign newsdesk</p>",
+        "rcsId":"GNL004729",
+        "r2ContributorId":"16213",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/owen_bowcott_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418853140",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717715097/Curtis-Warren-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"54",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717716257/Curtis-Warren-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"130",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717717229/Curtis-Warren-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"340",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717718244/Curtis-Warren-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"84",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717719309/Curtis-Warren-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"132",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717720303/Curtis-Warren-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"168",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717721354/Curtis-Warren-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"180",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717722598/Curtis-Warren-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"228",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717723600/Curtis-Warren-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"276",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717724651/Curtis-Warren-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"372",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717723600/Curtis-Warren-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"276",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418853141",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717718244/Curtis-Warren-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"States of Jersey police",
+            "altText":"Curtis Warren",
+            "height":"84",
+            "credit":"States of Jersey police/PA",
+            "caption":"Curtis Warren, who is alleged to have earned more than £200m through his criminal empire. Photograph: States of Jersey police/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/cyclist-cambridgeshire-level-crossing-video-waterbeach",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T11:18:10Z",
+      "webTitle":"Cyclist came inches from death at Cambridgeshire level crossing",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/cyclist-cambridgeshire-level-crossing-video-waterbeach",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/cyclist-cambridgeshire-level-crossing-video-waterbeach",
+      "fields":{
+        "trailText":"Video footage shows train narrowly avoiding woman who ignored warning lights and barriers",
+        "headline":"Cyclist came inches from death at Cambridgeshire level crossing",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j84p",
+        "wordcount":"371",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/rail-transport",
+        "type":"keyword",
+        "webTitle":"Rail transport",
+        "webUrl":"http://www.theguardian.com/uk/rail-transport",
+        "apiUrl":"http://content.guardianapis.com/uk/rail-transport",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/transport",
+        "type":"keyword",
+        "webTitle":"Transport",
+        "webUrl":"http://www.theguardian.com/uk/transport",
+        "apiUrl":"http://content.guardianapis.com/uk/transport",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/cycling",
+        "type":"keyword",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/cycling",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/cycling",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418835405",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002CyclistCrossing-16x9.mp4",
+          "typeData":{
+            "source":"British Transport Police",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "width":"480",
+            "durationSeconds":"34"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002CyclistCrossing_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"British Transport Police",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "width":"480",
+            "durationSeconds":"34"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002CyclistCrossing_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"British Transport Police",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "width":"480",
+            "durationSeconds":"34"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002CyclistCrossing/131002CyclistCrossing.m3u8",
+          "typeData":{
+            "source":"British Transport Police",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "width":"480",
+            "durationSeconds":"34"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002CyclistCrossing_vpx.webm",
+          "typeData":{
+            "source":"British Transport Police",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CyclistCrossing_8144083.jpg",
+            "width":"480",
+            "durationSeconds":"34"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/christina-edkins-stabbing-family-horror-pain",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T10:54:08Z",
+      "webTitle":"Christina Edkins stabbing: family describe 'horror, distress and pain'",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/christina-edkins-stabbing-family-horror-pain",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/christina-edkins-stabbing-family-horror-pain",
+      "fields":{
+        "trailText":"Family issues statement as Phillip Simelane admits killing 16-year-old on bus in Halesowen, West Midlands",
+        "headline":"Christina Edkins stabbing: family describe 'horror, distress and pain'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j84z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711176219/Schoolgirl-bus-stabbing-005.jpg",
+        "wordcount":"477",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/knifecrime",
+        "type":"keyword",
+        "webTitle":"Knife crime",
+        "webUrl":"http://www.theguardian.com/uk/knifecrime",
+        "apiUrl":"http://content.guardianapis.com/uk/knifecrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418840232",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711173044/Schoolgirl-bus-stabbing-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"54",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711174073/Schoolgirl-bus-stabbing-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"340",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711175183/Schoolgirl-bus-stabbing-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"130",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711176219/Schoolgirl-bus-stabbing-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"84",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711177267/Schoolgirl-bus-stabbing-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"132",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711178323/Schoolgirl-bus-stabbing-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"168",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711179417/Schoolgirl-bus-stabbing-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"180",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711180505/Schoolgirl-bus-stabbing-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"228",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711181575/Schoolgirl-bus-stabbing-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"276",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711182643/Schoolgirl-bus-stabbing-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"372",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711181575/Schoolgirl-bus-stabbing-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"276",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418840233",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711176219/Schoolgirl-bus-stabbing-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"84",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/madeleine-mccann-father-portuguese-court-evidence-libel-case",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T10:30:20Z",
+      "webTitle":"Madeleine McCann's father returns to Portugal to give evidence in libel case",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/madeleine-mccann-father-portuguese-court-evidence-libel-case",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/madeleine-mccann-father-portuguese-court-evidence-libel-case",
+      "fields":{
+        "trailText":"Gerry McCann looks to testify in case against Gonçalo Amaral, who published book about Madeleine's disappearance in 2007",
+        "headline":"Madeleine McCann's father returns to Portugal to give evidence in libel case",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j832",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708845978/Gerry-McCann-to-testify-i-003.jpg",
+        "wordcount":"367",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/madeleinemccann",
+        "type":"keyword",
+        "webTitle":"Madeleine McCann",
+        "webUrl":"http://www.theguardian.com/uk/madeleinemccann",
+        "apiUrl":"http://content.guardianapis.com/uk/madeleinemccann",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/kate-mccann",
+        "type":"keyword",
+        "webTitle":"Kate McCann",
+        "webUrl":"http://www.theguardian.com/uk/kate-mccann",
+        "apiUrl":"http://content.guardianapis.com/uk/kate-mccann",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/portugal",
+        "type":"keyword",
+        "webTitle":"Portugal",
+        "webUrl":"http://www.theguardian.com/world/portugal",
+        "apiUrl":"http://content.guardianapis.com/world/portugal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418850429",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708842267/Gerry-McCann-to-testify-i-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"54",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708844638/Gerry-McCann-to-testify-i-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"130",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708845978/Gerry-McCann-to-testify-i-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"84",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708847269/Gerry-McCann-to-testify-i-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"132",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708848639/Gerry-McCann-to-testify-i-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"168",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708850047/Gerry-McCann-to-testify-i-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"180",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708851393/Gerry-McCann-to-testify-i-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"228",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708852921/Gerry-McCann-to-testify-i-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"276",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708852921/Gerry-McCann-to-testify-i-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"276",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective’s claims in the book The Truth of the Lie damaged the hunt for Madeleine. Photograph: Tiago Petinga/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418850430",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380708845978/Gerry-McCann-to-testify-i-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tiago Petinga",
+            "altText":"Gerry McCann to testify in libel case against Goncalo Amaral",
+            "height":"84",
+            "credit":"Tiago Petinga/EPA",
+            "caption":"The McCanns say the former detective's claims in the book The Truth Of The Lie damaged the hunt for Madeleine and exacerbated their anguish. Photograph: Tiago Petinga/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/football-fan-violence-london-restaurant",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-01T23:10:41Z",
+      "webTitle":"Italian football fans wreak havoc in Highbury restaurant",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/football-fan-violence-london-restaurant",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/football-fan-violence-london-restaurant",
+      "fields":{
+        "trailText":"Piebury Corner, a favourite with Arsenal fans and north London locals, subjected to vicious attack by up to 30 men",
+        "headline":"Italian football fans wreak havoc in Highbury restaurant",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7p4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669000760/Fans-Arsenal-v-Napoli-003.jpg",
+        "wordcount":"369",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"football/footballviolence",
+        "type":"keyword",
+        "webTitle":"Football violence",
+        "webUrl":"http://www.theguardian.com/football/footballviolence",
+        "apiUrl":"http://content.guardianapis.com/football/footballviolence",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.theguardian.com/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/napoli",
+        "type":"keyword",
+        "webTitle":"Napoli",
+        "webUrl":"http://www.theguardian.com/football/napoli",
+        "apiUrl":"http://content.guardianapis.com/football/napoli",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26370"
+        }]
+      },{
+        "id":"world/italy",
+        "type":"keyword",
+        "webTitle":"Italy",
+        "webUrl":"http://www.theguardian.com/world/italy",
+        "apiUrl":"http://content.guardianapis.com/world/italy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418791965",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380668997433/Fans-Arsenal-v-Napoli-001.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"54",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380668999392/Fans-Arsenal-v-Napoli-002.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"130",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669000760/Fans-Arsenal-v-Napoli-003.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"84",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669002093/Fans-Arsenal-v-Napoli-004.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"132",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669003409/Fans-Arsenal-v-Napoli-005.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"168",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669004709/Fans-Arsenal-v-Napoli-006.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"180",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669006006/Fans-Arsenal-v-Napoli-007.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"228",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669008539/Fans-Arsenal-v-Napoli-008.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"276",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669008539/Fans-Arsenal-v-Napoli-008.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"276",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418791966",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380669000760/Fans-Arsenal-v-Napoli-003.jpg",
+          "typeData":{
+            "source":"Tom Jenkins",
+            "altText":"Fans Arsenal v Napoli",
+            "height":"84",
+            "credit":"Tom Jenkins",
+            "caption":"Napoli fans outside the Emirates stadium before the game with Arsenal on Tuesday. Photograph: Tom Jenkins",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26370"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      }]
+    },{
+      "id":"uk-news/2013/oct/01/liam-adams-guilty-raping-oldest-daughter",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-01T16:06:36Z",
+      "webTitle":"Liam Adams found guilty of raping his eldest daughter",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/01/liam-adams-guilty-raping-oldest-daughter",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/01/liam-adams-guilty-raping-oldest-daughter",
+      "fields":{
+        "trailText":"Brother of Sinn Féin leader Gerry Adams is convicted of offences dating back 30 years",
+        "headline":"Liam Adams found guilty of raping his eldest daughter",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7j5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643489239/Liam-Adams-58-arrives-at--005.jpg",
+        "wordcount":"103",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/henrymcdonald",
+        "type":"contributor",
+        "webTitle":"Henry McDonald",
+        "webUrl":"http://www.theguardian.com/profile/henrymcdonald",
+        "apiUrl":"http://content.guardianapis.com/profile/henrymcdonald",
+        "bio":"<p>Henry McDonald is the Observer's Belfast correspondent</p>",
+        "rcsId":"GNL004658",
+        "r2ContributorId":"15264",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/23/1316792668937/henry-mcdonald.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418765220",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643485472/Liam-Adams-58-arrives-at--002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"54",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643486698/Liam-Adams-58-arrives-at--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"340",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643487973/Liam-Adams-58-arrives-at--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"130",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643489239/Liam-Adams-58-arrives-at--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"84",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643490558/Liam-Adams-58-arrives-at--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"132",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643491838/Liam-Adams-58-arrives-at--007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"168",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643493096/Liam-Adams-58-arrives-at--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"180",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643494384/Liam-Adams-58-arrives-at--009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"228",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643496013/Liam-Adams-58-arrives-at--010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"276",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643497332/Liam-Adams-58-arrives-at--011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"372",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643496013/Liam-Adams-58-arrives-at--010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"276",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418765221",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380643489239/Liam-Adams-58-arrives-at--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"Liam Adams, 58, arrives at Belfast crown court",
+            "height":"84",
+            "credit":"Paul Faith/PA",
+            "caption":"Liam Adams, 58, arrives at Belfast crown court. Photograph: Paul Faith/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/01/royal-marine-drill-instructor-fined",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-01T15:41:19Z",
+      "webTitle":"Royal Marine drill instructor fined for ill-treatment of new recruits",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/01/royal-marine-drill-instructor-fined",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/01/royal-marine-drill-instructor-fined",
+      "fields":{
+        "trailText":"Corporal Peter Clark admitted hitting one recruit in the groin and striking another in the face with a boot",
+        "headline":"Royal Marine drill instructor fined for ill-treatment of new recruits",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7ht",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641108079/Commando-training-centre--005.jpg",
+        "wordcount":"532",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/military",
+        "type":"keyword",
+        "webTitle":"Military",
+        "webUrl":"http://www.theguardian.com/uk/military",
+        "apiUrl":"http://content.guardianapis.com/uk/military",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418761577",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641104657/Commando-training-centre--002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"54",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641105665/Commando-training-centre--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"340",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641107041/Commando-training-centre--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"130",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641108079/Commando-training-centre--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"84",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641109070/Commando-training-centre--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"132",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641110039/Commando-training-centre--007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"168",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641111092/Commando-training-centre--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"180",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641112090/Commando-training-centre--009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"228",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641113101/Commando-training-centre--010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"276",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641114222/Commando-training-centre--011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"372",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641113101/Commando-training-centre--010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"276",
+            "credit":"Anthony Devlin/PA",
+            "caption":"Marines at the commando training centre in Lympstone, Devon, where the offences took place. Photograph: Anthony Devlin/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418761578",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380641108079/Commando-training-centre--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anthony Devlin",
+            "altText":"Commando training centre in Lympstone, Devon",
+            "height":"84",
+            "credit":"Anthony Devlin/PA",
+            "caption":"The offences took place in May and June last year at the commando training centre in Lympstone, Devon Photograph: Anthony Devlin/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}
