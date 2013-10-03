@@ -104,12 +104,10 @@ input[type=text] {
 }
 
 .list-header__display {
-    font-style: italic;
-}
-.list-header__display--is-set {
-    font-style: normal;
     font-size: 16px;
     font-weight: bold;
+}
+.list-header__display--is-set {
     color: #000000;
 }
 
@@ -128,7 +126,6 @@ input[type=text] {
     color: #999999;
     font-size: 12px;
 }
-
 
 .list-header__timings {
     font-size: 10px;

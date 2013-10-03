@@ -200,7 +200,7 @@ define([
             group.articles.removeAll();
         });
 
-        source.forEach(function(item, index) {
+        _.toArray(source).forEach(function(item, index) {
             var group;
 
             // FAKE a group - for testing.
