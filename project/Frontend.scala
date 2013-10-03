@@ -10,7 +10,7 @@ object Frontend extends Build with Prototypes {
   val common = grunt("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.6",
+      "com.gu.openplatform" %% "content-api-client" % "2.7",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -41,7 +41,8 @@ object Frontend extends Build with Prototypes {
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
       "pa._",
-      "feed._"
+      "feed._",
+      "football.controllers._"
     )
   )
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
@@ -69,7 +70,7 @@ object Frontend extends Build with Prototypes {
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
   )
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests, admin)
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
   val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",

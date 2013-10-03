@@ -1,7 +1,7 @@
 .collection--section-zone {
     &.collection--features-type .collection__title {
-        background-color: $pink;
-        border-color: $light-pink;
+        background-color: $feature-dark;
+        border-color: $feature-light;
     }
     @include mq($to: tablet) {
         .item:nth-child(1),

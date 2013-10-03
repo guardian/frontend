@@ -15,6 +15,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
       "test-picture",
       "main",
       "image",
+      Some(0),
       List(Asset(
         "image",
         Some("image/jpeg"),
@@ -27,6 +28,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
         "test-audio",
         "main",
         "audio",
+        Some(0),
         Nil)
     )
 
@@ -73,9 +75,9 @@ class ContentTest extends FlatSpec with ShouldMatchers {
 
   "Content" should "understand that in body pictures are not main pictures" in {
 
-    val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50),
-                                              image("test-image-1","body", "body picture 2", 50),
-                                              image("test-image-2","main", "main picture 1", 50)))
+    val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50, 0),
+                                              image("test-image-1","body", "body picture 2", 50, 0),
+                                              image("test-image-2","main", "main picture 1", 50, 0)))
 
     testContent.mainPicture.get.caption should be(Some("main picture 1"))
   }
@@ -83,19 +85,19 @@ class ContentTest extends FlatSpec with ShouldMatchers {
 
   it should "understand that main image is the image of relation 'gallery'" in {
 
-    val testContent = content("gallery", List(image("test-image-0","body", "body picture 1", 50),
-                                              image("test-image-1","body", "body picture 2", 50),
-                                              image("test-image-2","main", "main picture 1", 50),
-                                              image("test-image-3","gallery", "gallery picture 1", 50)))
+    val testContent = content("gallery", List(image("test-image-0","body", "body picture 1", 50, 0),
+                                              image("test-image-1","body", "body picture 2", 50, 0),
+                                              image("test-image-2","main", "main picture 1", 50, 0),
+                                              image("test-image-3","gallery", "gallery picture 1", 50, 0)))
 
     testContent.mainPicture.get.caption should be(Some("gallery picture 1"))
   }
 
   it should "understand that main image can be an image of type 'video'" in {
 
-    val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50),
-                                              image("test-image-1","body", "body picture 2", 50),
-                                              video("test-image-3","main", "video poster", 50)))
+    val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50, 0),
+                                              image("test-image-1","body", "body picture 2", 50, 0),
+                                              video("test-image-3","main", "video poster", 50, 0)))
 
     testContent.mainPicture.get.caption should be(Some("video poster"))
   }
@@ -144,15 +146,17 @@ class ContentTest extends FlatSpec with ShouldMatchers {
   private def image(  id: String,
                       relation: String,
                       caption: String,
-                      width: Int): ApiElement = {
-    ApiElement(id, relation, "image", List(asset(caption, width)))
+                      width: Int,
+                      index: Int): ApiElement = {
+    ApiElement(id, relation, "image", Some(index), List(asset(caption, width)))
   }
 
   private def video(  id: String,
                       relation: String,
                       caption: String,
-                      width: Int): ApiElement = {
-    ApiElement(id, relation, "video", List(asset(caption, width)))
+                      width: Int,
+                      index: Int): ApiElement = {
+    ApiElement(id, relation, "video", Some(index), List(asset(caption, width)))
   }
 
   private def asset(caption: String, width: Int): Asset = {

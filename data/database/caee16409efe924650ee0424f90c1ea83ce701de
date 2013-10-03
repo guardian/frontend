@@ -1,0 +1,2534 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":48025,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":4803,
+    "orderBy":"newest",
+    "edition":{
+      "id":"us/money",
+      "webTitle":"Money",
+      "webUrl":"http://www.theguardian.com/us/money",
+      "apiUrl":"http://content.guardianapis.com/us/money",
+      "code":"us"
+    },
+    "section":{
+      "id":"money",
+      "webTitle":"Money",
+      "webUrl":"http://www.theguardian.com/money",
+      "apiUrl":"http://content.guardianapis.com/money",
+      "editions":[{
+        "id":"money",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money",
+        "apiUrl":"http://content.guardianapis.com/money",
+        "code":"default"
+      },{
+        "id":"uk/money",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/uk/money",
+        "apiUrl":"http://content.guardianapis.com/uk/money",
+        "code":"uk"
+      },{
+        "id":"us/money",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/us/money",
+        "apiUrl":"http://content.guardianapis.com/us/money",
+        "code":"us"
+      },{
+        "id":"au/money",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/au/money",
+        "apiUrl":"http://content.guardianapis.com/au/money",
+        "code":"au"
+      }]
+    },
+    "results":[{
+      "id":"money/2013/oct/02/118-118-personal-loans-market",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-02T11:36:36Z",
+      "webTitle":"118 118 joins the personal loans market",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/02/118-118-personal-loans-market",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/02/118-118-personal-loans-market",
+      "fields":{
+        "trailText":"Telecoms company is pitching for the middle ground between banks and building societies and payday lenders",
+        "headline":"118 118 joins the personal loans market",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j862",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713506139/118-118-runners-escorting-005.jpg",
+        "wordcount":"464",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/loans",
+        "type":"keyword",
+        "webTitle":"Personal loans",
+        "webUrl":"http://www.theguardian.com/money/loans",
+        "apiUrl":"http://content.guardianapis.com/money/loans",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/debt",
+        "type":"keyword",
+        "webTitle":"Borrowing & debt",
+        "webUrl":"http://www.theguardian.com/money/debt",
+        "apiUrl":"http://content.guardianapis.com/money/debt",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/family-finances",
+        "type":"keyword",
+        "webTitle":"Family finances",
+        "webUrl":"http://www.theguardian.com/money/family-finances",
+        "apiUrl":"http://content.guardianapis.com/money/family-finances",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/payday-loans",
+        "type":"keyword",
+        "webTitle":"Payday loans",
+        "webUrl":"http://www.theguardian.com/money/payday-loans",
+        "apiUrl":"http://content.guardianapis.com/money/payday-loans",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/harriet-meyer",
+        "type":"contributor",
+        "webTitle":"Harriet Meyer",
+        "webUrl":"http://www.theguardian.com/profile/harriet-meyer",
+        "apiUrl":"http://content.guardianapis.com/profile/harriet-meyer",
+        "bio":"<p><a href=\"http://twitter.com/harriet_meyer\">Harriet Meyer</a> is Acting Editor of The Observer newspaper's Cash section. She also covers personal finance and consumer stories for the Guardian</p>",
+        "r2ContributorId":"31619",
+        "references":[]
+      },{
+        "id":"business/telecoms",
+        "type":"keyword",
+        "webTitle":"Telecommunications industry",
+        "webUrl":"http://www.theguardian.com/business/telecoms",
+        "apiUrl":"http://content.guardianapis.com/business/telecoms",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418845456",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713503194/118-118-runners-escorting-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"54",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713504160/118-118-runners-escorting-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"340",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713505161/118-118-runners-escorting-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"130",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713506139/118-118-runners-escorting-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"84",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713507136/118-118-runners-escorting-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"132",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713508205/118-118-runners-escorting-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"168",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713509325/118-118-runners-escorting-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"180",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713510373/118-118-runners-escorting-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"228",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713511413/118-118-runners-escorting-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"276",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713512507/118-118-runners-escorting-011.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"372",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713511413/118-118-runners-escorting-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"276",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418845457",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/2/1380713506139/118-118-runners-escorting-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"118 118 runners escorting an aged 192",
+            "height":"84",
+            "credit":"PR",
+            "caption":"118 118 began life when BT's 192 directory enquiries  monopoly was broken up.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/gallery/2013/oct/02/trading-up-trading-down-gallery",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-02T09:44:20Z",
+      "webTitle":"Trading up, trading down - in pictures",
+      "webUrl":"http://www.theguardian.com/money/gallery/2013/oct/02/trading-up-trading-down-gallery",
+      "apiUrl":"http://content.guardianapis.com/money/gallery/2013/oct/02/trading-up-trading-down-gallery",
+      "fields":{
+        "trailText":"<p>From a glossy flat in Liverpool to a Georgian house in Bridlington</p>",
+        "headline":"Trading up, trading down - in pictures",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6cj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380640340614/Kempton-cottage--006.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/series/tradinguptradingdown",
+        "type":"series",
+        "webTitle":"Trading up, trading down",
+        "webUrl":"http://www.theguardian.com/money/series/tradinguptradingdown",
+        "apiUrl":"http://content.guardianapis.com/money/series/tradinguptradingdown",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/houseprices",
+        "type":"keyword",
+        "webTitle":"House prices",
+        "webUrl":"http://www.theguardian.com/money/houseprices",
+        "apiUrl":"http://content.guardianapis.com/money/houseprices",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"lifeandstyle/homes",
+        "type":"keyword",
+        "webTitle":"Homes",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/homes",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/homes",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/annatims",
+        "type":"contributor",
+        "webTitle":"Anna Tims",
+        "webUrl":"http://www.theguardian.com/profile/annatims",
+        "apiUrl":"http://content.guardianapis.com/profile/annatims",
+        "rcsId":"GNL480079",
+        "r2ContributorId":"15393",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/anna_timms_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418829613",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380640340614/Kempton-cottage--006.jpg",
+          "typeData":{
+            "source":"Nock Deighton",
+            "altText":"Trail Trading up, trading down: Kempton cottage ",
+            "height":"84",
+            "credit":"Nock Deighton",
+            "caption":"Kempton cottage ",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418760646",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380640337414/Bridlington-Georgian-hous-004.jpg",
+          "typeData":{
+            "source":"Jackson Stops",
+            "altText":"Trading up, trading down: Bridlington, Georgian house ",
+            "height":"448",
+            "credit":"Jackson Stops",
+            "caption":"<strong>Trading up: East Yorkshire.</strong> If Downton Abbey has elevated your domestic tastes, this 300-year-old house in Bridlington will provide a suitably aristocratic setting. Even the exacting architecture historian Nikolaus Pevsner was impressed, describing its lavish panelled, gilded and moulded interior as 'a great surprise'. It was commissioned by the chief lord of the manor in 1673 to flaunt his wealth and status. The Georgian flamboyance survives in most of the five bedrooms and five reception rooms. The grounds include a 150-year-old knot garden, but the 21st century intrudes in the form of a housing estate beyond the garden walls. On the market for £465,000. <br> <a href=\"http://www.jackson-stops.co.uk/cgi-bin/properties/summary-details.pl?propID=52345\">Jackson Stops</a></br>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-418760674",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380640333356/Kempton-cottage--002.jpg",
+          "typeData":{
+            "source":"Nock Deighton",
+            "altText":"Trading up, trading down: Kempton cottage ",
+            "height":"448",
+            "credit":"Nock Deighton",
+            "caption":"<strong>Trading up: Shropshire.</strong> This £340,000 early 17th-century cottage in the  hamlet of Kempton trades on its visual appeal, because although it is large enough to absorb a family, its quirky layout will require mental adjustment. The two main bedrooms are accessed by their own separate staircases and the third bedroom leads off the second. Everyone then has to trek downstairs to the bathroom. But the two capacious reception rooms, the huge inglenooks, the panelling, beams, flagstones and views are consolation for the inconvenience, and you can flee from family intimacy into the half acre of garden. <br> <a href=\"http://www.nockdeighton.co.uk./property-search/2308845/view.html\">Nock Deighton</a> </br>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-418760641",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380640331058/Bramham-east-Yorkshire--001.jpg",
+          "typeData":{
+            "source":"Hunters",
+            "altText":"Trading up, trading down: Bramham, east Yorkshire ",
+            "height":"448",
+            "credit":"Hunters",
+            "caption":"<strong>Trading down: West Yorkshire.</strong> It’s small but handy, being close to the shop, pubs and surgery in the village of Bramham, near Wetherby. There are beams and fireplaces in both the living room and the one bedroom, and space has been found to squeeze in an upstairs bathroom. Beyond the pretty kitchen is a decent-sized walled courtyard with side access. There’s no onward chain. On the market for £124,995.<br>\r\n<a href=\"http://www.huntersnet.co.uk/property/Low-Way-Bramham-Wetherby/5848\">Hunters</a></br>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-418760649",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380640335489/Albert-Dock-Liverpool-fla-003.jpg",
+          "typeData":{
+            "source":"Mann Island",
+            "altText":"Trading up, trading down: Albert Dock, Liverpool flat",
+            "height":"448",
+            "credit":"Mann Island",
+            "caption":"<strong>Trading down: Liverpool.</strong> This bold glass wedge shares the skyline with the city’s 'three graces' and overlooks the Albert Dock. One-bedroom apartments on the Mann Island development start at £125,000 and provide glossy shrinkage in the city centre. Each opens on to the full-height atrium and has open-plan living areas, a balcony and the option of underground parking. <br> <a href=\"http://www.zoopla.co.uk/for-sale/details/28908881\">Mann Island</a></br>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-418760907",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380640726556/Driffieild.jpg",
+          "typeData":{
+            "source":"Smiths Gore",
+            "altText":"Trading up: bargain ",
+            "height":"448",
+            "credit":"Smiths Gore",
+            "caption":"<strong>Bargain of the week: East Yorkshire.</strong> Don’t let its Spartan looks deter you: this three-bedroom house on the river bank at Wilfholme sits in a large garden close to footpaths that lead to the local nature reserve. Although two of the bedrooms are narrow, you get a lot of space, including a garage, driveway and 19ft reception room, for your £100,000. The price reflects the need for a touch of modernising. <br> <a href=\"http://www.smithsgore.co.uk/property-for-sale-driffield-3899746\">Smiths Gore</a></br>",
+            "width":"760"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/02/buying-house-friends-morgtgage-lender",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-02T06:00:04Z",
+      "webTitle":"Which lender should I approach if I'm buying a house with friends?",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/02/buying-house-friends-morgtgage-lender",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/02/buying-house-friends-morgtgage-lender",
+      "fields":{
+        "trailText":"We are pooling resources to buy a nicer property than we could ever afford separately but need advice on mortgage providers",
+        "headline":"Which lender should I approach if I'm buying a house with friends?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j78x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624692930/Homebuyers-looking-round--003.jpg",
+        "wordcount":"463",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/series/expertsproperty",
+        "type":"series",
+        "webTitle":"Ask the experts: homebuying",
+        "webUrl":"http://www.theguardian.com/money/series/expertsproperty",
+        "apiUrl":"http://content.guardianapis.com/money/series/expertsproperty",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/mortgages",
+        "type":"keyword",
+        "webTitle":"Mortgages",
+        "webUrl":"http://www.theguardian.com/money/mortgages",
+        "apiUrl":"http://content.guardianapis.com/money/mortgages",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/virginiawallis",
+        "type":"contributor",
+        "webTitle":"Virginia Wallis",
+        "webUrl":"http://www.theguardian.com/profile/virginiawallis",
+        "apiUrl":"http://content.guardianapis.com/profile/virginiawallis",
+        "bio":"<p>Virginia Wallis is a freelance personal finance journalist who contributes regularly to Guardian Unlimited Money as well as acting as the site's expert on homebuying. She has written for the Observer's Cash supplement and is currently the contributing editor, finance for Good Housekeeping magazine. She is also the author of three financial guides for Which?.</p>",
+        "r2ContributorId":"19171",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/virginia_wallis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/letters",
+        "type":"tone",
+        "webTitle":"Letters",
+        "webUrl":"http://www.theguardian.com/tone/letters",
+        "apiUrl":"http://content.guardianapis.com/tone/letters",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418730723",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624690384/Homebuyers-looking-round--001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624691706/Homebuyers-looking-round--002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624692930/Homebuyers-looking-round--003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624694052/Homebuyers-looking-round--004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624695084/Homebuyers-looking-round--005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624696184/Homebuyers-looking-round--006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624697267/Homebuyers-looking-round--007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624698617/Homebuyers-looking-round--008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624698617/Homebuyers-looking-round--008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418730724",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380624692930/Homebuyers-looking-round--003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Homebuyers looking round a property ",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"A reader seeks advice on buying property as a group. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/02/counterfeit-goods-surge-uk",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-01T23:03:00Z",
+      "webTitle":"Surge in purchases of counterfeit goods",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/02/counterfeit-goods-surge-uk",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/02/counterfeit-goods-surge-uk",
+      "fields":{
+        "trailText":"More UK shoppers than ever saving money – and potentially risking their lives – by buying knock-off versions of products",
+        "headline":"Surge in purchases of counterfeit goods",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j7p2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667504349/Counterfeit-DVDs-003.jpg",
+        "wordcount":"774",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/rebeccasmithers",
+        "type":"contributor",
+        "webTitle":"Rebecca Smithers",
+        "webUrl":"http://www.theguardian.com/profile/rebeccasmithers",
+        "apiUrl":"http://content.guardianapis.com/profile/rebeccasmithers",
+        "bio":"<p>Rebecca Smithers is consumer affairs correspondent for the <a href=\"http://www.guardian.co.uk/money/consumer-affairs\">Guardian</a></p>",
+        "rcsId":"GNL002880",
+        "r2ContributorId":"16313",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/25/1380117825699/Rebecca-Smithers-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418789941",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667501978/Counterfeit-DVDs-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"54",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667503279/Counterfeit-DVDs-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"130",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667504349/Counterfeit-DVDs-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"84",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667505374/Counterfeit-DVDs-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"132",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667506404/Counterfeit-DVDs-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"168",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667507410/Counterfeit-DVDs-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"180",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667508427/Counterfeit-DVDs-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"228",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667509476/Counterfeit-DVDs-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"276",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667509476/Counterfeit-DVDs-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"276",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418789942",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380667504349/Counterfeit-DVDs-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Simon Belcher",
+            "altText":"Counterfeit DVDs",
+            "height":"84",
+            "credit":"Simon Belcher/Alamy",
+            "caption":"Almost half of those interviewed admitted to buying counterfeit films or music. Photograph: Simon Belcher/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/01/landlords-pickle-tenants-charter",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-01T16:23:05Z",
+      "webTitle":"Landlords in a pickle as tenants' charter breaches buy-to-let terms",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/01/landlords-pickle-tenants-charter",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/01/landlords-pickle-tenants-charter",
+      "fields":{
+        "trailText":"Eric Pickles' move to allow renters to demand longer tenancies will leave many landlords at odds with their mortgage lenders",
+        "headline":"Landlords in a pickle as tenants' charter breaches buy-to-let terms",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j7jd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644093624/Pickles-at-Conservative-P-003.jpg",
+        "wordcount":"556",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/renting",
+        "type":"keyword",
+        "webTitle":"Renting property",
+        "webUrl":"http://www.theguardian.com/money/renting",
+        "apiUrl":"http://content.guardianapis.com/money/renting",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/buying-to-let",
+        "type":"keyword",
+        "webTitle":"Buying to let",
+        "webUrl":"http://www.theguardian.com/money/buying-to-let",
+        "apiUrl":"http://content.guardianapis.com/money/buying-to-let",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/banks",
+        "type":"keyword",
+        "webTitle":"Banks and building societies",
+        "webUrl":"http://www.theguardian.com/money/banks",
+        "apiUrl":"http://content.guardianapis.com/money/banks",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/family-finances",
+        "type":"keyword",
+        "webTitle":"Family finances",
+        "webUrl":"http://www.theguardian.com/money/family-finances",
+        "apiUrl":"http://content.guardianapis.com/money/family-finances",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"society/children",
+        "type":"keyword",
+        "webTitle":"Children",
+        "webUrl":"http://www.theguardian.com/society/children",
+        "apiUrl":"http://content.guardianapis.com/society/children",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/eric-pickles",
+        "type":"keyword",
+        "webTitle":"Eric Pickles",
+        "webUrl":"http://www.theguardian.com/politics/eric-pickles",
+        "apiUrl":"http://content.guardianapis.com/politics/eric-pickles",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/patrickcollinson",
+        "type":"contributor",
+        "webTitle":"Patrick Collinson",
+        "webUrl":"http://www.theguardian.com/profile/patrickcollinson",
+        "apiUrl":"http://content.guardianapis.com/profile/patrickcollinson",
+        "bio":"<p>Patrick Collinson is <a href=\"http://www.guardian.co.uk/money\">money</a> editor of the Guardian and the newspaper's personal finance editor</p>",
+        "rcsId":"GNL036830",
+        "r2ContributorId":"16224",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/patrick_collinson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418766318",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644090363/Pickles-at-Conservative-P-001.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"54",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644092592/Pickles-at-Conservative-P-002.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"130",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644093624/Pickles-at-Conservative-P-003.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"84",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644094623/Pickles-at-Conservative-P-004.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"132",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644095614/Pickles-at-Conservative-P-005.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"168",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644096622/Pickles-at-Conservative-P-006.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"180",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644097639/Pickles-at-Conservative-P-007.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"228",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644098706/Pickles-at-Conservative-P-008.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"276",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644098706/Pickles-at-Conservative-P-008.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"276",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles: “Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Ray Tang/Rex",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418766319",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/MONEY/Pix/pictures/2013/10/1/1380644093624/Pickles-at-Conservative-P-003.jpg",
+          "typeData":{
+            "source":"Ray Tang",
+            "photographer":"Rex",
+            "altText":"Pickles at Conservative Party Annual Conference ",
+            "height":"84",
+            "credit":"Rex/Ray Tang",
+            "caption":"Eric Pickles Pickles told the Conservative conference: \"Families deserve stability for their children, and all tenants deserve a good and transparent service from their landlords and lettings agents.\" Photograph: Rex/Ray Tang",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/01/currys-interview-breakdance-publicity-dream-job-graduate",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-01T16:13:07Z",
+      "webTitle":"Currys interview breakdance publicity leads to dream job for graduate",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/01/currys-interview-breakdance-publicity-dream-job-graduate",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/01/currys-interview-breakdance-publicity-dream-job-graduate",
+      "fields":{
+        "trailText":"21-year-old Alan Bacon offered job by employer who heard he was asked to dance during interview for a job at Currys in Cardiff",
+        "headline":"Currys interview breakdance publicity leads to dream job for graduate",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j7tj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642990914/For-the-Currys-interview--005.jpg",
+        "wordcount":"236",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/work-and-careers",
+        "type":"keyword",
+        "webTitle":"Work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-and-careers",
+        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/graduates",
+        "type":"keyword",
+        "webTitle":"Graduate careers",
+        "webUrl":"http://www.theguardian.com/money/graduates",
+        "apiUrl":"http://content.guardianapis.com/money/graduates",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418764363",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642986959/For-the-Currys-interview--002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"54",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642988305/For-the-Currys-interview--003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"340",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642989639/For-the-Currys-interview--004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"130",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642990914/For-the-Currys-interview--005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"84",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642992163/For-the-Currys-interview--006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"132",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642993456/For-the-Currys-interview--007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"168",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642994737/For-the-Currys-interview--008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"180",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642996022/For-the-Currys-interview--009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"228",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642997289/For-the-Currys-interview--010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"276",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642998572/For-the-Currys-interview--011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"372",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642997289/For-the-Currys-interview--010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"276",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418764364",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380642990914/For-the-Currys-interview--005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"For the Currys interview, Alan Bacon had prepared a five-minute talk about his hobbies.",
+            "height":"84",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"For the Currys interview, Bacon had prepared a five-minute talk about his hobbies. Photograph: Linda Nylind for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/01/payday-lenders-bank-account-restricted-bills-rent",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-01T13:14:32Z",
+      "webTitle":"Payday lenders' access to bank accounts should be restricted, says minister",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/01/payday-lenders-bank-account-restricted-bills-rent",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/01/payday-lenders-bank-account-restricted-bills-rent",
+      "fields":{
+        "trailText":"Lord Freud wants to stop lenders taking money direct from borrowers' accounts until utility bills and rent have been paid",
+        "headline":"Payday lenders' access to bank accounts should be restricted, says minister",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j7ck",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632721751/Lord-Freud-005.jpg",
+        "wordcount":"544",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/payday-loans",
+        "type":"keyword",
+        "webTitle":"Payday loans",
+        "webUrl":"http://www.theguardian.com/money/payday-loans",
+        "apiUrl":"http://content.guardianapis.com/money/payday-loans",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/debt",
+        "type":"keyword",
+        "webTitle":"Borrowing & debt",
+        "webUrl":"http://www.theguardian.com/money/debt",
+        "apiUrl":"http://content.guardianapis.com/money/debt",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/family-finances",
+        "type":"keyword",
+        "webTitle":"Family finances",
+        "webUrl":"http://www.theguardian.com/money/family-finances",
+        "apiUrl":"http://content.guardianapis.com/money/family-finances",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"politics/conservative-conference-2013",
+        "type":"keyword",
+        "webTitle":"Conservative conference 2013",
+        "webUrl":"http://www.theguardian.com/politics/conservative-conference-2013",
+        "apiUrl":"http://content.guardianapis.com/politics/conservative-conference-2013",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/toryconference",
+        "type":"keyword",
+        "webTitle":"Conservative conference",
+        "webUrl":"http://www.theguardian.com/politics/toryconference",
+        "apiUrl":"http://content.guardianapis.com/politics/toryconference",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/rajeev-syal",
+        "type":"contributor",
+        "webTitle":"Rajeev Syal",
+        "webUrl":"http://www.theguardian.com/profile/rajeev-syal",
+        "apiUrl":"http://content.guardianapis.com/profile/rajeev-syal",
+        "bio":"<p>Rajeev Syal covers Whitehall and works on off-diary stories from the lobby for the Guardian</p>",
+        "r2ContributorId":"29467",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/socialexclusion",
+        "type":"keyword",
+        "webTitle":"Social exclusion",
+        "webUrl":"http://www.theguardian.com/society/socialexclusion",
+        "apiUrl":"http://content.guardianapis.com/society/socialexclusion",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418748023",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632717775/Lord-Freud-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"54",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632718993/Lord-Freud-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"340",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632720445/Lord-Freud-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"130",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632721751/Lord-Freud-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"84",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632722994/Lord-Freud-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"132",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632724285/Lord-Freud-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"168",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632725553/Lord-Freud-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"180",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632726837/Lord-Freud-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"228",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632728118/Lord-Freud-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"276",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632729407/Lord-Freud-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"372",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632728118/Lord-Freud-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"276",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference that he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418748024",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380632721751/Lord-Freud-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Lord Freud",
+            "height":"84",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Lord Freud, who told a fringe meeting at the Conservative party's annual conference he has grown increasingly concerned by the way in which high-interest lenders use continuous payment authorities o access borrowers' accounts. Photograph: Peter Macdiarmid/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/us-money-blog/2013/oct/01/us-student-loans-college-planning-problems",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-01T12:45:00Z",
+      "webTitle":"Student loans: squeezed by tuition, rejected by banks, what's a family to do?",
+      "webUrl":"http://www.theguardian.com/money/us-money-blog/2013/oct/01/us-student-loans-college-planning-problems",
+      "apiUrl":"http://content.guardianapis.com/money/us-money-blog/2013/oct/01/us-student-loans-college-planning-problems",
+      "fields":{
+        "trailText":"<p><strong>Suzanne McGee:</strong> As universities charge more, student loans have become harder to find, leaving families with difficult decisions about their future</p>",
+        "headline":"Student loans: squeezed by tuition and rejected by banks, what's a family to do?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j726",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/24/1335281798755/A-graduation-ceremony-at--003.jpg",
+        "wordcount":"807",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/student-debt-us",
+        "type":"keyword",
+        "webTitle":"US student debt",
+        "webUrl":"http://www.theguardian.com/money/student-debt-us",
+        "apiUrl":"http://content.guardianapis.com/money/student-debt-us",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/student-finance-us",
+        "type":"keyword",
+        "webTitle":"US student finance",
+        "webUrl":"http://www.theguardian.com/money/student-finance-us",
+        "apiUrl":"http://content.guardianapis.com/money/student-finance-us",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/us-money-blog",
+        "type":"blog",
+        "webTitle":"US money blog",
+        "webUrl":"http://www.theguardian.com/money/us-money-blog",
+        "apiUrl":"http://content.guardianapis.com/money/us-money-blog",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/us-personal-finance",
+        "type":"keyword",
+        "webTitle":"US personal finance",
+        "webUrl":"http://www.theguardian.com/money/us-personal-finance",
+        "apiUrl":"http://content.guardianapis.com/money/us-personal-finance",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"education/education-us",
+        "type":"keyword",
+        "webTitle":"US education",
+        "webUrl":"http://www.theguardian.com/education/education-us",
+        "apiUrl":"http://content.guardianapis.com/education/education-us",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"profile/suzanne-mcgee",
+        "type":"contributor",
+        "webTitle":"Suzanne McGee",
+        "webUrl":"http://www.theguardian.com/profile/suzanne-mcgee",
+        "apiUrl":"http://content.guardianapis.com/profile/suzanne-mcgee",
+        "bio":"<p>Suzanne McGee is a financial journalist and the weekly columnist for <a href=\"http://www.theguardian.com/us/money\">Money US</a>. She's also written for The Wall Street Journal, Barron's, The Financial Times and the Institutional Investor. You can read her blog <a href=\"http://uncommonreading.blogspot.com/\">Uncommon Reader</a>and follow her on Twitter <a href=\"https://twitter.com/SuzanneMcGeeNYC\">@SuzanneMcGeeNYC</a></p>",
+        "r2ContributorId":"58713",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418751681",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/24/1335281805484/A-graduation-ceremony-at--008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Brooks Kraft",
+            "altText":"A graduation ceremony at Harvard University",
+            "height":"276",
+            "credit":"Brooks Kraft/Corbis",
+            "caption":"Many Harvard graduates cannot toss off student debt as easily as their caps. Photograph: Brooks Kraft/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418751682",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/24/1335281798755/A-graduation-ceremony-at--003.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Brooks Kraft",
+            "altText":"A graduation ceremony at Harvard University",
+            "height":"84",
+            "credit":"Brooks Kraft/Corbis",
+            "caption":"A graduation ceremony at Harvard University. Photograph: Brooks Kraft/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/01/eon-fixed-price-tariff-pensioners",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-01T09:44:56Z",
+      "webTitle":"E.ON scraps fixed-price tariff scheme for thousands of pensioners",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/01/eon-fixed-price-tariff-pensioners",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/01/eon-fixed-price-tariff-pensioners",
+      "fields":{
+        "trailText":"Company blames new Ofgem rules, but charity warns that elderly people would suffer from reforms meant to benefit them",
+        "headline":"E.ON scraps fixed-price tariff scheme for thousands of pensioners",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j765",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619982605/Pensioner-keeps-warm-next-003.jpg",
+        "wordcount":"566",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/household-bills",
+        "type":"keyword",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/family-finances",
+        "type":"keyword",
+        "webTitle":"Family finances",
+        "webUrl":"http://www.theguardian.com/money/family-finances",
+        "apiUrl":"http://content.guardianapis.com/money/family-finances",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/eon",
+        "type":"keyword",
+        "webTitle":"E.ON",
+        "webUrl":"http://www.theguardian.com/business/eon",
+        "apiUrl":"http://content.guardianapis.com/business/eon",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/utilities",
+        "type":"keyword",
+        "webTitle":"Utilities",
+        "webUrl":"http://www.theguardian.com/business/utilities",
+        "apiUrl":"http://content.guardianapis.com/business/utilities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/rebeccasmithers",
+        "type":"contributor",
+        "webTitle":"Rebecca Smithers",
+        "webUrl":"http://www.theguardian.com/profile/rebeccasmithers",
+        "apiUrl":"http://content.guardianapis.com/profile/rebeccasmithers",
+        "bio":"<p>Rebecca Smithers is consumer affairs correspondent for the <a href=\"http://www.guardian.co.uk/money/consumer-affairs\">Guardian</a></p>",
+        "rcsId":"GNL002880",
+        "r2ContributorId":"16313",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/25/1380117825699/Rebecca-Smithers-003.jpg",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418721283",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619979362/Pensioner-keeps-warm-next-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"54",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619981164/Pensioner-keeps-warm-next-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"130",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619982605/Pensioner-keeps-warm-next-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"84",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619983940/Pensioner-keeps-warm-next-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"132",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619985209/Pensioner-keeps-warm-next-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"168",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619986541/Pensioner-keeps-warm-next-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"180",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619988516/Pensioner-keeps-warm-next-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"228",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619989954/Pensioner-keeps-warm-next-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"276",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619989954/Pensioner-keeps-warm-next-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"276",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's StayWarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418721284",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380619982605/Pensioner-keeps-warm-next-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"Pensioner keeps warm next to heater ",
+            "height":"84",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"E.ON's Staywarm tariff offers fixed-price gas and electricity for those aged 60 or over.  Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/01/how-become-theatre-producer",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-01T08:32:48Z",
+      "webTitle":"How do I become … a theatre producer",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/01/how-become-theatre-producer",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/01/how-become-theatre-producer",
+      "fields":{
+        "trailText":"<p>Alastair Whatley reveals that there is just as much drama off-stage as on it – and it's not about the money</p>",
+        "headline":"How do I become … a theatre producer",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5j6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301266463/Alastair-Whatley-003.jpg",
+        "wordcount":"877",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/series/how-do-i-become-a",
+        "type":"series",
+        "webTitle":"How do I become …",
+        "webUrl":"http://www.theguardian.com/money/series/how-do-i-become-a",
+        "apiUrl":"http://content.guardianapis.com/money/series/how-do-i-become-a",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/work-and-careers",
+        "type":"keyword",
+        "webTitle":"Work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-and-careers",
+        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"stage/theatre",
+        "type":"keyword",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/annatims",
+        "type":"contributor",
+        "webTitle":"Anna Tims",
+        "webUrl":"http://www.theguardian.com/profile/annatims",
+        "apiUrl":"http://content.guardianapis.com/profile/annatims",
+        "rcsId":"GNL480079",
+        "r2ContributorId":"15393",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/anna_timms_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418725642",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301263117/Alastair-Whatley-001.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"54",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301265409/Alastair-Whatley-002.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"130",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301266463/Alastair-Whatley-003.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"84",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301267480/Alastair-Whatley-004.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"132",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301268571/Alastair-Whatley-005.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"168",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301269662/Alastair-Whatley-006.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"180",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301270788/Alastair-Whatley-007.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"228",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301271879/Alastair-Whatley-008.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301271879/Alastair-Whatley-008.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye. Photograph: Jack Ladenburg",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418725643",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/27/1380301266463/Alastair-Whatley-003.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Alastair Whatley",
+            "height":"84",
+            "credit":"Public domain",
+            "caption":"Whatley rehearsing The Private Ear and The Public Eye.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

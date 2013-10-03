@@ -1,8 +1,7 @@
-package controllers
+package football.controllers
 
 import model.{ Trail, MetaData, Competition }
 import org.joda.time.DateMidnight
-import feed._
 import implicits.Football
 
 case class MatchesOnDate(date: DateMidnight, competitions: Seq[Competition])
