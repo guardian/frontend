@@ -30,6 +30,15 @@ $meta: #767676;
 .collection__title a {
     color: inherit;
 }
+@include mq($to: tablet) {
+    .zone-sport .collection--sport-section,
+    .zone-culture .collection--culture-section,
+    .zone-football .collection---section {
+        .collection__title {
+            display: none;
+        }
+    }
+}
 .collection__display-toggle {
     @include box-sizing(border-box);
     position: absolute;
