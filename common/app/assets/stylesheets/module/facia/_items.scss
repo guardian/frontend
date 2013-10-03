@@ -30,12 +30,8 @@ $meta: #767676;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .zone-sport,
-    .zone-culture,
-    .zone-football {
-        .section--news .collection__title {
-            display: none;
-        }
+    .has-localnav .section--news .collection__title {
+        display: none;
     }
 }
 .collection__display-toggle {
