@@ -13,8 +13,10 @@ define([
                 { width:  768,  height: 1024, name: "Tablet portrait" },
                 { width:  1024, height: 768,  name: "Tablet landscape" }
             ],
-            previewUrl: 'http://www.theguardian.com',
-
+            previewUrls: {
+                prod: 'http://www.theguardian.com',
+                code: 'http://m.code.dev-theguardian.com'
+            },
             searchPageSize:        50,
             sectionSearches: {
                 "default": "news|uk|uk-news|world",
