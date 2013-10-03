@@ -1,6 +1,6 @@
 @(page: model.MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-<section class="collection collection--@style.className @if(style.section != "news"){js-collection--display-toggle} section--@style.section zone-@config.section.split("/").headOption"
+<section class="collection collection--@style.className @if(style.section != "news"){js-collection--display-toggle} collection--@style.section zone-@config.section.split("/").headOption"
          data-link-name="block | @collection.displayName.getOrElse(config.id)"
          data-collection-type="@style.className"
          data-section="@config.section">

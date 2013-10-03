@@ -1,7 +1,8 @@
-package controllers
+package controllers.admin
 
 import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
+import controllers.{AuthLogging, Identity}
 import conf.{ Switches, Configuration }
 import play.api.mvc._
 import scala.concurrent.Future
