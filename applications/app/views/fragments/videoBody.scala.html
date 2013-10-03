@@ -1,12 +1,10 @@
 @(page: VideoPage)(implicit request: RequestHeader)
 
 @defining(page.video){ video =>
+    <h2 class="article-zone tone-@VisualTone(video)">
+        <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+    </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(video)">
-        <div class="article-v2__inner">
-            <h2 class="article-zone type-1">
-                <a class="tone-colour" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName)</a>
-            </h2>
-        </div>
 
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
