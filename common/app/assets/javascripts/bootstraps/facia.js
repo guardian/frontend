@@ -26,7 +26,7 @@ define([
 
         showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                popular.render(context);
+                popular.render(config);
             });
         },
 
