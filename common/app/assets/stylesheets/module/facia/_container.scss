@@ -60,8 +60,8 @@
     }
     &.section--culture {
         .collection__title {
-            background-color: $pink;
-            border-color: $light-pink;
+            background-color: $feature-dark;
+            border-color: $feature-light;
         }
         @include mq($to: tablet) {
             @include first-row(1);
@@ -188,8 +188,9 @@
             width: 100% !important;
         }
         .competition-table {
+            padding-top: 2px;
             @include mq($to: desktop) {
-                border-top: 2px solid $light-blue;
+                border-top: 2px solid $news-light;
             }
             @include mq(desktop) {
                 padding-top: 0;

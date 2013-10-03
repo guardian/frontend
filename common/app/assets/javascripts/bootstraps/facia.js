@@ -8,7 +8,8 @@ define([
     'modules/facia/relativise-timestamp',
     'modules/facia/items-show-more',
     'modules/facia/collection-display-toggle',
-    'modules/footballfixtures'
+    'modules/footballfixtures',
+    'modules/facia/image-upgrade'
 ], function (
     common,
     bonzo,
@@ -17,14 +18,15 @@ define([
     RelativiseTimestamp,
     ItemsShowMore,
     CollectionDisplayToggle,
-    FootballFixtures
+    FootballFixtures,
+    ImageUpgrade
 ) {
 
     var modules = {
 
         showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                popular.render(context);
+                popular.render(config);
             });
         },
 
@@ -88,6 +90,22 @@ define([
                         .addToggle();
                 });
             });
+        },
+
+        upgradeImages: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                common.$g('.collection', context).each(function(collection) {
+                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
+                    common.$g('.item', collection).each(function(item, index) {
+                        // is this the first item in a container?
+                        var isMain = isContainer && (index === 0);
+                        common.$g('.item__image-container', item).each(function(imageContainer) {
+                            new ImageUpgrade(imageContainer, isMain)
+                                .upgrade();
+                        });
+                    });
+                });
+            });
         }
 
     };
@@ -100,6 +118,7 @@ define([
             modules.showItemsShowMore();
             modules.showFootballFixtures();
             modules.showCollectionDisplayToggle();
+            modules.upgradeImages();
         }
         common.mediator.emit("page:front:ready", config, context);
     };
