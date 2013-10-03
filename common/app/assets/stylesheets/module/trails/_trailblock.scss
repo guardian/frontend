@@ -10,7 +10,7 @@
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 
     .article-v2__inner &,
