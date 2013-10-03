@@ -5,7 +5,7 @@
 .sub-section-head {
     position: relative;
     overflow: hidden;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top: $baseline solid $c-newsAccent;
 
     h1 {
         @include fs-header(3);
@@ -47,7 +47,7 @@
     font-weight: bolder;
     padding: $baseline $gs-gutter/2 $baseline*4 $gs-gutter/2;
     margin: 0;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top: $baseline solid $c-newsAccent;
     @include box-sizing(border-box);
 
     &.zone-color {
