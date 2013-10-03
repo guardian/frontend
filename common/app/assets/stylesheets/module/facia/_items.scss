@@ -24,8 +24,8 @@ $meta: #767676;
     height: gs-height(1);
     padding: $gs-baseline/3 0 0 $gs-gutter/5;
     color: #ffffff;
-    background-color: $news-light;
-    border-top: $gs-baseline/3 solid $news-dark;
+    background-color: $news-dark;
+    border-top: $gs-baseline/3 solid $news-light;
 }
 .collection__title a {
     color: inherit;
@@ -96,7 +96,7 @@ a.item__link {
         padding-right: $gs-gutter/2;
         padding-left: 16px;
         i {
-            @extend .i-clock-grey;
+            @extend .i-clock-light-grey;
             left: 0;
         }
     }
@@ -108,7 +108,7 @@ a.item__link {
             color: inherit;
         }
         i {
-            @extend .i-comment-grey;
+            @extend .i-comment-light-grey;
             left: $gs-gutter/2 - 1;
         }
     }
