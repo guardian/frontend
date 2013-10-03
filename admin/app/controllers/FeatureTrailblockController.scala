@@ -1,8 +1,9 @@
-package controllers
+package controllers.admin
 
 import common.{ ExecutionContexts, Logging }
 import common.AdminMetrics.{ ConfigUpdateCounter, ConfigUpdateErrorCounter }
 import conf.Configuration
+import controllers.AuthLogging
 import play.api.mvc._
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.json.Json.toJson
