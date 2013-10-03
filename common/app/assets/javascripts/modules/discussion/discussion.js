@@ -202,7 +202,7 @@ define([
                     discussionElem = bonzo(this.discussionContainerNode),
                     showMoreBtnElem = bonzo(this.showMoreBtnNode),
                     showElem;
-                
+
                 if (closed) {
                     showElem = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
                     discussionElem.prepend(showElem);
@@ -219,7 +219,7 @@ define([
 
                 else {
                     ajax({
-                        url: '/discussion'+ discussionId +'.json'
+                        url: '/discussion/comment-box'
                     }).then(this.setupCommentBoxes.bind(this));
                 }
             },
@@ -253,7 +253,6 @@ define([
                 // TODO (jamesgorrie): this is weird, but we don't have templating
                 var thread = bonzo(qwery('.d-thread', this.discussionContainerNode)[0]),
                     comment = bonzo(qwery('.d-comment', this.discussionContainerNode)[0]).clone().removeClass('d-comment--blocked'),
-                    recommend = bonzo(comment[0].querySelector('.d-comment__recommend')),
                     actions = bonzo(comment[0].querySelector('.d-comment__actions')),
                     datetime = bonzo(comment[0].querySelector('time')),
                     author = bonzo(comment[0].querySelector('.d-comment__author')),
@@ -261,8 +260,6 @@ define([
                     avatar = bonzo(comment[0].querySelector('.d-comment__avatar'))[0];
 
                 comment[0].id = 'comment-'+ resp.id;
-                recommend.remove();
-                actions.remove();
                 author.html(user.displayName);
                 datetime.html('Just now');
 
