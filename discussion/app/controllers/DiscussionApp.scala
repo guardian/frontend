@@ -8,7 +8,10 @@ import scala.concurrent.Future
 import play.api.libs.ws.{WS, Response}
 
 
-trait DiscussionDispatcher extends CommentCountController with CommentPageController
+trait DiscussionDispatcher
+  extends CommentCountController
+  with CommentPageController
+  with CommentBoxController
 
 object DiscussionApp extends DiscussionDispatcher {
   protected val discussionApi = current.plugin(classOf[DiscussionApi]) getOrElse {
