@@ -56,7 +56,7 @@ define([
                         section = config.page.pageId === "" ? 'sport' : 'news',
                         numVisible = config.page.pageId === "" ? 3 : 5;
                     common.mediator.on('modules:footballfixtures:render', function() {
-                        var container = common.$g('.section--' + section, context)
+                        var container = common.$g('.collection--' + section, context)
                             .first()[0];
                         // toggle class
                         common.$g('.items', container)
