@@ -29,7 +29,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             },
 
            appendCta: function(trailblock) {
-               bonzo(trailblock).append('<button class="cta expander trailblock-show-more" data-link-name="Show more | 1">Show more</button>');
+               bonzo(trailblock).append('<button class="cta trailblock-show-more" data-link-name="Show more | 1">Show more</button>');
            },
 
            removeCta: function($cta) {
