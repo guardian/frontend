@@ -244,7 +244,6 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
     links.foreach { link =>
       link.attr("href", LinkTo(link.attr("href"), edition))
       link.attr("data-link-name", dataLinkName)
-      link.addClass("tone-colour")
     }
     body
   }
