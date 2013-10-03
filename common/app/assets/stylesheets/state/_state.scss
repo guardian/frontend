@@ -30,21 +30,6 @@
     height: auto;
 }
 
-.cta { /* call to action */
-    cursor: pointer;
-}
-
-.expander {
-    &:before {
-        position: relative;
-        top: -1px;
-        content: '\2212  ';
-    }
-    .shut &:before {
-        content: '+ ';
-    }
-}
-
 .collapsible {
     // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
     padding: 9px $gutter*2 9px $gutter/2; // double space on right to avoid icon

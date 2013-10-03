@@ -9,6 +9,7 @@
     border: none;
     background-color: $mushroom;
     text-shadow: none;
+    cursor: pointer;
 
     &:hover,
     &:focus {
@@ -43,8 +44,31 @@ button.cta {
     @extend %type-8;
     display: block;
     padding-top: 7px;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
     color: #666666;
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+        background: transparent;
+    }
+
+    &:after {
+        @extend .i-arrow-grey-down;
+        @if $svg-support {
+            @extend .svg-i-arrow-grey-down;
+        }
+        @include rotate(180deg);
+        content: '';
+        position: relative;
+        display: block;
+        margin: $baseline auto 0;
+    }
+    &.trailblock-show-more:after,
+    .shut &:after {
+        @include rotate(0);
+    }
 }
 
 .top {
