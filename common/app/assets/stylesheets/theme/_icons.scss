@@ -72,8 +72,8 @@ figcaption:before {
     @extend .i-image;
     display: inline-block;
     content: '';
-    margin-right: 4px;
-    height: 11px;
+    vertical-align: top;
+    margin: 1px 4px 0 0;
 
     @if ($svg-support) {
         .svg & {

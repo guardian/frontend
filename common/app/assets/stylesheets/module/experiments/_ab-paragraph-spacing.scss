@@ -1,5 +1,6 @@
 .ab-paragraph-spacing--indents {
-    .from-content-api {
+    .from-content-api,
+    .from-content-api .block-elements {
         > p {
             margin-bottom: 0;
 
@@ -18,7 +19,7 @@
             }
         }
     }
-    blockquote.quoted {
+    .from-content-api blockquote.quoted {
         text-indent: 0;
 
         @include mq(tablet) {

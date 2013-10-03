@@ -8,7 +8,8 @@
 /* Core elements
    ========================================================================== */
 
-.from-content-api {
+.from-content-api,
+.from-content-api .block-elements {
 
     @include fs-bodyCopy(3);
     color: #333333;
@@ -18,7 +19,6 @@
     }
 
     > p,
-    > blockquote,
     ul,
     ol,
     address {
@@ -149,11 +149,11 @@
 .caption,
 figcaption,
 .main-caption {
-    @include fs-data(2);
-    color: #666666;
+    @include fs-data(1);
+    color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-data(3, true);
+        @include fs-data(2, true);
     }
 }
 
@@ -196,10 +196,10 @@ figure {
     &.img--portrait {
         figcaption {
             background-color: $c-neutral7;
-            padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+            padding: $baseline 6px $baseline*6 6px;
 
             @include mq(wide) {
-                padding-bottom: $gs-column-height;
+                padding: $baseline*1.5 8px $gs-column-height 8px;
             }
         }
     }
