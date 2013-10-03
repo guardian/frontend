@@ -165,7 +165,7 @@ define([
                                           currentSection.sectionName,
 
                         localNavCtaHtml = '<div class="localnav--small">' +
-                                          '  <div class="localnav__inner tone-border u-cf">' +
+                                          '  <div class="localnav__inner u-cf">' +
                                           '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +
