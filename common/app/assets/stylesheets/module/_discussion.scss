@@ -423,15 +423,14 @@ $keylineSize: 1px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     border: 1px solid $grey;
-    margin: $baseline*2 0;
-    height: 50px;
-    padding: ($baseline*2) ($gutter/2);
-    resize: vertical;
-    width: 100%;
-
     font-family: $sans-serif;
     font-size: 14px;
     font-size: 1.4rem;
+    height: 50px;
+    margin: $baseline*2 0;
+    padding: ($baseline*2) ($gutter/2);
+    resize: vertical;
+    width: 100%;
 }
 
 .d-comment-box__body--expanded {

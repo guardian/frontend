@@ -35,7 +35,7 @@ CommentBox.CONFIG = {
     errors: {
         EMPTY_COMMENT_BODY: 'Please write a comment.',
         COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
-        ENHANCE_YOUR_CALM: 'You\'ll need to wait a minute before posting another comment.   ',
+        ENHANCE_YOUR_CALM: 'You\'ll need to wait a minute before submitting another comment.',
         API_ERROR: 'Sorry, there was a problem posting your comment.'
     }
 };
@@ -44,6 +44,7 @@ CommentBox.CONFIG = {
  * @type {Object.<string.*>}
  */
 CommentBox.prototype.defaultOptions = {
+    discussionId: null,
     apiRoot: null,
     condensed: false,
     maxLength: 5000
@@ -56,7 +57,7 @@ CommentBox.prototype.errors = [];
 
 /** @override */
 CommentBox.prototype.ready = function() {
-    if (this.elem.getAttribute('data-discussion-id') === null) {
+    if (this.getDiscussionId() === null) {
         throw new Error('CommentBox: You need to set the "data-discussion-id" on your element');
     }
 
@@ -163,7 +164,7 @@ CommentBox.prototype.fail = function(xhr) {
  * @return {string}
  */
 CommentBox.prototype.getDiscussionId = function() {
-    return this.elem.getAttribute('data-discussion-id').replace('discussion', '');
+    return this.options.discussionId || this.elem.getAttribute('data-discussion-id').replace('discussion', '');
 };
 
 /**

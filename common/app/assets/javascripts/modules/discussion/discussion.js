@@ -48,6 +48,7 @@ define([
                 '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
+            user                  = Id.getUserFromCookie(),
             currentUserAvatarUrl,
             self;
 
@@ -63,7 +64,7 @@ define([
                         self.articleContainerNode    = context.querySelector(articleContainer);
                         self.mediaPrimaryNode        = context.querySelector(mediaPrimary);
 
-                        if(self.discussionContainerNode.isInitialised) {
+                        if (self.discussionContainerNode.isInitialised) {
                             return;
                         } else {
                             self.discussionContainerNode.isInitialised = true;
@@ -143,13 +144,12 @@ define([
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                         loadingInProgress = false;
 
-                        RecommendComments.init(context, { apiRoot: apiRoot });
-
-                        // Post a comment
-                        if (!commentsHaveLoaded && config.switches.discussionPostComment) {
-                            self.buildCommentBoxes(response.commentBoxHtml);
+                        // We do this onload here as to only jump the page around once
+                        if (true || !commentsHaveLoaded && config.switches.discussionPostComment) {
+                            self.renderCommentBoxes();
                         }
 
+                        RecommendComments.init(context, { apiRoot: apiRoot });
                         commentsHaveLoaded = true;
                     },
                     error: function() {
@@ -197,32 +197,35 @@ define([
 
             },
 
-            showMoreReplies: function(el) {
-                var threadNode = el.parentNode,
-                    totalResponses = threadNode._responses,
-                    visibleResponses = threadNode._visibleResponses + responsesIncrement;
+            renderCommentBoxes: function() {
+                var closed = (self.discussionContainerNode.getAttribute('data-discusison-closed') === 'true'),
+                    discussionElem = bonzo(this.discussionContainerNode),
+                    showMoreBtnElem = bonzo(this.showMoreBtnNode),
+                    showElem;
+                
+                if (closed) {
+                    showElem = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
+                    discussionElem.prepend(showElem);
+                    return;
+                }
 
-                Array.prototype.forEach.call(threadNode.querySelectorAll('.d-comment'), function(commentNode, i) {
-                    if (i < visibleResponses) {
-                        commentNode.removeAttribute('hidden');
-                    }
-                });
+                else if (!user) {
+                    var url = config.page.idUrl +'/{1}?returnUrl='+ window.location.href;
+                    showElem = '<div class="d-bar d-bar--signin cta">Open for comments. <a href="'+ url.replace('{1}', 'signin') +'">Sign in</a> or <a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> to join the discussion.</div>';
+                    discussionElem.prepend(showElem);
+                    showMoreBtnElem.after(showElem);
+                    return;
+                }
 
-                threadNode._visibleResponses = visibleResponses;
-
-                if (visibleResponses >= totalResponses) {
-                    threadNode.querySelector('.js-show-more-replies').style.display = 'none';
-                } else {
-                    var buttonText = self.buildShowMoreLabel(totalResponses - visibleResponses);
-                    threadNode.querySelector('.js-show-more-replies').innerText = buttonText;
+                else {
+                    ajax({
+                        url: '/discussion'+ discussionId +'.json'
+                    }).then(this.setupCommentBoxes.bind(this));
                 }
             },
 
-            buildShowMoreLabel: function(num) {
-                return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
-            },
-
-            buildCommentBoxes: function(html) {
+            setupCommentBoxes: function(html) {
+                html = html.commentBoxHtml;
                 var topBox, bottomBox,
                     topBoxElem = bonzo.create(html),
                     bottomBoxElem = bonzo.create(html);
@@ -230,11 +233,18 @@ define([
                 bonzo(this.discussionContainerNode).prepend(topBoxElem);
                 bonzo(this.showMoreBtnNode).after(bottomBoxElem);
 
-                topBox = new CommentBox(context, { apiRoot: apiRoot, condensed: true });
+                topBox = new CommentBox(context, {
+                    apiRoot: apiRoot,
+                    discussionId: discussionId,
+                    condensed: true
+                });
                 topBox.attachTo(topBoxElem[0]);
                 topBox.on('posted', this.addComment.bind(this, false));
 
-                bottomBox = new CommentBox(context, { apiRoot: apiRoot });
+                bottomBox = new CommentBox(context, {
+                    apiRoot: apiRoot,
+                    discussionId: discussionId
+                });
                 bottomBox.attachTo(bottomBoxElem[0]);
                 bottomBox.on('posted', this.addComment.bind(this, true));
             },
@@ -242,7 +252,7 @@ define([
             addComment: function(takeToTop, resp) {
                 // TODO (jamesgorrie): this is weird, but we don't have templating
                 var thread = bonzo(qwery('.d-thread', this.discussionContainerNode)[0]),
-                    comment = bonzo(qwery('.d-comment', this.discussionContainerNode)[0]).clone(),
+                    comment = bonzo(qwery('.d-comment', this.discussionContainerNode)[0]).clone().removeClass('d-comment--blocked'),
                     recommend = bonzo(comment[0].querySelector('.d-comment__recommend')),
                     actions = bonzo(comment[0].querySelector('.d-comment__actions')),
                     datetime = bonzo(comment[0].querySelector('time')),
@@ -253,7 +263,7 @@ define([
                 comment[0].id = 'comment-'+ resp.id;
                 recommend.remove();
                 actions.remove();
-                author.html(Id.getUserFromCookie().displayName);
+                author.html(user.displayName);
                 datetime.html('Just now');
 
                 body.html('<p>'+ resp.body.replace('\n\n', '</p><p>') +'</p>');
@@ -281,6 +291,32 @@ define([
                     });
                 }
             },
+
+            showMoreReplies: function(el) {
+                var threadNode = el.parentNode,
+                    totalResponses = threadNode._responses,
+                    visibleResponses = threadNode._visibleResponses + responsesIncrement;
+
+                Array.prototype.forEach.call(threadNode.querySelectorAll('.d-comment'), function(commentNode, i) {
+                    if (i < visibleResponses) {
+                        commentNode.removeAttribute('hidden');
+                    }
+                });
+
+                threadNode._visibleResponses = visibleResponses;
+
+                if (visibleResponses >= totalResponses) {
+                    threadNode.querySelector('.js-show-more-replies').style.display = 'none';
+                } else {
+                    var buttonText = self.buildShowMoreLabel(totalResponses - visibleResponses);
+                    threadNode.querySelector('.js-show-more-replies').innerText = buttonText;
+                }
+            },
+
+            buildShowMoreLabel: function(num) {
+                return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
+            },
+
 
             bindEvents: function() {
                 // Setup events
