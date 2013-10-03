@@ -63,13 +63,14 @@ define([
     Collection.prototype.createGroups = function(groupNames) {
         var dropItem = this.drop.bind(this);
 
-        return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(n) {
+        return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
             return {
-                name: n,
+                group: index,
+                name: name,
                 articles: ko.observableArray(),
                 dropItem: dropItem
             };
-        })
+        }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
     Collection.prototype.toggleEditingConfig = function() {
@@ -188,29 +189,26 @@ define([
         this.elements = this.elements || $('[data-collection="' + this.id + '"]');
         this.elements.empty();
 
-        this.importList(opts, 'live', 'live');
-        this.importList(opts, this.state.hasDraft() ? 'draft' : 'live', 'draft');
+        this.importList(opts.live, this.live);
+        this.importList(opts.draft || opts.live, this.draft);
     };
 
-    Collection.prototype.importList = function(opts, from, to) {
-        var self = this,
-            groups = this[to];
+    Collection.prototype.importList = function(source, groups) {
+        var self = this;
 
         _.each(groups, function(group) {
             group.articles.removeAll();
         });
 
-        if (opts[from]) {
-            opts[from].forEach(function(item, index) {
-                var groupList;
+        source.forEach(function(item, index) {
+            var group;
 
-                // FAKE a group - for testing.
-                //item.group = ["major", "minor", "other"][Math.min(2, Math.floor(index/2))];
+            // FAKE a group - for testing.
+            item.group = Math.max(0, 2 - Math.floor(index/2));
 
-                groupList = _.find(groups, function(group){ return group.name === item.group; }) || groups[0];
-                groupList.articles.push(new Article(item));
-            });
-        }
+            group = _.find(groups, function(g){ return g.group === item.group; }) || groups[0];
+            group.articles.push(new Article(item));
+        });
     }
 
     Collection.prototype.decorate = function() {

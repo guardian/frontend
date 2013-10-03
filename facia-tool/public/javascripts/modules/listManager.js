@@ -168,7 +168,7 @@ define([
                 }
 
                 apiProps.itemMeta = {
-                    group: group.name
+                    group: group.group
                 }
             }
 
