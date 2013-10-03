@@ -10,7 +10,8 @@ import play.api.libs.json.JsArray
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import play.api.libs.json.JsNumber
-import model.{Comment, CommentCount}
+import discussion.model.{Profile, Comment, CommentCount}
+import play.api.mvc.{Headers, Cookies}
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
@@ -31,7 +32,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
   }
 
-  def commentsFor(key: String, page: String) = {
+  def commentsFor(key: String, page: String): Future[CommentPage] = {
     val size = if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
     val apiUrl = s"$apiRoot/discussion/$key?pageSize=$size&page=$page&orderBy=newest&showSwitches=true"
 
@@ -64,6 +65,18 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
   }
 
+  def myProfile(headers: Headers, cookies: Cookies): Future[Profile] ={
+    def onError(r: Response) =
+      s"Error loading profile, status: ${r.status}, message: ${r.statusText}"
+    val apiUrl = s"$apiRoot/profile/me"
+
+//    val authCookies = cookies filter { AuthCookies.all contains _.name }
+    getJsonOrError(apiUrl, onError) map {
+      json =>
+        Profile(json)
+    }
+  }
+
   protected def getJsonOrError(url: String, onError: (Response) => String):Future[JsValue] = {
     val start = currentTimeMillis()
     GET(url) map {
@@ -84,3 +97,12 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 }
 
 
+object AuthCookies {
+  val guMi = "GU_MI"
+  val guMe = "GU_ME"
+  val guU = "GU_U"
+  val insecure = guU :: guMi :: guMe :: Nil
+  val secure = insecure map {"SC_" + _ }
+  val all = secure ::: insecure
+
+}
