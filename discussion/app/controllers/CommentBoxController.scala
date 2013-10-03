@@ -3,13 +3,16 @@ package controllers
 import play.api.mvc.Action
 import common.JsonComponent
 import model.Cached
-import discussion.model.PrivateProfileFields
+import discussion.model.{Profile, PrivateProfileFields}
+
+import scala.concurrent.Future
 
 trait CommentBoxController extends DiscussionController {
 
-  def postBox() = Action.async {
+  def commentBox() = Action.async {
     implicit request =>
-      discussionApi.myProfile(request.headers, request.cookies) map {
+//      discussionApi.myProfile(request.headers, request.cookies) map {
+      Future(FakeProfile) map {
         profile =>
           val fields = profile.privateFields getOrElse {throw new RuntimeException("No profile information found")}
           val box = fields match {
@@ -22,6 +25,16 @@ trait CommentBoxController extends DiscussionController {
           }
       }
   }
-
-
 }
+
+object FakeProfile extends Profile(
+  "",
+  "Fake Profile",
+  isStaff = false,
+  isContributor = false,
+  privateFields = Some(PrivateProfileFields(
+    canPostComment = true,
+    isPremoderated = false,
+    isSocial = false
+  ))
+)

@@ -17,6 +17,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   protected def GET(url: String): Future[Response]
   protected val apiRoot: String
+  protected val profileHeaders = Set("GU-IdentityToken", "Cookie")
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
     def onError(response: Response) =
