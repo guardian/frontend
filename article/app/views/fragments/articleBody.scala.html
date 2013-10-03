@@ -2,9 +2,11 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-    <h2 class="article-zone tone-border">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-    </h2>
+    <div class="tone-@VisualTone(article)">
+        <h2 class="article-zone tone-accent-border">
+            <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+        </h2>
+    </div>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
