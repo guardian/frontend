@@ -1,3 +1,7 @@
+.match-stats {
+    margin-bottom: $baseline*4;
+}
+
 .match-aggregate,
 .match-comment {
     text-align: center;
@@ -53,7 +57,7 @@
 }
 
 .m-status {
-    padding: 2px 5px;
+    padding: 0 5px;
 }
 
 .home-header {
@@ -104,7 +108,7 @@
 }
 
 .section-divider {
-    border-top: 4px solid $mushroom;
+    @include fs-header(1);
     border-bottom: 1px solid $mushroom;
     padding-top: $baseline * 2;
     padding-bottom: $baseline * 3;

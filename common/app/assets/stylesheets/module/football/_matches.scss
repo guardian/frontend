@@ -6,7 +6,7 @@
 
 .competitions-date {
     background-color: $sportMid;
-    color: #fff;
+    color: $c-neutral1;
     margin-top: $baseline*2;
     margin-bottom: $baseline;
     padding: 9px $gutter/2;
@@ -37,7 +37,7 @@
 }
 
 a.competition-title {
-    color: $sportBright;
+    color: $sportMid;
     font-weight: bold;
 }
 
@@ -121,10 +121,10 @@ a.competition-title {
 
 .match-status abbr {
     display: block;
-    padding: 2px 0;
+    padding: 0;
     margin-top: -2px;
     border: none;
-    width: 28px;
+    width: 24px;
     text-align: center;
 }
 
@@ -139,7 +139,7 @@ a.competition-title {
 
 .match-FT,
 .match-HT {
-    color: #fff;
+    color: $c-neutral1;
     background-color: $sportBright;
 }
 
@@ -270,7 +270,6 @@ a.competition-title {
         font-family: $sans-serif;
         font-size: 14px;
         color: #fff;
-        border-bottom: 1px solid #a1c391;
         padding-bottom: $baseline;
         margin-top: 10px;
     }
@@ -281,7 +280,7 @@ a.competition-title {
 
     .sections li a {
         color: #fff;
-        border-top-color: #a1c391;
+        border-top-color: $sportBright;
         line-height: 21px;
     }
 }
@@ -312,7 +311,9 @@ a.competition-title {
 
 .football-filter {
     background: $sportBright;
-    margin: 0 $gs-gutter/2 $baseline*2;
+    margin: 0 $gs-gutter/2;
+    padding: $baseline*3 32px $baseline*1.5 8px;
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
@@ -320,8 +321,10 @@ a.competition-title {
     color: #fff;
     border-bottom: none;
 
-    > a {
-        color: #fff;
+    > a,
+    > a:hover {
+        color: $c-neutral1;
+        @include fs-bodyCopy(1);
     }
 
     > span {
@@ -338,9 +341,6 @@ a.competition-title {
     top: 0;
 }
 
-.football-table-container {
-    margin-top: $baseline*2;
-}
 
 .live-matches-dateline {
     display: block;
@@ -349,4 +349,9 @@ a.competition-title {
     .has-localnav & {
         padding-top: 12px;
     }
+}
+
+.competitions {
+    margin: $baseline*2 0;
+    list-style: none;
 }
