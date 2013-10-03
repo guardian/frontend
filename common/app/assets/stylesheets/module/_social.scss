@@ -8,12 +8,24 @@
 .social__item {
     float: left;
     width: 25%;
-    opacity: 0.5;
     @include box-sizing(border-box);
 
-    &:hover {
-        opacity: 1;
+    .i-share-email:hover {
+      @extend .i-share-email-hover;
     }
+
+    .i-share-facebook:hover {
+      @extend .i-share-facebook-hover;
+    }
+
+    .i-share-gplus:hover {
+      @extend .i-share-gplus-hover;
+    }
+
+    .i-share-twitter:hover {
+      @extend .i-share-twitter-hover;
+    }
+
 }
 .social__action {
     height: 36px;
