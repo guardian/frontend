@@ -75,37 +75,6 @@
             @include fs-bodyHeading(3, true);
         }
     }
-    > p {
-        margin-bottom: 0;
-
-        + a + p, // Inline link cards are inserted between paragraphs
-        + .inline-image + p,
-        + p {
-            // Indent consecutive paragraphs
-            // by the value of the line-height
-            text-indent: 24px;
-            text-indent: 2.4rem;
-
-            @include mq(tablet) {
-                text-indent: 28px;
-                text-indent: 2.8rem;
-            }
-        }
-    }
-    > p,
-    > figure,
-    > video {
-        + h2 {
-            margin-top: 24px;
-
-            @include mq(tablet) {
-                margin-top: 27px;
-            }
-        }
-        + h3 {
-            margin-top: $baseline*3;
-        }
-    }
 }
 .no-indent {
     text-indent: 0 !important;
