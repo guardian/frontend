@@ -130,10 +130,8 @@ object Frontend extends Build with Prototypes {
     interactive,
     sport,
     coreNavigation,
-    image,
     discussion,
     router,
-    diagnostics,
     identity,
     admin)
 
