@@ -8,6 +8,9 @@ import play.api.mvc.Results._
 import play.api.mvc.BodyParsers._
 import play.api.Play
 import scala.concurrent.Future
+import play.api.libs.openid.OpenID
+import conf.Configuration
+import org.joda.time.DateTime
 
 case class Identity(openid: String, email: String, firstName: String, lastName: String) {
   implicit val formats = Serialization.formats(NoTypeHints)
@@ -68,7 +71,21 @@ object NonAuthAction {
 
 }
 
-class AuthAction(loginRoute: String) extends ExecutionContexts {
+class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with implicits.Dates {
+  import Play.current
+
+  override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
+    if (withinAllowedTime(request) || Play.isTest)
+      Future { f(request).withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)) }
+    else
+      Future { Redirect(loginUrl).withSession(("loginFromUrl", request.uri)) }
+  }
+
+  def withinAllowedTime(request: Request[AnyContent]): Boolean =
+    request.session.get(Configuration.cookies.lastSeenKey).map(new DateTime(_)).exists(_.age < Configuration.cookies.sessionExpiryTime)
+}
+
+class AuthAction(loginUrl: String) extends ExecutionContexts {
   import Play.current
 
   def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
@@ -84,28 +101,68 @@ class AuthAction(loginRoute: String) extends ExecutionContexts {
       val authenticatedRequest = Identity(request) map { id => f(new AuthenticatedRequest(Some(id), request)) }
       authenticatedRequest getOrElse {
         Future {
-          Redirect(loginRoute).withSession(request.session + ("loginFromUrl", request.uri))
+          Redirect(loginUrl).withSession(request.session + ("loginFromUrl", request.uri))
         }
       }
     }
   }
 }
 
-trait LoginController {
+trait LoginController extends ExecutionContexts { self: Controller =>
   val openIdAttributes = Seq(
     ("email", "http://axschema.org/contact/email"),
     ("firstname", "http://axschema.org/namePerson/first"),
     ("lastname", "http://axschema.org/namePerson/last")
   )
+  val extraOpenIDParameters: Seq[String] = Nil
   val googleOpenIdUrl = "https://www.google.com/accounts/o8/id"
 
   val loginUrl: String
   val baseUrl: String //Where to go if there is no loginFromUrl
 
   def openIdCallback(secure: Boolean)(implicit request: RequestHeader): String
-
   def login: Action[AnyContent]
-  def loginPost: Action[AnyContent]
-  def openIDCallback: Action[AnyContent]
-  def logout: Action[AnyContent]
+
+  def loginPost = Action.async { implicit request =>
+    OpenID
+      .redirectURL(googleOpenIdUrl, openIdCallback(secure=true), openIdAttributes)
+      .map(_ + extraOpenIDParameters.mkString("&", "&", ""))
+      .map(Redirect(_))
+      .recover {
+      case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+    }
+  }
+
+  def openIDCallback = Action.async { implicit request =>
+    OpenID.verifiedId.map { info =>
+      val credentials = Identity(
+        info.id,
+        info.attributes.get("email").get,
+        info.attributes.get("firstname").get,
+        info.attributes.get("lastname").get
+      )
+
+      // allow test user access
+      val isTestUser = (credentials.email == "test.automation@gutest.com" && Configuration.environment.isNonProd)
+
+      if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
+        Redirect(session.get("loginFromUrl").getOrElse(baseUrl)).withSession {
+          session +
+           (Identity.KEY -> credentials.writeJson) +
+            (Configuration.cookies.lastSeenKey -> DateTime.now.toString) -
+            "loginFromUrl"
+        }
+      } else {
+        Redirect(loginUrl).flashing(
+          ("error" -> "You can only log in using a Guardian Google Account")
+        ).withSession(session - Identity.KEY)
+      }
+    }.recover {
+      case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+    }
+  }
+
+  def logout = Action { implicit request =>
+    Redirect(loginUrl).withNewSession
+  }
 }
