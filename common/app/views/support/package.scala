@@ -311,8 +311,9 @@ object OmnitureAnalyticsData {
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
     val publication = data.get("publication").getOrElse("")
-    val registrationEvent = data.get("registrationEvent").getOrElse("")
+    val omnitureEvent = data.get("omnitureEvent").getOrElse("")
     val registrationType = data.get("registrationType").getOrElse("")
+    val signinErrorMessage = data.get("signinErrorMessage").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -344,8 +345,9 @@ object OmnitureAnalyticsData {
       ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
       ("c56", jsSupport),
-      ("event", registrationEvent),
-      ("v23", registrationType)
+      ("event", omnitureEvent),
+      ("v23", registrationType),
+      ("e27", signinErrorMessage)
     )
 
 

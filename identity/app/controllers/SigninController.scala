@@ -67,7 +67,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                 else error.description
               formFold.withError(error.context.getOrElse(""), errorMessage)
             }
-            Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+            Ok(views.html.signin(page.signinError(idRequest), idRequest, idUrlBuilder, formWithErrors))
           }
           case Right(responseCookies) => {
             logger.trace("Logging user in")
