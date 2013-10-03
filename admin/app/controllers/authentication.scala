@@ -1,10 +1,10 @@
-package controllers
+package controllers.admin
 
-import conf.Configuration
 import common.ExecutionContexts
+import conf.Configuration
+import controllers.{AuthAction, Identity, LoginController, NonAuthAction}
 import play.api.mvc._
 import play.api.libs.openid.OpenID
-import scala.concurrent.Future
 
 object Authenticated extends AuthAction(routes.Login.login.url)
 

@@ -1,7 +1,8 @@
-package controllers
+package controllers.admin
 
 import play.api.mvc.Controller
 import common.Logging
+import controllers.AuthLogging
 import tools.CloudWatch
 import play.api.libs.ws.WS
 import com.ning.http.client.Realm
