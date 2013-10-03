@@ -9,7 +9,7 @@
     border-top: 1px solid $c-neutral6;
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
+        margin-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
 
