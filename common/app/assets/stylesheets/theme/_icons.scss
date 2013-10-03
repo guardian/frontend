@@ -12,8 +12,10 @@
     top: -1px;
 }
 
-.i-sport-arrow-small {
-    margin: 0 0 -1px $gutter/2;
+.i-sport-arrow--small {
+    @include transform(scale(0.6));
+    margin: 3px 0 0 3px;
+    vertical-align: top;
 }
 
 .is-active .i-menu {

@@ -8,7 +8,8 @@
     @include box-sizing(border-box);
     min-height: $gs-column-height;
     padding: 0 $gs-gutter/2;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top-width: $baseline/2;
+    border-top-style: solid;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
