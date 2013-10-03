@@ -32,8 +32,8 @@ object FakeProfile extends Profile(
   isStaff = false,
   isContributor = false,
   privateFields = Some(PrivateProfileFields(
-    canPostComment = true,
-    isPremoderated = false,
+    canPostComment = false,
+    isPremoderated = true,
     isSocial = false
   ))
 )
