@@ -3,20 +3,18 @@
 }
 
 .article-zone {
-    padding: 13px 0 14px;
+    padding: $baseline 0 $baseline*4;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
+    margin-bottom: 0;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
     }
     font-weight: bolder;
     line-height: 1;
-    border-bottom: 1px solid $mushroom;
-
-    @include mq(tablet) {
-        border-top: none;
-    }
+    border-bottom: 1px solid $c-neutral5;
+    border-top: 2px solid $c-neutral5;
 
     .article__popular & {
         border-bottom: none;
@@ -125,7 +123,6 @@
 .article__standfirst {
     @include fs-headline(1, true);
     text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
     margin-bottom: $baseline*3;
     color: $c-neutral2;
 

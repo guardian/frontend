@@ -272,28 +272,31 @@
 
     .localnav__cta {
         float: right;
-        width: 50px;
-        height: 37px;
-        margin-right: $gs-gutter / -2;
+        width: $gs-column-width;
+        height: $baseline*7;
+        margin: $baseline*2 $gs-gutter/2 0 0;
         padding: 0;
         background-color: #ffffff;
+        border-left: 1px solid $c-neutral5;
+
+        i {
+            margin-top: -4px;
+        }
 
         &.is-active i {
             @include rotate(180deg);
         }
-    }
 
-    .i-nav-divider {
-        margin: 4px 0 0 0;
-        background-color: #ffffff;
-        border-left: 0;
+        &:hover {
+            background-color: #ffffff;
+        }
     }
-
 }
 
 .localnav__inner {
-    border-bottom: 1px solid $medianMushroom;
-    margin: 0 $gs-gutter / 2;
+    border-top: $baseline/2 solid $c-newsAccent;
+    margin: 0;
+    padding-bottom: $baseline*2;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
@@ -304,7 +307,6 @@
 .localnav__title {
     @extend .section-head;
     float: left;
-    padding: 17px 0 12px 0 !important;
     border: 0 !important;
     margin: 0 !important;
 }
