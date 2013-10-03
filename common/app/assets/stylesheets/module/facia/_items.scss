@@ -19,9 +19,8 @@ $meta: #767676;
 }
 .collection__title {
     margin-top: 30px;
-    @include fs-header(1);
-    @include box-sizing(border-box);
-    height: gs-height(1);
+    @include fs-header(5);
+    height: gs-height(1) - $gs-baseline/3;
     padding: $gs-baseline/3 0 0 $gs-gutter/5;
     color: #ffffff;
     background-color: $news-dark;
@@ -31,10 +30,10 @@ $meta: #767676;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .zone-sport .collection--sport-section,
-    .zone-culture .collection--culture-section,
-    .zone-football .collection--football-section {
-        .collection__title {
+    .zone-sport,
+    .zone-culture,
+    .zone-football {
+        .section--news .collection__title {
             display: none;
         }
     }
@@ -42,7 +41,7 @@ $meta: #767676;
 .collection__display-toggle {
     @include box-sizing(border-box);
     position: absolute;
-    min-height: gs-height(1) - $gs-baseline/3;
+    min-height: gs-height(1);
     min-width: gs-span(1);
     top: $gs-baseline/3;
     right: 0;

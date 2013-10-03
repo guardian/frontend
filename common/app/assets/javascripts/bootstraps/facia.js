@@ -53,18 +53,22 @@ define([
                 if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport")) {
                     // wrap the return sports stats component in an 'item'
                     var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                        section = config.page.pageId === "" ? 'sport' : 'news',
                         numVisible = config.page.pageId === "" ? 3 : 5;
                     common.mediator.on('modules:footballfixtures:render', function() {
+                        var container = common.$g('.section--' + section, context)
+                            .first()[0];
                         // toggle class
-                        common.$g('.collection--sport-section .items')
+                        common.$g('.items', container)
                             .removeClass('items--without-sport-stats')
                             .addClass('items--with-sport-stats');
                         // add it after the first item
-                        common.$g('.collection--sport-section .item:first-child', context)
+                        common.$g('.item:first-child', container)
+                            .first()
                             .after($statsItem);
                         // now hide one of the shown ones (but not on mobile)
                         if (detect.getBreakpoint() !== 'mobile') {
-                            common.$g('.collection--sport-section .item.u-h', context)
+                            common.$g('.item.u-h', container)
                                 .first()
                                 .previous()
                                 .addClass('u-h');

@@ -45,12 +45,16 @@ define([
                 prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
                     attachMethod = 'append';
                 common.mediator.on('modules:footballfixtures:render', function() {
+                    var container = common.$g('.section--news', context)
+                        .first()[0];
                     // toggle class
-                    common.$g('.collection--football-section .items')
+                    common.$g('.items', container)
+                        .first()
                         .removeClass('items--without-sport-stats')
                         .addClass('items--with-sport-stats');
                     // add it after the first item
-                    common.$g('.collection--football-section .item:first-child', context)
+                    common.$g('.item:first-child', container)
+                        .first()
                         .after(prependTo);
                 });
             } else {
