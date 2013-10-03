@@ -35,7 +35,7 @@ CommentBox.CONFIG = {
     errors: {
         EMPTY_COMMENT_BODY: 'Please write a comment.',
         COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
-        ENHANCE_YOUR_CALM: 'You\'ll need to wait a minute before submitting another comment.',
+        ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
         API_ERROR: 'Sorry, there was a problem posting your comment.'
     }
 };
@@ -95,7 +95,7 @@ CommentBox.prototype.postComment = function(e) {
     }
 
     else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' too long.');
+        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
     }
 
     if (this.errors.length === 0) {
