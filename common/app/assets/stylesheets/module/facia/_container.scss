@@ -187,6 +187,9 @@
         @include mq($to: tablet) {
             width: 100% !important;
         }
+        @include mq(tablet) {
+            min-height: gs-height(8);
+        }
         .competition-table {
             padding-top: 2px;
             @include mq($to: desktop) {

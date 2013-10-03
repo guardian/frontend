@@ -33,7 +33,7 @@ $meta: #767676;
 @include mq($to: tablet) {
     .zone-sport .collection--sport-section,
     .zone-culture .collection--culture-section,
-    .zone-football .collection---section {
+    .zone-football .collection--football-section {
         .collection__title {
             display: none;
         }

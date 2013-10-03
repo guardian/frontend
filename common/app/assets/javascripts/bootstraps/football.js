@@ -37,12 +37,32 @@ define([
         },
 
         showFrontFixtures: function(context) {
-            var prependTo = context.querySelector('.trailblock ul > li'),
-                table;
+            var prependTo,
+                table,
+                attachMethod;
+            if (common.$g('.facia-container').length) {
+                // wrap the return sports stats component in an 'item'
+                prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                    attachMethod = 'append';
+                common.mediator.on('modules:footballfixtures:render', function() {
+                    // toggle class
+                    common.$g('.collection--football-section .items')
+                        .removeClass('items--without-sport-stats')
+                        .addClass('items--with-sport-stats');
+                    // add it after the first item
+                    common.$g('.collection--football-section .item:first-child', context)
+                        .after(prependTo);
+                });
+            } else {
+                prependTo = context.querySelector('.trailblock ul > li'),
+                    attachMethod = 'after';
+            }
+
             if(!bonzo(prependTo).hasClass('footballfixtures-loaded')) {
                 bonzo(prependTo).addClass('footballfixtures-loaded');
                 table = new FootballFixtures({
                     prependTo: prependTo,
+                    attachMethod: attachMethod,
                     contextual: false,
                     expandable: true,
                     numVisible: 10

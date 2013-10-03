@@ -52,11 +52,9 @@ define([
             common.mediator.on('page:front:ready', function(config, context) {
                 if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport")) {
                     // wrap the return sports stats component in an 'item'
-                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                        numVisible = config.page.pageId === "" ? 3 : 5;
                     common.mediator.on('modules:footballfixtures:render', function() {
-                        // only show 7 rows
-                        common.$g('.match:nth-child(n + 8)', $statsItem)
-                            .addClass('u-h');
                         // toggle class
                         common.$g('.collection--sport-section .items')
                             .removeClass('items--without-sport-stats')
@@ -77,7 +75,8 @@ define([
                         attachMethod: 'append',
                         competitions: ['500', '510', '100', '400'],
                         contextual: false,
-                        expandable: false
+                        expandable: true,
+                        numVisible: numVisible
                     }).init();
                 }
             });
