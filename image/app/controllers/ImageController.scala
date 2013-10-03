@@ -13,7 +13,6 @@ import javax.imageio.ImageIO
 import org.apache.commons.io.{IOUtils, FilenameUtils}
 import java.io.File
 import play.api.libs.ws.Response
-import scala.Some
 import play.api.mvc.SimpleResult
 
 object ImageController extends Controller with Logging with Implicits with ExecutionContexts {
