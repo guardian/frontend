@@ -9,14 +9,14 @@
     border-top: 1px solid $c-neutral6;
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 
     .article-v2__inner &,
     .article__main-column & {
-        padding-left: 0;
-        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     > ul {

@@ -32,6 +32,7 @@
 
 .sub-section-head {
     margin: 0 $gs-gutter/2;
+    border-top-width: $baseline/2;
 
     a {
         padding-left: 0;
@@ -45,8 +46,8 @@
     -webkit-font-smoothing: antialiased;
     line-height: 1;
     font-weight: bolder;
-    padding: $baseline $gs-gutter/2 $baseline*4 $gs-gutter/2;
-    margin: 0;
+    padding: $baseline/2 $gs-gutter/2 $baseline*4 $gs-gutter/2;
+    margin: 0 0 $baseline*2;
     border-top: $baseline solid $c-newsAccent;
     @include box-sizing(border-box);
 
