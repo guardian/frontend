@@ -18,7 +18,6 @@ trait CommentBoxController extends DiscussionController {
           val box = fields match {
             case PrivateProfileFields(false, _, _) => views.html.fragments.cannotCommentBox()
             case PrivateProfileFields(true, isPremod, _) => views.html.fragments.commentBox(isPremod)
-            case _ => views.html.fragments.premodCommentBox
           }
           Cached(60){
             JsonComponent("html" -> box.toString)
