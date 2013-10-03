@@ -10,6 +10,7 @@ GET     /discussion/comment-counts                                              
 GET     /discussion/comment-counts.json                                                         controllers.DiscussionApp.commentCountJson(shortUrls: String)
 GET     /discussion/*shortUrl.json                                                              controllers.DiscussionApp.commentPageJson(shortUrl)
 GET     /discussion/*shortUrl                                                                   controllers.DiscussionApp.commentPage(shortUrl)
+GET     /discussion/commentBox                                                                  controllers.DiscussionApp.commentBox()
 
 # Core Navigation
 GET     /most-read                                                                              controllers.MostPopularController.render(path = "")
