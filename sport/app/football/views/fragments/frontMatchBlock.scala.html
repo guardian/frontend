@@ -3,7 +3,7 @@
     data-count="@{competition.matches.length - numVisible}">
 
     <h3 class="type-5">Today's matches</h3>
-    <a href="@LinkTo{@competition.url}" class="competition-title football-table-link box-indent zone-color type-5" data-link-name="all todays matches">
+    <a href="@LinkTo{@competition.url}" class="competition-title football-table-link box-indent zone-color type-7" data-link-name="all todays matches">
        @competition.fullName <i class="i i-sport-arrow"></i>
     </a>
 
@@ -19,11 +19,11 @@
 </li>
 
 @if(isCompetitionPage) {
-<a href="@LinkTo{@competition.url/fixtures}" class="cta-small cta-small-border type-8 zone-color" data-link-name="View all competition fixtures">
+<a href="@LinkTo{@competition.url/fixtures}" class="cta-small cta-small-border type-8 zone-color front-competition-link" data-link-name="View all competition fixtures">
     View all @competition.fullName fixtures<i class="i i-sport-arrow i-sport-arrow--small"></i>
 </a>
 } else {
-<a href="@LinkTo{/football/live}" class="cta-small cta-small-border type-8 zone-color" data-link-name="View all matches">
+<a href="@LinkTo{/football/live}" class="cta-small cta-small-border type-8 zone-color front-competition-link" data-link-name="View all matches">
     View all today's matches<i class="i i-sport-arrow i-sport-arrow--small"></i>
 </a>
 }

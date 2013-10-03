@@ -201,10 +201,15 @@ a.competition-title {
 .front-competition-fixtures {
     padding-bottom: 0;
     border-bottom: none;
+    border-top: 1px solid $c-neutral6;
 }
 
 .front-competition-fixtures .cta {
     margin-top: 5px;
+}
+
+.front-competition-link {
+    border-bottom: 1px solid $c-neutral6;
 }
 
 // styling for non-ajax match nav
