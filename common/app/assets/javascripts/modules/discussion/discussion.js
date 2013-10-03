@@ -219,14 +219,14 @@ define([
 
                 else {
                     ajax({
-                        url: '/discussion/comment-box'
+                        url: '/discussion/comment-box.json'
                     }).then(this.setupCommentBoxes.bind(this));
                 }
             },
 
-            setupCommentBoxes: function(html) {
-                html = html.commentBoxHtml;
-                var topBox, bottomBox,
+            setupCommentBoxes: function(resp) {
+                var html = resp.html,
+                    topBox, bottomBox,
                     topBoxElem = bonzo.create(html),
                     bottomBoxElem = bonzo.create(html);
 
