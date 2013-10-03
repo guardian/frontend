@@ -9,6 +9,7 @@
     border: none;
     background-color: $mushroom;
     text-shadow: none;
+    cursor: pointer;
 
     &:hover,
     &:focus {
@@ -69,7 +70,6 @@ button.cta {
         @include rotate(0);
     }
 }
-
 
 .top {
     @extend %type-8;
