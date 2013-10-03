@@ -46,14 +46,14 @@
 }
 
 .section-head {
-    @include fs-header(5);
+    @include fs-header(4);
     height: $gs-column-height + $baseline*2;
     line-height: 1;
     font-weight: bolder;
     margin: 0;
     //padding: $baseline/2 $gs-gutter/2 $baseline*4 $gs-gutter/2;
     //margin: 0 0 $baseline*2;
-    border-top: $baseline solid $c-newsAccent;
+    border-top: $baseline/2 solid $c-newsAccent;
     @include box-sizing(border-box);
 
     padding: 2px $gs-gutter/2 0;

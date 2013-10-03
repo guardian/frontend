@@ -1,12 +1,10 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
-    <div class="article-v2__inner">
-        <h2 class="article-zone type-1">
-            <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
-        </h2>
-    </div>
+<h2 class="article-zone tone-@VisualTone(gallery)">
+    <a class="tone-colour tone-border" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
+</h2>
 
+<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article-v2__inner">
