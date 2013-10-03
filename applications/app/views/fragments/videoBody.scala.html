@@ -2,7 +2,7 @@
 
 @defining(page.video){ video =>
     <h2 class="article-zone tone-@VisualTone(video)">
-        <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName)</a>
+        <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(video)">
 

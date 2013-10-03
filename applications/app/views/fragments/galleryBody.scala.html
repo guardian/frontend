@@ -1,7 +1,7 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
 <h2 class="article-zone tone-@VisualTone(gallery)">
-    <a class="tone-colour tone-border" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
+    <a class="tone-colour tone-border" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
 </h2>
 
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">

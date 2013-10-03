@@ -3,7 +3,7 @@
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
     <h2 class="article-zone tone-@VisualTone(article)">
-        <a class="tone-colour tone-border" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
+        <a class="tone-colour tone-border" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live}"
