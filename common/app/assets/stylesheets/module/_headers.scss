@@ -56,7 +56,7 @@
     border-top: $baseline/2 solid $c-newsAccent;
     @include box-sizing(border-box);
 
-    padding: 2px $gs-gutter/2 0;
+    padding: $baseline $gs-gutter/2 0;
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;

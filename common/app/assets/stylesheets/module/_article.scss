@@ -10,20 +10,45 @@
     padding: 0 $gs-gutter/2;
     border-top: $baseline/2 solid $c-newsAccent;
 
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
     @include mq(tablet) {
         min-height: auto;
         padding: $baseline*3 0;
         border-top: 1px dotted $c-neutral5;
+
+        max-width: gs-span(8);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(rightCol) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+        max-width: none;
     }
 
     @include mq(leftCol) {
-        padding-left: $a-leftCol-width + $gs-gutter;
+        padding-left: $a-leftCol-width + $gs-gutter*2;
     }
 
     @include mq(wide) {
+        padding-left:  gs-span(3) + $gs-gutter*2;
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 
+    .box-indent & {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .zone-football & { // TODO: temporary until football gets side cols
+        margin-left: 0;
+        padding-left: $gs-gutter;
+    }
 }
 
 .article__sub-head {
