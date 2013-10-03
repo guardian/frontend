@@ -75,6 +75,20 @@
             @include fs-bodyHeading(3, true);
         }
     }
+    > p,
+    > figure,
+    > video {
+        + h2 {
+            margin-top: 24px;
+
+            @include mq(tablet) {
+                margin-top: 27px;
+            }
+        }
+        + h3 {
+            margin-top: $baseline*3;
+        }
+    }
 }
 .no-indent {
     text-indent: 0 !important;
@@ -95,38 +109,35 @@
     }
 }
 
-.article blockquote {
-    margin: 28px 0 28px 24px;
+.from-content-api blockquote {
     font-style: italic;
+    margin: 28px 0 28px 24px;
 
     @include mq(tablet) {
         margin-left: 28px;
     }
-}
-
-.article blockquote,
-.article blockquote p {
 
     &.quoted {
-        margin: 28px 0;
+        margin-left: 0;
+        font-style: normal;
+        color: $c-neutral2;
 
         p {
             @include fs-headline(1);
-            line-height: 24px;
-            line-height: 2.4rem;
-            font-style: normal;
-            text-indent: 40px;
-            color: $c-neutral2;
-        }
-    }
+            line-height: inherit;
 
-    @include mq(tablet) {
+            &:first-child {
+                text-indent: 40px;
 
-        &.quoted p {
-            @include fs-headline(2, true);
-            line-height: 28px;
-            line-height: 2.8rem;
-            text-indent: 42px;
+                @include mq(tablet) {
+                    text-indent: 42px;
+                }
+            }
+
+            @include mq(tablet) {
+                @include fs-headline(2, true);
+                line-height: inherit;
+            }
         }
     }
 }

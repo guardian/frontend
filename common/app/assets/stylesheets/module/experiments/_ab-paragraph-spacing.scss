@@ -17,18 +17,20 @@
                 }
             }
         }
-        > p,
-        > figure,
-        > video {
-            + h2 {
-                margin-top: 24px;
+    }
+    blockquote.quoted {
+        text-indent: 0;
 
-                @include mq(tablet) {
-                    margin-top: 27px;
-                }
-            }
-            + h3 {
-                margin-top: $baseline*3;
+        @include mq(tablet) {
+            text-indent: 0;
+        }
+
+        p {
+            margin-bottom: 0;
+            text-indent: 40px;
+
+            @include mq(tablet) {
+                text-indent: 42px;
             }
         }
     }
