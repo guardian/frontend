@@ -79,7 +79,7 @@
 
     time {
         display: inline-block;
-        width: 85%;
+        width: 80%;
     }
 
     i {
@@ -121,12 +121,14 @@
 }
 
 .article__standfirst {
-    @include fs-bodyCopy(3, true);
+    @include fs-headline(1, true);
     text-rendering: optimizeLegibility;
     margin-bottom: $baseline*3;
+    color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
+        @include fs-headline(2, true);
+        -webkit-font-smoothing: antialiased;
         margin-bottom: $baseline*4;
     }
 }
@@ -167,6 +169,7 @@
     margin-bottom: $baseline*2;
     min-height: 20px;
     padding: $baseline - 1 0 $baseline*3 - 1 0;
+    color: $c-neutral2;
 
     article & {
         @include mq(tablet, leftCol) {

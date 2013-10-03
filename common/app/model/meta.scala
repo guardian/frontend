@@ -63,6 +63,7 @@ trait Elements {
   def videos: List[VideoElement]
   def thumbnail: Option[ImageElement]
   def mainPicture: Option[ImageAsset]
+  def mainVideo: Option[VideoElement]
 
   private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
   // Find the the lowest index imageContainer.

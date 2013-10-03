@@ -5,7 +5,16 @@
     display: none;
 }
 
+.live-summary__expander-cta__button {
+    @include fs-data(3);
+    text-align: left;
+    font-weight: bold;
+}
+
 .live-summary--expandable {
+    border-bottom: 1px solid $c-neutral2;
+    margin-bottom: $baseline;
+
     .live-summary__expander-cta {
         display: block;
     }

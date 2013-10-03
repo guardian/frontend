@@ -159,7 +159,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
         ImageServerSwitch.switchOn
-        inBodyImage.getAttribute("class") should include("img-extended")
+        inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
@@ -252,7 +252,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be(29)
+        $("[itemprop=relatedLink]").size() should be(30)
       }
     }
 
@@ -431,18 +431,5 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
 
     }
-
-    scenario("Story package with a link to a Poll") {
-      Given("I'm on an article that has a story package linking to a Poll page")
-
-      HtmlUnit("/science/2013/aug/15/breastfeeding-six-months-breast-cancer") { browser =>
-        import browser._
-
-        Then("the poll should not appear in the list")
-        $(".related-trails a[href=\"/commentisfree/poll/2013/aug/15/breastfeeding-swimming-pool-unhygienic-poll\"]") should have size (0)
-      }
-
-    }
-
   }
 }
