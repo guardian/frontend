@@ -8,7 +8,14 @@
                 color: $colour;
             }
         }
+        .tone-border { border-color: $colour; }
+
         .tone-background { background-color: $colour; }
+
+        .is-summary > .block-title {
+            color: $colour;
+        }
+
         .commentcount {
             i {
                 @extend .i-comment-#{$tone};

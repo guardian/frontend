@@ -126,7 +126,7 @@ define([
             s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
-   
+
             var mvt = ab.makeOmnitureTag(config, document);
             if (mvt.length > 0) {
 
@@ -148,6 +148,10 @@ define([
             }
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
+
+            // NB: only needs to be in while we're serving both old fronts and new facia
+            var propValue = ((config.page.isFacia) ? 'Facia' : 'Fronts') + '-application';
+            s.prop69 = s.eVar55 = propValue;
 
             s.prop65    = config.page.headline || '';
 

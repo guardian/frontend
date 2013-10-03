@@ -189,6 +189,65 @@
     border-color: $c-commentAccent;
 }
 
-.zone-money .tone-border {
-    border-color: $c-newsAccent;
+.zone-money .trail__count--commentcount i {
+    @extend .i-comment-news;
 }
+
+
+.zone-childrens-books-site .trail__count--commentcount i,
+.zone-tv-and-radio .trail__count--commentcount i,
+.zone-artanddesign .trail__count--commentcount i,
+.zone-stage .trail__count--commentcount i,
+.zone-culture .trail__count--commentcount i,
+.zone-film .trail__count--commentcount i,
+.zone-books .trail__count--commentcount i,
+.zone-music .trail__count--commentcount i {
+    @extend .i-comment-feature;
+}
+
+.zone-journalismcompetition .trail__count--commentcount i,
+.zone-global-development .trail__count--commentcount i,
+.zone-law .trail__count--commentcount i,
+.zone-theobserver .trail__count--commentcount i,
+.zone-science .trail__count--commentcount i,
+.zone-theguardian .trail__count--commentcount i,
+.zone-education .trail__count--commentcount i,
+.zone-technology .trail__count--commentcount i,
+.zone-society .trail__count--commentcount i,
+.zone-politics .trail__count--commentcount i,
+.zone-news .trail__count--commentcount i,
+.zone-uk .trail__count--commentcount i,
+.zone-uk-news .trail__count--commentcount i,
+.zone-media .trail__count--commentcount i,
+.zone-world .trail__count--commentcount i {
+    @extend .i-comment-news;
+}
+
+.zone-fashion .trail__count--commentcount i,
+.zone-lifeandstyle .trail__count--commentcount i {
+    @extend .i-comment-feature;
+}
+
+.zone-sport .trail__count--commentcount i,
+.zone-football .trail__count--commentcount i {
+    @extend .i-comment-news;
+}
+
+.zone-travel .trail__count--commentcount i {
+    @extend .i-comment-feature;
+}
+
+.zone-business .trail__count--commentcount i {
+    @extend .i-comment-news;
+}
+
+.zone-commentisfree .trail__count--commentcount i,
+.zone-tone .trail__count--commentcount i,
+.zone-global .trail__count--commentcount i {
+    @extend .i-comment-comment;
+}
+
+.zone-money .trail__count--commentcount i {
+    @extend .i-comment-news;
+}
+

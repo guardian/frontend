@@ -20,15 +20,15 @@ define([
             '<div class="live-toggler-wrapper">' +
             '  <button class="u-button-reset live-toggler live-toggler--all js-live-toggler"' +
             '          data-link-name="filter show key-events" title="Show key events only">' +
-            '    <span class="lt__label">Showing</span>' +
-            '    <span class="u-h">key events instead of</span>' +
+            '    <span class="u-h">Showing key events instead of</span>' +
             '    <span class="lt__value">All posts</span>' +
+            '    <i class="i i-arrow-grey-down"></i>' +
             '  </button>' +
             '  <button class="u-button-reset live-toggler live-toggler--key-events js-live-toggler"' +
             '          data-link-name="filter show all posts" title="Show all posts">' +
-            '    <span class="lt__label">Showing</span>' +
-            '    <span class="u-h">all posts instead of</span>' +
+            '    <span class="u-h">Showing all posts instead of</span>' +
             '    <span class="lt__value">Key events</span>' +
+            '    <i class="i i-arrow-grey-down"></i>' +
             '  </button>' +
             '</div>';
     }

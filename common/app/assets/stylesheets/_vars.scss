@@ -107,7 +107,8 @@ $fs-data: (
     12 14, // 2
     13 16, // 3
     14 18, // 4
-    18 22  // 5
+    16 20, // 5
+    18 22  // 6
 );
 
 /* Colours
@@ -128,19 +129,23 @@ $darkGrey: #676767;
 
 $c-neutral1: #333333;
 $c-neutral2: #676767;
-$c-neutral3: #cfcfcd;
+$c-neutral3: #929497;
+$c-neutral4: #b3b3b4;
+$c-neutral5: #cfcfcd;
+$c-neutral6: #edede7;
 $c-neutral7: #f4f4ee;
+
 
 /* Tones
    ========================================================================== */
-$c-newsDefault: #065E91;
-$c-newsAccent: #21BDFF;
+$c-newsDefault: #005689;
+$c-newsAccent: #4BC6DF;
 
-$c-featureDefault: #981F5C;
-$c-featureAccent: #F57188;
+$c-featureDefault: #951C55;
+$c-featureAccent: #F66980;
 
-$c-commentDefault: #FB8935;
-$c-commentAccent: #FEC000;
+$c-commentDefault: #E6711B;
+$c-commentAccent: #FFBB00;
 
 
 /* Zones

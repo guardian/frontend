@@ -16,7 +16,7 @@
         }
     }
 
-    <div class="trailblock front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
+    <div class="trailblock @if(page.isNetworkFront){trailblock--no-border} front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
         data-count="@block.description.numItemsVisible"
         data-section-id="@block.description.id">
 

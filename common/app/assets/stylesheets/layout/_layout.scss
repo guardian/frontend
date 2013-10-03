@@ -124,12 +124,9 @@ $headerHeight: 58px;
     width: $inArticleInlineImgWidth;
     float: left;
     clear: left;
-    margin: 3px 0 0 0;
-    background-color: $c-neutral7;
-    padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+    margin: 3px $gs-gutter 0 0;
 
     @include mq(mobileLandscape) {
-        padding-right: $gs-gutter;
         width: gs-span(2);
     }
 

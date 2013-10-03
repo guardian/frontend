@@ -12,6 +12,10 @@
 
     @socialSignin(page, idRequest, idUrlBuilder)
 
+    <div class="form__note">
+        By proceeding, you agree to The Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
+    </div>
+
     <div class="identity-section">
         <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
             @if(signinForm.globalError.isDefined) {
