@@ -2,12 +2,10 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
+    <h2 class="article-zone tone-@VisualTone(article)">
+        <a class="tone-colour tone-border" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+    </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-        <div class="article-v2__inner">
-            <h2 class="article-zone type-1">
-                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
-            </h2>
-        </div>
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
@@ -89,7 +87,7 @@
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                <h3 id="comments" class="type-2 article-zone">Comments</h3>
+                <h3 id="comments" class="article__sub-head tone-colour tone-border">Comments</h3>
                 <div class="article__discussion"></div>
 
                 <div class="d-show-cta-wrapper">
