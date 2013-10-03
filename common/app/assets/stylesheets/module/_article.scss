@@ -8,7 +8,8 @@
     @include box-sizing(border-box);
     min-height: $gs-column-height;
     padding: 0 $gs-gutter/2;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top-width: $baseline/2;
+    border-top-style: solid;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -18,7 +19,7 @@
     @include mq(tablet) {
         min-height: auto;
         padding: $baseline*3 0;
-        border-top: 1px dotted $c-neutral5;
+        border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 
         max-width: gs-span(8);
         margin-left: auto;
@@ -41,7 +42,7 @@
     }
 
     .box-indent & {
-        padding-left: 0;
+        padding-left: 0 !important;
         margin-left: 0;
     }
 
