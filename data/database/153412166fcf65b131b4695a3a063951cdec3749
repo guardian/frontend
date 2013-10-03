@@ -1,0 +1,1943 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-04-16T07:47:00Z",
+      "webTitle":"Tall buildings",
+      "webUrl":"http://www.theguardian.com/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness",
+      "fields":{
+        "trailText":"<p>New skyscrapers are radically altering city skylines. Are the towers near you beautiful or banal? Share your images</p>",
+        "headline":"Tall buildings",
+        "body":"<p>When Observer architecture critic Rowan Moore wrote about his <a href=\"http://www.guardian.co.uk/artanddesign/2012/dec/02/london-high-rise-craze-ruins-skyline\">concerns about London's tall building construction free-for-all</a> in the New Review, the impassioned responses from readers made fascinating reading. Is the capital's rash of new skyscrapers the result of lazy, unimaginative designs waved through by council planners for political and commercial gain? Or do high buildings bring a sense of ambition to a city's idea of itself &ndash; and provide desperately needed space on the vertical plane? The Observer has teamed up with <a href=\"http://www.architecture.com/\">RIBA</a> to organise a <a href=\"http://www.architecture.com/WhatsOn/Talks/Events/2013/Spring/RIBAObserverPanelDiscussionAreTallBuildingsBlightingourSkyline.aspx\">panel discussion</a> on the subject, on Tuesday April 16, between Rowan Moore, City of London chief planning officer Peter Rees, author/journalist Simon Jenkins and architect Julia Barfield, chaired by Kevin McCloud.</p> <p>We'd like to illustrate our report of the event with your images of tall buildings &shy;&ndash; the beautiful or the banal, not just in London but wherever you are. Share your images using GuardianWitness &ndash; and if you get them to us before 10am on Friday 18th, the best will be published on the Guardian site.</p> <p>Closes 5pm Wednesday 24 April 2013.</p> <p><a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> is the home of user-generated content on the Guardian. Contribute your video, pictures and stories, and browse news, reviews and creations submitted by others. Posts will be reviewed prior to publication on GuardianWitness, and the best pieces will feature on the Guardian site.</p><!-- Guardian Watermark: internal-code/content/407209202|2013-10-02T14:49:15Z|9011d9402f674596aaf58b9bd06b9b556a243484 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-24T11:28:51Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+        "standfirst":"New skyscrapers are radically altering city skylines. Are the towers near you beautiful or banal? Share your images",
+        "shortUrl":"http://gu.com/p/3f62h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"407209202",
+        "allowUgc":"true",
+        "internalComposerCode":"516be496e4b046e93b9623cf",
+        "isPremoderated":"false",
+        "byline":"Sarah Donaldson",
+        "ugcEndDate":"2013-04-19T10:00:00Z",
+        "publication":"theguardian.com",
+        "internalPageCode":"1894013",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T06:52:37Z"
+      },
+      "tags":[{
+        "id":"artanddesign/architecture",
+        "type":"keyword",
+        "webTitle":"Architecture",
+        "webUrl":"http://www.theguardian.com/artanddesign/architecture",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/architecture",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/series/assignment-of-the-week",
+        "type":"series",
+        "webTitle":"Assignment of the week",
+        "webUrl":"http://www.theguardian.com/theguardian/series/assignment-of-the-week",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/assignment-of-the-week",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/series/guardianwitness-assignments",
+        "type":"series",
+        "webTitle":"GuardianWitness assignments",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-assignments",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-assignments",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"profile/sarahdonaldson",
+        "type":"contributor",
+        "webTitle":"Sarah Donaldson",
+        "webUrl":"http://www.theguardian.com/profile/sarahdonaldson",
+        "apiUrl":"http://content.guardianapis.com/profile/sarahdonaldson",
+        "bio":"<p>Sarah Donaldson is arts editor of the <a href=\"http://www.guardian.co.uk/theobserver\">Observer</a></p>",
+        "r2ContributorId":"26497",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/red/blue_pics/2008/09/12/sarah_donaldson.jpg",
+        "references":[]
+      },{
+        "id":"artanddesign/design",
+        "type":"keyword",
+        "webTitle":"Design",
+        "webUrl":"http://www.theguardian.com/artanddesign/design",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/design",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378593/af0db547-8bce-4630-895d-58ff42ee297e-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378593/af0db547-8bce-4630-895d-58ff42ee297e-460x276.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"276",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378969/af0db547-8bce-4630-895d-58ff42ee297e-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378969/af0db547-8bce-4630-895d-58ff42ee297e-220x132.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"132",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379215/af0db547-8bce-4630-895d-58ff42ee297e-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379215/af0db547-8bce-4630-895d-58ff42ee297e-620x372.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"372",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379682/af0db547-8bce-4630-895d-58ff42ee297e-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379682/af0db547-8bce-4630-895d-58ff42ee297e-1020x612.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"612",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380234/af0db547-8bce-4630-895d-58ff42ee297e-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380234/af0db547-8bce-4630-895d-58ff42ee297e-380x228.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"228",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"84",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380757/af0db547-8bce-4630-895d-58ff42ee297e-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380757/af0db547-8bce-4630-895d-58ff42ee297e-540x324.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"324",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026381842/af0db547-8bce-4630-895d-58ff42ee297e-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026381842/af0db547-8bce-4630-895d-58ff42ee297e-2048x1536.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"1536",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026384419/af0db547-8bce-4630-895d-58ff42ee297e-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026384419/af0db547-8bce-4630-895d-58ff42ee297e-2060x1236.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"1236",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026386861/af0db547-8bce-4630-895d-58ff42ee297e-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026386861/af0db547-8bce-4630-895d-58ff42ee297e-300x180.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"180",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026387245/af0db547-8bce-4630-895d-58ff42ee297e-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026387245/af0db547-8bce-4630-895d-58ff42ee297e-1024x768.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"768",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/516be496e4b046e93b9623cf"
+      }],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"lifeandstyle/2013/apr/16/dogs-sleeping-pets-guardianwitness",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-04-16T07:39:00Z",
+      "webTitle":"Top pets: let sleeping dogs lie",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/apr/16/dogs-sleeping-pets-guardianwitness",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/apr/16/dogs-sleeping-pets-guardianwitness",
+      "fields":{
+        "trailText":"<p>Dozing dachshunds, wiped-out whippets, snoozing schnauzers – we'd like to see them all</p>",
+        "headline":"Top pets: let sleeping dogs lie",
+        "body":"<p>For this week&rsquo;s Top pets assignment, please show us pictures of your canine friends asleep.</p> <p>Closes 10am Monday 22 April 2013.</p> <p><a href=\"https://witness.guardian.co.uk/assignment/5166d9e5e4b06bae4b7cdacb\">See the current contributions on GuardianWitness.</a></p> <p><a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> is the home of user-generated content on the Guardian. Contribute your video, pictures and stories, and browse news, reviews and creations submitted by others. Posts will be reviewed prior to publication on GuardianWitness, and the best pieces will feature on the Guardian site.</p><!-- Guardian Watermark: internal-code/content/407039314|2013-10-02T14:49:15Z|1bfe56cc58c3a05df62d1a32aa10dd99764994d8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-17T14:17:12Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695045830/-140x84.jpeg",
+        "standfirst":"Dozing dachshunds, wiped-out whippets, snoozing schnauzers – we'd like to see them all",
+        "shortUrl":"http://gu.com/p/3f4bv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695045830/-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"407039314",
+        "allowUgc":"true",
+        "internalComposerCode":"5166d9e5e4b06bae4b7cdacb",
+        "isPremoderated":"false",
+        "ugcEndDate":"2013-04-18T11:00:00Z",
+        "publication":"theguardian.com",
+        "internalPageCode":"1892781",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T06:55:28Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/series/top-pets",
+        "type":"series",
+        "webTitle":"Top pets",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/top-pets",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/top-pets",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/dogs",
+        "type":"keyword",
+        "webTitle":"Dogs",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/dogs",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/dogs",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"theguardian/series/guardianwitness-assignments",
+        "type":"series",
+        "webTitle":"GuardianWitness assignments",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-assignments",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-assignments",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"lifeandstyle/pets",
+        "type":"keyword",
+        "webTitle":"Pets",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/pets",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/pets",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695036697/-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695036697/-220x132.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"132",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695036978/-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695036978/-300x180.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"180",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695037431/-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695037431/-380x228.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"228",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695037834/-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695037834/-620x372.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"372",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695038190/-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695038190/-460x276.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"276",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695038953/-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695038953/-2060x1236.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"1236",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695041276/-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695041276/-2048x1536.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"1536",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695043127/-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695043127/-540x324.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"324",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695043794/-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695043794/-1020x612.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"612",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695044967/-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695044967/-1024x768.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"768",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695045830/-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/11/1365695045830/-140x84.jpeg",
+            "source":"Katie Le Ruez",
+            "photographer":"Katie Le Ruez",
+            "altText":"Sleeping whippet",
+            "height":"84",
+            "credit":"Katie Le Ruez/Katie Le Ruez",
+            "caption":"A whippet puppy sleeps on the sofa. Photograph: Katie Le Ruez",
+            "mediaId":"gu-fc-6a86686a-729e-4dcf-9782-9b52995b6484",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/5166d9e5e4b06bae4b7cdacb"
+      }],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/apr/16/syria-refugees-world-guardianwitness",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-04-16T07:43:00Z",
+      "webTitle":"Syria refugees: your stories",
+      "webUrl":"http://www.theguardian.com/world/2013/apr/16/syria-refugees-world-guardianwitness",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/16/syria-refugees-world-guardianwitness",
+      "fields":{
+        "trailText":"<p>As Syria's humanitarian crisis escalates, we want to hear from those involved</p>",
+        "headline":"Syria refugees: your stories",
+        "body":"<p>Over 1.5 million refugees have fled the civil war in Syria, according to the UN.&nbsp;Hundreds of thousands of people have left the country but have not yet been officially registered, and many more are internally displaced within Syria.</p> <p>With thousands of people crossing Syria's borders every day, the UN, aid agencies and neighbouring countries are struggling to cope. Lebanon, Turkey, Egypt and Iraq are all hosting refugees&nbsp;<a href=\"http://www.washingtonpost.com/world/middle_east/camp-for-syrian-refugees-opens-in-jordan-funded-by-uae-as-more-syrians-flee-civil-war/2013/04/10/ea704550-a1cf-11e2-bd52-614156372695_story.html\">and Jordan has recently opened a second camp</a>&nbsp;to ease pressure on its first, Zaatari, which now houses more than 100,000 people. Many more refugees are avoiding the camps and residing in towns and cities.&nbsp;</p> <p>If you're affected by the civil war in Syria &ndash; whether you're a refugee, an aid worker, or living in a host country &ndash; we'd like you to show us what life is like for you and the people around you. Share your images, video and text using GuardianWitness.</p> <p>Though we'd like to hear from you, your security is most important. We recognise it may not always be safe to record or share your experiences &ndash; so please think about this when sharing your content with GuardianWitness.</p> <p><strong>Closes 5pm Wednesday 2 October 2013</strong></p> <p><a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a>&nbsp;is the home of user-generated content on the Guardian. Contribute your video, pictures and stories, and browse news, reviews and creations submitted by others. Posts will be published on GuardianWitness, and the best pieces featured on the Guardian site.</p><!-- Guardian Watermark: internal-code/content/407079258|2013-10-02T14:49:15Z|36e6f6aeace4292fecdf041a2d94e56a2374058a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-08-28T08:26:16Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382130/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-140x84.jpeg",
+        "standfirst":"As Syria's humanitarian crisis escalates, we want to hear from those involved",
+        "shortUrl":"http://gu.com/p/3f4tk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382130/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"407079258",
+        "allowUgc":"true",
+        "internalComposerCode":"5167c90ce4b06bae4b7cdb93",
+        "isPremoderated":"false",
+        "ugcEndDate":"2013-09-02T17:00:00Z",
+        "publication":"theguardian.com",
+        "internalPageCode":"1892990",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T06:53:48Z"
+      },
+      "tags":[{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/series/guardianwitness-assignments",
+        "type":"series",
+        "webTitle":"GuardianWitness assignments",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-assignments",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-assignments",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"profile/maeve-shearlaw",
+        "type":"contributor",
+        "webTitle":"Maeve Shearlaw",
+        "webUrl":"http://www.theguardian.com/profile/maeve-shearlaw",
+        "apiUrl":"http://content.guardianapis.com/profile/maeve-shearlaw",
+        "bio":"<p>Maeve is community coordinator on the Global development site. Follow her on twitter @maeveshearlaw</p>",
+        "r2ContributorId":"53839",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756380983/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756380983/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-460x276.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"276",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756381546/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756381546/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-1020x612.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"612",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382130/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382130/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-140x84.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"84",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382439/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382439/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-620x372.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"372",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382821/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756382821/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-380x228.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"228",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756383696/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756383696/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-2060x1236.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"1236",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756385952/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756385952/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-2048x1536.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"1536",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756388256/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756388256/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-300x180.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"180",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756388506/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756388506/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-540x324.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"324",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756388931/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756388931/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-1024x768.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"768",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756389703/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365756389703/cb8653c0-27a2-4e7a-af04-fa6840f7a88a-220x132.jpeg",
+            "source":"REUTERS",
+            "photographer":"MUHAMMAD HAMED",
+            "altText":"Syrian refugees receive humanitarian aid shopping vouchers",
+            "height":"132",
+            "credit":"MUHAMMAD HAMED/REUTERS",
+            "caption":"Syrian refugees receive humanitarian aid shopping vouchers at a distribution center of the World Food Program (WFP) organization in Amman April 11, 2013. The U.N. refugee agency and the WFP are distributing shopping vouchers to 170,000 Syrian refugees in Jordan every month to mostly women and children. The shopping voucher program has allocated $5.5 million in vouchers for Syrian refugees in Jordan, according to a WFP official. Photograph: MUHAMMAD HAMED/REUTERS",
+            "mediaId":"gu-fc-3082e010-5bf7-4e79-9481-e6cd2dc04b6c",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/5167c90ce4b06bae4b7cdb93"
+      }],
+      "isExpired":"false"
+    },{
+      "id":"culture/2013/apr/15/guardianwitness-shooting-video-light",
+      "sectionId":"culture",
+      "sectionName":"Culture",
+      "webPublicationDate":"2013-04-15T11:35:00Z",
+      "webTitle":"GuardianWitness guide to video: light",
+      "webUrl":"http://www.theguardian.com/culture/2013/apr/15/guardianwitness-shooting-video-light",
+      "apiUrl":"http://content.guardianapis.com/culture/2013/apr/15/guardianwitness-shooting-video-light",
+      "fields":{
+        "trailText":"<p>Over the next few months we'll be giving you some tips so you can improve your video, and light is the topic for our first tutorial</p>",
+        "headline":"GuardianWitness guide to video: light",
+        "body":"<p>Hello and welcome to the GuardianWitness guide to video. Over the next few months we&rsquo;ll be giving you some tips so you can improve your video, whether you&rsquo;re using an iPhone, a DSLR with all the bells and whistles, or anything in between.</p> <p>We&rsquo;ll also be setting a range of assignments, from rough and ready point-and-shoots that require zero editing, to requests for slightly more polished efforts.</p> <p>There should be something for everyone, no matter how skilled you are (or aren&rsquo;t) with a camera.</p> <p>Light is the topic for our first tutorial. How you see light and how you choose to record it is fundamental to shooting good video, and you certainly don&rsquo;t need a fancy camera to have a go. Your eyes are much more important than your kit for this exercise.</p> <p>As the series continues, someone from the Guardian will be on-hand to offer some constructive criticism after each assignment, and to highlight the best responses.</p> <p>We&rsquo;re also hoping you will let us know if there&rsquo;s a topic you&rsquo;d like to see covered or if there are other issues you think we should be addressing.</p> <p>There&rsquo;s an option in the <a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> app to &lsquo;Send us an assignment idea&rsquo; for you to do just that, and we&rsquo;ll open comments here once we&rsquo;ve got some videos from you.</p> <p>So without any further ado, take a look at our first episode, then get outside with your camera and show us what you&rsquo;ve got!</p> <p>Closes 1pm Tuesday 30 April 2013.</p> <ul> <li><a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> is the home of user-generated content on the Guardian. Contribute your video, pictures and stories, and browse news, reviews and creations submitted by others. Posts will be reviewed prior to publication on GuardianWitness, and the best pieces will feature on the Guardian site.</li> </ul><!-- Guardian Watermark: internal-code/content/407204587|2013-10-02T14:49:15Z|db2daf0bb1b477d1ac376b24bf8e41b5c2eea00d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-05-17T09:50:38Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/15/1366020735775/The-GuardianWitness-Guide-026.jpg",
+        "standfirst":"Over the next few months we'll be giving you some tips so you can improve your video, and light is the topic for our first tutorial",
+        "shortUrl":"http://gu.com/p/3f6vh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/15/1366020735775/The-GuardianWitness-Guide-026.jpg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"407204587",
+        "allowUgc":"true",
+        "internalComposerCode":"516bd63ee4b00f501f7c42e9",
+        "isPremoderated":"false",
+        "byline":"Elliot Smith",
+        "ugcEndDate":"2013-04-30T10:00:00Z",
+        "publication":"theguardian.com",
+        "internalPageCode":"1893959",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T06:28:59Z"
+      },
+      "tags":[{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/series/guardianwitness-guide-to-shooting-video",
+        "type":"series",
+        "webTitle":"GuardianWitness guide to shooting video",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-guide-to-shooting-video",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-guide-to-shooting-video",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/series/guardianwitness-assignments",
+        "type":"series",
+        "webTitle":"GuardianWitness assignments",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-assignments",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-assignments",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"profile/elliotsmith",
+        "type":"contributor",
+        "webTitle":"Elliot Smith",
+        "webUrl":"http://www.theguardian.com/profile/elliotsmith",
+        "apiUrl":"http://content.guardianapis.com/profile/elliotsmith",
+        "bio":"<p>Elliot Smith is a <a href=\"http://www.guardian.co.uk/multimedia\">multimedia</a> producer for guardian.co.uk. You should follow him on Twitter <a href=\"https://twitter.com/elliotsmith\">here</a></p>",
+        "r2ContributorId":"19190",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/516bd63ee4b00f501f7c42e9"
+      }],
+      "isExpired":"false"
+    },{
+      "id":"commentisfree/2013/apr/16/cuts-personal-comment-guardianwitness",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-04-16T06:50:00Z",
+      "webTitle":"How are the cuts affecting you? Share your images",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/apr/16/cuts-personal-comment-guardianwitness",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/apr/16/cuts-personal-comment-guardianwitness",
+      "fields":{
+        "trailText":"<p>Help us build a more comprehensive picture of life under the cuts</p>",
+        "headline":"How are the cuts affecting you? Share your images",
+        "body":"<p>As part of our series, Comment is free would like you to share images that show how the government cuts have affected your life. Have your local public services that you use had to close, such as libraries or sports facilities? Can you no longer afford to take your children for days out, or pay for school trips? We're asking for images of the things you've had to stop doing, to get an idea of how the government cuts are challenging daily life. Perhaps you could send us an image of a shop that you can no longer afford to go to, or a journey you have stopped taking, or something you're making do with because you can't afford to replace it.</p> <p>Send us your images using GuardianWitness and help us build a more comprehensive picture of life under the cuts. You can find out more by reading <a href=\"http://www.guardian.co.uk/help/insideguardian/2013/apr/16/introducing-guardianwitness-platform-content-youve-created\">Joanna Geary's introductory post</a>.</p> <p>Closes 10am Tuesday 7 May 2013.</p> <p><a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> is the home of user-generated content on the Guardian. Contribute your video, pictures and stories, and browse news, reviews and creations submitted by others. Posts will be reviewed prior to publication on GuardianWitness, and the best pieces will feature on the Guardian site &ndash; they might even appear in the paper.</p><!-- Guardian Watermark: internal-code/content/407211349|2013-10-02T14:49:15Z|52d9acc0604df8766cf5e1d6bc38b64b0e6232b3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-16T09:40:01Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591083/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-140x84.jpeg",
+        "standfirst":"Help us build a more comprehensive picture of life under the cuts",
+        "shortUrl":"http://gu.com/p/3f63h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591083/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"407211349",
+        "allowUgc":"true",
+        "internalComposerCode":"516beb30e4b046e93b9623d2",
+        "isPremoderated":"false",
+        "byline":"Bella Mackie",
+        "ugcEndDate":"2013-05-07T10:00:00Z",
+        "publication":"theguardian.com",
+        "internalPageCode":"1894040",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T06:50:58Z"
+      },
+      "tags":[{
+        "id":"commentisfree/series/the-cuts-get-personal",
+        "type":"series",
+        "webTitle":"The cuts get personal",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/the-cuts-get-personal",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/the-cuts-get-personal",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"theguardian/series/guardianwitness-assignments",
+        "type":"series",
+        "webTitle":"GuardianWitness assignments",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-assignments",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-assignments",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"profile/bella-mackie",
+        "type":"contributor",
+        "webTitle":"Bella Mackie",
+        "webUrl":"http://www.theguardian.com/profile/bella-mackie",
+        "apiUrl":"http://content.guardianapis.com/profile/bella-mackie",
+        "bio":"<p>Bella Mackie is Comment is free's community co-ordinator. She doesn't like fashion magazines</p>",
+        "r2ContributorId":"39037",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/8/1365417288729/Isabella-Mackie.jpg",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031588052/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031588052/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-300x180.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"180",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031588393/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031588393/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-220x132.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"132",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031589060/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031589060/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-2060x1236.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"1236",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031590576/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031590576/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-540x324.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"324",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591083/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591083/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-140x84.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"84",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591385/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591385/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-460x276.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"276",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591652/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031591652/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-620x372.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"372",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031592441/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031592441/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-2048x1536.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"1536",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031594009/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031594009/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-1020x612.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"612",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031594798/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031594798/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-380x228.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"228",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031595187/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366031595187/f42db4ea-90c3-4ae0-85ec-ab0c9357b95f-1024x768.jpeg",
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes.",
+            "height":"768",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Thousands of homes in the poorest parts of the UK that were set for demolition may be left with people living there due to government cuts to housing programmes. Photograph: Jeff J Mitchell/Getty Images",
+            "mediaId":"gu-fc-d9a4b620-d5b8-4404-ae71-371983085151",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/516beb30e4b046e93b9623d2"
+      }],
+      "isExpired":"false"
+    },{
+      "id":"artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-04-16T07:47:00Z",
+      "webTitle":"Tall buildings",
+      "webUrl":"http://www.theguardian.com/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness",
+      "fields":{
+        "trailText":"<p>New skyscrapers are radically altering city skylines. Are the towers near you beautiful or banal? Share your images</p>",
+        "headline":"Tall buildings",
+        "body":"<p>When Observer architecture critic Rowan Moore wrote about his <a href=\"http://www.guardian.co.uk/artanddesign/2012/dec/02/london-high-rise-craze-ruins-skyline\">concerns about London's tall building construction free-for-all</a> in the New Review, the impassioned responses from readers made fascinating reading. Is the capital's rash of new skyscrapers the result of lazy, unimaginative designs waved through by council planners for political and commercial gain? Or do high buildings bring a sense of ambition to a city's idea of itself &ndash; and provide desperately needed space on the vertical plane? The Observer has teamed up with <a href=\"http://www.architecture.com/\">RIBA</a> to organise a <a href=\"http://www.architecture.com/WhatsOn/Talks/Events/2013/Spring/RIBAObserverPanelDiscussionAreTallBuildingsBlightingourSkyline.aspx\">panel discussion</a> on the subject, on Tuesday April 16, between Rowan Moore, City of London chief planning officer Peter Rees, author/journalist Simon Jenkins and architect Julia Barfield, chaired by Kevin McCloud.</p> <p>We'd like to illustrate our report of the event with your images of tall buildings &shy;&ndash; the beautiful or the banal, not just in London but wherever you are. Share your images using GuardianWitness &ndash; and if you get them to us before 10am on Friday 18th, the best will be published on the Guardian site.</p> <p>Closes 5pm Wednesday 24 April 2013.</p> <p><a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> is the home of user-generated content on the Guardian. Contribute your video, pictures and stories, and browse news, reviews and creations submitted by others. Posts will be reviewed prior to publication on GuardianWitness, and the best pieces will feature on the Guardian site.</p><!-- Guardian Watermark: internal-code/content/407209202|2013-10-02T14:49:15Z|9011d9402f674596aaf58b9bd06b9b556a243484 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-24T11:28:51Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+        "standfirst":"New skyscrapers are radically altering city skylines. Are the towers near you beautiful or banal? Share your images",
+        "shortUrl":"http://gu.com/p/3f62h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"407209202",
+        "allowUgc":"true",
+        "internalComposerCode":"516be496e4b046e93b9623cf",
+        "isPremoderated":"false",
+        "byline":"Sarah Donaldson",
+        "ugcEndDate":"2013-04-19T10:00:00Z",
+        "publication":"theguardian.com",
+        "internalPageCode":"1894013",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T06:52:37Z"
+      },
+      "tags":[{
+        "id":"artanddesign/architecture",
+        "type":"keyword",
+        "webTitle":"Architecture",
+        "webUrl":"http://www.theguardian.com/artanddesign/architecture",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/architecture",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/series/assignment-of-the-week",
+        "type":"series",
+        "webTitle":"Assignment of the week",
+        "webUrl":"http://www.theguardian.com/theguardian/series/assignment-of-the-week",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/assignment-of-the-week",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/series/guardianwitness-assignments",
+        "type":"series",
+        "webTitle":"GuardianWitness assignments",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-assignments",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-assignments",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"profile/sarahdonaldson",
+        "type":"contributor",
+        "webTitle":"Sarah Donaldson",
+        "webUrl":"http://www.theguardian.com/profile/sarahdonaldson",
+        "apiUrl":"http://content.guardianapis.com/profile/sarahdonaldson",
+        "bio":"<p>Sarah Donaldson is arts editor of the <a href=\"http://www.guardian.co.uk/theobserver\">Observer</a></p>",
+        "r2ContributorId":"26497",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/red/blue_pics/2008/09/12/sarah_donaldson.jpg",
+        "references":[]
+      },{
+        "id":"artanddesign/design",
+        "type":"keyword",
+        "webTitle":"Design",
+        "webUrl":"http://www.theguardian.com/artanddesign/design",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/design",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378593/af0db547-8bce-4630-895d-58ff42ee297e-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378593/af0db547-8bce-4630-895d-58ff42ee297e-460x276.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"276",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378969/af0db547-8bce-4630-895d-58ff42ee297e-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026378969/af0db547-8bce-4630-895d-58ff42ee297e-220x132.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"132",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379215/af0db547-8bce-4630-895d-58ff42ee297e-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379215/af0db547-8bce-4630-895d-58ff42ee297e-620x372.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"372",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379682/af0db547-8bce-4630-895d-58ff42ee297e-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026379682/af0db547-8bce-4630-895d-58ff42ee297e-1020x612.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"612",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380234/af0db547-8bce-4630-895d-58ff42ee297e-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380234/af0db547-8bce-4630-895d-58ff42ee297e-380x228.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"228",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380454/af0db547-8bce-4630-895d-58ff42ee297e-140x84.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"84",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380757/af0db547-8bce-4630-895d-58ff42ee297e-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026380757/af0db547-8bce-4630-895d-58ff42ee297e-540x324.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"324",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026381842/af0db547-8bce-4630-895d-58ff42ee297e-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026381842/af0db547-8bce-4630-895d-58ff42ee297e-2048x1536.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"1536",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026384419/af0db547-8bce-4630-895d-58ff42ee297e-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026384419/af0db547-8bce-4630-895d-58ff42ee297e-2060x1236.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"1236",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026386861/af0db547-8bce-4630-895d-58ff42ee297e-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026386861/af0db547-8bce-4630-895d-58ff42ee297e-300x180.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"180",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026387245/af0db547-8bce-4630-895d-58ff42ee297e-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366026387245/af0db547-8bce-4630-895d-58ff42ee297e-1024x768.jpeg",
+            "source":"Alamy",
+            "photographer":"PSL Images / Alamy",
+            "altText":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London.",
+            "height":"768",
+            "credit":"PSL Images / Alamy/Alamy",
+            "caption":"BTAXTC Citypoint (left) and other office buildings in Ropemaker place, London. Photograph: PSL Images/Alamy",
+            "mediaId":"gu-fc-837cb7ff-6473-4b5d-94b2-5cbfc0e562e2",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/516be496e4b046e93b9623cf"
+      }],
+      "isExpired":"false"
+    },{
+      "id":"theguardian/video/2013/apr/16/guardian-witness-promo-video",
+      "sectionId":"theguardian",
+      "sectionName":"From the Guardian",
+      "webPublicationDate":"2013-04-16T08:15:00Z",
+      "webTitle":"GuardianWitness: our new home for content you've created - video",
+      "webUrl":"http://www.theguardian.com/theguardian/video/2013/apr/16/guardian-witness-promo-video",
+      "apiUrl":"http://content.guardianapis.com/theguardian/video/2013/apr/16/guardian-witness-promo-video",
+      "fields":{
+        "trailText":"<p>GuardianWitness: our new home for content you've created - video</p>",
+        "headline":"GuardianWitness: our new home for content you've created - video",
+        "body":"<video data-media-id=\"gu-video-407157721\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107580922/GuardianWitness-powered-b-016.jpg\">\n        <source src=\"http://cdn.theguardian.tv/brightcove/2013/4/15brightcove/2013/4/15/130413WitnessPromo-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/4/15/130413WitnessPromo_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/4/15/130413WitnessPromo/130413WitnessPromo.m3u8\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/4/15/130413WitnessPromo-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/4/15/130413WitnessPromo_3gpLg16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/407157721|2013-10-02T14:49:15Z|d45c265432159f863084df15cf9b803fc82cfb2d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-16T13:31:57Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107571898/GuardianWitness-powered-b-010.jpg",
+        "standfirst":"Visit the <a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> site or download the <a href=\"https://itunes.apple.com/gb/app/guardianwitness/id587343125?mt=8\">iPhone</a> or <a href=\"https://play.google.com/store/apps/details?id=com.guardian.witness&amp;feature=nav_result#?t=W251bGwsMSwxLDMsImNvbS5ndWFyZGlhbi53aXRuZXNzIl0\">Android app</a>",
+        "shortUrl":"http://gu.com/p/3f5he",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107571898/GuardianWitness-powered-b-010.jpg",
+        "commentable":"false",
+        "internalContentCode":"407157721",
+        "allowUgc":"false",
+        "internalOctopusCode":"7481107",
+        "isPremoderated":"false",
+        "byline":"Elliot Smith, Katherine Le Ruez and Mark Summers",
+        "publication":"theguardian.com",
+        "internalPageCode":"1893686",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T08:15:08Z"
+      },
+      "tags":[{
+        "id":"theguardian/series/guardianwitness-assignments",
+        "type":"series",
+        "webTitle":"GuardianWitness assignments",
+        "webUrl":"http://www.theguardian.com/theguardian/series/guardianwitness-assignments",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/guardianwitness-assignments",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/elliotsmith",
+        "type":"contributor",
+        "webTitle":"Elliot Smith",
+        "webUrl":"http://www.theguardian.com/profile/elliotsmith",
+        "apiUrl":"http://content.guardianapis.com/profile/elliotsmith",
+        "bio":"<p>Elliot Smith is a <a href=\"http://www.guardian.co.uk/multimedia\">multimedia</a> producer for guardian.co.uk. You should follow him on Twitter <a href=\"https://twitter.com/elliotsmith\">here</a></p>",
+        "r2ContributorId":"19190",
+        "references":[]
+      },{
+        "id":"profile/katherineleruez",
+        "type":"contributor",
+        "webTitle":"Katherine Le Ruez",
+        "webUrl":"http://www.theguardian.com/profile/katherineleruez",
+        "apiUrl":"http://content.guardianapis.com/profile/katherineleruez",
+        "bio":"<p>Katherine Le Ruez is an executive producer for guardian.co.uk</p>",
+        "r2ContributorId":"19196",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-407157721",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107559618/GuardianWitness-powered-b-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"230",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107732889/GuardianWitness-powered-b-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"90",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107562281/GuardianWitness-powered-b-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"225",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107563736/GuardianWitness-powered-b-004.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"360",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107566773/GuardianWitness-powered-b-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"54",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107569225/GuardianWitness-powered-b-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"340",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107570622/GuardianWitness-powered-b-009.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"130",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107571898/GuardianWitness-powered-b-010.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"84",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107573314/GuardianWitness-powered-b-011.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"132",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107574584/GuardianWitness-powered-b-012.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"168",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107575942/GuardianWitness-powered-b-013.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"180",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107577243/GuardianWitness-powered-b-014.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"228",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107578897/GuardianWitness-powered-b-015.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"276",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107580922/GuardianWitness-powered-b-016.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"372",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107565371/GuardianWitness-powered-b-005.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"360",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2013/4/15brightcove/2013/4/15/130413WitnessPromo-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/4/15/130413WitnessPromo-720.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/4/15/130413WitnessPromo_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/4/15/130413WitnessPromo_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/4/15/130413WitnessPromo/130413WitnessPromo.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        }]
+      },{
+        "id":"gu-image-407271866",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/16/1366107571898/GuardianWitness-powered-b-010.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Graphic",
+            "altText":"GuardianWitness powered by EE logo",
+            "height":"84",
+            "credit":"Graphic/guardian.co.uk",
+            "caption":"GuardianWitness powered by EE logo",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"help/insideguardian/2013/apr/16/introducing-guardianwitness-platform-content-youve-created",
+      "sectionId":"help",
+      "sectionName":"Help",
+      "webPublicationDate":"2013-04-16T09:01:00Z",
+      "webTitle":"Introducing GuardianWitness, our new platform for content you've created",
+      "webUrl":"http://www.theguardian.com/help/insideguardian/2013/apr/16/introducing-guardianwitness-platform-content-youve-created",
+      "apiUrl":"http://content.guardianapis.com/help/insideguardian/2013/apr/16/introducing-guardianwitness-platform-content-youve-created",
+      "fields":{
+        "trailText":"<p>GuardianWitness is a new way to collaborate with Guardian journalists by telling us your side of a story in video, pictures or text</p>",
+        "headline":"Introducing GuardianWitness, our new platform for content you've created",
+        "body":"<video data-media-id=\"gu-video-407157721\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/brightcove/2013/4/15brightcove/2013/4/15/130413WitnessPromo-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/4/15/130413WitnessPromo-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/4/15/130413WitnessPromo/130413WitnessPromo.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/4/15/130413WitnessPromo_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/4/15/130413WitnessPromo_3gpLg16x9.3gp\"></source>\n      </video><p>The digital communication revolution has expanded the possibilities for how we, as journalists, do our journalism – the tools we can use in our research and the ways that we can connect with others. It has also opened up a whole new world for those outside of newsrooms to tell their stories.</p><p>We believe that journalism gets stronger when these worlds collaborate. This is open journalism.</p><p>Today, in partnership with EE, we launch <a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> – a new platform that takes the Guardian another step further on this open journalism journey. </p><p>Of course working with you, our readers, is something that the Guardian has always been proud to do.</p><p>We are lucky to have amazing communities that come to our site to share their passions and interests. From politics to poetry our community members regularly work with us to bring additional insight and depth to our coverage. </p><p>From <a href=\"http://www.guardian.co.uk/world/greenland\">Greenland</a> to <a href=\"http://www.guardian.co.uk/world/antarctica\">Antarctica</a>, West Africa's <a href=\"http://www.guardian.co.uk/world/guinea-bissau\">Guinea-Bissau</a> to <a href=\"http://www.guardian.co.uk/world/tuvalu\">Tuvalu</a> in the Pacific, over the past year Guardian readers have accessed our site from almost every country in the world. Working together with our journalists - from picture and multimedia editors to correspondents and columnists - together we can help bring stories to light from across the globe.</p><p>In recent years alone, you have been involved in some of the biggest news stories of the age: helping us <a href=\"http://www.guardian.co.uk/politics/mps-expenses\">review MPs' expense claims</a>; providing <a href=\"http://www.guardian.co.uk/world/arab-and-middle-east-protests\">eyewitness accounts of the Arab Spring</a>; unpicking<a href=\"http://www.guardian.co.uk/world/sarah-palin-emails\"> Sarah Palin's emails</a> and <a href=\"http://www.guardian.co.uk/uk/london-riots\">covering</a> – and later <a href=\"http://www.guardian.co.uk/uk/series/reading-the-riots\">understanding</a> - the UK riots.</p><p>When police told us that there was nothing suspicious about the death of the newspaper seller Ian Tomlinson, it was a reader that sent us <a href=\"http://www.guardian.co.uk/uk/2009/apr/07/ian-tomlinson-g20-death-video\">a video which clearly showed a police officer knocking Tomlinson to the ground</a>. When we started to investigate unfair Government work schemes, <a href=\"http://www.guardian.co.uk/society/2013/feb/12/poundland-ruling-government-work-schemes\">Cait Reilly submitted her story</a> and subsequently challenged the Government's workfare scheme in court.</p><p>You have helped us tell <a href=\"http://www.guardian.co.uk/society/series/breadline-britain\">the human story of public spending cuts</a> with heartfelt and emotional personal stories, added depth and insight to our culture site's <a href=\"http://www.guardian.co.uk/music/music+tone/albumreview\">album</a> and <a href=\"http://www.guardian.co.uk/books/series/reader-reviews-roundup\">book reviews</a>, and <a href=\"http://www.guardian.co.uk/culture/culture+tone/q-and-as\">quizzed actors, authors, musicians, dancers and artists</a> to find out exactly what makes them tick, and created our own <a href=\"http://www.guardian.co.uk/books/series/not-the-booker-prize\">alternative to the Booker prize</a>.</p><p>The <a href=\"https://witness.guardian.co.uk/\">GuardianWitness platform</a>, and supporting <a href=\"https://itunes.apple.com/gb/app/guardianwitness/id587343125?mt=8\">iPhone</a> and <a href=\"https://play.google.com/store/apps/details?id=com.guardian.witness&amp;feature=nav_result#?t=W251bGwsMSwxLDMsImNvbS5ndWFyZGlhbi53aXRuZXNzIl0\">Android apps</a> will help us to carry on this tradition. It will allow you to tell your story - by desktop or mobile - by submitting pictures, videos and text to journalists directly from an assignment.</p><p>It also has its own <a href=\"https://witness.guardian.co.uk/\">site</a>, which allows you to submit and browse news, opinions and creations submitted to those assignments.</p><p>If your submission is picked up by a journalist it could go on to be featured across the Guardian - in print and online - which means you can help set the news agenda and become part of the Guardian's award-winning journalism.</p><p>If you've seen something you think we should know about, you can also send us your own stories via the website or mobile apps. Or, if you think there's an assignment our readers should be investigating, then you can submit your suggestions.</p><p>To find out more, see our <a href=\"http://www.guardian.co.uk/info/2013/jan/17/about\">About GuardianWitness</a> page or read the <a href=\"http://www.guardian.co.uk/info/2013/jan/17/faqs\">FAQs</a>. If you have any questions about our open journalism or the GuardianWitness site specifically, please do add your comments below. </p><p>We look forward to seeing, sharing and understanding the whole picture with you.</p><!-- Guardian Watermark: internal-code/content/403245992|2013-10-02T14:49:15Z|1954fffb29f3ca2178fdbb435c3145b5574dd8a1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-12T11:11:30Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"GuardianWitness is a new way to collaborate with Guardian journalists by telling us your side of a story - <a href=\"https://witness.guardian.co.uk/\">online</a> and on <a href=\"https://play.google.com/store/apps/details?id=com.guardian.witness\">Android</a> and <a href=\"https://itunes.apple.com/us/app/guardianwitness/id587343125?ls=1&amp;mt=8\">iPhone</a>",
+        "shortUrl":"http://gu.com/p/3de4t",
+        "wordcount":"547",
+        "commentable":"true",
+        "internalContentCode":"403245992",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Joanna Geary",
+        "publication":"theguardian.com",
+        "internalPageCode":"1860534",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-23T09:01:00Z"
+      },
+      "tags":[{
+        "id":"help/insideguardian",
+        "type":"blog",
+        "webTitle":"Inside the Guardian blog",
+        "webUrl":"http://www.theguardian.com/help/insideguardian",
+        "apiUrl":"http://content.guardianapis.com/help/insideguardian",
+        "sectionId":"help",
+        "sectionName":"Help",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/joanna-geary",
+        "type":"contributor",
+        "webTitle":"Joanna Geary",
+        "webUrl":"http://www.theguardian.com/profile/joanna-geary",
+        "apiUrl":"http://content.guardianapis.com/profile/joanna-geary",
+        "bio":"<p>Joanna Geary is digital development editor for the Guardian. She is responsible for developing new tools and processes to help journalists better understand, reach and work with readers</p>",
+        "r2ContributorId":"49089",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/12/1334236392431/Joanna_Geary.jpg",
+        "references":[]
+      },{
+        "id":"media/citizenmedia",
+        "type":"keyword",
+        "webTitle":"Citizen media",
+        "webUrl":"http://www.theguardian.com/media/citizenmedia",
+        "apiUrl":"http://content.guardianapis.com/media/citizenmedia",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-407157721",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2013/4/15brightcove/2013/4/15/130413WitnessPromo-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/4/15/130413WitnessPromo-720.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/4/15/130413WitnessPromo_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/4/15/130413WitnessPromo_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/4/15/130413WitnessPromo/130413WitnessPromo.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/14/130413WitnessPromo_7481107.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    }]
+  }
+}

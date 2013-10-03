@@ -1,0 +1,2148 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-06-03T09:35:47Z",
+      "webTitle":"Burma's Rohingya people: a story of segregation and desperation | Rushanara Ali",
+      "webUrl":"http://www.theguardian.com/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation",
+      "apiUrl":"http://content.guardianapis.com/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation",
+      "fields":{
+        "trailText":"<strong>Rushanara Ali: </strong>The international community must put pressure on Burma to protect Rohingya Muslims and end segregation in Rakhine state",
+        "headline":"Burma's Rohingya people: a story of segregation and desperation",
+        "body":"<p>How desperate and distrustful of your government do you have to be to refuse an offer of relocation when a cyclone is about to hit your home? That many of the displaced Rohingya people in Burma's Rakhine state took this decision demonstrates how difficult their lives have become.</p><p></p><p>For months now, the Rohingya Muslim people have been targeted in a campaign that a <a href=\"http://www.hrw.org/sites/default/files/reports/burma0413webwcover_0.pdf\" title=\"\">Human Rights Watch report</a> (pdf) has described as \"ethnic cleansing\". Rohingya Muslims in Burma have been forced into segregated settlements and camps, and – in many cases – cut off from lifesaving aid.</p><p></p><p>I visited displacement camps in Rakhine in May with <a href=\"http://refugeesinternational.org/\" title=\"\">Refugees International</a> and <a href=\"http://www.burmacampaign.org.uk/\" title=\"\">Burma Campaign UK</a>, meeting with displaced people who – after suffering horrific attacks by members of the Rakhine Buddhist community in October –were forced to flee into remote areas of the countryside, areas completely unsuitable for displacement camps.</p><p>Drinking water had to be brought in on boats by NGOs, and primary healthcare was provided one morning a week. If you needed medical help at other times, you had to hope an NGO would come by boat to get you.</p><p>Residents of this squalid community fall ill frequently due to insanitary conditions. I travelled by boat for two hours to Pauktaw, where a <a href=\"http://www.unhcr.org.uk/\" title=\"\">UNHCR</a>-supported camp is home to thousands of Rohingya people. The shores adjacent to the camps were covered in faeces, with dead rats floating in the water just metres from where children were bathing to keep cool in the heat.</p><p></p><p>Since it was attacked, the Rohingya community has been totally cut off from markets and job opportunities; living in a segregated area, its people are barred by the authorities from travelling to the sites where they used to work and trade. Donor governments – including the UK – have helped provide some basic services, but it is nowhere near enough to give these people a safe and dignified existence.</p><p></p><p>The Rohingyas I met were living in flimsy tents so close to the shore that there was no way they could survive the monsoon season, let alone a cyclone. Even the emergency evacuations now underway will not be enough to get them safely through the coming months. During my visit, I was told that it would take at least two months to build temporary shelters on higher ground, and the government has delayed allocating the necessary land, perhaps in an attempt to assuage local Rakhine extremists. All of this demonstrates the unwillingness of the government to prioritise the safety of the Rohingya community.</p><p></p><p>Aid agencies have had real difficulties in getting help to people. Apart from the logistical problems created by the camps' isolation, the government has introduced bureaucratic obstacles, including serious delays in providing travel authorisations and visas for aid staff. Most troubling, some Rakhine Buddhist political and religious leaders have made threats against aid agencies because they object to assistance being offered to to the Rohingyas. Instead of taking action, the government refuses to let aid workers operate in areas where threats are made.</p><p></p><p>Displaced people told me about family members they had lost in the October attacks, speaking of their grief. Most wanted to return home, but were too scared to do so without appropriate protection. And they were aware that rather than focusing on moving people to higher ground during April, the government was conducting a \"verification exercise\" in displacement camps, in which they tried to force Rohingyas to sign forms admitting that they were \"Bengalis\". This only added to their distrust of the authorities, which was already high after many of the security services either committed or condoned attacks on their community last year. People told me that they would never be allowed to return home because local authorities were trying to create Muslim-free zones.</p><p></p><p>In a discussion with a group of Rohingya women, I listened to stories of family members being killed; some had lost seven, eight, nine loved ones. After hearing these testimonies, I wasn't surprised that some Rohingya people took the seemingly irrational decision to refuse relocation in the face of a cyclone. They are so desperate that they do not know who to trust or where they may be sent next. And, as a woman who lost her entire family said, \"If, after having lost everything – including my whole family – because we are Rohingya Muslims, [the government] still don't recognise me as Rohingya in my own country, then I might as well be dead\".</p><p></p><p>The UK government, together with the rest of the international community, must keep the pressure on the Burmese government to facilitate full humanitarian access to the Rohingya, end segregation in Rakhine state, provide them with the protection they need to return home, and restore their Burmese citizenship.</p><p></p><p>• <em>A video documenting Rushanara Ali's trip to Burma can be found </em><a href=\"http://www.youtube.com/watch?annotation_id=annotation_319262&amp;feature=iv&amp;src_vid=CAkP1cjMfaw&amp;v=7Z0ZFWsL37o\" title=\"\"><em>here</em></a></p><!-- Guardian Watermark: internal-code/content/409882795|2013-10-02T14:49:16Z|ca0992d745b19253b43d8b6da13961e7b5ec9dff -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-06-03T09:37:33Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+        "standfirst":"The international community must put pressure on Burma to protect Rohingya Muslims and end segregation in Rakhine state",
+        "shortUrl":"http://gu.com/p/3g95c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+        "wordcount":"792",
+        "commentable":"true",
+        "internalContentCode":"409882795",
+        "allowUgc":"false",
+        "internalOctopusCode":"7659324",
+        "isPremoderated":"false",
+        "byline":"Rushanara Ali",
+        "publication":"theguardian.com",
+        "internalPageCode":"1915959",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-06-10T09:35:47Z"
+      },
+      "tags":[{
+        "id":"global-development/poverty-matters",
+        "type":"blog",
+        "webTitle":"Poverty matters blog",
+        "webUrl":"http://www.theguardian.com/global-development/poverty-matters",
+        "apiUrl":"http://content.guardianapis.com/global-development/poverty-matters",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/conflict-and-development",
+        "type":"keyword",
+        "webTitle":"Conflict and development",
+        "webUrl":"http://www.theguardian.com/global-development/conflict-and-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/conflict-and-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/internally-displaced-people",
+        "type":"keyword",
+        "webTitle":"Internally displaced people",
+        "webUrl":"http://www.theguardian.com/world/internally-displaced-people",
+        "apiUrl":"http://content.guardianapis.com/world/internally-displaced-people",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/rushanara-ali",
+        "type":"contributor",
+        "webTitle":"Rushanara Ali",
+        "webUrl":"http://www.theguardian.com/profile/rushanara-ali",
+        "apiUrl":"http://content.guardianapis.com/profile/rushanara-ali",
+        "bio":"<p>Rushanara Ali is Labour MP for Bethnal Green and Bow and shadow international development minister</p>",
+        "r2ContributorId":"34847",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/15/1373884088560/Rushanara-Ali.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-409990691",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018201831/MDG-Rohingya-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"54",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018203446/MDG-Rohingya-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"130",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"84",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018205857/MDG-Rohingya-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"132",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018207066/MDG-Rohingya-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"168",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018208307/MDG-Rohingya-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"180",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018209572/MDG-Rohingya-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"228",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018210927/MDG-Rohingya-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"276",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018212240/MDG-Rohingya-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"340",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018210927/MDG-Rohingya-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"276",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah camp for internally displaced people on the outskirts of Sittwe. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-409990692",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"84",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"world/2012/dec/20/burma-rohingya-muslim-refugee-camps",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2012-12-20T14:23:43Z",
+      "webTitle":"Trapped inside Burma's refugee camps, the Rohingya people call for recognition",
+      "webUrl":"http://www.theguardian.com/world/2012/dec/20/burma-rohingya-muslim-refugee-camps",
+      "apiUrl":"http://content.guardianapis.com/world/2012/dec/20/burma-rohingya-muslim-refugee-camps",
+      "fields":{
+        "newspaperPageNumber":"21",
+        "trailText":"<p>Muslim group languishes in makeshift homes with no work, no schools and no citizenship rights from Burmese government</p>",
+        "headline":"Trapped inside Burma's refugee camps, the Rohingya people call for recognition",
+        "body":"<p>The helicopter cuts a sharp arc away from the sea and sweeps over pagoda-topped hills and dusty farmland until a mass of dirty white tents comes into view. Soon throngs of people can be seen coming out of their makeshift homes and rushing towards the airfield, until they resemble a human fence, snaking five-deep around the camp. There are mothers in pastel hijabs, men in T-shirts and longyis, and naked children clutching on to grandparents, jostling for space among puddles and dust, held back by guards with rifles.</p><p>Here at Pauktaw refugee camp in Rakhine state – home to the inhabitants of five Rohingya Muslim villages who fled intercommunal conflict in western Burma this year – there are no schools, no work and no fields to cultivate – because no one is allowed to leave. When a helicopter lands, they hope it will bring either more supplies or some end to a way of life that has been unchanged for six months.</p><p>Since June Rakhine state, on the border with Bangladesh, has been ripped apart by violence between the majority Rakhine Buddhists and minority Rohingya Muslims, sparked by the rape and murder of a Buddhist woman. Thousands of homes have been destroyed, 200 people have been killed and more than 115,000 displaced.</p><p>Communities that once co-existed peacefully have been sent to segregated refugee camps all around the state, the majority of them filled with Rohingya – a population of roughly 800,000 who claim to be rightful citizens of Burma but whom the Burmese government widely calls &quot;Bengali immigrants&quot;, denying them citizenship and placing restrictions on their rights to travel, attend higher education and even marry.</p><p>Accompanying a high-level delegation of Burmese officials and British diplomats – including the British ambassador to Burma, Andrew Heyn, and the minister for south-east Asia, Hugo Swire – to five refugee camps over a two-day period, the Guardian was escorted by gun-wielding Buddhist border guards to meet Pauktaw camp's Muslim leaders, who sit cross-legged on plastic sheeting underneath ripped tents suspended by salvaged wood.</p><p>Entirely reliant on aid, they said they needed greater medical care and want recognition as an ethnic group. &quot;Rakhines came to our villages and burned down our houses, that's why we're here,&quot; said one elder, his hands clasped tightly at his waist. &quot;We've been living here for generations and never had a situation like this, so I don't know why it happened. But now we have no documents – everything was burnt.&quot;</p><p>Tents are so scarce that many families have cobbled together thatch-and-corrugated iron shelters, sleeping on hay and torn blankets. Those that do exist bear Saudi Arabia's logo, but they are torn and thin – leftovers from a huge aid donation during cyclone Nargis. Aid workers said the UNHCR has been forbidden to provide the camp with new tents, but the reasons were unclear from both U Hla Maung Tin, chief minister of Rakhine state, and General Zaw Winn, Burma's deputy minister for border affairs, both of whom were part of the visiting delegation.</p><p>The British government is Burma's largest aid donor and through various NGOs is providing water, sanitation and healthcare to about 58,000 Buddhists and Muslims across the state. But camp conditions vary wildly in their size and ethnicity. In Mingan, a Rakhine camp of 300 people in Sittwe, water pumps, kitchen crops and rubbish bins make neat little rows next to the newly issued tents and their inhabitants are allowed to go into town and work. In contrast, none of the Rohingya the Guardian met said they were allowed to leave – &quot;for their own security&quot;, officials explain – and they have watched instead as their farmland and animals have been taken over by Rakhine Buddhists.</p><p>Villages razed since the conflict began this summer, and reignited in October, have turned into breeding grounds for discontent. In Sittwe, the regional capital where much of the violence took place, the city is segregated along Muslim and Buddhist lines and a tight curfew is still in place. &quot;It is impossible for the Muslims to stay here now,&quot; said Cho Cho Lwin, 41, from her tent in Mingan. &quot;If we forgive them, they'll just do it again. They have always wanted to expand their land but until now didn't have the chance.&quot;</p><p>Many Burmese believe the Rohingya are illegal Bengali immigrants who crossed over from Bangladesh during the British occupation, and who aim to turn Rakhine into a Muslim state. As many Rakhine are fervent nationalists – Rakhine was an independent kingdom until 1784 – they worry that the Rohingya are extremists in disguise.</p><p>&quot;There are outside radical elements [at play] and [the Rohingya issue] is a tool of Islamicisation,&quot; said Oo Hla Saw of the Rakhine Nationalities Development party (RNDP). &quot;That is why we are afraid.&quot;</p><p>Most Burmese refuse to consider the Rohingya as an ethnic group and claim the name has been fabricated and used to win international support. Anti-Rohingya animosity is so strong that it can be felt ddown in the former capital, Rangoon, where discussions on the issue turn into rants about Burma's porous borders and a government that has been too soft on the &quot;illegal Bengalis&quot;.</p><p>While the government has seemingly taken steps to address the issue, a Rakhine inquiry commission set up in August raised eyebrows after it emerged there was not a single Rohingya representative on the commission, yet its chairman, Aye Maung, heads the RNDP, and another of its representatives, Ko Ko Gyi, has previously stated that Rohingya are &quot;invading&quot; Burma.</p><p>Multiple allegations of abuse against Rohingya by security forces, including rape and torture, have been lodged with human rights groups, who have expressed concern about the prevalence of Muslims in detention. According to official figures released last week, more than 1,100 suspects have been detained in connection with this year's violence, three-quarters of whom are Rohingya.</p><p>Abu Tahay, of the Rohingya political group National Democratic Party for Development, says the authorities have acted without warrants and Rohingya detainees have been held without bail or access to lawyers.</p><p>The Burmese government has been quick to deny international media reports of genocide and has described the situation as an intercommunal conflict caused by underdevelopment in the state. Last month President Thein Sein promised that his government would look at a range of solutions – among them resettlement and citizenship – in what has become Burma's most pressing conflict since its transition to democracy last year.</p><p>Local immigration authorities recently began the mammoth task of verifying the citizenship of Rakhine's Muslim population in an effort to settle the explosive question. While some Rohingya hold temporary registration cards that grant them the right to vote but little else, citizenship revolves around a contentious 1982 law requiring proof that the past three generations of an applicant's family have lived in Burma. It is a touchy subject for Rohingya, many of whom lack any documentation but insist that their ancestors were born and bred in the state.</p><p>The census is expected to continue until 2014, although it is still unclear whether Buddhist and Muslim communities will be expected to live together once more or will continue to be segregated. It is also unknown what will happen to those who are incapable of providing documentation.</p><p>Swire – who initially travelled to Burma to lead a trade delegation – said &quot;conditions [in Rakhine] remain extremely worrying&quot; and stressed that without greater determination and urgent action &quot;this tragedy will continue to deepen for all concerned&quot;.</p><p>To date, Aung San Suu Kyi – who is considered internationally as Burma's most unifying political figure and who has previously stressed the significance of ethnic rights – has been largely absent from debates on the issue and it is unclear why she has not played a greater role.</p><p>However, analysts largely believe <a href=\"http://blogs.cfr.org/asia/2012/10/28/myanmars-ethnic-violence-where-is-suu-kyi/\" title=\"\">her reticence</a> may stem from a political desire to maintain majority Burman votes for her NLD party, particularly in the runup to the 2015 parliamentary elections.</p><p>According to Swire, who briefly met Aung San Suu Kyi and raised the Rohingya issue, the Nobel laureate is prepared to help in the reconciliation process if invited by the Burmese government to do so. &quot;[Suu Kyi] herself has been very clear about this– she is extremely busy. She can't do everything in this country,&quot; said Swire. &quot;If she is formally invited to get involved, she has indicated to me that she would be very willing to do that.&quot;</p><p>With aid workers expecting Rakhine's refugee camps to remain in place for at least another year, it seems many Rohingya are still at the mercy of the Burmese government and the few media and foreign dignitaries able to visit.</p><p>When one teary-eyed Rohingya man pleaded with Zaw Winn, telling him, &quot;We are real Rohingya – please recognise us&quot;, the minister looked at his colleague and laughed.</p><p>So iIt is perhaps no surprise that, at the end of the tour of Pauktaw, a few brave Rohingya slipped handwritten letters into the hands of the delegation, including one to the Guardian that read: &quot;We are real citizens of Burma … We hope that you will save and rescue [us].&quot;</p><h2>Who are the Rohingya?</h2><p>• The Rohingya are an 800,000-strong Muslim minority in Rakhine state, western Burma, which borders Bangladesh. Though many claim to have lived in Burma for generations, they are not recognised as one of the country's 135 ethnic groups.</p><p>•A document on Burmese languages dating back to 1799 refers to &quot;Rooinga&quot; as &quot;natives of Arakan [Rakhine]&quot;, but it is widely believed that most Rohingya came over from Bangladesh around 1821, when Britain annexed Burma as a province of British India and brought over migrant Muslim labourers.</p><p>• Large-scale Burmese-government crackdowns on the Rohingya, including Operation Dragon King in 1978, and Operation Clean and Beautiful Nation in 1991, forced hundreds of thousands to flee to Bangladesh. Thousands of others have also left for Thailand, Malaysia and Indonesia, many of them by boat.</p><p>• This latest crisis to befall Rakhine state, which has seen 200 killed and 115,000 displaced – most of them Rohingya – tests Burma's recent transition to democracy and its commitment to establishing full human rights for those within its borders.</p><!-- Guardian Watermark: internal-code/content/401396226|2013-10-02T14:49:16Z|3fab6585c084cd2146255a3a069819fbf9eb9a1a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T15:31:38Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012570246/Pauktaw-refugee-camp-in-B-005.jpg",
+        "standfirst":"Muslim group languishes in makeshift homes with no work, no schools and no citizenship rights from Burmese government",
+        "shortUrl":"http://gu.com/p/3ck7e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012570246/Pauktaw-refugee-camp-in-B-005.jpg",
+        "wordcount":"1665",
+        "commentable":"false",
+        "internalContentCode":"401396226",
+        "allowUgc":"false",
+        "internalOctopusCode":"7044259",
+        "isPremoderated":"false",
+        "byline":"Kate Hodal in Sittwe, Myaybon and Pauktaw, Burma",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2012-12-21",
+        "internalPageCode":"1845302",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-12-23T14:23:43Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/race",
+        "type":"keyword",
+        "webTitle":"Race issues",
+        "webUrl":"http://www.theguardian.com/world/race",
+        "apiUrl":"http://content.guardianapis.com/world/race",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/refugees",
+        "type":"keyword",
+        "webTitle":"Refugees",
+        "webUrl":"http://www.theguardian.com/world/refugees",
+        "apiUrl":"http://content.guardianapis.com/world/refugees",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/kate-hodal",
+        "type":"contributor",
+        "webTitle":"Kate Hodal",
+        "webUrl":"http://www.theguardian.com/profile/kate-hodal",
+        "apiUrl":"http://content.guardianapis.com/profile/kate-hodal",
+        "r2ContributorId":"47767",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-401465416",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012565736/Pauktaw-refugee-camp-in-B-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"54",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012567342/Pauktaw-refugee-camp-in-B-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"340",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012568883/Pauktaw-refugee-camp-in-B-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"130",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012570246/Pauktaw-refugee-camp-in-B-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"84",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012571618/Pauktaw-refugee-camp-in-B-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"132",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012573092/Pauktaw-refugee-camp-in-B-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"168",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012574621/Pauktaw-refugee-camp-in-B-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"180",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012576015/Pauktaw-refugee-camp-in-B-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"228",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012577551/Pauktaw-refugee-camp-in-B-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"276",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012579016/Pauktaw-refugee-camp-in-B-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"372",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012577551/Pauktaw-refugee-camp-in-B-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"276",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\n\r\n\r\n Photograph: Kate Hodal for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-401465417",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/20/1356012570246/Pauktaw-refugee-camp-in-B-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Kate Hodal",
+            "altText":"Pauktaw refugee camp in Burma",
+            "height":"84",
+            "credit":"Kate Hodal/Guardian",
+            "caption":"Rohingya refugees at the Pauktaw camp in west Burma.\r\r\r Photograph: Kate Hodal for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/mar/22/burma-ethnic-violence-dead-meikhtila",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-03-22T18:41:15Z",
+      "webTitle":"Ethnic violence erupts in Burma leaving scores dead",
+      "webUrl":"http://www.theguardian.com/world/2013/mar/22/burma-ethnic-violence-dead-meikhtila",
+      "apiUrl":"http://content.guardianapis.com/world/2013/mar/22/burma-ethnic-violence-dead-meikhtila",
+      "fields":{
+        "newspaperPageNumber":"34",
+        "trailText":"<p>State of emergency declared in the central city of Meikhtila after three days of ethnic violence between Muslims and Buddhists</p>",
+        "headline":"Ethnic violence erupts in Burma leaving scores dead",
+        "body":"<p><strong> </strong></p><p>Burma has issued a state of emergency in the central city of Meikhtila after three days of ethnic violence between Muslims and Buddhists has left scores dead, forced thousands to flee and left local homes and shops reduced to smoking rubble.</p><p>Rioting began on Wednesday in the now ash-covered town, located 360 miles north of the commercial capital Rangoon, after an argument between a Muslim shopkeeper and his Buddhist customers erupted into a street brawl that ended with the death of a Buddhist monk.</p><p>Soon after, photos and videos of mobs roaming the streets were circulating online – showing streets littered with burning motorbikes, men armed with sticks and swords destroying property, and buildings set ablaze – with little indication that security forces were putting a stop to it.</p><p>The violence has called into question Burma's fledgling transition to democracy after a quasi-civilian government ended nearly 50 years of military rule in 2010. Led by reformist president Thein Sein, who has carried out a series of economic and political reforms – among them the lifting of censorship regulations and the release of many political prisoners – but the country has also witnessed a growing tension between majority Buddhists and minority Muslims, who comprise 5% of the 60m population.</p><p>Exact numbers of those killed and injured are hard to establish. Win Htein, of the opposition National League for Democracy party, said 20&nbsp;people – including the monk – are confirmed dead. But Ko Wanna Shwe of the Rangoon-based Islamic Religious Affairs Council told the Guardian that figure was likely to be much higher: \"We are getting reports from people in Meikhtila since Wednesday that [the number] is higher. Nearly 100 people have been killed – teachers, students, shopkeepers,\" he said by phone. \"Even young men aged eight to 14 included.\"</p><p>Camps have been established to accommodate 2,000 people who have fled, Win Htein told Reuters, but it is not clear if they are protected by security forces.</p><p>Many fear the situation is a reprise of last year's violence in Rakhine state, western Burma, where hundreds were killed and 120,000 left homeless after two serious bouts of <a href=\"http://www.guardian.co.uk/world/2012/jun/12/burma-ethnic-violence-escalates\" title=\"\">violence between Buddhists and Rohingya Muslims in June</a> and <a href=\"http://www.guardian.co.uk/world/2012/oct/27/burma-wave-anti-muslim-violence\" title=\"\">October</a>.</p><p>A stateless minority, the Rohingya are not recognised as Burmese citizens and many of them either live in segregated camps for internally displaced people or have <a href=\"http://www.guardian.co.uk/world/2012/dec/20/burma-rohingya-muslim-refugee-camps\" title=\"\">fled by their thousands to neighbouring countries, often in makeshift boats</a>. Rumours of a \"third massacre\" against the Rohingya have been circulating for months, with photos of alleged leaflets inciting violence posted on social media.</p><p>Rights groups on Friday described the situation in Meikhtila as a warning sign that Burma still has a long way to go to establish peace and reconciliation in a country that proscribed dissent for nearly half a century, and called for the government to put an end to the violence.</p><p>\"The key issue is this: the government has frankly failed to stare down the people who are inciting hatred, the people who are engaging in this communal violence … and that failure has set an example that impunity to attack Muslims is alive and well in Burma,\" said Phil Robertson of Human Rights Watch. \"There's a major army base in that town. If people are engaging in rioting and attacks, then they could be stopped. So why does violence continue on now for two days or so? There's either a complete lack of capacity or a failure of political will because Buddhist monks are involved.\"</p><p>Burmese monks have often been involved in sectarian violence, with anti-Muslim protests in Mandalay led by the saffron-robed religious leaders last year. Meikhtila is no different. One monk, who wielded a foot-long sword, threatened an Associated Press journalist and demanded his camera, while other monks attempted to drag a group of reporters out of a van. \"We don't feel safe and we have now moved inside a monastery,\" one Meikhtila resident told the AP. \"The situation is unpredictable and dangerous.\"</p><p>Both the UN and Burma's opposition leader, Aung San Suu Kyi, called for order to be restored; the town was still burning on Friday evening. Suu Kyi has come under severe fire for her handling of the Rakhine situation last year, which some activists termed a genocide against the Rohingya, and earlier this month she backed a controversial copper mine in Letpadaung.</p><p>It is unclear exactly why this latest bout of ethnic violence escalated so quickly. Win Htein,&nbsp;the lawmaker for the NLD, told&nbsp;Radio Free Asia that he believed that some Muslims in Meikhtila – who comprise one-third of the population of 100,000 – may have been harbouring \"some feelings over the Rakhine problem\", thereby fomenting unrest.</p><p>But it may just be one example of violence in a nation that could see many others take place in relatively quick succession, said Mark Farmaner of human rights group Burma Campaign UK.</p><p>\"We've seen examples of anti-Muslim propaganda in Mon state, Shan state, Kachin state and Karen state, where people are distributing anti-Muslim leaflets,\" he told the Guardian. \"It may not be directly linked to violence in Rakhine state in an obvious way but … aan incident like this [an argument in a gold shop] wouldn't normally lead to deaths and thousands of people trying to flee, if there weren't already incredibly high tensions in the first place. That means it's been organised and that no action has been taken to put a lid on it.\" President Tun Khin of the UK-based Burmese Rohingya Organisation described the violence in Meikhtila as a state-sponsored attack, and said: \"These are not communal clashes; this is not equal sides fighting. These are organised attacks to cleanse [Burma] of Muslims where the vast majority of those killed and displaced are Muslims … There should be laws on racism if the government wants to see durable peace in Burma.\"</p><!-- Guardian Watermark: internal-code/content/406095644|2013-10-02T14:49:16Z|79246b1ec913deb7ba334fa16c6c8bd7235d9e97 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T20:10:49Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977629232/People-fleeing-ethnic-vio-003.jpg",
+        "standfirst":"State of emergency declared in the central city of Meikhtila after three days of ethnic violence between Muslims and Buddhists",
+        "shortUrl":"http://gu.com/p/3ekxm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977629232/People-fleeing-ethnic-vio-003.jpg",
+        "wordcount":"957",
+        "commentable":"false",
+        "internalContentCode":"406095644",
+        "allowUgc":"false",
+        "internalOctopusCode":"7397026",
+        "isPremoderated":"false",
+        "byline":"Kate Hodal in Bangkok",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-03-23",
+        "internalPageCode":"1884514",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-03-25T18:41:15Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/buddhism",
+        "type":"keyword",
+        "webTitle":"Buddhism",
+        "webUrl":"http://www.theguardian.com/world/buddhism",
+        "apiUrl":"http://content.guardianapis.com/world/buddhism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/islam",
+        "type":"keyword",
+        "webTitle":"Islam",
+        "webUrl":"http://www.theguardian.com/world/islam",
+        "apiUrl":"http://content.guardianapis.com/world/islam",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/kate-hodal",
+        "type":"contributor",
+        "webTitle":"Kate Hodal",
+        "webUrl":"http://www.theguardian.com/profile/kate-hodal",
+        "apiUrl":"http://content.guardianapis.com/profile/kate-hodal",
+        "r2ContributorId":"47767",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-406172236",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977625391/People-fleeing-ethnic-vio-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"54",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977627958/People-fleeing-ethnic-vio-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"130",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977629232/People-fleeing-ethnic-vio-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"84",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977630733/People-fleeing-ethnic-vio-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"132",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977632137/People-fleeing-ethnic-vio-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"168",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977633529/People-fleeing-ethnic-vio-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"180",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977634760/People-fleeing-ethnic-vio-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"228",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977636126/People-fleeing-ethnic-vio-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"276",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977636126/People-fleeing-ethnic-vio-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"276",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-406172237",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363977629232/People-fleeing-ethnic-vio-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"People fleeing ethnic violence in Burma",
+            "height":"84",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Thousands of people have been forced to flee their homes and shops after three days of ethnic violence in Burma Photograph: Khin Maung Win/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/may/30/burma-buddhist-attacks-lashio",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-05-30T03:23:14Z",
+      "webTitle":"Burma's Buddhist mobs sow fear amid widening unrest",
+      "webUrl":"http://www.theguardian.com/world/2013/may/30/burma-buddhist-attacks-lashio",
+      "apiUrl":"http://content.guardianapis.com/world/2013/may/30/burma-buddhist-attacks-lashio",
+      "fields":{
+        "trailText":"<p>Muslims attacked and mosque torched as Thein Sein's government fails to intervene</p>",
+        "headline":"Burma's Buddhist mobs sow fear amid widening unrest",
+        "body":"<p>It was a terrifying sight: hundreds of angry, armed men on motorcycles advancing up a dusty street with no one to stop them. Shouting at the top of their lungs, clutching machetes, iron pipes and long bamboo poles, they thrust their fists repeatedly into the air.</p><p>The object of their rage: Burma's embattled Muslims.</p><p>Gaping residents backed away as the Buddhist mob passed. Worried business owners turned away customers and retreated indoors. And three armed soldiers standing in green fatigues on a corner watched quietly, doing nothing despite an emergency government ordinance banning groups of more than five from gathering.</p><p>Within a few hours on Wednesday, at least one person was dead and four injured as the north-east region of Burma became the latest to fall prey to the country's swelling tide of anti-Muslim unrest.</p><p>Two days of violence in the city of Lashio have cast fresh doubt over whether President Thein Sein's government can or will act to contain the racial and religious intolerance plaguing a nation still struggling to emerge from half a century of military rule. </p><p>Muslims have been the main victims since the violence began in western Rakhine state last year, but so far most criminal trials have involved prosecutions of Muslims, not members of the Buddhist majority.</p><p>The rioting in Lashio started on Tuesday after reports that a Muslim man had splashed petrol on a Buddhist woman and set her on fire. He was arrested. The woman was taken to hospital with burns on her chest, back and hands.</p><figure data-media-id='gu-image-409753727'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/30/1369882971597/A-mosque-in-Lashio-destro-006.jpg' alt='A mosque in Lashio destroyed in the attacks. ' width='460' height='276' class='gu-image'/><figcaption>A mosque in Lashio destroyed in the attacks.  Photograph: Nyein Chan Naing/EPA</figcaption></figure><p>Mobs took revenge by burning down several Muslim shops and one of the city's main mosques, along with an Islamic orphanage that was so badly charred that only two walls remained, said Min Thein, a resident contacted by telephone.</p><p>On Wednesday fires still smouldered at the ruined mosque, where a dozen charred motorcycles lay on the pavement underneath its white minarets. Troops stood guard. The wind carried the acrid smell of several burned vehicles across town, and most Muslims hid in their homes.</p><p>When one group of thugs arrived at a Muslim-owned cinema housed in a sprawling villa, they hurled rocks over the gate, smashing windows. They then broke inside and ransacked the building.</p><p>Ma Wal, a 48-year-old Buddhist shopkeeper across the street, said she saw the crowd arrive. They had knives and stones, and came in two separate waves.</p><p>\"I couldn't look,\" she said, recounting how she had shut the wooden doors of her shop. \"We were terrified.\"</p><p>A couple of hours later, the mobs were gone and two army trucks and a small contingent of soldiers guarded the villa. </p><p>\"I don't know what to think about it,\" she said. \"More casualties are ... not good for anybody.\"</p><p>The government, which came to power in 2011 promising a new era of democratic rule, appealed for calm.</p><p>\"Damaging religious buildings and creating religious riots is inappropriate for the democratic society we are trying to create,\" presidential spokesman Ye Htut said on his Facebook page. \"Any criminal act will be dealt with according to the law,\" he said.</p><p>National police said nine people were arrested for involvement in the two days of violence, but did not say if they were Buddhists or Muslims.</p><p>After nightfall, authorities could be heard issuing instructions on loudspeakers across the city, reminding residents a dusk-to-dawn curfew was in effect. The voice bellowing into the night said: \"You are prohibited from carrying sticks or swords or any kind of weapon.\"</p><p>A local freelance journalist, Khun Zaw Oo, said he was hit on the head with an iron pipe as he photographed mobs ransacking shops. He said he managed to flee but a companion also holding a camera was attacked and badly injured.</p><p>Hundreds of people died in Rakhine state last year when <a href=\"http://www.guardian.co.uk/world/2012/jun/11/burma-clashes-muslims-buddhists-arakan\">clashes between Buddhists and Muslims </a>drove about 140,000 residents, mostly Muslims, from their homes. Most are still living in refugee camps.</p><p>This month, authorities in two areas of Rakhine announced a regulation <a href=\"http://www.scmp.com/news/asia/article/1246107/rakhine-state-rohingya-face-two-child-limit-family-size\">limiting Muslim families to two children</a>. The policy drew sharp criticism from Muslim leaders, rights groups and opposition leader Aung San Suu Kyi. </p><p>On Tuesday a US state department spokesman, Patrick Ventrell, said the US opposed coercive policies limiting births, and <a href=\"http://www.cbsnews.com/8301-202_162-57586510/burma-urged-by-u.s-to-eliminate-2-child-policy/\">called on Burma</a> \"to eliminate all such policies without delay\".</p><p>The clashes had seemed confined to the Rakhine region, but in late March, similar Buddhist-led violence swept the town of Meikthila in central Burma, killing at least 43 people. Earlier this month, a court <a href=\"http://www.bbc.co.uk/news/world-asia-22607447\">sentenced seven Muslims from Meikthila to prison terms</a> for their role in the violence.</p><p>Several other towns in central Burma experienced less deadly violence, mostly involving the torching of Muslim businesses and mosques.</p><p>Muslims account for about 4% of Burma's roughly 60 million people. Anti-Muslim sentiment is closely tied to nationalism and the dominant Buddhist religion, so leaders have been reluctant to speak up.</p><p>Thein Sein's administration has been heavily criticised for not doing enough to protect Muslims. He vowed last week during a trip to the US that all perpetrators of the sectarian violence would be brought to justice.</p><!-- Guardian Watermark: internal-code/content/409750646|2013-10-02T14:49:16Z|adcc6773d77fa2706e2ee642b18bca0e6169af30 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-05-30T03:36:54Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/30/1369880521542/Buddhists-maraud-through--002.jpg",
+        "standfirst":"Muslims attacked and mosque torched as Thein Sein's government fails to intervene",
+        "shortUrl":"http://gu.com/p/3g7kp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/30/1369880521542/Buddhists-maraud-through--002.jpg",
+        "wordcount":"824",
+        "commentable":"false",
+        "internalContentCode":"409750646",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Lashio",
+        "publication":"theguardian.com",
+        "internalPageCode":"1914919",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-06-02T03:23:14Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/islam",
+        "type":"keyword",
+        "webTitle":"Islam",
+        "webUrl":"http://www.theguardian.com/world/islam",
+        "apiUrl":"http://content.guardianapis.com/world/islam",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/buddhism",
+        "type":"keyword",
+        "webTitle":"Buddhism",
+        "webUrl":"http://www.theguardian.com/world/buddhism",
+        "apiUrl":"http://content.guardianapis.com/world/buddhism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/thein-sein",
+        "type":"keyword",
+        "webTitle":"Thein Sein",
+        "webUrl":"http://www.theguardian.com/world/thein-sein",
+        "apiUrl":"http://content.guardianapis.com/world/thein-sein",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/aung-san-suu-kyi",
+        "type":"keyword",
+        "webTitle":"Aung San Suu Kyi",
+        "webUrl":"http://www.theguardian.com/world/aung-san-suu-kyi",
+        "apiUrl":"http://content.guardianapis.com/world/aung-san-suu-kyi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-409753726",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/30/1369880543368/Buddhists-maraud-through--006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Gemunu Amarasinghe",
+            "altText":"Buddhists maraud through Lashio, where Muslim-owned businesses were attacked.",
+            "height":"276",
+            "credit":"Gemunu Amarasinghe/AP",
+            "caption":"Buddhists maraud through Lashio, where Muslim-owned businesses were attacked. Photograph: Gemunu Amarasinghe/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-409753727",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/30/1369882971597/A-mosque-in-Lashio-destro-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"A mosque in Lashio destroyed in the attacks. ",
+            "height":"276",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"A mosque in Lashio destroyed in the attacks.  Photograph: Nyein Chan Naing/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-409753728",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/30/1369880521542/Buddhists-maraud-through--002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Gemunu Amarasinghe",
+            "altText":"Buddhists maraud through Lashio, where Muslim-owned businesses were attacked.",
+            "height":"84",
+            "credit":"Gemunu Amarasinghe/AP",
+            "caption":"Buddhists maraud through Lashio, where Muslim-owned businesses were attacked. Photograph: Gemunu Amarasinghe/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"global-development/gallery/2013/jun/20/rohingya-refugees-bangladesh-asia-in-pictures",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-06-20T13:45:00Z",
+      "webTitle":"Rohingya refugees exodus to Bangladesh and south-east Asia – in pictures",
+      "webUrl":"http://www.theguardian.com/global-development/gallery/2013/jun/20/rohingya-refugees-bangladesh-asia-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/global-development/gallery/2013/jun/20/rohingya-refugees-bangladesh-asia-in-pictures",
+      "fields":{
+        "trailText":"<p>Many Rohingya Muslim people are being forced out of Burma because of sectarian and religious violence</p>",
+        "headline":"Rohingya refugees exodus to Bangladesh and south-east Asia – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-06-21T10:18:04Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Environment/Pix/columnists/2013/6/19/1371663370170/MDG--Muslim-Rohingya-refu-002.jpg",
+        "standfirst":"Many Rohingya Muslim people are being forced out of Burma because of sectarian and religious violence. These refugees are seeking a better life in Bangladesh, Thailand, Malaysia and Indonesia, but their escape routes are dangerous and they are often not welcome or cared for when they arrive in their new countries",
+        "shortUrl":"http://gu.com/p/3gytk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/6/19/1371663370170/MDG--Muslim-Rohingya-refu-002.jpg",
+        "commentable":"false",
+        "internalContentCode":"411168389",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1925066",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-06-23T13:45:02Z"
+      },
+      "tags":[{
+        "id":"global-development/migration",
+        "type":"keyword",
+        "webTitle":"Migration",
+        "webUrl":"http://www.theguardian.com/global-development/migration",
+        "apiUrl":"http://content.guardianapis.com/global-development/migration",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/refugees",
+        "type":"keyword",
+        "webTitle":"Refugees",
+        "webUrl":"http://www.theguardian.com/world/refugees",
+        "apiUrl":"http://content.guardianapis.com/world/refugees",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/thailand",
+        "type":"keyword",
+        "webTitle":"Thailand",
+        "webUrl":"http://www.theguardian.com/world/thailand",
+        "apiUrl":"http://content.guardianapis.com/world/thailand",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/malaysia",
+        "type":"keyword",
+        "webTitle":"Malaysia",
+        "webUrl":"http://www.theguardian.com/world/malaysia",
+        "apiUrl":"http://content.guardianapis.com/world/malaysia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bangladesh",
+        "type":"keyword",
+        "webTitle":"Bangladesh",
+        "webUrl":"http://www.theguardian.com/world/bangladesh",
+        "apiUrl":"http://content.guardianapis.com/world/bangladesh",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-411301870",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/6/19/1371663370170/MDG--Muslim-Rohingya-refu-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"MDG : Muslim Rohingya refugees trying to cross the Naf river into Bangladesh from Myanmar",
+            "height":"84",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims, trying to cross the Naf river into Bangladesh to escape sectarian violence in Myanmar, look on from an intercepted boat in Teknaf on July 13, 2012.  Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-411167952",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663154625/Rohingya-men-are-seen-amo-024.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Staff",
+            "altText":"Rohingya refugees: Rohingya men are seen among houses set on fire during fighting ",
+            "height":"480",
+            "credit":"Reuters",
+            "caption":"Rohingya men are seen among houses set on fire during <a href=\"http://www.guardian.co.uk/commentisfree/2012/aug/14/burma-violence-muslim-rohingya-refugees\">fighting between Buddhist Rakhine and Muslim Rohingya communities</a> in Sittwe, Burma, last year. The sectarian violence <a href=\"http://www.guardian.co.uk/world/2012/dec/20/burma-rohingya-muslim-refugee-camps\">forced thousands of people to flee</a>. The Rohingyas are not recognised as citizens by the Burmese government",
+            "width":"710"
+          }
+        }]
+      },{
+        "id":"gu-image-411168169",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663066049/trying-to-cross-the-Naf-r-012.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Munir Uz Zaman",
+            "altText":"Rohingya refugees: trying to cross the Naf river into Bangladesh",
+            "height":"480",
+            "credit":"Munir Uz Zaman/AFP",
+            "caption":"Rohingya people, trying to cross the Naf river into Bangladesh to escape sectarian violence in Burma, look on from an intercepted boat in Teknaf in July last year. <a href=\"http://www.guardian.co.uk/world/2012/aug/07/bangladesh-persecuted-burmese-tribe-muslim\">Bangladesh has turned away boatloads of Rohingyas</a>",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411168044",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663038583/Rohingya-refugees-in-the--002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Suthep Kritsanavarin",
+            "altText":"Rohingya refugees: Rohingya refugees in the salt fields in Taknaf Bangladesh",
+            "height":"480",
+            "credit":"Suthep Kritsanavarin/Alamy",
+            "caption":"Rohingya refugees provide much of the workforce in the salt fields in Taknaf, earning less than subsistence wages for the arduous work. Despite the low wages and poor conditions, the refugees' domination of jobs has led to conflict with local Bengali communities. In early 2010, a local politician led a protest of Bengali villagers, blocking the road outside the crowded Kutupalong refugee camp housing thousands of Rohingya, and demanded they be forcibly pushed back across the border to Burma. The UNHCR and international NGOs have difficulty working inside the camps as a result of the political backlash",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411167807",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663041340/Outside-Kutupalong-Refuge-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Suthep Kritsanavarin",
+            "altText":"Rohingya refugees: Outside Kutupalong Refugee Camp",
+            "height":"480",
+            "credit":"Suthep Kritsanavarin/Alamy",
+            "caption":"Outside Kutupalong refugee camp, near Cox's Bazar in Bangladesh, about 40,000 unregistered Rohingyas who were forced from their villages have set up an overcrowded, unofficial camp. The majority of refugees are children, women and older people. The men search for work outside the camp. They are ineligible to receive humanitarian support from the UN high commissioner for refugees, the UNHCR, because they are outside the camp",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411168054",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663068610/United-Nations-High-Commi-013.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Andrew Caballero-Reynolds ",
+            "altText":"Rohingya refugees: United Nations High Commission for Refugees (UNHCR) office in New Delhi ",
+            "height":"480",
+            "credit":"Andrew Caballero-Reynolds /AFP/Getty Images",
+            "caption":"Refugees from the Rohingya community take refuge on a street near the UNHCR office in New Delhi, India, in May last year. About 800 Burmese refugees set up a temporary camp in April. The UNHCR has issued them asylum seeker cards but they have been demanding refugee status",
+            "width":"727"
+          }
+        }]
+      },{
+        "id":"gu-image-411168112",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663035606/discovered-in-a-car-trunk-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Suthep Kritsanavarin",
+            "altText":"Rohingya refugees: discovered in a car trunk outside Kuala Lumpur",
+            "height":"480",
+            "credit":"Suthep Kritsanavarin/Alamy",
+            "caption":"Rohingya refugees are discovered in the boot of a car outside the Malaysian capital of Kuala Lumpur. Organised syndicates control a lucrative human trafficking ring that extorts huge sums of money from Rohingyas desperate to flee Burma in search of a better life",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411168114",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663057630/disembarking-at-a-beach-o-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "altText":"Rohingya refugees: disembarking at a beach on Langkawi island",
+            "height":"480",
+            "credit":"AFP/Getty Images",
+            "caption":"Rohingya refugees disembark at a beach on Langkawi island off the northern Malaysian state of Kedah in December last year. About 500 Burma nationals swam the last 500m to enter Malaysia illegally at the end of a 15-day boat journey, which left one person dead",
+            "width":"673"
+          }
+        }]
+      },{
+        "id":"gu-image-411168035",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663079800/Rohingya-refugees-from-My-016.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Yongyot Pruksarak",
+            "altText":"Rohingya refugees: Rohingya refugees from Myanmar sail to seek employment in Malaysia",
+            "height":"480",
+            "credit":"Yongyot Pruksarak/EPA",
+            "caption":"Rohingya refugees gather on a boat heading to Malaysia as they are rescued by Thai naval officers at the Andaman coast, Phuket island, southern Thailand in January. More than 200 Rohingyas arrived by boat along the southern Thai coast for a stopover on their way to Malaysia, where they could seek employment",
+            "width":"711"
+          }
+        }]
+      },{
+        "id":"gu-image-411168049",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663075751/Thai-police-rescued-traff-015.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Thoranit Pirunla-ONG",
+            "altText":"Rohingya refugees: Thai police rescued trafficked Rohingya refugees from Myanmar",
+            "height":"480",
+            "credit":"Thoranit Pirunla-ONG/EPA",
+            "caption":"Rohingya refugees wait for registration at an immigration detention centre in Sadao, Songkhla province, southern Thailand in January. Thai police raided a warehouse and rescued 307 refugees who had been held at a rubber plantation for three months by an alleged human-trafficking gang near the Malaysian border. Within two days, police and government officials rescued more than 700 Rohingya from the trafficking gang",
+            "width":"759"
+          }
+        }]
+      },{
+        "id":"gu-image-411167876",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663130757/Refugees-headed-for-Austr-020.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Hotli Simanjuntak",
+            "altText":"Rohingya refugees: Refugees headed for Australia rescued by Aceh fisherman",
+            "height":"480",
+            "credit":"Hotli Simanjuntak/EPA",
+            "caption":"Rohingya refugees sleep on the floor of the immigration office in Lhok Seumawe, northern Aceh, Indonesia in February. About 120 Rohingya refugees, including six woman and two children, were rescued by a local fisherman after getting stranded at sea while heading for Australia",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411168038",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663127429/Rohingya-refugees-in-Aceh-019.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Hotli Simanjuntak",
+            "altText":"Rohingya refugees: Rohingya refugees in Aceh",
+            "height":"480",
+            "credit":"Hotli Simanjuntak/EPA",
+            "caption":"Rohingya refugees queue for food at the training centre house in Krueng Raya, Aceh, in April",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411168040",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663083413/Rohingya-refugees-protest-017.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Dedi Sahputra",
+            "altText":"Rohingya refugees: Rohingya refugees protest",
+            "height":"480",
+            "credit":"Dedi Sahputra/EPA",
+            "caption":"Rohingya refugees hold a banner during a protest outside the UNHCR office in Medan, North Sumatra province, Indonesia, in March. About 100 Rohingya refugees staged a protest urging the UNHCR to resettle them in Australia, New Zealand and the US ",
+            "width":"720"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-06-03T09:35:47Z",
+      "webTitle":"Burma's Rohingya people: a story of segregation and desperation | Rushanara Ali",
+      "webUrl":"http://www.theguardian.com/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation",
+      "apiUrl":"http://content.guardianapis.com/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation",
+      "fields":{
+        "trailText":"<strong>Rushanara Ali: </strong>The international community must put pressure on Burma to protect Rohingya Muslims and end segregation in Rakhine state",
+        "headline":"Burma's Rohingya people: a story of segregation and desperation",
+        "body":"<p>How desperate and distrustful of your government do you have to be to refuse an offer of relocation when a cyclone is about to hit your home? That many of the displaced Rohingya people in Burma's Rakhine state took this decision demonstrates how difficult their lives have become.</p><p></p><p>For months now, the Rohingya Muslim people have been targeted in a campaign that a <a href=\"http://www.hrw.org/sites/default/files/reports/burma0413webwcover_0.pdf\" title=\"\">Human Rights Watch report</a> (pdf) has described as \"ethnic cleansing\". Rohingya Muslims in Burma have been forced into segregated settlements and camps, and – in many cases – cut off from lifesaving aid.</p><p></p><p>I visited displacement camps in Rakhine in May with <a href=\"http://refugeesinternational.org/\" title=\"\">Refugees International</a> and <a href=\"http://www.burmacampaign.org.uk/\" title=\"\">Burma Campaign UK</a>, meeting with displaced people who – after suffering horrific attacks by members of the Rakhine Buddhist community in October –were forced to flee into remote areas of the countryside, areas completely unsuitable for displacement camps.</p><p>Drinking water had to be brought in on boats by NGOs, and primary healthcare was provided one morning a week. If you needed medical help at other times, you had to hope an NGO would come by boat to get you.</p><p>Residents of this squalid community fall ill frequently due to insanitary conditions. I travelled by boat for two hours to Pauktaw, where a <a href=\"http://www.unhcr.org.uk/\" title=\"\">UNHCR</a>-supported camp is home to thousands of Rohingya people. The shores adjacent to the camps were covered in faeces, with dead rats floating in the water just metres from where children were bathing to keep cool in the heat.</p><p></p><p>Since it was attacked, the Rohingya community has been totally cut off from markets and job opportunities; living in a segregated area, its people are barred by the authorities from travelling to the sites where they used to work and trade. Donor governments – including the UK – have helped provide some basic services, but it is nowhere near enough to give these people a safe and dignified existence.</p><p></p><p>The Rohingyas I met were living in flimsy tents so close to the shore that there was no way they could survive the monsoon season, let alone a cyclone. Even the emergency evacuations now underway will not be enough to get them safely through the coming months. During my visit, I was told that it would take at least two months to build temporary shelters on higher ground, and the government has delayed allocating the necessary land, perhaps in an attempt to assuage local Rakhine extremists. All of this demonstrates the unwillingness of the government to prioritise the safety of the Rohingya community.</p><p></p><p>Aid agencies have had real difficulties in getting help to people. Apart from the logistical problems created by the camps' isolation, the government has introduced bureaucratic obstacles, including serious delays in providing travel authorisations and visas for aid staff. Most troubling, some Rakhine Buddhist political and religious leaders have made threats against aid agencies because they object to assistance being offered to to the Rohingyas. Instead of taking action, the government refuses to let aid workers operate in areas where threats are made.</p><p></p><p>Displaced people told me about family members they had lost in the October attacks, speaking of their grief. Most wanted to return home, but were too scared to do so without appropriate protection. And they were aware that rather than focusing on moving people to higher ground during April, the government was conducting a \"verification exercise\" in displacement camps, in which they tried to force Rohingyas to sign forms admitting that they were \"Bengalis\". This only added to their distrust of the authorities, which was already high after many of the security services either committed or condoned attacks on their community last year. People told me that they would never be allowed to return home because local authorities were trying to create Muslim-free zones.</p><p></p><p>In a discussion with a group of Rohingya women, I listened to stories of family members being killed; some had lost seven, eight, nine loved ones. After hearing these testimonies, I wasn't surprised that some Rohingya people took the seemingly irrational decision to refuse relocation in the face of a cyclone. They are so desperate that they do not know who to trust or where they may be sent next. And, as a woman who lost her entire family said, \"If, after having lost everything – including my whole family – because we are Rohingya Muslims, [the government] still don't recognise me as Rohingya in my own country, then I might as well be dead\".</p><p></p><p>The UK government, together with the rest of the international community, must keep the pressure on the Burmese government to facilitate full humanitarian access to the Rohingya, end segregation in Rakhine state, provide them with the protection they need to return home, and restore their Burmese citizenship.</p><p></p><p>• <em>A video documenting Rushanara Ali's trip to Burma can be found </em><a href=\"http://www.youtube.com/watch?annotation_id=annotation_319262&amp;feature=iv&amp;src_vid=CAkP1cjMfaw&amp;v=7Z0ZFWsL37o\" title=\"\"><em>here</em></a></p><!-- Guardian Watermark: internal-code/content/409882795|2013-10-02T14:49:16Z|ca0992d745b19253b43d8b6da13961e7b5ec9dff -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-06-03T09:37:33Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+        "standfirst":"The international community must put pressure on Burma to protect Rohingya Muslims and end segregation in Rakhine state",
+        "shortUrl":"http://gu.com/p/3g95c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+        "wordcount":"792",
+        "commentable":"true",
+        "internalContentCode":"409882795",
+        "allowUgc":"false",
+        "internalOctopusCode":"7659324",
+        "isPremoderated":"false",
+        "byline":"Rushanara Ali",
+        "publication":"theguardian.com",
+        "internalPageCode":"1915959",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-06-10T09:35:47Z"
+      },
+      "tags":[{
+        "id":"global-development/poverty-matters",
+        "type":"blog",
+        "webTitle":"Poverty matters blog",
+        "webUrl":"http://www.theguardian.com/global-development/poverty-matters",
+        "apiUrl":"http://content.guardianapis.com/global-development/poverty-matters",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/conflict-and-development",
+        "type":"keyword",
+        "webTitle":"Conflict and development",
+        "webUrl":"http://www.theguardian.com/global-development/conflict-and-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/conflict-and-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/internally-displaced-people",
+        "type":"keyword",
+        "webTitle":"Internally displaced people",
+        "webUrl":"http://www.theguardian.com/world/internally-displaced-people",
+        "apiUrl":"http://content.guardianapis.com/world/internally-displaced-people",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/rushanara-ali",
+        "type":"contributor",
+        "webTitle":"Rushanara Ali",
+        "webUrl":"http://www.theguardian.com/profile/rushanara-ali",
+        "apiUrl":"http://content.guardianapis.com/profile/rushanara-ali",
+        "bio":"<p>Rushanara Ali is Labour MP for Bethnal Green and Bow and shadow international development minister</p>",
+        "r2ContributorId":"34847",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/15/1373884088560/Rushanara-Ali.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-409990691",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018201831/MDG-Rohingya-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"54",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018203446/MDG-Rohingya-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"130",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"84",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018205857/MDG-Rohingya-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"132",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018207066/MDG-Rohingya-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"168",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018208307/MDG-Rohingya-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"180",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018209572/MDG-Rohingya-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"228",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018210927/MDG-Rohingya-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"276",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018212240/MDG-Rohingya-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"340",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018210927/MDG-Rohingya-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"276",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah camp for internally displaced people on the outskirts of Sittwe. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-409990692",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/5/31/1370018204687/MDG-Rohingya-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Soe Than Win",
+            "altText":"MDG Rohingya",
+            "height":"84",
+            "credit":"Soe Than Win/AFP/Getty Images",
+            "caption":"Rohingya children play on a tent at Bawdupah IDP camp on the outskirts of Sittwe, May, 2013. Photograph: Soe Than Win/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"commentisfree/2013/jul/14/leaders-stop-genocide-rohingya-burma",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-07-14T15:00:00Z",
+      "webTitle":"Why Burma could become another Rwanda | Ahamed Jarmal",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/jul/14/leaders-stop-genocide-rohingya-burma",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/jul/14/leaders-stop-genocide-rohingya-burma",
+      "fields":{
+        "trailText":"<p><strong>Ahamed Jarmal: </strong>Burma is ethnically cleansing the Rohingya people. When David Cameron meets the Burmese president tomorrow he must call for it to stop</p>",
+        "headline":"Why Burma could become another Rwanda",
+        "body":"<p>After the genocide that tore apart a nation and killed 800,000 in Rwanda, the world said never again. But nearly 20 years later, we find ourselves on the brink of another campaign of destruction against an entire people. Yet once again it is being greeted with silence.</p><p>In <a href=\"http://www.guardian.co.uk/world/burma?INTCMP=SRCH\" title=\"\">Burma</a>, ethnic cleansing is happening. We have seen more human rights violations and attacks on Rohingya minorities in the past two years than in the last 20. Organised in monasteries and on Facebook, a wave of hate is being broadcast against the Muslim Rohingya community in Burma and a new apartheid system is being introduced.</p><p>My family regularly get called \"dogs\" or worse when they walk down the street. The government continues to deny us citizenship, telling us this isn't our home. We can't marry the people we love and are told we're only allowed to have two children per family. We can't travel from one village to another without permission. No other minority in the world faces such extreme and vicious treatment. We are being treated as criminals simply because we exist.</p><p>But now the situation is getting really desperate. Mobs have attacked our villages, driving us from our homes, children have been hacked to death, and hundreds of my people have been killed by members of the majority. Thugs are distributing leaflets threatening to \"wipe us out\" and children in schools are being taught that the Rohingya are different.</p><p>Everyone from our community is affected. I was lucky enough to flee 10 years ago when it was simply discrimination, but last year the rising violence forced my brother to flee to Bangladesh. Many people I know have faced appalling abuse and torture in a country they used to call home.</p><p>If this sounds all too familiar, that is because it is. This is the same type of racist incitement used to such devastating effect in Rwanda against the Tutsis in 1994. All signs are pointing to a coming horror. Yet the government has not just failed to stop these brutal attacks but is participating in it by inciting violence and fuelling hate.</p><p>The Burmese government knows this is happening. The same old generals are still in charge. They may have changed their clothes but their hearts and minds are still the same. We had higher hopes for Aung San Suu Kyi, who may have condemned the violence but still hasn't spoken out in favour of the Rohingya. With the elections just two years away, this is an issue that she won't take on.</p><p>Burmese president Thein Sein wants to \"harmonise\" the country and make it pure. He says \"there are no Rohingya among the races\" and wants us out of our homes and settled in camps run by the UN so that they can look after us. In the past year, more than 140,000 of us have been forced to live in squalid conditions, yet our government has denied us access to aid and many are desperately trying to flee.</p><p>In 10 years' time, it is very possible that my community of 800,000 people will be decimated to little more than 50,000 scattered in pockets, living in fear across the country.</p><p>On Monday, <a href=\"http://www.guardian.co.uk/world/thein-sein\" title=\"\">Thein Sein</a> will arrive in London to meet David Cameron, then on to Paris to see President Hollande. He will sell his country's transition from international pariah to poster boy for democratic change, trade and investment. He'll also talk trade, with an auction for lucrative mineral contracts up for grabs, and a beauty parade leading to heads of state doing all they can to impress.</p><p>Before Cameron and Hollande sign commercial contracts we need them to push the generals to show they will stop the Rohingya being wiped off the map in Burma. Over 1 million people have joined this request, signing an <a href=\"https://secure.avaaz.org/en/we_said_never_again_en/?bHFhfab&amp;v=26526\" title=\"\">Avaaz campaign</a> to get world leaders to take concrete, accountable steps to stop the violence spreading against my people. The attacks on the Rohingya must be independently investigated, new laws supporting our citizenship must be passed and full humanitarian access is urgently needed to awful camps that are home to thousands of Rohingya.</p><p>The only way to stop genocide is to prevent it from happening in the first place. World leaders failed to act 20 years ago in Rwanda, then promised they would never let such horrors happen again. My people are praying they meant it.</p><!-- Guardian Watermark: internal-code/content/412794003|2013-10-02T14:49:16Z|db5aba55a5bf2a4cb5afd9fa30021bd3744fb68d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-15T16:25:05Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802108742/---AFP-PICTURES-OF-THE-YE-003.jpg",
+        "standfirst":"Burma is ethnically cleansing the Rohingya people. When David Cameron meets the Burmese president tomorrow he must call for it to stop",
+        "shortUrl":"http://gu.com/p/3ha7e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802108742/---AFP-PICTURES-OF-THE-YE-003.jpg",
+        "wordcount":"721",
+        "commentable":"true",
+        "internalContentCode":"412794003",
+        "allowUgc":"false",
+        "internalOctopusCode":"7834079",
+        "isPremoderated":"false",
+        "byline":"Ahamed Jarmal",
+        "publication":"theguardian.com",
+        "internalPageCode":"1936427",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-17T15:00:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/thein-sein",
+        "type":"keyword",
+        "webTitle":"Thein Sein",
+        "webUrl":"http://www.theguardian.com/world/thein-sein",
+        "apiUrl":"http://content.guardianapis.com/world/thein-sein",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/francois-hollande",
+        "type":"keyword",
+        "webTitle":"François Hollande",
+        "webUrl":"http://www.theguardian.com/world/francois-hollande",
+        "apiUrl":"http://content.guardianapis.com/world/francois-hollande",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/ahamed-jarmal",
+        "type":"contributor",
+        "webTitle":"Ahamed Jarmal",
+        "webUrl":"http://www.theguardian.com/profile/ahamed-jarmal",
+        "apiUrl":"http://content.guardianapis.com/profile/ahamed-jarmal",
+        "bio":"<p>Ahamed Jarmal is secretary general of the Burmese Rohingya Organisation</p>",
+        "r2ContributorId":"57635",
+        "references":[]
+      },{
+        "id":"world/rwanda",
+        "type":"keyword",
+        "webTitle":"Rwanda",
+        "webUrl":"http://www.theguardian.com/world/rwanda",
+        "apiUrl":"http://content.guardianapis.com/world/rwanda",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/poverty-matters",
+        "type":"blog",
+        "webTitle":"Poverty matters blog",
+        "webUrl":"http://www.theguardian.com/global-development/poverty-matters",
+        "apiUrl":"http://content.guardianapis.com/global-development/poverty-matters",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412875187",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802106220/---AFP-PICTURES-OF-THE-YE-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"54",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802107712/---AFP-PICTURES-OF-THE-YE-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"130",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802108742/---AFP-PICTURES-OF-THE-YE-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"84",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802110105/---AFP-PICTURES-OF-THE-YE-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"132",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802111151/---AFP-PICTURES-OF-THE-YE-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"168",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802112207/---AFP-PICTURES-OF-THE-YE-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"180",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802113207/---AFP-PICTURES-OF-THE-YE-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"228",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802114216/---AFP-PICTURES-OF-THE-YE-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"276",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802114216/---AFP-PICTURES-OF-THE-YE-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"276",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412875188",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/14/1373802108742/---AFP-PICTURES-OF-THE-YE-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"-- AFP PICTURES OF THE YEAR 2012 --  Roh",
+            "height":"84",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims seeking to cross the Naf river into Bangladesh are turned away by border guards. Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/jul/15/david-cameron-burma-thein-sein-rights",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-15T01:45:00Z",
+      "webTitle":"David Cameron urged to raise human rights with Burma's Thein Sein",
+      "webUrl":"http://www.theguardian.com/world/2013/jul/15/david-cameron-burma-thein-sein-rights",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/15/david-cameron-burma-thein-sein-rights",
+      "fields":{
+        "trailText":"<p>Campaigners want the prime minister to press the former military leader on violence against Burma's Muslims</p>",
+        "headline":"David Cameron urged to raise human rights with Burma's Thein Sein",
+        "body":"<p>David Cameron is under pressure to raise human rights in talks on Monday with Burma's president, Thein Sein, the first leader of the country to visit Britain in more than a quarter of a century. </p><p>Thein Sein is due to talk trade, aid and democracy with Cameron and his ministers during a two-day visit at a time when Burma is opening up its oil, gas and telecoms sectors to foreign investors.</p><p>Thein Sein, a former military commander, wants the West to help Burma's economy recover from decades of military dictatorship, Soviet-style planning and international sanctions.</p><p>Western leaders have praised him for ending the house arrest of opposition leader Aung San Suu Kyi, releasing some political prisoners, and allowing the opposition to contest an election.</p><p>But they want him to loosen further the military's grip before a 2015 presidential election which the British-educated Suu Kyi hopes to contest. Suu Kyi, a Nobel laureate, visited Britain last year.</p><p>Thein Sein is also under pressure to act to protect Burma's Muslim minority from inter-ethnic violence.</p><p>\"Cameron should not miss an important opportunity to press Burma's president on justice for crimes against humanity committed against the country's Muslims, the release of remaining political prisoners, or an end to repressive laws,\" Human Rights Watch said.</p><p>At least 237 people have been killed in Burma in religious violence over the past year and about 150,000 have been displaced. Most of the victims were <a href=\"http://www.guardian.co.uk/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation\">Rohingya Muslims</a>, the United Nations said.</p><p>Avaaz, a global campaign group, plans a demonstration outside the Houses of Parliament on Monday, saying almost a million people have signed a petition calling for an end to the violence.</p><p>A spokesman for the British Foreign Office said: \"We want to recognise the remarkable reforms of the last 18 months but also to raise at the highest levels our ongoing concerns, particularly about inter-communal and anti-Muslim violence.\"</p><p>Britain would press Thein Sein to improve humanitarian access, to address accountability for crimes and to end discrimination against the Rohingya, he said.</p><p>Thein Sein, who remains close to the military, this year became the first leader of his country since 1966 to visit the White House. His British trip is thought to be the first by a Burmese leader since the late General Ne Win visited in 1986.</p><!-- Guardian Watermark: internal-code/content/412823866|2013-10-02T14:49:16Z|9860b42f2e0838e4d0d4f04cc9246b8eb232bf4b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-15T05:30:42Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/15/1373852138650/Officials-farewell-presid-003.jpg",
+        "standfirst":"Campaigners want the prime minister to press the former military leader on violence against Burma's Muslims",
+        "shortUrl":"http://gu.com/p/3had2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/15/1373852138650/Officials-farewell-presid-003.jpg",
+        "wordcount":"370",
+        "commentable":"false",
+        "internalContentCode":"412823866",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Reuters",
+        "publication":"theguardian.com",
+        "internalPageCode":"1936577",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-18T01:45:13Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/thein-sein",
+        "type":"keyword",
+        "webTitle":"Thein Sein",
+        "webUrl":"http://www.theguardian.com/world/thein-sein",
+        "apiUrl":"http://content.guardianapis.com/world/thein-sein",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/aung-san-suu-kyi",
+        "type":"keyword",
+        "webTitle":"Aung San Suu Kyi",
+        "webUrl":"http://www.theguardian.com/world/aung-san-suu-kyi",
+        "apiUrl":"http://content.guardianapis.com/world/aung-san-suu-kyi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"law/human-rights",
+        "type":"keyword",
+        "webTitle":"Human rights",
+        "webUrl":"http://www.theguardian.com/law/human-rights",
+        "apiUrl":"http://content.guardianapis.com/law/human-rights",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412825143",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/15/1373852150471/Officials-farewell-presid-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Officials farewell president Thein Sein as he leaves Rangoon for Europe.",
+            "height":"276",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Officials farewell president Thein Sein as he leaves Rangoon for Europe. Photograph: Khin Maung Win/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412825144",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/15/1373852138650/Officials-farewell-presid-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Officials farewell president Thein Sein as he leaves Rangoon for Europe.",
+            "height":"84",
+            "credit":"Khin Maung Win/AP",
+            "caption":"Officials farewell president Thein Sein as he leaves Rangoon for Europe. Photograph: Khin Maung Win/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"true"
+    }]
+  }
+}
