@@ -219,7 +219,7 @@ define([
 
                 else {
                     ajax({
-                        url: '/discussion'+ discussionId +'.json'
+                        url: '/discussion/comment-box'
                     }).then(this.setupCommentBoxes.bind(this));
                 }
             },
