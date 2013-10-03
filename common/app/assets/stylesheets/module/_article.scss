@@ -18,7 +18,7 @@
     @include mq(tablet) {
         min-height: auto;
         padding: $baseline*3 0;
-        border-top: 1px dotted $c-neutral5;
+        border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 
         max-width: gs-span(8);
         margin-left: auto;
@@ -41,7 +41,7 @@
     }
 
     .box-indent & {
-        padding-left: 0;
+        padding-left: 0 !important;
         margin-left: 0;
     }
 
