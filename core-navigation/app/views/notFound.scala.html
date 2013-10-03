@@ -1,16 +1,23 @@
-@(page: Page, popular: MostPopular)(implicit request: RequestHeader)
+@(page: model.Page, trails: Seq[model.Trail])(implicit request: RequestHeader)
 
-@main(page, Switches.all){
-}{
-    <section class="front-section zone-@popular.section">
-        <h2 class="section-head zone-color">Oops</h2>
-        <div class="headline-list box-indent"
-             data-link-name="@popular.heading">
-            <ul class="unstyled">
-                @popular.trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li><span class="count">@info.rowNum</span> @fragments.linkText(trail, info)</li>
-                }
-            </ul>
+    @main(page, Switches.all) {
+    } {
+        <div class="article-wrapper monocolumn-wrapper">
+            <article>
+                <header class="article__head">
+
+                    <h2 class="article-zone zone-color type-1">
+                        404
+                    </h2>
+
+                    @fragments.headline("Sorry - we haven't been able to serve the page you asked for.")
+                    <p class="article__standfirst type-7">
+                        Maybe we can interest you in some of these...
+                    </p>
+
+                    @fragments.relatedTrails(trails, "")
+
+                </header>
+            </article>
         </div>
-    </section>
-}
+    }
