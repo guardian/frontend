@@ -65,7 +65,7 @@
         @include fs-data(4);
 
         @include mq(tablet) {
-            @include fs-data(5);
+            @include fs-data(5, true);
         }
     }
 

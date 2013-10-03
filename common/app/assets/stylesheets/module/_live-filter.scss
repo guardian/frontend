@@ -27,12 +27,12 @@
 
     .live-toggler {
         border-right: 1px solid $c-neutral5;
-        max-width: 140px;
+        max-width: gs-span(2);
     }
 }
 .live-toggler {
     display: none;
-    padding: 8px 8px 24px 6px;
+    padding: $baseline*2 8px $baseline*6 6px;
     text-align: left;
     position: relative;
 

@@ -303,7 +303,7 @@
     color: $c-neutral1;
     position: relative;
     display: block;
-    padding: 8px 8px 24px 6px;
+    padding: $baseline*2 8px $baseline*6 6px;
     text-align: left;
     overflow: auto;
     background-color: $mushroom;
