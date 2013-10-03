@@ -16,8 +16,8 @@ trait CommentBoxController extends DiscussionController {
         profile =>
           val fields = profile.privateFields getOrElse {throw new RuntimeException("No profile information found")}
           val box = fields match {
-            case PrivateProfileFields(false, _, _) => views.html.fragments.cannotCommentBox
-            case PrivateProfileFields(true, true, _) => views.html.fragments.commentBox
+            case PrivateProfileFields(false, _, _) => views.html.fragments.cannotCommentBox()
+            case PrivateProfileFields(true, isPremod, _) => views.html.fragments.commentBox(isPremod)
             case _ => views.html.fragments.premodCommentBox
           }
           Cached(60){

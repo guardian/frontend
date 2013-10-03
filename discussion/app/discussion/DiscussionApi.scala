@@ -66,17 +66,17 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
   }
 
-  def myProfile(headers: Headers, cookies: Cookies): Future[Profile] ={
-    def onError(r: Response) =
-      s"Error loading profile, status: ${r.status}, message: ${r.statusText}"
-    val apiUrl = s"$apiRoot/profile/me"
-
-//    val authCookies = cookies filter { AuthCookies.all contains _.name }
-    getJsonOrError(apiUrl, onError) map {
-      json =>
-        Profile(json)
-    }
-  }
+//  def myProfile(headers: Headers, cookies: Cookies): Future[Profile] ={
+//    def onError(r: Response) =
+//      s"Error loading profile, status: ${r.status}, message: ${r.statusText}"
+//    val apiUrl = s"$apiRoot/profile/me"
+//
+////    val authCookies = cookies filter { AuthCookies.all contains _.name }
+//    getJsonOrError(apiUrl, onError) map {
+//      json =>
+//        Profile(json)
+//    }
+//  }
 
   protected def getJsonOrError(url: String, onError: (Response) => String):Future[JsValue] = {
     val start = currentTimeMillis()
