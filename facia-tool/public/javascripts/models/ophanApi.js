@@ -48,7 +48,7 @@ function (
     function prepareSeries(data) {
         var simpleSeries,
             slots = 100,
-            groups = [
+            graphs = [
                 {name: 'Other',    data: [], color: 'd61d00', max: 0}, // required
                 {name: 'Google',   data: [], color: '89A54E', max: 0},
                 {name: 'Guardian', data: [], color: '4572A7', max: 0}
@@ -57,30 +57,30 @@ function (
         if(data.seriesData && data.seriesData.length) {
             _.each(data.seriesData, function(s){
 
-                // Pick the relevant group...
-                var group = _.find(groups, function(g){
+                // Pick the relevant graph...
+                var graph = _.find(graphs, function(g){
                         return g.name === s.name;
-                    }) || groups[0]; // ...defaulting to the first ('Other')
+                    }) || graphs[0]; // ...defaulting to the first ('Other')
 
                 // How many 1 min points are we adding into each slot
                 var minsPerSlot = Math.max(1, Math.floor(s.data.length / slots));
 
-                // ...sum the data into each group
+                // ...sum the data into each graph
                 _.each(_.last(s.data, minsPerSlot*slots), function(d,index) {
                     var i = Math.floor(index / minsPerSlot);
-                    group.data[i] = (group.data[i] || 0) + (d.count / minsPerSlot);
-                    group.max = Math.max(group.max, group.data[i]);
+                    graph.data[i] = (graph.data[i] || 0) + (d.count / minsPerSlot);
+                    graph.max = Math.max(graph.max, graph.data[i]);
                 });
             });
 
-            return _.map(groups, function(group){
+            return _.map(graphs, function(graph){
                 // recent pageviews per minute average
-                var pvm = _.reduce(_.last(group.data, common.config.pvmPeriod), function(m, n){ return m + n; }, 0) / common.config.pvmPeriod;
+                var pvm = _.reduce(_.last(graph.data, common.config.pvmPeriod), function(m, n){ return m + n; }, 0) / common.config.pvmPeriod;
                 // classify activity on scale of 1,2,3
-                group.activity = pvm < common.config.pvmHot ? pvm < common.config.pvmWarm ? 1 : 2 : 3;
+                graph.activity = pvm < common.config.pvmHot ? pvm < common.config.pvmWarm ? 1 : 2 : 3;
                 // Round the datapoints
-                group.data = _.map(group.data, function(d) { return Math.round(d*10)/10; });
-                return group;
+                graph.data = _.map(graph.data, function(d) { return Math.round(d*10)/10; });
+                return graph;
             });
         }
     }
