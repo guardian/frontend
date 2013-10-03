@@ -22,6 +22,7 @@ define([
                 {
                     sectionId:   'culture',
                     sectionName: 'Culture',
+                    sectionTone: 'feature',
                     zones: {
                         '/culture'     : 'Culture',
                         '/film'        : 'Film',
@@ -34,6 +35,7 @@ define([
                 },{
                     sectionId:   'football',
                     sectionName: 'Football',
+                    sectionTone: 'news',
                     zones: {
                         '/football'              : 'Football',
                         '/football/tables'       : 'Tables',
@@ -46,6 +48,7 @@ define([
                 },{
                     sectionId:   'sport',
                     sectionName: 'Sport',
+                    sectionTone: 'news',
                     zones: {
                         '/sport'             : 'Sport',
                         '/football'          : 'Football',
@@ -164,8 +167,8 @@ define([
                                           currentSection.zones['/'+config.page.section] ||
                                           currentSection.sectionName,
 
-                        localNavCtaHtml = '<div class="localnav--small">' +
-                                          '  <div class="localnav__inner u-cf">' +
+                        localNavCtaHtml = '<div class="localnav--small tone-' + currentSection.sectionTone + '">' +
+                                          '  <div class="localnav__inner tone-accent-border u-cf">' +
                                           '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +
