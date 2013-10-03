@@ -22,7 +22,7 @@ object RecentController extends Controller with Logging with JsonTrails with Exe
       .orderBy("newest")
       .pageSize(50)
       .response.map { response =>
-        SupportedContentFilter(response.results map { Content(_) })
+        response.results map { Content(_) }
       }
   }
 
