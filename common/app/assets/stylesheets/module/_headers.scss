@@ -33,6 +33,11 @@
 .sub-section-head {
     margin: 0 $gs-gutter/2;
 
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+
     a {
         padding-left: 0;
         padding-right: 0;
@@ -41,14 +46,18 @@
 
 .section-head {
     @include fs-header(5);
-    height: $gs-column-height;
-    -webkit-font-smoothing: antialiased;
+    height: $gs-column-height + $baseline*2;
     line-height: 1;
     font-weight: bolder;
-    padding: $baseline $gs-gutter/2 $baseline*4 $gs-gutter/2;
     margin: 0;
     border-top: $baseline solid $c-newsAccent;
     @include box-sizing(border-box);
+
+    padding: 2px $gs-gutter/2 0;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 
     &.zone-color {
         @include mq(tablet) {

@@ -3,26 +3,27 @@
 }
 
 .article-zone {
-    padding: $baseline 0 $baseline*4;
+    padding: 2px 0 18px;
+    margin-bottom: 0;
+    font-weight: bolder;
+    line-height: 1;
+    border-top: 2px solid $c-neutral5;
+
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
-    margin-bottom: 0;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
-    }
-    font-weight: bolder;
-    line-height: 1;
-    border-bottom: 1px solid $c-neutral5;
-    border-top: 2px solid $c-neutral5;
-
-    .article__popular & {
-        border-bottom: none;
     }
     .article-zone-no-indent &,
     .monocolumn-wrapper & {
         margin-left: 0;
         margin-right: 0;
+    }
+
+    border-bottom: 1px solid $c-neutral5;
+    .article__popular & {
+        border-bottom: none;
     }
 }
 
