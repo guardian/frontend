@@ -2,32 +2,76 @@
     position: relative;
 }
 
-.article-zone {
-    padding: $baseline 0 $baseline*4;
+.article-zone,
+.article__zone {
+    @include fs-header(3);
+    @include box-sizing(border-box);
+    min-height: $gs-column-height;
+    padding: 0 $gs-gutter/2;
+    border-top-width: $baseline/2;
+    border-top-style: solid;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        min-height: auto;
+        padding: $baseline*3 0;
+        border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
+
+        max-width: gs-span(8);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(rightCol) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+        max-width: none;
+    }
+
+    @include mq(leftCol) {
+        padding-left: $a-leftCol-width + $gs-gutter*2;
+    }
+
+    @include mq(wide) {
+        padding-left:  gs-span(3) + $gs-gutter*2;
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+    }
+
+    .box-indent & {
+        padding-left: 0 !important;
+        margin-left: 0;
+    }
+
+    .zone-football & { // TODO: temporary until football gets side cols
+        margin-left: 0;
+        padding-left: $gs-gutter;
+    }
+}
+
+.article__sub-head {
+    @include fs-header(2);
+    padding: $baseline/2 0 $baseline*2;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
-    margin-bottom: 0;
+    margin-bottom: $baseline*3;
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
-    }
-    font-weight: bolder;
-    line-height: 1;
-    border-bottom: 1px solid $c-neutral5;
-    border-top: 2px solid $c-neutral5;
-
-    .article__popular & {
-        border-bottom: none;
     }
     .article-zone-no-indent &,
     .monocolumn-wrapper & {
         margin-left: 0;
         margin-right: 0;
     }
-}
 
-.article-zone-sub {
-    @extend %type-6;
+    .article__popular & {
+        border-bottom: none;
+    }
 }
 
 .article__head {
@@ -37,11 +81,15 @@
 .article__headline {
     @include fs-headline(4);
     margin-bottom: $baseline*6;
+    padding-top: 8px;
+    border-top: 1px dotted $c-neutral5;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
         @include fs-headline(8, true);
         margin-bottom: $gs-column-height;
+        padding-top: 0px;
+        border-top: none;
     }
 
     a {

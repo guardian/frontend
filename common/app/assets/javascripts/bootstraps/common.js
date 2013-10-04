@@ -300,19 +300,33 @@ define([
             }
         },
 
+        // toggle in/out of facia
+        faciaToggle: function () {
+            var faciaToggle = /#facia-opt-(.*)/.exec(window.location.hash);
+            if (faciaToggle) {
+                var cookieName = 'GU_FACIA';
+                if (faciaToggle[1] === 'in') {
+                    var expiryDays = 365;
+                    Cookies.add(cookieName, 'true', 365);
+                } else {
+                    Cookies.cleanUp([cookieName]);
+                }
+            }
+        },
+
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
 
             var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
                 releaseMessage = {
-                    show: function () {
-                        common.$g('#header').addClass('js-release-message');
-                        common.$g('.release-message').removeClass('u-h');
-                    },
-                    hide: function () {
-                        userPrefs.set('releaseMessage', true);
-                        common.$g('#header').removeClass('js-release-message');
-                        common.$g('.release-message').addClass('u-h');
+                show: function () {
+                    common.$g('#header').addClass('js-release-message');
+                    common.$g('.release-message').removeClass('u-h');
+                },
+                hide: function () {
+                    userPrefs.set('releaseMessage', true);
+                    common.$g('#header').removeClass('js-release-message');
+                    common.$g('.release-message').addClass('u-h');
                     }
                 };
 
@@ -320,15 +334,16 @@ define([
 
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
-               
+
                 releaseMessage.show();
-                
+
                 bean.on(document, 'click', '.release-message-ack', function(e) {
                     releaseMessage.hide();
                 });
             }
         },
-        
+
+
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 var swipe = swipeNav(config, contextHtml);
@@ -392,6 +407,7 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
+            modules.faciaToggle();
             modules.displayReleaseMessage(config);
         }
         common.mediator.emit("page:common:ready", config, context);

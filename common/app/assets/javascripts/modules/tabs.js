@@ -22,7 +22,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
             showTab: function (container, clickedTab, originalEvent) {
 
-                var classes = 'tabs__tab--selected tone-colour tone-border';
+                var classes = 'tabs__tab--selected tone-colour tone-accent-border';
 
                 // find the active tab in the set. returns an array of 1 item, hence [0]
                 var currentTab = common.$g('.tabs__tab--selected a', container)[0];

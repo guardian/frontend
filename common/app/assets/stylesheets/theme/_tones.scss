@@ -1,6 +1,7 @@
-@mixin tone($tone, $colour) {
+@mixin tone($tone, $colour, $accentColour) {
     .tone-#{$tone} {
-        .tone-colour {
+        .tone-colour,
+        &.tone-colour{
             &,
             &:active,
             &:focus,
@@ -8,9 +9,14 @@
                 color: $colour;
             }
         }
-        .tone-border { border-color: $colour; }
+        .tone-border,
+        &.tone-border { border-color: $colour; }
 
-        .tone-background { background-color: $colour; }
+        .tone-accent-border,
+        &.tone-accent-border { border-color: $accentColour; }
+
+        .tone-background,
+        &.tone-background { background-color: $colour; }
 
         .is-summary > .block-title {
             color: $colour;
@@ -26,14 +32,14 @@
 
 /* News
    ========================================================================== */
-@include tone(news, $c-newsDefault);
+@include tone(news, $c-newsDefault, $c-newsAccent);
 
 /* Comment
    ========================================================================== */
-@include tone(comment, $c-commentDefault);
+@include tone(comment, $c-commentDefault, $c-commentAccent);
 
 /* Feature
    ========================================================================== */
-@include tone(feature, $c-featureDefault);
+@include tone(feature, $c-featureDefault, $c-featureAccent);
 
 

@@ -46,7 +46,8 @@
 .zone-uk .tone-colour,
 .zone-uk-news .tone-colour,
 .zone-media .tone-colour,
-.zone-world .tone-colour {
+.zone-world .tone-colour,
+.zone-global .tone-colour {
     color: $c-newsDefault;
 }
 
@@ -70,8 +71,7 @@
 }
 
 .zone-commentisfree .tone-colour,
-.zone-tone .tone-colour,
-.zone-global .tone-colour {
+.zone-tone .tone-colour {
     color: $c-commentDefault;
 }
 
@@ -103,7 +103,8 @@
 .zone-uk .tone-background,
 .zone-uk-news .tone-background,
 .zone-media .tone-background,
-.zone-world .tone-background {
+.zone-world .tone-background,
+.zone-global .tone-background {
     background-color: $c-newsDefault;
 }
 
@@ -126,8 +127,7 @@
 }
 
 .zone-commentisfree .tone-background,
-.zone-tone .tone-background,
-.zone-global .tone-background {
+.zone-tone .tone-background {
     background-color: $c-commentDefault;
 }
 
@@ -161,7 +161,8 @@
 .zone-uk .tone-border,
 .zone-uk-news .tone-border,
 .zone-media .tone-border,
-.zone-world .tone-border {
+.zone-world .tone-border,
+.zone-global .tone-border {
     border-color: $c-newsAccent;
 }
 
@@ -184,8 +185,7 @@
 }
 
 .zone-commentisfree .tone-border,
-.zone-tone .tone-border,
-.zone-global .tone-border {
+.zone-tone .tone-border {
     border-color: $c-commentAccent;
 }
 
@@ -219,7 +219,8 @@
 .zone-uk .trail__count--commentcount i,
 .zone-uk-news .trail__count--commentcount i,
 .zone-media .trail__count--commentcount i,
-.zone-world .trail__count--commentcount i {
+.zone-world .trail__count--commentcount i,
+.zone-global .trail__count--commentcount i {
     @extend .i-comment-news;
 }
 
@@ -242,14 +243,11 @@
 }
 
 .zone-commentisfree .trail__count--commentcount i,
-.zone-tone .trail__count--commentcount i,
-.zone-global .trail__count--commentcount i {
+.zone-tone .trail__count--commentcount i {
     @extend .i-comment-comment;
 }
 
 .zone-money .trail__count--commentcount i {
     @extend .i-comment-news;
 }
-
-
 

@@ -1,6 +1,7 @@
-package controllers
+package controllers.admin
 
 import conf.Configuration
+import controllers.AuthLogging
 import common.{ExecutionContexts, Logging}
 import implicits.Strings
 import play.api.mvc._
