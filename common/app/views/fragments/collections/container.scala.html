@@ -1,7 +1,7 @@
 @(page: model.MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 @if(collection.items.nonEmpty) {
-    <section class="collection collection--@style.className @if(style.section != "news"){js-collection--display-toggle} collection--@style.section tone-@style.section"
+    <section class="collection collection--@style.className @if(style.containerType != "news"){js-collection--display-toggle} collection--@style.containerType tone-@style.tone"
              data-link-name="block | @collection.displayName.getOrElse(config.id)"
              data-collection-type="@style.className"
              data-section="@config.section">

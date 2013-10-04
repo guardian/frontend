@@ -1,7 +1,7 @@
 @(config: Config, collection: Collection, style: SectionZone, containerIndex: Int)(implicit request: RequestHeader)
 
 @if(collection.items.nonEmpty) {
-    <section class="collection collection--@style.className js-collection--display-toggle tone-@config.section.split("/").headOption"
+    <section class="collection collection--@style.className js-collection--display-toggle tone-@style.tone"
              data-link-name="block | @collection.displayName.getOrElse(config.id)"
              data-collection-type="@style.className"
              data-section="@config.section">
