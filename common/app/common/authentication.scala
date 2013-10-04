@@ -90,7 +90,7 @@ class AuthAction(loginUrl: String) extends ExecutionContexts {
 
   def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
 
-  def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async { _ match {
+  def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async { req: Request[AnyContent] => req match {
     case authenticatedRequest: AuthenticatedRequest[_] => f(authenticatedRequest)
 
     case request if Play.isTest =>
@@ -134,6 +134,8 @@ trait LoginController extends ExecutionContexts { self: Controller =>
   }
 
   def openIDCallback = Action.async { implicit request =>
+    val output = "ok"
+    println("ok")
     OpenID.verifiedId.map { info =>
       val credentials = Identity(
         info.id,
