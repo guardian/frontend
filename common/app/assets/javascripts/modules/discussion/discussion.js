@@ -78,7 +78,7 @@ define([
             insertCommentCounts: function(commentCount) {
                 var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
                     html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
-                           '  <i class="i i-comment-blue"></i>' + commentCount +
+                           '  <i class="i i-comment-news"></i>' + commentCount +
                            '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                            '</a>';
 

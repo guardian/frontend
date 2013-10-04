@@ -11,7 +11,7 @@ define([
     var attributeName = "data-discussion-id",
         countUrl = "/discussion/comment-counts.json?shortUrls=",
         tpl = '<span class="trail__count trail__count--commentcount tone-colour">';
-        tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-blue"></i>[COUNT]';
+        tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-news"></i>[COUNT]';
         tpl += '<span class="u-h"> comments</span></a></span>';
 
     function getContentIds(context) {
