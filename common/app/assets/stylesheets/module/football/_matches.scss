@@ -6,7 +6,7 @@
 
 .competitions-date {
     background-color: $c-sportMid;
-    color: $c-neutral1;
+    color: #ffffff;
     margin-top: $baseline*2;
     margin-bottom: $baseline;
     padding: 9px $gutter/2;
@@ -14,6 +14,7 @@
 
 .team-fixtures .competitions-date,
 .team-results .competitions-date {
+    color: $c-neutral1;
     background-color: $c-sportBright;
 }
 
