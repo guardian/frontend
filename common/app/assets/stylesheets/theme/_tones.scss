@@ -1,6 +1,7 @@
 @mixin tone($tone, $colour, $accentColour) {
     .tone-#{$tone} {
-        .tone-colour {
+        .tone-colour,
+        &.tone-colour{
             &,
             &:active,
             &:focus,
@@ -8,11 +9,14 @@
                 color: $colour;
             }
         }
-        .tone-border { border-color: $colour; }
+        .tone-border,
+        &.tone-border { border-color: $colour; }
 
-        .tone-accent-border { border-color: $accentColour; }
+        .tone-accent-border,
+        &.tone-accent-border { border-color: $accentColour; }
 
-        .tone-background { background-color: $colour; }
+        .tone-background,
+        &.tone-background { background-color: $colour; }
 
         .is-summary > .block-title {
             color: $colour;
