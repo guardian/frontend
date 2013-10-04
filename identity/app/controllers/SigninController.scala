@@ -49,7 +49,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     def onError(formWithErrors: Form[(String, String, Boolean)]): Future[SimpleResult] = {
       logger.info("Invalid login form submission")
       Future {
-        Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+        Ok(views.html.signin(page.signinValidationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
       }
     }
 
@@ -67,7 +67,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                 else error.description
               formFold.withError(error.context.getOrElse(""), errorMessage)
             }
-            Ok(views.html.signin(page.signinError(idRequest), idRequest, idUrlBuilder, formWithErrors))
+            Ok(views.html.signin(page.signinAuthenticationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
           }
           case Right(responseCookies) => {
             logger.trace("Logging user in")

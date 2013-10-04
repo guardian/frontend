@@ -34,12 +34,22 @@ trait Omniture {
     new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
   }
 
-  def signinError(idRequest: IdentityRequest) : IdentityPage with TrackingParams = {
+  def signinAuthenticationError(idRequest: IdentityRequest) : IdentityPage with TrackingParams = {
     val newMetadata = addMetadata(
       "returnUrl" -> idRequest.returnUrl,
       "content-type" -> "userid", // For the no js omniture tracking
       "omnitureEvent" -> "event34",
       "identityErrorMessage" -> "Authentication failed"
+    )
+    new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
+  }
+
+  def signinValidationError(idRequest: IdentityRequest) : IdentityPage with TrackingParams = {
+    val newMetadata = addMetadata(
+      "returnUrl" -> idRequest.returnUrl,
+      "content-type" -> "userid", // For the no js omniture tracking
+      "omnitureEvent" -> "event34",
+      "identityErrorMessage" -> "Validation failed"
     )
     new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
   }
