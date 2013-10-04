@@ -61,7 +61,7 @@ $mq-breakpoints: (
 /* Fonts
    ========================================================================== */
 
-$sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
 
@@ -69,11 +69,11 @@ $serifheadline: "EgyptianHeadline", georgia, serif;
 // Usage:
 // font-size (px) line-height (px) // level
 $fs-headers: (
-    16, // 1
-    18, // 2
-    20, // 3
-    22, // 4
-    24  // 5
+    16 20, // 1
+    18 24, // 2
+    20 28, // 3
+    22 28, // 4
+    24 28  // 5
 );
 
 $fs-headlines: (
@@ -107,7 +107,8 @@ $fs-data: (
     12 14, // 2
     13 16, // 3
     14 18, // 4
-    18 22  // 5
+    16 20, // 5
+    18 22  // 6
 );
 
 /* Colours
@@ -118,7 +119,7 @@ $fs-data: (
  */
 $blue: #214583;
 $darkBlue: #152E5F;
-$lightBlue: #95B2CB;
+$lightBlue: #4490CE;
 $linkBlue: #005689;
 $mushroom: #F4F4EE;
 $medianMushroom: #EDEDE7;
@@ -126,10 +127,25 @@ $darkMushroom: #E3E3DB;
 $grey: #B3B3B4;
 $darkGrey: #676767;
 
-$neutral1: #333333;
-$neutral2: #676767;
-$neutral3: #cfcfcd;
+$c-neutral1: #333333;
+$c-neutral2: #676767;
+$c-neutral3: #929497;
+$c-neutral4: #b3b3b4;
+$c-neutral5: #cfcfcd;
+$c-neutral6: #edede7;
+$c-neutral7: #f4f4ee;
 
+
+/* Tones
+   ========================================================================== */
+$c-newsDefault: #005689;
+$c-newsAccent: #4BC6DF;
+
+$c-featureDefault: #951C55;
+$c-featureAccent: #F66980;
+
+$c-commentDefault: #E6711B;
+$c-commentAccent: #FFBB00;
 
 
 /* Zones
@@ -146,14 +162,16 @@ $environmentGreen: #4A7801;
 $lifeandstyleOrange: #EA721E;
 $moneyPurple: #7D0068;
 $newsRed: #D61D00;
-$sportBright: #20A111;
-$sportDark: #005D1D;
-$sportMid: #057227;
+
 $travelBlue: #066EC9;
 
 
 /* Football
    ========================================================================== */
 
-$homeColour: $sportBright;
-$awayColour: #19646E;
+$c-sportBright: #70d2e6;
+$c-sportMid: #005689;
+$c-sportDark: #003f64;
+
+$c-sportHome: $c-sportBright;
+$c-sportAway: $c-sportDark;

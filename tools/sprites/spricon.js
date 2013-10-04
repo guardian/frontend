@@ -120,10 +120,6 @@
         // css class prefix
         var cssprefix = config.cssprefix || "i-";
 
-        // location of styleguide HTML fragment
-        var styleguidepath = config.styleguidepath || "/";
-        var styleguidefilename = config.styleguidefilename || "sprites.scala.html";
-
         // create the output directory
         if (!fs.existsSync( config.imgDest )) {
             fs.mkdirSync( config.imgDest );
@@ -152,9 +148,7 @@
                     spritepath,
                     cssprefix,
                     cssbasepath,
-                    generatesvg,
-                    styleguidepath,
-                    styleguidefilename
+                    generatesvg
                   ],
                   fallback: ''
                 }, function(err, result, code) {

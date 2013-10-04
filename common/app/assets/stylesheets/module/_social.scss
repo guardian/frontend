@@ -1,51 +1,38 @@
 .social-wrapper {
-   padding: $baseline*3 0 $baseline*4;
-   overflow: hidden;
+    padding: $baseline*3 0 $baseline*4;
+    max-width: gs-span(4);
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: $baseline*4;
 }
+.social__item {
+    float: left;
+    width: 20%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 
-.social {
+    .i-share-email:hover {
+        @extend .i-share-email-hover;
+    }
 
+    .i-share-facebook:hover {
+        @extend .i-share-facebook-hover;
+    }
+
+    .i-share-gplus:hover {
+        @extend .i-share-gplus-hover;
+    }
+
+    .i-share-twitter:hover {
+        @extend .i-share-twitter-hover;
+    }
 }
-
-.social__item--mail    { background-color: #84847E; }
-.social__item--fb      { background-color: #3b5998; }
-.social__item--twitter { background-color: #00aced; }
-.social__item--gplus   { background-color: #dd4b39; }
-
 .social__action {
     height: 36px;
     display: block;
-    margin-bottom: 8px;
     position: relative;
 }
-
 .social__icon {
     position: absolute;
-    left: 5px;
-    bottom: 5px;
-}
-
-@include mq(320px) {
-    .social-wrapper {
-        width: gs-span(4);
-    }
-    .social {
-        display: table;
-        width: 100%;
-    }
-    ul.social {
-        margin-bottom: $baseline*4;
-    }
-    .social__item {
-        float: left;
-        width: gs-span(4) / 4;
-        @include box-sizing(border-box);
-
-        + .social__item {
-            border-left: $gutter/2 solid #ffffff;
-        }
-    }
-    .social__action {
-        margin-bottom: 0;
-    }
+    left: 0;
+    bottom: 3px;
 }
