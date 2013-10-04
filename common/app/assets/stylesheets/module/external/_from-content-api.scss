@@ -75,23 +75,6 @@
             @include fs-bodyHeading(3, true);
         }
     }
-    > p {
-        margin-bottom: 0;
-
-        + a + p, // Inline link cards are inserted between paragraphs
-        + .inline-image + p,
-        + p {
-            // Indent consecutive paragraphs
-            // by the value of the line-height
-            text-indent: 24px;
-            text-indent: 2.4rem;
-
-            @include mq(tablet) {
-                text-indent: 28px;
-                text-indent: 2.8rem;
-            }
-        }
-    }
     > p,
     > figure,
     > video {
@@ -126,46 +109,34 @@
     }
 }
 
-.article blockquote {
-    margin: 28px 0 28px 24px;
+.from-content-api blockquote {
     font-style: italic;
+    margin: 28px 0 28px 24px;
 
     @include mq(tablet) {
         margin-left: 28px;
     }
-}
-
-.article blockquote,
-.article blockquote p {
 
     &.quoted {
-        margin: 28px 0;
+        margin-left: 0;
+        font-style: normal;
+        color: $c-neutral2;
 
         p {
             @include fs-headline(1);
-            line-height: 24px;
-            line-height: 2.4rem;
-            font-style: normal;
-            color: $c-neutral2;
-            margin-bottom: 0;
-            text-indent: 24px;
+            line-height: inherit;
 
             &:first-child {
                 text-indent: 40px;
+
+                @include mq(tablet) {
+                    text-indent: 42px;
+                }
             }
-        }
-    }
 
-    @include mq(tablet) {
-
-        &.quoted p {
-            @include fs-headline(2, true);
-            line-height: 28px;
-            line-height: 2.8rem;
-            text-indent: 28px;
-
-            &:first-child {
-                text-indent: 42px;
+            @include mq(tablet) {
+                @include fs-headline(2, true);
+                line-height: inherit;
             }
         }
     }
