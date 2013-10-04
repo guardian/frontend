@@ -1,10 +1,8 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-<div class="tone-@VisualTone(gallery)">
-    <h2 class="article-zone tone-accent-border">
-        <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
-    </h2>
-</div>
+<h2 class="article-zone tone-@VisualTone(gallery) tone-accent-border">
+    <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+</h2>
 
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
