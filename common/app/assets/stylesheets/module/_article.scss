@@ -473,3 +473,16 @@ video {
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 }
+
+
+.article__popular {
+
+    .article-zone {
+        border-color: $c-newsAccent; // Acts as a default
+    }
+
+    i {
+        @include rotate(-90deg);
+        margin-top: 10px;
+    }
+}
