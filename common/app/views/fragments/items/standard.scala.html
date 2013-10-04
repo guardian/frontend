@@ -5,7 +5,7 @@
     <h@if(mainItem){1}else{2} class="item__title">
         <a href="@LinkTo{@trail.url}" class="item__link">
             @if(trail.trailType == Option("comment")) {
-                <span class="i i-quote-marks"></span>
+                <span class="i i-quote-light-grey"></span>
             }
             @RemoveOuterParaHtml(trail.headline)
         </a>
@@ -22,7 +22,8 @@
         <time class="item__timestamp js-item__timestamp"
               itemprop="datePublished"
               datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-              data-timestamp="@trail.webPublicationDate.getMillis">
+              data-timestamp="@trail.webPublicationDate.getMillis"
+              data-relativeformat="short">
             <i class="i"></i>
             <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
         </time>

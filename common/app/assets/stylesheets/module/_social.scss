@@ -7,11 +7,23 @@
 }
 .social__item {
     float: left;
-    width: 25%;
-    @include box-sizing(border-box);
+    width: 20%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 
-    + .social__item {
-        border-left: 1px solid $c-neutral5;
+    .i-share-email:hover {
+        @extend .i-share-email-hover;
+    }
+
+    .i-share-facebook:hover {
+        @extend .i-share-facebook-hover;
+    }
+
+    .i-share-gplus:hover {
+        @extend .i-share-gplus-hover;
+    }
+
+    .i-share-twitter:hover {
+        @extend .i-share-twitter-hover;
     }
 }
 .social__action {

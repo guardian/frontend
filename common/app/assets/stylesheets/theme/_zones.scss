@@ -1,194 +1,257 @@
 // TODO make this human readable
 
-.zone-news .zone-color {
-    color: $newsRed; // red
+.zone-news .tone-colour {
+    color: $c-newsDefault; // red
 }
 
-.zone-environment .zone-color {
-    color: $environmentGreen; // eco green
+.zone-environment .tone-colour {
+    color: $c-newsDefault; // eco green
 }
 
-.zone-news .zone-background,
-.zone-news .zone-background-hover:hover,
-.zone-news .zone-background-hover:focus,
-.zone-news .zone-background-hover:active {
-    background-color: $newsRed; // red
+.zone-news .tone-background,
+.zone-news .tone-background-hover:hover,
+.zone-news .tone-background-hover:focus,
+.zone-news .tone-background-hover:active {
+    background-color: $c-newsDefault; // red
 }
 
-.zone-environment .zone-background,
-.zone-environment .zone-background-hover:hover,
-.zone-environment .zone-background-hover:focus,
-.zone-environment .zone-background-hover:active {
-    background-color: $environmentGreen; // eco green
+.zone-environment .tone-background,
+.zone-environment .tone-background-hover:hover,
+.zone-environment .tone-background-hover:focus,
+.zone-environment .tone-background-hover:active {
+    background-color: $c-newsDefault; // eco green
 }
 
-.zone-childrens-books-site .zone-color,
-.zone-tv-and-radio .zone-color,
-.zone-artanddesign .zone-color,
-.zone-stage .zone-color,
-.zone-culture .zone-color,
-.zone-film .zone-color,
-.zone-books .zone-color,
-.zone-music .zone-color {
-    color: $culturePink;
+.zone-childrens-books-site .tone-colour,
+.zone-tv-and-radio .tone-colour,
+.zone-artanddesign .tone-colour,
+.zone-stage .tone-colour,
+.zone-culture .tone-colour,
+.zone-film .tone-colour,
+.zone-books .tone-colour,
+.zone-music .tone-colour {
+    color: $c-featureDefault;
 }
 
-.zone-journalismcompetition .zone-color,
-.zone-global-development .zone-color,
-.zone-law .zone-color,
-.zone-theobserver .zone-color,
-.zone-science .zone-color,
-.zone-theguardian .zone-color,
-.zone-education .zone-color,
-.zone-technology .zone-color,
-.zone-society .zone-color,
-.zone-politics .zone-color,
-.zone-uk .zone-color,
-.zone-uk-news .zone-color,
-.zone-media .zone-color,
-.zone-world .zone-color {
-    color: $newsRed;
+.zone-journalismcompetition .tone-colour,
+.zone-global-development .tone-colour,
+.zone-law .tone-colour,
+.zone-theobserver .tone-colour,
+.zone-science .tone-colour,
+.zone-theguardian .tone-colour,
+.zone-education .tone-colour,
+.zone-technology .tone-colour,
+.zone-society .tone-colour,
+.zone-politics .tone-colour,
+.zone-uk .tone-colour,
+.zone-uk-news .tone-colour,
+.zone-media .tone-colour,
+.zone-world .tone-colour,
+.zone-global .tone-colour {
+    color: $c-newsDefault;
 }
 
-.zone-fashion .zone-color,
-.zone-lifeandstyle .zone-color {
-    color: $lifeandstyleOrange;
+.zone-fashion .tone-colour,
+.zone-lifeandstyle .tone-colour {
+    color: $c-featureDefault;
 }
 
-.zone-sport .zone-color,
-.zone-football .zone-color,
-.zone-cricket .zone-color {
-    color: $sportBright;
+.zone-sport .tone-colour,
+.zone-football .tone-colour,
+.zone-cricket .tone-colour {
+    color: $c-newsDefault;
 }
 
-.zone-travel .zone-color {
-    color: $travelBlue;
+.zone-travel .tone-colour {
+    color: $c-featureDefault;
 }
 
-.zone-business .zone-color {
-    color: $businessBlue;
+.zone-business .tone-colour {
+    color: $c-newsDefault;
 }
 
-.zone-commentisfree .zone-color,
-.zone-tone .zone-color,
-.zone-global .zone-color {
-    color: $commentBlue;
+.zone-commentisfree .tone-colour,
+.zone-tone .tone-colour {
+    color: $c-commentDefault;
 }
 
-.zone-money .zone-color {
-    color: $moneyPurple;
+.zone-money .tone-colour {
+    color: $c-newsDefault;
 }
 
-.zone-childrens-books-site .zone-background,
-.zone-tv-and-radio .zone-background,
-.zone-artanddesign .zone-background,
-.zone-stage .zone-background,
-.zone-culture .zone-background,
-.zone-film .zone-background,
-.zone-books .zone-background,
-.zone-music .zone-background {
-    background-color: $culturePink;
+.zone-childrens-books-site .tone-background,
+.zone-tv-and-radio .tone-background,
+.zone-artanddesign .tone-background,
+.zone-stage .tone-background,
+.zone-culture .tone-background,
+.zone-film .tone-background,
+.zone-books .tone-background,
+.zone-music .tone-background {
+    background-color: $c-featureDefault;
 }
 
-.zone-journalismcompetition .zone-background,
-.zone-global-development .zone-background,
-.zone-law .zone-background,
-.zone-theobserver .zone-background,
-.zone-science .zone-background,
-.zone-theguardian .zone-background,
-.zone-education .zone-background,
-.zone-technology .zone-background,
-.zone-society .zone-background,
-.zone-politics .zone-background,
-.zone-uk .zone-background,
-.zone-uk-news .zone-background,
-.zone-media .zone-background,
-.zone-world .zone-background {
-    background-color: $newsRed;
+.zone-journalismcompetition .tone-background,
+.zone-global-development .tone-background,
+.zone-law .tone-background,
+.zone-theobserver .tone-background,
+.zone-science .tone-background,
+.zone-theguardian .tone-background,
+.zone-education .tone-background,
+.zone-technology .tone-background,
+.zone-society .tone-background,
+.zone-politics .tone-background,
+.zone-uk .tone-background,
+.zone-uk-news .tone-background,
+.zone-media .tone-background,
+.zone-world .tone-background,
+.zone-global .tone-background {
+    background-color: $c-newsDefault;
 }
 
-.zone-fashion .zone-background,
-.zone-lifeandstyle .zone-background {
-    background-color: $lifeandstyleOrange;
+.zone-fashion .tone-background,
+.zone-lifeandstyle .tone-background {
+    background-color: $c-featureDefault;
 }
 
-.zone-sport .zone-background,
-.zone-football .zone-background {
-    background-color: $sportBright;
+.zone-sport .tone-background,
+.zone-football .tone-background {
+    background-color: $c-newsDefault;
 }
 
-.zone-travel .zone-background {
-    background-color: $travelBlue;
+.zone-travel .tone-background {
+    background-color: $c-featureDefault;
 }
 
-.zone-business .zone-background {
-    background-color: $businessBlue;
+.zone-business .tone-background {
+    background-color: $c-newsDefault;
 }
 
-.zone-commentisfree .zone-background,
-.zone-tone .zone-background,
-.zone-global .zone-background {
-    background-color: $commentBlue;
+.zone-commentisfree .tone-background,
+.zone-tone .tone-background {
+    background-color: $c-commentDefault;
 }
 
-.zone-money .zone-background {
-    background-color: $moneyPurple;
+.zone-money .tone-background {
+    background-color: $c-newsDefault;
 }
 
 
 
-.zone-childrens-books-site .zone-border,
-.zone-tv-and-radio .zone-border,
-.zone-artanddesign .zone-border,
-.zone-stage .zone-border,
-.zone-culture .zone-border,
-.zone-film .zone-border,
-.zone-books .zone-border,
-.zone-music .zone-border {
-    border-color: $culturePink;
+.zone-childrens-books-site .tone-border,
+.zone-tv-and-radio .tone-border,
+.zone-artanddesign .tone-border,
+.zone-stage .tone-border,
+.zone-culture .tone-border,
+.zone-film .tone-border,
+.zone-books .tone-border,
+.zone-music .tone-border {
+    border-color: $c-featureAccent;
 }
 
-.zone-journalismcompetition .zone-border,
-.zone-global-development .zone-border,
-.zone-law .zone-border,
-.zone-theobserver .zone-border,
-.zone-science .zone-border,
-.zone-theguardian .zone-border,
-.zone-education .zone-border,
-.zone-technology .zone-border,
-.zone-society .zone-border,
-.zone-politics .zone-border,
-.zone-uk .zone-border,
-.zone-uk-news .zone-border,
-.zone-media .zone-border,
-.zone-world .zone-border {
-    border-color: $newsRed;
+.zone-journalismcompetition .tone-border,
+.zone-global-development .tone-border,
+.zone-law .tone-border,
+.zone-theobserver .tone-border,
+.zone-science .tone-border,
+.zone-theguardian .tone-border,
+.zone-education .tone-border,
+.zone-technology .tone-border,
+.zone-society .tone-border,
+.zone-politics .tone-border,
+.zone-uk .tone-border,
+.zone-uk-news .tone-border,
+.zone-media .tone-border,
+.zone-world .tone-border,
+.zone-global .tone-border {
+    border-color: $c-newsAccent;
 }
 
-.zone-fashion .zone-border,
-.zone-lifeandstyle .zone-border {
-    border-color: $lifeandstyleOrange;
+.zone-fashion .tone-border,
+.zone-lifeandstyle .tone-border {
+    border-color: $c-featureAccent;
 }
 
-.zone-sport .zone-border,
-.zone-football .zone-border {
-    border-color: $sportBright;
+.zone-sport .tone-border,
+.zone-football .tone-border {
+    border-color: $c-newsAccent;
 }
 
-.zone-travel .zone-border {
-    border-color: $travelBlue;
+.zone-travel .tone-border {
+    border-color: $c-featureAccent;
 }
 
-.zone-business .zone-border {
-    border-color: $businessBlue;
+.zone-business .tone-border {
+    border-color: $c-newsAccent;
 }
 
-.zone-commentisfree .zone-border,
-.zone-tone .zone-border,
-.zone-global .zone-border {
-    border-color: $commentBlue;
+.zone-commentisfree .tone-border,
+.zone-tone .tone-border {
+    border-color: $c-commentAccent;
 }
 
-.zone-money .zone-border {
-    border-color: $moneyPurple;
+.zone-childrens-books-site .trail__count--commentcount i,
+.zone-tv-and-radio .trail__count--commentcount i,
+.zone-artanddesign .trail__count--commentcount i,
+.zone-stage .trail__count--commentcount i,
+.zone-culture .trail__count--commentcount i,
+.zone-film .trail__count--commentcount i,
+.zone-books .trail__count--commentcount i,
+.zone-music .trail__count--commentcount i,
+
+.zone-fashion .trail__count--commentcount i,
+.zone-lifeandstyle .trail__count--commentcount i,
+
+.zone-travel .trail__count--commentcount i {
+    @extend .i-comment-feature;
+
+    @if $svg-support {
+        .svg & {
+            @extend .i-svg-comment-feature;
+            background-position: 0 0;
+        }
+    }
+}
+
+.zone-journalismcompetition .trail__count--commentcount i,
+.zone-global-development .trail__count--commentcount i,
+.zone-law .trail__count--commentcount i,
+.zone-theobserver .trail__count--commentcount i,
+.zone-science .trail__count--commentcount i,
+.zone-theguardian .trail__count--commentcount i,
+.zone-education .trail__count--commentcount i,
+.zone-technology .trail__count--commentcount i,
+.zone-society .trail__count--commentcount i,
+.zone-politics .trail__count--commentcount i,
+.zone-news .trail__count--commentcount i,
+.zone-uk .trail__count--commentcount i,
+.zone-uk-news .trail__count--commentcount i,
+.zone-media .trail__count--commentcount i,
+.zone-world .trail__count--commentcount i,
+.zone-global .trail__count--commentcount i,
+
+.zone-sport .trail__count--commentcount i,
+.zone-football .trail__count--commentcount i,
+
+.zone-business .trail__count--commentcount i,
+.zone-money .trail__count--commentcount i {
+    @extend .i-comment-news;
+
+    @if $svg-support {
+        .svg & {
+            @extend .i-svg-comment-news;
+            background-position: 0 0;
+        }
+    }
+}
+
+.zone-commentisfree .trail__count--commentcount i,
+.zone-tone .trail__count--commentcount i {
+    @extend .i-comment-comment;
+
+    @if $svg-support {
+        .svg & {
+            @extend .i-svg-comment-comment;
+            background-position: 0 0;
+        }
+    }
 }
