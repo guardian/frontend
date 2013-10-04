@@ -2,7 +2,7 @@
 
 @model.days.map{ day =>
     @if(isLive != "live") { <h2 class="competitions-date type-7">@day.date.toString("EEEE d MMMM yyyy")</h2>}
-    <ol class="competitions unstyled" data-link-name="matches">
+    <ol class="competitions" data-link-name="matches">
         @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
 
             <li class="competition" data-link-name="competition | @comp.fullName" data-competition-id="@comp.id">

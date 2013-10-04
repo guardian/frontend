@@ -87,8 +87,8 @@ define([
 
             insertCommentCounts: function(commentCount) {
                 var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
-                    html = '<a href="#comments" class="js-show-discussion commentcount" data-link-name="Comment count">' +
-                           '  <i class="i i-comment-count-small"></i>' + commentCount +
+                    html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
+                           '  <i class="i"></i>' + commentCount +
                            '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                            '</a>';
 
@@ -212,7 +212,7 @@ define([
 
                 else if (!user) {
                     var url = config.page.idUrl +'/{1}?returnUrl='+ window.location.href;
-                    showElem = '<div class="d-bar d-bar--signin cta">Open for comments. <a href="'+ url.replace('{1}', 'signin') +'">Sign in</a> or <a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> to join the discussion.</div>';
+                    showElem = '<div class="d-bar d-bar--signin">Open for comments. <a href="'+ url.replace('{1}', 'signin') +'">Sign in</a> or <a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> to join the discussion.</div>';
                     discussionElem.prepend(showElem);
                     showMoreBtnElem.after(showElem);
                     return;

@@ -1,6 +1,6 @@
 @(webPublicationDate: org.joda.time.DateTime, isLive: Boolean = false, isFront: Boolean = false)(implicit request: RequestHeader)
 
-<p class="relative-timestamp type-11 @if(isFront){ front-timestamp}">
-    @if(isLive){ <i class="is-live-icon">LIVE</i> } else { <i class="i i-date relative-timestamp__icon"></i> }
+<p class="relative-timestamp @if(isFront){ front-timestamp}">
+    @if(isLive){ <i class="is-live-icon">LIVE</i> } else { <i class="i i-clock-grey relative-timestamp__icon"></i> }
     <time class="js-timestamp" itemprop="datePublished" datetime="@webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@webPublicationDate.getMillis">@* Anything inside here will be replaced by JS *@@Format(webPublicationDate, "d MMM y")</time>
 </p>
