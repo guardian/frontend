@@ -199,10 +199,10 @@ a.competition-title {
 }
 
 //These are nasty... blame the designers!
-.front-competition-fixtures {
+.front-competition-table {
     padding-bottom: 0;
-    border-bottom: none;
     border-top: 1px solid $c-neutral6;
+    border-bottom: 1px solid $c-neutral6;
 }
 
 .front-competition-fixtures .cta {
@@ -210,7 +210,7 @@ a.competition-title {
 }
 
 .front-competition-link {
-    border-bottom: 1px solid $c-neutral6;
+    //border-bottom: 1px solid $c-neutral6;
 }
 
 // styling for non-ajax match nav
