@@ -11,13 +11,12 @@ import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import play.api.libs.json.JsNumber
 import discussion.model.{Profile, Comment, CommentCount}
-import play.api.mvc.{Headers, Cookies}
+import play.api.mvc.Headers
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
-  protected def GET(url: String): Future[Response]
+  protected def GET(url: String, headers: (String, String)*): Future[Response]
   protected val apiRoot: String
-  protected val profileHeaders = Set("GU-IdentityToken", "Cookie")
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
     def onError(response: Response) =
@@ -66,21 +65,22 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
   }
 
-//  def myProfile(headers: Headers, cookies: Cookies): Future[Profile] ={
-//    def onError(r: Response) =
-//      s"Error loading profile, status: ${r.status}, message: ${r.statusText}"
-//    val apiUrl = s"$apiRoot/profile/me"
-//
-////    val authCookies = cookies filter { AuthCookies.all contains _.name }
-//    getJsonOrError(apiUrl, onError) map {
-//      json =>
-//        Profile(json)
-//    }
-//  }
+  def myProfile(headers: Headers): Future[Profile] ={
+    def onError(r: Response) =
+      s"Error loading profile, status: ${r.status}, message: ${r.statusText}"
+    val apiUrl = s"$apiRoot/profile/me"
 
-  protected def getJsonOrError(url: String, onError: (Response) => String):Future[JsValue] = {
+    val authHeader = AuthHeaders.filterHeaders(headers).toSeq
+
+    getJsonOrError(apiUrl, onError, authHeader: _*) map {
+      json =>
+        Profile(json)
+    }
+  }
+
+  protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*):Future[JsValue] = {
     val start = currentTimeMillis()
-    GET(url) map {
+    GET(url, headers:_*) map {
       response =>
         DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
 
@@ -90,20 +90,16 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
           case _ =>
             log.error(onError(response))
-            throw new RuntimeException("Error from Discussion API")
+            throw new RuntimeException("Error from Discussion API, "+onError(response))
         }
     }
   }
-
 }
 
+object AuthHeaders {
+  val guIdToken = "GU-IdentityToken"
+  val cookie = "Cookie"
+  val all = Set(guIdToken, cookie)
 
-object AuthCookies {
-  val guMi = "GU_MI"
-  val guMe = "GU_ME"
-  val guU = "GU_U"
-  val insecure = guU :: guMi :: guMe :: Nil
-  val secure = insecure map {"SC_" + _ }
-  val all = secure ::: insecure
-
+  def filterHeaders(headers: Headers): Map[String, String] = headers.toSimpleMap filterKeys { all.contains }
 }
