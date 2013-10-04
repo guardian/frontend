@@ -59,7 +59,7 @@ define([
             }).then(
                 function (response) {
                     //This is because the endpoint can also return a 204 no-content
-                    if(response) {
+                    if(response && response.html) {
                         that.view.render(response.html);
                     }
                 },
