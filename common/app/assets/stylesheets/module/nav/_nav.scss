@@ -272,12 +272,13 @@
 
     .localnav__cta {
         width: $gs-column-width;
-        height: $gs-column-height + $baseline;
+        height: $gs-column-height - $baseline*1.5;
         padding: 0;
-        margin: 0;
+        margin: $baseline*1.5 0;
         position: absolute;
         right: 0;
-        bottom: 0;
+        top: 0;
+        border-left: 1px solid $c-neutral6;
 
         &,
         &:hover,
@@ -287,7 +288,7 @@
         }
 
         i {
-            margin-top: 4px;
+            margin-top: -4px;
         }
 
         &.is-active i {
