@@ -1,6 +1,7 @@
-@()(implicit request: RequestHeader)
+@(page: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
 @import java.net.URLEncoder.encode
+@import common.DesktopLink
 
 @if(ReleaseMessageSwitch.isSwitchedOn) {
     <div class="site-message u-h" data-link-name="release message">
@@ -16,11 +17,9 @@
                 </li>
                 <li class="site-message__actions__item">
                     <i class="i i-back"></i>
-                    @defining(encode(s"${LinkTo(s"/")}?view=desktop", "UTF-8")){ encodedDestinationUrl =>
-                        <a class="js-main-site-link" rel="nofollow"
-                            href="@LinkTo{/preference/platform/desktop}?page=@encodedDestinationUrl"
+                        <a class="js-main-site-link" rel="nofollow" href="@DesktopLink(page)"
                             data-link-name="opt-out">Opt-out and return to standard desktop site </a>
-                    }
+
                 </li>
             </ul>
 
