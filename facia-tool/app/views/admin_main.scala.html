@@ -48,7 +48,7 @@
             define('Config', function() {
                 return {
                     apiKey: '@conf.Configuration.contentApi.key',
-                    identity: @{Html(identity)}
+                    env:    '@env.toLowerCase'
                 }
             });
         </script>

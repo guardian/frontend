@@ -1,7 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @* live with empty standfirst as it is used to hook things into the page with javascript *@
-<p class="article__standfirst type-7" itemprop="description" data-link-name="standfirst">
+<p class="article__standfirst" itemprop="description" data-link-name="standfirst">
     @content.standfirst.map { s =>
         @withJsoup(BulletCleaner(s))(
             InBodyLinkCleaner("in standfirst link")(Edition(request))

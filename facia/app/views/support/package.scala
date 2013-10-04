@@ -39,7 +39,7 @@ object FindStyle {
     )),
     ("au/sport", Map(
       ("au/sport/regular-stories", Container("news", showMore = true)),
-      ("au/sport/football/regular-stories", SectionZone()),
+      ("au/football/regular-stories", SectionZone()),
       ("au/sport/cricket/regular-stories", SectionZone()),
       ("au/sport/afl/regular-stories", SectionZone()),
       ("au/sport/nrl/regular-stories", SectionZone()),
@@ -74,7 +74,7 @@ object FindStyle {
     )),
     ("uk/sport", Map(
       ("uk/sport/regular-stories", Container("news", showMore = true)),
-      ("uk/sport/football/regular-stories", SectionZone()),
+      ("uk/football/regular-stories", SectionZone()),
       ("uk/sport/cricket/regular-stories", SectionZone()),
       ("uk/sport/rugby-union/regular-stories", SectionZone()),
       ("uk/sport/motorsports/regular-stories", SectionZone()),

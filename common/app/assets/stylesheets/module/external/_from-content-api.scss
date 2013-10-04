@@ -8,67 +8,137 @@
 /* Core elements
    ========================================================================== */
 
-.from-content-api {
+.from-content-api,
+.from-content-api .block-elements {
 
-    @extend %type-6;
-    color: #333;
+    @include fs-bodyCopy(3);
+    color: #333333;
 
     @include mq(tablet) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 26px;
-        line-height: 2.6rem;
+        @include fs-bodyCopy(4, true);
     }
 
     > p,
-    > blockquote,
     ul,
     ol,
     address {
         margin: 0 0 $baseline*2 0;
         padding: 0;
     }
-    h2 {
-        @extend %type-4;
-        color: #333;
-        margin-bottom: $baseline;
+    > ol,
+    > ul {
+       margin-top: 0.8em;
+       list-style: none;
+    }
+    > ol {
+        counter-reset: li;
+    }
+    > ol > li:before {
+        content: counter(li)".";
+        counter-increment: li;
+        @include fs-header(1);
+        margin-right: 4px;
 
         @include mq(tablet) {
-            font-size: 22px;
-            font-size: 2.2rem;
-            line-height: 28px;
-            line-height: 2.8rem;
+            @include fs-header(2, true);
+        }
+    }
+    > ul > li {
+        text-indent: 20px;
+    }
+    > ul > li:before {
+        font-size: 48px;
+        content: "\2022";
+        color: $c-neutral5;
+        position: absolute;
+        left: -22px;
+        top: 1px;
+    }
+    > ol > li,
+    > ul > li {
+        position: relative;
+        margin-bottom: 0.8em;
+    }
+    h2 {
+        @include fs-header(2);
+
+        @include mq(tablet) {
+            margin-bottom: 1px;
+            @include fs-header(3, true);
         }
     }
     h3 {
-        @extend %type-5;
         margin: 0;
-        font-family: georgia, serif;
+        @include fs-bodyHeading(2);
+
+        @include mq(tablet) {
+            @include fs-bodyHeading(3, true);
+        }
     }
+    > p,
+    > figure,
+    > video {
+        + h2 {
+            margin-top: 24px;
+
+            @include mq(tablet) {
+                margin-top: 27px;
+            }
+        }
+        + h3 {
+            margin-top: $baseline*3;
+        }
+    }
+}
+.no-indent {
+    text-indent: 0 !important;
 }
 
 .from-content-api--small {
-    @extend %type-7;
+    @include fs-bodyCopy(2, true);
 
     @include mq(tablet) {
-        @include font($serif, normal, 16, 24);
+        @include fs-bodyCopy(3, true);
     }
     h2 {
-        @extend %type-5;
+        @include fs-bodyHeading(2, true);
 
         @include mq(tablet) {
-            @include font($serif, 700, 18, 24);
+            @include fs-bodyHeading(3, true);
         }
     }
 }
 
-.article blockquote,
-.article blockquote p {
+.from-content-api blockquote {
+    font-style: italic;
+    margin: 28px 0 28px 24px;
+
     @include mq(tablet) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 26px;
-        line-height: 2.6rem;
+        margin-left: 28px;
+    }
+
+    &.quoted {
+        margin-left: 0;
+        font-style: normal;
+        color: $c-neutral2;
+
+        p {
+            @include fs-headline(1);
+            line-height: inherit;
+
+            &:first-child {
+                text-indent: 40px;
+
+                @include mq(tablet) {
+                    text-indent: 42px;
+                }
+            }
+
+            @include mq(tablet) {
+                @include fs-headline(2, true);
+                line-height: inherit;
+            }
+        }
     }
 }
 
@@ -79,8 +149,12 @@
 .caption,
 figcaption,
 .main-caption {
-    @extend %type-12;
-    color: #666;
+    @include fs-data(1);
+    color: $c-neutral2;
+
+    @include mq(tablet) {
+        @include fs-data(2, true);
+    }
 }
 
 .main-caption {
@@ -101,14 +175,41 @@ figure {
 
     img {
         display: block;
-        margin-bottom: $baseline*2;
     }
 
-    &.img-extended {
+    &.img {
+        margin-top: $baseline*4;
+        margin-bottom: $baseline*5;
+
+        @include mq(leftCol) {
+            margin-top: $baseline*5;
+            margin-bottom: $baseline*6;
+        }
+    }
+
+    &.img--extended {
         margin-top: $baseline*4;
         margin-bottom: $baseline*4;
     }
+
+    &.img--landscape,
+    &.img--portrait {
+        figcaption {
+            background-color: $c-neutral7;
+            padding: $baseline 6px $baseline*6 6px;
+
+            @include mq(wide) {
+                padding: $baseline*1.5 8px $gs-column-height 8px;
+            }
+        }
+    }
 }
+
+p + figure,
+p + video {
+    margin-top: $baseline;
+}
+
 
 
 /* Video embeds
@@ -139,10 +240,10 @@ figure {
 
 .from-content-api {
     cite {
-        @extend %type-7;
+        @include fs-bodyCopy(1);
 
         a {
-            color: #666;
+            color: #666666;
 
             &:hover,
             &:focus,
@@ -159,6 +260,7 @@ figure {
     }
 }
 
+
 /* Tables
    ========================================================================== */
 
@@ -169,7 +271,7 @@ figure {
 
     // This is a weird xml output from the api
     table caption {
-        @extend %type-5;
+        @include fs-headline(2);
         padding: $baseline*2 0;
         text-align: left;
         border-top: 1px solid #B3B3B4;
@@ -177,14 +279,14 @@ figure {
 
     th,
     td {
-        @extend %type-11;
+        @include fs-data(3);
         padding: $baseline*2;
         color: #676767;
     }
 
     th {
         font-weight: 600;
-        color: #333;
+        color: #333333;
     }
 
     tbody tr:nth-child(odd) td {

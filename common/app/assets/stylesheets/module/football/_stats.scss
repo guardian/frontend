@@ -1,3 +1,7 @@
+.match-stats {
+    margin-bottom: $baseline*4;
+}
+
 .match-aggregate,
 .match-comment {
     text-align: center;
@@ -15,13 +19,13 @@
 }
 
 .home-stat {
-    background-color: $homeColour;
+    background-color: $c-sportHome;
     height: 15px;
     width: 100%;
 }
 
 .away-stat {
-    background-color: $awayColour;
+    background-color: $c-sportAway;
     height: 15px;
 }
 
@@ -53,14 +57,14 @@
 }
 
 .m-status {
-    padding: 2px 5px;
+    padding: 0 5px;
 }
 
 .home-header {
     float: left;
     width: 49.5%;
     margin-bottom: $baseline * 3;
-    border-bottom: 5px solid $homeColour;
+    border-bottom: 5px solid $c-sportHome;
     padding-bottom: $baseline;
 }
 
@@ -69,7 +73,7 @@
     width: 49.5%;
     text-align: right;
     margin-bottom: $baseline * 3;
-    border-bottom: 5px solid $awayColour;
+    border-bottom: 5px solid $c-sportAway;
     padding-bottom: $baseline;
 }
 
@@ -91,7 +95,7 @@
     font-style: normal;
     line-height: 1;
     color: #fff;
-    background-color: $sportBright;
+    background-color: $c-sportBright;
 
     abbr {
         border-bottom: none !important;
@@ -104,7 +108,7 @@
 }
 
 .section-divider {
-    border-top: 4px solid $mushroom;
+    @include fs-header(1);
     border-bottom: 1px solid $mushroom;
     padding-top: $baseline * 2;
     padding-bottom: $baseline * 3;

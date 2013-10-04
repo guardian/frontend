@@ -3,8 +3,12 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
     return function(collection, config) {
 
         var _$collection = bonzo(collection),
-            _$button = bonzo(bonzo.create('<button class="collection__display-toggle" data-link-name="Show"><span class="collection__display-toggle__text">Hide</span></button>'))
-                           .append('<span class="u-h"> ' + _$collection.attr('data-section') + '</span>'),
+            _$button = bonzo(bonzo.create(
+                '<button class="collection__display-toggle" data-link-name="Show">'
+                    + '<i class="i i-arrow-white-large"></i>'
+                    + '<span class="collection__display-toggle__text u-h">Hide</span>'
+                +'</button>'
+            )),
             _prefName = 'front-trailblocks',
             _edition = config.page.edition.toLowerCase(),
             _toggleText = {

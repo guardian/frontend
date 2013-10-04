@@ -1,8 +1,8 @@
 @(description: TrailblockDescription, isFront: Boolean, edition: Option[Edition] = None)(implicit request: RequestHeader)
-<div class="@if(isFront){front-section-head zone-background} else {sub-section-head}">
+<div class="@if(isFront){front-section-head tone-background} else {sub-section-head} tone-border">
     <h1 id="@SafeName(description)">
-        <a @if(!isFront){class="zone-color"} data-link-name="section heading" href="@LinkTo{/@description.id}">
-            @description.name
+        <a @if(!isFront){class="tone-colour"} data-link-name="section heading" href="@LinkTo{/@description.id}">
+            @description.name.toLowerCase
         </a>
     </h1>
     @edition.map(_.id).map{ ed =>

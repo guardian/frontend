@@ -46,7 +46,7 @@
     @extend %type-7;
     background-color: $mushroom;
     border-bottom: 1px solid #DEDEDD;
-    color: $sportBright;
+    color: $c-sportBright;
     font-weight: 500;
     margin: $baseline*2 0 0 0;
     padding: 10px $gutter/2 $baseline*2;
@@ -61,7 +61,7 @@
     th {
         @extend %type-10;
         background-color: $mushroom;
-        color: $sportMid;
+        color: $c-sportMid;
         display: table-cell;
         font-weight: 500;
         padding: $baseline*2 $gutter/4*3;
@@ -97,7 +97,7 @@
 
     dt {
         @extend %type-10;
-        color: $sportMid;
+        color: $c-sportMid;
         font-weight: 500;
         padding: $baseline*2 $gutter/4*3 0;
     }

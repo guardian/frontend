@@ -14,13 +14,13 @@
     }
     @include mq(tablet, desktop) {
         @include row(2);
-        .item:nth-child(n + 3) {
+        .item:nth-child(n+3) {
             @include card($without-extras: true);
         }
     }
     @include mq(desktop, wide) {
         @include row(3);
-        .item:nth-child(n + 4) {
+        .item:nth-child(n+4) {
             @include card($without-extras: true);
         }
     }
@@ -31,19 +31,19 @@
         }
         // stylings for beggining and end of rows
         .item:first-child,
-        .item:nth-child(4n + 4) {
+        .item:nth-child(4n+4) {
             @include row-start;
         }
         .item:nth-child(2),
         .item:nth-child(3),
-        .item:nth-child(4n + 7) {
+        .item:nth-child(4n+7) {
             @include row-end;
         }
         .item:first-child {
             @include card-triple-width;
             float: left;
         }
-        .item:nth-child(n + 2) {
+        .item:nth-child(n+2) {
             @include card($without-extras: true);
         }
         .item:nth-child(3) {
