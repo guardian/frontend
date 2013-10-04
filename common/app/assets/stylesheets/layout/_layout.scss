@@ -17,6 +17,12 @@ $headerHeight: 58px;
 /* Global header and navigation
    ========================================================================== */
 
+#header.js-site-message {
+    @include mq(tablet) {
+        top: auto
+    }
+}
+
 #header {
     min-height: $headerHeight;
     position: absolute;

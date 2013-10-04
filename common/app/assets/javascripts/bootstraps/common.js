@@ -6,6 +6,7 @@ define([
     //Vendor libraries
     'domReady',
     'bonzo',
+    'bean',
     //Modules
     'modules/storage',
     'modules/detect',
@@ -42,6 +43,7 @@ define([
 
     domReady,
     bonzo,
+    bean,
 
     storage,
     detect,
@@ -312,13 +314,34 @@ define([
             }
         },
 
-        displayReleaseMessage: function () {
-            if (window.screen.width >= 600) {
-                Array.prototype.forEach.call(document.querySelectorAll('.release-message'), function (el) {
-                    el.className = el.className.replace('u-h', '');
+        // display a flash message to devices over 600px who don't have the mobile cookie
+        displayReleaseMessage: function (config) {
+
+            var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
+                releaseMessage = {
+                    show: function () {
+                        common.$g('#header').addClass('js-site-message');
+                        common.$g('.site-message').removeClass('u-h');
+                    },
+                    hide: function () {
+                        userPrefs.set('releaseMessage', true);
+                        common.$g('#header').removeClass('js-site-message');
+                        common.$g('.site-message').addClass('u-h');
+                    }
+                };
+
+            if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
+                // force the visitor in to the alpha release for subsequent visits
+                Cookies.add("GU_VIEW", "mobile", 365);
+
+                releaseMessage.show();
+
+                bean.on(document, 'click', '.js-site-message-close', function(e) {
+                    releaseMessage.hide();
                 });
             }
         },
+
 
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
@@ -384,7 +407,7 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.faciaToggle();
-            modules.displayReleaseMessage();
+            modules.displayReleaseMessage(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };
