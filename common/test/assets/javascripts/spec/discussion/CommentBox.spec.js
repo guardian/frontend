@@ -40,7 +40,7 @@ define([
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
             context = document.getElementById(fixturesId);
-            commentBox = new CommentBox(context, { apiRoot: '/discussion', maxLength: maxCommentLength });
+            commentBox = new CommentBox(context, common.mediator, { apiRoot: '/discussion', maxLength: maxCommentLength });
             commentBox.attachTo();
         });
 
@@ -87,7 +87,7 @@ define([
             it('should send a success message to the user when comment is valid', function() {
                 var callback = jasmine.createSpy();
                 runs(function() {
-                    commentBox.on('success', callback);
+                    commentBox.on('post:success', callback);
                     server.respondWith([200, {}, apiPostValidCommentResp]);
                     commentBox.getElem('body').value = validCommentText;
                     bean.fire(commentBox.elem, 'submit');
@@ -100,7 +100,8 @@ define([
 
                 // This id comes from api-post-comment-valid
                 runs(function() {
-                    expect(JSON.stringify(callback.calls[0].args[0])).toEqual(JSON.stringify({ id: 27388163 }));
+                    console.info(apiPostValidCommentResp);
+                    expect(JSON.stringify(callback.calls[0].args[0].id)).toEqual(JSON.parse(apiPostValidCommentResp).message);
                 });
             });
 

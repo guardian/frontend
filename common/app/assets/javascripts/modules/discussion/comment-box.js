@@ -13,9 +13,13 @@ define([
 /**
  * @constructor
  * @extends Component
+ * @param {Element=} context
+ * @param {Object} mediator
+ * @param {Object=} options
  */
-function CommentBox(context, options) {
+function CommentBox(context, mediator, options) {
     this.context = context || document;
+    this.mediator = mediator;
     this.setOptions(options);
 }
 Component.create(CommentBox);
@@ -134,11 +138,11 @@ CommentBox.prototype.error = function(type, message) {
  */
 CommentBox.prototype.success = function(comment, resp) {
     comment.id = parseInt(resp.message, 10);
-    this.emit('posted', comment);
     if (resp.status === 'ok') {
         this.getElem('body').value = '';
         this.setFormState();
-        this.emit('success', { id: parseInt(resp.message, 10) });
+        this.emit('post:success', comment);
+        this.mediator.emit('discussion:commentbox:post:success', resp);
     } else {
         this.fail();
     }

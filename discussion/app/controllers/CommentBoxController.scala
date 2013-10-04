@@ -27,13 +27,14 @@ trait CommentBoxController extends DiscussionController {
 }
 
 object FakeProfile extends Profile(
-  "",
-  "Fake Profile",
+  "10000",
+  "avatar",
+  "Display Me fakey",
   isStaff = false,
   isContributor = false,
   privateFields = Some(PrivateProfileFields(
-    canPostComment = false,
-    isPremoderated = true,
+    canPostComment = true,
+    isPremoderated = false,
     isSocial = false
   ))
 )

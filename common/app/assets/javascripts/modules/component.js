@@ -41,8 +41,11 @@ Component.prototype.template = null;
 /** @type {Object.<string.Element>} */
 Component.prototype.elems = null;
 
-/** @type {Object.<string.Element>} */
+/** @type {Object.<string.*>} */
 Component.prototype.options = null;
+
+/** @type {Object.<string.*>} */
+Component.prototype.defaultOptions = {};
 
 /**
  * Uses the CONFIG.classes.component
@@ -77,8 +80,8 @@ Component.prototype.dispose = function() {};
  * @param {Function} handler
  * @param {*} args
  */
-Component.prototype.on = function(eventName, handler, args) {
-    bean.on(this.elem, eventName, handler.bind(this), args);
+Component.prototype.on = function(eventName, handler, data) {
+    bean.on(this.elem, eventName, handler.bind(this), data);
 };
 
 /**
@@ -119,6 +122,7 @@ Component.prototype.getConf = function() {
  * @param {Object} options
  */
 Component.prototype.setOptions = function(options) {
+    options = options || {};
     this.options = {};
     for (var prop in this.defaultOptions) {
         this.options[prop] = options[prop] || this.defaultOptions[prop];

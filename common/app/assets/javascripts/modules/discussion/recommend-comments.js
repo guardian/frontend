@@ -108,6 +108,7 @@ RecommendComments.success = function(resp) {
         RecommendComments.getEvent('success'),
         {
             id: parseInt(this.getAttribute('data-comment-id'), 10),
+            userId: parseInt(this.getAttribute('data-user-id'), 10),
             count: parseInt(this.getAttribute('data-recommend-count'), 10)
         }
     );

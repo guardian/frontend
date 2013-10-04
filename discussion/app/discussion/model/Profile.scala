@@ -4,6 +4,7 @@ package model
 import play.api.libs.json.{JsObject, JsValue}
 
 case class Profile(
+  userId: String,
   avatar: String,
   displayName: String,
   isStaff: Boolean = false,
@@ -17,6 +18,7 @@ object Profile {
     val profileJson = json \ "userProfile"
     val badges = profileJson \ "badge" \\ "name"
     Profile(
+      userId = (profileJson \ "userId").as[String],
       avatar = (profileJson \ "avatar").as[String],
       displayName = (profileJson \ "displayName").as[String],
       isStaff = badges.exists(_.as[String] == "Staff"),
