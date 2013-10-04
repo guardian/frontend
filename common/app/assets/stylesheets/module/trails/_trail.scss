@@ -80,7 +80,7 @@
 .trail__count a:focus,
 .trail__count a:active,
 .trail .relative-timestamp {
-    color: $c-neutral2;
+    color: #767676;
     @include fs-data(2);
 
     @include mq(tablet) {
