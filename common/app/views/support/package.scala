@@ -192,7 +192,9 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
           }
         }
         fig.getElementsByTag("figcaption").foreach { figcaption =>
-          if (!figcaption.hasText()) {
+
+          // content api/ tools sometimes pops a &nbsp; in the blank field
+          if (!figcaption.hasText() || figcaption.text().length < 2) {
             figcaption.remove();
           } else {
             figcaption.attr("itemprop", "description")
