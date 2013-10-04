@@ -21,8 +21,7 @@
     <li class="league-table">
 
         <a class="competition-title football-table-header football-table-link type-7 zone-color" href="@table.competition.url" data-link-name="competition">
-            @table.competition.fullName
-            <i class="i i-sport-arrow"></i>
+            @table.competition.fullName<i class="i i-sport-arrow"></i>
         </a>
 
         <table class="table-football">
@@ -52,7 +51,7 @@
         </table>
 
         @if(!model.singleCompetition) {
-            <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8 zone-color">View full @table.competition.fullName table <i class="i i-sport-arrow-small"></i></a>
+            <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8 zone-color">View full @table.competition.fullName table<i class="i i-sport-arrow-small"></i></a>
         }
 
     </li>
@@ -60,7 +59,6 @@
 </ol>
 
 <div class="box-indent article-zone-no-indent">
-
     @footballCompetitionNav(model.comp)
 
     @fragments.mostPopularPlaceholder("sport")

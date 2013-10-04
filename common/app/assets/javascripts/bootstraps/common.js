@@ -311,6 +311,20 @@ define([
             }
         },
 
+        // toggle in/out of facia
+        faciaToggle: function () {
+            var faciaToggle = /#facia-opt-(.*)/.exec(window.location.hash);
+            if (faciaToggle) {
+                var cookieName = 'GU_FACIA';
+                if (faciaToggle[1] === 'in') {
+                    var expiryDays = 365;
+                    Cookies.add(cookieName, 'true', 365);
+                } else {
+                    Cookies.cleanUp([cookieName]);
+                }
+            }
+        },
+
         displayReleaseMessage: function () {
             if (window.screen.width >= 600) {
                 Array.prototype.forEach.call(document.querySelectorAll('.release-message'), function (el) {
@@ -318,7 +332,7 @@ define([
                 });
             }
         },
-        
+
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 var swipe = swipeNav(config, contextHtml);
@@ -382,6 +396,7 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
+            modules.faciaToggle();
             modules.displayReleaseMessage();
             modules.externalLinksCards();
         }

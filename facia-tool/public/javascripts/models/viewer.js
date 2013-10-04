@@ -1,8 +1,10 @@
 define([
+    'Config',
     'models/common',
     'knockout'
 ],
 function (
+    Config,
     common,
     ko
 ){
@@ -43,7 +45,7 @@ function (
 
     return {
         breakpoints: ko.observableArray(breakpoints),
-        urlBase:     common.config.previewUrl,
+        urlBase:     common.config.previewUrls[Config.env === 'prod' ? 'prod' : 'code'],
 
         render:      render,
         shuffleUp:   function() { shuffleLayout(1) },
