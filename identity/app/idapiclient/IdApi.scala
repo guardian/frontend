@@ -31,7 +31,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   // AUTH
 
   def authApp(auth: Auth, trackingData: OmnitureTracking): Future[Response[AccessTokenResponse]] = {
-    val response = http.GET(apiUrl("auth"), auth.parameters ++ trackingData.parameters ++ clientAuth.parameters, auth.headers ++ clientAuth.headers)
+    val response = http.POST(apiUrl("auth"), None, auth.parameters ++ trackingData.parameters ++ clientAuth.parameters, auth.headers ++ clientAuth.headers)
     response map jsonBodyParser.extract[AccessTokenResponse](jsonField("accessToken"))
   }
 
@@ -42,7 +42,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   }
 
   def unauth(trackingData: OmnitureTracking, auth: Auth): Future[Response[Unit]] = {
-    val response = http.GET(apiUrl("unauth"),
+    val response = http.POST(apiUrl("unauth"), None,
       clientAuth.parameters ++ trackingData.parameters ++ auth.parameters,
       clientAuth.headers ++ trackingData.parameters ++ auth.headers
     )
