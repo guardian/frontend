@@ -48,7 +48,6 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
         val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
         if (illegalParams.nonEmpty) {
           // it is pretty hard to spot what is happening in tests without this println
-          println(request.uri)
           println(s"\n\nILLEGAL PARAMETER(S) FOUND : ${illegalParams.mkString(",")}\n\n")
           throw new RuntimeException(s"illegal parameter(s) found ${illegalParams.mkString(",")}")
         }

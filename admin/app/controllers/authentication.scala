@@ -2,7 +2,7 @@ package controllers.admin
 
 import common.ExecutionContexts
 import conf.Configuration
-import controllers.{AuthAction, LoginController, NonAuthAction}
+import controllers.{AuthAction, LoginController}
 import play.api.mvc._
 
 object Authenticated extends AuthAction(routes.Login.login.url)
@@ -16,9 +16,9 @@ object Login extends LoginController with Controller with ExecutionContexts {
     routes.Login.openIDCallback.absoluteURL(secure && Configuration.environment.stage != "dev")
   }
 
-  def login = NonAuthAction {
+  def login = Action {
     request =>
       val error = request.flash.get("error")
-      Ok(views.html.auth.login(request, error, Configuration.environment.stage))
+      Ok(views.html.auth.login(error, Configuration.environment.stage))
   }
 }
