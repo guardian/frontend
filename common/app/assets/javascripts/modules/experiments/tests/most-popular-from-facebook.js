@@ -31,9 +31,10 @@ define(['common', 'bonzo', 'modules/popular', 'modules/storage'], function (comm
                 test: function () {
                     common.mediator.on('modules:popular:loaded', function (container) {
                         var tabs = container.querySelectorAll('.tabs__tab');
+                        var classes = 'tabs__tab--selected tone-colour tone-accent-border';
 
-                        bonzo(tabs).removeClass('tabs__tab--selected');
-                        bonzo(tabs[1]).addClass('tabs__tab--selected');
+                        bonzo(tabs).removeClass(classes);
+                        bonzo(tabs[1]).addClass(classes);
 
                         container.querySelector('#tabs-popular-1').style.display = 'none';
                         container.querySelector('#tabs-popular-2').style.display = 'block';

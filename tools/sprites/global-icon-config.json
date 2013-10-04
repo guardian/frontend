@@ -5,6 +5,5 @@
     "datasvgcss" : "_global-icons-svg.scss",
     "urlpngcss" : "_global-icons-sprite.scss",
     "spritepath" : "../images/global/",
-    "svg" : true,
-    "styleguidefilename" : "sprites.scala.html"
+    "svg" : true
 }

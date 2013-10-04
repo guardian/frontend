@@ -10,90 +10,6 @@
     margin-bottom: $baseline*3;
 }
 
-$keylineColor: darken($darkMushroom, 15%);
-$keylineSize: 1px;
-
-/* Tabs
-   ========================================================================== */
-
-.d-tabs {
-    margin: 0 $gs-gutter/-2;
-    padding-bottom: $baseline*3;
-    
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter * -1;
-        margin-right: $gs-gutter * -1;
-    }
-}
-
-    .d-tabs--is-live {
-        margin-bottom: $baseline*6;
-    }
-
-.d-tabs__container {
-    display: table;
-    background-color: $darkMushroom;
-    width: 100%;
-}
-.d-tabs__item {
-    @include box-sizing(border-box);
-    border-top: $keylineSize solid $darkMushroom;
-    border-bottom: $keylineSize solid $keylineColor;
-    padding-left: $gs-gutter / 2;
-    padding-right: $gs-gutter / 2;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-
-    display: table-cell;
-    cursor: pointer;
-}
-.d-tabs__item--byline {
-    @extend %type-7;
-    vertical-align: top;
-    padding-top: $baseline;
-    padding-bottom: $baseline;
-
-    a {
-        pointer-events: none;
-        color: #666;
-    }
-    &.d-tabs__item--is-active {
-        padding-bottom: $baseline + $keylineSize;
-        border-top-color: $keylineColor;
-        border-right: $keylineSize solid $keylineColor;
-
-        a {
-            pointer-events: auto;
-            color: $linkBlue;
-        }
-    }
-}
-
-
-.d-tabs__item--commentcount {
-    width: 50px;
-    padding-top: 14px;
-    padding-bottom: $baseline * 4;
-    min-height: 60px;
-    text-align: center;
-    vertical-align: middle;
-
-    &.d-tabs__item--is-active {
-        border-top-color: $keylineColor;
-        border-left: $keylineSize solid $keylineColor;
-        padding-bottom: $baseline * 4 + $keylineSize;
-    }
-}
-.d-tabs__item--is-active {
-    border-bottom: 0;
-    background-color: #fff;
-}
-
-
-
 .d-thread {
     list-style: none;
     margin: 0 0 1em;
@@ -108,7 +24,7 @@ $keylineSize: 1px;
     }
 }
 .d-comment {
-    color: $neutral1;
+    color: $c-neutral1;
     font-family: sans-serif;
     border-top: 1px solid $medianMushroom;
 }
@@ -242,7 +158,7 @@ $keylineSize: 1px;
 }
 
 .d-meta-item {
-    color: $neutral2;
+    color: $c-neutral2;
     font-size: .85714285714em;
     font-family: $sans-serif; // Force font when used outside of comment context
 }
@@ -253,7 +169,7 @@ $keylineSize: 1px;
 }
 
 .d-comment__action {
-    color: $neutral2;
+    color: $c-neutral2;
     font-size: .85714285714em;
 }
 
@@ -317,7 +233,6 @@ $keylineSize: 1px;
     padding: .275em .6em .375em;
     border: 0;
     border-radius: 4px;
-    background: #F6644F;
     text-align: center;
     color: white;
 
@@ -334,7 +249,7 @@ $keylineSize: 1px;
         left: 6px;
         border-width: 0 0 8px 8px;
         border-style: solid;
-        border-color: transparent #F6644F;
+        border-color: transparent inherit;
     }
 }
 
@@ -385,18 +300,25 @@ $keylineSize: 1px;
 .d-show-cta:focus {
     @extend %type-6;
     line-height: 1;
-    color: #444;
+    color: $c-neutral1;
     position: relative;
     display: block;
-    padding: $baseline*4 $gutter/2;
+    padding: $baseline*2 8px $baseline*6 6px;
     text-align: left;
     overflow: auto;
     background-color: $mushroom;
+    position: relative;
 
     .d-commentcount {
         position: absolute;
         top: 13px;
         right: 10px;
+    }
+
+    i {
+        position: absolute;
+        left: 6px;
+        bottom: 6px;
     }
 }
 

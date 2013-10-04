@@ -2,12 +2,10 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-    <div class="article-wrapper monocolumn-wrapper">
-        <div class="article-v2__inner">
-            <h2 class="article-zone type-1">
-                <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
-            </h2>
-        </div>
+    <h2 class="article-zone  tone-@VisualTone(article) tone-accent-border">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+    </h2>
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
@@ -70,6 +68,7 @@
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
+                                    <h2 class="article__meta-heading tone-colour">Share this article</h2>
                                     @fragments.social(article, "next to content")
                                 </div>
                             </div>
@@ -88,13 +87,17 @@
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                <h3 id="comments" class="type-2 article-zone">Comments</h3>
+                <h3 id="comments" class="article__sub-head tone-colour tone-border">Comments</h3>
                 <div class="article__discussion"></div>
 
                 <div class="d-show-cta-wrapper">
                     <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@article.shortUrlId}"
                        data-is-ajax data-link-name="View all comments">
-                        View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
+                        View all comments
+                        <span class="d-commentcount speech-bubble tone-background tone-border">
+                            <span class="js-commentcount__number"></span>
+                        </span>
+                        <i class="i i-arrow-grey-down"></i>
                     </a>
                 </div>
             }
