@@ -6,7 +6,7 @@
 GET        /assets/*file                                                                             controllers.Assets.at(path="/public", file)
 
 # Discussion
-GET        /discussion/comment-box                                                                    controllers.DiscussionApp.commentBox()
+GET        /discussion/comment-box.json                                                              controllers.DiscussionApp.commentBox()
 GET        /discussion/comment-counts                                                                controllers.DiscussionApp.commentCount(shortUrls: String)
 GET        /discussion/comment-counts.json                                                           controllers.DiscussionApp.commentCountJson(shortUrls: String)
 GET        /discussion/*shortUrl.json                                                                controllers.DiscussionApp.commentPageJson(shortUrl)
@@ -97,6 +97,32 @@ GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> 
 GET     /football/match/:matchId.json                                                           football.controllers.MatchController.renderMatchIdJson(matchId)
 GET     /football/match/:matchId                                                                football.controllers.MatchController.renderMatchId(matchId)
 
+# Admin
+GET        /login                                                                                    controllers.admin.Login.login
+POST       /login                                                                                    controllers.admin.Login.loginPost
+GET        /openIDCallback                                                                           controllers.admin.Login.openIDCallback
+GET        /logout                                                                                   controllers.admin.Login.logout
+GET        /admin                                                                                    controllers.admin.IndexController.admin()
+GET        /admin/feature-trailblock                                                                 controllers.admin.FeatureTrailblockController.edit()
+POST       /admin/feature-trailblock                                                                 controllers.admin.FeatureTrailblockController.save()
+GET        /api/proxy/*path                                                                          controllers.admin.Api.proxy(path, callback)
+GET        /api/tag                                                                                  controllers.admin.Api.tag(q, callback)
+GET        /api/item/*path                                                                           controllers.admin.Api.item(path, callback)
+GET        /json/proxy/*absUrl                                                                       controllers.admin.Api.json(absUrl)
+GET        /ophan/pageviews/*path                                                                    controllers.admin.OphanApiController.pageViews(path)
+GET        /ophan/pageviews                                                                          controllers.admin.OphanApiController.platformPageViews()
+GET        /dev/switchboard                                                                          controllers.admin.SwitchboardController.renderSwitchboard()
+POST       /dev/switchboard                                                                          controllers.admin.SwitchboardController.save()
+GET        /analytics/kpis                                                                           controllers.admin.AnalyticsController.kpis()
+GET        /analytics/pageviews                                                                      controllers.admin.AnalyticsController.pageviews()
+GET        /analytics/browsers                                                                       controllers.admin.AnalyticsController.browsers()
+GET        /analytics/abtests                                                                        controllers.admin.AnalyticsController.abtests()
+GET        /metrics/loadbalancers                                                                    controllers.admin.DashboardController.renderDashboard()
+GET        /metrics/fastly                                                                           controllers.admin.FastlyController.renderFastly()
+GET        /radiator                                                                                 controllers.admin.RadiatorController.renderRadiator()
+GET        /radiator/pingdom                                                                         controllers.admin.RadiatorController.pingdom()
+GET        /radiator/commit/*hash                                                                    controllers.admin.RadiatorController.commitDetail(hash)
+GET        /troubleshoot/football                                                                    controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 
 # Front
 GET        /$path<(\w\w-edition)?>                                                                   controllers.FrontController.renderFront(path)
@@ -124,7 +150,6 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                           controllers.IndexController.renderTrails(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                             controllers.IndexController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                  controllers.IndexController.render(path)
-
 
 # Articles
 GET        /*path.json                                                                               controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])

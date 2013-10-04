@@ -1,8 +1,9 @@
-package controllers
+package controllers.admin
 
 import play.api.mvc.Controller
 import common.Logging
 import conf.Configuration
+import controllers.AuthLogging
 
 object FootballTroubleshooterController extends Controller with Logging with AuthLogging {
 
