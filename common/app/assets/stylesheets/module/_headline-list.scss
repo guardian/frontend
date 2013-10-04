@@ -37,6 +37,10 @@
         float: left;
         color: $c-neutral4;
         width: 12px;
+
+        @include mq(tablet) {
+            @include fs-bodyCopy(3, true);
+        }
     }
 }
 
