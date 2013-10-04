@@ -73,7 +73,7 @@ input[type=text] {
 }
 
 #collections .connectedList {
-    min-height: 50px;
+    padding: 0 0 10px 0;
 }
 
 .pending {
@@ -104,10 +104,6 @@ input[type=text] {
 }
 
 .list-header__display {
-    font-style: italic;
-}
-.list-header__display--is-set {
-    font-style: normal;
     font-size: 16px;
     font-weight: bold;
     color: #000000;
@@ -128,7 +124,6 @@ input[type=text] {
     color: #999999;
     font-size: 12px;
 }
-
 
 .list-header__timings {
     font-size: 10px;
@@ -215,10 +210,7 @@ a.list-header__status__control:visited {
     float: left;
     padding: 0 0 5px 0;
     position: relative;
-}
-
-.collection--isMajor {
-    border-top: 3px solid #999999;
+    border-top: 2px solid #999999;
 }
 
 .collection:first-child {
@@ -233,10 +225,9 @@ a.list-header__status__control:visited {
     padding: 1px 3px 4px 4px;
     position: relative;
     border-radius: 2px;
-    background-color: #FFFFFF;
 }
 
-.is-draft .trail {
+.draft-zones {
     background-color: #EEEEEE;
 }
 
@@ -454,6 +445,13 @@ button {
     position: absolute;
     bottom: -2px;
     right: 33px;
+}
+
+.zone-name {
+    padding: 0 0 0 4px;
+    font-size: 14px;
+    font-style: italic;
+    color: #666666;
 }
 
 .frames {
