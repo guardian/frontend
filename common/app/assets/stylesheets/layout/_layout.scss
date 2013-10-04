@@ -17,8 +17,10 @@ $headerHeight: 58px;
 /* Global header and navigation
    ========================================================================== */
 
-#header.js-release-message {
-    top: auto
+#header.js-site-message {
+    @include mq(tablet) {
+        top: auto
+    }
 }
 
 #header {

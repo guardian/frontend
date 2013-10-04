@@ -1,20 +1,33 @@
 @()(implicit request: RequestHeader)
 @import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
+@import java.net.URLEncoder.encode
 
 @if(ReleaseMessageSwitch.isSwitchedOn) {
-    <div class="release-message u-h monocolumn-wrapper" data-link-name="release message">
-        <p>
-            You’re viewing an alpha release of the Guardian’s responsive website. <a href="">Find out more</a>.
-        </p>
+    <div class="site-message u-h" data-link-name="release message">
+        <div class="site-message__inner">
+            <p class="site-message__message">
+                You’re viewing an alpha release of the Guardian’s responsive website. <a href="@LinkTo{/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site}">Find out more</a>.
+            </p>
 
-        <ul class="release-message__actions">
-            <li><a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback"> We’d love to hear your feedback</a></li>
-            <li><a class="js-main-site-link" rel="nofollow" href="@LinkTo{/}?view=desktop" data-link-name="opt-out">Opt-out and return to standard desktop site </a></li>
-        </ul>
+            <ul class="site-message__actions unstyled">
+                <li class="site-message__actions__item">
+                    <i class="i i-comment-grey"></i>
+                    <a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank"> We’d love to hear your feedback</a>
+                </li>
+                <li class="site-message__actions__item">
+                    <i class="i i-back"></i>
+                    @defining(encode(s"${LinkTo(s"/")}?view=desktop", "UTF-8")){ encodedDestinationUrl =>
+                        <a class="js-main-site-link" rel="nofollow"
+                            href="@LinkTo{/preference/platform/desktop}?page=@encodedDestinationUrl"
+                            data-link-name="opt-out">Opt-out and return to standard desktop site </a>
+                    }
+                </li>
+            </ul>
 
-        <button class="release-message-ack" data-link-name="hide release message">
-            <i class="i i-message-close"></i>
-            Hide this message
-        </button>.
+            <button class="site-message__close js-site-message-close" data-link-name="hide release message">
+                <i class="i i-message-close"></i>
+                <span class="u-h">Hide this message</span>
+            </button>
+        </div>
     </div> 
 }

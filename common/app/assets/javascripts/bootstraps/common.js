@@ -319,25 +319,24 @@ define([
 
             var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
                 releaseMessage = {
-                show: function () {
-                    common.$g('#header').addClass('js-release-message');
-                    common.$g('.release-message').removeClass('u-h');
-                },
-                hide: function () {
-                    userPrefs.set('releaseMessage', true);
-                    common.$g('#header').removeClass('js-release-message');
-                    common.$g('.release-message').addClass('u-h');
+                    show: function () {
+                        common.$g('#header').addClass('js-site-message');
+                        common.$g('.site-message').removeClass('u-h');
+                    },
+                    hide: function () {
+                        userPrefs.set('releaseMessage', true);
+                        common.$g('#header').removeClass('js-site-message');
+                        common.$g('.site-message').addClass('u-h');
                     }
                 };
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
-
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
 
                 releaseMessage.show();
 
-                bean.on(document, 'click', '.release-message-ack', function(e) {
+                bean.on(document, 'click', '.js-site-message-close', function(e) {
                     releaseMessage.hide();
                 });
             }
