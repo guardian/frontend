@@ -55,9 +55,16 @@
     @include box-sizing(border-box);
 
     padding: $baseline $gs-gutter/2 0;
+
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+        padding-left: 0;
     }
 
     &.zone-color {
