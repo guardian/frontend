@@ -295,8 +295,7 @@ object Switches extends Collections {
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
-    AddVaryAcceptHeader,
-    ABUltimateParagraphSpacing
+    AddVaryAcceptHeader
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
