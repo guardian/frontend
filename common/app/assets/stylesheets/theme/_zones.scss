@@ -238,8 +238,7 @@
 
     @if $svg-support {
         .svg & {
-            @extend .i-svg-comment-news;
-            background-position: 0 0;
+            @extend .svg-i-comment-news;
         }
     }
 }
@@ -250,8 +249,7 @@
 
     @if $svg-support {
         .svg & {
-            @extend .i-svg-comment-comment;
-            background-position: 0 0;
+            @extend .svg-i-comment-comment;
         }
     }
 }
