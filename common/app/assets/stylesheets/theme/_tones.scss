@@ -1,7 +1,7 @@
 @mixin tone($tone, $colour, $accentColour) {
     .tone-#{$tone} {
         .tone-colour,
-        &.tone-colour{
+        &.tone-colour {
             &,
             &:active,
             &:focus,
@@ -25,21 +25,30 @@
         .commentcount {
             i {
                 @extend .i-comment-#{$tone};
+                @if $svg-support {
+                    .svg & {
+                        @extend .i-svg-comment-#{$tone};
+                    }
+                }
             }
         }
     }
 }
 
+
 /* News
    ========================================================================== */
+
 @include tone(news, $c-newsDefault, $c-newsAccent);
+
 
 /* Comment
    ========================================================================== */
+
 @include tone(comment, $c-commentDefault, $c-commentAccent);
+
 
 /* Feature
    ========================================================================== */
+   
 @include tone(feature, $c-featureDefault, $c-featureAccent);
-
-
