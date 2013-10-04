@@ -176,23 +176,19 @@
         }
     }
     .item--sport-stats {
-        @include mq($to: tablet) {
-            width: 100% !important;
-        }
         @include mq(tablet) {
             min-height: gs-height(8);
         }
-        .competition-table {
+        @include mq($to: desktop) {
             padding-top: 2px;
-            @include mq($to: desktop) {
-                border-top: 2px solid $news-light;
-            }
+            border-top: 2px solid $news-light;
+        }
+        .competition-table {
+            border-bottom-style: none;
             @include mq(desktop) {
                 padding-top: 0;
             }
             h3 {
-                color: #000000;
-                margin-bottom: 6px;
                 @include fs-headline(3);
                 @include mq(tablet) {
                     @include fs-headline(4, $size-only: true);
@@ -204,16 +200,6 @@
             .match-desc__result {
                 width: 30px;
             }
-        }
-        .cta-small.cta-small-border {
-            border-bottom-style: none;
-            @include mq($to: desktop) {
-                padding-top: 3px;
-            }
-            @include mq(desktop) {
-                padding-top: 7px;
-            }
-            padding-bottom: 0;
         }
     }
 }

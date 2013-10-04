@@ -1,8 +1,8 @@
 @(trail: Trail, index: Int, mainItem: Boolean = false)(implicit request: RequestHeader)
 
-<li class="item @trail.trailType.map("item--" + _) @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}"
+<li class="item @trail.trailType.map("item--" + _) @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@VisualTone(trail)" data-link-name="trail | @{index + 1}"
     @trail.discussionId.map{ id => data-discussion-id="@id" }>
-    <h@if(mainItem){1}else{2} class="item__title">
+    <h@if(mainItem){1}else{2} class="item__title tone-accent-border">
         <a href="@LinkTo{@trail.url}" class="item__link">
             @if(trail.trailType == Option("comment")) {
                 <span class="i i-quote-light-grey"></span>
@@ -12,7 +12,7 @@
     </h@if(mainItem){1}else{2}>
     @if(trail.trailType == Option("comment")) {
         @trail.byline.map { byLine =>
-            <p class="item__byline">@Html(byLine)</p>
+            <p class="item__byline tone-colour">@Html(byLine)</p>
         }
     }
     @trail.trailText.map { text =>
