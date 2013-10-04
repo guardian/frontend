@@ -1,3 +1,7 @@
+//Variables and mixins
+@import "_vars";
+@import "_mixins";
+
 .facia-container {
     @include mq(tablet) {
         width: gs-span(8);

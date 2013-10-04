@@ -1,9 +1,9 @@
-@(metaData: MetaData)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader)
 <!--[if (gt IE 8) | (IEMobile)]><!-->
 <style type="text/css">
     @Html(Head.css)
 </style>
-@if(metaData.metaData.contains("is-facia")) {
+@if(IsFacia(request)) {
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/facia.min.css")" />
 }
 <!--<![endif]-->
