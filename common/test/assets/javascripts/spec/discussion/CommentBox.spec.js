@@ -100,7 +100,6 @@ define([
 
                 // This id comes from api-post-comment-valid
                 runs(function() {
-                    console.info(apiPostValidCommentResp);
                     expect(JSON.stringify(callback.calls[0].args[0].id)).toEqual(JSON.parse(apiPostValidCommentResp).message);
                 });
             });
