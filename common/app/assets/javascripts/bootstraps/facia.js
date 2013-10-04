@@ -53,7 +53,6 @@ define([
                             .addClass('items--with-sport-stats');
                         // add it after the first item
                         common.$g('.item:first-child', container)
-                            .first()
                             .after($statsItem);
                         // now hide one of the shown ones (but not on mobile)
                         if (detect.getBreakpoint() !== 'mobile') {
