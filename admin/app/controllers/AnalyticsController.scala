@@ -1,10 +1,10 @@
-package controllers
+package controllers.admin
 
 import play.api.mvc.Controller
 import common.Logging
+import controllers.AuthLogging
 import tools._
 import tools.charts._
-
 
 object AnalyticsController extends Controller with Logging with AuthLogging {
 
