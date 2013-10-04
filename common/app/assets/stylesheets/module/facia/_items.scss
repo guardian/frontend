@@ -47,10 +47,10 @@ $meta: #767676;
     color: #ffffff;
     padding: 0;
     i {
-        @include transform(rotateX(180deg));
+        @include transform(rotate(180deg));
     }
     .collection--rolled-up & i {
-        @include transform(rotateX(0));
+        @include transform(rotate(0));
 
     }
 }
@@ -163,7 +163,7 @@ a.item__link {
 }
 .item--comment {
     .item__title {
-        border-top-color: $comment-dark;
+        border-top-color: #fb0;
         position: relative;
         padding-top: $gs-baseline*2 + 2;
     }
