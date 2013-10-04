@@ -39,7 +39,7 @@ trait Omniture {
       "returnUrl" -> idRequest.returnUrl,
       "content-type" -> "userid", // For the no js omniture tracking
       "omnitureEvent" -> "event34",
-      "identityErrorMessage" -> "Authentication failed"
+      "omnitureErrorMessag" -> "Authentication failed"
     )
     new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
   }
@@ -49,7 +49,7 @@ trait Omniture {
       "returnUrl" -> idRequest.returnUrl,
       "content-type" -> "userid", // For the no js omniture tracking
       "omnitureEvent" -> "event34",
-      "identityErrorMessage" -> "Validation failed"
+      "omnitureErrorMessage" -> "Validation failed"
     )
     new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
   }

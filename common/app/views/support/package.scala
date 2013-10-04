@@ -329,7 +329,7 @@ object OmnitureAnalyticsData {
     val publication = data.get("publication").getOrElse("")
     val omnitureEvent = data.get("omnitureEvent").getOrElse("")
     val registrationType = data.get("registrationType").getOrElse("")
-    val signinErrorMessage = data.get("signinErrorMessage").getOrElse("")
+    val omnitureErrorMessage = data.get("omnitureErrorMessage").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -363,7 +363,7 @@ object OmnitureAnalyticsData {
       ("c56", jsSupport),
       ("event", omnitureEvent),
       ("v23", registrationType),
-      ("e27", signinErrorMessage)
+      ("e27", omnitureErrorMessage)
     )
 
 
