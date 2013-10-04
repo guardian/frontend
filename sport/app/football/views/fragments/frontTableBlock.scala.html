@@ -1,6 +1,6 @@
 @(table: Table, highlightTeamId: Option[String] = None)(implicit request: RequestHeader)
 
-<li id="front-competition-table" class="competition-table" data-link-name="front table">
+<li id="front-competition-table" class="competition-table front-competition-table" data-link-name="front table">
     <h3 class="type-5">@table.competition.fullName table</h3>
 
     <p class="dateline type-11"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
@@ -30,5 +30,5 @@
         }
     </table>
 
-    <a href="@LinkTo{@{table.competition.url + "/table"}}" data-link-name="full table" class="cta-small cta-small-border type-8 zone-color">View full table <i class="i i-sport-arrow i-sport-arrow--small"></i></a>
+    <a href="@LinkTo{@{table.competition.url + "/table"}}" data-link-name="full table" class="cta-small cta-small-border type-8 zone-color front-competition-link">View full table <i class="i i-sport-arrow i-sport-arrow--small"></i></a>
 </li>
