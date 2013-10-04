@@ -4,13 +4,15 @@
 
     @include mq(768px) {
         line-height: 22px;
+
+        p {
+            font-size: 16px;
+            font-size: 1.6rem;
+        }
     }
 
     p {
         margin-bottom: 12px;
-        font-size: 16px;
-        font-size: 1.6rem;
-        font-family: $sans-serif;
     }
     
     blockquote {
