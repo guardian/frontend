@@ -22,8 +22,12 @@
     ul,
     ol,
     address {
-        margin: 0 0 $baseline*2 0;
+        margin: 0 0 $baseline*3 0;
         padding: 0;
+
+        @include mq(tablet) {
+            margin-bottom: $baseline*4;
+        }
     }
     > ol,
     > ul {
