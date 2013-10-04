@@ -28,4 +28,14 @@ class ChangeViewControllerTest extends FlatSpec with ShouldMatchers {
     header("Cache-Control", result) should be (Some("no-cache"))
     header("Pragma", result) should be (Some("no-cache"))
   }
+
+  it should "not accept redirects to arbitrary domains" in Fake {
+    val result = controllers.ChangeViewController.render("mobile", "http://www.bbc.co.uk/sport/0/football")(TestRequest())
+    status(result) should be (403)
+  }
+
+  it should "not accept redirects to arbitrary protocol relative domains" in Fake {
+    val result = controllers.ChangeViewController.render("mobile", "//www.bbc.co.uk/sport/0/football")(TestRequest())
+    status(result) should be (403)
+  }
 }
