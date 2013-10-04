@@ -57,7 +57,9 @@ button.cta {
     &:after {
         @extend .i-arrow-grey-down;
         @if $svg-support {
-            @extend .svg-i-arrow-grey-down;
+            .svg & {
+                @extend .svg-i-arrow-grey-down;
+            }
         }
         @include rotate(180deg);
         content: '';

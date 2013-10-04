@@ -189,11 +189,6 @@
     border-color: $c-commentAccent;
 }
 
-.zone-money .trail__count--commentcount i {
-    @extend .i-comment-news;
-}
-
-
 .zone-childrens-books-site .trail__count--commentcount i,
 .zone-tv-and-radio .trail__count--commentcount i,
 .zone-artanddesign .trail__count--commentcount i,
@@ -201,8 +196,20 @@
 .zone-culture .trail__count--commentcount i,
 .zone-film .trail__count--commentcount i,
 .zone-books .trail__count--commentcount i,
-.zone-music .trail__count--commentcount i {
+.zone-music .trail__count--commentcount i,
+
+.zone-fashion .trail__count--commentcount i,
+.zone-lifeandstyle .trail__count--commentcount i,
+
+.zone-travel .trail__count--commentcount i {
     @extend .i-comment-feature;
+
+    @if $svg-support {
+        .svg & {
+            @extend .i-svg-comment-feature;
+            background-position: 0 0;
+        }
+    }
 }
 
 .zone-journalismcompetition .trail__count--commentcount i,
@@ -220,34 +227,31 @@
 .zone-uk-news .trail__count--commentcount i,
 .zone-media .trail__count--commentcount i,
 .zone-world .trail__count--commentcount i,
-.zone-global .trail__count--commentcount i {
-    @extend .i-comment-news;
-}
-
-.zone-fashion .trail__count--commentcount i,
-.zone-lifeandstyle .trail__count--commentcount i {
-    @extend .i-comment-feature;
-}
+.zone-global .trail__count--commentcount i,
 
 .zone-sport .trail__count--commentcount i,
-.zone-football .trail__count--commentcount i {
-    @extend .i-comment-news;
-}
+.zone-football .trail__count--commentcount i,
 
-.zone-travel .trail__count--commentcount i {
-    @extend .i-comment-feature;
-}
-
-.zone-business .trail__count--commentcount i {
+.zone-business .trail__count--commentcount i,
+.zone-money .trail__count--commentcount i {
     @extend .i-comment-news;
+
+    @if $svg-support {
+        .svg & {
+            @extend .i-svg-comment-news;
+            background-position: 0 0;
+        }
+    }
 }
 
 .zone-commentisfree .trail__count--commentcount i,
 .zone-tone .trail__count--commentcount i {
     @extend .i-comment-comment;
-}
 
-.zone-money .trail__count--commentcount i {
-    @extend .i-comment-news;
+    @if $svg-support {
+        .svg & {
+            @extend .i-svg-comment-comment;
+            background-position: 0 0;
+        }
+    }
 }
-
