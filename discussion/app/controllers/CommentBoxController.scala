@@ -11,8 +11,8 @@ trait CommentBoxController extends DiscussionController {
 
   def commentBox() = Action.async {
     implicit request =>
-//      discussionApi.myProfile(request.headers, request.cookies) map {
-      Future(FakeProfile) map {
+      discussionApi.myProfile(request.headers) map {
+//      Future(FakeProfile) map {
         profile =>
           val fields = profile.privateFields getOrElse {throw new RuntimeException("No profile information found")}
           val box = fields match {
