@@ -31,7 +31,7 @@ define([
         matchNav: function(config, context){
             if (config.page.footballMatch) {
                 var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
-                    url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                    url += "?page=" + encodeURIComponent(config.page.pageId);
                 new MatchNav().load(url, context);
             }
         },
