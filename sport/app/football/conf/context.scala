@@ -27,7 +27,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
       }
     }
 
-    Jobs.schedule("MatchDayAgentRefreshJob", "0/10 * * * * ?", FootballMetrics.MatchDayLoadTimingMetric) {
+    Jobs.schedule("MatchDayAgentRefreshJob", "0/5 * * * * ?", FootballMetrics.MatchDayLoadTimingMetric) {
       Competitions.refreshMatchDay()
     }
 

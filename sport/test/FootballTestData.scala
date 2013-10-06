@@ -101,6 +101,7 @@ trait FootballTestData {
       Competitions.competitionAgents.foreach { agent =>
         competitions.filter(_.id == agent.competition.id).map { comp =>
           agent.update(comp)
+          agent.addMatches(comp.matches)
         }
       }
     }

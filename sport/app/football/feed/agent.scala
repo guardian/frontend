@@ -84,8 +84,19 @@ class CompetitionAgent(_competition: Competition) extends Fixtures with Results 
       def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
     }
 
-  def addMatches(matches: Seq[FootballMatch]) = agent.send{ comp =>
-    comp.copy(matches = (comp.matches ++ matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate)
+  def addMatches(newMatches: Seq[FootballMatch]) = agent.send{ comp =>
+
+    //log any changes to the status of the match
+    newMatches.foreach{ newMatch =>
+      comp.matches.find(_.id == newMatch.id).foreach{ oldMatch =>
+        val newSummary = newMatch.statusSummary
+        val oldSummary = oldMatch.statusSummary
+        if (newSummary != oldSummary) log.info(s"Match Status Changed $oldSummary -> $newSummary")
+      }
+    }
+
+                         //it is important that newMatches are at the start of the list here
+    comp.copy(matches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate)
   }
 
   def refresh() {

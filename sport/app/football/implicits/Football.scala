@@ -3,6 +3,7 @@ package implicits
 import pa._
 import org.joda.time.{ DateTime, DateMidnight }
 import model._
+import views.MatchStatus
 
 
 trait Football extends Collections {
@@ -22,6 +23,11 @@ trait Football extends Collections {
 
   implicit class Content2squadSheet(c: Content) {
     lazy val squadSheet = c.tags.exists(_.id == "football/series/squad-sheets")
+  }
+
+  implicit class Match2StatusSummary(m: FootballMatch) {
+    lazy val statusSummary = StatusSummary(s"${m.homeTeam.name} v ${m.awayTeam.name}",
+      MatchStatus(m.matchStatus).toString, m.homeTeam.score, m.awayTeam.score)
   }
 
   implicit class Match2isOn(m: FootballMatch) {

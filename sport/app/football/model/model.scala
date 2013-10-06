@@ -72,3 +72,8 @@ object Table {
 }
 
 case class TeamFixture(competition: Competition, fixture: pa.FootballMatch)
+
+case class StatusSummary(description: String, status: String, homeScore: Option[Int], awayScore: Option[Int])
+
+
+
