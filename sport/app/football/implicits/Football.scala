@@ -4,7 +4,13 @@ import pa._
 import org.joda.time.{ DateTime, DateMidnight }
 import model._
 
-trait Football {
+
+trait Football extends Collections {
+
+
+  implicit class MatchSeq2Sorted(matches: Seq[FootballMatch]) {
+    lazy val sortByDate = matches.sortBy(m => (m.date.getMillis, m.homeTeam.name))
+  }
 
   implicit class Content2minByMin(c: Content) {
     lazy val minByMin = c.tags.exists(_.id == "tone/minutebyminute")
@@ -34,6 +40,7 @@ trait Football {
 
     lazy val isFixture = m match {
       case f: Fixture => true
+      case m: MatchDay => m.matchStatus == "-" // yeah really even though its not in the docs
       case _ => false
     }
 

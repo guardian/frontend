@@ -5,7 +5,6 @@ import org.joda.time.DateTime
 import pa._
 import model.Competition
 import feed.Competitions
-import scala.concurrent.Await
 
 
 trait FootballTestData {
@@ -99,19 +98,10 @@ trait FootballTestData {
 
   def loadTestData() {
     if (Competitions.matches.isEmpty) {
-      if (Competitions.matches.isEmpty) {
-        val futures = Competitions.competitionAgents.flatMap { agent =>
-          competitions.filter(_.id == agent.competition.id).flatMap { comp =>
-            Seq(
-              agent.update(comp),
-              agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
-              agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
-              agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
-              agent.updateLeagueTable(comp.leagueTable)
-            )
-          }
+      Competitions.competitionAgents.foreach { agent =>
+        competitions.filter(_.id == agent.competition.id).map { comp =>
+          agent.update(comp)
         }
-        futures.foreach(f => Await.result(f, scala.concurrent.duration.Duration("2000ms")))
       }
     }
   }

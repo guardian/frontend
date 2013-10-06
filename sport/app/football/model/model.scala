@@ -23,7 +23,7 @@ case class Competition(
 
   lazy val matchDates = matches.map(_.date.toDateMidnight).distinct
 
-  lazy val teams = matches.flatMap { m => Seq(m.homeTeam, m.awayTeam) }.distinctBy(_.id).sortBy(TeamName(_))
+  lazy val teams = matches.flatMap { m => Seq(m.homeTeam, m.awayTeam) }.distinctBy(_.id).sortBy(_.name)
 
   lazy val descriptionFullyLoaded = startDate.isDefined
 }
