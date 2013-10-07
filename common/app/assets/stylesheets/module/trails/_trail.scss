@@ -26,8 +26,9 @@
     @include fs-headline(2);
     margin-top: $baseline;
     margin-bottom: $baseline*6 - 3px;
+
     @include mq(tablet) {
-        @include fs-headline(3, true);
+        @include fs-headline(4, true);
         margin-bottom: $baseline*8 - 3px;
     }
 }
@@ -157,8 +158,14 @@
         overflow: hidden;
         height: 71px;
         width: 120px;
+
         @include mq(mobileLandscape) {
             margin-right: $gs-gutter;
+        }
+
+        @include mq(tablet) {
+            heihgt: gs-height(2);
+            width: gs-span(2);
         }
 
         img {
