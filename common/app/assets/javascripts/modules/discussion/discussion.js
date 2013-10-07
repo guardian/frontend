@@ -256,15 +256,16 @@ define([
 
             addComment: function(takeToTop, resp) {
                 // TODO (jamesgorrie): this is weird, but we don't have templating
-                var thread = bonzo(qwery('.d-thread', self.discussionContainerNode)[0]),
-                    comment = bonzo(qwery('.d-comment', self.discussionContainerNode)[0]).clone().removeClass('d-comment--blocked'),
-                    actions = bonzo(comment[0].querySelector('.d-comment__actions')),
-                    datetime = bonzo(comment[0].querySelector('time')),
-                    author = bonzo(comment[0].querySelector('.d-comment__author')),
-                    body = bonzo(comment[0].querySelector('.d-comment__body')),
-                    avatar = bonzo(comment[0].querySelector('.d-comment__avatar'))[0];
+                var discussionContainerNode = self.discussionContainerNode[0],
+                    thread = bonzo(qwery('.d-thread', discussionContainerNode)),
+                    comment = bonzo(qwery('.d-comment', discussionContainerNode)).clone().removeClass('d-comment--blocked')[0],
+                    actions = bonzo(comment.querySelector('.d-comment__actions')),
+                    datetime = bonzo(comment.querySelector('time')),
+                    author = bonzo(comment.querySelector('.d-comment__author')),
+                    body = bonzo(comment.querySelector('.d-comment__body')),
+                    avatar = bonzo(comment.querySelector('.d-comment__avatar'))[0];
 
-                comment[0].id = 'comment-'+ resp.id;
+                comment.id = 'comment-'+ resp.id;
                 author.html(user.displayName);
                 datetime.html('Just now');
 
@@ -276,22 +277,9 @@ define([
                     window.location.hash = 'comment-'+ resp.id;
                 }
 
-                // avatar oddity as only discussion knows where it lives
-                if (currentUserAvatarUrl) {
-                    avatar.src = currentUserAvatarUrl;
-                } else {
-                    avatar.src = 'http://static.guim.co.uk/sys-images/Guardian/Pix/site_furniture/2010/09/01/no-user-image.gif';
-                    return ajax({
-                        url: apiRoot +'/profile/me',
-                        type: 'jsonp',
-                        crossOrigin: true,
-                        data: { GU_U: Id.getCookie() },
-                        headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
-                    }).then(function(resp) {
-                        currentUserAvatarUrl = resp.userProfile.avatar;
-                        avatar.src = currentUserAvatarUrl;
-                    });
-                }
+                // This is stored in the DOM like so
+                // To spare us another call to the discussion API
+                avatar.src = qwery('.js-avatar-url', discussionContainerNode)[0].getAttribute('data-avatar-url');
             },
 
             showMoreReplies: function(el) {
