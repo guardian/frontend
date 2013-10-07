@@ -179,11 +179,9 @@
         @include mq(tablet) {
             min-height: gs-height(8);
         }
-        @include mq($to: desktop) {
-            padding-top: 2px;
-            border-top: 2px solid $news-light;
-        }
         .competition-table {
+            padding-top: 2px;
+            border-top: 2px solid $c-newsAccent;
             border-bottom-style: none;
             @include mq(desktop) {
                 padding-top: 0;
@@ -199,6 +197,9 @@
             }
             .match-desc__result {
                 width: 30px;
+            }
+            .cta {
+                margin-bottom: 0;
             }
         }
     }
