@@ -450,7 +450,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see links to tags")
-        $(".article__tags a").size should be (19)
+        $(".article__tags a").size should be (5)
       }
     }
 
