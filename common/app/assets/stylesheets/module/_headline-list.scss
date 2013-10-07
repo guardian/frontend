@@ -28,7 +28,8 @@
         }
     }
     .count {
-        @include fs-bodyCopy(1);
+        font-family: $serifheadline;
+        @include fs-bodyCopy(1, true);
         float: left;
         color: $c-neutral4;
         width: 14px;
