@@ -58,7 +58,7 @@
     text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
+        @include fs-bodyCopy(3, true);
         clear: none;
     }
 }
