@@ -98,7 +98,8 @@ define(['common', 'bonzo'], function (common, bonzo) {
     function replaceValidTimestamps(context) {
         findValidTimestamps(context).each(function(el, i) {
             var $el = bonzo(el),
-                datetime = new Date($el.attr('datetime')),
+                timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'), // Epoch dates are more reliable, fallback to datetime for liveblog blocks
+                datetime = new Date(timestamp),
                 relativeDate = makeRelativeDate(datetime.getTime(), {
                                   // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
                                   showTime: bonzo($el.parent()).hasClass('block-time'),
