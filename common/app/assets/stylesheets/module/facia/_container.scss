@@ -177,13 +177,16 @@
     }
     .item--sport-stats {
         @include mq(tablet) {
-            min-height: gs-height(8);
+            min-height: gs-height(8) - 6;
         }
         .competition-table {
-            padding-top: 2px;
-            border-top: 2px solid $c-newsAccent;
             border-bottom-style: none;
+            @include mq($to: desktop) {
+                padding-top: 2px;
+                border-top: 2px solid $c-newsAccent;
+            }
             @include mq(desktop) {
+                border-top-style: none;
                 padding-top: 0;
             }
             h3 {
