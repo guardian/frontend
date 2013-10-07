@@ -14,7 +14,8 @@ define(['common', 'bonzo', 'modules/popular', 'modules/storage'], function (comm
 
             var isArticle = config.page && config.page.contentType === "Article",
                 isFromFacebook = document.referrer.indexOf('facebook.com') !== -1,
-                hasBeenFromFacebook = storage.get('gu.ab.participations')[this.id],
+                participations = storage.get('gu.ab.participations'),
+                hasBeenFromFacebook = participations ? participations[this.id] : false,
                 isTest = /#dev-fbpopular/.test(window.location.hash);
 
             return isArticle && (isFromFacebook || hasBeenFromFacebook || isTest);
