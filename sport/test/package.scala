@@ -95,7 +95,6 @@ object TestHttp extends Http with ExecutionContexts {
       val file = base + (url.replace(Configuration.pa.apiKey, "APIKEY")
         .replace(s"${Configuration.pa.host}/", "")
         .replace("/", "__"))
-
       // spoof todays date
       file.replace(today.toString("yyyyMMdd"), "20121020")
     }
