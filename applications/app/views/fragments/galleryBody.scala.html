@@ -1,13 +1,11 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<div class="article-wrapper monocolumn-wrapper">
-    <div class="article-v2__inner">
-        <h2 class="article-zone type-1">
-            <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
-        </h2>
-    </div>
+<h2 class="article-zone tone-@VisualTone(gallery) tone-accent-border">
+    <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+</h2>
 
+<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article-v2__inner">
@@ -37,15 +35,15 @@
                     <p class="gallery-nav type-11">
 
                         @if(index > 1) {
-                            <a class="gallery-prev control" href="?index=@(index - 1)">Previous</a>
+                            <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
                         }
 
                         Image @index of @gallery.size
 
                         @if(index < gallery.size) {
-                            <a class="gallery-next control" href="?index=@(index + 1)">Next</a>
+                            <a class="gallery-next control tone-colour" href="?index=@(index + 1)">Next</a>
                         } else {
-                            <a class="gallery-next control" href="?index=1">Next</a>
+                            <a class="gallery-next control tone-colour" href="?index=1">Next</a>
                         }
                     </p>
 
@@ -69,9 +67,8 @@
                 </div>
             </div>
             <div class="article-v2__secondary-column" aria-hidden="true">
-                <div class="article-v2__secondary-column__inner">
+                <h2 class="article__meta-heading tone-colour">Share this gallery</h2>
                 @fragments.social(gallery, "next to content")
-                </div>
             </div>
         </div>
     </article>

@@ -46,8 +46,6 @@ function (
 
             // Run through slots and create documentWrite for each.
             // Other ad types such as iframes and custom can be plugged in here later
-
-            generateMiddleSlot(currConfig);
             
             for (var c in contexts) {
                 var els = contexts[c].querySelectorAll('.ad-slot');

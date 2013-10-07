@@ -3,7 +3,7 @@
 @import org.joda.time.DateTime
 
 <h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
+    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
 </h2>
 
 @filterBar(page.webTitle)
@@ -14,7 +14,7 @@
     @fixtures.map{ fixture =>
         <h2 class="competitions-date type-4">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
-        <a class="competition-title football-table-link zone-color type-4" href="@fixture.competition.url" data-link-name="view competition">
+        <a class="competition-title football-table-link tone-colour type-4" href="@fixture.competition.url" data-link-name="view competition">
             @fixture.competition.fullName <i class="i i-sport-arrow"></i>
         </a>
         <ol class="matches unstyled">

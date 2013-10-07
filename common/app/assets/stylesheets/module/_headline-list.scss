@@ -2,46 +2,53 @@
     li {
         display: block;
         overflow: auto;
-        border-bottom: 1px solid #dddddd;
-        padding: $baseline*2 0;
+        padding: $baseline 0 $baseline*5;
+        @include mq(tablet) {
+            padding: $baseline*2 0 $baseline*6;
+        }
 
-        &:last-child {
-            border-bottom: none;
+        + li {
+            border-top: 1px solid $c-neutral6;
         }
     }
-
     p {
         float: left;
         width: 90%;
         padding-left: $baseline*2;
-    }
 
-    a {
-        color: #333333;
-
-        &:visited {
-            color: #777777;
+        @include mq(tablet) {
+            @include fs-bodyCopy(3);
         }
     }
+    a {
+        color: $c-neutral1;
 
+        &:visited {
+            color: $c-neutral2;
+        }
+    }
     .count {
-        @extend %type-7;
+        font-family: $serifheadline;
+        @include fs-bodyCopy(1, true);
         float: left;
-        line-height: 20px;
-        line-height: 2rem;
-        color: #777777;
-        width: 12px;
+        color: $c-neutral4;
+        width: 14px;
+        width: 1.4rem;
+
+        @include mq(tablet) {
+            @include fs-bodyCopy(3, true);
+            width: 20px;
+            width: 2rem;
+        }
     }
 }
-
-
 .headline-list__title {
-    margin: 0 $gs-gutter/2 $baseline;
+    margin: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
     }
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c-neutral6;
     padding: $baseline $gutter/4 $baseline*3 0;
 
     @include mq(544px) {

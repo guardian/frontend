@@ -3,8 +3,15 @@ package implicits
 import pa._
 import org.joda.time.{ DateTime, DateMidnight }
 import model._
+import views.MatchStatus
 
-trait Football {
+
+trait Football extends Collections {
+
+
+  implicit class MatchSeq2Sorted(matches: Seq[FootballMatch]) {
+    lazy val sortByDate = matches.sortBy(m => (m.date.getMillis, m.homeTeam.name))
+  }
 
   implicit class Content2minByMin(c: Content) {
     lazy val minByMin = c.tags.exists(_.id == "tone/minutebyminute")
@@ -16,6 +23,11 @@ trait Football {
 
   implicit class Content2squadSheet(c: Content) {
     lazy val squadSheet = c.tags.exists(_.id == "football/series/squad-sheets")
+  }
+
+  implicit class Match2StatusSummary(m: FootballMatch) {
+    lazy val statusSummary = StatusSummary(s"${m.homeTeam.name} v ${m.awayTeam.name}",
+      MatchStatus(m.matchStatus).toString, m.homeTeam.score, m.awayTeam.score)
   }
 
   implicit class Match2isOn(m: FootballMatch) {
@@ -34,6 +46,7 @@ trait Football {
 
     lazy val isFixture = m match {
       case f: Fixture => true
+      case m: MatchDay => m.matchStatus == "-" // yeah really even though its not in the docs
       case _ => false
     }
 
@@ -83,6 +96,7 @@ trait Football {
     override lazy val section: String = "football"
     override lazy val webPublicationDate: DateTime = m.date
     override lazy val sectionName: String = "Football"
+    override lazy val mainVideo: Option[VideoElement] = None
   }
 
   implicit class Match2hasStarted(m: FootballMatch) {

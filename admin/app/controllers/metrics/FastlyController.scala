@@ -1,6 +1,6 @@
-package controllers.metrics
+package controllers.admin
 
-import controllers.{ Authenticated, AuthLogging }
+import controllers.AuthLogging
 import common.Logging
 import play.api.mvc.Controller
 import tools.CloudWatch

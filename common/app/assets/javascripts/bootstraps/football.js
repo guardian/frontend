@@ -31,18 +31,40 @@ define([
         matchNav: function(config, context){
             if (config.page.footballMatch) {
                 var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
-                    url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                    url += ".json?page=" + encodeURIComponent(config.page.pageId);
                 new MatchNav().load(url, context);
             }
         },
 
         showFrontFixtures: function(context) {
-            var prependTo = context.querySelector('.trailblock ul > li'),
-                table;
+            var prependTo,
+                table,
+                attachMethod;
+            if (context.querySelector('.facia-container')) {
+                // wrap the return sports stats component in an 'item'
+                prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                    attachMethod = 'append';
+                common.mediator.on('modules:footballfixtures:render', function() {
+                    var container = common.$g('.collection--news', context)
+                        .first()[0];
+                    // toggle class
+                    common.$g('.items', container)
+                        .removeClass('items--without-sport-stats')
+                        .addClass('items--with-sport-stats');
+                    // add it after the first item
+                    common.$g('.item:first-child', container)
+                        .after(prependTo);
+                });
+            } else {
+                prependTo = context.querySelector('.trailblock ul > li'),
+                    attachMethod = 'after';
+            }
+
             if(!bonzo(prependTo).hasClass('footballfixtures-loaded')) {
                 bonzo(prependTo).addClass('footballfixtures-loaded');
                 table = new FootballFixtures({
                     prependTo: prependTo,
+                    attachMethod: attachMethod,
                     contextual: false,
                     expandable: true,
                     numVisible: 10
@@ -61,8 +83,31 @@ define([
                 if(title) { title.className = "js-hidden"; }
             });
 
+            var prependTo,
+                attachMethod;
+            if (context.querySelector('.facia-container')) {
+                // wrap the return sports stats component in an 'item'
+                prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                    attachMethod = 'append';
+                common.mediator.on('modules:footballfixtures:render', function() {
+                    var container = common.$g('.collection--news', context)
+                        .first()[0];
+                    // toggle class
+                    common.$g('.items', container)
+                        .removeClass('items--without-sport-stats')
+                        .addClass('items--with-sport-stats');
+                    // add it after the first item
+                    common.$g('.item:first-child', container)
+                        .after(prependTo);
+                });
+            } else {
+                prependTo = context.querySelector('.t2'),
+                    attachMethod = 'after';
+            }
+
             var todaysFixtures = new FootballFixtures({
-                prependTo: context.querySelector('.t2'),
+                prependTo: prependTo,
+                attachMethod: attachMethod,
                 competitions: [competition],
                 contextual: true,
                 expandable: false
@@ -95,7 +140,7 @@ define([
                 switches: switches,
                 responseSelector: responseSelector,
                 progressToggle: true,
-                progressColour: '#20a111'
+                progressColour: '#70d2e6'
             }).init();
         }
     };

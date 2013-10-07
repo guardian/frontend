@@ -21,7 +21,7 @@ This explains the rationale for some of the implementation details of the image 
 
 - The [im4java](im4java.sourceforge.net) library (ImageMagick for Java) produces slightly better results, albeit a few percent
   larger, than the pure Java library we used ([Scalr](https://github.com/thebuzzmedia/imgscalr)).
-- im4java also provides better support for modern web formats like progressive JPG encoding and WebP.
+- im4java also provides better support for modern web formats like progressive JPG encoding and WebP (presently, WebP is unsupported by ImageMagick on ubuntu 12.04, 1/10/13).
 - GraphicsMagick is better supported by CentOS, so we used that over ImageMagick which didn't install cleanly from the standard EPEL repo.
 - The im4java library pipes out to the (blocking) GraphicsMagick command line tool (called 'gm').
 - We do not write to disk during the image transform. The origin image is represented in the response body of a Play request and piped

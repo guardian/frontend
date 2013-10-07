@@ -5,7 +5,6 @@ define([
     //Modules
     'modules/detect',
     'modules/facia/popular',
-    'modules/facia/relativise-timestamp',
     'modules/facia/items-show-more',
     'modules/facia/collection-display-toggle',
     'modules/footballfixtures',
@@ -15,7 +14,6 @@ define([
     bonzo,
     detect,
     popular,
-    RelativiseTimestamp,
     ItemsShowMore,
     CollectionDisplayToggle,
     FootballFixtures,
@@ -26,16 +24,7 @@ define([
 
         showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                popular.render(context);
-            });
-        },
-
-        relativiseTimestamps: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                common.toArray(context.querySelectorAll('.js-item__timestamp')).forEach(function(timestamp) {
-                    new RelativiseTimestamp(timestamp)
-                        .relativise();
-                });
+                popular.render(config);
             });
         },
 
@@ -52,21 +41,22 @@ define([
             common.mediator.on('page:front:ready', function(config, context) {
                 if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport")) {
                     // wrap the return sports stats component in an 'item'
-                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                        section = config.page.pageId === "" ? 'sport' : 'news',
+                        numVisible = config.page.pageId === "" ? 3 : 5;
                     common.mediator.on('modules:footballfixtures:render', function() {
-                        // only show 7 rows
-                        common.$g('.match:nth-child(n + 8)', $statsItem)
-                            .addClass('u-h');
+                        var container = common.$g('.collection--' + section, context)
+                            .first()[0];
                         // toggle class
-                        common.$g('.collection--sport-section .items')
+                        common.$g('.items', container)
                             .removeClass('items--without-sport-stats')
                             .addClass('items--with-sport-stats');
                         // add it after the first item
-                        common.$g('.collection--sport-section .item:first-child', context)
+                        common.$g('.item:first-child', container)
                             .after($statsItem);
                         // now hide one of the shown ones (but not on mobile)
                         if (detect.getBreakpoint() !== 'mobile') {
-                            common.$g('.collection--sport-section .item.u-h', context)
+                            common.$g('.item.u-h', container)
                                 .first()
                                 .previous()
                                 .addClass('u-h');
@@ -77,7 +67,8 @@ define([
                         attachMethod: 'append',
                         competitions: ['500', '510', '100', '400'],
                         contextual: false,
-                        expandable: false
+                        expandable: true,
+                        numVisible: numVisible
                     }).init();
                 }
             });
@@ -114,7 +105,6 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.showPopular();
-            modules.relativiseTimestamps();
             modules.showItemsShowMore();
             modules.showFootballFixtures();
             modules.showCollectionDisplayToggle();

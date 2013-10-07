@@ -1,0 +1,355 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/03/french-mps-bill-amazon-discount-books",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-03T15:54:39Z",
+      "webTitle":"French MPs pass bill to curb Amazon's discounting on books",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/03/french-mps-bill-amazon-discount-books",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/03/french-mps-bill-amazon-discount-books",
+      "fields":{
+        "trailText":"Deputies vote for move to protect small booksellers and defend France's culture against market forces and big internet firms",
+        "headline":"French MPs pass bill to curb Amazon's discounting on books",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j9eq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815244800/Amazon-005.jpg",
+        "wordcount":"526",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/amazon",
+        "type":"keyword",
+        "webTitle":"Amazon.com",
+        "webUrl":"http://www.theguardian.com/technology/amazon",
+        "apiUrl":"http://content.guardianapis.com/technology/amazon",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"books/booksellers",
+        "type":"keyword",
+        "webTitle":"Booksellers",
+        "webUrl":"http://www.theguardian.com/books/booksellers",
+        "apiUrl":"http://content.guardianapis.com/books/booksellers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/efinance",
+        "type":"keyword",
+        "webTitle":"E-commerce",
+        "webUrl":"http://www.theguardian.com/technology/efinance",
+        "apiUrl":"http://content.guardianapis.com/technology/efinance",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418987040",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815241413/Amazon-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"54",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815242399/Amazon-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"340",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815243504/Amazon-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"130",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815244800/Amazon-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"84",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815246350/Amazon-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"132",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815247348/Amazon-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"168",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815248395/Amazon-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"180",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815249419/Amazon-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"228",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815250419/Amazon-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"276",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815251506/Amazon-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"372",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815250419/Amazon-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"276",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with France's 5% discount limit on books if the bill becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418987041",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815244800/Amazon-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"84",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

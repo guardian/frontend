@@ -15,17 +15,17 @@ define([
             });
         },
         collectionTmpl =
-            '<section class="collection collection--popular items--cards" data-collection-type="container" data-section="popular">' +
-                '<h2 class="collection__title">Popular</h2>' +
+            '<section class="collection collection--popular items--cards tone-news" data-collection-type="container" data-section="popular">' +
+                '<h2 class="collection__title tone-background tone-accent-border">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
             return updateTmpl(
                 '<li class="item">' +
-                    '<h2 class="item__title"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
+                    '<h2 class="item__title tone-accent-border"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
                     '<p class="item__standfirst">@trail.trailText</p>' +
                     '<div class="item__meta item__meta--grey">' +
                         '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
-                            '<i class="i"></i><span class="timestamp__text"></span>' +
+                            '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
                         '</time>' +
                     '</div>' +
                 '</li>',
@@ -45,13 +45,17 @@ define([
 
     var popular =  {
 
-        render:  function () {
+        render:  function (config) {
+            var hasSection = config.page && config.page.section !== 'global';
             return ajax({
-                url: '/most-read.json',
+                url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
                 type: 'json',
                 crossOrigin: true
             }).then(
                 function(resp) {
+                    if (resp.fullTrails.length === 0) {
+                        return;
+                    }
                     var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>'));
                     resp.fullTrails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(

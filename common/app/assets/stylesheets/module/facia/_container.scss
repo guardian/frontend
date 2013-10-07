@@ -1,6 +1,6 @@
 .collection--container {
-    &.section--news,
-    &.section--sport {
+    &.collection--news,
+    &.collection--sport {
         @include mq($to: tablet) {
             @include row(1);
             .item:nth-child(1) {
@@ -23,7 +23,7 @@
                 .item:nth-child(5) {
                     @include row-end;
                 }
-                .item:nth-child(n + 6) {
+                .item:nth-child(n+6) {
                     @include card-headline;
                 }
             }
@@ -44,25 +44,21 @@
                 .item:nth-child(6) {
                     @include row-end;
                 }
-                .item:nth-child(n + 7) {
+                .item:nth-child(n+7) {
                     @include card-headline;
                 }
             }
         }
     }
-    &.section--culture,
-    &.section--comments {
+    &.collection--culture,
+    &.collection--commentisfree {
         @include mq($to: tablet) {
-            .item:nth-child(n + 4) {
+            .item:nth-child(n+4) {
                 @include card-headline;
             }
         }
     }
-    &.section--culture {
-        .collection__title {
-            background-color: $pink;
-            border-color: $light-pink;
-        }
+    &.collection--culture {
         @include mq($to: tablet) {
             @include first-row(1);
             .item:nth-child(1) {
@@ -80,11 +76,7 @@
             }
         }
     }
-    &.section--comments {
-        .collection__title {
-            background-color: $comment-light;
-            border-color: $comment-dark;
-        }
+    &.collection--commentisfree {
         @include mq($to: tablet) {
             @include first-row(1);
             .item:first-child {
@@ -108,22 +100,22 @@
     @include mq(tablet, desktop) {
         @include first-row(1);
         .item:first-child,
-        .item:nth-child(2n + 2) {
+        .item:nth-child(2n+2) {
             @include row-start;
         }
         .item:first-child,
-        .item:nth-child(2n + 3) {
+        .item:nth-child(2n+3) {
             @include row-end;
         }
-        &.section--news,
-        &.section--sport {
-            .item:nth-child(n + 6) {
+        &.collection--news,
+        &.collection--sport {
+            .item:nth-child(n+6) {
                 @include card($without-extras: true);
             }
         }
-        &.section--culture,
-        &.section--comments {
-            .item:nth-child(n + 4) {
+        &.collection--culture,
+        &.collection--commentisfree {
+            .item:nth-child(n+4) {
                 @include card($without-extras: true);
             }
         }
@@ -134,23 +126,23 @@
             @include card($without-extras: true, $not-first-row: true);
         }
         .item:first-child,
-        .item:nth-child(3n + 4) {
+        .item:nth-child(3n+4) {
             @include row-start;
         }
         .item:nth-child(2),
         .item:nth-child(3),
-        .item:nth-child(3n + 6) {
+        .item:nth-child(3n+6) {
             @include row-end;
         }
-        &.section--news,
-        &.section--sport {
-            .item:nth-child(n + 7) {
+        &.collection--news,
+        &.collection--sport {
+            .item:nth-child(n+7) {
                 @include card($without-extras: true);
             }
         }
-        &.section--culture,
-        &.section--comments {
-            .item:nth-child(n + 4) {
+        &.collection--culture,
+        &.collection--commentisfree {
+            .item:nth-child(n+4) {
                 @include card($without-extras: true);
             }
         }
@@ -162,42 +154,42 @@
             @include card($without-extras: true, $not-first-row: true);
         }
         .item:first-child,
-        .item:nth-child(4n + 6) {
+        .item:nth-child(4n+6) {
             @include row-start;
         }
         .item:nth-child(3),
         .item:nth-child(5),
-        .item:nth-child(4n + 9) {
+        .item:nth-child(4n+9) {
             @include row-end;
         }
-        &.section--news,
-        &.section--sport {
-            .item:nth-child(n + 10) {
+        &.collection--news,
+        &.collection--sport {
+            .item:nth-child(n+10) {
                 @include card($without-extras: true);
             }
         }
-        &.section--culture,
-        &.section--comments {
-            .item:nth-child(n + 6) {
+        &.collection--culture,
+        &.collection--commentisfree {
+            .item:nth-child(n+6) {
                 @include card($without-extras: true);
             }
         }
     }
     .item--sport-stats {
-        @include mq($to: tablet) {
-            width: 100% !important;
+        @include mq(tablet) {
+            min-height: gs-height(8) - 6;
         }
         .competition-table {
-            padding-top: 2px;
+            border-bottom-style: none;
             @include mq($to: desktop) {
-                border-top: 2px solid $light-blue;
+                padding-top: 2px;
+                border-top: 2px solid $c-newsAccent;
             }
             @include mq(desktop) {
+                border-top-style: none;
                 padding-top: 0;
             }
             h3 {
-                color: #000000;
-                margin-bottom: 6px;
                 @include fs-headline(3);
                 @include mq(tablet) {
                     @include fs-headline(4, $size-only: true);
@@ -209,16 +201,9 @@
             .match-desc__result {
                 width: 30px;
             }
-        }
-        .cta-small.cta-small-border {
-            border-bottom-style: none;
-            @include mq($to: desktop) {
-                padding-top: 3px;
+            .cta {
+                margin-bottom: 0;
             }
-            @include mq(desktop) {
-                padding-top: 7px;
-            }
-            padding-bottom: 0;
         }
     }
 }
