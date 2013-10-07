@@ -35,7 +35,7 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
       //Our tests use things from uk, us and au. Lets wait for these three fronts (60 seconds)
       while (!Front.hasItems("uk") || !Front.hasItems("us") || !Front.hasItems("au")) {
         // ensure we don't get in an endless loop if test data changes
-        if (System.currentTimeMillis - start > 60000) throw new RuntimeException("front should have loaded by now")
+        if (System.currentTimeMillis - start > 2.minutes.toMillis) throw new RuntimeException("front should have loaded by now")
       }
     }
   }
