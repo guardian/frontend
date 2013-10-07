@@ -105,10 +105,6 @@
         vertical-align: -3px;
         margin-right: 4px;
     }
-    .relative-timestamp + & {
-        border-left: 1px solid $c-neutral5;
-        margin-left: 6px;
-    }
 }
 
 .trail__count--commentcount {
@@ -118,6 +114,9 @@
     a:active {
         color: inherit;
     }
+}
+.trail__count--imagecount {
+    right: $gutter/2;
 }
 
 
