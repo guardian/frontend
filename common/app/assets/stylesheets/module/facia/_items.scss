@@ -83,7 +83,8 @@ $meta: #767676;
     color: #ffffff;
     background-color: #d23e55;
     @include fs-data(5);
-    padding: 2px 3px;
+    display: inline-block;
+    padding: 0 3px;
     position: relative;
     top: -4px;
     font-weight: bold;
@@ -262,30 +263,6 @@ a.item__link {
         margin-top: 0;
     }
 }
-@mixin card-half-width($without-image: false) {
-    width: 50%;
-    display: inline-block;
-    vertical-align: top;
-    padding-left: $gs-gutter/2 - 1;
-    padding-right: $gs-gutter/2;
-    border-left: 1px dotted $c-neutral5;
-    .item__title {
-        @include fs-headline(1, $size-only: true);
-    }
-    .item__byline {
-        @include fs-header(1, $size-only: true);
-    }
-    @if $without-image {
-        .item__image-container {
-            display: none;
-        }
-    } @else {
-        &.item--without-image .item__standfirst {
-            display: block;
-        }
-
-    }
-}
 @mixin card-headline {
     padding: 0;
     border-left-style: none;
@@ -308,6 +285,37 @@ a.item__link {
     .item__duration  {
         display: none;
     }
+    .item__live-indicator {
+        @include fs-data(1, true);
+        top: -3px;
+    }
+}
+@mixin card-half-width($without-image: false) {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: $gs-gutter/2 - 1;
+    padding-right: $gs-gutter/2;
+    border-left: 1px dotted $c-neutral5;
+    .item__title {
+        @include fs-headline(1, $size-only: true);
+    }
+    .item__byline {
+        @include fs-header(1, $size-only: true);
+    }
+    @if $without-image {
+        .item__image-container {
+            display: none;
+        }
+    } @else {
+        &.item--without-image .item__standfirst {
+            display: block;
+        }
+    }
+    .item__live-indicator {
+        @include fs-data(1, true);
+        top: -3px;
+    }
 }
 @mixin card-double-width {
     width: gs-span(8);
@@ -322,6 +330,10 @@ a.item__link {
     }
     @include mq(desktop) {
         float: left;
+    }
+    .item__live-indicator {
+        @include fs-data(6, true);
+        top: -3px;
     }
 }
 @mixin card-triple-width {
