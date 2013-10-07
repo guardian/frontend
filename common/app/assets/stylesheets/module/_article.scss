@@ -41,7 +41,7 @@
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 
-    .box-indent & {
+    .article-zone-no-indent & {
         padding-left: 0 !important;
         margin-left: 0;
     }
