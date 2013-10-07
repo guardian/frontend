@@ -11,6 +11,7 @@ import pa.{Http, PaClient}
 import play.api.{Application => PlayApp, Plugin}
 import play.api.libs.ws.WS
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
@@ -26,11 +27,11 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
       }
     }
 
-    Jobs.schedule("MatchDayAgentRefreshJob", "0/10 * * * * ?", FootballMetrics.MatchDayLoadTimingMetric) {
+    Jobs.schedule("MatchDayAgentRefreshJob", "0/5 * * * * ?", FootballMetrics.MatchDayLoadTimingMetric) {
       Competitions.refreshMatchDay()
     }
 
-    Jobs.schedule("CompetitionRefreshJob", "0 0/5 * * * ?", FootballMetrics.CompetitionLoadTimingMetric) {
+    Jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?", FootballMetrics.CompetitionLoadTimingMetric) {
       Competitions.refreshCompetitionData()
     }
 
@@ -38,7 +39,16 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
       LiveBlogAgent.refresh()
     }
 
-    Jobs.schedule("TeamMapRefreshJob", "0 * * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
+    Jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
+      TeamMap.refresh()
+    }
+
+    // Have all these run once at load, then on the scheduled times
+    AkkaAsync.after(5.seconds){
+      Competitions.refreshCompetitionData()
+      Competitions.refreshMatchDay()
+      LiveBlogAgent.refresh()
+      Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent)
       TeamMap.refresh()
     }
   }
