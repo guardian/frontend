@@ -4,6 +4,9 @@
     <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@tone" data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }>
         <h@if(mainItem){1}else{2} class="item__title tone-accent-border">
+            @if(trail.isLive){
+                <span class="item__live-indicator">Live</span>
+            }
             <a href="@LinkTo{@trail.url}" class="item__link">
                 @if(tone == "comment") {
                     <span class="i i-quote-light-grey"></span>
