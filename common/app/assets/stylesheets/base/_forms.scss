@@ -95,7 +95,7 @@
 }
 
 .text-input {
-    border: 1px solid $grey;
+    border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
     color: #545454;
@@ -109,7 +109,7 @@
     width: 100%;
 
     &:focus {
-        border-color: $darkGrey;
+        border-color: $c-neutral2;
     }
 }
 
