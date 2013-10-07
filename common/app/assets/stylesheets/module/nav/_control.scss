@@ -19,7 +19,7 @@
 
     &.is-active {
         background-color: #fff !important;
-        color: $blue;
+        color: $c-brandBlue;
     }
 }
 
@@ -126,7 +126,7 @@ span.control__menu.i-menu {
         color: #fff;
 
         &.is-active {
-            color: $blue;
+            color: $c-brandBlue;
         }
 
         @include mq(tablet) {
@@ -212,7 +212,7 @@ span.control__menu.i-menu {
     &:active,
     &:hover,
     &:focus     { color: #fff; }
-    &.is-active { color: $blue; }
+    &.is-active { color: $c-brandBlue; }
 
     @include mq(tablet) {
         position: absolute;

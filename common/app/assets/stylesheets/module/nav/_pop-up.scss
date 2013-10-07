@@ -10,7 +10,7 @@
     padding: $baseline*2 0;
     list-style: none;
     margin-bottom: -4px;
-    border-bottom: $baseline solid $blue;
+    border-bottom: $baseline solid $c-brandBlue;
     background: #fff;
     width: 100%;
     @include transform(translateZ(0)); // Hotfix to make popups stay on top

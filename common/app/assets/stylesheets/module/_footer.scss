@@ -27,7 +27,7 @@
  */
 .nav--footer .nav__link {
     color: #ffffff;
-    border-top-color: lighten($blue, 7%);
+    border-top-color: lighten($c-brandBlue, 7%);
 }
 
 
@@ -43,14 +43,14 @@
    }
 }
 .footer__primary {
-    background: $blue;
+    background: $c-brandBlue;
 }
 .footer__banner {
-    background-color: darken($blue, 5%);
+    background-color: darken($c-brandBlue, 5%);
     margin-bottom: $baseline;
 
     @include mq(tablet) {
-        background-color: $blue;
+        background-color: $c-brandBlue;
     }
 }
 @include mq(tablet) {
@@ -143,7 +143,7 @@
     border: 0;
     background: inherit;
     padding: 0;
-    color: $blue;
+    color: $c-brandBlue;
 }
 
 .has-swipe .swipe-switches__button--off {
