@@ -8,7 +8,7 @@
     float: left;
     clear: left;
     width: $a-leftCol-width;
-    margin-left: ($a-leftCol-width + $gs-gutter)*-1;
+    margin-left: ($a-leftCol-width + $gs-gutter) * -1;
     margin-bottom: $baseline*2;
 
     @include mq($a-leftCol-trigger) {
@@ -18,11 +18,10 @@
     }
 
     @include mq(wide) {
-        margin-left: (gs-span(3) + $gs-gutter)*-1;
+        margin-left: (gs-span(3) + $gs-gutter) * -1;
         width: gs-span(3);
     }
 }
-
 .furniture--right {
     @include mq($a-rightCol-trigger) {
         display: block;
@@ -37,10 +36,9 @@
     position: relative;
 
     a {
-        color: #444444;
+        color: $c-neutral1;
     }
 }
-
 .card__media {
     display: block;
     width: 100%;
@@ -68,7 +66,6 @@
     position: relative;
     @include box-sizing(border-box);
 }
-
 .card__meta {
     min-height: gs-height(1);
     @include fs-data(2);
@@ -91,7 +88,6 @@
             left: 0;
         }
     }
-
     .trail__count {
         position: static;
         float: left;
@@ -102,39 +98,32 @@
             color: $c-neutral2;
             margin-left: $gs-gutter/2 - 1;
         }
-
         i {
             @extend .i-comment-grey;
         }
     }
 }
-
 .card__zone {
     @extend %type-2;
     margin-bottom: 0;
 }
-
 .card__headline {
     font-family: $serif !important; // Override .from-content-api h3 defaults
-    color: #444444;
     font-size: 20px !important;
     font-size: 2.0rem !important;
     line-height: 24px !important;
     line-height: 2.4rem !important;
 
 }
-
 .card__description {
-    color: #444444;
+    color: $c-neutral1;
 }
-
 .card__appendix {
     color: #8c8c8c;
     padding-top: $baseline;
 }
-
 .card--left {
-    padding-top: 6px; // Align block with top of the text
+    padding-top: 6px; // Aligns border with top of text
 
     .card__headline {
         font-size: 16px !important;
@@ -143,14 +132,12 @@
         line-height: 2.0rem !important;
     }
 }
-
 .card--right {
     margin-top: $baseline*4;
 
     .card__title {
         @include fs-header(2);
     }
-
     .card__body {
         min-height: gs-height(2);
         padding-bottom: 0;
