@@ -19,7 +19,7 @@ define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, 
                     beforeInsert: function (html) {
                         return '' +
                             '<h3 class="headline-list__title">Top stories</h3>' +
-                            '<div class="headline-list headline-list--top box-indent" data-link-name="top-stories">' +
+                            '<div class="headline-list box-indent" data-link-name="top-stories">' +
                                 html +
                             '</div>';
                     },
