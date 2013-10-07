@@ -97,7 +97,7 @@ trait FootballTestData {
       LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
 
   def loadTestData() {
-    if (Competitions.matches.isEmpty) {
+    if (Competitions().matches.isEmpty) {
       Competitions.competitionAgents.foreach { agent =>
         competitions.filter(_.id == agent.competition.id).map { comp =>
           agent.update(comp)
