@@ -10,7 +10,6 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
 
   private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[Trail]](None)).toMap
 
-  // TODO editions
   def refresh() = {
     log.info("Refreshing Live Blogs")
     editions.foreach{ edition =>
@@ -41,7 +40,6 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
 
   private def isClockWatch(content: Content) = content.tags.exists(_.id == "football/series/saturday-clockwatch")
 
-  // TODO EDITIONS
   def blogFor(edition: Edition) = agents(edition.id)
 
   def stop() {
