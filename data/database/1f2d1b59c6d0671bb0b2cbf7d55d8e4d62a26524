@@ -1,0 +1,196 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk-news/video/2013/sep/26/london-kings-cross-square-boris-johnson-video",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-09-26T16:28:38Z",
+      "webTitle":"London's King’s Cross Square opened by Boris Johnson - video",
+      "webUrl":"http://www.theguardian.com/uk-news/video/2013/sep/26/london-kings-cross-square-boris-johnson-video",
+      "apiUrl":"http://content.guardianapis.com/uk-news/video/2013/sep/26/london-kings-cross-square-boris-johnson-video",
+      "fields":{
+        "trailText":"<p>Following a £550m refurbishment, King's Cross Square has reopened to the public</p>",
+        "headline":"London's King’s Cross Square opened by Boris Johnson - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4gf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/26/1380211630552/Opening-of-Kings-Cross-Sq-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/rail-transport",
+        "type":"keyword",
+        "webTitle":"Rail transport",
+        "webUrl":"http://www.theguardian.com/uk/rail-transport",
+        "apiUrl":"http://content.guardianapis.com/uk/rail-transport",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/boris",
+        "type":"keyword",
+        "webTitle":"Boris Johnson",
+        "webUrl":"http://www.theguardian.com/politics/boris",
+        "apiUrl":"http://content.guardianapis.com/politics/boris",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/transport",
+        "type":"keyword",
+        "webTitle":"Transport",
+        "webUrl":"http://www.theguardian.com/uk/transport",
+        "apiUrl":"http://content.guardianapis.com/uk/transport",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418356057",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/26/1380211642027/Opening-of-Kings-Cross-Sq-016.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Opening of Kings Cross Square",
+            "height":"360",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Opening of Kings Cross Square Photograph: Sean Dempsey/PA",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/26/1380211622711/Opening-of-Kings-Cross-Sq-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Opening of Kings Cross Square",
+            "height":"360",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Opening of Kings Cross Square Photograph: Sean Dempsey/PA",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/26/ITNP_NF_KINGSCROSS_1540_26_AIC-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/26/ITNP_NF_KINGSCROSS_1540_26_AIC_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/26/ITNP_NF_KINGSCROSS_1540_26_AIC_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/26/ITNP_NF_KINGSCROSS_1540_26_AIC/ITNP_NF_KINGSCROSS_1540_26_AIC.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        }]
+      },{
+        "id":"gu-image-418365421",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/26/1380211630552/Opening-of-Kings-Cross-Sq-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Opening of Kings Cross Square",
+            "height":"84",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Opening of Kings Cross Square Photograph: Sean Dempsey/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
