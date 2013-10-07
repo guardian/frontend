@@ -207,7 +207,6 @@
     @include box-sizing(border-box);
     display: none;
     overflow: auto;
-    width: 100%;
     margin: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;

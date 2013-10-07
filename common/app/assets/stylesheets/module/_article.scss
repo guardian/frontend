@@ -46,9 +46,10 @@
         margin-left: 0;
     }
 
-    &.sport-header { // TODO: temporary until football gets side cols
-        margin-left: 0;
-        padding-left: $gs-gutter;
+    &.sport-header,
+    &.article-zone--sport { // TODO: temporary until football gets side cols
+        padding-left: 0;
+        margin-left: $gs-gutter;
     }
 }
 

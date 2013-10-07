@@ -78,16 +78,27 @@
    ========================================================================== */
 
 .page-head {
-    @extend %type-4;
-    padding: 0 $gs-gutter/2 $baseline*2;
+    @include fs-headline(2);
+    padding: 0 0 $baseline*4;
+    margin: 0 $gs-gutter/2 $baseline $gs-gutter/2;
+    border-bottom: 1px dotted $c-neutral4;
+
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 }
 
+.page__sub-head {
+    @include fs-header(1);
+    padding: 0;
+    margin: 0 $gs-gutter/2 $baseline*4 $gs-gutter/2;
 
-
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+}
 
 .release {
     display: none;
