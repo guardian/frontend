@@ -5,7 +5,6 @@ import net.liftweb.json.{ Serialization, NoTypeHints }
 import net.liftweb.json.Serialization.{ read, write }
 import play.api.mvc._
 import play.api.mvc.Results._
-import play.api.mvc.BodyParsers._
 import play.api.Play
 import scala.concurrent.Future
 import play.api.libs.openid.OpenID
@@ -27,48 +26,21 @@ object Identity {
 
   def readJson(json: String) = read[Identity](json)
 
-  def apply(request: Request[Any]): Option[Identity] = request match {
-    case authenticated: AuthenticatedRequest[_] => authenticated.identity
-    case _ => request.session.get(KEY).map(credentials => Identity.readJson(credentials))
+  def apply(request: Request[Any]): Option[Identity] = {
+    request.session.get(KEY).map(credentials => Identity.readJson(credentials))
   }
 }
 
-object AuthenticatedRequest {
-  def apply[A](request: Request[A]) = {
-    new AuthenticatedRequest(Identity(request), request)
-  }
-}
-
-class AuthenticatedRequest[A](val identity: Option[Identity], request: Request[A]) extends WrappedRequest(request) {
-  lazy val isAuthenticated = identity.isDefined
-}
+class AuthenticatedRequest(val identity: Identity, request: Request[AnyContent]) extends WrappedRequest(request)
 
 trait AuthLogging {
   self: Logging =>
   def log(msg: String, request: Request[AnyContent]) {
     request match {
-      case auth: AuthenticatedRequest[_] => auth.identity.foreach(id => log.info(id.email + ": " + msg))
+      case auth: AuthenticatedRequest => log.info(auth.identity.email + ": " + msg)
       case _ => throw new IllegalStateException("Expected an authenticated request")
     }
   }
-}
-
-object NonAuthAction {
-
-  def apply[A](p: BodyParser[A])(f: AuthenticatedRequest[A] => Result) = {
-    Action(p) {
-      implicit request => f(AuthenticatedRequest(request))
-    }
-  }
-
-  def apply(f: AuthenticatedRequest[AnyContent] => Result): Action[AnyContent] = {
-    this.apply(parse.anyContent)(f)
-  }
-
-  def apply(block: => Result): Action[AnyContent] = {
-    this.apply(_ => block)
-  }
-
 }
 
 class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with implicits.Dates {
@@ -90,22 +62,17 @@ class AuthAction(loginUrl: String) extends ExecutionContexts {
 
   def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
 
-  def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async { _ match {
-    case authenticatedRequest: AuthenticatedRequest[_] => f(authenticatedRequest)
+  def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async {
 
-    case request if Play.isTest =>
-      val stubbedIdentity = new AuthenticatedRequest(Some(Identity("1234", "foo@bar.com", "John", "Smith")), request)
-      f(stubbedIdentity)
+      request: Request[AnyContent] =>
 
-    case request =>
-      val authenticatedRequest = Identity(request) map { id => f(new AuthenticatedRequest(Some(id), request)) }
-      authenticatedRequest getOrElse {
-        Future {
-          Redirect(loginUrl).withSession(request.session + ("loginFromUrl", request.uri))
-        }
+      val identity: Option[Identity] = Identity(request)
+      identity match {
+        case Some(id) => f(new AuthenticatedRequest(id, request))
+        case _ if Play.isTest => f(new AuthenticatedRequest(Identity("1234", "foo@bar.com", "John", "Smith"), request))
+        case _ => Future(Redirect(loginUrl).withSession(request.session + ("loginFromUrl", request.uri)))
       }
     }
-  }
 }
 
 trait LoginController extends ExecutionContexts { self: Controller =>
