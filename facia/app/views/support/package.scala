@@ -34,7 +34,7 @@ object FindStyle {
       ("au/commentisfree/regular-stories", Container(tone = "comment"))
     )),
     ("au/culture", Map(
-      ("au/culture/regular-stories", Container(tone = "features", showMore = true)),
+      ("au/culture/regular-stories", Container(tone = "feature", showMore = true)),
       ("au/film/regular-stories", SectionZone(tone = "feature")),
       ("au/music/regular-stories", SectionZone(tone = "feature")),
       ("au/books/regular-stories", SectionZone(tone = "feature")),
@@ -69,7 +69,7 @@ object FindStyle {
       ("uk/commentisfree/regular-stories", Container(tone = "comment"))
     )),
     ("uk/culture", Map(
-      ("uk/culture/regular-stories", Container(tone = "features", showMore = true)),
+      ("uk/culture/regular-stories", Container(tone = "feature", showMore = true)),
       ("uk/tv-and-radio/regular-stories", SectionZone(tone = "feature")),
       ("uk/film/regular-stories", SectionZone(tone = "feature")),
       ("uk/music/regular-stories", SectionZone(tone = "feature")),
@@ -107,7 +107,7 @@ object FindStyle {
       ("us/commentisfree/regular-stories", Container(tone = "comment"))
     )),
     ("us/culture", Map(
-      ("us/culture/regular-stories", Container(tone = "features", showMore = true)),
+      ("us/culture/regular-stories", Container(tone = "feature", showMore = true)),
       ("us/film/regular-stories", SectionZone(tone = "feature")),
       ("us/music/regular-stories", SectionZone(tone = "feature")),
       ("us/stage/regular-stories", SectionZone(tone = "feature")),
