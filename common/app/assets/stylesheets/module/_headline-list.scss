@@ -36,11 +36,11 @@
         @include fs-bodyCopy(1);
         float: left;
         color: $c-neutral4;
-        width: 12px;
+        width: 14px;
 
         @include mq(tablet) {
             @include fs-bodyCopy(3, true);
-            width: 18px;
+            width: 20px;
         }
     }
 }
