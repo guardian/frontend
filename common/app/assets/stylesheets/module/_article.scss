@@ -27,17 +27,17 @@
     }
 
     @include mq(rightCol) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
         max-width: none;
     }
 
     @include mq(leftCol) {
-        padding-left: $a-leftCol-width + $gs-gutter*2;
+        padding-left: $a-leftCol-width + $gs-gutter;
     }
 
     @include mq(wide) {
-        padding-left:  gs-span(3) + $gs-gutter*2;
+        padding-left:  gs-span(3);
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 
