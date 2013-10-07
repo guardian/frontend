@@ -16,7 +16,7 @@ trait CompetitionSupport extends implicits.Football {
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
   )
 
-  def competitions: Seq[Competition]
+  val competitions: Seq[Competition]
 
   def withMatchesOn(date: DateMidnight) = CompetitionSupport {
     val competitionsWithMatches = competitions.filter(_.matches.exists(_.isOn(date)))
@@ -31,17 +31,17 @@ trait CompetitionSupport extends implicits.Football {
 
   def withId(compId: String) = competitions.find(_.id == compId)
 
-  def withTodaysMatchesAndFutureFixtures = CompetitionSupport {
+  lazy val withTodaysMatchesAndFutureFixtures = CompetitionSupport {
     val today = new DateMidnight
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today)))).filter(_.hasMatches)
   }
 
-  def withTodaysMatchesAndPastResults = CompetitionSupport {
+  lazy val withTodaysMatchesAndPastResults = CompetitionSupport {
     val today = new DateMidnight
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(today)))).filter(_.hasMatches)
   }
 
-  def withTodaysMatches = CompetitionSupport {
+  lazy val withTodaysMatches = CompetitionSupport {
     val today = new DateMidnight
     competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
   }
@@ -50,7 +50,7 @@ trait CompetitionSupport extends implicits.Football {
     competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
   }
 
-  def matchDates = competitions.flatMap(_.matchDates).distinct.sorted
+  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
   def nextMatchDates(startDate: DateMidnight, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
 
@@ -76,25 +76,17 @@ trait CompetitionSupport extends implicits.Football {
     .filter(m => interval.contains(m.date))
     .find(m => m.hasTeam(team1) && m.hasTeam(team2))
 
-  def matches = competitions.flatMap(_.matches).sortByDate
+  lazy val matches = competitions.flatMap(_.matches).sortByDate
 
 }
 
 object CompetitionSupport{
   def apply(comps: Seq[Competition]): CompetitionSupport = new CompetitionSupport {
-    // TODO, this is temporary and will be removed by step 2
-    // if I do it all now the changeset will be too big due to renaming
-    // in this context these are immutable, this just ensures we do not re-evalute them constantly
-    override lazy val competitions = comps
-    override lazy val withTodaysMatchesAndFutureFixtures = super.withTodaysMatchesAndFutureFixtures
-    override lazy val withTodaysMatchesAndPastResults = super.withTodaysMatchesAndPastResults
-    override lazy val withTodaysMatches = super.withTodaysMatches
-    override lazy val matchDates = super.matchDates
-    override lazy val matches = super.matches
+    val competitions = comps
   }
 }
 
-trait Competitions extends CompetitionSupport with LiveMatches with Logging with implicits.Collections with implicits.Football {
+trait Competitions extends LiveMatches with Logging with implicits.Collections with implicits.Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -127,7 +119,7 @@ trait Competitions extends CompetitionSupport with LiveMatches with Logging with
   val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }
   val competitionIds: Seq[String] = competitionDefinitions map { _.id }
 
-  def competitions = competitionAgents.map(_.competition)
+  private def competitions = competitionAgents.map(_.competition)
 
   def refreshCompetitionAgent(id: String) {
     competitionAgents find { _.competition.id == id } map { _.refresh() }
@@ -157,4 +149,6 @@ trait Competitions extends CompetitionSupport with LiveMatches with Logging with
   }
 }
 
-object Competitions extends Competitions
+object Competitions extends Competitions {
+  def apply() = CompetitionSupport(competitions)
+}
