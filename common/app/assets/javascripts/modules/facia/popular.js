@@ -22,7 +22,7 @@ define([
             return updateTmpl(
                 '<li class="item">' +
                     '<h2 class="item__title tone-accent-border"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
-                    '<p class="item__standfirst tone-colour">@trail.trailText</p>' +
+                    '<p class="item__standfirst">@trail.trailText</p>' +
                     '<div class="item__meta item__meta--grey">' +
                         '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
                             '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
