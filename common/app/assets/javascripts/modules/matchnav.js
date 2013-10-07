@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
+define(['common', 'ajax'], function (common, ajax) {
 
     function MatchNav() {
 
