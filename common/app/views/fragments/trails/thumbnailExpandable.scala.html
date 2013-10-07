@@ -1,6 +1,6 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader, trailId: String = util.Random.alphanumeric.take(5).mkString)
 
-<@element class="trail trail--thumbnail trail--expandable t@rowNum @if(trail.mainPicture(width=220).nonEmpty) { has-image}" data-link-name="trail"
+<@element class="trail trail--thumbnail trail--expandable t@rowNum @if(trail.mainPicture(width=220).nonEmpty) { trail--has-image}" data-link-name="trail"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
     @if(!trail.leadingParagraphs.isEmpty) {
