@@ -267,6 +267,7 @@
 .localnav--small {
     background-color: #fff;
     display: block;
+    border-top: $baseline/2 solid $c-newsAccent;
 
     @include mq(tablet) { display: none; }
 
@@ -299,7 +300,9 @@
 
 .localnav__inner {
     position: relative;
-    border-top: $baseline/2 solid $c-newsAccent;
+    margin: 0 $gs-gutter/2;
+    border-bottom: 1px solid $c-neutral6;
+    border-bottom-color: $c-neutral6 !important;
 }
 
 .localnav__title {
@@ -308,6 +311,7 @@
     float: left;
     border: 0 !important;
     height: $gs-column-height + $baseline !important;
+    padding-left: 0 !important;
 }
 
 
