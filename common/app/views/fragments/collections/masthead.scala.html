@@ -14,7 +14,7 @@
             }
         }
 
-        <ul class="unstyled items item-count-@collection.items.size items--cards items--without-sport-stats">
+        <ul class="unstyled items item-count-@collection.items.size items--without-sport-stats">
             @collection.items.zipWithIndex.map{ case (trail, index) =>
                 @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0)
             }
