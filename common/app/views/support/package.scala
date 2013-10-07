@@ -44,11 +44,11 @@ object SectionFront extends Style { val className = "section-front" }
  */
 object Masthead extends Style { val className = "masthead" }
 
-case class SectionZone(val collectionType: String = "news") extends Style {
+case class SectionZone(val tone: String = "news") extends Style {
   val className = "section-zone"
 }
 
-case class Container(val section: String, val showMore: Boolean = false) extends Style {
+case class Container(val containerType: String = "news", val tone: String = "news", val showMore: Boolean = false) extends Style {
   val className = "container"
 }
 
