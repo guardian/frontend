@@ -40,7 +40,7 @@
     }
 }
 .headline-list__title {
-    margin: 0 $gs-gutter/2 $baseline;
+    margin: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
