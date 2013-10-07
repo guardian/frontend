@@ -17,6 +17,10 @@ define([
                 prod: 'http://www.theguardian.com',
                 code: 'http://m.code.dev-theguardian.com'
             },
+            filterTypes: {
+                section: { display: 'Section', param: "section", path: "sections", placeholder: "e.g. news" },
+                tag:     { display: 'Tag',     param: "tag",     path: "tags",     placeholder: "e.g. sport/triathlon" }
+            },
             searchPageSize:        50,
             sectionSearches: {
                 "default": "news|uk|uk-news|world",
@@ -29,12 +33,12 @@ define([
 
             ophanCallsPerSecond:   4,     // n.b. times number of blocks
             collectionsPollMs:     10000, // 10 seconds
-            latestArticlesPollMs:  10000, // 10 seconds
-            cacheExpiryMs:         60000, // 1 min
+            latestArticlesPollMs:  30000, // 10 seconds
+            cacheExpiryMs:         120000, // 2 mins
             defaultToLiveMode:     true,
 
             apiBase:               '',
-            apiSearchBase:         '/api/proxy/search'
+            apiSearchBase:         '/api/proxy'
         },
 
         state: {},

@@ -43,7 +43,7 @@ function (
     function fetchData(ids, callback) {
         var apiUrl;
         if (ids.length) {
-            apiUrl = common.config.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
+            apiUrl = common.config.apiSearchBase + "/search?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');

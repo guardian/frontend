@@ -26,7 +26,10 @@ define([
 
         var self = this,
             model = {
-                latestArticles: new LatestArticles(),
+                latestArticles: new LatestArticles({
+                    filterTypes: common.config.filterTypes
+                }),
+
                 clipboard:      knockout.observableArray(),
                 collections:    knockout.observableArray(),
                 configs:        knockout.observableArray(),
@@ -259,7 +262,7 @@ define([
 
         model.config.subscribe(function(config) {
             var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
-            model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
+            model.latestArticles.setSection(common.config.sectionSearches[section || 'default'] || section);
             setConfig(config);
         });
 
