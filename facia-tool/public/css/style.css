@@ -500,10 +500,10 @@ iframe {
 .autocompleter .suggestion {
     font-size: 14px;
     line-height: 18px;
+    white-space: nowrap;
     background: #ffffff;
     color: #666666;
     border-left: 1px solid #cccccc;
-    border-right: 1px solid #cccccc;
     padding: 0 7px 0 7px;
 }
 

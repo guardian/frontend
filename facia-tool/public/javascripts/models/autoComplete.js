@@ -9,7 +9,6 @@ function (
     cache
 ){
     var maxItems = 50,
-        deBounced
         counter = 0;
 
     return function (opts) {
@@ -33,27 +32,24 @@ function (
 
             counter += 1;
             count = counter;
-            clearTimeout(deBounced);
-            deBounced = setTimeout(function() {
 
-                new Reqwest({
-                    url: common.config.apiSearchBase + url + "&page-size=" + maxItems,
-                    type: 'jsonp'
-                }).always(
-                    function(resp) {
-                        var data;
+            new Reqwest({
+                url: common.config.apiSearchBase + url + "&page-size=" + maxItems,
+                type: 'jsonp'
+            }).always(
+                function(resp) {
+                    var data;
 
-                        if (count === counter) {
-                            data = resp.response && resp.response.results ? resp.response.results : [];
-                            data = data.length ? data : [{_alert : "...sorry, no " + path + " found."}];
-                            cache.put('contentApi', url, data);
-                            opts.receiver(data);
-                        }
+                    if (count !== counter) { return; }
+                    data = resp.response && resp.response.results ? resp.response.results : [];
+                    if (data.length === 0) {
+                        opts.receiver([{_alert : "...sorry, no " + path + " found."}]);
+                        return;
                     }
-                );
-
-
-            }, 300);
+                    cache.put('contentApi', url, data);
+                    opts.receiver(data);
+                }
+            );
         }
     }
 });
