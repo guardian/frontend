@@ -30,7 +30,7 @@
 
     @include mq(tablet) {
         max-width: gs-span(3);
-        border-bottom: 1px solid $c-neutral4;
+        border-bottom: 1px solid $c-neutral5;
     }
 
     a {
@@ -62,7 +62,7 @@
     padding-top: $baseline*2;
 
     @include mq(tablet) {
-        border-top: 1px solid $c-neutral4;
+        border-top: 1px solid $c-neutral5;
     }
 }
 
