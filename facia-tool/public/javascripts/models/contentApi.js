@@ -1,11 +1,9 @@
 define([
-    'Config',
     'Reqwest',
     'models/common',
     'models/cache'
 ],
 function (
-    Config,
     Reqwest,
     common,
     cache
@@ -43,7 +41,7 @@ function (
     function fetchData(ids, callback) {
         var apiUrl;
         if (ids.length) {
-            apiUrl = common.config.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
+            apiUrl = common.config.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all";
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');
