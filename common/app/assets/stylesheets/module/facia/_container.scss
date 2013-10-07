@@ -51,7 +51,7 @@
         }
     }
     &.collection--culture,
-    &.collection--comments {
+    &.collection--commentisfree {
         @include mq($to: tablet) {
             .item:nth-child(n+4) {
                 @include card-headline;
@@ -76,7 +76,7 @@
             }
         }
     }
-    &.collection--comments {
+    &.collection--commentisfree {
         @include mq($to: tablet) {
             @include first-row(1);
             .item:first-child {
@@ -114,7 +114,7 @@
             }
         }
         &.collection--culture,
-        &.collection--comments {
+        &.collection--commentisfree {
             .item:nth-child(n+4) {
                 @include card($without-extras: true);
             }
@@ -141,7 +141,7 @@
             }
         }
         &.collection--culture,
-        &.collection--comments {
+        &.collection--commentisfree {
             .item:nth-child(n+4) {
                 @include card($without-extras: true);
             }
@@ -169,7 +169,7 @@
             }
         }
         &.collection--culture,
-        &.collection--comments {
+        &.collection--commentisfree {
             .item:nth-child(n+6) {
                 @include card($without-extras: true);
             }

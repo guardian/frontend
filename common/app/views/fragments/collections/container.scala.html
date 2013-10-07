@@ -2,7 +2,7 @@
 
 @if(collection.items.nonEmpty) {
     <section class="collection collection--@style.className @if(style.containerType != "news"){js-collection--display-toggle} collection--@style.containerType tone-@style.tone"
-             data-link-name="block | @collection.displayName.getOrElse(config.id)"
+             data-link-name="block | @config.id"
              data-collection-type="@style.className"
              data-section="@config.section">
 

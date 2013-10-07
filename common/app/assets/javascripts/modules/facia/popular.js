@@ -25,7 +25,7 @@ define([
                     '<p class="item__standfirst tone-colour">@trail.trailText</p>' +
                     '<div class="item__meta item__meta--grey">' +
                         '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
-                            '<i class="i"></i><span class="timestamp__text"></span>' +
+                            '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
                         '</time>' +
                     '</div>' +
                 '</li>',
