@@ -156,7 +156,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
         faciaPageOption map { faciaPage =>
           if (path != editionalisedPath) {
-            Redirect(editionalisedPath)
+            LinkTo.redirectWithParameters(request, editionalisedPath)
           } else {
             if (request.isJson) {
               val html = views.html.fragments.frontBody(frontPage, faciaPage)
