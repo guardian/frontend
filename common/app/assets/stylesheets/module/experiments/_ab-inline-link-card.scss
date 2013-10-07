@@ -108,12 +108,17 @@
     margin-bottom: 0;
 }
 .card__headline {
-    font-family: $serif !important; // Override .from-content-api h3 defaults
     font-size: 20px !important;
     font-size: 2.0rem !important;
     line-height: 24px !important;
     line-height: 2.4rem !important;
 
+    .card--left  & {
+        font-size: 16px !important;
+        font-size: 1.6rem !important;
+        line-height: 20px !important;
+        line-height: 2.0rem !important;
+    }
 }
 .card__description {
     color: $c-neutral1;
@@ -124,13 +129,6 @@
 }
 .card--left {
     padding-top: 6px; // Aligns border with top of text
-
-    .card__headline {
-        font-size: 16px !important;
-        font-size: 1.6rem !important;
-        line-height: 20px !important;
-        line-height: 2.0rem !important;
-    }
 }
 .card--right {
     margin-top: $baseline*4;
