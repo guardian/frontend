@@ -13,11 +13,14 @@ $news-light: #00b1f7;
 .collection__title {
     margin-top: 30px;
     @include fs-header(5);
-    height: gs-height(1) - $gs-baseline/3;
-    padding: $gs-baseline/3 0 0 $gs-gutter/5;
+    min-height: gs-height(1) - $gs-baseline*(2/3);
+    padding: $gs-baseline/3 $gs-gutter/5;
     color: #ffffff;
     border-top-width: $gs-baseline/3;
     border-top-style: solid;
+    .collection:first-child & {
+        margin-top: 0;
+    }
 }
 .collection__title a {
     color: inherit;
