@@ -9,6 +9,6 @@ class TagTemplateTest extends FlatSpec with ShouldMatchers {
   it should "render tag headline" in HtmlUnit("/world/turkey") { browser =>
     import browser._
 
-    $("h1").first.getText should be("Turkey")
+    $("h1").first.getText should be ("turkey")
   }
 }

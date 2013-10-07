@@ -35,6 +35,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     val stage = apply("STAGE", "unknown")
 
     val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
+
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
   }
 
   object switches {
@@ -86,6 +88,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object site {
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
+  }
+
+  object cookies {
+    lazy val lastSeenKey: String = "lastseen"
+    lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
   }
 
   object proxy {

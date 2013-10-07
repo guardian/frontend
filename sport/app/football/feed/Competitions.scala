@@ -18,12 +18,12 @@ trait CompetitionSupport extends implicits.Football {
 
   def competitions: Seq[Competition]
 
-  def withMatchesOn(date: DateMidnight) = competitionSupportWith {
+  def withMatchesOn(date: DateMidnight) = CompetitionSupport {
     val competitionsWithMatches = competitions.filter(_.matches.exists(_.isOn(date)))
     competitionsWithMatches.map(c => c.copy(matches = c.matches.filter(_.isOn(date))))
   }
 
-  def withCompetitionFilter(path: String) = competitionSupportWith(
+  def withCompetitionFilter(path: String) = CompetitionSupport(
     competitions.filter(_.url == path)
   )
 
@@ -31,22 +31,22 @@ trait CompetitionSupport extends implicits.Football {
 
   def withId(compId: String) = competitions.find(_.id == compId)
 
-  def withTodaysMatchesAndFutureFixtures = competitionSupportWith {
+  def withTodaysMatchesAndFutureFixtures = CompetitionSupport {
     val today = new DateMidnight
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today)))).filter(_.hasMatches)
   }
 
-  def withTodaysMatchesAndPastResults = competitionSupportWith {
+  def withTodaysMatchesAndPastResults = CompetitionSupport {
     val today = new DateMidnight
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(today)))).filter(_.hasMatches)
   }
 
-  def withTodaysMatches = competitionSupportWith {
+  def withTodaysMatches = CompetitionSupport {
     val today = new DateMidnight
     competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
   }
 
-  def withTeam(team: String) = competitionSupportWith {
+  def withTeam(team: String) = CompetitionSupport {
     competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
   }
 
@@ -59,7 +59,7 @@ trait CompetitionSupport extends implicits.Football {
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
 
   def withTeamMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap(c =>
-    c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortBy(_.date.getMillis).map { m =>
+    c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortByDate.map { m =>
       TeamFixture(c, m)
     }
   )
@@ -76,14 +76,25 @@ trait CompetitionSupport extends implicits.Football {
     .filter(m => interval.contains(m.date))
     .find(m => m.hasTeam(team1) && m.hasTeam(team2))
 
-  def matches = competitions.flatMap(_.matches).sortBy(_.date.millis)
+  def matches = competitions.flatMap(_.matches).sortByDate
 
-  private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
-    def competitions = comps
+}
+
+object CompetitionSupport{
+  def apply(comps: Seq[Competition]): CompetitionSupport = new CompetitionSupport {
+    // TODO, this is temporary and will be removed by step 2
+    // if I do it all now the changeset will be too big due to renaming
+    // in this context these are immutable, this just ensures we do not re-evalute them constantly
+    override lazy val competitions = comps
+    override lazy val withTodaysMatchesAndFutureFixtures = super.withTodaysMatchesAndFutureFixtures
+    override lazy val withTodaysMatchesAndPastResults = super.withTodaysMatchesAndPastResults
+    override lazy val withTodaysMatches = super.withTodaysMatches
+    override lazy val matchDates = super.matchDates
+    override lazy val matches = super.matches
   }
 }
 
-trait Competitions extends CompetitionSupport with ExecutionContexts with Logging with implicits.Collections with implicits.Football {
+trait Competitions extends CompetitionSupport with LiveMatches with Logging with implicits.Collections with implicits.Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -116,22 +127,7 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
   val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }
   val competitionIds: Seq[String] = competitionDefinitions map { _.id }
 
-  override def competitions = competitionAgents.map { agent =>
-    val results = agent.results
-
-    //results trump live games
-    val resultsWithLiveGames = agent.liveMatches.filterNot(g => results.exists(_.id == g.id)) ++ results
-
-    //results and live games trump fixtures
-    val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ resultsWithLiveGames
-
-    val distinctGames = allGames.distinctBy(_.id).sortBy(m => (m.date.minuteOfDay().get(), m.homeTeam.name))
-
-    agent.competition.copy(
-      matches = distinctGames,
-      leagueTable = agent.leagueTable
-    )
-  }
+  def competitions = competitionAgents.map(_.competition)
 
   def refreshCompetitionAgent(id: String) {
     competitionAgents find { _.competition.id == id } map { _.refresh() }
@@ -149,21 +145,11 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
   //one http call updates all competitions
   def refreshMatchDay() = {
     log.info("Refreshing match day data")
-    FootballClient.matchDay(DateMidnight.now).map{ todaysMatches: List[MatchDay] =>
-      val liveMatches = todaysMatches.filter(_.isLive)
-      val results = todaysMatches.filter(_.isResult)
-      competitionAgents.map { agent =>
-
-      //update the results of the competition
-        val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
-        agent.addResultsFromMatchDay(competitionResults)
-
-        //update the live matches of the competition
-        val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
-        log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
-        agent.updateLiveMatches(competitionLiveMatches)
+    getLiveMatches.foreach(_.map{ case (compId, newMatches) =>
+      competitionAgents.find(_.competition.id == compId).foreach{ agent =>
+        agent.addMatches(newMatches)
       }
-    }
+    })
   }
 
   def stop() {

@@ -2,20 +2,22 @@ define([
     'Reqwest',
     'knockout',
     'models/common',
-    'models/list',
+    'models/collection',
     'models/article',
     'models/latestArticles',
     'models/contentApi',
-    'models/ophanApi'
+    'models/ophanApi',
+    'models/viewer',
 ], function(
     reqwest,
     knockout,
     common,
-    List,
+    Collection,
     Article,
     LatestArticles,
     contentApi,
-    ophanApi
+    ophanApi,
+    viewer
 ) {
     var clipboardEl = document.querySelector('#clipboard'),
         loc = window.location;
@@ -29,41 +31,45 @@ define([
                 collections:    knockout.observableArray(),
                 configs:        knockout.observableArray(),
                 config:         knockout.observable(),
+
+                viewer:         viewer,
+                showViewer:     knockout.observable(),
+
                 actions: {
-                    unsetConfig: unsetConfig,
-                    flushClipboard: flushClipboard
+                    flushClipboard: flushClipboard,
+                    toggleViewer:   toggleViewer
                 }
             };
 
         function getConfig() {
-            return [].concat(_.filter((common.util.queryParams().config || "").split(","), function(str){ return !!str; }));
+            return common.util.queryParams().front;
         }
 
-        function setConfig(ids) {
-            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('config', [].concat(ids).join(',')));
+        function setConfig(id) {
+            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('front', id));
             renderCollections();
         }
 
-        function unsetConfig() {
-            model.config(undefined);
-            setConfig([]);
+        function toggleViewer() {
+            model.showViewer(!model.showViewer());
+            if (model.showViewer()) {
+                model.viewer.render();
+            }
         }
 
         function renderConfig() {
-            model.config(getConfig()[0]);
+            model.config(getConfig());
         }
 
         function renderCollections() {
             model.collections.removeAll();
-            getConfig().map(function(config){
-                fetchConfig(config, function(collections){
-                    model.collections(
-                        (collections || []).map(function(collection){
-                            return new List(collection);
-                        })
-                    );
-                    connectSortableLists();
-                });
+            fetchConfig(getConfig(), function(collections){
+                model.collections(
+                    (collections || []).map(function(collection){
+                        return new Collection(collection);
+                    })
+                );
+                connectSortableLists();
             });
         }
 
@@ -89,7 +95,8 @@ define([
                     toList = fromList = item.parent();
                 },
                 stop: function(event, ui) {
-                    var toListPersists = toList.hasClass('persisted'),
+                    var withinCollection = (fromList.data('collection') === toList.data('collection')),
+                        toListPersists = toList.hasClass('persisted'),
                         fromListPersists = fromList.hasClass('persisted'),
                         index,
                         clone;
@@ -105,7 +112,7 @@ define([
                     }
 
                     // Delete out of fromList, if we've dragged between lists
-                    if(fromListPersists && toListPersists && fromList !==  toList) {
+                    if(fromListPersists && toListPersists && !withinCollection) {
                         saveList({
                             listEl: fromList,
                             itemEl: item,
@@ -134,42 +141,48 @@ define([
         };
 
         function saveList(opts) {
-            var itemId  = opts.itemEl.data('url'),
-                isLive  = opts.listEl.hasClass('is-live'),
-                method  = opts.delete ? 'delete' : 'post',
-                listObj = knockout.dataFor(opts.listEl[0]),
-                delta;
+            var $collection = opts.listEl.parent(),
+                list,
+                index,
 
-            if (!listObj || !listObj.id || !opts.itemEl.length || !itemId) { return; }
+                article     = knockout.dataFor(opts.itemEl[0]),
+                group       = knockout.dataFor(opts.listEl[0]),
+                collection  = knockout.dataFor($collection[0]),
 
-            delta = {
-                item:   itemId,
-                live:   isLive,
-                draft: !isLive
-            };
+                apiProps = {
+                    item:   article.meta.id(),
+                    live:   collection.state.liveMode(),
+                    draft: !collection.state.liveMode()
+                };
 
-            if (method === 'post') {
-                delta.position = opts.itemEl.next().data('url');
-                if (!delta.position) {
-                    var numOfItems = $("[data-url]", opts.listEl).length;
-                    if (numOfItems > 1) {
-                        delta.position = $("[data-url]", opts.listEl).eq(numOfItems - 2).data('url');
-                        delta.after = true;
-                    }
+            if (!opts.delete) {
+                list = $('.connectedList > .trail', $collection).map(function() {
+                    return $(this).data('url')
+                }).get();
+                index = list.indexOf(article.meta.id());
+
+                apiProps.position = list[index + 1];
+                if (!apiProps.position && list[index - 1]) {
+                    apiProps.position = list[index - 1];
+                    apiProps.after = true;
+                }
+
+                apiProps.itemMeta = {
+                    group: group.group
                 }
             }
 
-            listObj.state.loadIsPending(true);
-
             reqwest({
-                method: method,
-                url: common.config.apiBase + '/collection/' + listObj.id,
+                method: opts.delete ? 'delete' : 'post',
+                url: common.config.apiBase + '/collection/' + collection.id,
                 type: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify(delta)
+                data: JSON.stringify(apiProps)
             }).always(function(resp) {
-                listObj.load();
+                collection.load();
             });
+
+            collection.state.loadIsPending(true);
         };
 
         function startPoller() {
@@ -192,7 +205,7 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    if (!_.isArray(resp) || resp.length === 0) {
+                    if (!(_.isArray(resp) && resp.length > 0)) {
                         window.console.log("ERROR: No configs were found");
                         return;
                     }
@@ -204,13 +217,14 @@ define([
         };
 
         function fetchConfig(id, callback) {
+            if (!(id && _.isFunction(callback))) {
+                return;
+            }
             reqwest({
                 url: common.config.apiBase + '/config/' + id,
                 type: 'json'
             }).then(
-                function(resp) {
-                    if (_.isFunction(callback)) { callback(resp); }
-                },
+                callback,
                 function(xhr) { window.console.log("ERROR: There was a problem fetching the config for " + id); }
             );
         };
@@ -246,7 +260,7 @@ define([
         model.config.subscribe(function(config) {
             var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
             model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
-            setConfig(config ? [config] : []);
+            setConfig(config);
         });
 
         knockout.bindingHandlers.makeDropabble = {
@@ -258,23 +272,23 @@ define([
 
         knockout.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
-                var groups = knockout.utils.unwrapObservable(valueAccessor()),
+                var graphs = knockout.utils.unwrapObservable(valueAccessor()),
                     max;
 
-                if (!_.isArray(groups)) { return; };
-                max = _.max(_.pluck(groups, 'max'));
+                if (!_.isArray(graphs)) { return; };
+                max = _.max(_.pluck(graphs, 'max'));
                 if (!max) { return; };
 
-                _.each(_.toArray(groups).reverse(), function(group, i){
-                    $(element).sparkline(group.data, {
+                _.each(_.toArray(graphs).reverse(), function(graph, i){
+                    $(element).sparkline(graph.data, {
                         chartRangeMax: max,
-                        defaultPixelsPerValue: group.data.length < 50 ? group.data.length < 30 ? 3 : 2 : 1,
+                        defaultPixelsPerValue: graph.data.length < 50 ? graph.data.length < 30 ? 3 : 2 : 1,
                         height: Math.round(Math.max(10, Math.min(40, max))),
-                        lineColor: '#' + group.color,
+                        lineColor: '#' + graph.color,
                         spotColor: false,
                         minSpotColor: false,
                         maxSpotColor: false,
-                        lineWidth: group.activity || 1,
+                        lineWidth: graph.activity || 1,
                         fillColor: false,
                         composite: i > 0
                     });
@@ -283,14 +297,15 @@ define([
             }
         };
 
-        this.init = function(callback) {
+        this.init = function() {
             fetchConfigs(function(){
-                knockout.applyBindings(model);
-
                 renderConfig();
                 window.onpopstate = renderConfig;
 
+                knockout.applyBindings(model);
+
                 startPoller();
+
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
             });

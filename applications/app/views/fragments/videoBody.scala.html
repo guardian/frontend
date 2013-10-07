@@ -1,12 +1,10 @@
 @(page: VideoPage)(implicit request: RequestHeader)
 
 @defining(page.video){ video =>
-    <div class="article-wrapper monocolumn-wrapper">
-        <div class="article-v2__inner">
-            <h2 class="article-zone type-1">
-                <a class="zone-color" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName)</a>
-            </h2>
-        </div>
+    <h2 class="article-zone tone-@VisualTone(video) tone-accent-border">
+        <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+    </h2>
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(video)">
 
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
@@ -43,6 +41,7 @@
                     </div>
                 </div>
                 <div class="article-v2__secondary-column" aria-hidden="true">
+                    <h2 class="article__meta-heading tone-colour">Share this video</h2>
                     @fragments.social(video, "next to content")
                 </div>
             </div>

@@ -88,7 +88,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin }
     val stats: Trail = theMatch
 
-    val currentPage = request.getParameter("currentPage").flatMap { pageId =>
+    val currentPage = request.getParameter("page").flatMap { pageId =>
       (stats :: List(matchReport, minByMin).flatten).find(_.url.endsWith(pageId))
     }
 

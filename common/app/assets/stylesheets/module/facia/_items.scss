@@ -19,21 +19,24 @@ $meta: #767676;
 }
 .collection__title {
     margin-top: 30px;
-    @include fs-header(1);
-    @include box-sizing(border-box);
-    height: gs-height(1);
+    @include fs-header(5);
+    height: gs-height(1) - $gs-baseline/3;
     padding: $gs-baseline/3 0 0 $gs-gutter/5;
     color: #ffffff;
-    background-color: $news-light;
-    border-top: $gs-baseline/3 solid $news-dark;
+    background-color: $news-dark;
+    border-top: $gs-baseline/3 solid $news-light;
 }
 .collection__title a {
     color: inherit;
 }
+@include mq($to: tablet) {
+    .has-localnav .collection--news .collection__title {
+        display: none;
+    }
+}
 .collection__display-toggle {
-    @include box-sizing(border-box);
     position: absolute;
-    min-height: gs-height(1) - $gs-baseline/3;
+    min-height: gs-height(1);
     min-width: gs-span(1);
     top: $gs-baseline/3;
     right: 0;
@@ -42,8 +45,14 @@ $meta: #767676;
     background-color: transparent;
     @include fs-data(2);
     color: #ffffff;
-    padding: $gs-baseline*(2/3) 0 0 $gs-baseline*(1/3);
-    text-align: left;
+    padding: 0;
+    i {
+        @include transform(rotate(180deg));
+    }
+    .collection--rolled-up & i {
+        @include transform(rotate(0));
+
+    }
 }
 .item {
     position: relative;
@@ -70,8 +79,8 @@ a.item__link {
     @include fs-header(4);
 }
 .item__standfirst {
-    margin: $gs-baseline*2 0 0;
-    @include fs-headline(1);
+    margin: 20px 0 0;
+    @include fs-bodyHeading(1);
     color: #676767;
 }
 .item__meta {
@@ -96,7 +105,7 @@ a.item__link {
         padding-right: $gs-gutter/2;
         padding-left: 16px;
         i {
-            @extend .i-clock-grey;
+            @extend .i-clock-light-grey;
             left: 0;
         }
     }
@@ -108,7 +117,7 @@ a.item__link {
             color: inherit;
         }
         i {
-            @extend .i-comment-grey;
+            @extend .i-comment-light-grey;
             left: $gs-gutter/2 - 1;
         }
     }
@@ -154,7 +163,7 @@ a.item__link {
 }
 .item--comment {
     .item__title {
-        border-top-color: $comment-dark;
+        border-top-color: #fb0;
         position: relative;
         padding-top: $gs-baseline*2 + 2;
     }
@@ -193,7 +202,7 @@ a.item__link {
     .item--without-image .item__standfirst {
         @include mq(tablet) {
             display: block;
-            min-height: gs-height(4) - $gs-baseline;
+            min-height: gs-height(4) - $gs-baseline - 2;
         }
     }
     .item__image-container {
@@ -212,7 +221,7 @@ a.item__link {
 }
 
 @mixin first-row($first-row-size) {
-    .item:nth-child(-n + #{$first-row-size}) {
+    .item:nth-child(-n+#{$first-row-size}) {
         margin-top: $gs-baseline/2;
         .item__title {
             padding-top: 0;
@@ -240,11 +249,11 @@ a.item__link {
     @include first-row($row-size);
     // stylings for begining and end of rows
     .item:first-child,
-    .item:nth-child(#{$row-size}n + #{$first-row-size + 1}) {
+    .item:nth-child(#{$row-size}n+#{$first-row-size + 1}) {
         @include row-start;
     }
-    .item:nth-child(#{$row-size}n + #{$first-row-size}),
-    .item:nth-child(#{$row-size}n + #{$first-row-size + $row-size}) {
+    .item:nth-child(#{$row-size}n+#{$first-row-size}),
+    .item:nth-child(#{$row-size}n+#{$first-row-size + $row-size}) {
         @include row-end;
     }
 }
@@ -254,6 +263,9 @@ a.item__link {
         width: 100%;
         .item__title {
             min-height: 0;
+        }
+        &.item--without-image .item__standfirst {
+            display: block;
         }
     }
     @if $without-extras {
@@ -325,6 +337,9 @@ a.item__link {
     .item__title {
         @include fs-headline(7, $size-only: true);
     }
+    .item__standfirst {
+        min-height: gs-height(8) - $gs-baseline - 2;
+    }
     .item__image-container {
         height: gs-height(8);
     }
@@ -345,7 +360,7 @@ a.item__link {
     }
     .item__standfirst {
         display: block;
-        min-height: gs-height(4) - $gs-baseline;
+        min-height: gs-height(4) - $gs-baseline - 2;
     }
     .item__image-container {
         height: 100%;
