@@ -12,7 +12,7 @@ import play.api.data._
 import play.api.mvc.SimpleResult
 import scala.concurrent.Future
 import services._
-import utils.{ RemoteAddress, SafeLogging }
+import utils.SafeLogging
 
 @Singleton
 class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
@@ -21,7 +21,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      idRequestParser : IdRequestParser,
                                      idUrlBuilder : IdentityUrlBuilder,
                                      signinService : PlaySigninService  )
-  extends Controller with ExecutionContexts with SafeLogging with RemoteAddress {
+  extends Controller with ExecutionContexts with SafeLogging {
 
   val page = IdentityPage("/register", "Register", "register")
 
@@ -46,7 +46,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
   def processForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = registrationForm.bindFromRequest
-    val omnitureData = idRequest.omnitureData
+    val trackingData = idRequest.trackingData
 
     def onError(formWithErrors: Form[(String, String, String, Boolean, Boolean)]): Future[SimpleResult] = {
       logger.info("Invalid registration request")
@@ -57,8 +57,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
     def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[SimpleResult] = form match {
       case (email, username, password, gnmMarketing, thirdPartyMarketing) => {
-        val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, clientIp(request))
-        val registeredUser: Future[Response[User]] = api.register(user, omnitureData, clientIp(request))
+        val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
+        val registeredUser: Future[Response[User]] = api.register(user, trackingData)
 
         val result: Future[SimpleResult] = registeredUser flatMap {
           case Left(errors) =>
@@ -73,7 +73,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
           case Right(user) =>
             val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
-            val authResponse = api.authBrowser(EmailPassword(email, password), omnitureData)
+            val authResponse = api.authBrowser(EmailPassword(email, password), trackingData)
             val response: Future[SimpleResult] = signinService.getCookies(authResponse, false) map {
               case Left(errors) => {
                 Ok(views.html.registration_confirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
