@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.Action
+import play.api.mvc.{AnyContent, SimpleResult, Action}
 import common.JsonComponent
 import model.Cached
 import discussion.model.{Profile, PrivateProfileFields}
@@ -9,10 +9,9 @@ import scala.concurrent.Future
 
 trait CommentBoxController extends DiscussionController {
 
-  def commentBox() = Action.async {
+  def commentBox(): Action[AnyContent] = Action.async {
     implicit request =>
       discussionApi.myProfile(request.headers) map {
-//      Future(FakeProfile) map {
         profile =>
           val fields = profile.privateFields getOrElse {throw new RuntimeException("No profile information found")}
           val box = fields match {
@@ -22,18 +21,9 @@ trait CommentBoxController extends DiscussionController {
           Cached(60){
             JsonComponent("html" -> box.toString)
           }
+      } recover {
+        case t: Throwable => JsonComponent("error" -> t.getMessage)
+
       }
   }
 }
-
-object FakeProfile extends Profile(
-  "",
-  "Fake Profile",
-  isStaff = false,
-  isContributor = false,
-  privateFields = Some(PrivateProfileFields(
-    canPostComment = false,
-    isPremoderated = true,
-    isSocial = false
-  ))
-)
