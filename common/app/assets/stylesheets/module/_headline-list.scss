@@ -2,18 +2,15 @@
     li {
         display: block;
         overflow: auto;
-        border-bottom: 1px solid $c-neutral6;
         padding: $baseline 0 $baseline*5;
-
-        &:last-child {
-            border-bottom: none;
-        }
-
         @include mq(tablet) {
             padding: $baseline*2 0 $baseline*6;
         }
-    }
 
+        + li {
+            border-top: 1px solid $c-neutral6;
+        }
+    }
     p {
         float: left;
         width: 90%;
@@ -23,15 +20,13 @@
             @include fs-bodyCopy(3);
         }
     }
-
     a {
-        color: #333333;
+        color: $c-neutral1;
 
         &:visited {
-            color: #777777;
+            color: $c-neutral2;
         }
     }
-
     .count {
         @include fs-bodyCopy(1);
         float: left;
@@ -44,15 +39,13 @@
         }
     }
 }
-
-
 .headline-list__title {
     margin: 0 $gs-gutter/2 $baseline;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
     }
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $c-neutral6;
     padding: $baseline $gutter/4 $baseline*3 0;
 
     @include mq(544px) {
