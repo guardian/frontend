@@ -12,7 +12,6 @@ trait CommentBoxController extends DiscussionController {
   def commentBox() = Action.async {
     implicit request =>
       discussionApi.myProfile(request.headers) map {
-//      Future(FakeProfile) map {
         profile =>
           val fields = profile.privateFields getOrElse {throw new RuntimeException("No profile information found")}
           val box = fields match {
@@ -25,16 +24,3 @@ trait CommentBoxController extends DiscussionController {
       }
   }
 }
-
-object FakeProfile extends Profile(
-  "10000",
-  "avatar",
-  "Display Me fakey",
-  isStaff = false,
-  isContributor = false,
-  privateFields = Some(PrivateProfileFields(
-    canPostComment = true,
-    isPremoderated = false,
-    isSocial = false
-  ))
-)
