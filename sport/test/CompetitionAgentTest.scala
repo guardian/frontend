@@ -1,16 +1,11 @@
 package test
 
-import feed.{Competitions, CompetitionAgent}
+import feed.{CompetitionSupport, Competitions, CompetitionAgent}
 import model.Competition
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import concurrent.Promise
-import concurrent.{Future, Await}
-import concurrent.duration._
-import conf.FootballClient
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Millis, Span}
-import org.scalatest.concurrent.PatienceConfiguration
 import org.joda.time.DateMidnight
 
 
@@ -26,6 +21,8 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       override val competitionAgents = Seq(
         CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
       )
+
+      def matches = CompetitionSupport(competitionAgents.map(_.competition)).matches
     }
 
     TestCompetitions.competitionAgents.foreach(_.refreshFixtures())
@@ -43,6 +40,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       override val competitionAgents = Seq(
         CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, startDate = seasonStart))
       )
+      def matches = CompetitionSupport(competitionAgents.map(_.competition)).matches
     }
 
     TestCompetitions.competitionAgents.foreach(_.refreshResults())
@@ -60,6 +58,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       override val competitionAgents = Seq(
         CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
       )
+      def matches = CompetitionSupport(competitionAgents.map(_.competition)).matches
     }
 
     TestCompetitions.refreshMatchDay()
@@ -75,6 +74,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       override val competitionAgents = Seq(
         CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
       )
+      def competitions = competitionAgents.map(_.competition)
     }
 
     TestCompetitions.competitionAgents.foreach(_.refresh())
