@@ -1,7 +1,7 @@
-@(keywords: Seq[Tag])(implicit request: RequestHeader)
+@(keywords: Seq[Tag], visibleKeywords: Int = 5)(implicit request: RequestHeader)
 
 <div class="keywordlist" itemprop="keywords">
-    @Html(keywords.map{ keyword =>
+    @Html(keywords.take(visibleKeywords).map{ keyword =>
         <a class="keywordlist__item" href={LinkTo(keyword.url)}>{keyword.name}</a>
     }.mkString(", "))
 </div>
