@@ -114,7 +114,7 @@
 }
 
 .submit-input {
-    background: $linkBlue;
+    background: $c-newsDefault;
     border: 0 none;
     color: #fff;
     font-size: 14px;
@@ -125,7 +125,7 @@
 
     &:hover,
     &:focus {
-        background: darken($linkBlue, 5%);
+        background: darken($c-newsDefault, 5%);
     }
 
     &:active {

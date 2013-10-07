@@ -32,13 +32,13 @@
         padding: 0;
         min-width: 160px;
         background-color: #fff;
-        border-bottom: 1px solid $darkMushroom;
-        border-left: 1px solid $darkMushroom;
+        border-bottom: 1px solid $c-neutral5;
+        border-left: 1px solid $c-neutral5;
     }
 
     // Popup is not sticking to the edge of screen
     @include mq(1150px) {
-        border-right: 1px solid $darkMushroom;
+        border-right: 1px solid $c-neutral5;
     }
 
     @include mq(tablet) {
@@ -48,7 +48,7 @@
         }
         .nav--stacked > .nav__item {
             > .nav__link {
-                border-bottom: 1px solid $darkMushroom;
+                border-bottom: 1px solid $c-neutral5;
             }
             &:last-child > .nav__link {
                 border-bottom: none;

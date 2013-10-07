@@ -7,13 +7,13 @@
     padding: $baseline*3 0 $baseline*3 0;
     margin: $baseline*3 0;
     border: none;
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     text-shadow: none;
     cursor: pointer;
 
     &:hover,
     &:focus {
-        background-color: $darkMushroom;
+        background-color: $c-neutral5;
     }
 
     &,
@@ -100,7 +100,7 @@ button.cta {
     padding: $baseline*2 0 $baseline*3 0;
 }
 .cta-small--border {
-    border-bottom: 1px solid $medianMushroom;
+    border-bottom: 1px solid $c-neutral6;
 }
 
 .most-viewed-no-js {

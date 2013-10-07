@@ -1,4 +1,4 @@
-$meta: #767676;
+$meta: $c-neutral2;
 
 .collection {
     position: relative;
@@ -73,7 +73,7 @@ a.item__link {
 .item__standfirst {
     margin: 20px 0 0;
     @include fs-bodyHeading(1);
-    color: #676767;
+    color: $c-neutral2;
 }
 .item__meta {
     color: $meta;

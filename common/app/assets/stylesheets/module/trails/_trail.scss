@@ -12,7 +12,7 @@
         display: inline-block;
     }
     & + & {
-        border-top: 1px solid $medianMushroom;
+        border-top: 1px solid $c-neutral6;
     }
 }
 
@@ -86,7 +86,7 @@
 .trail__count a:focus,
 .trail__count a:active,
 .trail .relative-timestamp {
-    color: #767676;
+    color: $c-neutral2;
     @include fs-data(2);
 
     @include mq(tablet) {
