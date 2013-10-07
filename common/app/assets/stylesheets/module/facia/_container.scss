@@ -88,6 +88,9 @@
             }
         }
     }
+    &.collection--football-nav {
+        margin-top: $baseline*6;
+    }
     @include mq(tablet) {
         @include first-row(1);
         .items {
