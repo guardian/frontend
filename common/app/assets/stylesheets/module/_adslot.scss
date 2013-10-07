@@ -28,6 +28,14 @@
     background-color: #fff;
 }
 
+.ad-slot-top-banner-ad {
+    background-color: #f0f0f0;
+
+    @include mq(tablet) {
+        background-color: #ffffff;
+    }
+}
+
 .ad-slot-middle-banner-ad {
     background-color: #fff;
     min-height: 0;

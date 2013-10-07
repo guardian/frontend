@@ -208,6 +208,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial presenting visitors from Facebook with Most Popular from Facebook",
     safeState = Off)
 
+  val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
+    "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -287,6 +291,7 @@ object Switches extends Collections {
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
     ABMostPopularFromFacebook,
+    ABUltimateParagraphSpacing,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,

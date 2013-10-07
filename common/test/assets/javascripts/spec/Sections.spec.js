@@ -89,7 +89,6 @@ define([ 'common',
               sections.view.insertLocalNav(document);
 
               expect(document.querySelector('[data-link-name="Books"]').parentNode.className).toContain('is-active');
-              expect(document.querySelector('[data-link-name="Books"]').className).toContain('zone-color');
             });
 
 
@@ -110,8 +109,8 @@ define([ 'common',
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
-              expect(document.querySelectorAll('.is-active .zone-color[href="/culture"]').length).not.toBe(0);
-              expect(document.querySelectorAll('.nav--footer .is-active .zone-color[href="/culture"]').length).toBe(0);
+              expect(document.querySelectorAll('.is-active [href="/culture"]').length).not.toBe(0);
+              expect(document.querySelectorAll('.nav--footer .is-active [href="/culture"]').length).toBe(0);
             });
         });
     });
