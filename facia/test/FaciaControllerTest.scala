@@ -15,6 +15,35 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
+  override def beforeAll() = {
+    /*running(FakeApplication()) {
+      Jobs.deschedule("FrontRefreshJob")
+      Jobs.schedule("FrontRefreshJob", "0 * * * * ?", FrontMetrics.FrontLoadTimingMetric) {
+        // stagger refresh jobs to avoid dogpiling the api
+        Front.refreshJobs().zipWithIndex.foreach{ case (job, index) =>
+          val sec = (index * 2) % 60
+          AkkaAsync.after(sec.seconds){
+            job()
+          }
+        }
+      }
+
+      Front.refresh()
+
+      val start = System.currentTimeMillis
+
+      //Our tests use things from uk, us and au. Lets wait for these three fronts (60 seconds)
+      while (!Front.hasItems("uk") || !Front.hasItems("us") || !Front.hasItems("au")) {
+        // ensure we don't get in an endless loop if test data changes
+        if (System.currentTimeMillis - start > 2.minutes.toMillis) throw new RuntimeException("front should have loaded by now")
+      }
+    }*/
+  }
+
+  override def afterAll() = {
+    //Jobs.deschedule("FrontsRefreshJob")
+  }
+
   ignore should "200 when content type is front" in Fake {
     val result = controllers.FaciaController.renderEditionFront("uk")(TestRequest())
     status(result) should be(200)
