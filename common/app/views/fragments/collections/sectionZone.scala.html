@@ -1,14 +1,14 @@
 @(config: Config, collection: Collection, style: SectionZone, containerIndex: Int)(implicit request: RequestHeader)
 
 @if(collection.items.nonEmpty) {
-    <section class="collection collection--@style.className js-collection--display-toggle zone-@config.section.split("/").headOption"
-             data-link-name="block | @collection.displayName.getOrElse(config.id)"
+    <section class="collection collection--@style.className js-collection--display-toggle tone-@style.tone"
+             data-link-name="block | @config.id"
              data-collection-type="@style.className"
              data-section="@config.section">
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
             @if(title.nonEmpty) {
-                <h2 class="collection__title tone-background tone-border">
+                <h2 class="collection__title tone-background tone-accent-border">
                     <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
                 </h2>
             }

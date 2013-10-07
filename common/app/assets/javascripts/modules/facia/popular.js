@@ -15,17 +15,17 @@ define([
             });
         },
         collectionTmpl =
-            '<section class="collection collection--popular items--cards" data-collection-type="container" data-section="popular">' +
-                '<h2 class="collection__title tone-background tone-border">Popular</h2>' +
+            '<section class="collection collection--popular items--cards tone-news" data-collection-type="container" data-section="popular">' +
+                '<h2 class="collection__title tone-background tone-accent-border">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
             return updateTmpl(
                 '<li class="item">' +
-                    '<h2 class="item__title"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
-                    '<p class="item__standfirst">@trail.trailText</p>' +
+                    '<h2 class="item__title tone-accent-border"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
+                    '<p class="item__standfirst tone-colour">@trail.trailText</p>' +
                     '<div class="item__meta item__meta--grey">' +
                         '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
-                            '<i class="i"></i><span class="timestamp__text"></span>' +
+                            '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
                         '</time>' +
                     '</div>' +
                 '</li>',
