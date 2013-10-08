@@ -1,33 +1,37 @@
-.social-wrapper {
-    padding: $baseline*3 0 $baseline*4;
-    max-width: gs-span(4);
-    overflow: hidden;
-    white-space: nowrap;
-    margin-bottom: $baseline*4;
+@mixin socialOnPageLoad {
+    .social-wrapper {
+        padding: $baseline*3 0 $baseline*4;
+        margin-bottom: $baseline*4;
+        max-width: gs-span(4);
+        overflow: hidden;
+    }
+    .social__item {
+        float: left;
+        width: 60px;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    .social__action {
+        &,
+        i {
+            display: block;
+        }
+    }
 }
-.social__item {
-    float: left;
-    width: 20%;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-.social__action {
-    height: 36px;
-    display: block;
-    position: relative;
-}
-.social__action--email:hover i,
-.social__action--email:focus i {
-    @extend .i-share-email-hover;
-}
-.social__action--facebook:hover i,
-.social__action--facebook:focus i {
-    @extend .i-share-facebook-hover;
-}
-.social__action--gplus:hover i,
-.social__action--gplus:focus i {
-    @extend .i-share-gplus-hover;
-}
-.social__action--twitter:hover i,
-.social__action--twitter:focus i {
-    @extend .i-share-twitter-hover;
+@mixin socialDelayed {
+    .social__action--email:hover i,
+    .social__action--email:focus i {
+        @extend .i-share-email-hover;
+    }
+    .social__action--facebook:hover i,
+    .social__action--facebook:focus i {
+        @extend .i-share-facebook-hover;
+    }
+    .social__action--gplus:hover i,
+    .social__action--gplus:focus i {
+        @extend .i-share-gplus-hover;
+    }
+    .social__action--twitter:hover i,
+    .social__action--twitter:focus i {
+        @extend .i-share-twitter-hover;
+    }
 }
