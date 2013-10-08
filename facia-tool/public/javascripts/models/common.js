@@ -18,8 +18,8 @@ define([
                 code: 'http://m.code.dev-theguardian.com'
             },
             filterTypes: {
-                section: { display: 'in section...', param: "section", path: "sections", placeholder: "e.g. news" },
-                tag:     { display: 'in tag...',     param: "tag",     path: "tags",     placeholder: "e.g. sport/triathlon" }
+                section: { display: 'in section:', param: "section", path: "sections", placeholder: "section, e.g. news" },
+                tag:     { display: 'with tag:',     param: "tag",     path: "tags",     placeholder: "tag, e.g. sport/triathlon" }
             },
             searchPageSize:        50,
             sectionSearches: {

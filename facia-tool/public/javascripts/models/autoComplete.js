@@ -24,13 +24,12 @@ function (
         }
 
         data = cache.get('contentApi', url);
+        counter += 1;
 
         if(data) {
             opts.receiver(data);
         } else {
             opts.receiver([{_alert : "searching for " + path + "..."}]);
-
-            counter += 1;
             count = counter;
 
             new Reqwest({
@@ -38,16 +37,25 @@ function (
                 type: 'jsonp'
             }).always(
                 function(resp) {
-                    var data;
+                    var results;
 
-                    if (count !== counter) { return; }
-                    data = resp.response && resp.response.results ? resp.response.results : [];
-                    if (data.length === 0) {
-                        opts.receiver([{_alert : "...sorry, no " + path + " found."}]);
+                    if (count !== counter) {
                         return;
                     }
-                    cache.put('contentApi', url, data);
-                    opts.receiver(data);
+
+                    results = resp.response && resp.response.results ? resp.response.results : false;
+
+                    if (!results) {
+                        opts.receiver([{_alert : "...sorry, there was an error."}]);
+                        return;
+                    }
+
+                    if (results.length === 0) {
+                        results = [{_alert : "...sorry, no " + path + " found."}];
+                    }
+
+                    cache.put('contentApi', url, results);
+                    opts.receiver(results);
                 }
             );
         }
