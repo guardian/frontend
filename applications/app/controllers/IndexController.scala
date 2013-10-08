@@ -10,6 +10,16 @@ import services.{IndexPage, Concierge}
 
 object IndexController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
+
+  def renderCombiner(leftSide: String, rightSide: String) = Action.async{ implicit request =>
+    Concierge.index(Edition(request), leftSide, rightSide).map{ page =>
+      page match {
+        case Left(p) => renderFaciaFront(p)
+        case _ => throw new RuntimeException("TODO")
+      }
+    }
+  }
+
   def renderJson(path: String) = render(path)
 
   def render(path: String) = Action.async { implicit request =>

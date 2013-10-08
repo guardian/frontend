@@ -4,14 +4,26 @@ import model._
 import conf.ContentApi
 import model.Section
 import common._
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
+import scala.concurrent.Future
 
 case class IndexPage(page: MetaData, trails: Seq[Trail])
 
 trait Index extends ConciergeRepository with QueryDefaults {
+
+  def index(edition: Edition, leftSide: String, rightSide: String) = {
+    ContentApi.search(edition)
+      .tag(s"$leftSide,$rightSide")
+      .pageSize(20)
+      .response.map {response =>
+
+      //TODO Right
+      Left(combiner(response))
+    }.recover(suppressApiNotFound)
+  }
 
   def index(edition: Edition, path: String) = {
     ContentApi.item(path, edition)
@@ -21,6 +33,12 @@ trait Index extends ConciergeRepository with QueryDefaults {
       val page = response.tag.flatMap(t => tag(response)).orElse(response.section.flatMap(t => section(response)))
       ModelOrResult(page, response)
     }.recover(suppressApiNotFound)
+  }
+
+  private def combiner(response: SearchResponse) = {
+    val trails = response.results map { Content(_) }
+    //TODO
+    IndexPage(Page("foo", "foo", "foo", "foo"), trails)
   }
 
   private def section(response: ItemResponse) = {
