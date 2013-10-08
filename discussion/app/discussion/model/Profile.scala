@@ -29,7 +29,7 @@ object Profile {
 
   private def getPrivateFields(json: JsValue): Option[PrivateProfileFields] = json match {
     case obj: JsObject => Some(PrivateProfileFields(obj))
-    case _ => println("Error: %s" format json);None
+    case _ => None
   }
 }
 
