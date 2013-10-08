@@ -46,5 +46,3 @@ trait Index extends ConciergeRepository with QueryDefaults {
     tag map { IndexPage(_, allTrails) }
   }
 }
-
-object Concierge extends Index

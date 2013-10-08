@@ -5,15 +5,15 @@ import conf._
 import model._
 import play.api.mvc._
 import play.api.libs.json._
-import services.{IndexPage, Concierge}
+import services.{Index, IndexPage}
 
 
-object IndexController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
+trait IndexController extends Controller with Index with Logging with Paging with JsonTrails with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
 
   def render(path: String) = Action.async { implicit request =>
-    Concierge.index(Edition(request), path) map {
+    index(Edition(request), path) map {
       case Left(model) => if (IsFacia(request)) renderFaciaFront(model) else renderFront(model)
       case Right(notFound) => notFound
     }
@@ -21,7 +21,7 @@ object IndexController extends Controller with Logging with Paging with JsonTrai
 
   def renderTrailsJson(path: String) = renderTrails(path)
   def renderTrails(path: String) = Action.async { implicit request =>
-    Concierge.index(Edition(request), path) map {
+    index(Edition(request), path) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
     }
@@ -59,3 +59,5 @@ object IndexController extends Controller with Logging with Paging with JsonTrai
     renderFormat(response, response, model.page)
   }
 }
+
+object IndexController extends IndexController
