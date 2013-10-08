@@ -59,14 +59,15 @@
                         </div>
                     </div>
 
-                    <div class="social-wrapper">
-                        @fragments.social(article)
-                    </div>
                     @if(article.keywords.nonEmpty){
-                        <div class="component" data-link-name="article keywords">
+                        <div class="article__keywords" data-link-name="article keywords">
                             @fragments.keywordList(article.keywords)
                         </div>
                     }
+
+                    <div class="social-wrapper">
+                        @fragments.social(article)
+                    </div>
 
                 </div>
                 <div class="article-v2__secondary-column" aria-hidden="true">

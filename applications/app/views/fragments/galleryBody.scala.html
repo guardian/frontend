@@ -80,7 +80,11 @@
                 </div>
 
                 @fragments.standfirst(gallery)
-
+                @if(gallery.keywords.nonEmpty){
+                    <div class="article__keywords" data-link-name="gallery keywords">
+                        @fragments.keywordList(gallery.keywords)
+                    </div>
+                }
                 <div class="social-wrapper">
                     @fragments.social(gallery)
                 </div>
@@ -89,11 +93,6 @@
                 <h2 class="article__meta-heading tone-colour">Share this gallery</h2>
                 @fragments.social(gallery, "next to content")
             </div>
-            @if(gallery.keywords.nonEmpty){
-                <div class="component" data-link-name="gallery keywords">
-                    @fragments.keywordList(gallery.keywords)
-                </div>
-            }
         </div>
     </article>
     <div class="article-v2__inner">

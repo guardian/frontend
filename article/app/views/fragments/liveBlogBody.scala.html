@@ -87,14 +87,14 @@
                     @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
                         <div class="article__discussion" id="comments"></div>
                     }
-                    <div class="social-wrapper">
-                        @fragments.social(article)
-                    </div>
                     @if(article.keywords.nonEmpty){
-                        <div class="component" data-link-name="live blog keywords">
+                        <div class="article__keywords" data-link-name="live blog keywords">
                             @fragments.keywordList(article.keywords)
                         </div>
                     }
+                    <div class="social-wrapper">
+                        @fragments.social(article)
+                    </div>
                 </div>
                 <div class="article-v2__secondary-column" aria-hidden="true">
                     <div class="article-v2__secondary-column__inner">
