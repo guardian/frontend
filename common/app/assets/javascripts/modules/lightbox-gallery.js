@@ -123,20 +123,21 @@ define(["bean",
             });
 
             bean.on(window, 'popstate', function(event) {
-
-                if (event.state && event.state.lightbox) {
-                    // This keeps the back button to navigate back through images
+                if (event.state && event.state.lightbox && event.state.currentImage) {
                     self.goTo(event.state.currentImage, {
                         dontUpdateUrl: true
                     });
 
-                } else if (!event.state || !event.state.lightbox) {
+                } else if (event.state && event.state.lightbox && !event.state.currentImage) {
                     // This happens when we reach back to the state before the lightbox was opened
                     // Needs a slight timeout as browsers reset the scroll position on popstate
                     setTimeout(function() {
                         overlay.hide();
                         self.removeOverlay();
                     },10);
+
+                    // Remove keyboard handlers
+                    bean.off(document.body, 'keydown', self.handleKeyEvents);
 
                     common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
                 }
@@ -182,6 +183,10 @@ define(["bean",
                     $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
+                    // Save the first state of the gallery
+                    // This allows us to close the overlay if we go back far enough in the history
+                    url.pushUrl({ lightbox: true }, document.title, self.galleryUrl);
+
                     // Keep a copy of the original images markup, so we can
                     // easily restore it back when removing swipe
                     imagesNode   = galleryNode.querySelector('.gallery__images');
@@ -194,10 +199,6 @@ define(["bean",
                     self.layout();
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
-
-                    // Save only the first url change
-                    // ie. the back button will exit lightbox mode
-                    self.pushUrlState({ replace: false });
 
                     // Setup keyboard nav handler
                     bean.on(document.body, 'keydown', self.handleKeyEvents);
@@ -302,7 +303,7 @@ define(["bean",
 
 
             if (!opts.dontUpdateUrl) {
-                self.pushUrlState({ replace: true });
+                self.pushUrlState();
             }
         };
 
@@ -441,7 +442,7 @@ define(["bean",
 
 
         this.pushUrlState = function(opts) {
-            opts = opts || opts;
+            opts = opts || {};
             if (pushUrlChanges) {
                 var state = {
                     lightbox: true,
