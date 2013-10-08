@@ -39,7 +39,7 @@ define([
                         var url = "/football/api/match-nav/" +
                                   config.webPublicationDateAsUrlPart() + "/" +
                                   teamIds[0] + "/" + teamIds[1] +
-                                  "?page=" + encodeURIComponent(config.page.pageId);
+                                  ".json?page=" + encodeURIComponent(config.page.pageId);
 
                         matchNav.load(url, context);
                     }

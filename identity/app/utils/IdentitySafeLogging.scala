@@ -29,6 +29,7 @@ class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname : String)
         getVariableMatcher("trackingUserAgent"),
         getVariableMatcher("trackingIpAddress"),
         getVariableMatcher("Authorization"),
+        getVariableMatcher("ip"),
         jsonStringMatcher("token"),
         jsonStringMatcher("accessToken"),
         jsonStringMatcher("password"),

@@ -33,7 +33,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     val stage = apply("STAGE", "unknown")
 
-    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
   }
 
   object switches {

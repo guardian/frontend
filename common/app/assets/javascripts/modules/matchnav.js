@@ -18,7 +18,7 @@ define(['common', 'ajax'], function (common, ajax) {
         this.load = function (url, context) {
             var that = this;
             ajax({
-                url: url + '.json',
+                url: url,
                 type: 'json',
                 crossOrigin: true
             }).then(

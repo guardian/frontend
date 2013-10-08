@@ -18,7 +18,7 @@ class ChangeViewControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.ChangeViewController.render("desktop", "/foo/bar?view=mobile")(TestRequest())
     val GU_VIEW = cookies(result).apply("GU_VIEW")
 
-    GU_VIEW.maxAge should be (Some(60))
+    GU_VIEW.maxAge should be (Some(5184000))  // 60 days, this is seconds
     GU_VIEW.value should be ("desktop")
   }
 
