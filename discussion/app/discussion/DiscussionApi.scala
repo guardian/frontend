@@ -67,7 +67,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   def myProfile(headers: Headers): Future[Profile] ={
     def onError(r: Response) =
-      s"Error loading profile, status: ${r.status}, message: ${r.statusText}"
+      s"Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/profile/me"
 
     val authHeader = AuthHeaders.filterHeaders(headers).toSeq

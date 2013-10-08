@@ -1,13 +1,11 @@
 @mixin d-comment__body {
-    line-height: 1.4;
     word-wrap: break-word;
 
     @include mq(768px) {
         line-height: 22px;
 
         p {
-            font-size: 16px;
-            font-size: 1.6rem;
+            @include fs-data(5);
         }
     }
 

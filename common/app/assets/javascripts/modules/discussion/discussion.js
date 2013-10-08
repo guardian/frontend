@@ -48,7 +48,6 @@ define([
             clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
             user                  = Id.getUserFromCookie(),
-            currentUserAvatarUrl,
             self;
 
         return {

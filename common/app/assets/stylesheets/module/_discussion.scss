@@ -338,12 +338,11 @@
 }
 
 .d-comment-box__body {
-    box-sizing: border-box;
+    @include fs-data(4);
+
     -moz-box-sizing: border-box;
+    box-sizing: border-box;
     border: 1px solid $grey;
-    font-family: $sans-serif;
-    font-size: 14px;
-    font-size: 1.4rem;
     height: 50px;
     margin: $baseline*2 0;
     padding: ($baseline*2) ($gutter/2);
