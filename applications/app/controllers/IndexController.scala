@@ -10,12 +10,20 @@ import services.{IndexPage, Concierge}
 
 object IndexController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
+
+  def renderCombiner(leftSide: String, rightSide: String) = Action.async{ implicit request =>
+    Concierge.index(Edition(request), leftSide, rightSide).map {
+      case Left(page) => if (IsFacia(request)) renderFaciaFront(page) else renderFront(page)
+      case Right(other) => other
+    }
+  }
+
   def renderJson(path: String) = render(path)
 
   def render(path: String) = Action.async { implicit request =>
     Concierge.index(Edition(request), path) map {
       case Left(model) => if (IsFacia(request)) renderFaciaFront(model) else renderFront(model)
-      case Right(notFound) => notFound
+      case Right(other) => other
     }
   }
 
