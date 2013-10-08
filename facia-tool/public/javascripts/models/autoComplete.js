@@ -12,14 +12,15 @@ function (
         counter = 0;
 
     return function (opts) {
-        var q = opts.query || '',
+        var receiver = opts.receiver || function () {},
+            q = opts.query || '',
             path = opts.path || "tags",
             url  = "/" + path + "?q=" + q,
             data,
             count;
 
         if(!q.match(/[a-z0-9]+/i)) {
-            opts.receiver([]);
+            receiver([]);
             return;
         }
 
@@ -27,9 +28,9 @@ function (
         counter += 1;
 
         if(data) {
-            opts.receiver(data);
+            receiver(data);
         } else {
-            opts.receiver([{_alert : "searching for " + path + "..."}]);
+            receiver([{_alert : "searching for " + path + "..."}]);
             count = counter;
 
             new Reqwest({
@@ -46,7 +47,7 @@ function (
                     results = resp.response && resp.response.results ? resp.response.results : false;
 
                     if (!results) {
-                        opts.receiver([{_alert : "...sorry, there was an error."}]);
+                        receiver([{_alert : "...sorry, there was an error."}]);
                         return;
                     }
 
@@ -55,7 +56,7 @@ function (
                     }
 
                     cache.put('contentApi', url, results);
-                    opts.receiver(results);
+                    receiver(results);
                 }
             );
         }
