@@ -93,11 +93,12 @@ Component.prototype.emit = function(eventName, args) {
 };
 
 /**
- * TODO (jamesgorrie): Add caching in this.elems
  * @param {string} elemName this corresponds to CONFIG.classes
  */
 Component.prototype.getElem = function(elemName) {
+    if (this.elems[elemName]) { return this.elems[elemName]; }
     var elem = qwery(this.getClass(elemName), this.elem)[0];
+    this.elems[elemName] = elem;
     return elem;
 };
 
