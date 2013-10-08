@@ -412,7 +412,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
-
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
@@ -432,25 +431,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     }
 
-    scenario("Story package with a link to a Poll") {
-      Given("I'm on an article that has a story package linking to a Poll page")
-
-      HtmlUnit("/world/2013/aug/06/french-woman-breastfeed-service-gay-couples") { browser =>
-        import browser._
-
-        Then("the poll should not appear in the list")
-        $(".related-trails a[href=\"/commentisfree/poll/2013/aug/15/breastfeeding-swimming-pool-unhygienic-poll\"]") should have size (0)
-      }
-
-    }
-
     scenario("Show tags in an article"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting"){ browser =>
         import browser._
 
         Then("I should see links to tags")
-        $(".article__tags a").size should be (5)
+        $(".article__keywords a").size should be (5)
       }
     }
 
