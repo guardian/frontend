@@ -52,6 +52,7 @@ object MatchStatus extends Logging {
     ("Resumed", "R"), // Match has been Resumed.
     ("Abandoned", "A"), // Match has been Abandoned.
     ("Fixture", "F"), // Created Fixture is available and had been Created by us.
+    ("-", "F"), // this sneaky one is not in the docs
     ("New", "N"), // Match A New Match has been added to our data.
     ("Cancelled", "C") // A Match has been Cancelled.
   )

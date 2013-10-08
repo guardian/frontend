@@ -51,7 +51,7 @@
         }
     }
     &.collection--culture,
-    &.collection--comments {
+    &.collection--commentisfree {
         @include mq($to: tablet) {
             .item:nth-child(n+4) {
                 @include card-headline;
@@ -76,7 +76,7 @@
             }
         }
     }
-    &.collection--comments {
+    &.collection--commentisfree {
         @include mq($to: tablet) {
             @include first-row(1);
             .item:first-child {
@@ -87,6 +87,9 @@
                 @include card($without-extras: true);
             }
         }
+    }
+    &.collection--football-nav {
+        margin-top: $baseline*6;
     }
     @include mq(tablet) {
         @include first-row(1);
@@ -114,7 +117,7 @@
             }
         }
         &.collection--culture,
-        &.collection--comments {
+        &.collection--commentisfree {
             .item:nth-child(n+4) {
                 @include card($without-extras: true);
             }
@@ -141,7 +144,7 @@
             }
         }
         &.collection--culture,
-        &.collection--comments {
+        &.collection--commentisfree {
             .item:nth-child(n+4) {
                 @include card($without-extras: true);
             }
@@ -169,30 +172,27 @@
             }
         }
         &.collection--culture,
-        &.collection--comments {
+        &.collection--commentisfree {
             .item:nth-child(n+6) {
                 @include card($without-extras: true);
             }
         }
     }
     .item--sport-stats {
-        @include mq($to: tablet) {
-            width: 100% !important;
-        }
         @include mq(tablet) {
-            min-height: gs-height(8);
+            min-height: gs-height(8) - 6;
         }
         .competition-table {
-            padding-top: 2px;
+            border-bottom-style: none;
             @include mq($to: desktop) {
-                border-top: 2px solid $news-light;
+                padding-top: 2px;
+                border-top: 2px solid $c-newsAccent;
             }
             @include mq(desktop) {
+                border-top-style: none;
                 padding-top: 0;
             }
             h3 {
-                color: #000000;
-                margin-bottom: 6px;
                 @include fs-headline(3);
                 @include mq(tablet) {
                     @include fs-headline(4, $size-only: true);
@@ -204,16 +204,9 @@
             .match-desc__result {
                 width: 30px;
             }
-        }
-        .cta-small.cta-small-border {
-            border-bottom-style: none;
-            @include mq($to: desktop) {
-                padding-top: 3px;
+            .cta {
+                margin-bottom: 0;
             }
-            @include mq(desktop) {
-                padding-top: 7px;
-            }
-            padding-bottom: 0;
         }
     }
 }

@@ -14,7 +14,8 @@ define(['common', 'bonzo', 'modules/popular', 'modules/storage'], function (comm
 
             var isArticle = config.page && config.page.contentType === "Article",
                 isFromFacebook = document.referrer.indexOf('facebook.com') !== -1,
-                hasBeenFromFacebook = storage.get('gu.ab.participations')[this.id],
+                participations = storage.get('gu.ab.participations'),
+                hasBeenFromFacebook = participations ? participations[this.id] : false,
                 isTest = /#dev-fbpopular/.test(window.location.hash);
 
             return isArticle && (isFromFacebook || hasBeenFromFacebook || isTest);
@@ -31,9 +32,10 @@ define(['common', 'bonzo', 'modules/popular', 'modules/storage'], function (comm
                 test: function () {
                     common.mediator.on('modules:popular:loaded', function (container) {
                         var tabs = container.querySelectorAll('.tabs__tab');
+                        var classes = 'tabs__tab--selected tone-colour tone-accent-border';
 
-                        bonzo(tabs).removeClass('tabs__tab--selected');
-                        bonzo(tabs[1]).addClass('tabs__tab--selected');
+                        bonzo(tabs).removeClass(classes);
+                        bonzo(tabs[1]).addClass(classes);
 
                         container.querySelector('#tabs-popular-1').style.display = 'none';
                         container.querySelector('#tabs-popular-2').style.display = 'block';

@@ -17,7 +17,7 @@ object FrontScoresController extends Controller with implicits.Football with Log
     val numVisible = request.getIntParameter("numVisible").getOrElse(0)
     val isCompetitionPage = request.getBooleanParameter("competitionPage").getOrElse(false)
 
-    val todaysCompetitions = Competitions.withTodaysMatches.competitions
+    val todaysCompetitions = Competitions().withTodaysMatches.competitions
 
     //keep competitions in same order as passed in ids but prefer home nation friendlies
     val competition = todaysCompetitions.find(_.matches.exists(_.isHomeNationGame)).orElse(

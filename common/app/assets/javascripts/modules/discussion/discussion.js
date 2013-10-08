@@ -77,8 +77,8 @@ define([
 
             insertCommentCounts: function(commentCount) {
                 var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
-                    html = '<a href="#comments" class="js-show-discussion commentcount" data-link-name="Comment count">' +
-                           '  <i class="i i-comment-count-small"></i>' + commentCount +
+                    html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
+                           '  <i class="i"></i>' + commentCount +
                            '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                            '</a>';
 
@@ -248,15 +248,6 @@ define([
                     bean.fire(context.querySelector('.js-show-discussion'), 'click');
                 }
 
-                // Auto load comments on desktop sizes
-                if (/desktop|extended/.test(Detect.getLayoutMode())) {
-                    var inview = new Inview('#comments', context);
-                    bean.on(context, 'inview', '#comments', function(e) {
-                        self.loadDiscussion();
-                        bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
-                        bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
-                    });
-                }
             }
         };
 

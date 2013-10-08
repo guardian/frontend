@@ -1,8 +1,10 @@
 .match-summary {
     padding-top: 5px;
+    padding-bottom: $baseline*3;
 
     h2 {
-        margin-bottom: $baseline*2;
+        @include fs-headline(3);
+        margin-bottom: $baseline;
     }
 
     p:nth-child(3) {
@@ -10,8 +12,9 @@
     }
 
     .away-team {
-        border-top: 1px solid $mushroom;
+        border-top: 1px solid $c-neutral7;
         padding-top: $baseline;
+        margin-top: $baseline*5;
     }
 
     .home-scorers {

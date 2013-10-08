@@ -17,7 +17,7 @@
 
 @TeamMap(team).url.map{ url =>
 <a href="@url/fixtures" class="cta-small cta-small-border type-8 zone-color" data-link-name="View all team fixtures">
-    View all @TeamName(team) fixtures<i class="i i-sport-arrow-small"></i>
+    View all @team.name fixtures <i class="i i-sport-arrow i-sport-arrow--small"></i>
 </a>
 }
 
@@ -37,6 +37,6 @@
 
 @TeamMap(team).url.map{ url =>
     <a href="@url/results" class="cta-small cta-small-border type-8 zone-color" data-link-name="View all team results">
-        View all @TeamName(team) results<i class="i i-sport-arrow-small"></i>
+        View all @team.name results <i class="i i-sport-arrow i-sport-arrow--small"></i>
     </a>
 }

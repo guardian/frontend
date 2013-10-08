@@ -1,0 +1,54 @@
+@mixin tone($tone, $colour, $accentColour) {
+    .tone-#{$tone} {
+        .tone-colour,
+        &.tone-colour {
+            &,
+            &:active,
+            &:focus,
+            &:hover {
+                color: $colour;
+            }
+        }
+        .tone-border,
+        &.tone-border { border-color: $colour; }
+
+        .tone-accent-border,
+        &.tone-accent-border { border-color: $accentColour; }
+
+        .tone-background,
+        &.tone-background { background-color: $colour; }
+
+        .is-summary > .block-title {
+            color: $colour;
+        }
+
+        .commentcount {
+            i {
+                @extend .i-comment-#{$tone};
+                @if $svg-support {
+                    .svg & {
+                        @extend .i-svg-comment-#{$tone};
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* News
+   ========================================================================== */
+
+@include tone(news, $c-newsDefault, $c-newsAccent);
+
+
+/* Comment
+   ========================================================================== */
+
+@include tone(comment, $c-commentDefault, $c-commentAccent);
+
+
+/* Feature
+   ========================================================================== */
+   
+@include tone(feature, $c-featureDefault, $c-featureAccent);

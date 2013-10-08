@@ -22,6 +22,8 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
             showTab: function (container, clickedTab, originalEvent) {
 
+                var classes = 'tabs__tab--selected tone-colour tone-accent-border';
+
                 // find the active tab in the set. returns an array of 1 item, hence [0]
                 var currentTab = common.$g('.tabs__tab--selected a', container)[0];
 
@@ -30,8 +32,8 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                 var paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
 
                 // show hide stuff
-                bonzo(currentTab.parentNode).removeClass('tabs__tab--selected');
-                bonzo(clickedTab.parentNode).addClass('tabs__tab--selected');
+                bonzo(currentTab.parentNode).removeClass(classes);
+                bonzo(clickedTab.parentNode).addClass(classes);
                 bonzo(paneToHide).hide();
                 bonzo(paneToShow).removeClass('js-hidden').show().focus();
 

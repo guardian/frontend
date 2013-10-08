@@ -2,8 +2,6 @@
 
 <@element class="trail trail--gallery t@rowNum" data-link-name="gallery trail">
 
-    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
-
     <h@headingLevel class="trail__headline type-5">
         <span class="trail__headline-kicker">Gallery:</span>
         <a href="@LinkTo{@trail.url}" data-link-name="@rowNum | text">
@@ -12,6 +10,8 @@
     </h@headingLevel>
 
     @fragments.galleryThumbs(trail)
+
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
     <span class="trail__count trail__count--imagecount">
         <a href="@trail.url" data-link-name="Gallery image count">
