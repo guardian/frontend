@@ -2,6 +2,8 @@ package controllers.front
 
 import common._
 import model.FaciaPage
+import akka.util.Timeout
+import concurrent.duration._
 
 
 class Front extends Logging {
@@ -22,20 +24,25 @@ class Front extends Logging {
 
   def refreshPageFrontAgent() = {
     val newFronts = faciaFronts
-    pageFrontAgent.send{ oldValue =>
+    pageFrontAgent.alter{ oldValue =>
       val newFrontsFiltered = newFronts.filterNot {
         case (id, pageFront) => oldValue.contains(id)
       }
       oldValue ++ newFrontsFiltered
-    }
+    }(Timeout(60.seconds))
   }
 
   def refresh() = refreshJobs().foreach(_())
 
   def refreshJobs() = Seq(() => {
-      ConfigAgent.refresh()
+      refreshConfig()
       refreshPageFrontAgent()
-    }) ++ pageFrontAgent().values.map{ agent => () => agent.refresh() }
+      refreshPageFronts()
+    })
+
+  def refreshPageFronts() = pageFrontAgent().values.map { agent => () => agent.refresh() }
+
+  def refreshConfig() = ConfigAgent.refresh()
 
   def apply(path: String): Option[FaciaPage] = pageFrontAgent().get(path).flatMap(pageFront => pageFront())
 
