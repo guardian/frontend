@@ -44,12 +44,12 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
     //Jobs.deschedule("FrontsRefreshJob")
   }
 
-  ignore should "200 when content type is front" in Fake {
+  "FaciaController" should "200 when content type is front" in Fake {
     val result = controllers.FaciaController.renderEditionFront("uk")(TestRequest())
     status(result) should be(200)
   }
 
-  ignore should "redirect base page to edition page if on www.theguardian.com" in Fake {
+  it should "redirect base page to edition page if on www.theguardian.com" in Fake {
 
     val result = controllers.FaciaController.renderFront("")(responsiveRequest.withHeaders("X-GU-Edition" -> "US"))
     status(result) should be(303)
@@ -61,17 +61,17 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
 
   }
 
-  ignore should "understand the editionalised network front" in Fake {
+  it should "understand the editionalised network front" in Fake {
     val result2 = controllers.FaciaController.renderEditionFront("uk")(TestRequest())
     status(result2) should be(200)
   }
 
-  ignore should "understand editionalised section fronts" in Fake {
+  it should "understand editionalised section fronts" in Fake {
     val result2 = controllers.FaciaController.renderEditionSectionFront("uk/culture")(TestRequest())
     status(result2) should be(200)
   }
 
-  ignore should "return JSONP when callback is supplied to front" in Fake {
+  it should "return JSONP when callback is supplied to front" in Fake {
     val fakeRequest = FakeRequest(GET, s"?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
 
@@ -81,7 +81,7 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
     contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
-  ignore should "return JSON when .json format is supplied to front" in Fake {
+  it should "return JSON when .json format is supplied to front" in Fake {
     val fakeRequest = FakeRequest("GET", ".json")
       .withHeaders("Host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
@@ -92,8 +92,8 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
     contentAsString(result) should startWith("{\"html\"")
   }
 
-  ignore should "200 when content type is front trails" in Fake {
-    //Fronts never redirected, this redirects if you hignore naked slash
+  it should "200 when content type is front trails" in Fake {
+    //Fronts never redirected, this redirects if you hit naked slash
     val result = controllers.FaciaController.renderTrails("")(TestRequest())
     status(result) should be(303)
 
@@ -101,7 +101,7 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
     status(result2) should be(200)
   }
 
-  ignore should "return JSONP when callback is supplied to front trails" in Fake {
+  it should "return JSONP when callback is supplied to front trails" in Fake {
     val fakeRequest = FakeRequest(GET, s"/culture/trails?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
 
@@ -111,7 +111,7 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
     contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
-  ignore should "return JSON when .json format is supplied to front trails" in Fake {
+  it should "return JSON when .json format is supplied to front trails" in Fake {
     val fakeRequest = FakeRequest("GET", "/culture/trails.json")
       .withHeaders("Host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
@@ -122,7 +122,7 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
     contentAsString(result) should startWith("{\"html\"")
   }
 
-  ignore should "200 when hitting the front" in Fake {
+  it should "200 when hitting the front" in Fake {
     val result = controllers.FaciaController.renderEditionFront("uk")(TestRequest())
     status(result) should be(200)
   }
