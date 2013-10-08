@@ -1,8 +1,11 @@
 .keywordlist {
     font-family: $sans-serif;
-    color: $c-neutral2;
 }
 .keywordlist__item {
-    color: $c-neutral2;
     display: inline-block;
+
+    &,
+    a {
+        color: $c-neutral2;
+    }
 }
