@@ -9,7 +9,7 @@
 
 .sport-summary__head {
     @extend %type-7;
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     border-bottom: 1px solid #DEDEDD;
     color: $c-sportBright;
     display: block;
@@ -20,7 +20,7 @@
 }
 
 .sport-summary__body {
-    background-color: $mushroom;
+    background-color: $c-neutral7;
 }
 
 .sport-summary__score {

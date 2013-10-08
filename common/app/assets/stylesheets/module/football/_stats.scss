@@ -104,13 +104,13 @@
 }
 
 .item-divider {
-    border-top: 1px solid $mushroom;
+    border-top: 1px solid $c-neutral7;
     padding-top: $baseline;
 }
 
 .section-divider {
     @include fs-header(1);
-    border-bottom: 1px solid $mushroom;
+    border-bottom: 1px solid $c-neutral7;
     padding-top: $baseline * 2;
     padding-bottom: $baseline * 3;
 }

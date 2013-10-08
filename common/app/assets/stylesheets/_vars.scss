@@ -117,27 +117,20 @@ $fs-data: (
 /**
  * @todo: Blues need comments to associate with brand/logo colours
  */
-$blue: #214583;
-$darkBlue: #152E5F;
-$lightBlue: #4490CE;
-$linkBlue: #005689;
-$mushroom: #F4F4EE;
-$medianMushroom: #EDEDE7;
-$darkMushroom: #E3E3DB;
-$grey: #B3B3B4;
-$darkGrey: #676767;
+$c-brandBlue: #214583;
 
 $c-neutral1: #333333;
-$c-neutral2: #676767;
-$c-neutral3: #929497;
-$c-neutral4: #b3b3b4;
-$c-neutral5: #cfcfcd;
+$c-neutral2: #767676;
+$c-neutral3: #bdbdbd;
+$c-neutral4: #dcdcdc;
+$c-neutral5: #e3e3db;
 $c-neutral6: #edede7;
 $c-neutral7: #f4f4ee;
 
 
 /* Tones
    ========================================================================== */
+
 $c-newsDefault: #005689;
 $c-newsAccent: #4BC6DF;
 
