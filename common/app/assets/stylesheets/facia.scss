@@ -1,0 +1,21 @@
+//Variables and mixins
+@import "_vars";
+@import "_mixins";
+
+.facia-container {
+    @include mq(tablet) {
+        width: gs-span(8);
+    }
+    @include mq(desktop) {
+        width: gs-span(12);
+    }
+    @include mq(wide) {
+        width: gs-span(16);
+    }
+}
+
+@import "module/facia/items";
+@import "module/facia/masthead";
+@import "module/facia/container";
+@import "module/facia/section-zone";
+@import "module/facia/popular";
