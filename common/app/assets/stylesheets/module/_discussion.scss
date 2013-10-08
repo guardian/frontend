@@ -320,7 +320,7 @@
 /* Comment Box
    ========================================================================== */
 .d-bar {
-    background-color: $mushroom;
+    background-color: $c-neutral5;
     padding: $baseline*3 $gutter $baseline*3 $gutter;
     margin-bottom: $baseline*3;
 }
@@ -342,7 +342,7 @@
 
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    border: 1px solid $grey;
+    border: 1px solid $c-neutral5;
     height: 50px;
     margin: $baseline*2 0;
     padding: ($baseline*2) ($gutter/2);

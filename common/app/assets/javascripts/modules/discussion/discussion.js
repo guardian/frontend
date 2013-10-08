@@ -225,6 +225,7 @@ define([
             },
 
             renderCommentBoxes: function(resp) {
+                if (resp.error) { return; }
                 var html = resp.html,
                     topBox, bottomBox,
                     discussionElem = bonzo(self.discussionContainerNode),
