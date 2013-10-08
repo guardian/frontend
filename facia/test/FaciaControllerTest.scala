@@ -10,7 +10,7 @@ import controllers.front.Front
 import concurrent.duration._
 import org.scalatest.time.{Millis, Span}
 
-class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAfterAll {
+class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAfterAll with ExecutionContexts {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
@@ -18,32 +18,14 @@ class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAft
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
   override def beforeAll() = {
-    /*running(FakeApplication()) {
-      Jobs.deschedule("FrontRefreshJob")
-      Jobs.schedule("FrontRefreshJob", "0 * * * * ?", FrontMetrics.FrontLoadTimingMetric) {
-        // stagger refresh jobs to avoid dogpiling the api
-        Front.refreshJobs().zipWithIndex.foreach{ case (job, index) =>
-          val sec = (index * 2) % 60
-          AkkaAsync.after(sec.seconds){
-            job()
-          }
-        }
-      }
-
-      Front.refresh()
-
-      val start = System.currentTimeMillis
-
-      //Our tests use things from uk, us and au. Lets wait for these three fronts (60 seconds)
-      while (!Front.hasItems("uk") || !Front.hasItems("us") || !Front.hasItems("au")) {
-        // ensure we don't get in an endless loop if test data changes
-        if (System.currentTimeMillis - start > 2.minutes.toMillis) throw new RuntimeException("front should have loaded by now")
-      }
-    }*/
-  }
-
-  override def afterAll() = {
-    //Jobs.deschedule("FrontsRefreshJob")
+    running(FakeApplication()) {
+      val loadFrontFuture = for {
+        config <- Front.refreshConfig()
+        pageFrontAgent <- Front.refreshPageFrontAgent()
+        s <- Future.sequence(Front.pageFrontAgent().values.map(_.refresh()))
+      } yield s
+      Await.result(loadFrontFuture, 60.seconds)
+    }
   }
 
   "FaciaController" should "200 when content type is front" in Fake {
