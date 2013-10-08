@@ -1,12 +1,14 @@
 package test
 
+import concurrent.{Future, Await}
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
-import common.{AkkaAsync, FrontMetrics, Jobs}
+import common.ExecutionContexts
 import controllers.front.Front
 import concurrent.duration._
+import org.scalatest.time.{Millis, Span}
 
 class FaciaControllerTest extends FlatSpec with ShouldMatchers with BeforeAndAfterAll {
 
