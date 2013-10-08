@@ -285,7 +285,7 @@ p + video {
     td {
         @include fs-data(3);
         padding: $baseline*2;
-        color: #676767;
+        color: $c-neutral2;
     }
 
     th {

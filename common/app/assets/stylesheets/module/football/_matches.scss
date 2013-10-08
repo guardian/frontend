@@ -65,7 +65,7 @@ a.competition-title {
         padding: $baseline*2;
 
         &:active {
-            background: $darkMushroom;
+            background: $c-neutral5;
             color: #fff !important;
             text-decoration: none;
         }
@@ -184,7 +184,7 @@ a.competition-title {
             content: "+ ";
         }
         &:active {
-            background: $darkMushroom;
+            background: $c-neutral5;
             text-decoration: none;
         }
     }
@@ -289,7 +289,7 @@ a.competition-title {
 
 .team-list li span {
     padding: $baseline*2 0;
-    border-top: 1px solid $mushroom;
+    border-top: 1px solid $c-neutral7;
     display: block;
     height: auto;
     color: #999;

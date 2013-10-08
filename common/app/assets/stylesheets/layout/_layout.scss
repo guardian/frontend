@@ -45,19 +45,19 @@ $headerHeight: 58px;
         &:before {
             top: 0;
             height: $headerHeight;
-            background-color: $blue;
+            background-color: $c-brandBlue;
         }
 
         &:after {
             top: $headerHeight;
             height: 40px;
-            background-color: $mushroom;
-            border-bottom: 1px solid $darkMushroom;
+            background-color: $c-neutral7;
+            border-bottom: 1px solid $c-neutral5;
         }
     }
 }
     .header__inner {
-        background-color: $blue;
+        background-color: $c-brandBlue;
         height: 60px;
     }
 
