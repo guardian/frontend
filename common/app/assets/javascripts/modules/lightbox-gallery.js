@@ -385,7 +385,7 @@ define(["bean",
                 // In landscape, size all images to the height of the screen
                 $images.css({'height': contentHeight + 'px', 'width': 'auto'});
             } else {
-                $images.removeAttr('style');
+                $images.css({'height': 'auto', 'width': '100%'});
             }
 
             self.alignNavArrows();
