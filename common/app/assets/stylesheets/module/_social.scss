@@ -15,24 +15,19 @@
     display: block;
     position: relative;
 }
-.social__action--email:hover .social__icon,
-.social__action--email:focus .social__icon {
+.social__action--email:hover i,
+.social__action--email:focus i {
     @extend .i-share-email-hover;
 }
-.social__action--facebook:hover .social__icon,
-.social__action--facebook:focus .social__icon {
+.social__action--facebook:hover i,
+.social__action--facebook:focus i {
     @extend .i-share-facebook-hover;
 }
-.social__action--gplus:hover .social__icon,
-.social__action--gplus:focus .social__icon {
+.social__action--gplus:hover i,
+.social__action--gplus:focus i {
     @extend .i-share-gplus-hover;
 }
-.social__action--twitter:hover .social__icon,
-.social__action--twitter:focus .social__icon {
+.social__action--twitter:hover i,
+.social__action--twitter:focus i {
     @extend .i-share-twitter-hover;
-}
-.social__icon {
-    position: absolute;
-    left: 0;
-    bottom: 3px;
 }
