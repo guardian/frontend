@@ -13,7 +13,7 @@
     font-size: 1.4rem;
 
     padding-left: 28px; /* aligns with top level comment's body */
-    border-left: 8px solid $darkMushroom;
+    border-left: 8px solid $c-neutral5;
 
     @include mq(768px) {
         padding-left: 44px;
@@ -65,7 +65,7 @@
 }
 
 .d2-permalink .d2-datetime {
-    color: #767676;
+    color: $c-neutral2;
     font-size: .85714285714em;
     font-family: $sans-serif; // Force font when used outside of comment context
 }
