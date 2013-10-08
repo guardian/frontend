@@ -1,6 +1,4 @@
 .keywordlist {
-    font-size: .9em;
-    line-height: 1.6;
     font-family: $sans-serif;
     color: $c-neutral2;
 }
@@ -8,20 +6,3 @@
     color: $c-neutral2;
     display: inline-block;
 }
-//.keywords--pipe-separated {
-//    .keywords__item {
-//        display: inline;
-//
-//        & + & {
-//           padding-left: 6px;
-//
-//           &:before {
-//               content: '|';
-//               margin-right: 6px;
-//               font-size: 11px;
-//               position: relative;
-//               top: -2px;
-//           }
-//        }
-//    }
-//}
