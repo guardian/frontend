@@ -1,7 +1,7 @@
 @(keywords: Seq[Tag], visibleKeywords: Int = 5)(implicit request: RequestHeader)
 
-<ul class="keywordlist unstyled" itemprop="keywords">
+<ul class="inline-list f-data" itemprop="keywords">
     @keywords.take(visibleKeywords).zipWithRowInfo.map{ case(keyword, row) =>
-        <li class="keywordlist__item"><a href="@LinkTo(keyword.url)">@keyword.name</a>@if(!row.isLast){, }</li>
+        <li class="inline-list__item c-neutral2"><a class="c-neutral2" href="@LinkTo(keyword.url)">@keyword.name</a>@if(!row.isLast){, }</li>
     }
 </ul>

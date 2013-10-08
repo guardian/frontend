@@ -20,8 +20,33 @@ nav ol {
 // Some list helpers
 
 // Remove margin and bullets from lists.
-ol.unstyled, 
+ol.unstyled,
 ul.unstyled {
     margin: 0;
     list-style: none;
+}
+
+/**
+ * Inline list
+ *
+ * Usage:
+ * <ul class="inline-list">
+ *     <li class="inline-list__item"><a href="">Keyword</a>, </li>
+ *     <li class="inline-list__item"><a href="">Lorem ipsum</a>, </li>
+ *     <li class="inline-list__item"><a href="">Dolor sit</a>, </li>
+ *     <li class="inline-list__item"><a href="">Amet</a>, </li>
+ *     <li class="inline-list__item"><a href="">Fromage</a></li>
+ * </ul>
+ *
+ * Renders as:
+ * Keyword, Lorem ipsum,
+ * Dolor sit, Amet, Fromage
+ */
+
+.inline-list {
+    margin: 0;
+    list-style: none;
+}
+.inline-list__item {
+    display: inline-block; // Prevent linebreak within an item
 }
