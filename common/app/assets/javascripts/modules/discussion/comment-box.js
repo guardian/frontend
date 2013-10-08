@@ -128,7 +128,7 @@ CommentBox.prototype.postComment = function(e) {
 CommentBox.prototype.error = function(type, message) {
     var error = document.createElement('div');
     error.className = this.getClass('error', true);
-    error.innerHTML = message || this.getConf().errors[type];
+    error.innerHTML = message || this.conf().errors[type];
     this.getElem('messages').appendChild(error);
     this.errors.push(type);
 };
@@ -159,7 +159,7 @@ CommentBox.prototype.fail = function(xhr) {
 
     if (xhr.status === 420) {
         this.error('ENHANCE_YOUR_CALM');
-    } else if (this.getConf().errors[response.errorCode]) {
+    } else if (this.conf().errors[response.errorCode]) {
         this.error(response.errorCode);
     } else {
         this.error('API_ERROR');

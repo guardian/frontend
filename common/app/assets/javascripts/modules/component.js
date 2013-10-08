@@ -108,14 +108,14 @@ Component.prototype.getElem = function(elemName) {
  * @return {string}
  */
 Component.prototype.getClass = function(elemName, sansDot) {
-    var config = this.getConf();
+    var config = this.conf();
     return (sansDot ? '' : '.') + config.classes[elemName] || null;
 };
 
 /**
  * @return {Object}
  */
-Component.prototype.getConf = function() {
+Component.prototype.conf = function() {
     return this.constructor.CONFIG;
 };
 
