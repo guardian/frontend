@@ -1,7 +1,7 @@
 @(headerLink: model.Link, links: Seq[model.Link])(implicit request: RequestHeader)
 @import common.LinkTo
 <div class="tone-news">
-    <h3 class="article-zone article-zone--sport tone-accent-border">
+    <h3 class="article__sub-head tone-colour">
         <a class="tone-colour" href="@headerLink.url" data-link-name="football index @headerLink.linkName">@headerLink.linkText.toLowerCase</a>
     </h3>
     <div class="sections u-cf football-nav" data-link-name="football bottom nav">
