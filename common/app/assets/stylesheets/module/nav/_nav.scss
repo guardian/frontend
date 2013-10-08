@@ -70,7 +70,7 @@
     .nav__link {
         display: block;
         padding: 3px 0 $baseline*4;
-        border-top: 1px solid $mushroom;
+        border-top: 1px solid $c-neutral7;
         height: auto;
         background-color: transparent;
         -webkit-font-smoothing: antialiased;
@@ -94,13 +94,13 @@
 
 .nav-popup--small .nav--section-divider {
     margin: 0;
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     padding: 0 $gs-gutter/2 $baseline*2;
 
     .nav .nav__item + .nav__item {
         .nav__link {
             border-bottom: 0;
-            border-top: 1px solid $darkMushroom;
+            border-top: 1px solid $c-neutral5;
         }
     }
 
@@ -140,8 +140,8 @@
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
-    background-color: $mushroom;
-    border-bottom: 1px solid $darkMushroom;
+    background-color: $c-neutral7;
+    border-bottom: 1px solid $c-neutral5;
 
     @include mq(tablet) { display: block; }
 }
@@ -176,7 +176,7 @@
     }
 
     .nav__link {
-        color: #333333; // This is here because the below selectors are too specific for zone-color to work
+        color: $c-neutral1; // This is here because the below selectors are too specific for zone-color to work
     }
 
     .nav__link,
@@ -191,7 +191,9 @@
     }
 
     .is-active .nav__link {
+        color: $c-neutral1;
         font-weight: bold;
+        border-color: $c-neutral1;
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
@@ -205,14 +207,13 @@
     @include box-sizing(border-box);
     display: none;
     overflow: auto;
-    width: 100%;
-    padding: 0 $gs-gutter/2;
+    margin: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
     background-color: #ffffff;
-    border-bottom: 1px solid $darkMushroom;
+    border-bottom: 1px solid $c-neutral6;
 
     @include mq(tablet) { display: block; }
 }
@@ -265,46 +266,51 @@
 .localnav--small {
     background-color: #fff;
     display: block;
+    border-top: $baseline/2 solid $c-newsAccent;
 
     @include mq(tablet) { display: none; }
 
     .localnav__cta {
-        float: right;
-        width: 50px;
-        height: 37px;
-        margin-right: $gs-gutter / -2;
+        width: $gs-column-width;
+        height: $gs-column-height - $baseline*1.5;
         padding: 0;
-        background-color: #ffffff;
+        margin: $baseline*1.5 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-left: 1px solid $c-neutral6;
+
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: #ffffff;
+        }
+
+        i {
+            margin-top: -4px;
+        }
 
         &.is-active i {
             @include rotate(180deg);
         }
     }
-
-    .i-nav-divider {
-        margin: 4px 0 0 0;
-        background-color: #ffffff;
-        border-left: 0;
-    }
-
 }
 
 .localnav__inner {
-    border-bottom: 1px solid $medianMushroom;
-    margin: 0 $gs-gutter / 2;
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
+    position: relative;
+    margin: 0 $gs-gutter/2;
+    border-bottom: 1px solid $c-neutral6;
+    border-bottom-color: $c-neutral6 !important;
 }
 
 .localnav__title {
     @extend .section-head;
+    width: 100%;
     float: left;
-    padding: 17px 0 12px 0 !important;
     border: 0 !important;
-    margin: 0 !important;
+    height: $gs-column-height + $baseline !important;
+    padding-left: 0 !important;
 }
 
 

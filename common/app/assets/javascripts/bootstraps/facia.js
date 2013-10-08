@@ -5,7 +5,6 @@ define([
     //Modules
     'modules/detect',
     'modules/facia/popular',
-    'modules/facia/relativise-timestamp',
     'modules/facia/items-show-more',
     'modules/facia/collection-display-toggle',
     'modules/footballfixtures',
@@ -15,7 +14,6 @@ define([
     bonzo,
     detect,
     popular,
-    RelativiseTimestamp,
     ItemsShowMore,
     CollectionDisplayToggle,
     FootballFixtures,
@@ -27,15 +25,6 @@ define([
         showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
                 popular.render(config);
-            });
-        },
-
-        relativiseTimestamps: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                common.toArray(context.querySelectorAll('.js-item__timestamp')).forEach(function(timestamp) {
-                    new RelativiseTimestamp(timestamp)
-                        .relativise();
-                });
             });
         },
 
@@ -56,7 +45,7 @@ define([
                         section = config.page.pageId === "" ? 'sport' : 'news',
                         numVisible = config.page.pageId === "" ? 3 : 5;
                     common.mediator.on('modules:footballfixtures:render', function() {
-                        var container = common.$g('.section--' + section, context)
+                        var container = common.$g('.collection--' + section, context)
                             .first()[0];
                         // toggle class
                         common.$g('.items', container)
@@ -64,7 +53,6 @@ define([
                             .addClass('items--with-sport-stats');
                         // add it after the first item
                         common.$g('.item:first-child', container)
-                            .first()
                             .after($statsItem);
                         // now hide one of the shown ones (but not on mobile)
                         if (detect.getBreakpoint() !== 'mobile') {
@@ -117,7 +105,6 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.showPopular();
-            modules.relativiseTimestamps();
             modules.showItemsShowMore();
             modules.showFootballFixtures();
             modules.showCollectionDisplayToggle();

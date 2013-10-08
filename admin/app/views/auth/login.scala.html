@@ -1,4 +1,4 @@
-@(request: controllers.AuthenticatedRequest[AnyContent], error: Option[String] = None, env: String)
+@(error: Option[String] = None, env: String)
 
 @admin_main("Login", env) {
         @if(error.isDefined) {

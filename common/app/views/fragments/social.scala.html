@@ -4,39 +4,38 @@
 
 @defining(s"http://${request.host}${request.path}"){ url =>
     <ul class="social unstyled" data-link-name="@position">
-        <li class="social__item--mail social__item">
-            <a  class="social__action"
+        <li class="social__item">
+            <a  class="social__action social__action--email"
                 data-link-name="social-mail"
                 href="mailto:?subject=@helper.urlEncode(page.webTitle).replaceAll("\\+", "%20")&amp;body=@helper.urlEncode(url)">
                 <span class="u-h">Share via Email</span>
-                <i class="i-mail i social__icon"></i>
+                <i class="i-share-email i social__icon"></i>
             </a>
         </li>
-        <li class="social__item--fb social__item">
-            <a  class="social__action"
+        <li class="social__item">
+            <a  class="social__action social__action--facebook"
                 data-link-name="social-fb"
-                href="https://www.facebook.com/dialog/feed?app_id=180444840287&amp;redirect_uri=@helper.urlEncode(url)&amp;link=@helper.urlEncode(url)&amp;ref=responsive">
+                href="https://www.facebook.com/dialog/feed?app_id=@Configuration.javascript.pageData("guardian.page.fbAppId")&amp;redirect_uri=@helper.urlEncode(url)&amp;link=@helper.urlEncode(url)&amp;ref=responsive">
                 <span class="u-h">Share on Facebook</span>
-                <i class="i-fb i social__icon"></i>
+                <i class="i-share-facebook i social__icon"></i>
             </a>
        </li>
-       <li class="social__item--twitter social__item">
-            <a  class="social__action"
+       <li class="social__item">
+            <a  class="social__action social__action--twitter"
                 data-link-name="social-twitter"
                 href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&amp;url=@helper.urlEncode(url)">
                 <span class="u-h">Share on Twitter</span>
-                <i class="i-twitter i social__icon"></i>
+                <i class="i-share-twitter i social__icon"></i>
             </a>
         </li>
-        <li class="social__item--gplus social__item">
-            <a
-            class="social__action"
+        <li class="social__item">
+            <a  class="social__action social__action--gplus"
                 data-link-name="social-gplus" 
                 href="https://plus.google.com/share?url=@helper.urlEncode(url)&amp;hl=en-GB&amp;wwc=1">
                 <span class="u-h">Share on Google+</span>
-                <i class="i-gplus i social__icon"></i>
+                <i class="i-share-gplus i social__icon"></i>
             </a>
         </li>
     </ul>
-    }
+}
 }
