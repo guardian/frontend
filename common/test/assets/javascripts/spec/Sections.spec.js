@@ -47,6 +47,7 @@ define([ 'common',
 
             it("Should insert a local nav when in Culture", function() {
               config.page.section = 'culture';
+              config.page.pageId = 'culture';
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
@@ -56,6 +57,7 @@ define([ 'common',
 
             it("Should insert a local nav when in Sport", function() {
               config.page.section = 'sport';
+              config.page.pageId = 'sport';
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
@@ -65,6 +67,7 @@ define([ 'common',
 
             it("Should not insert a local nav when in Business", function() {
               config.page.section = 'business';
+              config.page.pageId = 'business';
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
