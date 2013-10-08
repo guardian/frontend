@@ -55,7 +55,8 @@ i.gallery__watermark {
     }
 
     .gallery__item {
-        float: left;
+        display: inline-block;
+        vertical-align: top;
         margin: $baseline * 2;
 
         @include mq(tablet) {
