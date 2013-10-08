@@ -176,7 +176,7 @@
             @include mq(tablet) {
                 @include box-sizing(content-box);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 width: gs-span(4);
                 .item__title {
                     min-height: gs-height(3);
@@ -236,7 +236,7 @@
         .item:nth-child(n+2) {
             @include mq(tablet, wide) {
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 width: gs-span(4);
                 .item__title {
                     min-height: gs-height(3) + $gs-baseline;
@@ -250,7 +250,7 @@
                 @include box-sizing(content-box);
                 padding-left: $gs-gutter/2 - 1;
                 padding-right: $gs-gutter/2;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 width: gs-span(4);
                 .item__title {
                     min-height: gs-height(3);
@@ -334,7 +334,7 @@
                 @include box-sizing(content-box);
                 width: gs-span(4);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 .item__title {
                     min-height: gs-height(2) - 8;
                     @include font-size(20, 24);
@@ -355,7 +355,7 @@
             .item:nth-child(2) {
                 @include box-sizing(content-box);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 padding-right: $gs-gutter/2;
                 width: gs-span(4);
                 .item__title {
@@ -372,7 +372,7 @@
                 @include box-sizing(content-box);
                 width: gs-span(4);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 .item__title {
                     min-height: gs-height(3) + $gs-baseline;
                 }

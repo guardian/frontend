@@ -24,6 +24,7 @@ module.exports = function (grunt) {
                     // Everything else goes into frontend-static bundling.
                     'common/conf/assets/head.min.css': 'common/app/assets/stylesheets/head.scss',
                     'static/target/compiled/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
+                    'static/target/compiled/stylesheets/facia.min.css': 'common/app/assets/stylesheets/facia.scss',
                     'static/target/compiled/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
                     'static/target/compiled/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',

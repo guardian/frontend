@@ -41,14 +41,15 @@
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 
-    .box-indent & {
+    .article-zone-no-indent & {
         padding-left: 0 !important;
         margin-left: 0;
     }
 
-    &.sport-header { // TODO: temporary until football gets side cols
-        margin-left: 0;
-        padding-left: $gs-gutter;
+    &.sport-header,
+    &.article-zone--sport { // TODO: temporary until football gets side cols
+        padding-left: 0;
+        margin-left: $gs-gutter;
     }
 }
 

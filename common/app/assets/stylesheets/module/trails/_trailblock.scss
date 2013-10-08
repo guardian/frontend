@@ -6,7 +6,6 @@
     max-height: none;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
-    border-top: 1px solid $c-neutral6;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
@@ -26,7 +25,7 @@
         margin-bottom: 0;
 
         + ul {
-            border-top: 1px solid $medianMushroom;
+            border-top: 1px solid $c-neutral6;
         }
     }
 }

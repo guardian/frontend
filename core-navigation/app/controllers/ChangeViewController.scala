@@ -9,7 +9,7 @@ import play.api.mvc.Cookie
 object ChangeViewController extends Controller with Logging with ExecutionContexts {
 
   private def switchTo(platform: String, url: String) = Found(url)
-    .withCookies(Cookie("GU_VIEW", platform, maxAge = Some(60)))
+    .withCookies(Cookie("GU_VIEW", platform, maxAge = Some(5184000))) // 60 days, this is seconds
     .withHeaders("Cache-Control" -> "max-age=0")
 
   // we do not want people redirecting to arbitrary domains
