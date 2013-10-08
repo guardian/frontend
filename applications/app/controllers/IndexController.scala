@@ -12,11 +12,9 @@ object IndexController extends Controller with Logging with Paging with JsonTrai
 
 
   def renderCombiner(leftSide: String, rightSide: String) = Action.async{ implicit request =>
-    Concierge.index(Edition(request), leftSide, rightSide).map{ page =>
-      page match {
-        case Left(p) => renderFaciaFront(p)
-        case _ => throw new RuntimeException("TODO")
-      }
+    Concierge.index(Edition(request), leftSide, rightSide).map {
+      case Left(page) => if (IsFacia(request)) renderFaciaFront(page) else renderFront(page)
+      case Right(other) => other
     }
   }
 
@@ -25,7 +23,7 @@ object IndexController extends Controller with Logging with Paging with JsonTrai
   def render(path: String) = Action.async { implicit request =>
     Concierge.index(Edition(request), path) map {
       case Left(model) => if (IsFacia(request)) renderFaciaFront(model) else renderFront(model)
-      case Right(notFound) => notFound
+      case Right(other) => other
     }
   }
 

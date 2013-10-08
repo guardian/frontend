@@ -4,24 +4,46 @@ import model._
 import conf.ContentApi
 import model.Section
 import common._
-import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
+import com.gu.openplatform.contentapi.model.ItemResponse
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
-import scala.concurrent.Future
 
 case class IndexPage(page: MetaData, trails: Seq[Trail])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
+  private val SinglePart = """([\w\d\.-]+)""".r
+
   def index(edition: Edition, leftSide: String, rightSide: String) = {
+
+    // if the first tag is just one part then change it to a section tag...
+    val firstTag = leftSide match {
+      case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
+      case other => other
+    }
+
+    // if the second tag is just one part then it is in the same section as the first tag...
+    val secondTag = rightSide match {
+      case SinglePart(wordsForUrl) => s"${firstTag.split("/")(0)}/$wordsForUrl"
+      case other => other
+    }
+
     ContentApi.search(edition)
-      .tag(s"$leftSide,$rightSide")
+      .tag(s"$firstTag,$secondTag")
       .pageSize(20)
       .response.map {response =>
-
-      //TODO Right
-      Left(combiner(response))
+        val trails = response.results map { Content(_) }
+        trails match {
+          case Nil => Right(NotFound)
+          case head :: _ =>
+            //we can use .head here as the query is guaranteed to return the 2 tags
+            val tag1 = head.tags.find(_.id == firstTag).head
+            val tag2 = head.tags.find(_.id == secondTag).head
+            val pageName = s"${tag1.name} + ${tag2.name}"
+            val page = Page(s"$leftSide+$rightSide", tag1.section, pageName, s"GFE:${tag1.section}:$pageName")
+            Left(IndexPage(page, trails))
+        }
     }.recover(suppressApiNotFound)
   }
 
@@ -33,12 +55,6 @@ trait Index extends ConciergeRepository with QueryDefaults {
       val page = response.tag.flatMap(t => tag(response)).orElse(response.section.flatMap(t => section(response)))
       ModelOrResult(page, response)
     }.recover(suppressApiNotFound)
-  }
-
-  private def combiner(response: SearchResponse) = {
-    val trails = response.results map { Content(_) }
-    //TODO
-    IndexPage(Page("foo", "foo", "foo", "foo"), trails)
   }
 
   private def section(response: ItemResponse) = {
