@@ -7,22 +7,28 @@
 
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
   @if(theMatch.isLive || theMatch.isResult){
-    <h2 class="type-3">@homeTeam.name @homeTeam.score</h2>
+    <h2 class="match-summary__team">
+        @homeTeam.name
+        <span class="match-summary__score">@homeTeam.score</span>
+    </h2>
     @if(homeTeam.hasScored){
-        <p class="home-scorers type-11">@cleanScorers(homeTeam.scorers)</p>
+        <p class="match-summary__scorers match-summary__scorers--home">@cleanScorers(homeTeam.scorers)</p>
     }
-    <h2 class="away-team type-3">@awayTeam.name @awayTeam.score</h2>
 
+    <h2 class="match-summary__team match-summary__team--away">
+        @awayTeam.name
+        <span class="match-summary__score">@awayTeam.score</span>
+    </h2>
     @if(awayTeam.hasScored){
-        <p class="type-11">@cleanScorers(awayTeam.scorers)</p>
+        <p class="match-summary__scorers match-summary__scorers--home">@cleanScorers(awayTeam.scorers)</p>
     }
   } else {
-    <h2 class="type-3">@homeTeam.name v @awayTeam.name</h2>
+    <h2 class="match-summary__team">@homeTeam.name v @awayTeam.name</h2>
   }
 
     @if(theMatch.homeTeam.aggregateScore){
-        <p class="match-aggregate type-10"><span>(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</span></p>
+        <p class="match-summary__aggregate"><span>(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</span></p>
     }
 
-    @theMatch.comments.map{ comments => <h5 class="match-comment type-5">@comments.replace("(", "").replace(")", "")</h5>}
+    @theMatch.comments.map{ comments => <h5 class="match-summary__comment">@comments.replace("(", "").replace(")", "")</h5>}
 }
