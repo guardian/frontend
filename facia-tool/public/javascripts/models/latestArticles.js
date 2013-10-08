@@ -20,6 +20,7 @@ define([
         var self = this,
             deBounced,
             opts = opts || {},
+            counter = 0,
             container = document.querySelector('#latest-articles');
 
         this.articles   = ko.observableArray();
@@ -39,18 +40,14 @@ define([
             return (self.term() || '').match(/\//);
         }
 
-        this.term.subscribe(function(value){
-            self.search({
-                flushFirst: true
-            });
+        this.term.subscribe(function(){
+            self.search();
         });
 
         this.setFilter = function(item) {
             self.filter(item && item.id ? item.id : item);
             self.suggestions.removeAll();
-            self.search({
-                flushFirst: true
-            });
+            self.search();
         };
 
         this.clearFilter = function() {
@@ -78,7 +75,11 @@ define([
 
         // Grab articles from Content Api
         this.search = function(opts) {
+            var count;
+
             opts = opts || {};
+            counter += 1;
+            count = counter;
 
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
@@ -107,6 +108,8 @@ define([
                     url: url,
                     type: 'jsonp',
                     success: function(resp) {
+                        if (count !== counter) { return; }
+
                         var rawArticles = resp.response && resp.response[propName] ? resp.response[propName] : [];
 
                         self.flush(rawArticles.length === 0 ? "...sorry, no articles were found." : "");
@@ -121,7 +124,7 @@ define([
                     },
                     error: function() {}
                 });
-            }, 250);
+            }, 300);
 
             return true; // ensure default click happens on all the bindings
         };
