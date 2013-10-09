@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -o nounset
+set -o errexit
+
+bundle install --system
+npm install
+
+export GRUNT_ISDEV=1
+
+grunt "$@"
