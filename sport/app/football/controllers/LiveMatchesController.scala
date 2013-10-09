@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import conf._
@@ -17,13 +17,13 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
   def renderLiveMatchesJson() = renderLiveMatches()
   def renderLiveMatches() = Action { implicit request =>
-    renderLive(Competitions, None)
+    renderLive(Competitions(), None)
   }
 
   def renderLiveMatchesJsonFor(competitionName: String) = renderLiveMatchesFor(competitionName)
   def renderLiveMatchesFor(competitionName: String) = Action { implicit request =>
-    Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
-      renderLive(Competitions.withCompetitionFilter(s"/football/$competitionName"), Some(competition))
+    Competitions().competitions.find(_.url.endsWith(competitionName)).map { competition =>
+      renderLive(Competitions().withCompetitionFilter(s"/football/$competitionName"), Some(competition))
     }.getOrElse(NotFound)
   }
 

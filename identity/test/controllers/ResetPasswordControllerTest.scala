@@ -5,14 +5,14 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import idapiclient.{OmnitureTracking, IdApiClient}
+import idapiclient.{TrackingData, IdApiClient}
 import test.{TestRequest, Fake}
 import play.api.test._
 import play.api.test.Helpers._
-import client.{Error, Auth}
+import client.Error
 import scala.concurrent.Future
 import com.gu.identity.model.User
-import org.mockito.Matchers
+import org.mockito.{ArgumentMatcher, Matchers}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser}
 
 class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -20,8 +20,8 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   val api = mock[IdApiClient]
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
-  val omnitureData = mock[OmnitureTracking]
-  val identityRequest = IdentityRequest(omnitureData, None)
+  val trackingData = mock[TrackingData]
+  val identityRequest = IdentityRequest(trackingData, None, Some("123.456.789.10"))
 
   val resetPasswordController = new ResetPasswordController(api, requestParser, idUrlBuilder)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
@@ -45,15 +45,29 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     val fakeRequest = FakeRequest(POST, "/reset").withFormUrlEncodedBody("email-address" -> emailAddress)
 
     "with an api response validating the user" - {
-      when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Right()))
+      when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Right()))
+
       "should ask the api to send a reset email to the the the specified user" in Fake {
         resetPasswordController.processPasswordResetRequestForm(fakeRequest)
-        verify(api).sendPasswordResetEmail(emailAddress)
+        verify(api).sendPasswordResetEmail(Matchers.eq(emailAddress), any[TrackingData])
+      }
+
+      "should give the client's IP to the Identity API" in Fake {
+        when(trackingData.ipAddress).thenReturn(Some("123.456.789.10"))
+        resetPasswordController.processPasswordResetRequestForm(fakeRequest)
+
+        object TrackingDataIpMatcher extends ArgumentMatcher {
+          def matches(argument: scala.Any): Boolean = argument match {
+            case TrackingData(_, _, _, Some("123.456.789.10"), _, _) => true
+            case _ => false
+          }
+        }
+        verify(api).sendPasswordResetEmail(Matchers.any[String], Matchers.argThat(TrackingDataIpMatcher))
       }
     }
 
     "with an api is unable to locate the user" - {
-      when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Left(userNotFound)))
+      when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Left(userNotFound)))
 
         "should redirect to the form" in Fake {
           val result = resetPasswordController.processPasswordResetRequestForm(fakeRequest)

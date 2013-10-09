@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import feed.Competitions
@@ -17,7 +17,7 @@ object FrontScoresController extends Controller with implicits.Football with Log
     val numVisible = request.getIntParameter("numVisible").getOrElse(0)
     val isCompetitionPage = request.getBooleanParameter("competitionPage").getOrElse(false)
 
-    val todaysCompetitions = Competitions.withTodaysMatches.competitions
+    val todaysCompetitions = Competitions().withTodaysMatches.competitions
 
     //keep competitions in same order as passed in ids but prefer home nation friendlies
     val competition = todaysCompetitions.find(_.matches.exists(_.isHomeNationGame)).orElse(
@@ -27,6 +27,6 @@ object FrontScoresController extends Controller with implicits.Football with Log
     competition.map { comp =>
       val html = () => football.views.html.fragments.frontMatchBlock(comp, numVisible, isCompetitionPage)
       renderFormat(html, html, 60)
-    } getOrElse (NoContent)
+    } getOrElse NoContent
   }
 }

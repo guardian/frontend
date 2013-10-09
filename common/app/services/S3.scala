@@ -95,7 +95,6 @@ object S3FrontsApi extends S3 {
   val namespace = "frontsapi"
   lazy val location = s"${stage}/${namespace}"
 
-
   def getSchema = get(s"${location}/schema.json")
   def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
   def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")

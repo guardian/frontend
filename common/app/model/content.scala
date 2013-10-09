@@ -25,6 +25,8 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
+  lazy val openGraphImage: String = mainPicture.flatMap(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
+  lazy val bodyImages = imageMap("body")
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -120,19 +122,14 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   override lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
   override lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
   override lazy val mainPicture: Option[ImageAsset] = largestMainPicture.orElse(thumbnail.flatMap(_.largestImage))
-
-  private def findIndex( element: ApiElement): Int =  {
-    // Use the old media asset class, which defines an index, and find a media asset with a matching file path to the element
-    // This can be removed when the content api element query is implicityly ordered,
-    delegate.mediaAssets.find(element.assets.flatMap(_.file) contains _.file.getOrElse("")).map(_.index).getOrElse(0)
-  }
+  override lazy val mainVideo: Option[VideoElement] = videoMap("main").headOption
 
   private def elements(elementType: String): Map[String,List[Element]] = {
     // Find the elements associated with a given element type, keyed by a relation string.
     // Example relations are gallery, thumbnail, main, body
     delegate.elements.map(_.filter(_.elementType == elementType)
                            .groupBy(_.relation)
-                           .mapValues(_.map(element => Element(element, findIndex(element))).toList)
+                           .mapValues(_.map(element => Element(element)).toList)
     ).getOrElse(Map.empty).withDefaultValue(Nil)
   }
 }
@@ -145,6 +142,7 @@ object Content {
       case video if delegate.isVideo => new Video(delegate)
       case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
+      case picture if delegate.isImageContent => new ImageContent(delegate)
       case _ => new Content(delegate)
     }
   }
@@ -153,26 +151,30 @@ object Content {
 class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
-  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   lazy val isReview = tones.exists(_.id == "tone/reviews")
 
+  // A legacy body have an embedded video at the top.
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
     .getOrElse(false)
+
+  // True if the content model has at least one video asset in the 'main' relation.
+  lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
+
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
+  override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog)
   )
 
-  override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
-
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
-    "og:image" -> mainPicture.map(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
+    "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
@@ -223,7 +225,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
     "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
-    "og:image" -> imageOfWidth(640).map(_.path).getOrElse(mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback))
+    "og:image" -> openGraphImage
   ) ++ tags.map("video:tag" -> _.name)
 }
 
@@ -244,7 +246,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
-    "og:image" -> mainPicture.map(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
+    "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
@@ -254,6 +256,13 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 class Interactive(private val delegate: ApiContent) extends Content(delegate) {
   lazy val contentType = "Interactive"
   lazy val body: String = delegate.safeFields("body")
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
+}
+
+class ImageContent(private val delegate: ApiContent) extends Content(delegate) {
+
+  lazy val contentType = "ImageContent"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }

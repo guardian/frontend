@@ -1,3 +1,52 @@
-.release-message {
-    padding-top: 22px;  /* vertical spacing at the top of the article is a bit shot, so this is a bit aligned by skill of eye */
+.site-message {
+  display: none;
+  background: $c-neutral6;
+  @include mq(tablet) {
+      display: block;
+  }
+}
+
+.site-message__inner {
+    @include box-sizing(border-box);
+    @include gs-container;
+    position: relative;
+    padding: $baseline*3 $gs-gutter;
+}
+
+.site-message__message {
+    @include fs-headline(2);
+    color: $c-neutral2;
+    padding-bottom: $baseline*6;
+}
+
+.site-message__actions {
+    width: 100%;
+    border-top: 1px dotted $c-neutral2;
+}
+
+.site-message__actions__item {
+    display: inline;
+    @include fs-data(4);
+    margin-right: $gs-gutter;
+
+    a {
+        color: $c-neutral2;
+    }
+
+    i {
+        margin-bottom: -2px;
+        margin-right: 5px;
+    }
+}
+
+.site-message__close {
+    display: block;
+    position: absolute;
+    top: $baseline*3;
+    right: 20px;
+    padding: 0;
+    width: 22px;
+    height: 22px;
+    background-color: transparent;
+    border: none;
 }

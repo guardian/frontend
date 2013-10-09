@@ -1,13 +1,11 @@
 define([
     'models/common',
-    'models/editable',
     'knockout',
     'Reqwest',
     'js!humanizedTimeSpan'
 ],
 function (
     common,
-    Editable,
     ko,
     reqwest
 ){
@@ -70,12 +68,12 @@ function (
             contentType: 'application/json',
             data: JSON.stringify({
                 config: _.chain(this.config)
-                        .pairs()
-                        .filter(function(p){ return p[1]() && p[1]() !== self.meta[p[0]](); })
-                        .map(function(p){ return [p[0], p[1]()]; })
-                        .object()
-                        .value()
-            })
+                    .pairs()
+                    .filter(function(p){ return p[1]() && p[1]() !== self.meta[p[0]](); })
+                    .map(function(p){ return [p[0], p[1]()]; })
+                    .object()
+                    .value()
+        })
         }).always(function(){
             self.stopEditingConfig();
         });

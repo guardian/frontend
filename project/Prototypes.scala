@@ -1,14 +1,11 @@
 package com.gu
 
 import com.gu.versioninfo.VersionInfo
-import com.gu.PlayArtifact._
-import com.gu.PlayAssetHash._
-import com.gu.SbtGruntPlugin._
 import sbt._
 import sbt.Keys._
 import play.Project._
 import sbtassembly.Plugin.AssemblyKeys._
-import sbtassembly.Plugin.MergeStrategy
+import sbtassembly.Plugin._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -50,18 +47,6 @@ trait Prototypes {
     javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
     lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
 
-    assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
-      Seq(
-        // don't copy across svg files (they're inline)
-        (sourceDirectory / "assets" / "images") ** "*.png",
-        (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
-        (sourceDirectory / "assets" / "stylesheets") ** "*.min.css",
-        (sourceDirectory / "public") ** "*"
-      )
-    },
-
-    staticFilesPackage := "frontend-static",
-
     templatesImport ++= Seq(
       "common._",
       "model._",
@@ -93,38 +78,45 @@ trait Prototypes {
     (javaOptions in test) += "-DAPP_SECRET=secret"
   )
 
-  val frontendAssemblySettings = Seq(
+  val frontendAssemblySettings = assemblySettings ++ Seq(
     test in assembly := {},
-    executableName <<= (name) { "frontend-%s" format _ },
-    jarName in assembly <<= (executableName) map { "%s.jar" format _ },
-    aggregate in magenta := false,
+    jarName in assembly <<= (name) map { "frontend-%s.jar" format _ },
+    aggregate in assembly := false,
 
-    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { current =>
       {
         case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
         case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
         case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
 
+        // Take ours, i.e. MergeStrategy.last...
+        case "logger.xml" => MergeStrategy.last
+        case "version.txt" => MergeStrategy.last
+
+        // Merge play.plugins because we need them all
+        case "play.plugins" => MergeStrategy.filterDistinctLines
+
+        // Try to be helpful...
+        case "overview.html" => MergeStrategy.discard
+        case "NOTICE" => MergeStrategy.discard
         case "README" => MergeStrategy.discard
         case "CHANGELOG" => MergeStrategy.discard
+        case meta if meta.startsWith("META-INF/") => MergeStrategy.first
 
-        case x => old(x)
+        case other => current(other)
+      }
+    },
+
+    excludedFiles in assembly := { (bases: Seq[File]) =>
+      bases flatMap { base => (base / "META-INF" * "*").get } collect {
+        case f if f.getName.toUpperCase == "LICENSE" => f
+        case f if f.getName.toUpperCase == "MANIFEST.MF" => f
+        case f if f.getName.endsWith(".SF") => f
+        case f if f.getName.endsWith(".DSA") => f
+        case f if f.getName.endsWith(".RSA") => f
       }
     }
-  )
-
-  val javascriptFiles = SettingKey[PathFinder]("javascript-files", "All javascript")
-  val cssFiles = SettingKey[PathFinder]("css-files", "All css")
-
-  val frontendGruntSettings = Seq(
-    javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
-    cssFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.scss" },
-
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("jshint:common")),
-
-    resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:js", javascriptFiles)),
-    resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:css", cssFiles))
   )
 
   def root() = Project("root", base = file("."))
@@ -132,21 +124,17 @@ trait Prototypes {
       scalaVersion := "2.10.2"
     )
 
-  def base(name: String) = play.Project(name, version, path = file(name))
-    .settings(VersionInfo.settings:_*)
-    .settings(frontendCompilationSettings:_*)
-    .settings(frontendTestSettings:_*)
-
-  def application(name: String) = base(name)
-    .settings(playAssetHashDistSettings: _*)
-    .settings(frontendClientSideSettings:_*)
+  def application(name: String) = play.Project(name, version, path = file(name))
     .settings(frontendDependencyManagementSettings:_*)
+    .settings(frontendCompilationSettings:_*)
+    .settings(frontendClientSideSettings:_*)
+    .settings(frontendTestSettings:_*)
+    .settings(VersionInfo.settings:_*)
     .settings(frontendAssemblySettings:_*)
-    .settings(libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "6.0",
-      "commons-io" % "commons-io" % "2.4"
-    ))
-
-  def grunt(name: String) = application(name)
-    .settings(frontendGruntSettings:_*)
+    .settings(
+      libraryDependencies ++= Seq(
+        "com.gu" %% "management-play" % "6.0",
+        "commons-io" % "commons-io" % "2.4"
+      )
+    )
 }

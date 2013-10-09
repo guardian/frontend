@@ -1,0 +1,2772 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":128655,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":12866,
+    "orderBy":"newest",
+    "edition":{
+      "id":"football",
+      "webTitle":"Football",
+      "webUrl":"http://www.theguardian.com/football",
+      "apiUrl":"http://content.guardianapis.com/football",
+      "code":"default"
+    },
+    "section":{
+      "id":"football",
+      "webTitle":"Football",
+      "webUrl":"http://www.theguardian.com/football",
+      "apiUrl":"http://content.guardianapis.com/football",
+      "editions":[{
+        "id":"football",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football",
+        "apiUrl":"http://content.guardianapis.com/football",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"football/2013/oct/02/world-cup-2014-brazil-curitiba-stadium",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T14:03:40Z",
+      "webTitle":"World Cup 2014: Work suspended on Curitiba stadium due to 'safety risk'",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/02/world-cup-2014-brazil-curitiba-stadium",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/02/world-cup-2014-brazil-curitiba-stadium",
+      "fields":{
+        "trailText":"Work has been suspended on the 2014 World Cup stadium at Curitiba on the orders of a labour tribunal due to 'multiple safety risks'",
+        "headline":"World Cup 2014: Work suspended on Curitiba stadium due to 'safety risk'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8b9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380722382407/Labourers-work-on-the-Are-006.jpg",
+        "wordcount":"232",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/world-cup-2014",
+        "type":"keyword",
+        "webTitle":"World Cup 2014",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2014",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2014",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/world-cup-football",
+        "type":"keyword",
+        "webTitle":"World Cup",
+        "webUrl":"http://www.theguardian.com/football/world-cup-football",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"world/brazil",
+        "type":"keyword",
+        "webTitle":"Brazil",
+        "webUrl":"http://www.theguardian.com/world/brazil",
+        "apiUrl":"http://content.guardianapis.com/world/brazil",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418862050",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380722389068/Labourers-work-on-the-Are-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"  STRINGER Brazil / Reuters",
+            "altText":"Labourers work on the Arena da Baixada stadium which will host 2014 World Cup matches in Curitiba",
+            "height":"276",
+            "credit":"  STRINGER Brazil / Reuters/Reuters",
+            "caption":"Labourers at work on the Arena da Baixada stadium in Curitiba, which will host four 2014 World Cup matches. Photograph: Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418862051",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380722382407/Labourers-work-on-the-Are-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"  STRINGER Brazil / Reuters",
+            "altText":"Labourers work on the Arena da Baixada stadium which will host 2014 World Cup matches in Curitiba",
+            "height":"84",
+            "credit":"  STRINGER Brazil / Reuters/Reuters",
+            "caption":"Labourers at work on the Arena da Baixada stadium back in March 2013 and which will host 2014 World Cup matches in Curitiba. Photograph:   STRINGER Brazil / Reuters/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/2013/oct/02/dc-united-win-us-open-cup-lewis-neal",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T13:13:00Z",
+      "webTitle":"DC United surprise winners of 100th US Open Cup",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/02/dc-united-win-us-open-cup-lewis-neal",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/02/dc-united-win-us-open-cup-lewis-neal",
+      "fields":{
+        "trailText":"<p><strong>US Open Cup:</strong> DC United upset Real Salt Lake 1-0 to claim trophy and a place in Concacaf Champions League</p>",
+        "headline":"DC United surprise winners of 100th US Open Cup",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7qv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380685026728/97182f2c-525a-4efa-8bf1-526ca1954889-140x84.jpeg",
+        "wordcount":"1072",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/us-open-cup",
+        "type":"keyword",
+        "webTitle":"US Open Cup",
+        "webUrl":"http://www.theguardian.com/football/us-open-cup",
+        "apiUrl":"http://content.guardianapis.com/football/us-open-cup",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/mls",
+        "type":"keyword",
+        "webTitle":"MLS",
+        "webUrl":"http://www.theguardian.com/football/mls",
+        "apiUrl":"http://content.guardianapis.com/football/mls",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/dcunited",
+        "type":"keyword",
+        "webTitle":"DC United",
+        "webUrl":"http://www.theguardian.com/football/dcunited",
+        "apiUrl":"http://content.guardianapis.com/football/dcunited",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/realsaltlake",
+        "type":"keyword",
+        "webTitle":"Real Salt Lake",
+        "webUrl":"http://www.theguardian.com/football/realsaltlake",
+        "apiUrl":"http://content.guardianapis.com/football/realsaltlake",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/graham-parker",
+        "type":"contributor",
+        "webTitle":"Graham Parker",
+        "webUrl":"http://www.theguardian.com/profile/graham-parker",
+        "apiUrl":"http://content.guardianapis.com/profile/graham-parker",
+        "bio":"<p>Graham Parker is a writer based in Brooklyn, New York. He is also a widely exhibited artist and author of the book <em>Fair Use (notes from spam)</em>.<br />On Twitter he is @KidWeil</p>",
+        "r2ContributorId":"48198",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/1/9/1326131325698/Graham-Parker-profile-pic-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418855559",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380685028087/97182f2c-525a-4efa-8bf1-526ca1954889-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Leah Hogsten",
+            "altText":"D.C. United's Lewis Neal celebrates his goal against Real Salt Lake",
+            "height":"276",
+            "credit":"Leah Hogsten/AP",
+            "caption":"DC United's Lewis Neal celebrates his matchwinner against Real Salt Lake in the US Open Cup final, in Sandy, Utah. Photograph: Leah Hogsten/AP/The Salt Lake Tribune",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418855560",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380685026728/97182f2c-525a-4efa-8bf1-526ca1954889-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Leah Hogsten",
+            "altText":"D.C. United's Lewis Neal celebrates his goal against Real Salt Lake",
+            "height":"84",
+            "credit":"Leah Hogsten/AP",
+            "caption":"D.C. United's Lewis Neal celebrates his goal against Real Salt Lake during the U.S. Open Cup final, Tuesday, Oct. 1, 2013, in Sandy, Utah. Photograph: Leah Hogsten/AP/The Salt Lake Tribune",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/blog/2013/oct/02/celtic-fraser-forster-england-celtic",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T12:48:23Z",
+      "webTitle":"Fraser Forster's Champions League display warrants England recognition | Ewan Murray",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/celtic-fraser-forster-england-celtic",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/celtic-fraser-forster-england-celtic",
+      "fields":{
+        "trailText":"<strong>Ewan Murray: </strong>Celtic's outstanding young goalkeeper has surely done enough to convince the England manager Roy Hodgson of his talent",
+        "headline":"Fraser Forster's Champions League display warrants England recognition",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j88t",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717706089/Fraser-Forster-006.jpg",
+        "wordcount":"691",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/celtic",
+        "type":"keyword",
+        "webTitle":"Celtic",
+        "webUrl":"http://www.theguardian.com/football/celtic",
+        "apiUrl":"http://content.guardianapis.com/football/celtic",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/94"
+        }]
+      },{
+        "id":"football/england",
+        "type":"keyword",
+        "webTitle":"England",
+        "webUrl":"http://www.theguardian.com/football/england",
+        "apiUrl":"http://content.guardianapis.com/football/england",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/497"
+        }]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/ewanmurray",
+        "type":"contributor",
+        "webTitle":"Ewan Murray",
+        "webUrl":"http://www.theguardian.com/profile/ewanmurray",
+        "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
+        "r2ContributorId":"22562",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/8/18/1376837835334/Ewan-Murray-byline-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418853127",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717695937/Fraser-Forster-001.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"54",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717697939/Fraser-Forster-002.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"340",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717699661/Fraser-Forster-003.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"130",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717701401/Fraser-Forster-004.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"720",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717703579/Fraser-Forster-005.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"1536",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717706089/Fraser-Forster-006.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"84",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717707761/Fraser-Forster-007.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"132",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717709396/Fraser-Forster-008.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"168",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717711074/Fraser-Forster-009.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"180",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717712731/Fraser-Forster-010.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"228",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717714432/Fraser-Forster-011.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"276",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717716171/Fraser-Forster-012.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"372",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717718032/Fraser-Forster-013.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"1116",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717720434/Fraser-Forster-014.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"1536",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717714432/Fraser-Forster-011.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"276",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418853129",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717706089/Fraser-Forster-006.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"Michael Mayhew",
+            "altText":"Fraser Forster",
+            "height":"84",
+            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/497"
+      }]
+    },{
+      "id":"football/blog/2013/oct/02/mesut-ozil-arsenal-new-dennis-bergkamp",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T12:12:00Z",
+      "webTitle":"Could Mesut Özil be Arsenal's new Dennis Bergkamp? – open thread",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/mesut-ozil-arsenal-new-dennis-bergkamp",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/mesut-ozil-arsenal-new-dennis-bergkamp",
+      "fields":{
+        "trailText":"<p>Bergkamp broke Arsenal's transfer record and revitalised the club when he signed from Inter in 1995. Could Özil do the same?</p>",
+        "headline":"Could Mesut Özil be Arsenal's new Dennis Bergkamp? – open thread",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j82m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/11/5/1225920082604/Dennis-Bergkamp-003.jpg",
+        "wordcount":"500",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/mesut-ozil",
+        "type":"keyword",
+        "webTitle":"Mesut Ozil",
+        "webUrl":"http://www.theguardian.com/football/mesut-ozil",
+        "apiUrl":"http://content.guardianapis.com/football/mesut-ozil",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.theguardian.com/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/paul-campbell",
+        "type":"contributor",
+        "webTitle":"Paul Campbell",
+        "webUrl":"http://www.theguardian.com/profile/paul-campbell",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-campbell",
+        "bio":"<p>Paul Campbell is a community co-ordinator for sport on guardian.co.uk</p>",
+        "r2ContributorId":"52301",
+        "references":[]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418852405",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358962237631/Dennis-Bergkamp-reflects--015.jpg",
+          "typeData":{
+            "source":"FA",
+            "photographer":"FA",
+            "altText":"Dennis Bergkamp reflects on his time at Arsenal and English football",
+            "height":"276",
+            "credit":"FA/FA",
+            "caption":"Dennis Bergkamp becomes Arsenal's record signing in 1995. Photograph: FA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418852406",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/11/5/1225920082604/Dennis-Bergkamp-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eddie Keogh",
+            "altText":"Dennis Bergkamp",
+            "height":"84",
+            "credit":"Eddie Keogh/Reuters",
+            "caption":"Dennis Bergkamp. Photograph: Eddie Keogh/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/blog/2013/oct/02/david-moyes-manchester-united-alex-ferguson",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T11:44:29Z",
+      "webTitle":"David Moyes is on a hiding to nothing as Manchester United manager | Paul Wilson",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/david-moyes-manchester-united-alex-ferguson",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/david-moyes-manchester-united-alex-ferguson",
+      "fields":{
+        "trailText":"<strong>Paul Wilson: </strong>Succeeding Sir Alex Ferguson at Old Trafford has become the job from hell as United falter and David Moyes ties himself in knots",
+        "headline":"David Moyes is on a hiding to nothing as Manchester United manager",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j869",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713997010/David-Moyes-006.jpg",
+        "wordcount":"1144",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/david-moyes",
+        "type":"keyword",
+        "webTitle":"David Moyes",
+        "webUrl":"http://www.theguardian.com/football/david-moyes",
+        "apiUrl":"http://content.guardianapis.com/football/david-moyes",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/sir-alex-ferguson",
+        "type":"keyword",
+        "webTitle":"Sir Alex Ferguson",
+        "webUrl":"http://www.theguardian.com/football/sir-alex-ferguson",
+        "apiUrl":"http://content.guardianapis.com/football/sir-alex-ferguson",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchester-united",
+        "type":"keyword",
+        "webTitle":"Manchester United",
+        "webUrl":"http://www.theguardian.com/football/manchester-united",
+        "apiUrl":"http://content.guardianapis.com/football/manchester-united",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/12"
+        }]
+      },{
+        "id":"football/everton",
+        "type":"keyword",
+        "webTitle":"Everton",
+        "webUrl":"http://www.theguardian.com/football/everton",
+        "apiUrl":"http://content.guardianapis.com/football/everton",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/8"
+        }]
+      },{
+        "id":"football/preston",
+        "type":"keyword",
+        "webTitle":"Preston North End",
+        "webUrl":"http://www.theguardian.com/football/preston",
+        "apiUrl":"http://content.guardianapis.com/football/preston",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/61"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"books/david-peace",
+        "type":"keyword",
+        "webTitle":"David Peace",
+        "webUrl":"http://www.theguardian.com/books/david-peace",
+        "apiUrl":"http://content.guardianapis.com/books/david-peace",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/paulwilson",
+        "type":"contributor",
+        "webTitle":"Paul Wilson",
+        "webUrl":"http://www.theguardian.com/profile/paulwilson",
+        "apiUrl":"http://content.guardianapis.com/profile/paulwilson",
+        "bio":"<p>Paul Wilson is the Observer's <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent. He has previously worked for the Guardian and the Independent and local newspapers in the north of England, where he still lives, the only Evertonian in a family of Liverpool and Wigan Athletic supporters. No awards, books or television career to speak of, but he once saw a bloke on the tube laughing out loud while reading his column. He lives in hope that in another five years or so he might spot another one. Or even the same one</p>",
+        "rcsId":"GNL023673",
+        "r2ContributorId":"16254",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/paul_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418846366",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713987555/David-Moyes-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"54",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713989606/David-Moyes-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"340",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713991215/David-Moyes-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"130",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713992902/David-Moyes-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"720",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713994872/David-Moyes-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"1536",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713997010/David-Moyes-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"84",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713998594/David-Moyes-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"132",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714000157/David-Moyes-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"168",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714001753/David-Moyes-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"180",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714003327/David-Moyes-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"228",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714004923/David-Moyes-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"276",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714006591/David-Moyes-012.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"372",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714008463/David-Moyes-013.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"1116",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714010779/David-Moyes-014.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"1536",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714004923/David-Moyes-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"276",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418846367",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713997010/David-Moyes-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"David Moyes",
+            "height":"84",
+            "credit":"Peter Powell/EPA",
+            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/8"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/61"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/12"
+      }]
+    },{
+      "id":"football/blog/2013/oct/02/mesut-ozil-arsenal-five-things",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T10:52:35Z",
+      "webTitle":"Five reasons why Mesut Özil is such a special talent",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/mesut-ozil-arsenal-five-things",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/mesut-ozil-arsenal-five-things",
+      "fields":{
+        "trailText":"<strong>Michael Cox:</strong> Arsenal's £42.5m record signing Mesut Özil has got the lot – spatial awareness, a superb first touch, and he is a great team player",
+        "headline":"Five reasons why Mesut Özil is such a special talent",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j84m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380710659041/mesut-ozil-006.jpg",
+        "wordcount":"571",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/mesut-ozil",
+        "type":"keyword",
+        "webTitle":"Mesut Ozil",
+        "webUrl":"http://www.theguardian.com/football/mesut-ozil",
+        "apiUrl":"http://content.guardianapis.com/football/mesut-ozil",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.theguardian.com/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/realmadrid",
+        "type":"keyword",
+        "webTitle":"Real Madrid",
+        "webUrl":"http://www.theguardian.com/football/realmadrid",
+        "apiUrl":"http://content.guardianapis.com/football/realmadrid",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26303"
+        }]
+      },{
+        "id":"football/thierry-henry",
+        "type":"keyword",
+        "webTitle":"Thierry Henry",
+        "webUrl":"http://www.theguardian.com/football/thierry-henry",
+        "apiUrl":"http://content.guardianapis.com/football/thierry-henry",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/michael-cox",
+        "type":"contributor",
+        "webTitle":"Michael Cox",
+        "webUrl":"http://www.theguardian.com/profile/michael-cox",
+        "apiUrl":"http://content.guardianapis.com/profile/michael-cox",
+        "bio":"<p>Michael Cox is editor of <a href=\"http://www.zonalmarking.net/\">Zonal Marking</a></p>",
+        "r2ContributorId":"39673",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418852220",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380710665652/mesut-ozil-011.jpg",
+          "typeData":{
+            "source":"Imago / Barcroft Media",
+            "photographer":"Imago / Barcroft Media",
+            "altText":"mesut ozil",
+            "height":"276",
+            "credit":"Imago / Barcroft Media/Imago / Barcroft Media",
+            "caption":"Mesut Özil celebrates his first Arsenal goal, in the Champions League win over Napoli. Photograph: Imago/Barcroft Media",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418852221",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380710659041/mesut-ozil-006.jpg",
+          "typeData":{
+            "source":"Imago / Barcroft Media",
+            "photographer":"Imago / Barcroft Media",
+            "altText":"mesut ozil",
+            "height":"84",
+            "credit":"Imago / Barcroft Media/Imago / Barcroft Media",
+            "caption":"esut Özil celebrates his first Arsenal goal in the Champions League win over Napoli. Photograph: Imago / Barcroft Media",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26303"
+      }]
+    },{
+      "id":"football/video/2013/oct/02/greenpeace-protest-basel-fc-schalke-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T10:49:00Z",
+      "webTitle":"Greenpeace protest disrupts Basel v FC Schalke 04 Champions League match - video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/oct/02/greenpeace-protest-basel-fc-schalke-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/oct/02/greenpeace-protest-basel-fc-schalke-video",
+      "fields":{
+        "trailText":"<p>Greenpeace activists interrupt Tuesday night's Champions League clash between Basel and FC Schalke 04, unfurling a banner</p>",
+        "headline":"Greenpeace protest disrupts Basel v FC Schalke 04 Champions League match - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j83j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709257297/Greenpeace-protest-disrup-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"environment/greenpeace",
+        "type":"keyword",
+        "webTitle":"Greenpeace",
+        "webUrl":"http://www.theguardian.com/environment/greenpeace",
+        "apiUrl":"http://content.guardianapis.com/environment/greenpeace",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/series/amazing-world-of-sport",
+        "type":"series",
+        "webTitle":"The amazing world of sport",
+        "webUrl":"http://www.theguardian.com/sport/series/amazing-world-of-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/series/amazing-world-of-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418835387",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709246644/Greenpeace-protest-disrup-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"90",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709248154/Greenpeace-protest-disrup-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"225",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709249414/Greenpeace-protest-disrup-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"360",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709250745/Greenpeace-protest-disrup-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"360",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709253426/Greenpeace-protest-disrup-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"54",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709254711/Greenpeace-protest-disrup-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"340",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709256017/Greenpeace-protest-disrup-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"130",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709257297/Greenpeace-protest-disrup-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"84",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709258799/Greenpeace-protest-disrup-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"132",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709260039/Greenpeace-protest-disrup-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"168",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709261340/Greenpeace-protest-disrup-012.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"180",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709262611/Greenpeace-protest-disrup-013.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"228",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709263904/Greenpeace-protest-disrup-014.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"276",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709265282/Greenpeace-protest-disrup-015.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"372",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709266663/Greenpeace-protest-disrup-016.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"230",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002GreenpeaceProtest-16x9.mp4",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002GreenpeaceProtest_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002GreenpeaceProtest_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002GreenpeaceProtest/131002GreenpeaceProtest.m3u8",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002GreenpeaceProtest_vpx.webm",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        }]
+      },{
+        "id":"gu-image-418839760",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709257297/Greenpeace-protest-disrup-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Gillieron",
+            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "height":"84",
+            "credit":"Laurent Gillieron/AP",
+            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      }]
+    },{
+      "id":"football/video/2013/oct/02/celtic-neil-lennon-neymar-scott-brown-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T10:44:20Z",
+      "webTitle":"Celtic's Neil Lennon slams Neymar after Scott Brown red card against Barcelona – video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/oct/02/celtic-neil-lennon-neymar-scott-brown-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/oct/02/celtic-neil-lennon-neymar-scott-brown-video",
+      "fields":{
+        "trailText":"<p>Celtic manager Neil Lennon is standing by his captain after Scott Brown was sent off during the 1-0 loss to Barcelona</p>",
+        "headline":"Celtic's Neil Lennon slams Neymar after Scott Brown red card against Barcelona – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8vq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700950124/Celtic-boss-Neil-Lennon-s-006.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/celtic",
+        "type":"keyword",
+        "webTitle":"Celtic",
+        "webUrl":"http://www.theguardian.com/football/celtic",
+        "apiUrl":"http://content.guardianapis.com/football/celtic",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/94"
+        }]
+      },{
+        "id":"football/barcelona",
+        "type":"keyword",
+        "webTitle":"Barcelona",
+        "webUrl":"http://www.theguardian.com/football/barcelona",
+        "apiUrl":"http://content.guardianapis.com/football/barcelona",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26300"
+        }]
+      },{
+        "id":"football/neymar",
+        "type":"keyword",
+        "webTitle":"Neymar",
+        "webUrl":"http://www.theguardian.com/football/neymar",
+        "apiUrl":"http://content.guardianapis.com/football/neymar",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/neil-lennon",
+        "type":"keyword",
+        "webTitle":"Neil Lennon",
+        "webUrl":"http://www.theguardian.com/football/neil-lennon",
+        "apiUrl":"http://content.guardianapis.com/football/neil-lennon",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418818260",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700944068/Celtic-boss-Neil-Lennon-s-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"360",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700946592/Celtic-boss-Neil-Lennon-s-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"54",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700947762/Celtic-boss-Neil-Lennon-s-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"340",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700948968/Celtic-boss-Neil-Lennon-s-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"130",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700950124/Celtic-boss-Neil-Lennon-s-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"84",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700951392/Celtic-boss-Neil-Lennon-s-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"132",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700952582/Celtic-boss-Neil-Lennon-s-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"168",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700953741/Celtic-boss-Neil-Lennon-s-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"180",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700954936/Celtic-boss-Neil-Lennon-s-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"228",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700956118/Celtic-boss-Neil-Lennon-s-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"276",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700957342/Celtic-boss-Neil-Lennon-s-012.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"372",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700958549/Celtic-boss-Neil-Lennon-s-013.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"230",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700959726/Celtic-boss-Neil-Lennon-s-014.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"90",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700961062/Celtic-boss-Neil-Lennon-s-015.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"225",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700962245/Celtic-boss-Neil-Lennon-s-016.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"360",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002CelticBarca-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CelticBarca_8143593.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CelticBarca_8143593.jpg",
+            "width":"480",
+            "durationSeconds":"7"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002CelticBarca_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CelticBarca_8143593.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CelticBarca_8143593.jpg",
+            "width":"480",
+            "durationSeconds":"7"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002CelticBarca_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CelticBarca_8143593.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CelticBarca_8143593.jpg",
+            "width":"480",
+            "durationSeconds":"7"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002CelticBarca/131002CelticBarca.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CelticBarca_8143593.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CelticBarca_8143593.jpg",
+            "width":"480",
+            "durationSeconds":"7"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002CelticBarca_vpx.webm",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002CelticBarca_8143593.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002CelticBarca_8143593.jpg",
+            "width":"480",
+            "durationSeconds":"7"
+          }
+        }]
+      },{
+        "id":"gu-image-418839311",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380700950124/Celtic-boss-Neil-Lennon-s-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona - video",
+            "height":"84",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"Celtic boss Neil Lennon slams Neymar after Scott Brown red card against Barcelona Photograph: Afp/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26300"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      }]
+    },{
+      "id":"football/2013/oct/02/liverpool-fowler-mcmanaman-jones-coaching",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T10:43:49Z",
+      "webTitle":"Robbie Fowler, Steve McManaman and Rob Jones drafted in by Liverpool",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/02/liverpool-fowler-mcmanaman-jones-coaching",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/02/liverpool-fowler-mcmanaman-jones-coaching",
+      "fields":{
+        "trailText":"Robbie Fowler, Steve McManaman and Rob Jones have been drafted in by the Liverpool manager Brendan Rodgers to help coach the age-group players",
+        "headline":"Robbie Fowler, Steve McManaman and Rob Jones drafted in by Liverpool",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j845",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710546652/Robbie-Fowler-006.jpg",
+        "wordcount":"242",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/liverpool",
+        "type":"keyword",
+        "webTitle":"Liverpool",
+        "webUrl":"http://www.theguardian.com/football/liverpool",
+        "apiUrl":"http://content.guardianapis.com/football/liverpool",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/9"
+        }]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418838977",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710537644/Robbie-Fowler-001.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"54",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710539960/Robbie-Fowler-002.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"340",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710541477/Robbie-Fowler-003.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"130",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710542918/Robbie-Fowler-004.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"720",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710544697/Robbie-Fowler-005.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"1536",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710546652/Robbie-Fowler-006.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"84",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710548076/Robbie-Fowler-007.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"132",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710549447/Robbie-Fowler-008.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"168",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710550859/Robbie-Fowler-009.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"180",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710552147/Robbie-Fowler-010.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"228",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710553495/Robbie-Fowler-011.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"276",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710554984/Robbie-Fowler-012.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"372",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710556727/Robbie-Fowler-013.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"1116",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710559064/Robbie-Fowler-014.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"1536",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710553495/Robbie-Fowler-011.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"276",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418838978",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380710546652/Robbie-Fowler-006.jpg",
+          "typeData":{
+            "source":"PA Archive/Press Association Ima",
+            "photographer":"David Davies",
+            "altText":"Robbie Fowler",
+            "height":"84",
+            "credit":"David Davies/PA Archive/Press Association Ima",
+            "caption":"Robbie Fowler will be hoping some of his Liverpool magic rubs off on the youth players. Photograph: David Davies/PA Archive/Press Association Ima",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/9"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/video/2013/oct/02/jose-mourinho-chelsea-champions-league-steaua",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-02T10:18:00Z",
+      "webTitle":"José Mourinho satisfied with Chelsea's Champions League win at Steaua Bucharest - video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/oct/02/jose-mourinho-chelsea-champions-league-steaua",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/oct/02/jose-mourinho-chelsea-champions-league-steaua",
+      "fields":{
+        "trailText":"<p>Chelsea manager José Mourinho says he's happy with their 4-0 Champions League victory at Steaua Bucharest</p>",
+        "headline":"José Mourinho satisfied with Chelsea's Champions League win at Steaua Bucharest - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8xb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703160002/Jos--Mourinho-satisfied-w-005.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/chelsea",
+        "type":"keyword",
+        "webTitle":"Chelsea",
+        "webUrl":"http://www.theguardian.com/football/chelsea",
+        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/4"
+        }]
+      },{
+        "id":"football/steauabucharest",
+        "type":"keyword",
+        "webTitle":"Steaua Bucharest",
+        "webUrl":"http://www.theguardian.com/football/steauabucharest",
+        "apiUrl":"http://content.guardianapis.com/football/steauabucharest",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/jose-mourinho",
+        "type":"keyword",
+        "webTitle":"José Mourinho",
+        "webUrl":"http://www.theguardian.com/football/jose-mourinho",
+        "apiUrl":"http://content.guardianapis.com/football/jose-mourinho",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418821556",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703156258/Jos--Mourinho-satisfied-w-002.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"54",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703157512/Jos--Mourinho-satisfied-w-003.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"340",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703158778/Jos--Mourinho-satisfied-w-004.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"130",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703160002/Jos--Mourinho-satisfied-w-005.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"84",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703161312/Jos--Mourinho-satisfied-w-006.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"132",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703162498/Jos--Mourinho-satisfied-w-007.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"168",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703163703/Jos--Mourinho-satisfied-w-008.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"180",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703164944/Jos--Mourinho-satisfied-w-009.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"228",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703166190/Jos--Mourinho-satisfied-w-010.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"276",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703167474/Jos--Mourinho-satisfied-w-011.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"372",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703168764/Jos--Mourinho-satisfied-w-012.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"230",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703169977/Jos--Mourinho-satisfied-w-013.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"90",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703171200/Jos--Mourinho-satisfied-w-014.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"225",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703172408/Jos--Mourinho-satisfied-w-015.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"360",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703173725/Jos--Mourinho-satisfied-w-016.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"360",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002ChelseaWin-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002ChelseaWin_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002ChelseaWin_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002ChelseaWin/131002ChelseaWin.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002ChelseaWin_vpx.webm",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002ChelseaWin_8143651.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        }]
+      },{
+        "id":"gu-image-418834598",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380703160002/Jos--Mourinho-satisfied-w-005.jpg",
+          "typeData":{
+            "source":"  Cocolos Octavian/Demotix/Corbis",
+            "photographer":"Cocolos Octavian",
+            "altText":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest - video",
+            "height":"84",
+            "credit":"Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "caption":"José Mourinho satisfied with Chelsea's 4-0 Champions League win over Steaua Bucharest Photograph: Cocolos Octavian/  Cocolos Octavian/Demotix/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/4"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      }]
+    }],
+    "storyPackage":[]
+  }
+}

@@ -17,13 +17,11 @@
 @mixin fs-header($level, $size-only: false) {
     $header: nth($fs-headers, $level);
 
-    font-size: nth($header, 1)*1px;
-    font-size: nth($header, 1)/10*1rem;
+    @include font-size(nth($header, 1), nth($header, 2));
 
     @if $size-only == false {
         font-family: $serifheadline;
         font-weight: 900;
-        line-height: 1;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
     }
@@ -62,7 +60,7 @@
 
     @if $size-only == false {
         font-family: $serif;
-        -webkit-font-smoothing: subpixel-antialiased;
+        -webkit-font-smoothing: antialiased;
         text-rendering: optimizeSpeed;
     }
 }
@@ -74,7 +72,7 @@
 
     @if $size-only == false {
         font-family: $sans-serif;
-        -webkit-font-smoothing: subpixel-antialiased;
+        -webkit-font-smoothing: antialiased;
         text-rendering: optimizeSpeed;
     }
 }
@@ -108,14 +106,12 @@
 @mixin animation($args) {
     -webkit-animation: $args;
     -moz-animation: $args;
-    -ms-animation: $args;
     animation: $args;
 }
 
 @mixin keyframes($name) {
     @-webkit-keyframes $name { @content; }
     @-moz-keyframes $name { @content; }
-    @-ms-keyframes $name { @content; }
     @keyframes $name { @content; }
 }
 
@@ -129,6 +125,12 @@
     -webkit-box-shadow: $args;
     -moz-box-shadow: $args;
     box-shadow: $args;
+}
+
+@mixin background-size($args) {
+    -webkit-background-size: $args;
+    -moz-background-size: $args;
+    background-size: $args;
 }
 
 @mixin rotate($val) {
@@ -155,7 +157,6 @@
     position: relative;
     overflow: hidden;
 }
-
 
 @mixin old-ie {
     // Only use this content if we're dealing with old IE

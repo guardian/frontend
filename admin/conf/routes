@@ -3,10 +3,10 @@
 # ~~~~
 
 # authentication endpoints
-GET           /login                           controllers.Login.login
-POST          /login                           controllers.Login.loginPost
-GET           /openIDCallback                  controllers.Login.openIDCallback
-GET           /logout                          controllers.Login.logout
+GET           /login                           controllers.admin.Login.login
+POST          /login                           controllers.admin.Login.loginPost
+GET           /openIDCallback                  controllers.admin.Login.openIDCallback
+GET           /logout                          controllers.admin.Login.logout
 
 # static files
 GET           /assets/*file                    controllers.Assets.at(path="/public", file)
@@ -16,51 +16,41 @@ GET           /assets/*file                    controllers.Assets.at(path="/publ
 #######################################################
 
 #Index page
-GET           /                                controllers.IndexController.index()
-GET           /admin                           controllers.IndexController.admin()
+GET           /                                controllers.admin.IndexController.index()
+GET           /admin                           controllers.admin.IndexController.admin()
 
 # Admin endpoints
-GET           /admin/feature-trailblock        controllers.FeatureTrailblockController.edit()
-POST          /admin/feature-trailblock        controllers.FeatureTrailblockController.save()
+GET           /admin/feature-trailblock        controllers.admin.FeatureTrailblockController.edit()
+POST          /admin/feature-trailblock        controllers.admin.FeatureTrailblockController.save()
 
 # API endpoint proxying for https
-GET           /api/proxy/*path                 controllers.Api.proxy(path, callback)
-GET           /api/tag                         controllers.Api.tag(q, callback)
-GET           /api/item/*path                  controllers.Api.item(path, callback)
-GET           /json/proxy/*absUrl              controllers.Api.json(absUrl)
+GET           /api/proxy/*path                 controllers.admin.Api.proxy(path, callback)
+GET           /api/tag                         controllers.admin.Api.tag(q, callback)
+GET           /api/item/*path                  controllers.admin.Api.item(path, callback)
+GET           /json/proxy/*absUrl              controllers.admin.Api.json(absUrl)
 
 # Ophan proxying for https
-GET           /ophan/pageviews/*path           controllers.OphanApiController.pageViews(path)
-GET           /ophan/pageviews                 controllers.OphanApiController.platformPageViews()
+GET           /ophan/pageviews/*path           controllers.admin.OphanApiController.pageViews(path)
+GET           /ophan/pageviews                 controllers.admin.OphanApiController.platformPageViews()
 
 #Development endpoints
-GET           /dev/switchboard                 controllers.SwitchboardController.renderSwitchboard()
-POST          /dev/switchboard                 controllers.SwitchboardController.save()
-
-# Fronts
-GET           /collections                     controllers.FrontsController.index()
-GET           /fronts/config/*id               controllers.FrontsController.getConfig(id)
-
-GET           /fronts/collection/*id           controllers.FrontsController.readBlock(id)
-POST          /fronts/collection/*id           controllers.FrontsController.updateBlock(id)
-DELETE        /fronts/collection/*id           controllers.FrontsController.deleteTrail(id)
-GET           /fronts/collection               controllers.FrontsController.listCollections
-GET           /fronts/config                   controllers.FrontsController.listConfigs
+GET           /dev/switchboard                 controllers.admin.SwitchboardController.renderSwitchboard()
+POST          /dev/switchboard                 controllers.admin.SwitchboardController.save()
 
 # Analytics
-GET           /analytics/kpis                  controllers.AnalyticsController.kpis()
-GET           /analytics/pageviews             controllers.AnalyticsController.pageviews()
-GET           /analytics/browsers              controllers.AnalyticsController.browsers()
-GET           /analytics/abtests               controllers.AnalyticsController.abtests()
+GET           /analytics/kpis                  controllers.admin.AnalyticsController.kpis()
+GET           /analytics/pageviews             controllers.admin.AnalyticsController.pageviews()
+GET           /analytics/browsers              controllers.admin.AnalyticsController.browsers()
+GET           /analytics/abtests               controllers.admin.AnalyticsController.abtests()
 
 # Metrics
-GET           /metrics/loadbalancers           controllers.metrics.DashboardController.renderDashboard()
-GET           /metrics/fastly                  controllers.metrics.FastlyController.renderFastly()
+GET           /metrics/loadbalancers           controllers.admin.DashboardController.renderDashboard()
+GET           /metrics/fastly                  controllers.admin.FastlyController.renderFastly()
 
 # Radiator
-GET           /radiator                        controllers.RadiatorController.renderRadiator()
-GET           /radiator/pingdom                controllers.RadiatorController.pingdom()
-GET           /radiator/commit/*hash           controllers.RadiatorController.commitDetail(hash)
+GET           /radiator                        controllers.admin.RadiatorController.renderRadiator()
+GET           /radiator/pingdom                controllers.admin.RadiatorController.pingdom()
+GET           /radiator/commit/*hash           controllers.admin.RadiatorController.commitDetail(hash)
 
 # Football Troubleshooter
-GET           /troubleshoot/football           controllers.FootballTroubleshooterController.renderFootballTroubleshooter()
+GET           /troubleshoot/football           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()

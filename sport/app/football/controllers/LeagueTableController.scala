@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import conf._
@@ -6,9 +6,6 @@ import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
 import model.Page
-import pa.{ Round, LeagueTableEntry }
-import common.TeamCompetitions
-
 
 case class TablesPage(
     page: Page,
@@ -21,7 +18,7 @@ case class TablesPage(
 
 object LeagueTableController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
-  private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { Table(_) }
+  private def loadTables: Seq[Table] = Competitions().competitions.filter(_.hasLeagueTable).map { Table(_) }
 
   def renderLeagueTableJson() = renderLeagueTable()
   def renderLeagueTable() = Action { implicit request =>
@@ -61,7 +58,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       table.copy(groups = table.groups)
     }
 
-    val comps = Competitions.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
+    val comps = Competitions().competitions.filter(_.showInTeamsList).filter(_.hasTeams)
     
     val htmlResponse = () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)
     val jsonResponse = () => football.views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps)

@@ -43,7 +43,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
           Then("I should see the news trailblock")
           val news = $(".zone-news")
-          news.find(".trail__headline") should have length (4)
+          news.find(".trail__headline") should have length (5)
       }
     }
 
@@ -161,30 +161,6 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("load different content for UK and US front") {
-      Given("I visit the Network Front")
-
-      Fake {
-
-        //in real life these will always be editors picks only (content api does not do latest for front)
-        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5)(Uk))
-        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5)(Us))
-
-        ukAgent.refresh()
-        usAgent.refresh()
-        loadOrTimeout(ukAgent)
-        loadOrTimeout(usAgent)
-
-        val ukTrails = ukAgent.trailblock.get.trails
-        val usTrails = usAgent.trailblock.get.trails
-
-        Then("I should see UK Top Stories if I am in the UK edition")
-        And("I should see US Top Stories if I am in the US edition")
-
-        ukTrails should not equal (usTrails)
-      }
-    }
-
     scenario("de-duplicate visible trails") {
 
       Given("I am on the Network Front and I have not expanded any blocks")
@@ -260,7 +236,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should have ids for each block")
-          findFirst("h1[id='commentisfree']").getText should startWith ("Comment is free")
+          findFirst("h1[id='commentisfree']").getText should startWith ("comment is free")
       }
     }
 
@@ -285,7 +261,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
   }
 
   private def loadOrTimeout(agent: TrailblockAgent) {
-    eventually (timeout(5.seconds), interval(1.second)) { agent.trailblock should be ('defined) }
+    eventually (timeout(10.seconds), interval(1.second)) { agent.trailblock should be ('defined) }
   }
 
   private def createTrails(section: String, numTrails: Int) = (1 to numTrails).toList map {
@@ -315,4 +291,6 @@ private case class StubTrail(url: String) extends Trail {
   override def thumbnail = None
 
   override def mainPicture = None
+
+  override def mainVideo = None
 }

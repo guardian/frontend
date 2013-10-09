@@ -5,8 +5,8 @@
 }
 
 .competitions-date {
-    background-color: $sportMid;
-    color: #fff;
+    background-color: $c-sportMid;
+    color: #ffffff;
     margin-top: $baseline*2;
     margin-bottom: $baseline;
     padding: 9px $gutter/2;
@@ -14,7 +14,8 @@
 
 .team-fixtures .competitions-date,
 .team-results .competitions-date {
-    background-color: $sportBright;
+    color: $c-neutral1;
+    background-color: $c-sportBright;
 }
 
 .football-table-link,
@@ -37,7 +38,7 @@
 }
 
 a.competition-title {
-    color: $sportBright;
+    color: $c-sportMid;
     font-weight: bold;
 }
 
@@ -64,7 +65,7 @@ a.competition-title {
         padding: $baseline*2;
 
         &:active {
-            background: $darkMushroom;
+            background: $c-neutral5;
             color: #fff !important;
             text-decoration: none;
         }
@@ -121,10 +122,10 @@ a.competition-title {
 
 .match-status abbr {
     display: block;
-    padding: 2px 0;
+    padding: 0;
     margin-top: -2px;
     border: none;
-    width: 28px;
+    width: 24px;
     text-align: center;
 }
 
@@ -139,8 +140,8 @@ a.competition-title {
 
 .match-FT,
 .match-HT {
-    color: #fff;
-    background-color: $sportBright;
+    color: $c-neutral1;
+    background-color: $c-sportBright;
 }
 
 .matches,
@@ -183,7 +184,7 @@ a.competition-title {
             content: "+ ";
         }
         &:active {
-            background: $darkMushroom;
+            background: $c-neutral5;
             text-decoration: none;
         }
     }
@@ -198,9 +199,10 @@ a.competition-title {
 }
 
 //These are nasty... blame the designers!
-.front-competition-fixtures {
+.front-competition-table {
     padding-bottom: 0;
-    border-bottom: none;
+    border-top: 1px solid $c-neutral6;
+    border-bottom: 1px solid $c-neutral6;
 }
 
 .front-competition-fixtures .cta {
@@ -232,7 +234,7 @@ a.competition-title {
     .is-active,
     button:focus,
     button:hover {
-        background-color: $sportBright;
+        background-color: $c-sportBright;
     }
 }
 
@@ -261,7 +263,7 @@ a.competition-title {
     margin-bottom: $baseline*2;
 
     > li {
-        background: $sportMid;
+        background: $c-sportMid;
         padding: 0 12px;
     }
 
@@ -270,7 +272,6 @@ a.competition-title {
         font-family: $sans-serif;
         font-size: 14px;
         color: #fff;
-        border-bottom: 1px solid #a1c391;
         padding-bottom: $baseline;
         margin-top: 10px;
     }
@@ -281,14 +282,14 @@ a.competition-title {
 
     .sections li a {
         color: #fff;
-        border-top-color: #a1c391;
+        border-top-color: $c-sportBright;
         line-height: 21px;
     }
 }
 
 .team-list li span {
     padding: $baseline*2 0;
-    border-top: 1px solid $mushroom;
+    border-top: 1px solid $c-neutral7;
     display: block;
     height: auto;
     color: #999;
@@ -301,7 +302,7 @@ a.competition-title {
 }
 
 .football-filters .cta {
-    background: $sportDark;
+    background: $c-sportDark;
     color: #fff;
     margin-bottom: $baseline*2;
     margin-top: $baseline*4;
@@ -311,8 +312,10 @@ a.competition-title {
 // football-filter is the dropdown link item
 
 .football-filter {
-    background: $sportBright;
-    margin: 0 $gs-gutter/2 $baseline*2;
+    background: $c-sportBright;
+    margin: 0 $gs-gutter/2;
+    padding: $baseline*3 32px $baseline*1.5 8px;
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
@@ -320,8 +323,10 @@ a.competition-title {
     color: #fff;
     border-bottom: none;
 
-    > a {
-        color: #fff;
+    > a,
+    > a:hover {
+        color: $c-neutral1;
+        @include fs-bodyCopy(1);
     }
 
     > span {
@@ -330,7 +335,7 @@ a.competition-title {
 }
 
 .football-filter-arrow {
-    background: $sportMid;
+    background: $c-sportMid;
     height: 100%;
     width: 48px;
     position: absolute;
@@ -338,9 +343,6 @@ a.competition-title {
     top: 0;
 }
 
-.football-table-container {
-    margin-top: $baseline*2;
-}
 
 .live-matches-dateline {
     display: block;
@@ -349,4 +351,9 @@ a.competition-title {
     .has-localnav & {
         padding-top: 12px;
     }
+}
+
+.competitions {
+    margin: $baseline*2 0;
+    list-style: none;
 }

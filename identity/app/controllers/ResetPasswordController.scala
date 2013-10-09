@@ -20,7 +20,7 @@ import scala.concurrent.Future
 class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdRequestParser, idUrlBuilder: IdentityUrlBuilder )
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = new IdentityPage("/reset-password", "Reset Password", "reset-password")
+  val page = IdentityPage("/reset-password", "Reset Password", "reset-password")
 
   val requestPasswordResetForm = Form(
     Forms.single(
@@ -62,7 +62,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
 
     def onSuccess(form: (String)): Future[SimpleResult] = form match {
       case (email) =>
-        api.sendPasswordResetEmail(email) map {
+        api.sendPasswordResetEmail(email, idRequest.trackingData) map {
           case Left(errors) =>
             logger.info(s"Request new password returned errors ${errors.toString()}")
             val formWithError = errors.foldLeft(boundForm) { (form, error) =>

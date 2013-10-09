@@ -2,12 +2,10 @@
 @import feed._
 @import implicits.Football._
 
-<div class="article-wrapper monocolumn-wrapper">
-    <div class="article-v2__inner">
-        <h2 class="article-zone type-1">
-            <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
-        </h2>
-    </div>
+<h2 class="article-zone">
+    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+</h2>
+<div class="article-wrapper monocolumn-wrapper tone-news">
     <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
         <div class="article-v2__inner">
             <header class="article__head">
@@ -24,7 +22,7 @@
             <div class="after-header">
                 @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
                 @if(page.matchStarted){
-                    <h3 class="type-2 section-divider">Stats</h3>
+                    <h3 class="section-divider">Stats</h3>
                 }
             </div>
         </div>
@@ -56,7 +54,7 @@
         </div>
     </article>
     <div class="article-v2__inner">
-        @fragments.footballNav("/football", None, None)
+        @fragments.footballNav(page)
         @fragments.mostPopularPlaceholder("sport")
     </div>
 </div>

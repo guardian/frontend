@@ -22,7 +22,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -35,7 +36,8 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Sport",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -48,33 +50,36 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Money",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
     new FrontPage(isNetworkFront = false) {
       override val id = "commentisfree"
       override val section = "commentisfree"
-      override val webTitle = "commentisfree"
+      override val webTitle = "Comment is free"
       override lazy val analyticsName = "GFE:commentisfree"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Comment is free",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
     new FrontPage(isNetworkFront = false) {
       override val id = "business"
       override val section = "business"
-      override val webTitle = "business"
+      override val webTitle = "Business"
       override lazy val analyticsName = "GFE:business"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Business",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -87,7 +92,8 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -100,7 +106,8 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Film",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -113,7 +120,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     }
   )
@@ -148,7 +156,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
         faciaPageOption map { faciaPage =>
           if (path != editionalisedPath) {
-            Redirect(editionalisedPath)
+            LinkTo.redirectWithParameters(request, editionalisedPath)
           } else {
             if (request.isJson) {
               val html = views.html.fragments.frontBody(frontPage, faciaPage)

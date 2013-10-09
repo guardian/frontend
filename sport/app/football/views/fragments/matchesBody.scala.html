@@ -1,9 +1,9 @@
-@(model: MatchesPage)(implicit request: RequestHeader)
+@(model: football.controllers.MatchesPage)(implicit request: RequestHeader)
 @import support._
 @import org.joda.time.DateTime
 
 <h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
+    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
 </h2>
 
 @if(model.pageType == "live") {
@@ -37,7 +37,6 @@
 </div>
 
 <div class="box-indent article-zone-no-indent">
-    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
-
+    @footballCompetitionNav(model.comp)
     @fragments.mostPopularPlaceholder("sport")
 </div>

@@ -1,7 +1,6 @@
 /* ==========================================================================
    Tabs
    ========================================================================== */
-$tabBorderWidth: 2px;
 
 /* Default tabs
    ========================================================================== */
@@ -17,23 +16,33 @@ $tabBorderWidth: 2px;
     list-style-type: none;
     overflow: hidden;
     background: #fff;
+
+    @include mq(tablet) {
+        margin-bottom: -1px;
+    }
 }
 
 .tabs__tab {
     width: 50%;
     float: left;
     margin: 0;
-    background: $mushroom;
+    border-top: 3px solid $c-neutral6;
+
+    @include mq(tablet) {
+        max-width: gs-span(3);
+        border-bottom: 1px solid $c-neutral5;
+    }
 
     a {
-        @extend type-6;
-        text-align: center;
-        color: #545454;
-        margin: $tabBorderWidth $tabBorderWidth 0 $tabBorderWidth;
-        padding: $baseline*2;
+        @include fs-headline(1);
+        @include box-sizing(border-box);
+        min-height: $gs-column-height;
+        text-align: left;
+        color: inherit;
+        padding: $baseline 8px 0;
         display: block;
-        font-weight: normal;
         text-decoration: none;
+        background-color: $c-neutral6;
 
         &:active,
         &:focus {
@@ -41,17 +50,24 @@ $tabBorderWidth: 2px;
             text-decoration: none;
         }
 
-        @include mq($to: 300px) {
+        @include mq($to: tablet) {
             font-size: 14px;
             font-size: 1.4rem;
+        }
+
+        @include mq(tablet) {
+            padding: $baseline $gs-gutter/2 0;
         }
     }
 }
 
 .tabs__content {
     clear: both;
-    border: $tabBorderWidth solid $mushroom;
-    border-top: none;
+    padding-top: $baseline*2;
+
+    @include mq(tablet) {
+        border-top: 1px solid $c-neutral5;
+    }
 }
 
 .tabs__heading {
@@ -60,9 +76,11 @@ $tabBorderWidth: 2px;
 
 .tabs__tab--selected {
     a {
-        background: #fff;
-        color: #333;
-        font-weight: bold;
+        background: #ffffff;
+    }
+
+    @include mq(tablet) {
+        border-bottom-color: #ffffff !important;
     }
 }
 
@@ -80,7 +98,7 @@ $tabBorderWidth: 2px;
 
     .tabs__tab {
         display: table-cell;
-        border-left: $tabBorderWidth solid #fff;
+        border-left: 2px solid #ffffff;
         width: auto;
         float: none;
 

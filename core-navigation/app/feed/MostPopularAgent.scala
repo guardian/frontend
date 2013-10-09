@@ -2,7 +2,7 @@ package feed
 
 import conf.ContentApi
 import common._
-import model.{SupportedContentFilter, Content}
+import model.Content
 import scala.concurrent.duration._
 import scala.concurrent.Await
 import services.OphanApi
@@ -23,7 +23,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
       ContentApi.item("/", edition)
         .showMostViewed(true)
         .response.foreach{ response =>
-          val mostViewed = SupportedContentFilter(response.mostViewed map { Content(_) }) take 10
+          val mostViewed = response.mostViewed map { Content(_) } take 10
           agent.send{ old =>
             old + (edition.id -> mostViewed)
           }
@@ -72,7 +72,7 @@ object MostPopularFromFacebookAgent extends Logging with ExecutionContexts {
       response =>
         val results = response.results map (Content(_))
         log.debug("Content API list from IDs of most popular referred from facebook: " + results.map(_.id).mkString(","))
-        val mostViewed = SupportedContentFilter(results) take 10
+        val mostViewed = results take 10
         val sortedMostViewed = mostViewed sorted Ordering.by[Content, Int](content => ophanList.indexOf(content.id))
         agent.send(old => old + ("facebook" -> sortedMostViewed))
     }
@@ -95,7 +95,7 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
         .response.foreach{ response =>
-        val mostViewed = SupportedContentFilter(response.mostViewed map { Content(_) }) take 10
+        val mostViewed = response.mostViewed map { Content(_) } take 10
         agent.send{ old =>
           old + (edition.id -> mostViewed)
         }

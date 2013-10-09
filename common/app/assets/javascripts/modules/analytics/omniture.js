@@ -102,9 +102,11 @@ define([
 
             s.prop1     = config.page.headline || '';
             s.prop3     = config.page.publication || '';
+
+
+            s.channel = config.page.contentType === "Network Front" ? "Network Front" : config.page.section || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
-            s.channel   = (config.page.contentType === "Network Front") ? "Network Front" : config.page.section || '';
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
@@ -124,7 +126,7 @@ define([
             s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
-   
+
             var mvt = ab.makeOmnitureTag(config, document);
             if (mvt.length > 0) {
 
@@ -137,7 +139,19 @@ define([
                 s.events = s.apl(s.events,'event46',',');
             }
 
+            if (config.page.section === "identity")  {
+                s.prop11 = 'Users';
+                s.prop9 = "userid";
+                s.eVar42 = config.page.returnUrl || '';
+                s.hier2="GU/Users/Registration";
+                s.events = s.apl(s.events, config.page.registrationEvent, ',');
+            }
+
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
+
+            // NB: only needs to be in while we're serving both old fronts and new facia
+            var propValue = ((config.page.isFacia) ? 'Facia' : 'Fronts') + '-application';
+            s.prop69 = s.eVar55 = propValue;
 
             s.prop65    = config.page.headline || '';
 

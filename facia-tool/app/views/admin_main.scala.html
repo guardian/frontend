@@ -25,7 +25,6 @@
             var curl = {
                 baseUrl: '/assets/javascripts',
                 paths: {
-                    Common:       'common',
                     models:       'models',
                     knockout:     'components/knockout/build/output/knockout-latest.js',
                     Reqwest:      'components/reqwest/reqwest',
@@ -48,12 +47,10 @@
         <script>
             define('Config', function() {
                 return {
-                    apiKey: '@conf.Configuration.contentApi.key',
-                    identity: @{Html(identity)}
+                    env:    '@env.toLowerCase'
                 }
             });
         </script>
-
 
     </head>
     <body>

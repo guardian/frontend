@@ -159,7 +159,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
         ImageServerSwitch.switchOn
-        inBodyImage.getAttribute("class") should include("img-extended")
+        inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
@@ -252,7 +252,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be(29)
+        $("[itemprop=relatedLink]").size() should be(30)
       }
     }
 
@@ -364,10 +364,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
 
         Then("I should see buttons for my favourite social network")
-        findFirst(".social__item--mail .social__action").getAttribute("href") should be(mailShareUrl)
-        findFirst(".social__item--fb .social__action").getAttribute("href") should be(fbShareUrl)
-        findFirst(".social__item--twitter .social__action").getAttribute("href") should be(twitterShareUrl)
-        findFirst(".social__item--gplus .social__action").getAttribute("href") should be(gplusShareUrl)
+        findFirst(".social__action[data-link-name=social-mail]").getAttribute("href") should be(mailShareUrl)
+        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should be(fbShareUrl)
+        findFirst(".social__action[data-link-name=social-twitter]").getAttribute("href") should be(twitterShareUrl)
+        findFirst(".social__action[data-link-name=social-gplus]").getAttribute("href") should be(gplusShareUrl)
       }
       
       Given("I want to track the responsive share buttons using Facebook Insights")
@@ -380,7 +380,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val fbShareTrackingToken = "ref=responsive"
 
         Then("I should pass Facebook a tracking token")
-        findFirst(".social__item--fb .social__action").getAttribute("href") should include(fbShareTrackingToken)
+        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should include(fbShareTrackingToken)
       }
 
 
@@ -431,18 +431,5 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
 
     }
-
-    scenario("Story package with a link to a Poll") {
-      Given("I'm on an article that has a story package linking to a Poll page")
-
-      HtmlUnit("/science/2013/aug/15/breastfeeding-six-months-breast-cancer") { browser =>
-        import browser._
-
-        Then("the poll should not appear in the list")
-        $(".related-trails a[href=\"/commentisfree/poll/2013/aug/15/breastfeeding-swimming-pool-unhygienic-poll\"]") should have size (0)
-      }
-
-    }
-
   }
 }
