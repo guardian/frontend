@@ -9,7 +9,7 @@
 **/
 
 
-casper.start(host + '/culture?view=mobile');
+casper.start(host + 'culture?view=mobile');
 
 var clearLocalStorage = function() {
     casper.evaluate(function() { window.localStorage.clear(); });

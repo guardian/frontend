@@ -1,35 +1,34 @@
 Frontend
 ========
-
 The Guardian website frontend.
+
 
 New developers quick-start
 ===========================
-
 Frontend is a set of Play Framework 2 Scala applications.
+
 
 Requirements
 ------------
-
 * A Mac or Linux pc
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 * Installed npm (Node package manager - you quite possibly already have this) `sudo apt-get install npm`
 * Installed GraphicsMagick
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
-* Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You will already have this installed, but run `ruby -v` to check version number)
+* Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You may already have this installed, but run `ruby -v` to check version number)
+
 
 NPM ownership
 -------------
-
 Sometimes when you install npm it ends up owned by root (but in your home directory).
 
 Check that you own your own .npm directory `ls -ld ~/.npm`
 
 If it is owned by root then take ownership of it `sudo chown -R username:username ~/.npm`
 
+
 File handles
 ------------
-
 On Linux machines you may run into a "too many files open" error during compilation or reloading. You can find out
 how many file handles you are allowed per process by running `ulimit -n`. This can be quite low, e.g. 1024
 
@@ -46,13 +45,13 @@ And in the file `/etc/pam.d/common-session` add the following line.
 session required pam_limits.so
 ```
 
-restart the machine.
+Restart the machine.
 
 For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
 
+
 Configuration
 -------------
-
 You'll need a config file called _/etc/gu/install_vars_ with the following content :-
 
 ```
@@ -78,30 +77,37 @@ export proxy_host=proxy.somewhere.com
 export proxy_port=1234
 ```
 
+
 Running
 -------
+Assuming you have checked out this project, open a console and change directory
+into the root of the project.
 
-Assuming you have checked out this project, open a console and change directory into the root of the project.
+Frontend is built in two parts, using Grunt for the client side asset build and
+SBT for the Play Framework backend. Neither of these tools are much use for
+building the other half of the project and coupling them together with an
+integration is one of those bad ideas that is even worse than it sounds.
 
-Start Simple Build Tool (sbt) by running `./sbt012`
+Start the Grunt build and watch for development changes:
 
-Once sbt is running (it may take a while first time) then compile the project by typing `compile` (also can take a while first time)
+```
+./grunt watch
+```
 
-Switch project by typing `project dev-build`
-
-Now start the local server by typing `run` (this too will take long the first time)
+In another console, start Simple Build Tool (sbt) by running `./sbt`. It may
+take a while to start the first time. Once SBT is running, switch project by
+typing `project dev-build`. Then compile and run the project locally by typing
+`run`. This also can take a while first time.
 
 Now test you are up and running by hitting the following URLs:
    * http://localhost:9000/books
    * http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson
    * http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery
 
+Play Framework will recompile code changes on refresh.
 
-To use in Eclipse, use the `eclipsify` command. This will create Eclipse
-project and settings files which can be imported using the Import Existing
-Project options in Eclipse.
-
-To use in IntelliJ, see https://github.com/mpeltonen/sbt-idea
+To create project files for use in IntelliJ, run the `idea` task from the root
+SBT project. see https://github.com/mpeltonen/sbt-idea
 
 Further information on using the Play console is available [here][play2-console].
 
@@ -113,16 +119,16 @@ typically include:
 
 * `/management`: Operations support as per standard webapp guidelines. See
   guardian-management.
-* `/pages/<path>`: Serve the Guardian URL at `<path>` if supported by this
+* `/<path>`: Serve the Guardian URL at `<path>` if supported by this
   application.
 * `/assets/<file>`: A convenience for DEV machines. Assets are CDNed in PROD
   and would not be available on DEV.
-* `/<path>`: A synonym for `/pages/<path>` as a convenience for DEV machines.
 
 
 Deploying
 ---------
 Deployment uses the [Magenta][magenta] library.
+
 
 Debugging
 ---------
@@ -136,9 +142,10 @@ Any IDE debugger should be compatible. In IntelliJ, add a new Debug Configuratio
 Ensure the Transport is Socket, the Debugger mode is Attach, and the port is set to 1044.
 Start a new Debug session, and your breakpoints should be active.
 
+
 Additional Documentation
 ------------------------
-Further documentation notes and useful items can be found in `dev`.
+Further documentation notes and useful items can be found in `docs`.
 
 
 [sbt]: http://www.scala-sbt.org
