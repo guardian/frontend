@@ -40,6 +40,7 @@ CommentBox.CONFIG = {
         EMPTY_COMMENT_BODY: 'Please write a comment.',
         COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
         ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
+        USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
         API_ERROR: 'Sorry, there was a problem posting your comment.'
     }
 };
@@ -127,7 +128,7 @@ CommentBox.prototype.postComment = function(e) {
 CommentBox.prototype.error = function(type, message) {
     var error = document.createElement('div');
     error.className = this.getClass('error', true);
-    error.innerHTML = message || this.getConf().errors[type];
+    error.innerHTML = message || this.conf().errors[type];
     this.getElem('messages').appendChild(error);
     this.errors.push(type);
 };
@@ -153,10 +154,13 @@ CommentBox.prototype.success = function(comment, resp) {
  * @param {Reqwest=} resp (optional)
  */
 CommentBox.prototype.fail = function(xhr) {
+    var response = JSON.parse(xhr.responseText);
     this.setFormState();
 
     if (xhr.status === 420) {
         this.error('ENHANCE_YOUR_CALM');
+    } else if (this.conf().errors[response.errorCode]) {
+        this.error(response.errorCode);
     } else {
         this.error('API_ERROR');
     }

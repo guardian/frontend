@@ -1,11 +1,3 @@
-.i-guardian-logo {
-    @media (-webkit-min-device-pixel-ratio: 2) {
-        background-position: 0 0;
-        background-size: 100%;
-        background-image: url('../images/guardian-logo%402x.faee3f5abe0a2aff446866c8196e2b48.png');
-    }
-}
-
 .top .i-arrow-small-up {
     margin-left: $baseline*2;
     position: relative;
@@ -80,16 +72,6 @@ figcaption:before {
     @if ($svg-support) {
         .svg & {
             @extend .svg-i-image;
-        }
-    }
-}
-
-.story-picture__caption:before {
-    @extend .i-image-white;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-image-white;
         }
     }
 }

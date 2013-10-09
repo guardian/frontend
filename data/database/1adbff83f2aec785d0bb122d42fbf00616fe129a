@@ -1,0 +1,308 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/sep/26/pasta-firm-barilla-boycott-gay",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-26T16:36:23Z",
+      "webTitle":"Pasta firm Barilla boycotted over 'classic family' remarks",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/26/pasta-firm-barilla-boycott-gay",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/26/pasta-firm-barilla-boycott-gay",
+      "fields":{
+        "trailText":"Chairman Guido Barilla causes outrage in Italy after saying he would not consider using a gay family to advertise his products",
+        "headline":"Pasta firm Barilla boycotted over 'classic family' remarks",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4jb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213071240/Barilla-005.jpg",
+        "wordcount":"534",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/italy",
+        "type":"keyword",
+        "webTitle":"Italy",
+        "webUrl":"http://www.theguardian.com/world/italy",
+        "apiUrl":"http://content.guardianapis.com/world/italy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/gay-rights",
+        "type":"keyword",
+        "webTitle":"Gay rights",
+        "webUrl":"http://www.theguardian.com/world/gay-rights",
+        "apiUrl":"http://content.guardianapis.com/world/gay-rights",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/sexuality",
+        "type":"keyword",
+        "webTitle":"Sexuality",
+        "webUrl":"http://www.theguardian.com/society/sexuality",
+        "apiUrl":"http://content.guardianapis.com/society/sexuality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"media/advertising",
+        "type":"keyword",
+        "webTitle":"Advertising",
+        "webUrl":"http://www.theguardian.com/media/advertising",
+        "apiUrl":"http://content.guardianapis.com/media/advertising",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/lizzydavies",
+        "type":"contributor",
+        "webTitle":"Lizzy Davies",
+        "webUrl":"http://www.theguardian.com/profile/lizzydavies",
+        "apiUrl":"http://content.guardianapis.com/profile/lizzydavies",
+        "bio":"<p>Lizzy Davies is Rome correspondent for the Guardian. She previously worked for the paper in Paris, and for the Observer and Independent as a news editor</p>",
+        "r2ContributorId":"25822",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418365591",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213068083/Barilla-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"54",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213069162/Barilla-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"340",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213070223/Barilla-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"130",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213071240/Barilla-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"84",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213072221/Barilla-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"132",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213073321/Barilla-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"168",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213074595/Barilla-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"180",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213075643/Barilla-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"228",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213076711/Barilla-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"276",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213077811/Barilla-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"372",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213076711/Barilla-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"276",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418365592",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213071240/Barilla-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"84",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

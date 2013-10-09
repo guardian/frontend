@@ -1,11 +1,11 @@
 package football.controllers
 
+import feed.Competitions
 import model.{ Trail, Cached, Content }
 import play.api.mvc.{ SimpleResult, RequestHeader, Action, Controller }
 import common._
 import org.joda.time.format.DateTimeFormat
 import conf.ContentApi
-import feed.Competitions._
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import implicits.{ Requests, Football }
@@ -33,7 +33,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val contentDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
     val interval = new Interval(contentDate - 2.days, contentDate + 3.days)
 
-    val maybeResponse: Option[Future[SimpleResult]] = matchFor(interval, team1, team2) map { theMatch =>
+    val maybeResponse: Option[Future[SimpleResult]] = Competitions().matchFor(interval, team1, team2) map { theMatch =>
       val related: Future[Seq[Content]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
       related map { _ filter hasExactlyTwoTeams } map {
@@ -50,7 +50,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
   def moreOnJson(matchId: String) = moreOn(matchId)
   def moreOn(matchId: String) = Action.async { implicit request =>
-    val maybeMatch: Option[FootballMatch] = findMatch(matchId)
+    val maybeMatch: Option[FootballMatch] = Competitions().findMatch(matchId)
 
     val maybeResponse: Option[Future[SimpleResult]] = maybeMatch map { theMatch =>
       loadMoreOn(request, theMatch) map {

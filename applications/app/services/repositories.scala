@@ -8,10 +8,47 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
+import controllers.ImageContentPage
+import scala.concurrent.Future
+import play.api.mvc.SimpleResult
 
 case class IndexPage(page: MetaData, trails: Seq[Trail])
 
 trait Index extends ConciergeRepository with QueryDefaults {
+
+  private val SinglePart = """([\w\d\.-]+)""".r
+
+  def index(edition: Edition, leftSide: String, rightSide: String) = {
+
+    // if the first tag is just one part then change it to a section tag...
+    val firstTag = leftSide match {
+      case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
+      case other => other
+    }
+
+    // if the second tag is just one part then it is in the same section as the first tag...
+    val secondTag = rightSide match {
+      case SinglePart(wordsForUrl) => s"${firstTag.split("/")(0)}/$wordsForUrl"
+      case other => other
+    }
+
+    ContentApi.search(edition)
+      .tag(s"$firstTag,$secondTag")
+      .pageSize(20)
+      .response.map {response =>
+        val trails = response.results map { Content(_) }
+        trails match {
+          case Nil => Right(NotFound)
+          case head :: _ =>
+            //we can use .head here as the query is guaranteed to return the 2 tags
+            val tag1 = head.tags.find(_.id == firstTag).head
+            val tag2 = head.tags.find(_.id == secondTag).head
+            val pageName = s"${tag1.name} + ${tag2.name}"
+            val page = Page(s"$leftSide+$rightSide", tag1.section, pageName, s"GFE:${tag1.section}:$pageName")
+            Left(IndexPage(page, trails))
+        }
+    }.recover(suppressApiNotFound)
+  }
 
   def index(edition: Edition, path: String) = {
     ContentApi.item(path, edition)
@@ -47,4 +84,19 @@ trait Index extends ConciergeRepository with QueryDefaults {
   }
 }
 
-object Concierge extends Index
+trait ImageQuery extends ConciergeRepository with QueryDefaults {
+
+  def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
+    log.info(s"Fetching image content: $path for edition ${edition.id}")
+    val response = ContentApi.item(path, edition)
+      .showExpired(true)
+      .showFields("all")
+      .response.map { response =>
+      val mainContent: Option[Content] = response.content.filter { c => c.isImageContent } map {Content(_)}
+      val storyPackage: List[Trail] = response.storyPackage map { Content(_) }
+      mainContent.map { content => Left(ImageContentPage(content,storyPackage)) }.getOrElse(Right(NotFound))
+    }
+
+    response recover suppressApiNotFound
+  }
+}

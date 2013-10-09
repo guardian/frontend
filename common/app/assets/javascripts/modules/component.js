@@ -93,11 +93,12 @@ Component.prototype.emit = function(eventName, args) {
 };
 
 /**
- * TODO (jamesgorrie): Add caching in this.elems
  * @param {string} elemName this corresponds to CONFIG.classes
  */
 Component.prototype.getElem = function(elemName) {
+    if (this.elems[elemName]) { return this.elems[elemName]; }
     var elem = qwery(this.getClass(elemName), this.elem)[0];
+    this.elems[elemName] = elem;
     return elem;
 };
 
@@ -107,14 +108,14 @@ Component.prototype.getElem = function(elemName) {
  * @return {string}
  */
 Component.prototype.getClass = function(elemName, sansDot) {
-    var config = this.getConf();
+    var config = this.conf();
     return (sansDot ? '' : '.') + config.classes[elemName] || null;
 };
 
 /**
  * @return {Object}
  */
-Component.prototype.getConf = function() {
+Component.prototype.conf = function() {
     return this.constructor.CONFIG;
 };
 

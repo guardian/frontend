@@ -21,9 +21,9 @@ object Login extends LoginController with Controller with ExecutionContexts {
 
   def openIdCallback(secure: Boolean)(implicit request: RequestHeader): String = routes.Login.openIDCallback.absoluteURL(secure)
 
-  def login = NonAuthAction {
+  def login = Action {
     request =>
       val error = request.flash.get("error")
-      Ok(views.html.auth.login(request, error, Configuration.environment.stage))
+      Ok(views.html.auth.login(error, Configuration.environment.stage))
   }
 }
