@@ -166,6 +166,8 @@ define([
                     draft: !collection.state.liveMode()
                 };
 
+            collection.state.loadIsPending(true);
+
             if (!opts.delete) {
                 list = $('.connectedList > .trail', $collection).map(function() {
                     return $(this).data('url')
@@ -183,15 +185,19 @@ define([
                 }
             }
 
+            if (apiProps.item === apiProps.position) {
+                // Adding an item next to itself. Reload then bail.
+                collection.load();
+                return;
+            }
+
             authedAjax({
                 url: common.config.apiBase + '/collection/' + collection.id,
                 type: opts.delete ? 'delete' : 'post',
                 data: JSON.stringify(apiProps)
-            }).then(function(resp) {
+            }).then(function() {
                 collection.load();
             });
-
-            collection.state.loadIsPending(true);
         };
 
         function startPoller() {
