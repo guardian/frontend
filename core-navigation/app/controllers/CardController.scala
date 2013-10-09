@@ -36,7 +36,7 @@ object CardController extends Controller with Logging with ExecutionContexts {
     host match {
       case a if (whiteList.contains(a)) => WS.url(r).get().map { response =>
           response.status match {
-            case 200 =>
+            case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)
 
               val image = Option(fragment.select("meta[property=og:image]").attr("content"))
@@ -60,7 +60,7 @@ object CardController extends Controller with Logging with ExecutionContexts {
 
       case w if (w.startsWith("en.wikipedia.org")) => WS.url(r).get().map { response =>
           response.status match {
-            case 200 =>
+            case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)
               val firstParagraph = fragment.select("#mw-content-text > p").first
               firstParagraph.select(".reference").remove()
