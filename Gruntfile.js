@@ -481,17 +481,21 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 files: ['common/**/*.js'],
-                tasks: ['requirejs:compile'],
+                tasks: ['requirejs:compile', 'hash'],
                 options: {
                     spawn: false
                 }
             },
             sass: {
                 files: ['common/**/*.scss'],
-                tasks: ['sass:compile'],
+                tasks: ['sass:compile', 'hash'],
                 options: {
                     spawn: false
                 }
+            },
+            icons: {
+                files: ['common/app/assets/images/**/*'],
+                tasks: ['imagemin:compile', 'copy:compile', 'hash']
             }
         }
     });
