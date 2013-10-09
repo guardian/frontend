@@ -108,11 +108,14 @@ define([
             type: 'post',
             url: common.config.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
-        }).then(function(resp) {
-            self.load({
-                callback: function(){ self.setLiveMode(); }
-            });
+        })
+        .then(function() {
+            self.load();
+        })
+        .then(function() {
+            self.setLiveMode();
         });
+
         this.state.hasDraft(false);
         this.state.loadIsPending(true);
     };
@@ -129,7 +132,7 @@ define([
                 live:   self.state.liveMode(),
                 draft: !self.state.liveMode()
             }),
-        }).then(function(resp) {
+        }).then(function() {
             self.load();
         });
     };
@@ -138,7 +141,7 @@ define([
         var self = this;
         opts = opts || {};
 
-        authedAjax({
+        return authedAjax({
             url: common.config.apiBase + '/collection/' + this.id
         }).then(function(resp) {
             self.state.loadIsPending(false);
@@ -157,8 +160,6 @@ define([
             }
 
             self.decorate();
-
-            if (_.isFunction(opts.callback)) { opts.callback(); }
         });
     };
 

@@ -20,7 +20,8 @@ function (
             }
         });
 
-        fetchData(fetch, function(results){
+        fetchData(fetch)
+        .then(function(results){
             results.forEach(function(article){
                 if (article.id) {
                     cache.put('contentApi', article.id, article);
@@ -31,29 +32,31 @@ function (
                     });
                 }
             });
-        })
+        });
     };
 
     function decorateItem(fromObj, toKoObj) {
         toKoObj.populate(fromObj);
     }
 
-    function fetchData(ids, callback) {
+    function fetchData(ids) {
         var apiUrl;
+
         if (ids.length) {
             apiUrl = common.config.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all";
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');
 
-            authedAjax({
+            return authedAjax({
                 url: apiUrl
-            }).then(function(results) {
-                if (results.response && results.response.results) {
-                    callback(results.response.results);
+            }).then(function(resp) {
+                if (resp.response && resp.response.results) {
+                    return resp.response.results;
                 }
             });
         }
+        return $.Deferred();
     }
 
     return {

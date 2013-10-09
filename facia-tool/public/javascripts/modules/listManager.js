@@ -63,7 +63,9 @@ define([
 
         function renderCollections() {
             model.collections.removeAll();
-            fetchConfig(getConfig(), function(collections){
+
+            fetchConfig(getConfig())
+            .then(function(collections){
                 model.collections(
                     (collections || []).map(function(collection){
                         return new Collection(collection);
@@ -197,8 +199,8 @@ define([
             startPoller = function() {}; // make idempotent
         }
 
-        function fetchConfigs(callback) {
-            authedAjax({
+        function fetchConfigs() {
+            return authedAjax({
                 url: common.config.apiBase + '/config'
             }).then(function(resp) {
                 if (!(_.isArray(resp) && resp.length > 0)) {
@@ -206,17 +208,16 @@ define([
                     return;
                 }
                 model.configs(resp.sort());
-                if (_.isFunction(callback)) { callback(); }
             });
         };
 
-        function fetchConfig(id, callback) {
-            if (!(id && _.isFunction(callback))) {
+        function fetchConfig(id) {
+            if (!id) {
                 return;
             }
-            authedAjax({
+            return authedAjax({
                 url: common.config.apiBase + '/config/' + id
-            }).then(callback);
+            });
         };
 
         function flushClipboard() {
@@ -288,7 +289,8 @@ define([
         };
 
         this.init = function() {
-            fetchConfigs(function(){
+            fetchConfigs()
+            .then(function(){
                 renderConfig();
                 window.onpopstate = renderConfig;
 
