@@ -1,22 +1,25 @@
 @(page: model.Page, trails: Seq[model.Trail])(implicit request: RequestHeader)
 
 @main(page, Switches.all) { } {
-    <div class="article-wrapper monocolumn-wrapper tone-news">
+    <div class="monocolumn-wrapper">
         <article class="article">
             <header class="article__head">
 
-                <h2 class="article-zone zone-color type-1">
+                <h2 class="tone-color">
                     404
                 </h2>
 
                 @fragments.headline("Sorry - we haven't been able to serve the page you asked for.")
-                <p class="article__standfirst type-7">
+                <p class="article__standfirst">
                     Maybe we can interest you in some of these...
                 </p>
 
-                @fragments.relatedTrails(trails, "")
-
             </header>
         </article>
+        <div>
+            <aside role="complementary" data-link-context="related">
+            @fragments.relatedTrails(trails, "")
+            </aside>
+        </div>
     </div>
 }
