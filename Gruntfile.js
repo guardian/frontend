@@ -226,7 +226,12 @@ module.exports = function (grunt) {
                 command: [
                     'cd tools/sprites/',
                     'node spricon.js global-icon-config.json'
-                ].join('&&')
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: false
+                }
             },
 
             // Should be later in file but can't separate shell task definition
