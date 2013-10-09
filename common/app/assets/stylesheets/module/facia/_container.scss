@@ -181,7 +181,7 @@
         }
         &.collection--news,
         &.collection--sport {
-            .item:nth-child(n+2):nth-child(-n+9) {
+            .item:nth-child(n+6):nth-child(-n+9) {
                 @include card($with-image: true);
             }
             .item:nth-child(n+10) {
