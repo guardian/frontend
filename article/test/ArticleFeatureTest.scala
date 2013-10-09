@@ -412,7 +412,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
-
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
@@ -431,5 +430,19 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
 
     }
+
+    scenario("Show keywords in an article"){
+      Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
+
+      ArticleKeywordsSwitch.switchOn
+
+      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting"){ browser =>
+        import browser._
+
+        Then("I should see links to keywords")
+        $(".article__keywords a").size should be (5)
+      }
+    }
+
   }
 }

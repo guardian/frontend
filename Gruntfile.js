@@ -479,10 +479,23 @@ module.exports = function (grunt) {
 
         // Recompile on change
         watch: {
-            files: ['common/**/*.js', 'common/**/*.scss'],
-            tasks: ['compile'],
-            options: {
-                spawn: false
+            js: {
+                files: ['common/**/*.js'],
+                tasks: ['requirejs:compile', 'hash'],
+                options: {
+                    spawn: false
+                }
+            },
+            sass: {
+                files: ['common/**/*.scss'],
+                tasks: ['sass:compile', 'hash'],
+                options: {
+                    spawn: false
+                }
+            },
+            icons: {
+                files: ['common/app/assets/images/**/*'],
+                tasks: ['imagemin:compile', 'copy:compile', 'hash']
             }
         }
     });

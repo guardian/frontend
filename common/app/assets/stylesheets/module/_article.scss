@@ -321,6 +321,16 @@ video {
     border-top: 1px dotted $c-neutral5;
 }
 
+.article__keywords {
+    @include fs-data(4);
+    margin-top: $baseline*3;
+    margin-bottom: $baseline*3;
+
+    .ab-paragraph-spacing--indents & {
+        margin-top: $baseline*5;
+    }
+}
+
 /* Layout changes across devices
    ========================================================================== */
 
