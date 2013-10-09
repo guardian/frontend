@@ -8,7 +8,7 @@ import play.api.libs.ws.WS
 
 object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
-  def proxy(path: String) = Authenticated.async { request =>
+  def proxy(path: String) = AjaxExpiringAuthentication.async { request =>
     val queryString = request.queryString.map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
@@ -22,7 +22,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
     }
   }
 
-  def json(url: String) = Authenticated.async { request =>
+  def json(url: String) = AjaxExpiringAuthentication.async { request =>
     log("Proxying json request to: %s" format url, request)
 
     WS.url(url).get().map { response =>
