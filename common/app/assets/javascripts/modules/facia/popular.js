@@ -36,7 +36,7 @@ define([
             return updateTmpl(
                 '<div class="item__image-container">' +
                     '<a href="@trail.url" class="item__link">' +
-                        '<img class="item__image" alt="" data-src="@trail.mainPicture.item"  data-src-main="@trail.mainPicture.itemMain" />' +
+                        '<img class="item__image" alt="" data-src="@trail.mainPicture.item"  data-src-main="@trail.mainPicture.itemMain" data-src-mobile="@trail.mainPicture.itemMobile"  data-src-main-mobile="@trail.mainPicture.itemMainMobile" />' +
                     '</a>' +
                 '</div>',
                 trail
