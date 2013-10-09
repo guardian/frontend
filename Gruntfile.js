@@ -259,7 +259,8 @@ module.exports = function (grunt) {
                 mapping: 'common/conf/assets/assets.map',
                 srcBasePath: 'static/target/compiled',
                 destBasePath: 'static/target/hashed',
-                flatten: false
+                flatten: false,
+                hashLength: 32
             },
 
             files: {
