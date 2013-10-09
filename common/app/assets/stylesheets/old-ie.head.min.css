@@ -1,0 +1,3583 @@
+/* ==========================================================================
+   Reset/Normalize
+   ========================================================================== */
+/* ==========================================================================
+   Normalize.scss settings
+   ========================================================================== */
+/**
+ * Includes legacy browser support IE6/7
+ *
+ * Set to false if you want to drop support for IE6 and IE7
+ */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/*
+ * Corrects `block` display not defined in IE 8/9.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\0000331}}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block; }
+
+/**
+ * Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\0000341}}
+audio,
+canvas,
+video {
+  display: inline-block; }
+
+/**
+ * Prevents modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\0000354}}
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\0000363}}
+[hidden] {
+  display: none; }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ * 3.Corrects text resizing oddly in IE 6/7 when body `font-size` is set using
+ *    `em` units.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\0000379}}
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */ }
+
+/**
+ * Remove default margin.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\0000392}}
+body {
+  margin: 0; }
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+/**
+ * Improves readability when focused and also mouse hovered in all browsers.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003109}}
+a:focus {
+  outline: thin dotted; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003112}}
+a:active, a:hover {
+  outline: 0; }
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Addresses font sizes and margins set differently in IE 6/7.
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003128}}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003167}}
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003176}}
+b,
+strong {
+  font-weight: bold; }
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003190}}
+dfn {
+  font-style: italic; }
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003198}}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0; }
+
+/**
+ * Addresses styling not present in IE 8/9.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003208}}
+mark {
+  background: #ff0;
+  color: #000; }
+
+/**
+ * Addresses margins set differently in IE 6/7.
+ */
+/**
+ * Correct font family set oddly in Safari 5 and Chrome.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003231}}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  font-size: 1em; }
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003243}}
+pre {
+  white-space: pre-wrap; }
+
+/**
+ *  Set consistent quote types.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003251}}
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003279}}
+small {
+  font-size: 80%; }
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003288}}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003295}}
+sup {
+  top: -0.5em; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003299}}
+sub {
+  bottom: -0.25em; }
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/**
+ * 1. Remove border when inside `a` element in IE 8/9.
+ * 2. Improves image quality when scaled in IE 7.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003355}}
+img {
+  border: 0; }
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003366}}
+svg:not(:root) {
+  overflow: hidden; }
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003378}}
+figure {
+  margin: 0; }
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Define consistent border, margin, and padding.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003390}}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ * 3. Corrects text not wrapping in Firefox 3.
+ * 4. Corrects alignment displayed oddly in IE 6/7.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003403}}
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ * 4. Improves appearance and consistency in all browsers.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003422}}
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 2 */
+  margin: 0;
+  /* 3 */ }
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003438}}
+button,
+input {
+  line-height: normal; }
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003450}}
+button,
+select {
+  text-transform: none; }
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ * 4. Removes inner spacing in IE 7 without affecting normal text inputs.
+ *    Known issue: inner spacing remains in IE 6.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003467}}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */ }
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003480}}
+button[disabled],
+html input[disabled] {
+  cursor: default; }
+
+/**
+ * 1. Address box sizing set to `content-box` in IE 8/9.
+ * 2. Remove excess padding in IE 8/9.
+ * 3. Removes excess padding in IE 7.
+ *    Known issue: excess padding remains in IE 6.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003492}}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003507}}
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box; }
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003520}}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003529}}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * 1. Remove default vertical scrollbar in IE 8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003539}}
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */ }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/components\/normalize-scss\/_normalize\.scss}line{font-family:\00003552}}
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* ==========================================================================
+   Variables and mixins
+   ========================================================================== */
+/* ==========================================================================
+   Global variables
+   ========================================================================== */
+/**
+ * Be careful of Sass variable scope:
+ * http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
+ */
+/* Support
+   ========================================================================== */
+/* Layout dimensions
+   ========================================================================== */
+/* Breakpoints
+   ========================================================================== */
+/* Fonts
+   ========================================================================== */
+/* Colours
+   ========================================================================== */
+/**
+ * @todo: Blues need comments to associate with brand/logo colours
+ */
+/* Tones
+   ========================================================================== */
+/* Zones
+   ========================================================================== */
+/**
+ * note: try to at least alphabetise these within sections
+ */
+/* Football
+   ========================================================================== */
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\000031}}
+html {
+  overflow-y: scroll; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\000035}}
+body {
+  background-color: #fff; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\000039}}
+body:after {
+  content: "mobile";
+  display: none;
+  content: "tablet";
+  content: "desktop";
+  content: "wide"; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\0000323}}
+.dateline {
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  margin: 0 0 8px;
+  color: #767676; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\0000330}}
+.relative-timestamp {
+  display: block;
+  color: #767676;
+  margin: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\0000336}}
+.relative-timestamp span {
+  display: inline-block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\0000340}}
+.relative-timestamp__icon {
+  vertical-align: -3px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_base\.scss}line{font-family:\0000345}}
+ol,
+ul {
+  list-style-position: inside; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_type\.scss}line{font-family:\000033}}
+html {
+  font-size: 62.5%;
+  font-size: 0.625em;
+  font-family: "EgyptianText", georgia, serif; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_type\.scss}line{font-family:\0000310}}
+body {
+  color: #545454;
+  font-size: 100%;
+  font-size: 1.6em;
+  line-height: 1.4; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_type\.scss}line{font-family:\0000318}}
+h1, h2, h3, h4, h5, h6 {
+  color: #333333;
+  font-family: "EgyptianText", georgia, serif;
+  margin: 0;
+  text-rendering: optimizeLegibility; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_type\.scss}line{font-family:\0000342}}
+blockquote {
+  margin: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_type\.scss}line{font-family:\0000347}}
+p {
+  margin-top: 0;
+  margin-bottom: 8px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_type\.scss}line{font-family:\0000356}}
+h3 {
+  margin-bottom: 7px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_type\.scss}line{font-family:\0000361}}
+h4 {
+  margin: 0;
+  padding: 8px 10px 7px;
+  background-color: #ededed;
+  border-top: 1px solid #cccccc; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\000036}}
+.type-1, h1 {
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 28px;
+  line-height: 2.8rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\000037}}
+.type-2 {
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  font-size: 18px;
+  font-size: 1.8rem;
+  line-height: 28px;
+  line-height: 2.8rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000310}}
+.type-3, .trailblock-topstories .trail__headline {
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  font-size: 26px;
+  font-size: 2.6rem;
+  line-height: 30px;
+  line-height: 3rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000311}}
+.type-4 {
+  font-family: "EgyptianText", georgia, serif;
+  font-weight: 700;
+  font-size: 18px;
+  font-size: 1.8rem;
+  line-height: 24px;
+  line-height: 2.4rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000312}}
+.type-5 {
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  font-size: 18px;
+  font-size: 1.8rem;
+  line-height: 24px;
+  line-height: 2.4rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000313}}
+.type-6, h3, h4 {
+  font-family: "EgyptianText", georgia, serif;
+  font-weight: normal;
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 24px;
+  line-height: 2.4rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000314}}
+.type-7 {
+  font-family: "EgyptianText", georgia, serif;
+  font-weight: normal;
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 20px;
+  line-height: 2rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000317}}
+.type-8 {
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 20px;
+  line-height: 2rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000318}}
+.type-9 {
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  font-size: 1.3rem;
+  line-height: 20px;
+  line-height: 2rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000319}}
+.type-10, th,
+td, .nav--toolbar {
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: normal;
+  font-size: 13px;
+  font-size: 1.3rem;
+  line-height: 20px;
+  line-height: 2rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000320}}
+.dateline, .type-11, .commentcount {
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: normal;
+  font-size: 13px;
+  font-size: 1.3rem;
+  line-height: 16px;
+  line-height: 1.6rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/_extends-only\.scss}line{font-family:\0000321}}
+.type-12 {
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: normal;
+  font-size: 11px;
+  font-size: 1.1rem;
+  line-height: 16px;
+  line-height: 1.6rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_links\.scss}line{font-family:\000031}}
+a {
+  color: #005689;
+  text-decoration: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_links\.scss}line{font-family:\000036}}
+  a:hover, a:focus {
+    text-decoration: underline; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_links\.scss}line{font-family:\000039}}
+  a:active {
+    color: #4bc6df; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_links\.scss}line{font-family:\0000314}}
+a.u-underline {
+  text-decoration: underline; }
+
+/* Accessible hidden content.
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\000035}}
+.u-h, .article__head .commentcount__label,
+.h {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000317}}
+.is-hidden,
+[hidden] {
+  display: none !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000321}}
+.mobile-only {
+  display: none !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000327}}
+.hide-on-mobile {
+  display: none !important;
+  display: block !important; }
+
+/* Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000341}}
+.u-cf:after, .u-cf:before,
+.cf:after,
+.cf:before {
+  content: "";
+  display: table; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000345}}
+.u-cf:after,
+.cf:after {
+  clear: both; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000349}}
+.u-cf,
+.cf {
+  zoom: 1; }
+
+/**
+ * Text hyphenation
+ *
+ * Break strings when their length exceeds the width of their container
+ * and hyphenate words at the end of lines using the `hyphens` property.
+ * Browser support for hyphenation: http://caniuse.com/#search=hyphenation
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000369}}
+.u-text-hyphenate {
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto; }
+
+/**
+ * Fake table
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000382}}
+.u-table {
+  display: table; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000385}}
+.u-table__row {
+  display: table-row; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000388}}
+.u-table__cell {
+  display: table-cell;
+  width: 10000px;
+  max-width: 100%; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000393}}
+.u-table__cell--top {
+  vertical-align: top; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\0000396}}
+.u-table__cell--bottom {
+  vertical-align: bottom; }
+
+/**
+ * Reset button styles
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\00003105}}
+.u-button-reset {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  background: transparent; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_helpers\.scss}line{font-family:\00003113}}
+  .u-button-reset:focus {
+    outline: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_lists\.scss}line{font-family:\000031}}
+dt {
+  font-weight: bold; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_lists\.scss}line{font-family:\000038}}
+menu,
+ol,
+ul {
+  padding: 0;
+  margin-left: 25px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_lists\.scss}line{font-family:\0000315}}
+nav ul,
+nav ol {
+  list-style: none;
+  list-style-image: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_lists\.scss}line{font-family:\0000324}}
+ol.unstyled,
+ul.unstyled,
+.inline-list {
+  margin: 0;
+  list-style: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/base\/_lists\.scss}line{font-family:\0000333}}
+.inline-list__item {
+  display: inline-block; }
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_grid-system\.scss}line{font-family:\0000327}}
+.gs-container {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1132px;
+  max-width: 1292px; }
+
+/* Global wrapper
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\000036}}
+#preloads {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1132px;
+  max-width: 1292px;
+  clear: both;
+  margin-top: 58px;
+  margin-top: 104px; }
+
+/* Global header and navigation
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000320}}
+#header.js-site-message {
+  top: auto; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000326}}
+#header {
+  min-height: 58px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  /* These styles extend the top bars to the screen edges */ }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000337}}
+  #header:before, #header:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: -10; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000345}}
+  #header:before {
+    top: 0;
+    height: 58px;
+    background-color: #214583; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000351}}
+  #header:after {
+    top: 58px;
+    height: 40px;
+    background-color: #f4f4ee;
+    border-bottom: 1px solid #e3e3db; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000359}}
+.header__inner {
+  background-color: #214583;
+  height: 60px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000364}}
+.guardian-logo-wrapper {
+  float: left;
+  margin: 20px 0 18px 10px;
+  margin-left: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000368}}
+  .guardian-logo-wrapper i {
+    display: block; }
+
+/* Columning
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000381}}
+.monocolumn-wrapper {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-left: 20px;
+  padding-right: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000385}}
+  .monocolumn-wrapper .page-head {
+    padding-left: 0;
+    padding-right: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\0000397}}
+.monocolumn-wrapper {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003102}}
+.monocolumn-wrapper--no-limit {
+  max-width: none; }
+
+/* Layout helpers
+   ========================================================================== */
+/**
+ * @todo Should these be moved to helpers?
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003115}}
+.component {
+  margin-bottom: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003119}}
+.box-indent {
+  padding: 0 10px 4px;
+  padding-left: 20px;
+  padding-right: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003129}}
+.img--inline {
+  width: 114px;
+  float: left;
+  clear: left;
+  margin: 3px 20px 0 0;
+  width: 140px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003139}}
+  .img--inline figcaption {
+    word-wrap: break-word; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003144}}
+.img-tiny.img--inline {
+  width: auto;
+  max-width: 114px; }
+
+/* Preloads (for swipe)
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003153}}
+#preloads-inner {
+  position: relative;
+  top: 0;
+  height: 100%;
+  width: 100%; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003160}}
+.preload {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0); }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003165}}
+.has-swipe .preload {
+  position: absolute;
+  width: 100%; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003170}}
+.has-swipe #preload-0 {
+  left: -100%; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003171}}
+.has-swipe #preload-1 {
+  left: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003172}}
+.has-swipe #preload-2 {
+  left: 100%; }
+
+/* Ajax loading helpers
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003179}}
+.preload-msg {
+  padding: 50px 50px 250px 50px;
+  text-align: center; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/layout\/_layout\.scss}line{font-family:\00003184}}
+.preload-msg .is-updating {
+  display: block;
+  margin: 10px auto; }
+
+/* ==========================================================================
+   Global modules
+   ========================================================================== */
+/* ==========================================================================
+   Nav object
+   ========================================================================== */
+/**
+ *
+ * Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction
+ *
+ * The root component nav and >li>a selectors should not be modified directly,
+ * instead use modifier classes such as "nav--stacked"
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000313}}
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 4px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000318}}
+  .nav .nav__item--full {
+    width: 100%;
+    margin: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000323}}
+  .nav > li,
+  .nav > li > a {
+    display: inline-block;
+    zoom: 1; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000328}}
+  .nav li.is-active {
+    font-weight: bold; }
+
+/* ==========================================================================
+   Nav Modifiers
+   ========================================================================== */
+/* Stacked
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000340}}
+.nav--stacked > li {
+  display: list-item; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000343}}
+  .nav--stacked > li a {
+    display: block; }
+
+/* Columns
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000352}}
+.nav--columns {
+  padding: 4px 10px;
+  padding-left: 20px;
+  padding-right: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000358}}
+  .nav--columns > .nav__item {
+    float: left;
+    width: 50%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 10px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000364}}
+    .nav--columns > .nav__item:nth-child(even) {
+      padding-right: 0;
+      padding-left: 10px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000370}}
+  .nav--columns .nav__link {
+    display: block;
+    padding: 3px 0 16px;
+    border-top: 1px solid #f4f4ee;
+    height: auto;
+    background-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-size: 1.4rem;
+    line-height: 20px;
+    line-height: 2rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000381}}
+.nav--columns-football {
+  padding: 8px 0 4px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000386}}
+.nav--top-border-off > .nav__item:nth-child(-n+2) .nav__link {
+  border-top: none;
+  padding-top: 0; }
+
+/* Section divider
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\0000395}}
+.nav-popup--small .nav--section-divider {
+  margin: 0;
+  background-color: #f4f4ee;
+  padding: 0 10px 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: -5px !important;
+  border-top: 12px solid white;
+  border-top: none;
+  margin-top: -13px !important; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003101}}
+  .nav-popup--small .nav--section-divider .nav .nav__item + .nav__item .nav__link {
+    border-bottom: 0;
+    border-top: 1px solid #e3e3db; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003115}}
+  .nav-popup--small .nav--section-divider .nav__item {
+    margin: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003123}}
+.control--sections .i-nav-divider {
+  border-left: 0; }
+
+/* Global navigation
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003133}}
+.nav-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: none;
+  overflow: auto;
+  width: 100%;
+  padding: 0 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #f4f4ee;
+  border-bottom: 1px solid #e3e3db;
+  display: block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003149}}
+.nav--global {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: none;
+  float: left;
+  clear: left;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  padding: 0 50px 0 0;
+  display: block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003161}}
+  .nav--global .nav__item {
+    position: relative;
+    float: left; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003165}}
+    .nav--global .nav__item.is-active:after {
+      content: " ";
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid;
+      border-bottom-color: inherit;
+      position: absolute;
+      bottom: -2px;
+      margin-left: -10px;
+      left: 50%; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003178}}
+  .nav--global .nav__link {
+    color: #333333; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003185}}
+  .nav--global .nav__link,
+  .nav--global .nav__link:active,
+  .nav--global .nav__link:focus,
+  .nav--global .nav__link:hover {
+    display: block;
+    margin: 10px 0 12px;
+    padding: 2px 9px 0 9px;
+    font-size: 14px;
+    font-size: 1.4rem;
+    line-height: 19px;
+    line-height: 1.9rem;
+    text-decoration: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003193}}
+  .nav--global .is-active .nav__link {
+    color: #333333;
+    font-weight: bold;
+    border-color: #333333; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003199}}
+  .nav--global .nav__item:first-child .nav__link {
+    padding-left: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003200}}
+  .nav--global .nav__item:last-child .nav__link {
+    border-right: none; }
+
+/* Local navigation
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003206}}
+.localnav-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: none;
+  overflow: auto;
+  margin: 0 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #edede7;
+  display: block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003221}}
+.nav--local {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: none;
+  float: left;
+  clear: left;
+  width: 100%;
+  height: 52px;
+  overflow: hidden;
+  padding: 0;
+  background-color: #ffffff;
+  display: block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003235}}
+  .nav--local .nav__item {
+    float: left; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003239}}
+  .nav--local .nav__link {
+    color: #333333; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003245}}
+  .nav--local .nav__link,
+  .nav--local .nav__link:active,
+  .nav--local .nav__link:hover {
+    display: block;
+    margin: 16px 0 12px 0;
+    padding: 2px 9px 0 9px;
+    font-family: "EgyptianText", georgia, serif !important;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003255}}
+  .nav--local .is-active .nav__link {
+    font-family: "EgyptianHeadline", georgia, serif !important;
+    line-height: 18px !important;
+    font-weight: bold; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003261}}
+  .nav--local .nav__item:first-child .nav__link {
+    padding-left: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003262}}
+  .nav--local .nav__item:last-child .nav__link {
+    border-right: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003266}}
+.localnav--small {
+  background-color: #fff;
+  display: block;
+  border-top: 2px solid #4bc6df;
+  display: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003273}}
+  .localnav--small .localnav__cta {
+    width: 60px;
+    height: 30px;
+    padding: 0;
+    margin: 6px 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-left: 1px solid #edede7; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003286}}
+    .localnav--small .localnav__cta, .localnav--small .localnav__cta:hover, .localnav--small .localnav__cta:active, .localnav--small .localnav__cta:focus {
+      background-color: #ffffff; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003290}}
+    .localnav--small .localnav__cta i {
+      margin-top: -4px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003294}}
+    .localnav--small .localnav__cta.is-active i {
+      -moz-transform: rotate(180deg);
+      /* FF3.5+ */
+      -o-transform: rotate(180deg);
+      /* Opera 10.5 */
+      -webkit-transform: rotate(180deg);
+      /* Saf3.1+, Chrome */
+      -ms-transform: rotate(180deg);
+      /* IE9 */
+      transform: rotate(180deg); }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003300}}
+.localnav__inner {
+  position: relative;
+  margin: 0 10px;
+  border-bottom: 1px solid #edede7;
+  border-bottom-color: #edede7 !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003307}}
+.localnav__title {
+  width: 100%;
+  float: left;
+  border: 0 !important;
+  height: 40px !important;
+  padding-left: 0 !important; }
+
+/* Toolbar navigation
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003320}}
+.nav--toolbar {
+  display: none;
+  margin: 0 10px 0 20px;
+  padding: 12px 0 0;
+  display: block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003327}}
+  .nav--toolbar .nav__item {
+    margin: 4px 0 0 0;
+    padding: 4px 10px;
+    color: #fff;
+    border-right: 1px solid #94B1CA; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003333}}
+    .nav--toolbar .nav__item:last-child {
+      border-right: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003334}}
+    .nav--toolbar .nav__item.is-active {
+      text-decoration: underline; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003340}}
+  .nav--toolbar .nav__link,
+  .nav--toolbar .nav__link:active,
+  .nav--toolbar .nav__link:focus,
+  .nav--toolbar .nav__link:hover {
+    color: #fff;
+    text-decoration: none; }
+
+/* Faded link colors
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_nav\.scss}line{font-family:\00003350}}
+.nav .nav__item .nav__link--faded {
+  color: #9DBBD4; }
+
+/* ==========================================================================
+   Navigation controls
+   ========================================================================== */
+/* Control
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000312}}
+.control, .control:active, .control:focus, .control:hover {
+  font-family: "EgyptianText", georgia, serif !important;
+  font-size: 13px;
+  background-color: transparent;
+  vertical-align: top;
+  text-decoration: none !important; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000320}}
+.control.is-active {
+  background-color: #fff !important;
+  color: #214583; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000326}}
+.i-nav-divider {
+  float: left;
+  height: 28px;
+  width: 1px;
+  margin-right: 8px;
+  background-color: #274C98;
+  border-left: 1px solid #122853; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000335}}
+.is-active .i-nav-divider {
+  border-color: #fff;
+  background-color: #fff; }
+
+/* Sections control - (Hamburger icon )
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000347}}
+.control--sections,
+.control--sections:active,
+.control--sections:focus,
+.control--sections:hover {
+  float: right;
+  width: auto;
+  height: 28px;
+  padding: 16px 16px 15px 0;
+  position: absolute;
+  right: 0;
+  top: 58px;
+  padding: 0 16px 13px 0;
+  background-color: transparent;
+  color: #444;
+  font-size: 14px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000364}}
+.control--sections.is-active {
+  background-color: transparent !important;
+  border-right: 1px solid #e3e3db;
+  padding-right: 15px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000374}}
+.control__menu.i {
+  float: right;
+  margin-top: 7px;
+  text-indent: -1000em; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000380}}
+span.control__menu.i-menu {
+  display: inline-block;
+  margin-left: 6px;
+  display: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000389}}
+.control--sections .i-menu-active {
+  display: none;
+  margin-top: 14px;
+  display: inline-block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\0000398}}
+.control--sections .i-nav-divider {
+  top: 6px;
+  position: relative;
+  margin-right: 13px;
+  border-color: #BBBBBB;
+  background-color: #e3e3db; }
+
+/* Top stories control
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003121}}
+.control--topstories, .control--topstories:active, .control--topstories:hover, .control--topstories:focus {
+  float: right;
+  height: 28px;
+  margin: 0;
+  padding: 18px 0 13px 0;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  right: 48px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003128}}
+  .control--topstories.is-active, .control--topstories:active.is-active, .control--topstories:hover.is-active, .control--topstories:focus.is-active {
+    color: #214583; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003137}}
+  .control--topstories.control--right, .control--topstories:active.control--right, .control--topstories:hover.control--right, .control--topstories:focus.control--right {
+    right: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003146}}
+.control--topstories span {
+  display: none;
+  height: 28px;
+  vertical-align: top;
+  line-height: 28px;
+  margin-right: 8px;
+  margin-left: 8px;
+  display: inline-block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003159}}
+.control--topstories.is-active span {
+  background: none !important;
+  border-color: transparent !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003164}}
+.control--topstories .i-top-stories {
+  margin: 2px 16px 0 8px;
+  margin-left: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003172}}
+.control--topstories .i-nav-divider {
+  margin-top: -2px; }
+
+/* Search control
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003181}}
+.control--search {
+  float: right;
+  height: 28px;
+  padding: 16px 16px 15px 0;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003194}}
+.control--search .i-search {
+  margin-top: 5px;
+  margin-left: 6px;
+  margin-right: 2px; }
+
+/* Profile control
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003205}}
+.control--profile {
+  float: right;
+  height: 28px;
+  padding: 18px 0 13px 8px;
+  width: auto;
+  position: absolute;
+  top: 0;
+  right: 178px;
+  white-space: nowrap; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003214}}
+  .control--profile, .control--profile:active, .control--profile:hover, .control--profile:focus {
+    color: #fff; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003215}}
+  .control--profile.is-active {
+    color: #214583; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003225}}
+.control__info {
+  display: none;
+  height: 28px;
+  vertical-align: top;
+  line-height: 28px;
+  margin-right: 8px;
+  margin-left: 8px;
+  display: inline-block;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/nav\/_control\.scss}line{font-family:\00003241}}
+.control--profile .i-profile {
+  margin: 2px 16px 0 8px;
+  margin-left: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_adslot\.scss}line{font-family:\000031}}
+.ad-slot {
+  width: 100%;
+  padding: 10px 0 0 0;
+  text-align: center;
+  height: 54px;
+  position: relative;
+  z-index: 1000;
+  height: auto;
+  min-height: 96px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_adslot\.scss}line{font-family:\0000315}}
+  .ad-slot iframe {
+    margin: 0 auto; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_adslot\.scss}line{font-family:\0000320}}
+.ad-container {
+  display: inline-block;
+  width: auto;
+  margin: 0 auto !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_adslot\.scss}line{font-family:\0000326}}
+[data-link-name*="bottom-banner-ad"] {
+  padding: 8px 0;
+  background-color: #fff; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_adslot\.scss}line{font-family:\0000331}}
+.ad-slot-top-banner-ad {
+  background-color: #f0f0f0;
+  background-color: #ffffff; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_adslot\.scss}line{font-family:\0000339}}
+.ad-slot-middle-banner-ad {
+  background-color: #fff;
+  min-height: 0;
+  border-bottom: 1px solid #edede7; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_adslot\.scss}line{font-family:\0000345}}
+.ad-slot-middle-banner-ad .ad-container {
+  max-height: 50px;
+  padding: 5px 0 10px 0; }
+
+/* ==========================================================================
+   Trailblocks
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\000035}}
+.trailblock {
+  max-height: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-left: 20px;
+  margin-right: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000316}}
+  .article-v2__inner .trailblock, .article__main-column .trailblock {
+    margin-left: 0;
+    margin-right: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000320}}
+  .has-local-nav .trailblock {
+    border-top: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000324}}
+  .trailblock > ul {
+    margin-bottom: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000327}}
+    .trailblock > ul + ul {
+      border-top: 1px solid #edede7; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000333}}
+.trailblock--no-border {
+  border-top: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000339}}
+.front-section:not(:first-child) .trailblock {
+  margin-top: 4px; }
+
+/* Trailblock expandables
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000351}}
+.trailblock.shut > ul + ul {
+  border-top: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000355}}
+.trailblock.shut .count {
+  display: inline-block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000361}}
+.trailblock.rolled-up,
+.trailblock.rolled-out {
+  margin-top: 8px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000365}}
+.trailblock.rolled-up {
+  max-height: 0; }
+
+/* Trailblock topstories
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000377}}
+.trailblock-topstories li:first-child .b2 {
+  border-top: none; }
+
+/* Toggle trailblock
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trailblock\.scss}line{font-family:\0000385}}
+.toggle-trailblock {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  min-height: 36px;
+  min-width: 60px;
+  top: 0;
+  right: 0;
+  border: none;
+  border-left: 1px solid #ffffff;
+  background-color: transparent;
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 14px;
+  line-height: 1.4rem;
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  color: #ffffff;
+  padding: 14px 0 0 6px;
+  text-align: left; }
+
+/* ==========================================================================
+   Trail object
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\000035}}
+.trail {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 4px 0 24px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000311}}
+  .trail .relative-timestamp {
+    display: inline-block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000314}}
+  .trail + .trail {
+    border-top: 1px solid #e3e3db; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000320}}
+.trail--gallery,
+.trail--gallery + .trail {
+  border-top: none;
+  padding-top: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000325}}
+.trail__headline {
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin-top: 4px;
+  margin-bottom: 21px;
+  font-size: 28px;
+  font-size: 2.8rem;
+  line-height: 32px;
+  line-height: 3.2rem;
+  margin-bottom: 29px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000339}}
+.trail__headline a,
+.trail__headline a:hover,
+.trail__headline a:focus,
+.trail__headline a:active,
+.trail h2 a {
+  color: #333333; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000342}}
+.trail__headline a:active {
+  text-decoration: underline; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000345}}
+.trail__headline-kicker {
+  display: block;
+  color: #F9AF41; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000349}}
+.trail__img {
+  display: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000352}}
+  .images-upgraded .trail__img {
+    display: block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000356}}
+.trail__text {
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 20px;
+  line-height: 2rem;
+  font-family: "EgyptianText", georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  text-rendering: optimizeLegibility;
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  clear: none; }
+
+/* ==========================================================================
+   Trail counters
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000371}}
+.trail__count {
+  position: absolute;
+  top: 4px;
+  right: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000376}}
+  .trail__count a {
+    display: inline-block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000379}}
+  .trail__count i {
+    vertical-align: -3px;
+    margin-right: 4px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\0000388}}
+.trail__count a,
+.trail__count a:hover,
+.trail__count a:focus,
+.trail__count a:active,
+.trail .relative-timestamp {
+  color: #767676;
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 14px;
+  line-height: 1.4rem;
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  font-size: 13px;
+  font-size: 1.3rem;
+  line-height: 16px;
+  line-height: 1.6rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003100}}
+.trail__count--commentcount a,
+.trail__count--commentcount a:hover,
+.trail__count--commentcount a:focus,
+.trail__count--commentcount a:active {
+  color: inherit; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003104}}
+.trail__count--imagecount {
+  right: 8px; }
+
+/* ==========================================================================
+   Trail modifiers
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003114}}
+.trail--featured .trail__headline {
+  font-size: 24px;
+  font-size: 2.4rem;
+  line-height: 28px;
+  line-height: 2.8rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 24px;
+  font-size: 32px;
+  font-size: 3.2rem;
+  line-height: 36px;
+  line-height: 3.6rem;
+  margin-bottom: 32px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003124}}
+.trail--featured.trail--has-image .trail__text {
+  padding-bottom: 16px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003127}}
+.trail--featured.trail--has-image img {
+  vertical-align: bottom; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003133}}
+.trail--thumbnail .trail__img {
+  float: left;
+  margin-bottom: 4px;
+  margin-right: 10px;
+  margin-top: 3px;
+  position: relative;
+  overflow: hidden;
+  height: 71px;
+  width: 120px;
+  margin-right: 20px;
+  height: 84px;
+  width: 140px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003152}}
+  .trail--thumbnail .trail__img img {
+    width: 100%;
+    display: block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003157}}
+  .ab-expandable-trails--on .trail--thumbnail .trail__img {
+    margin-bottom: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003164}}
+.trail--headline .trail__headline {
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 20px;
+  line-height: 2rem;
+  margin-bottom: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003170}}
+.trail--gallery {
+  background-color: #F9F9F6;
+  padding-bottom: 3px;
+  border-bottom: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003175}}
+  .trail--gallery:first-child {
+    margin-top: -8px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003178}}
+  .front-section .trail--gallery:first-child {
+    margin-top: 8px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003181}}
+  .trail--gallery .i-gallery {
+    margin-top: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003184}}
+  .trail--gallery ul {
+    background-color: #ffffff; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003187}}
+  .trail--gallery .trail__headline {
+    margin-left: 8px;
+    margin-right: 8px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003191}}
+  .trail--gallery .relative-timestamp {
+    margin-left: 8px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003194}}
+  .trail--gallery + .trail--gallery {
+    margin: 16px 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003200}}
+.trail--expandable.trail--has-image .trail__img {
+  float: left; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003203}}
+.trail--expandable.trail--has-image .trail__expander-headline {
+  float: right;
+  width: 61%; }
+
+/**
+ * @todo: Clean these up into proper modifiers
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003214}}
+.matches-container .trail__text {
+  display: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/trails\/_trail\.scss}line{font-family:\00003217}}
+.competition .trail {
+  margin-top: 12px;
+  border-bottom: none; }
+
+/* ====== media (nicole sullivan's OOCSS) ====== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_media\.scss}line{font-family:\000034}}
+.media,
+.media__body {
+  overflow: hidden;
+  _overflow: visible;
+  zoom: 1; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_media\.scss}line{font-family:\0000310}}
+.media__img {
+  float: left;
+  margin-right: 15px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_media\.scss}line{font-family:\0000315}}
+.media__img img {
+  display: block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\000031}}
+.article {
+  position: relative; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\000036}}
+.article-zone,
+.article__zone {
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 28px;
+  line-height: 2.8rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: 900;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 36px;
+  padding: 0 10px;
+  border-top-width: 2px;
+  border-top-style: solid;
+  padding-left: 20px;
+  padding-right: 20px;
+  min-height: auto;
+  padding: 12px 0;
+  border-top: 1px dotted #e3e3db !important;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: none;
+  padding-left: 160px;
+  padding-left: 240px;
+  padding-right: 400px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\0000344}}
+  .article-zone-no-indent .article-zone, .article-zone-no-indent
+  .article__zone {
+    padding-left: 0 !important;
+    margin-left: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\0000350}}
+  .article-zone.sport-header, .article-zone.article-zone--sport,
+  .article__zone.sport-header,
+  .article__zone.article-zone--sport {
+    padding-left: 0;
+    margin-left: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\0000356}}
+.article__sub-head {
+  font-size: 18px;
+  font-size: 1.8rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: 900;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  padding: 2px 0 8px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 12px;
+  margin-left: 20px;
+  margin-right: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\0000368}}
+  .article-zone-no-indent .article__sub-head, .monocolumn-wrapper .article__sub-head {
+    margin-left: 0;
+    margin-right: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\0000373}}
+  .article__popular .article__sub-head {
+    border-bottom: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\0000378}}
+.article__head {
+  padding-top: 4px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\0000382}}
+.article__headline {
+  font-size: 28px;
+  font-size: 2.8rem;
+  line-height: 32px;
+  line-height: 3.2rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 24px;
+  padding-top: 8px;
+  border-top: 1px dotted #e3e3db;
+  -webkit-font-smoothing: antialiased;
+  font-size: 44px;
+  font-size: 4.4rem;
+  line-height: 48px;
+  line-height: 4.8rem;
+  margin-bottom: 36px;
+  padding-top: 0px;
+  border-top: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003100}}
+  .article__headline a, .article__headline a:hover, .article__headline a:active, .article__headline a:focus {
+    color: #333333; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003105}}
+  .article__headline em {
+    font-style: normal; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003109}}
+  .article__headline strong {
+    font-weight: normal; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003114}}
+.article__dateline {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 14px;
+  line-height: 1.4rem;
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  position: relative;
+  min-height: 36px;
+  padding-top: 4px;
+  padding-right: 60px;
+  margin-bottom: 12px;
+  border-top: 1px dotted #e3e3db;
+  color: #767676;
+  padding-right: 0;
+  font-size: 13px;
+  font-size: 1.3rem;
+  line-height: 16px;
+  line-height: 1.6rem;
+  display: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003125}}
+  .article__meta-container .article__dateline {
+    display: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003129}}
+  .article__dateline time {
+    display: inline-block;
+    width: 80%; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003134}}
+  .article__dateline i {
+    vertical-align: top; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003149}}
+  .article__meta-container .article__dateline {
+    display: block;
+    margin-bottom: 12px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003153}}
+    .article__meta-container .article__dateline time {
+      display: inline-block;
+      width: 85%; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003158}}
+    .article__meta-container .article__dateline i {
+      vertical-align: top;
+      margin-top: 1px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003166}}
+  .article__dateline .article__dateline-time {
+    display: inline-block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003172}}
+.article__standfirst {
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 20px;
+  line-height: 2rem;
+  text-rendering: optimizeLegibility;
+  margin-bottom: 12px;
+  color: #767676;
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003184}}
+.article-body {
+  margin-bottom: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003190}}
+.bullet {
+  font-size: 13px;
+  display: inline-block;
+  color: #999999;
+  margin: 2px 4px -2px 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003196}}
+  .bullet:first-of-type {
+    margin-top: 4px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003204}}
+.article__container,
+.article__main-column,
+.article-v2__inner,
+.article-v2__main-column {
+  position: relative; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003210}}
+.article__secondary-column,
+.article-v2__secondary-column,
+.byline--cloned {
+  display: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003214}}
+.byline {
+  font-weight: bold;
+  border-top: 1px dotted #e3e3db;
+  border-bottom: 1px dotted #e3e3db;
+  margin-bottom: 8px;
+  min-height: 20px;
+  padding: 3px 0 11px 0;
+  color: #767676; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003223}}
+  article .byline {
+    display: block;
+    padding-bottom: 48px;
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 60px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003242}}
+.article__meta-container {
+  float: left;
+  margin-left: -160px;
+  margin-bottom: 16px;
+  width: 140px;
+  margin-left: -240px;
+  width: 220px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003257}}
+.media-content + .article__meta-container {
+  margin-left: 0;
+  margin-bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003266}}
+.media-primary {
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-left: -20px;
+  margin-right: -20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003274}}
+.main-image {
+  margin-bottom: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003278}}
+.gu-video {
+  width: 100%;
+  margin-bottom: 8px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003283}}
+video {
+  max-width: 100%;
+  height: auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003289}}
+.commentcount {
+  display: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003293}}
+  .commentcount i {
+    vertical-align: bottom;
+    margin-right: 2px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003298}}
+  .article__head .commentcount {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 59px;
+    height: 35px;
+    padding: 4px 0 0 4px;
+    border-left: 1px dotted #e3e3db; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003317}}
+.article__meta-heading {
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 4px;
+  padding-bottom: 16px;
+  border-top: 1px dotted #e3e3db; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003324}}
+.article__keywords {
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 18px;
+  line-height: 1.8rem;
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  margin-top: 12px;
+  margin-bottom: 12px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003329}}
+  .ab-paragraph-spacing--indents .article__keywords {
+    margin-top: 20px; }
+
+/* Layout changes across devices
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003339}}
+.article__head,
+.main-caption {
+  padding-left: 0 !important;
+  padding-right: 0 !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003344}}
+.player,
+.media-primary {
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003348}}
+.article-v2__columning-wrapper {
+  padding-right: 80px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003351}}
+  .article-v2__columning-wrapper .media-primary {
+    margin-right: -80px !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003356}}
+.article__head .commentcount {
+  display: block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003366}}
+.article__container,
+.article__discussion {
+  display: block !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003369}}
+.d-actions .top {
+  display: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003378}}
+.article-wrapper {
+  position: relative;
+  max-width: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003382}}
+.article__main-column {
+  padding-right: 340px;
+  max-width: 620px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003386}}
+.article__secondary-column {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003392}}
+.article__secondary-column__inner {
+  height: 100%; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003396}}
+.article-v2__inner {
+  max-width: 620px;
+  padding-right: 400px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003400}}
+.article-v2__main-column {
+  max-width: 620px;
+  padding-right: 100px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003404}}
+.article-v2__columning-wrapper {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+  padding-right: 0;
+  position: relative; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003411}}
+  .article-v2__columning-wrapper .media-primary {
+    margin-right: 0 !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003415}}
+.article-v2__main-column {
+  display: table-cell;
+  vertical-align: top; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003419}}
+.article-v2__secondary-column {
+  position: relative;
+  display: table-cell;
+  width: 300px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003424}}
+.article-v2__secondary-column__inner {
+  top: 0;
+  bottom: 0;
+  position: absolute; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003429}}
+  .article-v2__secondary-column__inner > .u-table {
+    height: 100%; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003436}}
+.article-wrapper {
+  padding-left: 16px;
+  padding-right: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003440}}
+.article__main-column {
+  padding-left: 160px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003445}}
+.article-v2__inner,
+.article-v2__main-column {
+  padding-left: 160px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003449}}
+.article-v2__inner {
+  padding-right: 320px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003453}}
+.article-v2__main-column {
+  padding-right: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003457}}
+.article__head {
+  padding-top: 8px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003462}}
+.article__head .commentcount {
+  display: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003466}}
+.article__meta-container .commentcount {
+  display: block;
+  padding-top: 4px;
+  margin-bottom: 12px;
+  border-top: 1px dotted #e3e3db; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003477}}
+.article-v2__inner,
+.article-v2__main-column {
+  padding-left: 240px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003480}}
+.article-v2__main-column {
+  padding-right: 100px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003483}}
+.article-v2__inner {
+  padding-right: 400px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003491}}
+.article__popular .article-zone {
+  border-color: #4bc6df; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_article\.scss}line{font-family:\00003495}}
+.article__popular i {
+  -moz-transform: rotate(-90deg);
+  /* FF3.5+ */
+  -o-transform: rotate(-90deg);
+  /* Opera 10.5 */
+  -webkit-transform: rotate(-90deg);
+  /* Saf3.1+, Chrome */
+  -ms-transform: rotate(-90deg);
+  /* IE9 */
+  transform: rotate(-90deg);
+  margin-top: 10px; }
+
+/* Fronts/Sections/tags
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\000035}}
+.front-section-head,
+.sub-section-head {
+  position: relative;
+  overflow: hidden;
+  border-top: 4px solid #4bc6df; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000310}}
+  .front-section-head h1,
+  .sub-section-head h1 {
+    font-size: 20px;
+    font-size: 2rem;
+    line-height: 28px;
+    line-height: 2.8rem;
+    font-family: "EgyptianHeadline", georgia, serif;
+    font-weight: 900;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    height: 36px;
+    margin-bottom: 0;
+    line-height: 1;
+    font-weight: bolder;
+    -webkit-font-smoothing: antialiased; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000319}}
+  .front-section-head a,
+  .sub-section-head a {
+    display: block;
+    padding: 7px 10px 8px;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000329}}
+.front-section-head a {
+  color: #ffffff; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000333}}
+.sub-section-head {
+  margin: 0 10px;
+  border-top-width: 2px;
+  margin-left: 20px;
+  margin-right: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000342}}
+  .sub-section-head a {
+    padding-left: 0;
+    padding-right: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000348}}
+.section-head, .localnav__title {
+  font-size: 22px;
+  font-size: 2.2rem;
+  line-height: 28px;
+  line-height: 2.8rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: 900;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  height: 44px;
+  line-height: 1;
+  font-weight: bolder;
+  margin: 0;
+  border-top: 2px solid #4bc6df;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 4px 10px 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000370}}
+  .section-head.zone-color, .zone-color.localnav__title {
+    border-top: none; }
+
+/* Static pages and misc
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000380}}
+.page-head {
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  padding: 0 0 16px;
+  margin: 0 10px 4px 10px;
+  border-bottom: 1px dotted gainsboro;
+  margin-left: 20px;
+  margin-right: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\0000392}}
+.page__sub-head {
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 20px;
+  line-height: 2rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: 900;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  margin: 0 10px 16px 10px;
+  margin-left: 20px;
+  margin-right: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\00003103}}
+.release {
+  display: none;
+  margin: 18px 0 0 0;
+  color: white;
+  font-size: 10px;
+  float: left;
+  display: inline-block;
+  color: #95B1CA; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_headers\.scss}line{font-family:\00003115}}
+.message {
+  padding: 11px;
+  background-color: #ffe; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_social\.scss}line{font-family:\000032}}
+.social-wrapper {
+  padding: 12px 0 16px;
+  margin-bottom: 16px;
+  max-width: 300px;
+  overflow: hidden; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_social\.scss}line{font-family:\000038}}
+.social__item {
+  float: left;
+  width: 60px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_social\.scss}line{font-family:\0000315}}
+.social__action,
+.social__action i {
+  display: block; }
+
+/* ==========================================================================
+   External modules
+   ========================================================================== */
+/* Core elements
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000312}}
+.from-content-api,
+.from-content-api .block-elements {
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  font-family: "EgyptianText", georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  color: #333333;
+  font-size: 18px;
+  font-size: 1.8rem;
+  line-height: 28px;
+  line-height: 2.8rem; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000324}}
+  .from-content-api > p,
+  .from-content-api ul,
+  .from-content-api ol,
+  .from-content-api address,
+  .from-content-api .block-elements > p,
+  .from-content-api .block-elements ul,
+  .from-content-api .block-elements ol,
+  .from-content-api .block-elements address {
+    margin: 0 0 12px 0;
+    padding: 0;
+    margin-bottom: 16px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000333}}
+  .from-content-api > ol,
+  .from-content-api > ul,
+  .from-content-api .block-elements > ol,
+  .from-content-api .block-elements > ul {
+    margin-top: 0.8em;
+    list-style: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000337}}
+  .from-content-api > ol,
+  .from-content-api .block-elements > ol {
+    counter-reset: li; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000340}}
+  .from-content-api > ol > li:before,
+  .from-content-api .block-elements > ol > li:before {
+    content: counter(li) ".";
+    counter-increment: li;
+    font-size: 16px;
+    font-size: 1.6rem;
+    line-height: 20px;
+    line-height: 2rem;
+    font-family: "EgyptianHeadline", georgia, serif;
+    font-weight: 900;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    margin-right: 4px;
+    font-size: 18px;
+    font-size: 1.8rem;
+    line-height: 24px;
+    line-height: 2.4rem; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000350}}
+  .from-content-api > ul > li,
+  .from-content-api .block-elements > ul > li {
+    text-indent: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000353}}
+  .from-content-api > ul > li:before,
+  .from-content-api .block-elements > ul > li:before {
+    font-size: 48px;
+    content: "\2022";
+    color: #e3e3db;
+    position: absolute;
+    left: -22px;
+    top: 1px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000362}}
+  .from-content-api > ol > li,
+  .from-content-api > ul > li,
+  .from-content-api .block-elements > ol > li,
+  .from-content-api .block-elements > ul > li {
+    position: relative;
+    margin-bottom: 0.8em; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000366}}
+  .from-content-api h2,
+  .from-content-api .block-elements h2 {
+    font-size: 18px;
+    font-size: 1.8rem;
+    line-height: 24px;
+    line-height: 2.4rem;
+    font-family: "EgyptianHeadline", georgia, serif;
+    font-weight: 900;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: 1px;
+    font-size: 20px;
+    font-size: 2rem;
+    line-height: 28px;
+    line-height: 2.8rem; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000374}}
+  .from-content-api h3,
+  .from-content-api .block-elements h3 {
+    margin: 0;
+    font-size: 16px;
+    font-size: 1.6rem;
+    line-height: 24px;
+    line-height: 2.4rem;
+    font-family: "EgyptianText", georgia, serif;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-size: 18px;
+    font-size: 1.8rem;
+    line-height: 28px;
+    line-height: 2.8rem; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000385}}
+  .from-content-api > p + h2,
+  .from-content-api > figure + h2,
+  .from-content-api > video + h2,
+  .from-content-api .block-elements > p + h2,
+  .from-content-api .block-elements > figure + h2,
+  .from-content-api .block-elements > video + h2 {
+    margin-top: 24px;
+    margin-top: 27px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000392}}
+  .from-content-api > p + h3,
+  .from-content-api > figure + h3,
+  .from-content-api > video + h3,
+  .from-content-api .block-elements > p + h3,
+  .from-content-api .block-elements > figure + h3,
+  .from-content-api .block-elements > video + h3 {
+    margin-top: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\0000397}}
+.no-indent {
+  text-indent: 0 !important; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003101}}
+.from-content-api--small {
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 22px;
+  line-height: 2.2rem;
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 24px;
+  line-height: 2.4rem; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003107}}
+  .from-content-api--small h2 {
+    font-size: 16px;
+    font-size: 1.6rem;
+    line-height: 24px;
+    line-height: 2.4rem;
+    font-size: 18px;
+    font-size: 1.8rem;
+    line-height: 28px;
+    line-height: 2.8rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003116}}
+.from-content-api blockquote {
+  font-style: italic;
+  margin: 28px 0 28px 24px;
+  margin-left: 28px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003124}}
+  .from-content-api blockquote.quoted {
+    margin-left: 0;
+    font-style: normal;
+    color: #767676; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003129}}
+    .from-content-api blockquote.quoted p {
+      font-size: 16px;
+      font-size: 1.6rem;
+      line-height: 20px;
+      line-height: 2rem;
+      font-family: "EgyptianHeadline", georgia, serif;
+      font-weight: normal;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      line-height: inherit;
+      font-size: 20px;
+      font-size: 2rem;
+      line-height: 24px;
+      line-height: 2.4rem;
+      line-height: inherit; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003133}}
+      .from-content-api blockquote.quoted p:first-child {
+        text-indent: 40px;
+        text-indent: 42px; }
+
+/* Captions
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003155}}
+.caption,
+figcaption,
+.main-caption {
+  font-size: 11px;
+  font-size: 1.1rem;
+  line-height: 14px;
+  line-height: 1.4rem;
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  color: #767676;
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 14px;
+  line-height: 1.4rem; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003164}}
+.main-caption {
+  padding: 8px 10px 36px;
+  padding-left: 20px;
+  padding-right: 20px; }
+
+/* Figures
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003177}}
+figure {
+  margin: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003180}}
+  figure img {
+    display: block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003184}}
+  figure.img {
+    margin-top: 16px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 24px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003194}}
+  figure.img--extended {
+    margin-top: 16px;
+    margin-bottom: 16px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003201}}
+  figure.img--landscape figcaption, figure.img--portrait figcaption {
+    background-color: #f4f4ee;
+    padding: 4px 6px 24px 6px;
+    padding: 6px 8px 36px 8px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003213}}
+p + figure,
+p + video {
+  margin-top: 4px; }
+
+/* Video embeds
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003222}}
+.element-video__wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  margin-bottom: 8px;
+  background-color: #000; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003233}}
+  .element-video__wrap iframe,
+  .element-video__wrap object,
+  .element-video__wrap embed,
+  .element-video__wrap video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
+
+/* Citations
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003246}}
+.from-content-api cite {
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 20px;
+  line-height: 2rem;
+  font-family: "EgyptianText", georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003249}}
+  .from-content-api cite a {
+    color: #666666; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003255}}
+    .from-content-api cite a:hover, .from-content-api cite a:focus, .from-content-api cite a:visited:focus, .from-content-api cite a:visited:hover {
+      color: #4d4d4d;
+      border-bottom: 1px dotted #4d4d4d; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003259}}
+    .from-content-api cite a:visited {
+      color: #808080;
+      border-bottom: 1px dotted #808080; }
+
+/* Tables
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003272}}
+.from-content-api table {
+  margin-bottom: 16px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003277}}
+.from-content-api table caption {
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  padding: 8px 0;
+  text-align: left;
+  border-top: 1px solid #B3B3B4; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003285}}
+.from-content-api th,
+.from-content-api td {
+  font-size: 13px;
+  font-size: 1.3rem;
+  line-height: 16px;
+  line-height: 1.6rem;
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  padding: 8px;
+  color: #767676; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003291}}
+.from-content-api th {
+  font-weight: 600;
+  color: #333333; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/external\/_from-content-api\.scss}line{font-family:\00003296}}
+.from-content-api tbody tr:nth-child(odd) td {
+  background-color: #F9F9F7; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/experiments\/_ab-paragraph-spacing\.scss}line{font-family:\000034}}
+.ab-paragraph-spacing--indents .from-content-api > p,
+.ab-paragraph-spacing--indents .from-content-api .block-elements > p {
+  margin-bottom: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/experiments\/_ab-paragraph-spacing\.scss}line{font-family:\000039}}
+  .ab-paragraph-spacing--indents .from-content-api > p + a + p,
+  .ab-paragraph-spacing--indents .from-content-api > p + .inline-image + p,
+  .ab-paragraph-spacing--indents .from-content-api > p + p,
+  .ab-paragraph-spacing--indents .from-content-api .block-elements > p + a + p,
+  .ab-paragraph-spacing--indents .from-content-api .block-elements > p + .inline-image + p,
+  .ab-paragraph-spacing--indents .from-content-api .block-elements > p + p {
+    text-indent: 24px;
+    text-indent: 2.4rem;
+    text-indent: 28px;
+    text-indent: 2.8rem; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/experiments\/_ab-paragraph-spacing\.scss}line{font-family:\0000322}}
+.ab-paragraph-spacing--indents .from-content-api blockquote.quoted {
+  text-indent: 0;
+  text-indent: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/experiments\/_ab-paragraph-spacing\.scss}line{font-family:\0000329}}
+  .ab-paragraph-spacing--indents .from-content-api blockquote.quoted p {
+    margin-bottom: 0;
+    text-indent: 40px;
+    text-indent: 42px; }
+
+/* ==========================================================================
+   States
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\000034}}
+.js-on .js-hidden,
+.js-off .js-visible {
+  display: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\000038}}
+.is-off {
+  display: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000312}}
+.current {
+  font-weight: bold; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000316}}
+.is-on {
+  display: block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000320}}
+.has-cursor {
+  cursor: pointer; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000324}}
+.maxed {
+  width: 100%; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000328}}
+.gu-image {
+  width: 100%;
+  height: auto; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000333}}
+.collapsible {
+  padding: 9px 32px 9px 8px;
+  position: relative;
+  cursor: pointer; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000340}}
+.collapsible i {
+  position: absolute;
+  right: 14px;
+  display: inline-block;
+  top: 40%; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000349}}
+.trailblock .panel,
+.rolled-out {
+  height: auto;
+  margin-bottom: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000355}}
+.shut > .panel,
+.rolled-up {
+  overflow: hidden;
+  position: relative;
+  max-height: 0;
+  padding-top: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000362}}
+.update {
+  display: block;
+  overflow: hidden; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000366}}
+  .update.hidden {
+    display: none; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000371}}
+.is-updating {
+  display: none;
+  width: 36px;
+  height: 12px;
+  background-size: 100%;
+  margin-top: 18px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000378}}
+  .is-updating.is-active {
+    display: inline-block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/state\/_state\.scss}line{font-family:\0000383}}
+.is-live-icon {
+  padding: 1px 4px 2px 4px;
+  margin: 1px 3px 0 0;
+  font-size: 10px;
+  font-style: normal;
+  line-height: 1;
+  color: #fff;
+  background-color: #ec1c1c;
+  display: inline-block; }
+
+/* ==========================================================================
+   Colours
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\000033}}
+.zone-news .tone-colour {
+  color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\000037}}
+.zone-environment .tone-colour {
+  color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000314}}
+.zone-news .tone-background,
+.zone-news .tone-background-hover:hover,
+.zone-news .tone-background-hover:focus,
+.zone-news .tone-background-hover:active {
+  background-color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000321}}
+.zone-environment .tone-background,
+.zone-environment .tone-background-hover:hover,
+.zone-environment .tone-background-hover:focus,
+.zone-environment .tone-background-hover:active {
+  background-color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000332}}
+.zone-childrens-books-site .tone-colour,
+.zone-tv-and-radio .tone-colour,
+.zone-artanddesign .tone-colour,
+.zone-stage .tone-colour,
+.zone-culture .tone-colour,
+.zone-film .tone-colour,
+.zone-books .tone-colour,
+.zone-music .tone-colour {
+  color: #951c55; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000350}}
+.zone-journalismcompetition .tone-colour,
+.zone-global-development .tone-colour,
+.zone-law .tone-colour,
+.zone-theobserver .tone-colour,
+.zone-science .tone-colour,
+.zone-theguardian .tone-colour,
+.zone-education .tone-colour,
+.zone-technology .tone-colour,
+.zone-society .tone-colour,
+.zone-politics .tone-colour,
+.zone-uk .tone-colour,
+.zone-uk-news .tone-colour,
+.zone-media .tone-colour,
+.zone-world .tone-colour,
+.zone-global .tone-colour {
+  color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000355}}
+.zone-fashion .tone-colour,
+.zone-lifeandstyle .tone-colour {
+  color: #951c55; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000361}}
+.zone-sport .tone-colour,
+.zone-football .tone-colour,
+.zone-cricket .tone-colour {
+  color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000365}}
+.zone-travel .tone-colour {
+  color: #951c55; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000369}}
+.zone-business .tone-colour {
+  color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000374}}
+.zone-commentisfree .tone-colour,
+.zone-tone .tone-colour {
+  color: #e6711b; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000378}}
+.zone-money .tone-colour {
+  color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\0000389}}
+.zone-childrens-books-site .tone-background,
+.zone-tv-and-radio .tone-background,
+.zone-artanddesign .tone-background,
+.zone-stage .tone-background,
+.zone-culture .tone-background,
+.zone-film .tone-background,
+.zone-books .tone-background,
+.zone-music .tone-background {
+  background-color: #951c55; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003107}}
+.zone-journalismcompetition .tone-background,
+.zone-global-development .tone-background,
+.zone-law .tone-background,
+.zone-theobserver .tone-background,
+.zone-science .tone-background,
+.zone-theguardian .tone-background,
+.zone-education .tone-background,
+.zone-technology .tone-background,
+.zone-society .tone-background,
+.zone-politics .tone-background,
+.zone-uk .tone-background,
+.zone-uk-news .tone-background,
+.zone-media .tone-background,
+.zone-world .tone-background,
+.zone-global .tone-background {
+  background-color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003112}}
+.zone-fashion .tone-background,
+.zone-lifeandstyle .tone-background {
+  background-color: #951c55; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003117}}
+.zone-sport .tone-background,
+.zone-football .tone-background {
+  background-color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003121}}
+.zone-travel .tone-background {
+  background-color: #951c55; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003125}}
+.zone-business .tone-background {
+  background-color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003130}}
+.zone-commentisfree .tone-background,
+.zone-tone .tone-background {
+  background-color: #e6711b; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003134}}
+.zone-money .tone-background {
+  background-color: #005689; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003147}}
+.zone-childrens-books-site .tone-border,
+.zone-tv-and-radio .tone-border,
+.zone-artanddesign .tone-border,
+.zone-stage .tone-border,
+.zone-culture .tone-border,
+.zone-film .tone-border,
+.zone-books .tone-border,
+.zone-music .tone-border {
+  border-color: #f66980; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003165}}
+.zone-journalismcompetition .tone-border,
+.zone-global-development .tone-border,
+.zone-law .tone-border,
+.zone-theobserver .tone-border,
+.zone-science .tone-border,
+.zone-theguardian .tone-border,
+.zone-education .tone-border,
+.zone-technology .tone-border,
+.zone-society .tone-border,
+.zone-politics .tone-border,
+.zone-uk .tone-border,
+.zone-uk-news .tone-border,
+.zone-media .tone-border,
+.zone-world .tone-border,
+.zone-global .tone-border {
+  border-color: #4bc6df; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003170}}
+.zone-fashion .tone-border,
+.zone-lifeandstyle .tone-border {
+  border-color: #f66980; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003175}}
+.zone-sport .tone-border,
+.zone-football .tone-border {
+  border-color: #4bc6df; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003179}}
+.zone-travel .tone-border {
+  border-color: #f66980; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003183}}
+.zone-business .tone-border {
+  border-color: #4bc6df; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_zones\.scss}line{font-family:\00003188}}
+.zone-commentisfree .tone-border,
+.zone-tone .tone-border {
+  border-color: #ffbb00; }
+
+/* News
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\000038}}
+.tone-news .tone-colour, .tone-news .tone-colour:active, .tone-news .tone-colour:focus, .tone-news .tone-colour:hover, .tone-news.tone-colour, .tone-news.tone-colour:active, .tone-news.tone-colour:focus, .tone-news.tone-colour:hover {
+  color: #005689; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000313}}
+.tone-news .tone-border, .tone-news.tone-border {
+  border-color: #005689; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000316}}
+.tone-news .tone-accent-border, .tone-news.tone-accent-border {
+  border-color: #4bc6df; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000319}}
+.tone-news .tone-background, .tone-news.tone-background {
+  background-color: #005689; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000321}}
+.tone-news .is-summary > .block-title {
+  color: #005689; }
+
+/* Comment
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\000038}}
+.tone-comment .tone-colour, .tone-comment .tone-colour:active, .tone-comment .tone-colour:focus, .tone-comment .tone-colour:hover, .tone-comment.tone-colour, .tone-comment.tone-colour:active, .tone-comment.tone-colour:focus, .tone-comment.tone-colour:hover {
+  color: #e6711b; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000313}}
+.tone-comment .tone-border, .tone-comment.tone-border {
+  border-color: #e6711b; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000316}}
+.tone-comment .tone-accent-border, .tone-comment.tone-accent-border {
+  border-color: #ffbb00; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000319}}
+.tone-comment .tone-background, .tone-comment.tone-background {
+  background-color: #e6711b; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000321}}
+.tone-comment .is-summary > .block-title {
+  color: #e6711b; }
+
+/* Feature
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\000038}}
+.tone-feature .tone-colour, .tone-feature .tone-colour:active, .tone-feature .tone-colour:focus, .tone-feature .tone-colour:hover, .tone-feature.tone-colour, .tone-feature.tone-colour:active, .tone-feature.tone-colour:focus, .tone-feature.tone-colour:hover {
+  color: #951c55; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000313}}
+.tone-feature .tone-border, .tone-feature.tone-border {
+  border-color: #951c55; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000316}}
+.tone-feature .tone-accent-border, .tone-feature.tone-accent-border {
+  border-color: #f66980; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000319}}
+.tone-feature .tone-background, .tone-feature.tone-background {
+  background-color: #951c55; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_tones\.scss}line{font-family:\0000321}}
+.tone-feature .is-summary > .block-title {
+  color: #951c55; }
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\000031}}
+.i {
+  background-repeat: no-repeat;
+  display: inline-block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\000033}}
+.i-arrow-blue-down {
+  background-position: -8px -9px;
+  width: 15px;
+  height: 7px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\000035}}
+.i-arrow-grey-down {
+  background-position: -24px -9px;
+  width: 15px;
+  height: 7px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\000037}}
+.i-arrow-small-up {
+  background-position: -40px -9px;
+  width: 13px;
+  height: 7px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\000039}}
+.i-arrow-white-down {
+  background-position: -53px -9px;
+  width: 15px;
+  height: 7px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000311}}
+.i-arrow-white-large {
+  background-position: -69px -9px;
+  width: 23px;
+  height: 10px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000313}}
+.i-back {
+  background-position: -93px -9px;
+  width: 12px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000315}}
+.i-clock-grey {
+  background-position: -106px -9px;
+  width: 16px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000317}}
+.i-clock-light-grey {
+  background-position: -123px -9px;
+  width: 16px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000319}}
+.i-close-icon {
+  background-position: -140px -9px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000321}}
+.i-comment-comment, .tone-comment .commentcount i {
+  background-position: -159px -9px;
+  width: 16px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000323}}
+.i-comment-feature, .tone-feature .commentcount i {
+  background-position: -176px -9px;
+  width: 16px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000325}}
+.i-comment-grey {
+  background-position: -193px -9px;
+  width: 16px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000327}}
+.i-comment-light-grey {
+  background-position: -210px -9px;
+  width: 16px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000329}}
+.i-comment-news, .tone-news .commentcount i {
+  background-position: -227px -9px;
+  width: 16px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000331}}
+.i-date {
+  background-position: -244px -9px;
+  width: 10px;
+  height: 10px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000333}}
+.i-double-arrow-right-blue {
+  background-position: -255px -9px;
+  width: 15px;
+  height: 14px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000335}}
+.i-double-arrow-right-white {
+  background-position: -270px -9px;
+  width: 15px;
+  height: 14px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000337}}
+.i-ee-add-button {
+  background-position: -285px -9px;
+  width: 54px;
+  height: 47px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000339}}
+.i-fb {
+  background-position: -340px -9px;
+  width: 11px;
+  height: 22px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000341}}
+.i-filter-arrow-down {
+  background-position: -351px -9px;
+  width: 20px;
+  height: 11px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000343}}
+.i-filter-arrow-left {
+  background-position: -372px -9px;
+  width: 9px;
+  height: 15px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000345}}
+.i-filter-arrow-right {
+  background-position: -381px -9px;
+  width: 9px;
+  height: 15px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000347}}
+.i-filter-arrow-up {
+  background-position: -390px -9px;
+  width: 20px;
+  height: 11px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000349}}
+.i-fullscreen-toggle {
+  background-position: -411px -9px;
+  width: 12px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000351}}
+.i-gallery-arrow {
+  background-position: -424px -9px;
+  width: 32px;
+  height: 32px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000353}}
+.i-gallery-fullimage-icon {
+  background-position: -457px -9px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000355}}
+.i-gallery-pause-slideshow {
+  background-position: -476px -9px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000357}}
+.i-gallery-play-slideshow {
+  background-position: -495px -9px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000359}}
+.i-gallery-thumb-icon {
+  background-position: -514px -9px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000361}}
+.i-gallery {
+  background-position: -533px -9px;
+  width: 16px;
+  height: 14px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000363}}
+.i-gplus {
+  background-position: -550px -9px;
+  width: 24px;
+  height: 21px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000365}}
+.i-guardian-logo {
+  background-position: -457px -30px;
+  width: 108px;
+  height: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000367}}
+.i-guardian-picks {
+  background-position: -565px -30px;
+  width: 15px;
+  height: 47px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000369}}
+.i-image-white {
+  background-position: -8px -77px;
+  width: 12px;
+  height: 9px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000371}}
+.i-image {
+  background-position: -21px -77px;
+  width: 17px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000373}}
+.i-liveblog-pause {
+  background-position: -39px -77px;
+  width: 30px;
+  height: 30px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000375}}
+.i-liveblog-play {
+  background-position: -70px -77px;
+  width: 30px;
+  height: 30px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000377}}
+.i-livequote-after {
+  background-position: -101px -77px;
+  width: 37px;
+  height: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000379}}
+.i-livequote-before {
+  background-position: -139px -77px;
+  width: 37px;
+  height: 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000381}}
+.i-local-nav-arrow {
+  background-position: -177px -77px;
+  width: 50px;
+  height: 37px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000383}}
+.i-menu-active {
+  background-position: -228px -77px;
+  width: 18px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000385}}
+.i-menu {
+  background-position: -247px -77px;
+  width: 18px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000387}}
+.i-message-close {
+  background-position: -266px -77px;
+  width: 22px;
+  height: 22px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000389}}
+.i-play {
+  background-position: -289px -77px;
+  width: 10px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000391}}
+.i-powered-by-ee {
+  background-position: -300px -77px;
+  width: 68px;
+  height: 31px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000393}}
+.i-profile-active {
+  background-position: -369px -77px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000395}}
+.i-profile {
+  background-position: -388px -77px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000397}}
+.i-quote-light-grey {
+  background-position: -407px -77px;
+  width: 39px;
+  height: 24px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\0000399}}
+.i-quote-marks {
+  background-position: -446px -77px;
+  width: 39px;
+  height: 24px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003101}}
+.i-recommend-inactive {
+  background-position: -485px -77px;
+  width: 12px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003103}}
+.i-recommend {
+  background-position: -498px -77px;
+  width: 12px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003105}}
+.i-red-card {
+  background-position: -511px -77px;
+  width: 9px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003107}}
+.i-search-blue {
+  background-position: -521px -77px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003109}}
+.i-search {
+  background-position: -540px -77px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003111}}
+.i-share-email-hover {
+  background-position: -485px -96px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003113}}
+.i-share-email {
+  background-position: -522px -96px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003115}}
+.i-share-facebook-hover {
+  background-position: -8px -133px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003117}}
+.i-share-facebook {
+  background-position: -45px -133px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003119}}
+.i-share-gplus-hover {
+  background-position: -82px -133px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003121}}
+.i-share-gplus {
+  background-position: -119px -133px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003123}}
+.i-share-twitter-hover {
+  background-position: -156px -133px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003125}}
+.i-share-twitter {
+  background-position: -193px -133px;
+  width: 36px;
+  height: 36px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003127}}
+.i-sport-arrow {
+  background-position: -230px -133px;
+  width: 8px;
+  height: 15px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003129}}
+.i-story-quote {
+  background-position: -239px -133px;
+  width: 49px;
+  height: 25px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003131}}
+.i-swipe-arrow-small {
+  background-position: -289px -133px;
+  width: 5px;
+  height: 10px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003133}}
+.i-swipe-arrow {
+  background-position: -295px -133px;
+  width: 7px;
+  height: 16px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003135}}
+.i-top-stories-active {
+  background-position: -303px -133px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003137}}
+.i-top-stories {
+  background-position: -322px -133px;
+  width: 18px;
+  height: 18px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/theme\/_global-icons-sprite\.scss}line{font-family:\00003139}}
+.i-yellow-card {
+  background-position: -341px -133px;
+  width: 9px;
+  height: 12px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\000031}}
+.site-message {
+  display: none;
+  background: #edede7;
+  display: block; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\000039}}
+.site-message__inner {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto;
+  max-width: 1132px;
+  max-width: 1292px;
+  position: relative;
+  padding: 12px 20px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\0000316}}
+.site-message__message {
+  font-size: 20px;
+  font-size: 2rem;
+  line-height: 24px;
+  line-height: 2.4rem;
+  font-family: "EgyptianHeadline", georgia, serif;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: #767676;
+  padding-bottom: 24px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\0000322}}
+.site-message__actions {
+  width: 100%;
+  border-top: 1px dotted #767676; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\0000327}}
+.site-message__actions__item {
+  display: inline;
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 18px;
+  line-height: 1.8rem;
+  font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  margin-right: 20px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\0000332}}
+  .site-message__actions__item a {
+    color: #767676; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\0000336}}
+  .site-message__actions__item i {
+    margin-bottom: -2px;
+    margin-right: 5px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/kdeloumeau-prigent\/guardian\/frontend\/common\/app\/assets\/stylesheets\/module\/_release-message\.scss}line{font-family:\0000342}}
+.site-message__close {
+  display: block;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+  background-color: transparent;
+  border: none; }

@@ -1,15 +1,7 @@
 #!/bin/bash
 
-#Node package management for Grunt build steps
+set -o errexit
 
-bundle install --system
-npm install
-
-NPM_EXIT=$?
-
-if [ $NPM_EXIT == "1" ]; then
-   exit 1
-fi
 
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
@@ -52,9 +44,6 @@ do
     fi
 
 done
-
-# Grunt configuration
-export GRUNT_ISDEV=1
 
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
