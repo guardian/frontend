@@ -25,6 +25,7 @@ define(["bean",
             mode = 'fullimage',
             overlay,
             swipeActive,
+            isSwiping,
             slideshowActive,
             slideshowDelay = 5000, // in milliseconds
             captionControlHeight = 35, // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
@@ -86,10 +87,21 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
 
-            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function() {
-                if (swipeActive) {
+            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__item', function() {
+                if (swipeActive && !isSwiping) {
                     self.swipe.next();
                 }
+            });
+
+            bean.on(overlay.bodyNode,    'touchmove', '.gallery__item', function() {
+                isSwiping = true;
+            });
+
+            bean.on(overlay.bodyNode,    'touchend', '.gallery__item', function() {
+                // This prevents a click event firing at the same time as swipe is finishing
+                setTimeout(function() {
+                    isSwiping = false;
+                }, 250);
             });
 
             bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery__item', function(el) {
@@ -422,6 +434,8 @@ define(["bean",
                         self.alignNavArrows();
 
                         self.preloadImages();
+
+                        self.pushUrlState();
                     }
                 });
 
