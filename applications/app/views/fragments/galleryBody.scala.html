@@ -1,4 +1,5 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@import conf.Switches._
 
 <h2 class="article-zone tone-@VisualTone(gallery) tone-accent-border">
     <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
@@ -80,6 +81,12 @@
                 </div>
 
                 @fragments.standfirst(gallery)
+
+                @if(gallery.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                    <div class="article__keywords" data-link-name="gallery keywords">
+                        @fragments.keywordList(gallery.keywords)
+                    </div>
+                }
 
                 <div class="social-wrapper">
                     @fragments.social(gallery)

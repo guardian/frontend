@@ -29,6 +29,7 @@
 @import "module/_footer";
 @import "module/_stars";
 @import "module/_social";
+    @include socialDelayed;
 @import "module/_search";
 @import "module/_debug";
 @import "module/_gallerythumbs";

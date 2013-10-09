@@ -84,12 +84,16 @@
                         </div>
                     </div>
 
-                    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                        <div class="article__discussion" id="comments"></div>
+                    @if(article.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                        <div class="article__keywords" data-link-name="live blog keywords">
+                            @fragments.keywordList(article.keywords)
+                        </div>
                     }
+
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
+
                 </div>
                 <div class="article-v2__secondary-column" aria-hidden="true">
                     <div class="article-v2__secondary-column__inner">
@@ -132,7 +136,7 @@
 
                 <div class="d-show-cta-wrapper">
                     <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@article.shortUrlId}"
-                    data-is-ajax data-link-name="View all comments">
+                       data-is-ajax data-link-name="View all comments">
                         View all comments
                         <span class="d-commentcount speech-bubble tone-background tone-border">
                             <span class="js-commentcount__number"></span>

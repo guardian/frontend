@@ -1,0 +1,507 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2012/aug/23/australia-mining-boom-end",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2012-08-23T04:35:00Z",
+      "webTitle":"Australian minister declares end of mining resources boom",
+      "webUrl":"http://www.theguardian.com/world/2012/aug/23/australia-mining-boom-end",
+      "apiUrl":"http://content.guardianapis.com/world/2012/aug/23/australia-mining-boom-end",
+      "fields":{
+        "trailText":"<p>Labor's Martin Ferguson says mining boom has peaked after BHP Billiton delayed two major expansion projects</p>",
+        "headline":"Australian minister declares end of mining resources boom",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3ava6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/28/1340879650542/Australia-mining-003.jpg",
+        "wordcount":"661",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/bhpbilliton",
+        "type":"keyword",
+        "webTitle":"BHP Billiton",
+        "webUrl":"http://www.theguardian.com/business/bhpbilliton",
+        "apiUrl":"http://content.guardianapis.com/business/bhpbilliton",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/mining",
+        "type":"keyword",
+        "webTitle":"Mining",
+        "webUrl":"http://www.theguardian.com/business/mining",
+        "apiUrl":"http://content.guardianapis.com/business/mining",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-395079773",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/28/1340879656308/Australia-mining-008.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Australia mining",
+            "height":"276",
+            "credit":"AFP",
+            "caption":"The resources boom in Australia fuelled what has been dubbed a two-speed economy. Photograph: AFP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-395079774",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/28/1340879650542/Australia-mining-003.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Australia mining",
+            "height":"84",
+            "credit":"AFP",
+            "caption":"Contract workers in one Australian town, Moranbah, number 6,500 to the 8,500 locals, with accommodation to house another 3,500 workers under way.  Photograph: AFP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"business/2012/aug/23/qantas-aircraft-second-half-loss",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2012-08-23T00:36:48Z",
+      "webTitle":"Qantas announces second-half net loss as Australian CEOs forgo bonuses",
+      "webUrl":"http://www.theguardian.com/business/2012/aug/23/qantas-aircraft-second-half-loss",
+      "apiUrl":"http://content.guardianapis.com/business/2012/aug/23/qantas-aircraft-second-half-loss",
+      "fields":{
+        "trailText":"<p>Airline makes first annual loss since privatisation in 1995, in concert with other big Australian companies turning in poor results</p>",
+        "headline":"Qantas announces second-half net loss as Australian CEOs forgo bonuses",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3ava3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682164034/Qantas-planes-005.jpg",
+        "wordcount":"480",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/theairlineindustry",
+        "type":"keyword",
+        "webTitle":"Airline industry",
+        "webUrl":"http://www.theguardian.com/business/theairlineindustry",
+        "apiUrl":"http://content.guardianapis.com/business/theairlineindustry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/boeing",
+        "type":"keyword",
+        "webTitle":"Boeing",
+        "webUrl":"http://www.theguardian.com/business/boeing",
+        "apiUrl":"http://content.guardianapis.com/business/boeing",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/air-transport",
+        "type":"keyword",
+        "webTitle":"Air transport",
+        "webUrl":"http://www.theguardian.com/world/air-transport",
+        "apiUrl":"http://content.guardianapis.com/world/air-transport",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/annual-results",
+        "type":"keyword",
+        "webTitle":"Annual results",
+        "webUrl":"http://www.theguardian.com/business/annual-results",
+        "apiUrl":"http://content.guardianapis.com/business/annual-results",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-395076544",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682159004/Qantas-planes-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"54",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682160586/Qantas-planes-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"340",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682162425/Qantas-planes-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"130",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682164034/Qantas-planes-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"84",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682165727/Qantas-planes-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"132",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682167278/Qantas-planes-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"168",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682169248/Qantas-planes-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"180",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682171199/Qantas-planes-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"228",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682172992/Qantas-planes-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"276",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682174752/Qantas-planes-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"372",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682172992/Qantas-planes-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"276",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-395076545",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345682164034/Qantas-planes-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Scott Barbour",
+            "altText":"Qantas planes",
+            "height":"84",
+            "credit":"Scott Barbour/Getty Images",
+            "caption":"Australia's Qantas Airways posted poor second-half figures, adding up to a A$244 annual loss, in line with expectations. Photograph: Scott Barbour/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2012/aug/23/australia-mining-boom-end",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2012-08-23T04:35:00Z",
+      "webTitle":"Australian minister declares end of mining resources boom",
+      "webUrl":"http://www.theguardian.com/world/2012/aug/23/australia-mining-boom-end",
+      "apiUrl":"http://content.guardianapis.com/world/2012/aug/23/australia-mining-boom-end",
+      "fields":{
+        "trailText":"<p>Labor's Martin Ferguson says mining boom has peaked after BHP Billiton delayed two major expansion projects</p>",
+        "headline":"Australian minister declares end of mining resources boom",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3ava6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/28/1340879650542/Australia-mining-003.jpg",
+        "wordcount":"661",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/bhpbilliton",
+        "type":"keyword",
+        "webTitle":"BHP Billiton",
+        "webUrl":"http://www.theguardian.com/business/bhpbilliton",
+        "apiUrl":"http://content.guardianapis.com/business/bhpbilliton",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/mining",
+        "type":"keyword",
+        "webTitle":"Mining",
+        "webUrl":"http://www.theguardian.com/business/mining",
+        "apiUrl":"http://content.guardianapis.com/business/mining",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-395079773",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/28/1340879656308/Australia-mining-008.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Australia mining",
+            "height":"276",
+            "credit":"AFP",
+            "caption":"The resources boom in Australia fuelled what has been dubbed a two-speed economy. Photograph: AFP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-395079774",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/28/1340879650542/Australia-mining-003.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Australia mining",
+            "height":"84",
+            "credit":"AFP",
+            "caption":"Contract workers in one Australian town, Moranbah, number 6,500 to the 8,500 locals, with accommodation to house another 3,500 workers under way.  Photograph: AFP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

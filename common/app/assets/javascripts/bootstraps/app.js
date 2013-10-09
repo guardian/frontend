@@ -19,7 +19,8 @@ define('bootstraps/app', [
     "bootstraps/identity",
     "modules/experiments/ab",
     "modules/pageconfig",
-    "bootstraps/tag"
+    "bootstraps/tag",
+    "bootstraps/imagecontent"
 ], function (
     qwery,
     common,
@@ -41,7 +42,8 @@ define('bootstraps/app', [
     Identity,
     ab,
     pageConfig,
-    Tag
+    Tag,
+    ImageContent
 ) {
 
     var modules = {
@@ -141,6 +143,10 @@ define('bootstraps/app', [
 
                 if (config.page.section === "identity") {
                     Identity.init(config, context);
+                }
+
+                if (config.page.contentType === "ImageContent") {
+                    ImageContent.init(config, context);
                 }
 
                 //Kick it all off
