@@ -54,6 +54,7 @@ object CardController extends Controller with Logging with ExecutionContexts {
                 ("modified_time", fragment.select("meta[property=article:modified_time]").attr("content")),
                 ("host", a.replaceAll("^www\\.", ""))
               )).asInstanceOf[JsObject])
+            }
             case _ => NotFound
           }
         }
@@ -73,6 +74,7 @@ object CardController extends Controller with Logging with ExecutionContexts {
                 ("site_name", "Wikipedia"),
                 ("host", "wikipedia.org")
               )).asInstanceOf[JsObject])
+            }
             case _ => NotFound
           }
         }
