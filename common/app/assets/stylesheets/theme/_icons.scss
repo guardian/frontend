@@ -76,16 +76,6 @@ figcaption:before {
     }
 }
 
-.story-picture__caption:before {
-    @extend .i-image-white;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-image-white;
-        }
-    }
-}
-
 //Quotes
 .from-content-api blockquote.quoted:before {
     @extend .i;

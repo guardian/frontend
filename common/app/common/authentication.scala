@@ -48,9 +48,12 @@ class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with imp
 
   def authFailResult(request: Request[AnyContent]): SimpleResult = Redirect(loginUrl).withSession(("loginFromUrl", request.uri))
 
-  override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
+  override def apply(f: Request[AnyContent] => SimpleResult) = async(request => Future.apply(f(request)))
+
+  override def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = super.async { request =>
+
     if (withinAllowedTime(request) || Play.isTest)
-      Future { f(request).withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)) }
+      f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
     else
       Future { authFailResult(request) }
   }

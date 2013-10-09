@@ -142,6 +142,7 @@ object Content {
       case video if delegate.isVideo => new Video(delegate)
       case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
+      case picture if delegate.isImageContent => new ImageContent(delegate)
       case _ => new Content(delegate)
     }
   }
@@ -255,6 +256,13 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 class Interactive(private val delegate: ApiContent) extends Content(delegate) {
   lazy val contentType = "Interactive"
   lazy val body: String = delegate.safeFields("body")
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
+}
+
+class ImageContent(private val delegate: ApiContent) extends Content(delegate) {
+
+  lazy val contentType = "ImageContent"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
