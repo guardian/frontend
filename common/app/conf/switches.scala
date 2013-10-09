@@ -158,6 +158,10 @@ object Switches extends Collections {
     "If this is switched on then unsupported embeds will be included in article bodies.",
     safeState = Off)
 
+  val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
+    "If this is switched on then keywords will be shown at the end of articles.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -290,7 +294,8 @@ object Switches extends Collections {
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
-    AddVaryAcceptHeader
+    AddVaryAcceptHeader,
+    ArticleKeywordsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
