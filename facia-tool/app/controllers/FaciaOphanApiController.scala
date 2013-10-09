@@ -7,11 +7,11 @@ import common.ExecutionContexts
 
 object FaciaOphanApiController extends Controller with ExecutionContexts {
 
-  def pageViews(path: String) = Authenticated.async { request =>
+  def pageViews(path: String) = ExpiringAuthentication.async { request =>
     OphanApi.getBreakdown(path) map (body => Ok(body) as "application/json")
   }
 
-  def platformPageViews = Authenticated.async { request =>
+  def platformPageViews = ExpiringAuthentication.async { request =>
     OphanApi.getBreakdown(platform = "next-gen", hours = 2) map (body => Ok(body) as "application/json")
   }
 
