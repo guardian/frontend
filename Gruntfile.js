@@ -226,18 +226,19 @@ module.exports = function (grunt) {
                 command: [
                     'cd tools/sprites/',
                     'node spricon.js global-icon-config.json'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: false
-                }
+                ].join('&&')
             },
 
             // Should be later in file but can't separate shell task definition
             hooks: {
                 // Copy the project's pre-commit hook into .git/hooks
                 command: 'cp git-hooks/pre-commit .git/hooks/'
+            },
+
+            options: {
+                stdout: true,
+                stderr: true,
+                failOnError: false
             }
         },
 
