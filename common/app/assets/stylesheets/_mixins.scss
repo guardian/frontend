@@ -14,66 +14,81 @@
     @include font-size($size, $line-height);
 }
 
+@mixin f-header {
+    font-family: $serifheadline;
+    font-weight: 900;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
 @mixin fs-header($level, $size-only: false) {
     $header: nth($fs-headers, $level);
 
     @include font-size(nth($header, 1), nth($header, 2));
 
     @if $size-only == false {
-        font-family: $serifheadline;
-        font-weight: 900;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
+        @include f-header;
     }
 }
 
+@mixin f-headline {
+    font-family: $serifheadline;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
 @mixin fs-headline($level, $size-only: false) {
     $headline: nth($fs-headlines, $level);
 
     @include font-size(nth($headline, 1), nth($headline, 2));
 
     @if $size-only == false {
-        font-family: $serifheadline;
-        font-weight: normal;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
+        @include f-headline;
     }
 }
 
+@mixin f-bodyHeading {
+    font-family: $serif;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
 @mixin fs-bodyHeading($level, $size-only: false) {
     $heading: nth($fs-bodyHeadings, $level);
 
     @include font-size(nth($heading, 1), nth($heading, 2));
 
     @if $size-only == false {
-        font-family: $serif;
-        font-weight: bold;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: subpixel-antialiased;
+        @include f-bodyHeading;
     }
 }
 
+@mixin f-bodyCopy {
+    font-family: $serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
+}
 @mixin fs-bodyCopy($level, $size-only: false) {
     $bodycopy: nth($fs-bodyCopy, $level);
 
     @include font-size(nth($bodycopy, 1), nth($bodycopy, 2));
 
     @if $size-only == false {
-        font-family: $serif;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeSpeed;
+        @include f-bodyCopy;
     }
 }
 
+@mixin f-data {
+    font-family: $sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
+}
 @mixin fs-data($level, $size-only: false) {
     $data: nth($fs-data, $level);
 
     @include font-size(nth($data, 1), nth($data, 2));
 
     @if $size-only == false {
-        font-family: $sans-serif;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeSpeed;
+        @include f-data;
     }
 }
 
