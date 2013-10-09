@@ -46,17 +46,14 @@ function (
                 return encodeURIComponent(id);
             }).join(',');
 
-            authedAjax(
-                {
-                    url: apiUrl,
-                    dataType: 'json'
-                },
-                function(results) {
-                    if (results.response && results.response.results) {
-                        callback(results.response.results);
-                    }
+            authedAjax({
+                url: apiUrl,
+                dataType: 'json'
+            }).then(function(results) {
+                if (results.response && results.response.results) {
+                    callback(results.response.results);
                 }
-            );
+            });
         }
     }
 

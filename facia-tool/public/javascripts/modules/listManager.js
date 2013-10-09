@@ -175,10 +175,8 @@ define([
             authedAjax({
                 url: common.config.apiBase + '/collection/' + collection.id,
                 type: opts.delete ? 'delete' : 'post',
-                dataType: 'json',
-                contentType: 'application/json',
                 data: JSON.stringify(apiProps)
-            }, function(resp) {
+            }).then(function(resp) {
                 collection.load();
             });
 
@@ -201,9 +199,8 @@ define([
 
         function fetchConfigs(callback) {
             authedAjax({
-                url: common.config.apiBase + '/config',
-                dataType: 'json'
-            }, function(resp) {
+                url: common.config.apiBase + '/config'
+            }).then(function(resp) {
                 if (!(_.isArray(resp) && resp.length > 0)) {
                     window.console.log("ERROR: No configs were found");
                     return;
@@ -218,9 +215,8 @@ define([
                 return;
             }
             authedAjax({
-                url: common.config.apiBase + '/config/' + id,
-                dataType: 'json'
-            }, callback);
+                url: common.config.apiBase + '/config/' + id
+            }).then(callback);
         };
 
         function flushClipboard() {

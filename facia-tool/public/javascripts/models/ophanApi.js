@@ -88,18 +88,14 @@ function (
     function fetchData(id, callback) {
         cache.put('ophan', id, {failed: true});
 
-        authedAjax(
-            {
-                url: '/ophan/pageviews/' + id,
-                dataType: 'json'
-            },
-            function (resp) {
-                _.each(resp.seriesData, function(s){
-                    s.data.pop(); // Drop the last data point
-                })
-                callback(resp);
-            }
-        );
+        authedAjax({
+            url: '/ophan/pageviews/' + id
+        }).then(function (resp) {
+            _.each(resp.seriesData, function(s){
+                s.data.pop(); // Drop the last data point
+            })
+            callback(resp);
+        });
     }
 
     return {

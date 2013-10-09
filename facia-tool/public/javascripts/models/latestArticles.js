@@ -60,25 +60,21 @@ define([
                     propName = 'results';
                 }
 
-                authedAjax(
-                    {
-                        url: url,
-                        dataType: 'json'
-                    },
-                    function(data) {
-                        var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
+                authedAjax({
+                    url: url
+                }).then(function(data) {
+                    var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
 
-                        self.flush();
+                    self.flush();
 
-                        ([].concat(rawArticles)).forEach(function(article, index){
-                            article.index = index;
-                            self.articles.push(new Article(article));
-                            cache.put('contentApi', article.id, article);
-                        })
+                    ([].concat(rawArticles)).forEach(function(article, index){
+                        article.index = index;
+                        self.articles.push(new Article(article));
+                        cache.put('contentApi', article.id, article);
+                    })
 
-                        ophanApi.decorateItems(self.articles());
-                    }
-                );
+                    ophanApi.decorateItems(self.articles());
+                });
 
             }, 250);
 

@@ -65,8 +65,6 @@ function (
         authedAjax({
             url: common.config.apiBase + '/collection/' + listId + '/' + this.meta.id(),
             type: 'post',
-            dataType: 'json',
-            contentType: 'application/json',
             data: JSON.stringify({
                 config: _.chain(this.config)
                     .pairs()
@@ -75,7 +73,7 @@ function (
                     .object()
                     .value()
             })
-        }, function(){
+        }).then(function(){
             self.stopEditingConfig();
         });
     }

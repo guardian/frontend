@@ -105,18 +105,14 @@ define([
         var self = this;
 
         authedAjax({
-                url: common.config.apiBase + '/collection/' + this.id,
-                type: 'post',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify(goLive ? {publish: true} : {discard: true})
-            },
-            function(resp) {
-                self.load({
-                    callback: function(){ self.setLiveMode(); }
-                });
-            }
-        );
+            type: 'post',
+            url: common.config.apiBase + '/collection/' + this.id,
+            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
+        }).then(function(resp) {
+            self.load({
+                callback: function(){ self.setLiveMode(); }
+            });
+        });
         this.state.hasDraft(false);
         this.state.loadIsPending(true);
     };
@@ -125,54 +121,45 @@ define([
         var self = this;
 
         self.state.loadIsPending(true);
-        authedAjax(
-            {
-                type: 'delete',
-                url: common.config.apiBase + '/collection/' + self.id,
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    item: item.meta.id(),
-                    live:   self.state.liveMode(),
-                    draft: !self.state.liveMode()
-                }),
-            },
-            function(resp) {
-                self.load();
-            }
-        );
+        authedAjax({
+            type: 'delete',
+            url: common.config.apiBase + '/collection/' + self.id,
+            data: JSON.stringify({
+                item: item.meta.id(),
+                live:   self.state.liveMode(),
+                draft: !self.state.liveMode()
+            }),
+        }).then(function(resp) {
+            self.load();
+        });
     };
 
     Collection.prototype.load = function(opts) {
         var self = this;
         opts = opts || {};
 
-        authedAjax(
-            {
-                url: common.config.apiBase + '/collection/' + this.id,
-                dataType: 'json'
-            },
-            function(resp) {
-                self.state.loadIsPending(false);
+        authedAjax({
+            url: common.config.apiBase + '/collection/' + this.id
+        }).then(function(resp) {
+            self.state.loadIsPending(false);
 
-                self.state.hasDraft(_.isArray(resp.draft));
+            self.state.hasDraft(_.isArray(resp.draft));
 
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
-                    // noop
-                } else {
-                    self.populateLists(resp);
-                }
-
-                if (!self.state.editingConfig()) {
-                    common.util.populateObservables(self.collectionMeta, resp)
-                    self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
-                }
-
-                self.decorate();
-
-                if (_.isFunction(opts.callback)) { opts.callback(); }
+            if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
+                // noop
+            } else {
+                self.populateLists(resp);
             }
-        );
+
+            if (!self.state.editingConfig()) {
+                common.util.populateObservables(self.collectionMeta, resp)
+                self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
+            }
+
+            self.decorate();
+
+            if (_.isFunction(opts.callback)) { opts.callback(); }
+        });
     };
 
     Collection.prototype.populateLists = function(opts) {
@@ -225,22 +212,17 @@ define([
         this.state.editingConfig(false);
         this.state.loadIsPending(true);
 
-        authedAjax(
-            {
-                url: common.config.apiBase + '/collection/' + this.id,
-                type: 'post',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    config: {
-                        displayName: this.collectionMeta.displayName()
-                    }
-                })
-            },
-            function(){
-                self.load();
-            }
-        );
+        authedAjax({
+            url: common.config.apiBase + '/collection/' + this.id,
+            type: 'post',
+            data: JSON.stringify({
+                config: {
+                    displayName: this.collectionMeta.displayName()
+                }
+            })
+        }).then(function(){
+            self.load();
+        });
     };
 
     Collection.prototype.getTimeAgo = function(date) {

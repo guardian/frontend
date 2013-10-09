@@ -1,15 +1,13 @@
 define([], function () {
-    return function (opts, callback) {
-        $.ajax(opts)
-        .always(function(data, status, xhr) {
-            console.log(arguments);
+    return function (opts) {
+        opts.dataType = 'json';
+        opts.contentType = 'application/json';
+
+        return $.ajax(opts).then(function(data, status, xhr) {
             if (xhr.status === 403) {
                 window.location.href = '/logout';
-                return;
             }
-            if (_.isFunction(callback)) {
-                callback(data);
-            }
+            return data;
         });
     }
 });
