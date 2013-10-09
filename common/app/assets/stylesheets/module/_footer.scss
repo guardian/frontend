@@ -27,7 +27,7 @@
  */
 .nav--footer .nav__link {
     color: #ffffff;
-    border-top-color: lighten($blue, 7%);
+    border-top-color: lighten($c-brandBlue, 7%);
 }
 
 
@@ -36,21 +36,21 @@
 
 .footer {
    padding: 0 0 $baseline*4;
-   background-color: $mushroom;
+   background-color: $c-neutral7;
 
    .hide-in-footer {
        display: none !important;
    }
 }
 .footer__primary {
-    background: $blue;
+    background: $c-brandBlue;
 }
 .footer__banner {
-    background-color: darken($blue, 5%);
+    background-color: darken($c-brandBlue, 5%);
     margin-bottom: $baseline;
 
     @include mq(tablet) {
-        background-color: $blue;
+        background-color: $c-brandBlue;
     }
 }
 @include mq(tablet) {
@@ -61,10 +61,10 @@
 .footer__secondary {
     @include font($sans-serif, normal, 13, 19);
     padding-top: $baseline*2;
-    color: lighten($darkGrey, 15%);
+    color: lighten($c-neutral2, 15%);
 
     a {
-        color: $darkGrey;
+        color: $c-neutral2;
     }
 }
 .colophon {
@@ -119,7 +119,7 @@
 }
 
 .footer__misc {
-    border-top: 1px solid lighten($darkGrey, 40%);
+    border-top: 1px solid lighten($c-neutral2, 40%);
     padding-top: $baseline - 1;
 
     @include mq(tablet) {
@@ -143,7 +143,7 @@
     border: 0;
     background: inherit;
     padding: 0;
-    color: $blue;
+    color: $c-brandBlue;
 }
 
 .has-swipe .swipe-switches__button--off {

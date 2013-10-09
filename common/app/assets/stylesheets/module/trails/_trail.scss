@@ -12,7 +12,7 @@
         display: inline-block;
     }
     & + & {
-        border-top: 1px solid $medianMushroom;
+        border-top: 1px solid $c-neutral5;
     }
 }
 
@@ -58,7 +58,7 @@
     text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
+        @include fs-bodyCopy(3, true);
         clear: none;
     }
 }
@@ -86,7 +86,7 @@
 .trail__count a:focus,
 .trail__count a:active,
 .trail .relative-timestamp {
-    color: #767676;
+    color: $c-neutral2;
     @include fs-data(2);
 
     @include mq(tablet) {
@@ -145,7 +145,7 @@
         }
 
         @include mq(tablet) {
-            heihgt: gs-height(2);
+            height: gs-height(2);
             width: gs-span(2);
         }
 

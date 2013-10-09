@@ -1,8 +1,9 @@
 package conf
 
-import common.{ StaticAssets, GuardianConfiguration }
+import assets.Assets
+import common.GuardianConfiguration
 import com.gu.management.play.RequestMetrics
-import contentapi.{ElasticSearchContentApiClient, SolrContentApiClient}
+import contentapi.{ ElasticSearchContentApiClient, SolrContentApiClient }
 
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
 
@@ -14,6 +15,6 @@ object SwitchingContentApi {
   def apply() = if (Switches.ElasticSearchSwitch.isSwitchedOn) ElasticSearchContentApi else ContentApi
 }
 
-object Static extends StaticAssets(Configuration.assets.path, Configuration.assets.securePath)
+object Static extends Assets(Configuration.assets.path)
 
 object RequestMeasurementMetrics extends RequestMetrics.Standard

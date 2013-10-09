@@ -13,7 +13,7 @@ jsLintResult=$?
 
 git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
-    grunt test:unit:common
+    grunt jasmine:common
 fi
 jsCommonResult=$?
 

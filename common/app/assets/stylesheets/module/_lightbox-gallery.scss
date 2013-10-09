@@ -257,7 +257,7 @@ i.gallery__watermark {
     @extend %type-10;
     line-height: 16px;
     padding-bottom: $baseline * 4;
-    border-bottom: 1px solid #676767;
+    border-bottom: 1px solid $c-neutral2;
     max-width: 620px;
     margin: 0 auto $baseline auto;
 }

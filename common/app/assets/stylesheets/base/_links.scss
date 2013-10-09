@@ -1,5 +1,5 @@
 a {
-    color: $linkBlue;
+    color: $c-newsDefault;
     text-decoration: none;
 
     &:hover,
@@ -7,7 +7,7 @@ a {
        text-decoration: underline;
     }
     &:active {
-        color: $darkBlue;
+        color: $c-newsAccent;
     }
 }
 

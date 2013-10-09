@@ -20,5 +20,3 @@ trait Related extends ConciergeRepository {
     trails recoverApi404With Nil
   }
 }
-
-object Concierge extends Related

@@ -36,7 +36,7 @@ case class ClientAuth(clientAccessToken: String) extends Auth {
   override def headers: Parameters = Iterable.empty
 }
 
-case class OmnitureTracking(returnUrl:Option[String], registrationType: Option[String], omnitureSVi: Option[String],
+case class TrackingData(returnUrl:Option[String], registrationType: Option[String], omnitureSVi: Option[String],
                             ipAddress: Option[String], referrer: Option[String], userAgent: Option[String]) {
   def parameters: Parameters = List(
     returnUrl.map("trackingReturnUrl" -> _),
