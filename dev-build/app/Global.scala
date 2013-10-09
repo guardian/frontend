@@ -15,7 +15,7 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
 
           // nice big warning to devs if they are working on something uncached
           println("\n\n\n---------------------------- WARNING ------------------------------------")
-          println(s"URL ${rh.path}${rh.rawQueryString} has NO CACHE-CONTROL header")
+          println(s"URL ${rh.path} has NO CACHE-CONTROL header")
           println("-------------------------------------------------------------------------------\n\n\n")
         }
         result
