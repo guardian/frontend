@@ -58,7 +58,7 @@ class CommentBoxControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     contentType(result) should be(Some("application/json"))
     contentAsString(result) should not include("Add your comment")
-    contentAsString(result) should include("Commenting has been disabled for this account.")
+    contentAsString(result) should include("Commenting has been disabled for this account")
   }
 
   it should "not render comment box for banned user (by ID Token)" in{
@@ -67,7 +67,7 @@ class CommentBoxControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     contentType(result) should be(Some("application/json"))
     contentAsString(result) should not include("Add your comment")
-    contentAsString(result) should include("Commenting has been disabled for this account.")
+    contentAsString(result) should include("Commenting has been disabled for this account")
   }
 
   it should "not render comment box for banned premoderated user (by Cookie)" in{
@@ -76,7 +76,7 @@ class CommentBoxControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     contentType(result) should be(Some("application/json"))
     contentAsString(result) should not include("Add your comment")
-    contentAsString(result) should include("Commenting has been disabled for this account.")
+    contentAsString(result) should include("Commenting has been disabled for this account")
   }
 
   it should "not render comment box for banned premoderated user (by ID Token)" in{
@@ -85,7 +85,7 @@ class CommentBoxControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     contentType(result) should be(Some("application/json"))
     contentAsString(result) should not include("Add your comment")
-    contentAsString(result) should include("Commenting has been disabled for this account.")
+    contentAsString(result) should include("Commenting has been disabled for this account")
   }
 
   it should "not render comment box for invalid user" in{
