@@ -37,7 +37,9 @@
         @trail.mainPicture.map{ mainPicture =>
             <div class="item__image-container">
                 <a href="@LinkTo{@trail.url}" class="item__link">
-                    <img class="item__image" alt="" data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)" />
+                    <img class="item__image" alt=""
+                         data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)"
+                         data-src-mobile="@ImgSrc(mainPicture, FrontItemMobile)" data-src-main-mobile="@ImgSrc(mainPicture, FrontItemMainMobile)" />
                 </a>
             </div>
         }
