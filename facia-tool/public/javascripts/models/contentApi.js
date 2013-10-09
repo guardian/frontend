@@ -47,8 +47,7 @@ function (
             }).join(',');
 
             authedAjax({
-                url: apiUrl,
-                dataType: 'json'
+                url: apiUrl
             }).then(function(results) {
                 if (results.response && results.response.results) {
                     callback(results.response.results);
