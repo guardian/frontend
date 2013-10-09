@@ -7,7 +7,10 @@ define([
     "modules/analytics/reading",
     "modules/discussion/discussion",
     "modules/cricket",
-    "modules/experiments/live-blog-show-more"
+    "modules/experiments/live-blog-show-more",
+    "modules/notification-counter",
+    "modules/detect",
+    "modules/experiments/left-hand-card"
 ], function (
     common,
     AutoUpdate,
@@ -17,7 +20,10 @@ define([
     Reading,
     Discussion,
     Cricket,
-    LiveShowMore
+    LiveShowMore,
+    NotificationCounter,
+    detect,
+    LeftHandCard
 ) {
 
     var modules = {
@@ -33,7 +39,7 @@ define([
                         var url = "/football/api/match-nav/" +
                                   config.webPublicationDateAsUrlPart() + "/" +
                                   teamIds[0] + "/" + teamIds[1] +
-                                  "?currentPage=" + encodeURIComponent(config.page.pageId);
+                                  ".json?page=" + encodeURIComponent(config.page.pageId);
 
                         matchNav.load(url, context);
                     }
@@ -44,20 +50,28 @@ define([
         initLiveBlogging: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
-                    var a = new AutoUpdate({
+
+                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                        a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
                                 path = window.location.pathname;
+
                            return path + '.json' + '?lastUpdate=' + id;
                         },
-                        delay: 60000,
+                        delay: timerDelay,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
-                        manipulationType: 'prepend'
+                        manipulationType: 'prepend',
+                        animateInserts: true,
+                        progressToggle: true,
+                        progressColour: '#ec1c1c'
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
-                    var lf = new LiveFilter(context).init();
+                    var lf = new LiveFilter(context).init(),
+                        nc = new NotificationCounter().init();
+
 
                     if (config.switches.liveSummary) {
                         var ls = new LiveSummary(context).init();
@@ -104,11 +118,22 @@ define([
                     var options = { url: cricketMatchRefs[0],
                                 loadSummary: true,
                                 loadScorecard: true,
-                                summaryElement: '.article-headline',
-                                scorecardElement: '.article-headline',
+                                summaryElement: '.article__headline',
+                                scorecardElement: '.article__headline',
                                 summaryManipulation: 'after',
                                 scorecardManipulation: 'after' };
                     Cricket.cricketArticle(config, context, options);
+                }
+            });
+        },
+        
+        externalLinksCards: function () {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches && config.switches.externalLinksCards) {
+                    var card = new LeftHandCard({
+                            origin: 'internal',
+                            context: context
+                    });
                 }
             });
         }
@@ -122,6 +147,7 @@ define([
             modules.logReading();
             modules.initDiscussion();
             modules.initCricket();
+            modules.externalLinksCards();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

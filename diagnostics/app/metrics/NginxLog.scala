@@ -5,7 +5,6 @@ import au.com.bytecode.opencsv.CSVParser
 import com.gu.management.{ CountMetric, Metric }
 import net.sf.uadetector.service.UADetectorServiceFactory
 import org.apache.commons.io.input.{ TailerListenerAdapter, Tailer }
-import conf.Configuration
 
 object NginxLog {
 
@@ -101,7 +100,7 @@ object NginxLog {
   // combine all the metrics
   val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics ++ canary.metrics
 
-  Tailer.create(new File(Configuration.nginx.log), new TailerListenerAdapter() {
+  Tailer.create(new File("/var/log/nginx/access.log"), new TailerListenerAdapter() {
     override def handle(line: String) {
       var fields = Array("")
       var path = Option("")
@@ -112,7 +111,7 @@ object NginxLog {
         path = fields(2).trim.split(" ").toList.drop(1).headOption
         userAgent = fields(6)
       } catch {
-        case _ => return
+        case _: Throwable => return
       }
 
       path filter { path => isMetric(path) && (!isHealthCheck(userAgent)) } foreach { _ =>

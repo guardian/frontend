@@ -5,7 +5,6 @@ define('bootstraps/app', [
     "ajax",
     'modules/detect',
     'modules/errors',
-    'modules/analytics/canary',
     'modules/fonts',
     'modules/debug',
     "modules/router",
@@ -20,7 +19,8 @@ define('bootstraps/app', [
     "bootstraps/identity",
     "modules/experiments/ab",
     "modules/pageconfig",
-    "bootstraps/tag"
+    "bootstraps/tag",
+    "bootstraps/imagecontent"
 ], function (
     qwery,
     common,
@@ -28,7 +28,6 @@ define('bootstraps/app', [
     ajax,
     detect,
     Errors,
-    Canary,
     Fonts,
     Debug,
     Router,
@@ -43,7 +42,8 @@ define('bootstraps/app', [
     Identity,
     ab,
     pageConfig,
-    Tag
+    Tag,
+    ImageContent
 ) {
 
     var modules = {
@@ -55,18 +55,11 @@ define('bootstraps/app', [
         attachGlobalErrorHandler: function (config) {
             var e = new Errors({
                 window: window,
-                isDev: config.page.isDev
+                isDev: config.page.isDev,
+                beaconUrl: config.page.beaconUrl
             });
             e.init();
             common.mediator.on("module:error", e.log);
-        },
-
-       // RUM on features
-       sendInTheCanary: function (config) {
-            var c = new Canary({
-                isDev: config.page.isDev
-            });
-            c.init();
         },
 
         initialiseAbTest: function (config) {
@@ -104,7 +97,6 @@ define('bootstraps/app', [
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
-            modules.sendInTheCanary(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
 
@@ -115,8 +107,8 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context, contextHtml);
 
-                //Fronts
-                if(qwery('.facia-container').length) {
+                // Fronts
+                if (qwery('.facia-container').length) {
                     Facia.init(config, context);
                 } else if (config.page.isFront){
                     Front.init(config, context);
@@ -151,6 +143,10 @@ define('bootstraps/app', [
 
                 if (config.page.section === "identity") {
                     Identity.init(config, context);
+                }
+
+                if (config.page.contentType === "ImageContent") {
+                    ImageContent.init(config, context);
                 }
 
                 //Kick it all off

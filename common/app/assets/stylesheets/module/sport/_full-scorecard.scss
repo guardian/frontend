@@ -44,24 +44,24 @@
 
 .sport-fullscorecard__heading {
     @extend %type-7;
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     border-bottom: 1px solid #DEDEDD;
-    color: $sportBright;
+    color: $c-sportBright;
     font-weight: 500;
     margin: $baseline*2 0 0 0;
     padding: 10px $gutter/2 $baseline*2;
 }
 
 .sport-fullscorecard__table {
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     margin: 0 0 $baseline;
 }
 
 .sport-fullscorecard__thead {
     th {
         @extend %type-10;
-        background-color: $mushroom;
-        color: $sportMid;
+        background-color: $c-neutral7;
+        color: $c-sportMid;
         display: table-cell;
         font-weight: 500;
         padding: $baseline*2 $gutter/4*3;
@@ -77,7 +77,7 @@
 .sport-fullscorecard__tbody {
     td {
         @extend %type-10;
-        background-color: $mushroom;
+        background-color: $c-neutral7;
         border-top: 1px solid #DEDEDD;
         display: table-cell;
         padding: $baseline*2 $baseline*3;
@@ -92,12 +92,12 @@
 }
 
 .sport-fullscorecard__information {
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     margin: $baseline*2 0;
 
     dt {
         @extend %type-10;
-        color: $sportMid;
+        color: $c-sportMid;
         font-weight: 500;
         padding: $baseline*2 $gutter/4*3 0;
     }

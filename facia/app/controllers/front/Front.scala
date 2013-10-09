@@ -37,7 +37,16 @@ class Front extends Logging {
       refreshPageFrontAgent()
     }) ++ pageFrontAgent().values.map{ agent => () => agent.refresh() }
 
-  def apply(path: String): FaciaPage = pageFrontAgent()(path)()
+  def apply(path: String): Option[FaciaPage] = pageFrontAgent().get(path).flatMap(pageFront => pageFront())
+
+  def hasItems(pageFronts: Iterable[PageFront]): Boolean = pageFronts.exists( pageFront =>
+    pageFront.apply().exists( faciaPage =>
+      faciaPage.collections.map(_._2).exists( collection =>
+        collection.items.nonEmpty
+      )
+    )
+  )
+  def hasItems(path: String): Boolean = hasItems(pageFrontAgent.get().values.filter(_.id == path))
 }
 
 object Front extends Front

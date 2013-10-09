@@ -18,14 +18,14 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             test = {
                 one: new ABTest('DummyTest'),
                 two: new ABTest('DummyTest2')
-            }
+            };
             
             // a set of switches in various states
             switches = {
                 test_one_off: { switches: { abDummyTest: false }},
                 test_one_on: { switches: { abDummyTest: true }},
                 both_tests_on: { switches: { abDummyTest: true, abDummyTest2: true }}
-            }
+            };
 
             controlSpy = sinon.spy(test.one.variants[0], 'test'),
             variantSpy = sinon.spy(test.one.variants[1], 'test');
@@ -69,7 +69,7 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             });
             
             it("should not segment user if test can't be run", function() {
-                test.one.canRun = function() { return false; }
+                test.one.canRun = function() { return false; };
                 ab.segment(switches.test_one_on);
                 expect(ab.getParticipations()).toEqual([]);
             });
@@ -99,7 +99,7 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             it('should retrieve all the tests user is in', function() {
                 ab.addTest(test.two);
                 ab.segment(switches.both_tests_on);
-                var tests = Object.keys(ab.getParticipations()).map(function(k){ return k; }).toString()
+                var tests = Object.keys(ab.getParticipations()).map(function(k){ return k; }).toString();
                 expect(tests).toBe('DummyTest,DummyTest2');
             });
             
@@ -150,30 +150,34 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
         });
 
         describe("Analytics", function () {
-            
-            it('should add "data-link-test" tracking to body', function() {
+
+            it('should tell me if an event is applicable to a test that I belong to', function () {
                 ab.segment(switches.test_one_on);
-                ab.run(switches.test_one_on);
-                expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
+                expect(ab.isEventApplicableToAnActiveTest('most popular | The Guardian | trail | 1 | text')).toBeTruthy()
+
             });
 
-            it('should concat "data-link-test" tracking when more than one test', function() {
-                Math.seedrandom('gu');
+            it('should tell me if an event is applicable to a test with multiple event strings that I belong to', function () {
+                ab.segment(switches.test_one_on);
+                expect(ab.isEventApplicableToAnActiveTest('most popular | Section | trail | 1 | text')).toBeTruthy()
+            });
+
+            it('should return a list of test names that are relevant to the event', function () {
                 ab.addTest(test.two);
                 ab.segment(switches.both_tests_on);
-                ab.run(switches.both_tests_on);
-                expect(document.body.getAttribute('data-link-test')).toBe('AB | DummyTest test | control, AB | DummyTest2 test | control');
+                var event = {};
+                event.tag = 'most popular | The Guardian | trail | 1 | text';
+                expect(ab.getActiveTestsEventIsApplicableTo(event)).toEqual(['DummyTest', 'DummyTest2'])
             });
 
-            it('should not have duplicate "data-link-test" tracking when a test is run more than once', function() {
-                Math.seedrandom('gu');
+            it('should return the variant of a test that current user is participating in', function () {
                 ab.addTest(test.two);
-                ab.segment(switches.test_one_on);
-                ab.run(switches.test_one_on);
-                ab.run(switches.test_one_on);
-                expect(document.body.getAttribute('data-link-test')).toBe('AB | DummyTest test | control');
+                ab.segment(switches.both_tests_on);
+                var event = {};
+                event.tag = 'most popular | The Guardian | trail | 1 | text';
+                expect(ab.getTestVariant('DummyTest')).toEqual('control')
             });
-            
+
             it('should generate a string for Omniture to tag the test(s) the user is in', function() {
                 Math.seedrandom('gu');
                 test.two.audience = 1; 
@@ -181,11 +185,22 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
                 ab.segment(switches.both_tests_on);
                 ab.run(switches.both_tests_on);
                 expect(ab.makeOmnitureTag(switches.both_tests_on)).toBe("AB | DummyTest | control,AB | DummyTest2 | control");
-        
+
+            });
+
+            it('should generate Omniture tags when there is two tests, but one cannot run', function() {
+                Math.seedrandom('gu');
+                test.one.canRun = function() { return false; };
+                ab.addTest(test.one);
+                test.two.audience = 1;
+                ab.addTest(test.two);
+                ab.segment(switches.both_tests_on);
+                ab.run(switches.both_tests_on);
+                expect(ab.makeOmnitureTag(switches.both_tests_on)).toBe("AB | DummyTest2 | control");
             });
             
             it('should not generate Omniture tags when a test can not be run', function() {
-                test.two.canRun = function() { return false; }
+                test.two.canRun = function() { return false; };
                 ab.addTest(test.two);
                 ab.segment(switches.both_tests_on);
                 ab.run(switches.both_tests_on);

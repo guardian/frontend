@@ -1,9 +1,9 @@
 package controllers
 
-import play.api.mvc.{Action, Controller}
-import common.{JsonComponent, ExecutionContexts, Logging}
+import common.{ JsonComponent, ExecutionContexts, Logging }
 import discussion.DiscussionApi
 import model.Cached
+import play.api.mvc.{ Action, Controller }
 import play.api.libs.json.{JsArray, JsObject}
 
 trait DiscussionController
@@ -14,20 +14,25 @@ trait DiscussionController
 
   protected val discussionApi: DiscussionApi
 
-  def commentCount(shortUrls: String) = Action { implicit request =>
-    Cached.async(discussionApi.commentCounts(shortUrls)) {
-      counts =>
+  def commentCountJson(shortUrls: String) = commentCount(shortUrls)
+  def commentCount(shortUrls: String) = Action.async { implicit request =>
+    val counts = discussionApi.commentCounts(shortUrls)
+    counts map { counts =>
+      Cached(60) {
         JsonComponent(
           JsObject(Seq("counts" -> JsArray(counts.map(_.toJson))))
         )
+      }
     }
   }
 
-  def commentPage(shortUrl: String) = Action { implicit request =>
+  def commentPageJson(shortUrl: String) = commentPage(shortUrl)
+  def commentPage(shortUrl: String) = Action.async { implicit request =>
     val page = request.getQueryString("page").getOrElse("1")
+    val commentPage = discussionApi.commentsFor(shortUrl, page)
 
-    Cached.async(discussionApi.commentsFor(shortUrl, page)) {
-      commentPage =>
+    commentPage map { commentPage =>
+      Cached(60) {
         if (request.isJson)
           JsonComponent(
             "html" -> views.html.fragments.commentsBody(commentPage).toString,
@@ -36,6 +41,7 @@ trait DiscussionController
           )
         else
           Ok(views.html.comments(commentPage))
+      }
     }
   }
 }

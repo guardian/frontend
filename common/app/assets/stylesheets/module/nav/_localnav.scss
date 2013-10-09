@@ -24,7 +24,7 @@
 
     h2.article-zone:only-child,
     .parts__body > .article-zone,
-    .article-head > .article-zone,
+    .article__head > .article-zone,
     .section-head,
     .front-section:first-child .sub-section-head {
         display: none;
@@ -40,8 +40,8 @@
 /* Local navigation popup
    ========================================================================== */
 .nav-popup-localnav {
-    top: 172px;
-    border-color: $darkMushroom;
+    top: 160px;
+    border-color: $c-neutral5;
 
     .nav__link {
         color: #333333;

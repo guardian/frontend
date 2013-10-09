@@ -53,7 +53,7 @@ define([
                 bean.add(cta, 'click', function (e) {
                     model.toggleExpanded();
                 });
-                cta.className = 'cta expander';
+                cta.className = 'cta';
                 dom[0].appendChild(cta);
                 view.updateCallToAction();
             },

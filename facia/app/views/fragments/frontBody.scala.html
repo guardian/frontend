@@ -1,9 +1,18 @@
 @(front: FrontPage, faciaTrailblock: FaciaPage)(implicit request: RequestHeader)
 
-<div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
-    @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
-        @if(faciaTrailblock.collections.nonEmpty) {
-            @fragments.frontBlock(block._1, block._2, front, index)
+@if(faciaTrailblock.collections.nonEmpty) {
+    <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
+        @defining {TemplateDeduping()} { dedupe: TemplateDeduping =>
+            @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
+                @if(block._2.items.nonEmpty){
+                    @FindStyle(faciaTrailblock.id, block._1) match {
+                        case Masthead           => { @collections.masthead(block._1, dedupe(4, block._2), Masthead, index) }
+                        case style: Container   => { @collections.container(front, block._1,  dedupe(block._2), style, index) }
+                        case style: SectionZone => { @collections.sectionZone(block._1,  dedupe(block._2), style, index) }
+                        case style              => { @collections.masthead(block._1,  dedupe(block._2), style, index) }
+                    }
+                }
+            }
         }
-    }
-</div>
+    </div>
+}

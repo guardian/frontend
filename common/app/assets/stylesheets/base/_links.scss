@@ -1,13 +1,17 @@
-a,
-a:link,
-a:visited {
-    color: $linkBlue;
+a {
+    color: $c-newsDefault;
     text-decoration: none;
+
+    &:hover,
+    &:focus {
+       text-decoration: underline;
+    }
+    &:active {
+        color: $c-newsAccent;
+    }
 }
-a:hover,
-a:focus {
+
+a.u-underline {
     text-decoration: underline;
 }
-a:active {
-    color: $darkBlue;
-}
+

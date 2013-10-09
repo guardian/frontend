@@ -10,21 +10,13 @@
     padding: $baseline*2 0;
     list-style: none;
     margin-bottom: -4px;
-    border-bottom: $baseline solid $blue;
+    border-bottom: $baseline solid $c-brandBlue;
     background: #fff;
     width: 100%;
     @include transform(translateZ(0)); // Hotfix to make popups stay on top
                                        // of .preload elements in Chrome Android
 }
 
-.nav-popup .nav--section-divider {
-    padding-bottom: $baseline*4;
-
-    @include mq(tablet) {
-        margin: 0;
-        border-top: none;
-    }
-}
 
 /* Small
    ========================================================================== */
@@ -40,43 +32,35 @@
         padding: 0;
         min-width: 160px;
         background-color: #fff;
-        border-bottom: 1px solid $darkMushroom;
-        border-left: 1px solid $darkMushroom;
+        border-bottom: 1px solid $c-neutral5;
+        border-left: 1px solid $c-neutral5;
     }
 
     // Popup is not sticking to the edge of screen
-    @include mq(956px) {
-        border-right: 1px solid $darkMushroom;
+    @include mq(1150px) {
+        border-right: 1px solid $c-neutral5;
     }
 
-    .nav__item {
-        @include mq(tablet) {
-            margin: 0 $gutter;
-            border-bottom: 1px solid $darkMushroom;
+    @include mq(tablet) {
+        .nav__item {
+            margin: 0 $gs-gutter;
             text-align: right;
-
-            &:last-child {
+        }
+        .nav--stacked > .nav__item {
+            > .nav__link {
+                border-bottom: 1px solid $c-neutral5;
+            }
+            &:last-child > .nav__link {
                 border-bottom: none;
             }
         }
     }
-
-    .nav__link,
-    .nav--columns .nav__link {
-        @extend %type-7;
+    .nav__link {
+        color: #333333;
 
         @include mq(tablet) {
-            padding: $baseline*3 0;
-            @include font($serifheadline, 200, 14, 14);
+            @include font-size(14, 19);
+            padding: 10px 0;
         }
-    }
-}
-
-
-/* Small
-   ========================================================================== */
-.nav-popup-sections {
-    .nav__link {
-        color: #444;
     }
 }

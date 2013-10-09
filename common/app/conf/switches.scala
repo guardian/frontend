@@ -38,8 +38,12 @@ object Switches extends Collections {
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
     safeState = Off)
 
-  val ImageServerSwitch = Switch("Performance Switches", "image-server",
-    "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
+  val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
+    "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
+    safeState = Off)
+
+  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
+    "If this switch is on then (parts of) the application will use the Elastic Search content api",
     safeState = Off)
 
   // Advertising Switches
@@ -75,7 +79,6 @@ object Switches extends Collections {
     "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
 
-
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -86,6 +89,9 @@ object Switches extends Collections {
     "If this switch is on, only 10 top level comments are requested from discussion api.",
     safeState = Off)
 
+  val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
+    "If this switch is on, users can recommend comments",
+    safeState = Off)
 
   // Swipe Switches
 
@@ -96,7 +102,6 @@ object Switches extends Collections {
   val SwipeNavOnClick = Switch("Swipe Navigation", "swipe-nav-on-click",
     "If this switch is also on then swipe navigation on clicks is enabled.",
     safeState = Off)
-
 
   // Feature Switches
   
@@ -149,6 +154,10 @@ object Switches extends Collections {
     "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
     safeState = Off)
 
+  val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
+    "If this is switched on then unsupported embeds will be included in article bodies.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -191,6 +200,13 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
+  val ABMostPopularFromFacebook = Switch("A/B Tests", "ab-most-popular-from-facebook",
+    "If this is switched on an AB test runs to trial presenting visitors from Facebook with Most Popular from Facebook",
+    safeState = Off)
+
+  val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
+    "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
+    safeState = Off)
 
   // Sport Switch
 
@@ -204,15 +220,27 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  //Fronts film switch
-  val FilmFrontFacia = Switch("Facia", "facia-film",
-    "Switch to redirect traffic to the facia film front instead of front film front",
-    safeState = Off)
-
   val FaciaSwitch = Switch("Facia", "facia",
     "Switch to redirect to facia if request has X-Gu-Facia=true",
-    safeState = Off
-  )
+    safeState = Off  )
+
+  val FaciaLoadTestSwitch = Switch("Facia", "facia-load-test",
+    "Switch to make an xhr request from all fronts to Facia, just to load-test it",
+    safeState = Off )
+
+  // Image Switch
+
+  val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
+    "If this is switched on the Image server will use the webp format when requested.",
+    safeState = Off)
+
+  val AddVaryAcceptHeader = Switch("Image Server", "add-vary-accept-header",
+    "If this is switched on the Image server will add vary-accept to responses.",
+    safeState = Off)
+
+  val ImageServerSwitch = Switch("Image Server", "image-server",
+    "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
+    safeState = Off)
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -247,15 +275,22 @@ object Switches extends Collections {
     ExternalLinksCardsSwitch,
     LiveSummarySwitch,
     LiveCricketSwitch,
-    FilmFrontFacia,
     FaciaSwitch,
+    FaciaLoadTestSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABGalleryCta,
     ABSwipeCtas,
     ABExpandableMostPopular,
     ABRightHandCard,
-    ABLiveBlogShowMore
+    ABLiveBlogShowMore,
+    CssFromStorageSwitch,
+    ABMostPopularFromFacebook,
+    ABUltimateParagraphSpacing,
+    ElasticSearchSwitch,
+    ShowUnsupportedEmbedsSwitch,
+    ServeWebPImagesSwitch,
+    AddVaryAcceptHeader
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -289,6 +324,8 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
     Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
       refresh()
     }
+
+    refresh()
   }
 
   override def onStop() {

@@ -1,0 +1,3243 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":424,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":43,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/nhl",
+      "type":"keyword",
+      "webTitle":"NHL",
+      "webUrl":"http://www.theguardian.com/sport/nhl",
+      "apiUrl":"http://content.guardianapis.com/sport/nhl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/oct/04/pittsburgh-penguins-beat-new-jersey-devils",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-04T15:09:00Z",
+      "webTitle":"Pittsburgh Penguins beat New Jersey Devils in NHL season opener",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/04/pittsburgh-penguins-beat-new-jersey-devils",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/04/pittsburgh-penguins-beat-new-jersey-devils",
+      "fields":{
+        "trailText":"<p><strong>NHL round-up:</strong> Pittsburgh beat New Jersey 3-0; Boston Bruins defeat Tampa Bay Lightning 3-1</p>",
+        "headline":"Pittsburgh Penguins beat New Jersey Devils in NHL season opener",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jacp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380899217320/c8d105a7-b485-4459-8fb8-c36e95b3506f-140x84.jpeg",
+        "wordcount":"572",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/pittsburgh-penguins",
+        "type":"keyword",
+        "webTitle":"Pittsburgh Penguins",
+        "webUrl":"http://www.theguardian.com/sport/pittsburgh-penguins",
+        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-penguins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-jersey-devils",
+        "type":"keyword",
+        "webTitle":"New Jersey Devils",
+        "webUrl":"http://www.theguardian.com/sport/new-jersey-devils",
+        "apiUrl":"http://content.guardianapis.com/sport/new-jersey-devils",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-bruins",
+        "type":"keyword",
+        "webTitle":"Boston Bruins",
+        "webUrl":"http://www.theguardian.com/sport/boston-bruins",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/tampa-bay-lightning",
+        "type":"keyword",
+        "webTitle":"Tampa Bay Lightning",
+        "webUrl":"http://www.theguardian.com/sport/tampa-bay-lightning",
+        "apiUrl":"http://content.guardianapis.com/sport/tampa-bay-lightning",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419104821",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380899217140/c8d105a7-b485-4459-8fb8-c36e95b3506f-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alex Brandon",
+            "altText":"Calgary Flames vs Washington Capitals",
+            "height":"276",
+            "credit":"Alex Brandon/AP",
+            "caption":"Calgary Flames' Lee Stempniak and Washington Capitals goalie Michal Neuvirth watch a deflected puck on Thursday, Oct. 3, 2013, in Washington. The Capitals won 5-4 in a shootout. Photograph: Alex Brandon/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419104822",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380899217320/c8d105a7-b485-4459-8fb8-c36e95b3506f-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alex Brandon",
+            "altText":"Calgary Flames vs Washington Capitals",
+            "height":"84",
+            "credit":"Alex Brandon/AP",
+            "caption":"Calgary Flames right wing Lee Stempniak (22) and Washington Capitals goalie Michal Neuvirth, front, from the Czech Republic, watch a deflected puck sail past the goal in the third period of an NHL hockey game on Thursday, Oct. 3, 2013, in Washington. The Capitals won 5-4 in a shootout. Photograph: Alex Brandon/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/oct/04/favourite-things-week-sports-journalism-northern-ireland",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-04T10:36:00Z",
+      "webTitle":"Our favourite things this week: the best sports journalism from around the web",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/04/favourite-things-week-sports-journalism-northern-ireland",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/04/favourite-things-week-sports-journalism-northern-ireland",
+      "fields":{
+        "trailText":"<p>Featuring Lawrie Sanchez's green and white army, Nate Jackson on drugs, Rush, Wayne Rooney philosophising, Spain v Brazil, Nigel Clough and a former basketballer's love for his wife</p>",
+        "headline":"Our favourite things this week: the best sports journalism from around the web",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8dy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/10/3/1380796529893/David-Healy-001.jpg",
+        "wordcount":"1829",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/our-favourite-things-this-week",
+        "type":"series",
+        "webTitle":"Our favourite things this week",
+        "webUrl":"http://www.theguardian.com/sport/series/our-favourite-things-this-week",
+        "apiUrl":"http://content.guardianapis.com/sport/series/our-favourite-things-this-week",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-campbell",
+        "type":"contributor",
+        "webTitle":"Paul Campbell",
+        "webUrl":"http://www.theguardian.com/profile/paul-campbell",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-campbell",
+        "bio":"<p>Paul Campbell is a community co-ordinator for sport on guardian.co.uk</p>",
+        "r2ContributorId":"52301",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"film/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/film/sport",
+        "apiUrl":"http://content.guardianapis.com/film/sport",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.theguardian.com/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nfl",
+        "type":"keyword",
+        "webTitle":"NFL",
+        "webUrl":"http://www.theguardian.com/sport/nfl",
+        "apiUrl":"http://content.guardianapis.com/sport/nfl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/wayne-rooney",
+        "type":"keyword",
+        "webTitle":"Wayne Rooney",
+        "webUrl":"http://www.theguardian.com/football/wayne-rooney",
+        "apiUrl":"http://content.guardianapis.com/football/wayne-rooney",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchester-united",
+        "type":"keyword",
+        "webTitle":"Manchester United",
+        "webUrl":"http://www.theguardian.com/football/manchester-united",
+        "apiUrl":"http://content.guardianapis.com/football/manchester-united",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/12"
+        }]
+      },{
+        "id":"football/derbycounty",
+        "type":"keyword",
+        "webTitle":"Derby County",
+        "webUrl":"http://www.theguardian.com/football/derbycounty",
+        "apiUrl":"http://content.guardianapis.com/football/derbycounty",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/7"
+        }]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-bowl",
+        "type":"keyword",
+        "webTitle":"Super Bowl",
+        "webUrl":"http://www.theguardian.com/sport/super-bowl",
+        "apiUrl":"http://content.guardianapis.com/sport/super-bowl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/football/northernireland",
+        "apiUrl":"http://content.guardianapis.com/football/northernireland",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/964"
+        }]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419055932",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/10/3/1380796529893/David-Healy-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"David Healy",
+            "height":"84",
+            "credit":"Peter Morrison/AP",
+            "caption":"David Healy scores the goal that would sell thousands of DVDs in Northern Ireland. Photograph: Peter Morrison/AP",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419055933",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/10/3/1380796531224/David-Healy-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"David Healy",
+            "height":"276",
+            "credit":"Peter Morrison/AP",
+            "caption":"David Healy scores the goal that would sell thousands of DVDs in Northern Ireland. Photograph: Peter Morrison/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419055934",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/30/1377862765002/Chris-Hemsworth-and-Danie-023.jpg",
+          "typeData":{
+            "source":"Digital / 35mm",
+            "photographer":"Jaap Buitendijk",
+            "altText":"Chris Hemsworth and Daniel Brühl in Ron Howard's Rush",
+            "height":"276",
+            "credit":"Jaap Buitendijk/Digital / 35mm",
+            "caption":"Chris Hemsworth as James Hunt and Daniel Brühl as Niki Lauda in Rush. Photograph: Jaap Buitendijk",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/7"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/12"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/964"
+      }]
+    },{
+      "id":"sport/2013/oct/03/toronto-maple-leafs-second-straight-win",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-03T15:09:30Z",
+      "webTitle":"Toronto Maple Leafs win second straight to start new NHL season",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/03/toronto-maple-leafs-second-straight-win",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/03/toronto-maple-leafs-second-straight-win",
+      "fields":{
+        "trailText":"<p><strong>NHL round-up:</strong> Toronto Maple Leafs beat Philadelphia Flyers 3-1; Detroit Red Wings open season with victory over Buffalo Sabres</p>",
+        "headline":"Toronto Maple Leafs win second straight to start new NHL season",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j9cx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380810694558/81247186-48b5-4904-8f0c-147206a0f737-140x84.jpeg",
+        "wordcount":"259",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-red-wings",
+        "type":"keyword",
+        "webTitle":"Detroit Red Wings",
+        "webUrl":"http://www.theguardian.com/sport/detroit-red-wings",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-red-wings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/buffalo-sabres",
+        "type":"keyword",
+        "webTitle":"Buffalo Sabres",
+        "webUrl":"http://www.theguardian.com/sport/buffalo-sabres",
+        "apiUrl":"http://content.guardianapis.com/sport/buffalo-sabres",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-maple-leafs",
+        "type":"keyword",
+        "webTitle":"Toronto Maple Leafs",
+        "webUrl":"http://www.theguardian.com/sport/toronto-maple-leafs",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-maple-leafs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/philadelphia-flyers",
+        "type":"keyword",
+        "webTitle":"Philadelphia Flyers",
+        "webUrl":"http://www.theguardian.com/sport/philadelphia-flyers",
+        "apiUrl":"http://content.guardianapis.com/sport/philadelphia-flyers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418983667",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380810698565/81247186-48b5-4904-8f0c-147206a0f737-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Matt Slocum",
+            "altText":"Toronto Maple Leafs' Nikolai Kulemin vs Philadelphia Flyers' Maxime Talbot",
+            "height":"276",
+            "credit":"Matt Slocum/AP",
+            "caption":"Toronto Maple Leafs' Nikolai Kulemin, of Russia, collides with Philadelphia Flyers' Maxime Talbot on Wednesday, October 2, 2013. Photograph: Matt Slocum/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418983668",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380810694558/81247186-48b5-4904-8f0c-147206a0f737-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Matt Slocum",
+            "altText":"Toronto Maple Leafs' Nikolai Kulemin vs Philadelphia Flyers' Maxime Talbot",
+            "height":"84",
+            "credit":"Matt Slocum/AP",
+            "caption":"Toronto Maple Leafs' Nikolai Kulemin, left, of Russia, collides with Philadelphia Flyers' Maxime Talbot during the first period of an NHL hockey game on Wednesday, Oct. 2, 2013, in Philadelphia. Photograph: Matt Slocum/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/02/chicago-blackhawks-beat-capitals-nhl-season-opener",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-02T13:33:00Z",
+      "webTitle":"Chicago Blackhawks open Stanley Cup defence with win over Washington Capitals",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/02/chicago-blackhawks-beat-capitals-nhl-season-opener",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/02/chicago-blackhawks-beat-capitals-nhl-season-opener",
+      "fields":{
+        "trailText":"<p><strong>NHL round-up:</strong> Chicago wins season opener 6-4; Maple Leafs defeat Canadiens 4-3 and Montreal's new enforcer George Parros with concussion</p>",
+        "headline":"Blackhawks open Stanley Cup defence with win over Capitals",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j8a4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720571300/da8c42a8-4bfb-41ad-a2fe-b7bad9be9807-140x84.jpeg",
+        "wordcount":"308",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/washington-capitals",
+        "type":"keyword",
+        "webTitle":"Washington Capitals",
+        "webUrl":"http://www.theguardian.com/sport/washington-capitals",
+        "apiUrl":"http://content.guardianapis.com/sport/washington-capitals",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418875035",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720567735/da8c42a8-4bfb-41ad-a2fe-b7bad9be9807-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Nam Y. Huh",
+            "altText":"Chicago Blackhawks' Jonathan Toews and the Stanley Cup before NHL season opener against Washington Capitals",
+            "height":"276",
+            "credit":"Nam Y. Huh/AP",
+            "caption":"Chicago Blackhawks's Jonathan Toews with the Stanley Cup at the end of last season. Photograph: Nam Y Huh/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418875036",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720571300/da8c42a8-4bfb-41ad-a2fe-b7bad9be9807-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Nam Y. Huh",
+            "altText":"Chicago Blackhawks' Jonathan Toews and the Stanley Cup before NHL season opener against Washington Capitals",
+            "height":"84",
+            "credit":"Nam Y. Huh/AP",
+            "caption":"Chicago Blackhawks center Jonathan Toews carries out the Stanley Cup during a banner raising ceremony before an NHL hockey game between the Blackhawks and the Washington Capitals, Tuesday, Oct. 1, 2013, in Chicago. Photograph: Nam Y. Huh/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/01/nhl-2013-2014-preview-ten-things-to-watch",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-01T13:30:44Z",
+      "webTitle":"NHL: 10 things to watch out for in the 2013-14 season",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/nhl-2013-2014-preview-ten-things-to-watch",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/nhl-2013-2014-preview-ten-things-to-watch",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> From the worst new jerseys and the best new rivalries to the hardest hits and the worst fights, how will the season shape up?</p>",
+        "headline":"NHL: 10 things to watch out for in the 2013-14 season",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j72f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380581586838/2d881000-ee06-4d22-a5d9-59689ba828b8-140x84.jpeg",
+        "wordcount":"3092",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/san-jose-sharks",
+        "type":"keyword",
+        "webTitle":"San Jose Sharks",
+        "webUrl":"http://www.theguardian.com/sport/san-jose-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/san-jose-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/vancouver-canucks",
+        "type":"keyword",
+        "webTitle":"Vancouver Canucks",
+        "webUrl":"http://www.theguardian.com/sport/vancouver-canucks",
+        "apiUrl":"http://content.guardianapis.com/sport/vancouver-canucks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/dallas-stars",
+        "type":"keyword",
+        "webTitle":"Dallas Stars",
+        "webUrl":"http://www.theguardian.com/sport/dallas-stars",
+        "apiUrl":"http://content.guardianapis.com/sport/dallas-stars",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-maple-leafs",
+        "type":"keyword",
+        "webTitle":"Toronto Maple Leafs",
+        "webUrl":"http://www.theguardian.com/sport/toronto-maple-leafs",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-maple-leafs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-red-wings",
+        "type":"keyword",
+        "webTitle":"Detroit Red Wings",
+        "webUrl":"http://www.theguardian.com/sport/detroit-red-wings",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-red-wings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/buffalo-sabres",
+        "type":"keyword",
+        "webTitle":"Buffalo Sabres",
+        "webUrl":"http://www.theguardian.com/sport/buffalo-sabres",
+        "apiUrl":"http://content.guardianapis.com/sport/buffalo-sabres",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419106980",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380581588746/2d881000-ee06-4d22-a5d9-59689ba828b8-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charles Krupa",
+            "altText":"Chicago Blackhawks with Stanley Cup",
+            "height":"276",
+            "credit":"Charles Krupa/AP",
+            "caption":"Can the Chicago Blackhawks become the first team to repeat as Stanley Cup champions in 15 years. Photograph: Charles Krupa/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419106981",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380581586838/2d881000-ee06-4d22-a5d9-59689ba828b8-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charles Krupa",
+            "altText":"Chicago Blackhawks with Stanley Cup",
+            "height":"84",
+            "credit":"Charles Krupa/AP",
+            "caption":"The Chicago Blackhawks pose with the Stanley Cup after beating the Boston Bruins 3-2 in Game 6 of the NHL hockey Stanley Cup Finals, in Boston. There are old faces in new places, new rules and a daunting challenge facing the Blackhawks, who attempt to become the first team to repeat as Stanley Cup champs in 15 years. Photograph: Charles Krupa/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/jul/24/nhl-lgbt-gay-rights-russia-sochi-olympics",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-07-24T18:41:00Z",
+      "webTitle":"NHL stands up for LGBT rights – so why no boycott of the Sochi Olympics? | Colin Horgan",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/jul/24/nhl-lgbt-gay-rights-russia-sochi-olympics",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/jul/24/nhl-lgbt-gay-rights-russia-sochi-olympics",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> Given that the NHL is partnered with You Can Play, you'd think it would think twice about a country which attacks gay rights</p>",
+        "headline":"NHL stands up for LGBT rights – so why no boycott of the Sochi Olympics?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hh32",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/1/1335890091742/Police-detain-a-gay-right-004.jpg",
+        "wordcount":"1156",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/gay-rights",
+        "type":"keyword",
+        "webTitle":"Gay rights",
+        "webUrl":"http://www.theguardian.com/world/gay-rights",
+        "apiUrl":"http://content.guardianapis.com/world/gay-rights",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/winter-olympics-2014",
+        "type":"keyword",
+        "webTitle":"Winter Olympics 2014",
+        "webUrl":"http://www.theguardian.com/sport/winter-olympics-2014",
+        "apiUrl":"http://content.guardianapis.com/sport/winter-olympics-2014",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/winter-olympics",
+        "type":"keyword",
+        "webTitle":"Winter Olympics",
+        "webUrl":"http://www.theguardian.com/sport/winter-olympics",
+        "apiUrl":"http://content.guardianapis.com/sport/winter-olympics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.theguardian.com/world/russia",
+        "apiUrl":"http://content.guardianapis.com/world/russia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-413697549",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/1/1335890097810/Police-detain-a-gay-right-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Police detain a gay rights activist in St Petersburg",
+            "height":"276",
+            "credit":"Reuters",
+            "caption":"Russian police detain a gay rights activist in St Petersburg. Photograph: Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-413697550",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/1/1335890091742/Police-detain-a-gay-right-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Police detain a gay rights activist in St Petersburg",
+            "height":"84",
+            "credit":"Reuters",
+            "caption":"Police detain a gay rights activist in St Petersburg. Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-413697551",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/10/1357832447200/NHL-Commissioner-Gary-Bet-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"NHL Commissioner Gary Bettman",
+            "height":"276",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Gary Bettman said the decision to allow players to compete at next year's Winter Olympics was 'in many ways, a difficult one'. Photograph: Lucas Jackson/Reuters",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jul/13/gifs-clarence-seedorf-hockey-fights-ufc",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-13T09:00:00Z",
+      "webTitle":"The gifs that keep on giving: Clarence Seedorf, hockey fights and UFC",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/jul/13/gifs-clarence-seedorf-hockey-fights-ufc",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jul/13/gifs-clarence-seedorf-hockey-fights-ufc",
+      "fields":{
+        "trailText":"<p>This week's roundup includes Paolo Maldini's tough-tackling son, lightning in New York and a young man who wants to be on TV</p>",
+        "headline":"The gifs that keep on giving: Clarence Seedorf, hockey fights and UFC",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h9vt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/3/24/1300957035619/Clarence-Seedorf-to-join--008.jpg",
+        "wordcount":"88",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/the-gifs-that-keep-giving",
+        "type":"series",
+        "webTitle":"The gifs that keep on giving",
+        "webUrl":"http://www.theguardian.com/sport/series/the-gifs-that-keep-giving",
+        "apiUrl":"http://content.guardianapis.com/sport/series/the-gifs-that-keep-giving",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ufc",
+        "type":"keyword",
+        "webTitle":"UFC",
+        "webUrl":"http://www.theguardian.com/sport/ufc",
+        "apiUrl":"http://content.guardianapis.com/sport/ufc",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/basketball",
+        "type":"keyword",
+        "webTitle":"Basketball",
+        "webUrl":"http://www.theguardian.com/sport/basketball",
+        "apiUrl":"http://content.guardianapis.com/sport/basketball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.theguardian.com/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/paul-campbell",
+        "type":"contributor",
+        "webTitle":"Paul Campbell",
+        "webUrl":"http://www.theguardian.com/profile/paul-campbell",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-campbell",
+        "bio":"<p>Paul Campbell is a community co-ordinator for sport on guardian.co.uk</p>",
+        "r2ContributorId":"52301",
+        "references":[]
+      },{
+        "id":"sport/motorsports",
+        "type":"keyword",
+        "webTitle":"Motor sport",
+        "webUrl":"http://www.theguardian.com/sport/motorsports",
+        "apiUrl":"http://content.guardianapis.com/sport/motorsports",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412731632",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/3/24/1300957035619/Clarence-Seedorf-to-join--008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Olivier Morin",
+            "altText":"Clarence Seedorf to join Leicester? Well, not quite.",
+            "height":"84",
+            "credit":"Olivier Morin/AFP/Getty Images",
+            "caption":"Clarence Seedorf to join Leicester? Well, not quite. Photograph: Olivier Morin/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/10/vancouver-canucks-ottawa-senators-heritage-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-10T18:49:40Z",
+      "webTitle":"Vancouver Canucks and Ottawa Senators to play outdoor NHL game",
+      "webUrl":"http://www.theguardian.com/sport/2013/jul/10/vancouver-canucks-ottawa-senators-heritage-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/10/vancouver-canucks-ottawa-senators-heritage-classic",
+      "fields":{
+        "trailText":"<p>Heritage Classic at BC Place expands programme after 2012-13 lockout led to cancellation of all such showpiece games</p>",
+        "headline":"Vancouver Canucks and Ottawa Senators to play outdoor NHL game",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h86p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/14/1358162935055/Canucks-resume-training-005.jpg",
+        "wordcount":"280",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/vancouver-canucks",
+        "type":"keyword",
+        "webTitle":"Vancouver Canucks",
+        "webUrl":"http://www.theguardian.com/sport/vancouver-canucks",
+        "apiUrl":"http://content.guardianapis.com/sport/vancouver-canucks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ottawa-senators",
+        "type":"keyword",
+        "webTitle":"Ottawa Senators",
+        "webUrl":"http://www.theguardian.com/sport/ottawa-senators",
+        "apiUrl":"http://content.guardianapis.com/sport/ottawa-senators",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/canada",
+        "type":"keyword",
+        "webTitle":"Canada",
+        "webUrl":"http://www.theguardian.com/world/canada",
+        "apiUrl":"http://content.guardianapis.com/world/canada",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412578046",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/14/1358162940883/Canucks-resume-training-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Darryl Dyck",
+            "altText":"Canucks resume training",
+            "height":"276",
+            "credit":"Darryl Dyck/AP",
+            "caption":"Vancouver Canucks have something to cheer. Photograph: Darryl Dyck/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412578047",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/14/1358162935055/Canucks-resume-training-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Darryl Dyck",
+            "altText":"Canucks resume training",
+            "height":"84",
+            "credit":"Darryl Dyck/AP",
+            "caption":"Andrew Nicholson, a fan, cheers as he watches the Vancouver Canucks resume training ready for the start of the season on Saturday, delayed four months by a lockout Photograph: Darryl Dyck/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jul/06/gifs-neymar-lebron-james-terminator",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-06T09:00:00Z",
+      "webTitle":"The gifs that keep on giving: Neymar, LeBron James and The Terminator",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/jul/06/gifs-neymar-lebron-james-terminator",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jul/06/gifs-neymar-lebron-james-terminator",
+      "fields":{
+        "trailText":"<p>This week's roundup features men falling on to ice, furious fans and David Moyes playing Arnold Schwarzenegger</p>",
+        "headline":"The gifs that keep on giving: Neymar, LeBron James and The Terminator",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h5xq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/28/1372442112614/Neymar-003.jpg",
+        "wordcount":"78",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/the-gifs-that-keep-giving",
+        "type":"series",
+        "webTitle":"The gifs that keep on giving",
+        "webUrl":"http://www.theguardian.com/sport/series/the-gifs-that-keep-giving",
+        "apiUrl":"http://content.guardianapis.com/sport/series/the-gifs-that-keep-giving",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-campbell",
+        "type":"contributor",
+        "webTitle":"Paul Campbell",
+        "webUrl":"http://www.theguardian.com/profile/paul-campbell",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-campbell",
+        "bio":"<p>Paul Campbell is a community co-ordinator for sport on guardian.co.uk</p>",
+        "r2ContributorId":"52301",
+        "references":[]
+      },{
+        "id":"football/neymar",
+        "type":"keyword",
+        "webTitle":"Neymar",
+        "webUrl":"http://www.theguardian.com/football/neymar",
+        "apiUrl":"http://content.guardianapis.com/football/neymar",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.theguardian.com/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/basketball",
+        "type":"keyword",
+        "webTitle":"Basketball",
+        "webUrl":"http://www.theguardian.com/sport/basketball",
+        "apiUrl":"http://content.guardianapis.com/sport/basketball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412272515",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/28/1372442112614/Neymar-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Laurence Griffiths",
+            "altText":"Neymar",
+            "height":"84",
+            "credit":"Laurence Griffiths/Getty Images",
+            "caption":"Brazil's Neymar howls in pain, real or imagined, during his side's Confederations Cup victory over Uruguay.  Photograph: Laurence Griffiths/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/25/blackhawks-bruins-stanley-cup-best-moments",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-25T18:00:00Z",
+      "webTitle":"Six magic moments as the Chicago Blackhawks won the Stanley Cup",
+      "webUrl":"http://www.theguardian.com/sport/2013/jun/25/blackhawks-bruins-stanley-cup-best-moments",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/25/blackhawks-bruins-stanley-cup-best-moments",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> From the Boston Bruins' dramatic comeback against the Toronto Maple Leafs to the triple overtime of Stanley Cup Final Game One, the 2013 NHL playoffs provided plenty of action</p>",
+        "headline":"Six magic moments as the Chicago Blackhawks won the Stanley Cup",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gzjk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372177366260/Jonathan-Toews-of-the-Chi-005.jpg",
+        "wordcount":"750",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/stanley-cup",
+        "type":"keyword",
+        "webTitle":"Stanley Cup",
+        "webUrl":"http://www.theguardian.com/sport/stanley-cup",
+        "apiUrl":"http://content.guardianapis.com/sport/stanley-cup",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-bruins",
+        "type":"keyword",
+        "webTitle":"Boston Bruins",
+        "webUrl":"http://www.theguardian.com/sport/boston-bruins",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/toronto-maple-leafs",
+        "type":"keyword",
+        "webTitle":"Toronto Maple Leafs",
+        "webUrl":"http://www.theguardian.com/sport/toronto-maple-leafs",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-maple-leafs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-411613939",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372177382796/Jonathan-Toews-of-the-Chi-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bruce Bennett",
+            "altText":"Jonathan Toews of the Chicago Blackhawks hoists the Stanley Cup Trophy",
+            "height":"276",
+            "credit":"Bruce Bennett/Getty Images",
+            "caption":"Jonathan Toews of the Chicago Blackhawks hoists the Stanley Cup trophy. Photograph: Bruce Bennett/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-411613940",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372177366260/Jonathan-Toews-of-the-Chi-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bruce Bennett",
+            "altText":"Jonathan Toews of the Chicago Blackhawks hoists the Stanley Cup Trophy",
+            "height":"84",
+            "credit":"Bruce Bennett/Getty Images",
+            "caption":"Jonathan Toews of the Chicago Blackhawks hoists the Stanley Cup Trophy. Photograph: Bruce Bennett/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/2013/oct/01/nhl-2013-2014-preview-ten-things-to-watch",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-01T13:30:44Z",
+      "webTitle":"NHL: 10 things to watch out for in the 2013-14 season",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/nhl-2013-2014-preview-ten-things-to-watch",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/nhl-2013-2014-preview-ten-things-to-watch",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> From the worst new jerseys and the best new rivalries to the hardest hits and the worst fights, how will the season shape up?</p>",
+        "headline":"NHL: 10 things to watch out for in the 2013-14 season",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j72f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380581586838/2d881000-ee06-4d22-a5d9-59689ba828b8-140x84.jpeg",
+        "wordcount":"3092",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/san-jose-sharks",
+        "type":"keyword",
+        "webTitle":"San Jose Sharks",
+        "webUrl":"http://www.theguardian.com/sport/san-jose-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/san-jose-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/vancouver-canucks",
+        "type":"keyword",
+        "webTitle":"Vancouver Canucks",
+        "webUrl":"http://www.theguardian.com/sport/vancouver-canucks",
+        "apiUrl":"http://content.guardianapis.com/sport/vancouver-canucks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/dallas-stars",
+        "type":"keyword",
+        "webTitle":"Dallas Stars",
+        "webUrl":"http://www.theguardian.com/sport/dallas-stars",
+        "apiUrl":"http://content.guardianapis.com/sport/dallas-stars",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-maple-leafs",
+        "type":"keyword",
+        "webTitle":"Toronto Maple Leafs",
+        "webUrl":"http://www.theguardian.com/sport/toronto-maple-leafs",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-maple-leafs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-red-wings",
+        "type":"keyword",
+        "webTitle":"Detroit Red Wings",
+        "webUrl":"http://www.theguardian.com/sport/detroit-red-wings",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-red-wings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/buffalo-sabres",
+        "type":"keyword",
+        "webTitle":"Buffalo Sabres",
+        "webUrl":"http://www.theguardian.com/sport/buffalo-sabres",
+        "apiUrl":"http://content.guardianapis.com/sport/buffalo-sabres",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419106980",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380581588746/2d881000-ee06-4d22-a5d9-59689ba828b8-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charles Krupa",
+            "altText":"Chicago Blackhawks with Stanley Cup",
+            "height":"276",
+            "credit":"Charles Krupa/AP",
+            "caption":"Can the Chicago Blackhawks become the first team to repeat as Stanley Cup champions in 15 years. Photograph: Charles Krupa/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419106981",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380581586838/2d881000-ee06-4d22-a5d9-59689ba828b8-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charles Krupa",
+            "altText":"Chicago Blackhawks with Stanley Cup",
+            "height":"84",
+            "credit":"Charles Krupa/AP",
+            "caption":"The Chicago Blackhawks pose with the Stanley Cup after beating the Boston Bruins 3-2 in Game 6 of the NHL hockey Stanley Cup Finals, in Boston. There are old faces in new places, new rules and a daunting challenge facing the Blackhawks, who attempt to become the first team to repeat as Stanley Cup champs in 15 years. Photograph: Charles Krupa/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/04/bruins-blackhawks-dominate-conference-finals",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-04T13:16:56Z",
+      "webTitle":"Bruins and Blackhawks dominate opening games of NHL conference finals",
+      "webUrl":"http://www.theguardian.com/sport/2013/jun/04/bruins-blackhawks-dominate-conference-finals",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/04/bruins-blackhawks-dominate-conference-finals",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> Boston Bruins remember how to score as Pittsburgh Penguins flounder; Chicago Blackhawks force LA Kings to pull goalie Quick</p>",
+        "headline":"Bruins and Blackhawks dominate opening games of conference finals",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gagj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/4/1370321026533/46596328-921a-412c-9e87-58fb0c35695f-140x84.jpeg",
+        "wordcount":"1217",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nhl-five-things-we-learned",
+        "type":"series",
+        "webTitle":"NHL: five things we learned",
+        "webUrl":"http://www.theguardian.com/sport/series/nhl-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nhl-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/los-angeles-kings",
+        "type":"keyword",
+        "webTitle":"Los Angeles Kings",
+        "webUrl":"http://www.theguardian.com/sport/los-angeles-kings",
+        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-kings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-bruins",
+        "type":"keyword",
+        "webTitle":"Boston Bruins",
+        "webUrl":"http://www.theguardian.com/sport/boston-bruins",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/pittsburgh-penguins",
+        "type":"keyword",
+        "webTitle":"Pittsburgh Penguins",
+        "webUrl":"http://www.theguardian.com/sport/pittsburgh-penguins",
+        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-penguins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-410095277",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/4/1370321035096/46596328-921a-412c-9e87-58fb0c35695f-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Gene J. Puskar",
+            "altText":"Boston Bruins' Brad Marchand, Patrice Bergeron and Johnny Boychuk vs Pittsburgh Penguins",
+            "height":"276",
+            "credit":"Gene J. Puskar/AP",
+            "caption":"Boston Bruins' Brad Marchand, celebrates his goal with Patrice Bergeron and Johnny Boychuk in Game Two of the NHL hockey Stanley Cup playoffs Eastern Conference finals against the Pittsburgh Penguins. Photograph: Gene J. Puskar/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-410095278",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/4/1370321026533/46596328-921a-412c-9e87-58fb0c35695f-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Gene J. Puskar",
+            "altText":"Boston Bruins' Brad Marchand, Patrice Bergeron and Johnny Boychuk vs Pittsburgh Penguins",
+            "height":"84",
+            "credit":"Gene J. Puskar/AP",
+            "caption":"Boston Bruins' Brad Marchand, center, celebrates his goal with teammates Patrice Bergeron and Johnny Boychuk in the first period of Game 2 of the NHL hockey Stanley Cup playoffs Eastern Conference finals against the Pittsburgh Penguins in Pittsburgh on Monday, June 3, 2013. Photograph: Gene J. Puskar/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/may/21/nhl-playoffs-overtime-record-raffi-torres",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-05-21T14:16:07Z",
+      "webTitle":"Why have so many NHL playoffs gone to overtime in 2013? | Colin Horgan",
+      "webUrl":"http://www.theguardian.com/sport/2013/may/21/nhl-playoffs-overtime-record-raffi-torres",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/may/21/nhl-playoffs-overtime-record-raffi-torres",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> The NHL playoffs have already seen a record number of overtimes in the first round and 20 in total. Why? Plus, San Jose Sharks fined $100,000 for comments over Raffi Torres' suspension</p>",
+        "headline":"Why have so many NHL playoffs gone to overtime in 2013?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gxnm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/21/1369144223141/3ff45ae7-4603-49a9-afc0-c4a315dc499d-140x84.jpeg",
+        "wordcount":"2162",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nhl-five-things-we-learned",
+        "type":"series",
+        "webTitle":"NHL: five things we learned",
+        "webUrl":"http://www.theguardian.com/sport/series/nhl-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nhl-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-red-wings",
+        "type":"keyword",
+        "webTitle":"Detroit Red Wings",
+        "webUrl":"http://www.theguardian.com/sport/detroit-red-wings",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-red-wings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-rangers",
+        "type":"keyword",
+        "webTitle":"New York Rangers",
+        "webUrl":"http://www.theguardian.com/sport/new-york-rangers",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-rangers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-bruins",
+        "type":"keyword",
+        "webTitle":"Boston Bruins",
+        "webUrl":"http://www.theguardian.com/sport/boston-bruins",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/los-angeles-kings",
+        "type":"keyword",
+        "webTitle":"Los Angeles Kings",
+        "webUrl":"http://www.theguardian.com/sport/los-angeles-kings",
+        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-kings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-jose-sharks",
+        "type":"keyword",
+        "webTitle":"San Jose Sharks",
+        "webUrl":"http://www.theguardian.com/sport/san-jose-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/san-jose-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ottawa-senators",
+        "type":"keyword",
+        "webTitle":"Ottawa Senators",
+        "webUrl":"http://www.theguardian.com/sport/ottawa-senators",
+        "apiUrl":"http://content.guardianapis.com/sport/ottawa-senators",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/pittsburgh-penguins",
+        "type":"keyword",
+        "webTitle":"Pittsburgh Penguins",
+        "webUrl":"http://www.theguardian.com/sport/pittsburgh-penguins",
+        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-penguins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-409259172",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/21/1369144219670/3ff45ae7-4603-49a9-afc0-c4a315dc499d-460x276.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"CHRIS WATTIE",
+            "altText":"Pittsburgh Penguins vs Ottawa Senators",
+            "height":"276",
+            "credit":"CHRIS WATTIE/REUTERS",
+            "caption":"Pittsburgh Penguins goalie Tomas Vokoun after the game-winning double overtime goal by the Ottawa Senators. Photograph: Chris Wattie/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-409259173",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/21/1369144223141/3ff45ae7-4603-49a9-afc0-c4a315dc499d-140x84.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"CHRIS WATTIE",
+            "altText":"Pittsburgh Penguins vs Ottawa Senators",
+            "height":"84",
+            "credit":"CHRIS WATTIE/REUTERS",
+            "caption":"Pittsburgh Penguins goalie Tomas Vokoun lies on the ice after giving up the game winning goal to the Ottawa Senators during the second overtime in Game 3 of their NHL Eastern Conference semi-final playoff hockey game in Ottawa May 19, 2013. Photograph: Chris Wattie/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/may/08/islanders-penguins-nhl-playoffs-la-kings",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-05-08T14:32:11Z",
+      "webTitle":"NHL playoffs: Are the New York Islanders this year's LA Kings? | Colin Horgan",
+      "webUrl":"http://www.theguardian.com/sport/2013/may/08/islanders-penguins-nhl-playoffs-la-kings",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/may/08/islanders-penguins-nhl-playoffs-la-kings",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> The eighth-seeded New York Islanders have surprised the Pittsburgh Penguins; goodbye Vancouver Canucks; Ottawa Senators and Montreal Canadiens develop serious rivalry</p>",
+        "headline":"NHL playoffs: Are the New York Islanders this year's LA Kings?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3fkq3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368021712697/700352a7-245a-4c4e-9e27-bd19d6dec314-140x84.jpeg",
+        "wordcount":"1838",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nhl-five-things-we-learned",
+        "type":"series",
+        "webTitle":"NHL: five things we learned",
+        "webUrl":"http://www.theguardian.com/sport/series/nhl-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nhl-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/vancouver-canucks",
+        "type":"keyword",
+        "webTitle":"Vancouver Canucks",
+        "webUrl":"http://www.theguardian.com/sport/vancouver-canucks",
+        "apiUrl":"http://content.guardianapis.com/sport/vancouver-canucks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-jose-sharks",
+        "type":"keyword",
+        "webTitle":"San Jose Sharks",
+        "webUrl":"http://www.theguardian.com/sport/san-jose-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/san-jose-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-islanders",
+        "type":"keyword",
+        "webTitle":"New York Islanders",
+        "webUrl":"http://www.theguardian.com/sport/new-york-islanders",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-islanders",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/pittsburgh-penguins",
+        "type":"keyword",
+        "webTitle":"Pittsburgh Penguins",
+        "webUrl":"http://www.theguardian.com/sport/pittsburgh-penguins",
+        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-penguins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ottawa-senators",
+        "type":"keyword",
+        "webTitle":"Ottawa Senators",
+        "webUrl":"http://www.theguardian.com/sport/ottawa-senators",
+        "apiUrl":"http://content.guardianapis.com/sport/ottawa-senators",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/montreal-ca",
+        "type":"keyword",
+        "webTitle":"Montreal Canadiens",
+        "webUrl":"http://www.theguardian.com/sport/montreal-ca",
+        "apiUrl":"http://content.guardianapis.com/sport/montreal-ca",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-maple-leafs",
+        "type":"keyword",
+        "webTitle":"Toronto Maple Leafs",
+        "webUrl":"http://www.theguardian.com/sport/toronto-maple-leafs",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-maple-leafs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-bruins",
+        "type":"keyword",
+        "webTitle":"Boston Bruins",
+        "webUrl":"http://www.theguardian.com/sport/boston-bruins",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-408513169",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368021711373/700352a7-245a-4c4e-9e27-bd19d6dec314-460x276.jpeg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"SHANNON STAPLETON",
+            "altText":"New York Islanders' John Tavares vs Pittsburgh Penguins'",
+            "height":"276",
+            "credit":"SHANNON STAPLETON/Reuters",
+            "caption":"New York Islanders' John Tavares celebrates his goal against the Pittsburgh Penguins' during their Stanley Cup playoffs Eastern Conference quarter-final game in Uniondale, New York, May 7, 2013. Photograph: Shannon Stapleton/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-408513170",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368021712697/700352a7-245a-4c4e-9e27-bd19d6dec314-140x84.jpeg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"SHANNON STAPLETON",
+            "altText":"New York Islanders' John Tavares vs Pittsburgh Penguins'",
+            "height":"84",
+            "credit":"SHANNON STAPLETON/Reuters",
+            "caption":"New York Islanders' John Tavares celebrates his goal against the Pittsburgh Penguins' with teammate Josh Bailey (12) during the third period of their Stanley Cup playoffs Eastern Conference quarter-final game in Uniondale, New York, May 7, 2013. Photograph: Shannon Stapleton/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/may/03/nhl-playoffs-lars-eller-eric-gryba",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-05-03T20:00:00Z",
+      "webTitle":"Eric Gryba hit on Lars Eller signals bloody start to NHL playoffs",
+      "webUrl":"http://www.theguardian.com/sport/2013/may/03/nhl-playoffs-lars-eller-eric-gryba",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/may/03/nhl-playoffs-lars-eller-eric-gryba",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> Ottawa Senator's Eric Gryba suspended for two games for hit on Montreal Canadiens' Lars Eller; Minnesota Wild's Josh Harding doesn't let multiple sclerosis stop him; Toronto Maple Leafs struggle against Boston Bruins</p>",
+        "headline":"Eric Gryba hit on Lars Eller signals bloody start to NHL playoffs",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3fttz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367597629058/327533fa-dee9-4799-a684-a197b7e822f0-140x84.jpeg",
+        "wordcount":"1262",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nhl-five-things-we-learned",
+        "type":"series",
+        "webTitle":"NHL: five things we learned",
+        "webUrl":"http://www.theguardian.com/sport/series/nhl-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nhl-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"sport/montreal-ca",
+        "type":"keyword",
+        "webTitle":"Montreal Canadiens",
+        "webUrl":"http://www.theguardian.com/sport/montreal-ca",
+        "apiUrl":"http://content.guardianapis.com/sport/montreal-ca",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ottawa-senators",
+        "type":"keyword",
+        "webTitle":"Ottawa Senators",
+        "webUrl":"http://www.theguardian.com/sport/ottawa-senators",
+        "apiUrl":"http://content.guardianapis.com/sport/ottawa-senators",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-maple-leafs",
+        "type":"keyword",
+        "webTitle":"Toronto Maple Leafs",
+        "webUrl":"http://www.theguardian.com/sport/toronto-maple-leafs",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-maple-leafs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-bruins",
+        "type":"keyword",
+        "webTitle":"Boston Bruins",
+        "webUrl":"http://www.theguardian.com/sport/boston-bruins",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-rangers",
+        "type":"keyword",
+        "webTitle":"New York Rangers",
+        "webUrl":"http://www.theguardian.com/sport/new-york-rangers",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-rangers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/washington-capitals",
+        "type":"keyword",
+        "webTitle":"Washington Capitals",
+        "webUrl":"http://www.theguardian.com/sport/washington-capitals",
+        "apiUrl":"http://content.guardianapis.com/sport/washington-capitals",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/minnesota-wild",
+        "type":"keyword",
+        "webTitle":"Minnesota Wild",
+        "webUrl":"http://www.theguardian.com/sport/minnesota-wild",
+        "apiUrl":"http://content.guardianapis.com/sport/minnesota-wild",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-408294875",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367597623735/327533fa-dee9-4799-a684-a197b7e822f0-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Graham Hughes",
+            "altText":"Montreal Canadiens' Lars Eller vs Ottawa Senators' Eric Gryba",
+            "height":"276",
+            "credit":"Graham Hughes/AP",
+            "caption":"Montreal Canadiens' Lars Eller receives medical attention following a hit by Ottawa Senators' Eric Gryba during Game One of an NHL hockey Stanley Cup playoffs first-round series in Montreal on Thursday, May 2, 2013. Photograph: Graham Hughes/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-408294876",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367597629058/327533fa-dee9-4799-a684-a197b7e822f0-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Graham Hughes",
+            "altText":"Montreal Canadiens' Lars Eller vs Ottawa Senators' Eric Gryba",
+            "height":"84",
+            "credit":"Graham Hughes/AP",
+            "caption":"Montreal Canadiens' Lars Eller receives medical attention following a hit by Ottawa Senators' Eric Gryba during the second period of Game 1 of an NHL hockey Stanley Cup playoffs first-round series in Montreal on Thursday, May 2, 2013. Photograph: Graham Hughes/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/apr/23/tyler-seguin-bruins-no-homo-twitter",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-04-23T14:05:27Z",
+      "webTitle":"Bruins' Tyler Seguin puts NHL's homophobia clampdown to the test",
+      "webUrl":"http://www.theguardian.com/sport/2013/apr/23/tyler-seguin-bruins-no-homo-twitter",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/apr/23/tyler-seguin-bruins-no-homo-twitter",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> Boston Bruins' Tyler Seguin tweets homophobic comment; NHL announces Winter Classic expansion; Edmonton Oilers shuffle deckchairs</p>",
+        "headline":"Bruins' Tyler Seguin puts NHL's homophobia clampdown to the test",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3fbdn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/23/1366725203707/7f8d7634-0749-4162-92be-28b5925384ee-140x84.jpeg",
+        "wordcount":"1944",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nhl-five-things-we-learned",
+        "type":"series",
+        "webTitle":"NHL: five things we learned",
+        "webUrl":"http://www.theguardian.com/sport/series/nhl-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nhl-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-bruins",
+        "type":"keyword",
+        "webTitle":"Boston Bruins",
+        "webUrl":"http://www.theguardian.com/sport/boston-bruins",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/edmonton-oilers",
+        "type":"keyword",
+        "webTitle":"Edmonton Oilers",
+        "webUrl":"http://www.theguardian.com/sport/edmonton-oilers",
+        "apiUrl":"http://content.guardianapis.com/sport/edmonton-oilers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-jose-sharks",
+        "type":"keyword",
+        "webTitle":"San Jose Sharks",
+        "webUrl":"http://www.theguardian.com/sport/san-jose-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/san-jose-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/calgary-flames",
+        "type":"keyword",
+        "webTitle":"Calgary Flames",
+        "webUrl":"http://www.theguardian.com/sport/calgary-flames",
+        "apiUrl":"http://content.guardianapis.com/sport/calgary-flames",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-407729573",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/23/1366725206946/7f8d7634-0749-4162-92be-28b5925384ee-460x276.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"RAY STUBBLEBINE",
+            "altText":"Boston Bruins' Tyler Seguin",
+            "height":"276",
+            "credit":"RAY STUBBLEBINE/REUTERS",
+            "caption":"Boston Bruins' Tyler Seguin (with Daniel Paille #20). Photograph: Ray Stubblebine/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-407729574",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/23/1366725203707/7f8d7634-0749-4162-92be-28b5925384ee-140x84.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"RAY STUBBLEBINE",
+            "altText":"Boston Bruins' Tyler Seguin",
+            "height":"84",
+            "credit":"RAY STUBBLEBINE/REUTERS",
+            "caption":"Boston Bruins fans cheer Bruins center Tyler Seguin (19) as he skates off the ice with left wing Daniel Paille (20) after he scored against the New Jersey Devils in the third period of their NHL hockey game in Newark, New Jersey, April 10, 2013. Photograph: Ray Stubblebine/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/31/pittsburgh-penguins-winning-streat-crosby",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-31T14:42:47Z",
+      "webTitle":"Pittsburgh Penguins win streak hits 15 games even without Sidney Crosby",
+      "webUrl":"http://www.theguardian.com/sport/2013/mar/31/pittsburgh-penguins-winning-streat-crosby",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/31/pittsburgh-penguins-winning-streat-crosby",
+      "fields":{
+        "trailText":"<p>Star player leaves the ice after a hit as Pittsburgh closes in on 17-win record set by Mario Lemieux-led team in the 1990s</p>",
+        "headline":"Pittsburgh Penguins win streak hits 15 games even without Sidney Crosby",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3ezhn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/31/1364740180673/Sidney-Crosby-NHL-003.jpg",
+        "wordcount":"666",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/pittsburgh-penguins",
+        "type":"keyword",
+        "webTitle":"Pittsburgh Penguins",
+        "webUrl":"http://www.theguardian.com/sport/pittsburgh-penguins",
+        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-penguins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-islanders",
+        "type":"keyword",
+        "webTitle":"New York Islanders",
+        "webUrl":"http://www.theguardian.com/sport/new-york-islanders",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-islanders",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-maple-leafs",
+        "type":"keyword",
+        "webTitle":"Toronto Maple Leafs",
+        "webUrl":"http://www.theguardian.com/sport/toronto-maple-leafs",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-maple-leafs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ottawa-senators",
+        "type":"keyword",
+        "webTitle":"Ottawa Senators",
+        "webUrl":"http://www.theguardian.com/sport/ottawa-senators",
+        "apiUrl":"http://content.guardianapis.com/sport/ottawa-senators",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/los-angeles-kings",
+        "type":"keyword",
+        "webTitle":"Los Angeles Kings",
+        "webUrl":"http://www.theguardian.com/sport/los-angeles-kings",
+        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-kings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/minnesota-wild",
+        "type":"keyword",
+        "webTitle":"Minnesota Wild",
+        "webUrl":"http://www.theguardian.com/sport/minnesota-wild",
+        "apiUrl":"http://content.guardianapis.com/sport/minnesota-wild",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-406495492",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/31/1364740189537/Sidney-Crosby-NHL-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Gene J. Puskar",
+            "altText":"Sidney Crosby NHL",
+            "height":"276",
+            "credit":"Gene J. Puskar/AP",
+            "caption":"Pittsburgh Penguins center Sidney Crosby left the game after he was hit in the face with a puck during the first period. Photograph: Gene J. Puskar/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-406495493",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/31/1364740180673/Sidney-Crosby-NHL-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Gene J. Puskar",
+            "altText":"Sidney Crosby NHL",
+            "height":"84",
+            "credit":"Gene J. Puskar/AP",
+            "caption":"Pittsburgh Penguins center Sidney Crosby (87) is helped by referee Ian Walsh (29) after being hit in the face with a puck during the first period of an NHL hockey game against the New York Islanders in Pittsburgh, Saturday, March 30, 2013. Crosby left the game. (AP Photo/Gene J. Puskar) Photograph: Gene J. Puskar/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/mar/19/nhl-diving-flopping-embellishing-claude-julien",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-19T14:34:33Z",
+      "webTitle":"NHL must crack down on diving, flopping and embellishing | Colin Horgan",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/mar/19/nhl-diving-flopping-embellishing-claude-julien",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/19/nhl-diving-flopping-embellishing-claude-julien",
+      "fields":{
+        "trailText":"<p><strong>Colin Horgan:</strong> Boston Bruins coach Claude Julien's complaints about Montreal Canadiens sparks diving debate; Patrick Kane's wonder goal</p>",
+        "headline":"NHL must crack down on diving, flopping and embellishing",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3eh6y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363702308965/401e70f3-c180-4290-8898-00309c477da4-140x84.jpeg",
+        "wordcount":"1293",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nhl-five-things-we-learned",
+        "type":"series",
+        "webTitle":"NHL: five things we learned",
+        "webUrl":"http://www.theguardian.com/sport/series/nhl-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nhl-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/colin-horgan",
+        "type":"contributor",
+        "webTitle":"Colin Horgan",
+        "webUrl":"http://www.theguardian.com/profile/colin-horgan",
+        "apiUrl":"http://content.guardianapis.com/profile/colin-horgan",
+        "bio":"<p>Colin Horgan writes about Canadian parliament for <a href=\"http://ipolitics.ca/\">iPolitics.ca</a>, and is also a contributor to <a href=\"http://Macleans.ca\">Macleans.ca</a>. He used to blog for the Calgary Herald. Sometimes he shows up on television. On Twitter, he's <a href=\"http://twitter.com/cfhorgan\">@cfhorgan</a>. He lives in Ottawa</p>",
+        "r2ContributorId":"29550",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/23/1261568797991/colin.jpg",
+        "references":[]
+      },{
+        "id":"sport/edmonton-oilers",
+        "type":"keyword",
+        "webTitle":"Edmonton Oilers",
+        "webUrl":"http://www.theguardian.com/sport/edmonton-oilers",
+        "apiUrl":"http://content.guardianapis.com/sport/edmonton-oilers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-405849713",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363702313693/401e70f3-c180-4290-8898-00309c477da4-460x276.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"BRIAN SNYDER",
+            "altText":"Bruins vs Canadiens fights",
+            "height":"276",
+            "credit":"BRIAN SNYDER/REUTERS",
+            "caption":"Boston Bruins' Zdeno Chara  and Montreal Canadiens' Alexei Emelin are closely refereed in Boston, Massachusetts March 3, 2013. Photograph: Brian Snyder/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-405849714",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363702308965/401e70f3-c180-4290-8898-00309c477da4-140x84.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"BRIAN SNYDER",
+            "altText":"Bruins vs Canadiens fights",
+            "height":"84",
+            "credit":"BRIAN SNYDER/REUTERS",
+            "caption":"Boston Bruins defenseman Zdeno Chara (L) and Montreal Canadiens defenseman Alexei Emelin fight in the second period of their NHL hockey game in Boston, Massachusetts March 3, 2013. Photograph: Brian Snyder/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/17/tampa-bay-carolina-hurricanes-nhl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-17T14:45:48Z",
+      "webTitle":"Tampa Bay Lightning win over Carolina ends five-game home losing streak",
+      "webUrl":"http://www.theguardian.com/sport/2013/mar/17/tampa-bay-carolina-hurricanes-nhl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/17/tampa-bay-carolina-hurricanes-nhl",
+      "fields":{
+        "trailText":"<p><strong>NHL round-up: </strong>Rookies Tyler Johnson and Ondrej Palat score inaugural career goals, while  Jarred Tinordi has a big debut for the Islanders</p>",
+        "headline":"Tampa Bay Lightning win over Carolina ends five-game home losing streak",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3efqv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/17/1363530107388/Phoenix-Coyotes-v-Columbu-005.jpg",
+        "wordcount":"568",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/columbus-blue-jackets",
+        "type":"keyword",
+        "webTitle":"Columbus Blue Jackets",
+        "webUrl":"http://www.theguardian.com/sport/columbus-blue-jackets",
+        "apiUrl":"http://content.guardianapis.com/sport/columbus-blue-jackets",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/phoenix-coyotes",
+        "type":"keyword",
+        "webTitle":"Phoenix Coyotes",
+        "webUrl":"http://www.theguardian.com/sport/phoenix-coyotes",
+        "apiUrl":"http://content.guardianapis.com/sport/phoenix-coyotes",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/tampa-bay-lightning",
+        "type":"keyword",
+        "webTitle":"Tampa Bay Lightning",
+        "webUrl":"http://www.theguardian.com/sport/tampa-bay-lightning",
+        "apiUrl":"http://content.guardianapis.com/sport/tampa-bay-lightning",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carolina-hurricanes",
+        "type":"keyword",
+        "webTitle":"Carolina Hurricanes",
+        "webUrl":"http://www.theguardian.com/sport/carolina-hurricanes",
+        "apiUrl":"http://content.guardianapis.com/sport/carolina-hurricanes",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-jersey-devils",
+        "type":"keyword",
+        "webTitle":"New Jersey Devils",
+        "webUrl":"http://www.theguardian.com/sport/new-jersey-devils",
+        "apiUrl":"http://content.guardianapis.com/sport/new-jersey-devils",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/montreal-ca",
+        "type":"keyword",
+        "webTitle":"Montreal Canadiens",
+        "webUrl":"http://www.theguardian.com/sport/montreal-ca",
+        "apiUrl":"http://content.guardianapis.com/sport/montreal-ca",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/florida-panthers",
+        "type":"keyword",
+        "webTitle":"Florida Panthers",
+        "webUrl":"http://www.theguardian.com/sport/florida-panthers",
+        "apiUrl":"http://content.guardianapis.com/sport/florida-panthers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-islanders",
+        "type":"keyword",
+        "webTitle":"New York Islanders",
+        "webUrl":"http://www.theguardian.com/sport/new-york-islanders",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-islanders",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-405733078",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/17/1363530117432/Phoenix-Coyotes-v-Columbu-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Kirk Irwin",
+            "altText":"Phoenix Coyotes v Columbus Blue Jackets",
+            "height":"276",
+            "credit":"Kirk Irwin/Getty Images",
+            "caption":"Artem Ansimov of the Columbus Blue Jackets beats Mike Smith  of the Phoenix Coyotes for a goal during the shootout on Saturday. Photo: Kirk Irwin/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-405733079",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/17/1363530107388/Phoenix-Coyotes-v-Columbu-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Kirk Irwin",
+            "altText":"Phoenix Coyotes v Columbus Blue Jackets",
+            "height":"84",
+            "credit":"Kirk Irwin/Getty Images",
+            "caption":"Artem Ansimov of the Columbus Blue Jackets beats Mike Smith  of the Phoenix Coyotes for a goal during the shootout on Saturday. Photograph: Kirk Irwin/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/09/chicago-blackhawks-nhl-streak-ends",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-09T15:59:10Z",
+      "webTitle":"Chicago Blackhawks NHL streak ends with loss to Colorado Avalanche",
+      "webUrl":"http://www.theguardian.com/sport/2013/mar/09/chicago-blackhawks-nhl-streak-ends",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/09/chicago-blackhawks-nhl-streak-ends",
+      "fields":{
+        "trailText":"<p><strong>NHL round-up: </strong>Chicago's first loss in regulation time ends best start in league history, while Ottawa ends four-game skid over New York</p>",
+        "headline":"Chicago Blackhawks NHL streak ends with loss to Colorado Avalanche",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3ebba",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362844381229/Colorado-Avalanche-blackh-003.jpg",
+        "wordcount":"351",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nhl",
+        "type":"keyword",
+        "webTitle":"NHL",
+        "webUrl":"http://www.theguardian.com/sport/nhl",
+        "apiUrl":"http://content.guardianapis.com/sport/nhl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-blackhawks",
+        "type":"keyword",
+        "webTitle":"Chicago Blackhawks",
+        "webUrl":"http://www.theguardian.com/sport/chicago-blackhawks",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-blackhawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/colorado-avalanche",
+        "type":"keyword",
+        "webTitle":"Colorado Avalanche",
+        "webUrl":"http://www.theguardian.com/sport/colorado-avalanche",
+        "apiUrl":"http://content.guardianapis.com/sport/colorado-avalanche",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ottawa-senators",
+        "type":"keyword",
+        "webTitle":"Ottawa Senators",
+        "webUrl":"http://www.theguardian.com/sport/ottawa-senators",
+        "apiUrl":"http://content.guardianapis.com/sport/ottawa-senators",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-rangers",
+        "type":"keyword",
+        "webTitle":"New York Rangers",
+        "webUrl":"http://www.theguardian.com/sport/new-york-rangers",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-rangers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/anaheim-ducks",
+        "type":"keyword",
+        "webTitle":"Anaheim Ducks",
+        "webUrl":"http://www.theguardian.com/sport/anaheim-ducks",
+        "apiUrl":"http://content.guardianapis.com/sport/anaheim-ducks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/calgary-flames",
+        "type":"keyword",
+        "webTitle":"Calgary Flames",
+        "webUrl":"http://www.theguardian.com/sport/calgary-flames",
+        "apiUrl":"http://content.guardianapis.com/sport/calgary-flames",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-405310746",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362844390109/Colorado-Avalanche-blackh-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Rick Wilking",
+            "altText":"Colorado Avalanche blackhawks",
+            "height":"276",
+            "credit":"Rick Wilking/Reuters",
+            "caption":"Colorado Avalanche Paul Stastny celebrates with teammates after a first period goal over the Chicago Blackhawks on Friday. Photograph: Rick Wilking/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-405310747",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362844381229/Colorado-Avalanche-blackh-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Rick Wilking",
+            "altText":"Colorado Avalanche blackhawks",
+            "height":"84",
+            "credit":"Rick Wilking/Reuters",
+            "caption":"Colorado Avalanche Paul Stastny celebrates with teammates after a first period goal over the Chicago Blackhawks on Friday. Photograph: Rick Wilking/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

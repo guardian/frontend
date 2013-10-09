@@ -84,23 +84,3 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
     id = id, `type` = "type", webTitle = name, webUrl = "", apiUrl = ""
   )
 }
-
-/*
-
-
-
-  [error] Failed tests:
-[error] 	test.TagControllerTest
-[info] No tests to run for diagnostics/test:test
-[error] Failed tests:
-[error] 	test.FrontFeatureTest
-[info] No tests to run for router/test:test
-[error] Failed tests:
-[error] 	test.RelatedControllerTest
-
-
-
-
-
-
-*/

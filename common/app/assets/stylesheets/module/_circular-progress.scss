@@ -1,0 +1,36 @@
+.circular-progress {
+    position: relative;
+
+    &.circular-progress--is-off .circular-progress__cta {
+        @extend .i-liveblog-play;
+    }
+}
+
+.circular-progress__counter,
+.circular-progress__cta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.circular-progress__counter {
+    @extend %type-12;
+    font-weight: bold;
+    color: $c-neutral2;
+    line-height: 30px;
+    text-align: center;
+}
+
+
+// Mobile Safari tries to be clever with :hover states, causing them to stick around sometimes
+// So here we only apply them for non-touch devices
+.circular-progress--no-touch {
+    &:hover .circular-progress__counter {
+        display: none;
+    }
+
+    &:hover .circular-progress__cta {
+        @extend .i-liveblog-pause;
+    }
+}

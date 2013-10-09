@@ -28,7 +28,7 @@ ul {
 }
 
 #pingdom li,
-#riffraff li {
+.riffraff li {
     min-width: 30px;
     min-height: 30px;
     font-size: 0;
@@ -38,17 +38,17 @@ ul {
     margin: 5px 5px 0 0;
 }
 
-#pingdom li.up, #riffraff li.Completed { 
+#pingdom li.up, .riffraff li.Completed {
     background-color: #B8FAA0;
 }
 
-#pingdom li.down, #riffraff li.Failed {
+#pingdom li.down, .riffraff li.Failed {
     background-color: red;
 }
 
 
 
-#riffraff,
+.riffraff,
 #pingdom {
     overflow: hidden;
     padding: 0;
@@ -60,8 +60,12 @@ ul {
 }
 
 
-#riffraff li.Running {
+.riffraff li.Running {
     background-color: yellow;
+}
+
+li.Not.running {
+    background-color: lightgrey;
 }
 
 h2 {
@@ -92,6 +96,12 @@ a {
 }
 
 
+.deployers {
+    list-style: none;
+    font-family: Georgia, serif;
+    color: #999;
+    font-weight: normal;
+}
 
 @media screen and (min-width: 600px) {
     .charts {
@@ -104,10 +114,5 @@ a {
         float: left;
         width: 50%;
     }
-
-    .pageviews-wrapper {
-        float: right;
-    }
-
-},
+}
 

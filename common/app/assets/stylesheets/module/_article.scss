@@ -2,89 +2,183 @@
     position: relative;
 }
 
-.article-zone {
-    padding: 13px 0 14px;
+.article-zone,
+.article__zone {
+    @include fs-header(3);
+    @include box-sizing(border-box);
+    min-height: $gs-column-height;
+    padding: 0 $gs-gutter/2;
+    border-top-width: $baseline/2;
+    border-top-style: solid;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        min-height: auto;
+        padding: $baseline*3 0;
+        border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
+
+        max-width: gs-span(8);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(rightCol) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+        max-width: none;
+    }
+
+    @include mq(leftCol) {
+        padding-left: $a-leftCol-width + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        padding-left:  gs-span(3) + $gs-gutter;
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+    }
+
+    .article-zone-no-indent & {
+        padding-left: 0 !important;
+        margin-left: 0;
+    }
+
+    &.sport-header,
+    &.article-zone--sport { // TODO: temporary until football gets side cols
+        padding-left: 0;
+        margin-left: $gs-gutter;
+    }
+}
+
+.article__sub-head {
+    @include fs-header(2);
+    padding: $baseline/2 0 $baseline*2;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
+    margin-bottom: $baseline*3;
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
-    }
-    font-weight: bolder;
-    line-height: 1;
-    border-bottom: 1px solid $mushroom;
-
-    @include mq(tablet) {
-        border-top: none;
-    }
-
-    .js-popular & {
-        border-bottom: none;
     }
     .article-zone-no-indent &,
     .monocolumn-wrapper & {
         margin-left: 0;
         margin-right: 0;
     }
+
+    .article__popular & {
+        border-bottom: none;
+    }
 }
 
-.article-zone-sub {
-    @extend %type-6;
+.article__head {
+    padding-top: $baseline;
 }
 
-.article-head {
-    padding-top: $baseline*3;
-}
-
-.article-headline {
-    @extend %type-3;
-    margin-bottom: $baseline*2;
+.article__headline {
+    @include fs-headline(4);
+    margin-bottom: $baseline*6;
+    padding-top: 8px;
+    border-top: 1px dotted $c-neutral5;
 
     @include mq(tablet) {
-        font-family: $serifheadline;
         -webkit-font-smoothing: antialiased;
-        font-size: 34px;
-        font-size: 3.4rem;
-        line-height: 42px;
-        line-height: 4.2rem;
-        margin-bottom: $baseline*5;
-    }
-
-    @include mq(($a-rightCol-trigger + gs-span(1))) {
-        font-size: 40px;
-        font-size: 4rem;
-        line-height: 48px;
-        line-height: 4.8rem;
-        margin-bottom: $baseline*6;
+        @include fs-headline(8, true);
+        margin-bottom: $gs-column-height;
+        padding-top: 0px;
+        border-top: none;
     }
 
     a {
-        &:link,
-        &:visited,
+        &,
         &:hover,
         &:active,
         &:focus {
-            color: #333;
+            color: $c-neutral1;
+        }
+    }
+
+    em {
+        font-style: normal;
+    }
+
+    strong {
+        font-weight: normal;
+    }
+}
+
+.article__dateline {
+    @include box-sizing(border-box);
+    @include fs-data(2);
+    position: relative;
+    min-height: $gs-column-height;
+    padding-top: $baseline;
+    padding-right: gs-span(1);
+    margin-bottom: $baseline*3;
+    border-top: 1px dotted $c-neutral5;
+    color: $c-neutral2;
+
+    .article__meta-container & {
+        display: none;
+    }
+
+    time {
+        display: inline-block;
+        width: 80%;
+    }
+
+    i {
+        vertical-align: top;
+    }
+
+    @include mq(tablet) {
+        padding-right: 0;
+    }
+
+    @include mq(desktop) {
+        @include fs-data(3, true);
+    }
+
+    @include mq(leftCol) {
+        display: none;
+
+        .article__meta-container & {
+            display: block;
+            margin-bottom: $baseline*3;
+
+            time {
+                display: inline-block;
+                width: 85%;
+            }
+
+            i {
+                vertical-align: top;
+                margin-top: 1px;
+            }
+        }
+    }
+
+    @include mq(wide) {
+        .article__dateline-time {
+            display: inline-block;
         }
     }
 }
 
-.article-standfirst {
-    margin-bottom: $baseline*4;
+.article__standfirst {
+    @include fs-headline(1, true);
     text-rendering: optimizeLegibility;
+    margin-bottom: $baseline*3;
+    color: $c-neutral2;
 
     @include mq(tablet) {
+        @include fs-headline(2, true);
         -webkit-font-smoothing: antialiased;
-        font-size: 16px;
-        font-size: 1.6rem;
-        line-height: 24px;
-        line-height: 2.4rem;
-    }
-    @include mq(desktop) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 24px;
-        line-height: 2.4rem;
+        margin-bottom: $baseline*4;
     }
 }
 .article-body {
@@ -104,7 +198,6 @@
     }
 }
 
-
 .article__container,
 .article__main-column,
 .article-v2__inner,
@@ -119,40 +212,54 @@
 }
 
 .byline {
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
+    font-weight: bold;
+    border-top: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted $c-neutral5;
     margin-bottom: $baseline*2;
-    padding: $baseline 0 $baseline*4 0;
+    min-height: 20px;
+    padding: $baseline - 1 0 $baseline*3 - 1 0;
+    color: $c-neutral2;
 
     article & {
         @include mq(tablet, leftCol) {
-            font-size: 16px;
-            font-size: 1.6rem;
+            @include fs-bodyCopy(3, true);
+            min-height: 32px;
         }
         @include mq(rightCol) {
             display: block;
         }
+        @include mq(leftCol) {
+            padding-bottom: $baseline*12;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        @include mq(wide) {
+            padding-bottom: $baseline*15;
+        }
     }
 }
-@include mq(leftCol) {
-    article .byline {
+
+.article__meta-container {
+    @include mq(leftCol) {
         float: left;
         margin-left: ($a-leftCol-width + $gs-gutter)*-1;
         margin-bottom: $baseline*4;
         width: $a-leftCol-width;
     }
-    article .media-primary + .byline {
+
+    @include mq(wide) {
+        margin-left: (gs-span(3) + $gs-gutter)*-1;
+        width: gs-span(3);
+    }
+}
+
+@include mq(leftCol) {
+    .media-content + .article__meta-container {
         margin-left: 0;
         margin-bottom: 0;
         position: absolute;
         top: 0;
         left: 0;
-    }
-}
-@include mq(tablet) {
-    .d-tabs__item--byline {
-        font-size: 16px !important;
-        font-size: 1.6rem !important;
     }
 }
 
@@ -179,24 +286,54 @@ video {
     @include user-select;
 }
 
+.commentcount {
+    @extend %type-11;
+    display: none;
+
+    i {
+        vertical-align: bottom;
+        margin-right: 2px;
+    }
+
+    .article__head & {
+        @include box-sizing(border-box);
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: $gs-column-width - 1px;
+        height: $gs-column-height - 1px;
+        padding: $baseline 0 0 $baseline;
+        border-left: 1px dotted $c-neutral5;
+    }
+}
+
+.commentcount__label {
+    .article__head & {
+        @extend .u-h;
+    }
+}
+
+.article__meta-heading {
+    @include fs-headline(2);
+    padding-top: $baseline;
+    padding-bottom: $baseline*4;
+    border-top: 1px dotted $c-neutral5;
+}
 
 /* Layout changes across devices
    ========================================================================== */
 
 @include mq(tablet) {
-    .article-head,
+    .article__head,
     .main-caption {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-    .d-tabs,
     .player,
     .media-primary {
         margin-left: 0 !important;
         margin-right: 0 !important;
-    }
-    .d-tabs__item--byline {
-        padding-left: $gutter/4 !important;
     }
     .article-v2__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;
@@ -205,24 +342,27 @@ video {
             margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
         }
     }
+
+    .article__head .commentcount {
+        display: block;
+    }
 }
 
 @mixin hide-discussion-tabs {
-    .d-actions .top,
-    .d-tabs {
-        display: none;
-    }
+
 }
 @mixin comments-below-article {
     .article__container,
     .article__discussion {
         display: block !important;
     }
+    .d-actions .top {
+        display: none;
+    }
 }
 
 @include mq(rightCol) {
 
-    @include hide-discussion-tabs;
     @include comments-below-article;
 
     .article-wrapper {
@@ -252,6 +392,7 @@ video {
         padding-right: gs-span(1) + $gs-gutter*2;
     }
     .article-v2__columning-wrapper {
+        width: 100%;
         display: table;
         table-layout: fixed;
         padding-right: 0;
@@ -294,14 +435,55 @@ video {
     .article-v2__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
-    .article-head {
+
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + $gs-gutter;
+    }
+
+    .article-v2__main-column {
+        padding-right: $gs-gutter;
+    }
+
+    .article__head {
         padding-top: $baseline*2;
-        padding-bottom: $baseline*2;
+    }
+
+    .commentcount {
+        .article__head & {
+            display: none;
+        }
+
+        .article__meta-container & {
+            display: block;
+            padding-top: $baseline;
+            margin-bottom: $baseline*3;
+            border-top: 1px dotted $c-neutral5;
+        }
     }
 }
 
 @include mq(wide) {
-    .article-wrapper {
-        margin-left: $gs-column-width;
+    .article-v2__inner,
+    .article-v2__main-column {
+        padding-left: gs-span(3) + $gs-gutter;
+    }
+    .article-v2__main-column {
+        padding-right: gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+    }
+}
+
+
+.article__popular {
+
+    .article-zone {
+        border-color: $c-newsAccent; // Acts as a default
+    }
+
+    i {
+        @include rotate(-90deg);
+        margin-top: 10px;
     }
 }

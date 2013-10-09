@@ -9,7 +9,7 @@
 
 var casper = require('casper').create();
 
-casper.start(host+ "/football/2013/sep/02/transfer-deadline-day-2013-ozil-fellaini-herrera-bale-live?view=mobile");
+casper.start(host + "football/2013/sep/02/transfer-deadline-day-2013-ozil-fellaini-herrera-bale-live?view=mobile");
 
 casper.test.begin("Show key events only / all posts", function(test) {
     casper.waitForSelector(".live-toggler-wrapper", function() {

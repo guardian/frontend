@@ -24,17 +24,8 @@ object Au extends Edition(
 
   val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)){
 
-    val promiseOfCulture: Future[ItemResponse] = ContentApi.item
-      .itemId("culture")
-      .edition("au")
-      .showTags("all")
-      .showFields(trailFields)
-      .showInlineElements(inlineElements)
-      .showMedia("picture")
-      .showElements("all")
-      .showReferences(references)
-      .showStoryPackage(true)
-      .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")
+    val promiseOfCulture: Future[ItemResponse] = ContentApi.item("culture", AU)
+      .tag("-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography")
       .response
 
     EditorsPicsOrLeadContentAndLatest(promiseOfCulture)
@@ -42,18 +33,8 @@ object Au extends Edition(
 
   val commentCustomBlock = CustomTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)){
 
-    val promiseOfComment: Future[ItemResponse] = ContentApi.item
-      .itemId("commentisfree")
-      .edition("au")
-      .showTags("all")
-      .showFields(trailFields)
-      .showInlineElements(inlineElements)
-      .showMedia("picture")
-      .showElements("all")
+    val promiseOfComment: Future[ItemResponse] = ContentApi.item("commentisfree", AU)
       .showEditorsPicks(true)
-      .showReferences(references)
-      .showStoryPackage(true)
-      .tag(s"($supportedTypes)")
       .response
 
     EditorsPicsOrLeadContentAndLatest(promiseOfComment)
@@ -61,14 +42,7 @@ object Au extends Edition(
 
   val videoCustomBlock = CustomTrailblockDescription("type/video", "Video", numItemsVisible = 1, style = Some(Featured)){
 
-    val promiseOfAustralianVideo: Future[ItemResponse] = ContentApi.item.itemId("type/video")
-      .edition("au")
-      .showTags("all")
-      .showFields(trailFields)
-      .showInlineElements(inlineElements)
-      .showMedia("all")
-      .showReferences(references)
-      .showStoryPackage(true)
+    val promiseOfAustralianVideo: Future[ItemResponse] = ContentApi.item("type/video", AU)
       .tag("world/australia")
       .response
 

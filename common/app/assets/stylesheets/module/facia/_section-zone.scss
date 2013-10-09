@@ -1,0 +1,30 @@
+.collection--section-zone {
+    @include mq($to: tablet) {
+        .item:nth-child(1),
+        .item:nth-child(2) {
+            @include card-half-width;
+        }
+        .item:nth-child(n+3) {
+            @include card-headline;
+        }
+        @include row(2);
+    }
+    @include mq(tablet, desktop) {
+        @include row(2);
+        .item:nth-child(n+3) {
+            @include card($without-extras: true);
+        }
+    }
+    @include mq(desktop, wide) {
+        @include row(3);
+        .item:nth-child(n+4) {
+            @include card($without-extras: true);
+        }
+    }
+    @include mq(wide) {
+        @include row(4);
+        .item:nth-child(n+5) {
+            @include card($without-extras: true);
+        }
+    }
+}

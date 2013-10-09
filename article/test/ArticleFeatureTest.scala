@@ -94,8 +94,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".dateline").getText should be("Monday 6 August 2012 20.30 BST")
-        findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00Z")
+        findFirst(".article__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
 
@@ -106,7 +106,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        findFirst(".dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+        findFirst(".article__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-10'")
@@ -114,7 +114,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit.US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        findFirst(".dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
+        findFirst(".article__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -122,7 +122,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        findFirst(".dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -130,7 +130,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit.US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        findFirst(".dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
+        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
       }
 
     }
@@ -159,7 +159,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
         ImageServerSwitch.switchOn
-        inBodyImage.getAttribute("class") should include("img-extended")
+        inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
@@ -228,7 +228,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst(".main-site-link").getAttribute("href") should be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
@@ -239,8 +239,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst(".main-site-link").getAttribute("href") should
-          be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should
+          be(DesktopVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
@@ -252,7 +252,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be(29)
+        $("[itemprop=relatedLink]").size() should be(30)
       }
     }
 
@@ -359,15 +359,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         val mailShareUrl = "mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
-        val fbShareUrl = "http://m.facebook.com/dialog/feed?app_id=180444840287&display=touch&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
+        val fbShareUrl = "https://www.facebook.com/dialog/feed?app_id=180444840287&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
 
         Then("I should see buttons for my favourite social network")
-        findFirst(".social__item--mail .social__action").getAttribute("href") should be(mailShareUrl)
-        findFirst(".social__item--fb .social__action").getAttribute("href") should be(fbShareUrl)
-        findFirst(".social__item--twitter .social__action").getAttribute("href") should be(twitterShareUrl)
-        findFirst(".social__item--gplus .social__action").getAttribute("href") should be(gplusShareUrl)
+        findFirst(".social__action[data-link-name=social-mail]").getAttribute("href") should be(mailShareUrl)
+        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should be(fbShareUrl)
+        findFirst(".social__action[data-link-name=social-twitter]").getAttribute("href") should be(twitterShareUrl)
+        findFirst(".social__action[data-link-name=social-gplus]").getAttribute("href") should be(gplusShareUrl)
       }
       
       Given("I want to track the responsive share buttons using Facebook Insights")
@@ -380,7 +380,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val fbShareTrackingToken = "ref=responsive"
 
         Then("I should pass Facebook a tracking token")
-        findFirst(".social__item--fb .social__action").getAttribute("href") should include(fbShareTrackingToken)
+        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should include(fbShareTrackingToken)
       }
 
 
@@ -402,7 +402,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
-        findFirst("footer").getAttribute("role") should be("contentinfo")
+        findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
@@ -431,18 +431,5 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
 
     }
-
-    scenario("Story package with a link to a Poll") {
-      Given("I'm on an article that has a story package linking to a Poll page")
-
-      HtmlUnit("/science/2013/aug/15/breastfeeding-six-months-breast-cancer") { browser =>
-        import browser._
-
-        Then("the poll should not appear in the list")
-        $(".related-trails a[href=\"/commentisfree/poll/2013/aug/15/breastfeeding-swimming-pool-unhygienic-poll\"]") should have size (0)
-      }
-
-    }
-
   }
 }

@@ -66,7 +66,7 @@ define([
             imageFragment = '<img src="' + image + '" alt="" class="card__media" />';
         }
         if (datePublished) {
-            publishedFragment = '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
+            publishedFragment = '<div class="dateline"><i class="i i-clock-grey relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
         }
         if (title === 'Wikipedia') {
             contentFragment = '<div class="card__description type-11">' + description + '</div>';
@@ -77,23 +77,33 @@ define([
             contentFragment += '<div class="card__appendix type-12">' + host + '</div>';
         }
 
-        tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
-                  '<div class="furniture furniture--left card">' +
+        tpl = '<div class="card-wrapper">' +
+                  '<div class="furniture furniture--left card card--left">' +
                       titleFragment +
-                      imageFragment +
                       '<div class="card__body u-text-hyphenate">' +
-                          publishedFragment +
+                          '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
                           contentFragment +
+                          '</a>' +
                       '</div>' +
+                      '<div class="card__meta">' +
+                          publishedFragment +
+                      '</div>' +
+                      '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                         imageFragment +
+                      '</a>' +
                   '</div>' +
-              '</a>';
+              '</div>';
 
         self.$linkContext.before(tpl);
         common.mediator.emit('fragment:ready:dates');
     };
 
+    function stripHost(url) {
+        return url.replace("http://" + document.location.host, "");
+    }
+
     InlineLinkCard.prototype.fetchData = function() {
-        var href = this.link.getAttribute('href').trim(), // Trim because some href attributes contain spaces
+        var href = stripHost(this.link.getAttribute('href')), // Trim because some href attributes contain spaces
             self = this,
             reqURL;
         if ((/^\//).test(href)) {

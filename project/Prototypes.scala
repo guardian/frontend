@@ -1,12 +1,11 @@
+package com.gu
+
 import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
 import play.Project._
-import PlayArtifact._
-import PlayAssetHash._
 import sbtassembly.Plugin.AssemblyKeys._
-import sbtassembly.Plugin.MergeStrategy
-import SbtGruntPlugin._
+import sbtassembly.Plugin._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -48,18 +47,6 @@ trait Prototypes {
     javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
     lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
 
-    assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
-      Seq(
-        // don't copy across svg files (they're inline)
-        (sourceDirectory / "assets" / "images") ** "*.png",
-        (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
-        (sourceDirectory / "assets" / "stylesheets") ** "*.min.css",
-        (sourceDirectory / "public") ** "*"
-      )
-    },
-
-    staticFilesPackage := "frontend-static",
-
     templatesImport ++= Seq(
       "common._",
       "model._",
@@ -75,66 +62,72 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
+    // APP_SECRET system property not passed to forked?
+    sbt.Keys.fork in Test := false,
+
+    concurrentRestrictions in Global := Seq(Tags.limitAll(1)),
+
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+      "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+      "org.mockito" % "mockito-all" % "1.9.5" % "test"
     ),
 
     (javaOptions in test) += "-DAPP_SECRET=secret"
   )
 
-  val frontendAssemblySettings = Seq(
+  val frontendAssemblySettings = assemblySettings ++ Seq(
     test in assembly := {},
-    executableName <<= (name) { "frontend-%s" format _ },
-    jarName in assembly <<= (executableName) map { "%s.jar" format _ },
+    jarName in assembly <<= (name) map { "frontend-%s.jar" format _ },
+    aggregate in assembly := false,
 
-    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { current =>
       {
         case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
         case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
         case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
 
+        // Take ours, i.e. MergeStrategy.last...
+        case "logger.xml" => MergeStrategy.last
+        case "version.txt" => MergeStrategy.last
+
+        // Merge play.plugins because we need them all
+        case "play.plugins" => MergeStrategy.filterDistinctLines
+
+        // Try to be helpful...
+        case "overview.html" => MergeStrategy.discard
+        case "NOTICE" => MergeStrategy.discard
+        case "LICENSE" => MergeStrategy.discard
         case "README" => MergeStrategy.discard
         case "CHANGELOG" => MergeStrategy.discard
+        case "META-INF/MANIFEST.MF" => MergeStrategy.discard
 
-        case x => old(x)
+        case meta if meta.startsWith("META-INF/") => MergeStrategy.first
+
+        case other => current(other)
       }
     }
   )
 
-  val javascriptFiles = SettingKey[PathFinder]("javascript-files", "All javascript")
-  val cssFiles = SettingKey[PathFinder]("css-files", "All css")
-
-  val frontendGruntSettings = Seq(
-    javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
-    cssFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.scss" },
-
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("jshint:common")),
-
-    resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:js", javascriptFiles)),
-    resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:css", cssFiles))
-  )
-
   def root() = Project("root", base = file("."))
     .settings(
-      scalaVersion := "2.10.0", //TODO why does root not get auto 2.10.0?
-      parallelExecution in ThisBuild := false
+      scalaVersion := "2.10.2"
     )
 
-  def base(name: String) = play.Project(name, version, path = file(name))
-    .settings(VersionInfo.settings:_*)
-    .settings(frontendCompilationSettings:_*)
+  def application(name: String) = play.Project(name, version, path = file(name))
     .settings(frontendDependencyManagementSettings:_*)
-    .settings(frontendTestSettings:_*)
-
-  def application(name: String) = base(name)
-    .settings(playAssetHashDistSettings: _*)
+    .settings(frontendCompilationSettings:_*)
     .settings(frontendClientSideSettings:_*)
+    .settings(frontendTestSettings:_*)
+    .settings(VersionInfo.settings:_*)
     .settings(frontendAssemblySettings:_*)
-
-  def grunt(name: String) = application(name)
-    .settings(frontendGruntSettings:_*)
+    .settings(
+      libraryDependencies ++= Seq(
+        "com.gu" %% "management-play" % "6.0",
+        "commons-io" % "commons-io" % "2.4"
+      )
+    )
 }

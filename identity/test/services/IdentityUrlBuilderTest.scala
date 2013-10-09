@@ -5,13 +5,13 @@ import conf.IdentityConfiguration
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
-import idapiclient.OmnitureTracking
+import idapiclient.TrackingData
 
 class IdentityUrlBuilderTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val conf = new IdentityConfiguration
   val idRequest = mock[IdentityRequest]
-  val omnitureTracking = mock[OmnitureTracking]
-  when(idRequest.omnitureData) thenReturn omnitureTracking
+  val omnitureTracking = mock[TrackingData]
+  when(idRequest.trackingData) thenReturn omnitureTracking
   when(idRequest.returnUrl) thenReturn None
   when(omnitureTracking.registrationType) thenReturn None
 

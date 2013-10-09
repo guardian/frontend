@@ -1,12 +1,32 @@
-@()(implicit request: RequestHeader)
+@(page: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
+@import java.net.URLEncoder.encode
+@import common.DesktopLink
 
 @if(ReleaseMessageSwitch.isSwitchedOn) {
-    <div class="release-message u-h monocolumn-wrapper type-7">
-        <p>
-            You've opted in to an early release of the Guardian's new website.
-            We'd love to hear your <a href="mailto:userhelp@@guardian.co.uk">feedback</a>.
-            You can also <a class="main-site-link" rel="nofollow" href="@LinkTo{/}?view=desktop">opt-out</a> and continue using the existing website.
-        </p>
+    <div class="site-message u-h" data-link-name="release message">
+        <div class="site-message__inner">
+            <p class="site-message__message">
+                You’re viewing an alpha release of the Guardian’s responsive website. <a href="@LinkTo{/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site}">Find out more</a>.
+            </p>
+
+            <ul class="site-message__actions unstyled">
+                <li class="site-message__actions__item">
+                    <i class="i i-comment-grey"></i>
+                    <a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank"> We’d love to hear your feedback</a>
+                </li>
+                <li class="site-message__actions__item">
+                    <i class="i i-back"></i>
+                        <a class="js-main-site-link" rel="nofollow" href="@DesktopLink(page)"
+                            data-link-name="opt-out">Opt-out and return to standard desktop site </a>
+
+                </li>
+            </ul>
+
+            <button class="site-message__close js-site-message-close" data-link-name="hide release message">
+                <i class="i i-message-close"></i>
+                <span class="u-h">Hide this message</span>
+            </button>
+        </div>
     </div> 
 }

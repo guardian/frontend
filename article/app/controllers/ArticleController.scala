@@ -1,13 +1,15 @@
 package controllers
 
+import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
+import org.jsoup.nodes.Document
 import play.api.mvc.{ Content => _, _ }
 import views.support._
-import org.jsoup.nodes.Document
-import collection.JavaConversions._
 import views.BodyCleaner
+import scala.concurrent.Future
+import scala.collection.JavaConversions._
 
 trait ArticleWithStoryPackage {
   def article: Article
@@ -18,63 +20,64 @@ case class LiveBlogPage(article: LiveBlog, storyPackage: List[Trail]) extends Ar
 
 object ArticleController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
-    val promiseOfArticle = lookup(path)
-    Async {
-      promiseOfArticle.map {
-        case Left(model) if model.article.isExpired => renderExpired(model)
-        case Left(model) => renderArticle(model)
-        case Right(notFound) => notFound
-      }
+  def renderArticle(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) if model.article.isExpired => renderExpired(model)
+      case Left(model) => render(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderLatest(path: String, lastUpdate: Option[String]) = lastUpdate.map{ blockId =>
-    Action { implicit request =>
-      val promiseOfArticle = lookup(path)
-      Async {
-        promiseOfArticle.map {
-          case Left(model) if model.article.isExpired => renderExpired(model)
-          case Left(model) =>
-            val html = withJsoup(BodyCleaner(model.article, model.article.body)){
-              new HtmlCleaner {
-                def clean(d: Document): Document = {
-                  val blocksToKeep = d.getElementsByTag("div").takeWhile(_.attr("id") != blockId)
-                  d.getElementsByTag("div").drop(blocksToKeep.size).foreach(_.remove())
-                  d
-                }
-              }
-            }
-            JsonComponent(html)
-          case Right(notFound) => notFound
-        }
-      }
-    }
-  }.getOrElse(render(path))
+  def renderLatestFrom(path: String, lastUpdateBlockId: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) if model.article.isExpired => renderExpired(model)
+      case Left(model) =>
+        val html = withJsoup(BodyCleaner(model.article, model.article.body)) {
+          new HtmlCleaner {
+            def clean(d: Document): Document = {
+              val blocksToKeep = d.getElementsByTag("div") takeWhile { _.attr("id") != lastUpdateBlockId }
+              val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
 
-  private def lookup(path: String)(implicit request: RequestHeader) = {
+              blocksToDrop foreach { _.remove() }
+              d
+            }
+          }
+        }
+        JsonComponent(html)
+
+      case Right(notFound) => notFound
+    }
+  }
+
+  def renderLatest(path: String, lastUpdate: Option[String]) = {
+    lastUpdate map { renderLatestFrom(path, _) } getOrElse { renderArticle(path) }
+  }
+
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, SimpleResult]] = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}")
-    ContentApi.item(path, edition)
+    val response: Future[ItemResponse] = ContentApi.item(path, edition)
       .showExpired(true)
       .showTags("all")
       .showFields("all")
-      .response.map{ response =>
+      .response
 
-      val articleOption = response.content.filter {c => c.isArticle || c.isLiveBlog || c.isSudoku} map { Content(_) }
-      val storyPackage = SupportedContentFilter(response.storyPackage map { Content(_) }).toList
+    val result = response map { response =>
+      val storyPackage = response.storyPackage map { Content(_) }
 
-      val model = articleOption.map { model =>
-        model match {
-          case liveBlog: LiveBlog => LiveBlogPage(liveBlog, storyPackage.filterNot(_.id == model.id))
-          case article: Article => ArticlePage(article, storyPackage.filterNot(_.id == model.id))
-        }
+      val supportedContent = response.content.filter { c => c.isArticle || c.isLiveBlog || c.isSudoku }
+      val content = supportedContent map { Content(_) } map {
+        case liveBlog: LiveBlog => LiveBlogPage(liveBlog, storyPackage.filterNot(_.id == liveBlog.id))
+        case article: Article => ArticlePage(article, storyPackage.filterNot(_.id == article.id))
       }
-      ModelOrResult(model, response)
-    }.recover{ suppressApiNotFound }
+
+      ModelOrResult(content, response)
+    }
+
+    result recover suppressApiNotFound
   }
 
-  private def renderExpired(model: ArticleWithStoryPackage)(implicit request: RequestHeader): Result = Cached(model.article) {
+  private def renderExpired(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = Cached(model.article) {
     if (request.isJson) {
       JsonComponent(model.article, Switches.all, views.html.fragments.expiredBody(model.article))
     } else {
@@ -82,17 +85,15 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     }
   }
 
-  private def renderArticle(model: ArticleWithStoryPackage)(implicit request: RequestHeader): Result = {
-    model match {
-      case blog: LiveBlogPage =>
-        val htmlResponse = () => views.html.liveBlog(blog)
-        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
-        renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
-      case article: ArticlePage =>
-        val htmlResponse = () => views.html.article(article)
-        val jsonResponse = () => views.html.fragments.articleBody(article)
-        renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
-    }
-  }
+  private def render(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
+    case blog: LiveBlogPage =>
+      val htmlResponse = () => views.html.liveBlog(blog)
+      val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
+      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
 
+    case article: ArticlePage =>
+      val htmlResponse = () => views.html.article(article)
+      val jsonResponse = () => views.html.fragments.articleBody(article)
+      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+  }
 }

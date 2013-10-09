@@ -7,10 +7,9 @@
 
 .control {
     &,
-    &:link,
     &:active,
-    &:hover,
-    &:visited {
+    &:focus,
+    &:hover {
         font-family: $serif !important;
         font-size: 13px;
         background-color: transparent;
@@ -18,10 +17,9 @@
         text-decoration: none !important;
     }
 
-    &.is-active,
     &.is-active {
-      background-color: #fff;
-      color: $blue;
+        background-color: #fff !important;
+        color: $c-brandBlue;
     }
 }
 
@@ -44,30 +42,38 @@
    ========================================================================== */
 
 .control--sections,
-.control--sections:link,
 .control--sections:active,
-.control--sections:hover,
-.control--sections:visited {
-    float:right;
+.control--sections:focus,
+.control--sections:hover {
+    float: right;
     width: auto;
     height: 28px;
-    padding: 15px $gutter 15px 0;
+    padding: 16px $gutter 15px 0;
 
     @include mq(tablet) {
         position: absolute;
         right: 0;
         top: 58px;
-        padding: 0 $gutter 10px;
-        margin: $baseline*2 0;
+        padding: 0 $gutter 13px 0;
         background-color: transparent;
         color: #444;
         font-size: 14px;
     }
 }
 
+.control--sections.is-active {
+    @include mq(desktop) {
+        background-color: transparent !important;
+    }
+    @include mq(1152px) {
+        border-right: 1px solid $c-neutral5;
+        padding-right: $gutter - 1;
+    }
+}
+
 .control__menu.i {
     float: right;
-    margin-top: 8px;
+    margin-top: 7px;
     text-indent: -1000em;
 }
 
@@ -84,16 +90,24 @@ span.control__menu.i-menu {
     display: none;
 
     @include mq(tablet) {
-        margin-top: $baseline*2;
+        margin-top: 14px;
         display: inline-block;
     }
 }
 
 .control--sections .i-nav-divider {
     @include mq(tablet) {
-        margin-right: $gutter/4*3;
+        top: 6px;
+        position: relative;
+        margin-right: $gutter - 3;
         border-color: #BBBBBB;
-        background-color: $darkMushroom;
+        background-color: $c-neutral5;
+    }
+}
+.control--sections.is-active .i-nav-divider {
+    @include mq(tablet, desktop) {
+        top: 0;
+        height: 41px;
     }
 }
 
@@ -101,19 +115,18 @@ span.control__menu.i-menu {
    ========================================================================== */
 
 .control--topstories {
-    &:link,
+    &,
     &:active,
     &:hover,
-    &:visited,
     &:focus {
         float: right;
         height: 28px;
         margin: 0;
-        padding: 17px 0 13px 0;
+        padding: 18px 0 13px 0;
         color: #fff;
 
         &.is-active {
-            color: $blue;
+            color: $c-brandBlue;
         }
 
         @include mq(tablet) {
@@ -149,7 +162,7 @@ span.control__menu.i-menu {
     }
 
 .control--topstories .i-top-stories {
-    margin: 5px $gutter 0 $gutter/2;
+    margin: 2px $gutter 0 $gutter/2;
 
     @include mq(tablet) {
         margin-left: 0;
@@ -168,7 +181,7 @@ span.control__menu.i-menu {
 .control--search {
     float:right;
     height: 28px;
-    padding: 15px $gutter 15px 0;
+    padding: 16px $gutter 15px 0;
     border: none;
 
     @include mq(tablet) {
@@ -179,7 +192,7 @@ span.control__menu.i-menu {
 }
 
 .control--search .i-search {
-    margin-top: $baseline*2;
+    margin-top: 5px;
     margin-left: 6px;
     margin-right: 2px;
 }
@@ -192,15 +205,14 @@ span.control__menu.i-menu {
 .control--profile {
     float: right;
     height: 28px;
-    padding: 17px 0 13px $gutter/2;
+    padding: 18px 0 13px $gutter/2;
     width: auto;
 
-    &:link,
+    &,
     &:active,
     &:hover,
-    &:visited,
     &:focus     { color: #fff; }
-    &.is-active { color: $blue; }
+    &.is-active { color: $c-brandBlue; }
 
     @include mq(tablet) {
         position: absolute;
@@ -227,7 +239,7 @@ span.control__menu.i-menu {
 }
 
 .control--profile .i-profile {
-    margin: 5px $gutter 0 $gutter/2;
+    margin: 2px $gutter 0 $gutter/2;
 
     @include mq(tablet) {
         margin-left: 0;

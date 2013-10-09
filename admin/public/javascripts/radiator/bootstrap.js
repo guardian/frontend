@@ -21,12 +21,12 @@ window.addEventListener('load', function() {
     // riff raff - requires you to be on the guardian network
 
     $.ajax({
-                url: 'https://riffraff.gutools.co.uk/api/history?stage=PROD&projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=50', 
+                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend%3A%3A&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
                 dataType: 'jsonp',
                 success: function(deployments) {
 
                     // a hash of the last deployment each project 
-                    var latestDeployments = {};
+                    var latestDeployments = { "CODE": {}, "PROD": {}};
                     deployments.response.results.filter(function (deployment) {
                         
                             return /^frontend::/.test(deployment.projectName)
@@ -34,22 +34,47 @@ window.addEventListener('load', function() {
                         }).forEach(function(deploy) {
                             
                             var project = deploy.projectName;
-                            if (!latestDeployments.hasOwnProperty(project)) {
-                                latestDeployments[project] = deploy;
+                            var stage = deploy.stage;
+                            if (stage && !latestDeployments[stage].hasOwnProperty(project)) {
+                                latestDeployments[stage][project] = deploy;
                             }
-                        })
+                        });
 
-                    // render
-                    Object.keys(latestDeployments).forEach(function (deployment)  {
-                        var d  = latestDeployments[deployment];
-                        var li = document.createElement('li');
-                        li.className = d.status;
-                        li.innerHTML = d.projectName;
-                        li.setAttribute('title', d.projectName);
-                        riffraff.appendChild(li);
-                    });
+                    function renderDeployer(stage, revision, deployer){
+                        var targetId = stage + "-" + revision;
 
-                }})
+                        if (!document.getElementById(targetId)) {
+                            var list = document.getElementById("deployers" + stage);
+                            var li = document.createElement('li');
+                            li.setAttribute("id", targetId);
+                            list.appendChild(li);
+                            $.ajax({
+                                    url: '/radiator/commit/' + revision,
+                                    dataType: 'json',
+                                    success: function(rev) {
+                                        li.innerHTML = rev.commit.author.name + " <small>(deployed by " + deployer + ")</small>";
+                                    }
+                            });
+                        }
+                    }
+
+                    function renderDeploys(stage, target) {
+                        Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
+                            var d  = latestDeployments[stage][deployment];
+                            var li = document.createElement('li');
+                            li.className = d.status;
+                            li.innerHTML = d.projectName;
+                            li.setAttribute('title', d.projectName);
+                            target.appendChild(li);
+                            if(d.status !== "Completed"){
+                                renderDeployer(stage, d.tags.vcsRevision, d.deployer);
+                            }
+                        });
+                    }
+
+                    renderDeploys("CODE", riffraffCODE);
+                    renderDeploys("PROD", riffraffPROD);
+                }});
 
 
     // Page views

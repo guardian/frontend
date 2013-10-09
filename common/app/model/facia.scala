@@ -4,8 +4,8 @@ import views.support.Style
 
 case class Config(
                    id: String,
-                   name: String,
-                   contentApiQuery: Option[String]) {
+                   contentApiQuery: Option[String],
+                   displayName: Option[String]) {
   // 'middle' part of the id is the section
   val section: String = id.split("/").tail.dropRight(1).mkString("/")
 }

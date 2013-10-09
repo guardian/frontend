@@ -14,10 +14,8 @@ import scala.collection.JavaConversions._
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import com.gu.openplatform.contentapi.model.Asset
-import play.Play
 import org.apache.commons.lang.StringEscapeUtils
-
+import conf.Switches.ShowUnsupportedEmbedsSwitch
 
 sealed trait Style {
   val className: String
@@ -45,15 +43,13 @@ object SectionFront extends Style { val className = "section-front" }
  */
 object Masthead extends Style { val className = "masthead" }
 
-object TopStories extends Style { val className = "top-stories" }
+case class SectionZone(val tone: String = "news") extends Style {
+  val className = "section-zone"
+}
 
-object MediumStories extends Style { val className = "medium-stories" }
-
-object SmallStories extends Style { val className = "small-stories" }
-
-object Features extends Style { val className = "features" }
-
-object Highlights extends Style { val className = "highlights" }
+case class Container(val containerType: String = "news", val tone: String = "news", val showMore: Boolean = false) extends Style {
+  val className = "container"
+}
 
 
 object MetadataJson {
@@ -164,29 +160,40 @@ object VideoEmbedCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
-      if(!fig.hasClass("element-comment")) {
+      if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
+          fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
-          Option(img.attr("width")).filter(_.isInt) foreach { width =>
-            fig.addClass(width.toInt match {
-              case width if width <= 220 => "img-base inline-image"
-              case width if width < 460 => "img-median inline-image"
-              case width => "img-extended"
+
+          asset.foreach { image =>
+            fig.addClass(image.width match {
+              case width if width <= 220 => "img--base img--inline"
+              case width if width < 460 => "img--median"
+              case width => "img--extended"
+            })
+            fig.addClass(image.height match {
+              case height if height > image.width => "img--portrait"
+              case height if height < image.width => "img--landscape"
+              case height => ""
             })
           }
         }
         fig.getElementsByTag("figcaption").foreach { figcaption =>
-          if (!figcaption.hasText()) {
+
+          // content api/ tools sometimes pops a &nbsp; in the blank field
+          if (!figcaption.hasText() || figcaption.text().length < 2) {
             figcaption.remove();
           } else {
             figcaption.attr("itemprop", "description")
@@ -195,6 +202,10 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
       }
     }
     body
+  }
+
+  def findImageFromId(id:String): Option[ImageAsset] = {
+    contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
   }
 }
 
@@ -217,6 +228,14 @@ case class VideoPosterCleaner(videos: Seq[VideoAsset]) extends HtmlCleaner {
 
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
+}
+
+object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
+  def clean(body: Document): Document = {
+    val bullets = body.getElementsByClass("bullet")
+    bullets flatMap { _.parentTag("p") } foreach { _.addClass("no-indent") }
+    body
+  }
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
@@ -261,9 +280,12 @@ object InBodyElementCleaner extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
-    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
-    unsupportedElements.foreach(_.remove())
+    if (ShowUnsupportedEmbedsSwitch.isSwitchedOff) {
+      // this code removes unsupported embeds
+      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+      val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
+      unsupportedElements.foreach(_.remove())
+    }
     document
   }
 }
@@ -289,7 +311,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
@@ -304,6 +326,8 @@ object OmnitureAnalyticsData {
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
     val publication = data.get("publication").getOrElse("")
+    val registrationEvent = data.get("registrationEvent").getOrElse("")
+    val registrationType = data.get("registrationType").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -332,9 +356,13 @@ object OmnitureAnalyticsData {
       ("c14", data("build-number")),
       ("c19", platform),
       ("v19", platform),
+      ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
-      ("c56", jsSupport)
+      ("c56", jsSupport),
+      ("event", registrationEvent),
+      ("v23", registrationType)
     )
+
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString ("&"))
   }
@@ -376,7 +404,7 @@ object Format {
 
 object cleanTrailText {
   def apply(text: String)(implicit edition: Edition): Html = {
-    `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
+    withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }
 
@@ -385,7 +413,7 @@ object StripHtmlTags {
 }
 
 object StripHtmlTagsAndUnescapeEntities{
-  def apply( html: String) : String = {
+  def apply(html: String) : String = {
     val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
     val stripped = doc.body.html
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)
@@ -393,16 +421,40 @@ object StripHtmlTagsAndUnescapeEntities{
   }
 }
 
-object Head {
-  def css = if (Play.isDev) volatileCss else persistantCss
-
-  private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
-  private lazy val persistantCss: String = volatileCss
-}
-
 object CricketMatch {
   def apply(trail: Trail): Option[String] = trail match {
     case c: Content => c.cricketMatch
     case _ => None
   }
+}
+
+object VisualTone {
+
+  private val Comment = "comment"
+  private val News = "news"
+  private val Feature = "feature"
+
+  private val toneMappings = Map(
+    ("tone/comment", Comment),
+    ("tone/letters", Comment),
+    ("tone/obituaries", Comment),
+    ("tone/profiles", Comment),
+    ("tone/editorials", Comment),
+    ("tone/analysis", Comment),
+
+    ("tone/features", Feature),
+    ("tone/recipes", Feature),
+    ("tone/interview", Feature),
+    ("tone/performances", Feature),
+    ("tone/extract", Feature),
+    ("tone/reviews", Feature),
+    ("tone/albumreview", Feature),
+    ("tone/livereview", Feature),
+    ("tone/childrens-user-reviews", Feature)
+  )
+
+
+  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
+
+  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
 }

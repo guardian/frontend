@@ -1,3 +1,5 @@
+package com.gu
+
 import sbt._
 
 class Assets(private val assets: Seq[Asset]) {

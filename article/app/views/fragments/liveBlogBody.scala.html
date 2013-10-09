@@ -2,32 +2,28 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
-    <div class="article-wrapper monocolumn-wrapper">
-        <div class="article-v2__inner">
-            <h2 class="article-zone type-1">
-                <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
-            </h2>
-        </div>
+    <h2 class="article-zone tone-@VisualTone(article) tone-accent-border">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+    </h2>
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live}"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
-                <header class="article-head">
-                    @fragments.dateline(article.webPublicationDate, article.isLive)
-
+                <header class="article__head">
                     @fragments.headline(article.headline)
 
                     @if(LiveCricketSwitch.isSwitchedOn) {
                         @article.cricketMatch.map { id =>
                             <div class="after-headline">
-                                <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
-                                    itemprop="significantLink" id="schema-WebPage">View full scorecard
-                                    <i class="i i-sport-arrow-small"></i>
-                                </a>
+                                <a class="cta-small zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                                    itemprop="significantLink"
+                                    id="schema-WebPage">View full scorecard<i class="i i-sport-arrow-small"></i></a>
                             </div>
                         }
                     }
 
                     @fragments.standfirst(article)
+                    @fragments.article.dateline(article.webPublicationDate, article.isLive)
                 </header>
 
                 @fragments.witnessCallToAction(article)
@@ -44,8 +40,12 @@
                             }
                         }
                     }
+                    <div class="article__meta-container">
+                        @fragments.byline(article.byline, article)
 
-                    @fragments.byline(article.byline, article)
+                        @fragments.article.dateline(article.webPublicationDate, secondary=true)
+                        <div class="js-comment-count"></div>
+                    </div>
 
                     <div class="js-article__container article__container u-cf">
                         <div class="live-toolbar">
@@ -106,9 +106,7 @@
                                         </div>
                                     }
                                     @if(Switches.SocialSwitch.isSwitchedOn) {
-                                        <div class="from-content-api from-content-api--small">
-                                            <h2>Share this live blog</h2>
-                                        </div>
+                                        <h2 class="article__meta-heading tone-colour">Share this live blog</h2>
                                     }
                                     @fragments.social(article, "next to content")
                                 </div>
@@ -129,10 +127,17 @@
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                <h3 id="comments" class="article__sub-head tone-colour tone-border">Comments</h3>
+                <div class="article__discussion"></div>
+
                 <div class="d-show-cta-wrapper">
-                    <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
-                       data-is-ajax data-link-name="View all comments">
-                        View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
+                    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@article.shortUrlId}"
+                    data-is-ajax data-link-name="View all comments">
+                        View all comments
+                        <span class="d-commentcount speech-bubble tone-background tone-border">
+                            <span class="js-commentcount__number"></span>
+                        </span>
+                        <i class="i i-arrow-grey-down"></i>
                     </a>
                 </div>
             }
@@ -144,7 +149,7 @@
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
             }
 
-            <div class="js-popular" role="complementary"></div>
+            <div class="js-popular article__popular" role="complementary"></div>
         </div>
     </div>
     }

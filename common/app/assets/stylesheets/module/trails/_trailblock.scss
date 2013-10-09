@@ -4,25 +4,40 @@
 
 .trailblock {
     max-height: none;
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 
     .article-v2__inner &,
     .article__main-column & {
-        padding-left: 0;
-        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .has-local-nav & {
+        border-top: 0;
     }
 
     > ul {
         margin-bottom: 0;
 
         + ul {
-            border-top: 1px solid $medianMushroom;
+            border-top: 1px solid $c-neutral6;
+        }
+    }
+}
+
+.trailblock--no-border {
+    border-top: none;
+}
+
+.front-section {
+    &:not(:first-child) {
+        .trailblock {
+            margin-top: $baseline;
         }
     }
 }
@@ -44,7 +59,7 @@
 
 .trailblock.rolled-up,
 .trailblock.rolled-out {
-    margin-top: 0;
+    margin-top: $baseline*2;
 }
 
 .trailblock.rolled-up {
@@ -68,28 +83,17 @@
    ========================================================================== */
 
 .toggle-trailblock {
-    @extend %type-8;
+    @include box-sizing(border-box);
     position: absolute;
+    min-height: gs-height(1);
+    min-width: gs-span(1);
     top: 0;
     right: 0;
-    color: #fff;
-    padding: 15px $gs-gutter/2 $baseline*2 $gutter/2;
-    @include mq(mobileLandscape) {
-        padding-right: $gs-gutter;
-    }
-    cursor: pointer;
-    background-color: transparent;
-    font-weight: normal;
-    text-shadow: none;
     border: none;
-    @include box-shadow(none);
-
-    &:hover,
-    &:active {
-        background-color: transparent;
-        @include box-shadow(none);
-    }
-    .sub-section-head & {
-        color: #888;
-    }
+    border-left: 1px solid #ffffff;
+    background-color: transparent;
+    @include fs-data(2);
+    color: #ffffff;
+    padding: 14px 0 0 6px;
+    text-align: left;
 }

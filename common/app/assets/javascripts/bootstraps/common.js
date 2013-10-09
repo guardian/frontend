@@ -6,6 +6,7 @@ define([
     //Vendor libraries
     'domReady',
     'bonzo',
+    'bean',
     //Modules
     'modules/storage',
     'modules/detect',
@@ -17,9 +18,7 @@ define([
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/australia',
     'modules/navigation/edition-switch',
-    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/toggles',
     'modules/relativedates',
@@ -31,7 +30,6 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/experiments/left-hand-card',
     'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
@@ -45,6 +43,7 @@ define([
 
     domReady,
     bonzo,
+    bean,
 
     storage,
     detect,
@@ -56,9 +55,8 @@ define([
     Profile,
     Sections,
     Search,
-    Australia,
+
     EditionSwitch,
-    PlatformSwitch,
     Tabs,
     Toggles,
     RelativeDates,
@@ -70,7 +68,6 @@ define([
     AdvertsAnalytics,
     Debug,
     ab,
-    LeftHandCard,
     swipeNav,
     VideoAdvert,
     CommentCount,
@@ -102,9 +99,7 @@ define([
                 topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                aus = new Australia(config),
                 editions = new EditionSwitch(),
-                platforms = new PlatformSwitch(),
                 header = document.body,
                 profile;
 
@@ -119,7 +114,6 @@ define([
             toggles.init(header);
             topStories.load(config, header);
             search.init(header);
-            aus.init(header);
 
             common.mediator.on('page:common:ready', function(){
                 toggles.reset();
@@ -249,7 +243,15 @@ define([
                             viewData.experiments_json = JSON.stringify(testData);
                         }
 
-
+                        // nb, only needed while running both facia and old fronts
+                        // add extra data if 'facia'
+                        if (config.page.isFront === true) {
+                            viewData.platformVariant = ((config.page.isFacia === true) ? 'Facia' : 'Fronts') + '-application';
+                        }
+                        // also check if facia styled section or tag page
+                        else if (['Section', 'Tag'].indexOf(config.page.contentType) !== -1) {
+                            viewData.platformVariant = ((context.querySelector('.facia-container')) ? 'Facia' : 'Fronts') + '-application';
+                        }
 
                         return viewData;
                     });
@@ -259,17 +261,6 @@ define([
 
             });
 
-        },
-
-        externalLinksCards: function (config) {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.switches && config.switches.externalLinksCards) {
-                    var card = new LeftHandCard({
-                        origin: 'all',
-                        context: context
-                    });
-                }
-            });
         },
 
         loadAdverts: function () {
@@ -307,31 +298,58 @@ define([
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
 
-        // let large viewports opt-in to the responsive alpha
+        // opt-in to the responsive alpha
         optIn: function () {
             var countMeIn = /#countmein/.test(window.location.hash);
-            if (countMeIn && window.screen.width >= 900) {
+            if (countMeIn) {
                 var expiryDays = 365;
                 Cookies.add("GU_VIEW", "mobile", expiryDays);
-                Array.prototype.forEach.call(document.querySelectorAll('.release-message'), function (el) {
-                    el.className = el.className.replace('u-h', '');
-                });
+                Cookies.add("GU_FACIA", 'true', expiryDays);
             }
         },
 
-        // opt in/out of facia app
-        faciaOptToggle: function () {
-            var faciaOpt = /^#facia-opt-(.*)$/.exec(window.location.hash);
-            if (faciaOpt) {
-                var expiryDays = 365,
-                    cookieName = 'GU_FACIA';
-                if (faciaOpt[1] === 'in') {
-                    Cookies.add(cookieName, 'true', expiryDays);
+        // toggle in/out of facia
+        faciaToggle: function () {
+            var faciaToggle = /#facia-opt-(.*)/.exec(window.location.hash);
+            if (faciaToggle) {
+                var cookieName = 'GU_FACIA';
+                if (faciaToggle[1] === 'in') {
+                    var expiryDays = 365;
+                    Cookies.add(cookieName, 'true', 365);
                 } else {
                     Cookies.cleanUp([cookieName]);
                 }
             }
         },
+
+        // display a flash message to devices over 600px who don't have the mobile cookie
+        displayReleaseMessage: function (config) {
+
+            var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
+                releaseMessage = {
+                    show: function () {
+                        common.$g('#header').addClass('js-site-message');
+                        common.$g('.site-message').removeClass('u-h');
+                    },
+                    hide: function () {
+                        userPrefs.set('releaseMessage', true);
+                        common.$g('#header').removeClass('js-site-message');
+                        common.$g('.site-message').addClass('u-h');
+                    }
+                };
+
+            if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
+                // force the visitor in to the alpha release for subsequent visits
+                Cookies.add("GU_VIEW", "mobile", 365);
+
+                releaseMessage.show();
+
+                bean.on(document, 'click', '.js-site-message-close', function(e) {
+                    releaseMessage.hide();
+                });
+            }
+        },
+
 
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
@@ -396,8 +414,8 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
-            modules.faciaOptToggle();
-            modules.externalLinksCards();
+            modules.faciaToggle();
+            modules.displayReleaseMessage(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };

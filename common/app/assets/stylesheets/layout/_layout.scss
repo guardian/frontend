@@ -17,6 +17,12 @@ $headerHeight: 58px;
 /* Global header and navigation
    ========================================================================== */
 
+#header.js-site-message {
+    @include mq(tablet) {
+        top: auto
+    }
+}
+
 #header {
     min-height: $headerHeight;
     position: absolute;
@@ -39,26 +45,29 @@ $headerHeight: 58px;
         &:before {
             top: 0;
             height: $headerHeight;
-            background-color: $blue;
+            background-color: $c-brandBlue;
         }
 
         &:after {
             top: $headerHeight;
             height: 40px;
-            background-color: #F5F5F2;
-            border-bottom: 1px solid $darkMushroom;
+            background-color: $c-neutral7;
+            border-bottom: 1px solid $c-neutral5;
         }
     }
 }
     .header__inner {
-        background-color: $blue;
+        background-color: $c-brandBlue;
+        height: 60px;
     }
 
-#logo {
-    display: block;
+.guardian-logo-wrapper {
     float: left;
     margin: 20px 0 18px $gs-gutter/2;
-    text-indent: -9999px;
+
+    i {
+        display: block;
+    }
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
@@ -116,17 +125,14 @@ $headerHeight: 58px;
     }
 }
 
-.inline-image {
+
+.img--inline{
     width: $inArticleInlineImgWidth;
     float: left;
     clear: left;
-    margin: 3px 0 0 0;
-    padding-right: $gs-gutter/2;
-    padding-bottom: 15px;
-    background: white;
+    margin: 3px $gs-gutter 0 0;
 
     @include mq(mobileLandscape) {
-        padding-right: $gs-gutter;
         width: gs-span(2);
     }
 
@@ -135,7 +141,7 @@ $headerHeight: 58px;
     }
 }
 
-.img-tiny.inline-image {
+.img-tiny.img--inline {
     width: auto;
     max-width: $inArticleInlineImgWidth;
 }
@@ -151,16 +157,12 @@ $headerHeight: 58px;
     width: 100%;
 }
 
-#preload-0,
-#preload-1,
-#preload-2 {
+.preload {
     @include transform(translateZ(0));
 }
 
 .has-swipe {
-    #preload-0,
-    #preload-1,
-    #preload-2 {
+    .preload {
         position: absolute;
         width: 100%;
     }

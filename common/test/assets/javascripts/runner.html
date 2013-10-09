@@ -138,8 +138,6 @@
             </ul>
         </li>
         <li><a href="#Ajax">Ajax</a></li>
-        <li><a href="#Aware">Aware</a></li>
-        <li><a href="#Canary">Canary</a></li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
         <li><a href="#Errors">Errors</a></li>
@@ -153,7 +151,6 @@
                 <li><a href="#Control">Control</a></li>
                 <li><a href="#Sections">Sections</a></li>
                 <li><a href="#TopStories">Top Stories</a></li>
-                <li><a href="#Australia">Australia</a></li>
                 <li><a href="#PlatformSwitch">Platform switching</a></li>
                 <li><a href="#ProfileNav">User / Profile</a></li>
             </ul>
@@ -186,6 +183,14 @@
         <li><a href="#Overlay">Overlay</a></li>
         <li><a href="#Id">Id</a></li>
         <li><a href="#InlineLinkCard">Inline Link Card</a></li>
+        <li>
+          Discussion
+          <ul>
+            <li><a href="#discussion/RecommendComment">Recommend comment</a></li>
+          </ul>
+        </li>
+        <li><a href="#NotificationCounter">Notification Counter</a></li>
+        <li><a href="#CircularProgress">Circular Progressbar</a></li>
     </ul>
 
     <div id="test-cases">
@@ -289,32 +294,27 @@
 
         <!-- Tabs.spec -->
         <p id="tabs-test">
-
-          <div class="tabs-container">
-            <ol class="tabs js-tabs">
-                <li class="tabs-selected"><a id="tab1" href="#tab1panel">Foo</a></li>
-                <li><a id="tab2" href="#tab2panel">Bar</a></li>
-            </ol>
-
-            <div class="tabs-content">
-                 <div class="tabs-pane" id="tab1panel">foo</div>
-                 <div class="tabs-pane js-hidden" id="tab2panel">bar</div>
+            <div class="tabs">
+                <ol class="tabs__container js-tabs">
+                    <li class="tabs__tab tabs__tab--selected"><a id="tab1" href="#tab1panel">Foo</a></li>
+                    <li class="tabs__tab"><a id="tab2" href="#tab2panel">Bar</a></li>
+                </ol>
+                <div class="tabs__content">
+                    <div class="tabs__pane" id="tab1panel">foo</div>
+                    <div class="tabs__pane js-hidden" id="tab2panel">bar</div>
+                </div>
             </div>
-          </div>
-
-          <div class="tabs-container">
-            <ol class="tabs">
-                <li class="tabs-selected"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>
-                <li><a id="tab2_2" href="#tab2panel_2">Bar</a></li>
-                <li><a id="fake-tab" href="http://www.google.com">Google (fake tab)</a></li>
-            </ol>
-
-            <div class="tabs-content">
-                 <div class="tabs-pane" id="tab1panel_2">foo</div>
-                 <div class="tabs-pane js-hidden" id="tab2panel_2">bar</div>
+            <div class="tabs-container">
+                <ol class="tabs">
+                    <li class="tabs-selected"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>
+                    <li><a id="tab2_2" href="#tab2panel_2">Bar</a></li>
+                    <li><a id="fake-tab" href="http://www.google.com">Google (fake tab)</a></li>
+                </ol>
+                <div class="tabs-content">
+                    <div class="tabs-pane" id="tab1panel_2">foo</div>
+                    <div class="tabs-pane js-hidden" id="tab2panel_2">bar</div>
+                </div>
             </div>
-          </div>
-
         </p>
 
         <!-- -->
@@ -615,7 +615,7 @@
     <a class="au-test nav__link edition" data-link-name="switch to us edition" href="#edition-switch">US edition</a>
 
 <!-- PlatformSwitch.spec -->
-<a class="main-site-link" href="#foo"></a>
+<a class="js-main-site-link" href="#foo"></a>
 
 </body>
 </html>

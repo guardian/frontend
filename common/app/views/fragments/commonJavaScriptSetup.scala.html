@@ -1,6 +1,6 @@
 @(item: model.MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
-@import conf.Switches.FontSwitch
+@import conf.Switches._
 @import conf.Static
 @import conf.Configuration
 
@@ -20,6 +20,7 @@
             )
         ),
         css: {
+            loaded: false,
             football: '@Static("stylesheets/football.min.css")',
             gallery: '@Static("stylesheets/gallery.min.css")',
             video: '@Static("stylesheets/video.min.css")'
@@ -30,55 +31,69 @@
         apiName: 'require',
         paths: {
             omniture: '@Static("javascripts/vendor/omniture.js")',
-            swipe: '@Static("javascripts/vendor/swipe.js")'
+            swipe: '@Static("javascripts/vendor/swipe.js")',
+            zxcvbn: '@Static("javascripts/vendor/zxcvbn.js")'
         }
     };
 
     (function(isModern) {
         if (!isModern) { return false; }
 
-        @* we want this to happen ASAP to avoid FOUC *@
-        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
-    })(guardian.isModernBrowser);
-
-    function loadFontsFromStorage(prefs, key) {
-
-        var showFonts = false,
-            fontPreference = localStorage['gu.prefs.switch.font-family'],
-            fontSwitch = (fontPreference) ? JSON.parse(fontPreference).value : undefined;
-
-        @if(FontSwitch.isSwitchedOn) {
-            showFonts = true;
-        }
-
-        if (fontSwitch === true) {
-            showFonts = true;
-        } else if (fontSwitch === false && fontPreference) {
-            showFonts = false;
-        }
-
-        if (showFonts) {
-            var styleNodes = document.querySelectorAll('[data-cache-name]');
-            for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                var style = styleNodes[i],
-                    nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
-                    cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
-                    @* try to parse it (should really use the storage module) *@
-                    try {
-                        cachedCss = JSON.parse(cachedCss).value;
-                    } catch(e) {}
-                if (cachedCss) {
-                    style.innerHTML = cachedCss;
-                    style.setAttribute('data-cache-full', 'true');
-                    document.querySelector('html').className += ' font-' + nameAndCacheKey[1] + '-loaded';
+        @if(CssFromStorageSwitch.isSwitchedOn) {
+            function loadCssFromStorage() {
+                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.min.css").md5Key'), s, sc;
+                if(c) {
+                    s = document.createElement('style');
+                    sc = document.getElementsByTagName('script')[0];
+                    s.innerHTML = c;
+                    s.setAttribute('data-loaded-from', 'local');
+                    sc.parentNode.insertBefore(s, sc);
+                    guardian.css.loaded = true;
                 }
             }
         }
-    }
 
-    (function(isModern) {
-        if (!isModern) { return false; }
+        function loadFontsFromStorage(prefs, key) {
 
+            var showFonts = false,
+                fontPreference = localStorage['gu.prefs.switch.font-family'],
+                fontSwitch = (fontPreference) ? JSON.parse(fontPreference).value : undefined;
+
+            @if(FontSwitch.isSwitchedOn) {
+                showFonts = true;
+            }
+
+            if (fontSwitch === true) {
+                showFonts = true;
+            } else if (fontSwitch === false && fontPreference) {
+                showFonts = false;
+            }
+
+            if (showFonts) {
+                var styleNodes = document.querySelectorAll('[data-cache-name]');
+                for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                    var style = styleNodes[i],
+                        nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
+                        cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
+                        @* try to parse it (should really use the storage module) *@
+                        try {
+                            cachedCss = JSON.parse(cachedCss).value;
+                        } catch(e) {}
+                    if (cachedCss) {
+                        style.innerHTML = cachedCss;
+                        style.setAttribute('data-cache-full', 'true');
+                        document.querySelector('html').className += ' font-' + nameAndCacheKey[1] + '-loaded';
+                    }
+                }
+            }
+        }
+
+        @* we want this to happen ASAP to avoid FOUC *@
+        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
+
+        @if(CssFromStorageSwitch.isSwitchedOn) {
+            loadCssFromStorage();
+        }
         loadFontsFromStorage();
 
         guardian.config = @fragments.javaScriptConfig(item, switches);
