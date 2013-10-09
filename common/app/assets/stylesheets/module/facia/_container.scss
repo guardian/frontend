@@ -146,7 +146,8 @@
         }
         &.collection--news,
         &.collection--sport {
-            .item:nth-child(n+2):nth-child(-n+5) {
+            .item:nth-child(2),
+            .item:nth-child(n+4):nth-child(-n+6) {
                 @include card($with-image: true);
             }
             .item:nth-child(n+6) {
