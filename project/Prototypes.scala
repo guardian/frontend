@@ -100,14 +100,21 @@ trait Prototypes {
         // Try to be helpful...
         case "overview.html" => MergeStrategy.discard
         case "NOTICE" => MergeStrategy.discard
-        case "LICENSE" => MergeStrategy.discard
         case "README" => MergeStrategy.discard
         case "CHANGELOG" => MergeStrategy.discard
-        case "META-INF/MANIFEST.MF" => MergeStrategy.discard
-
         case meta if meta.startsWith("META-INF/") => MergeStrategy.first
 
         case other => current(other)
+      }
+    },
+
+    excludedFiles in assembly := { (bases: Seq[File]) =>
+      bases flatMap { base => (base / "META-INF" * "*").get } collect {
+        case f if f.getName.toUpperCase == "LICENSE" => f
+        case f if f.getName.toUpperCase == "MANIFEST.MF" => f
+        case f if f.getName.endsWith(".SF") => f
+        case f if f.getName.endsWith(".DSA") => f
+        case f if f.getName.endsWith(".RSA") => f
       }
     }
   )
