@@ -1,6 +1,7 @@
 define([
     'knockout',
     'models/common',
+    'models/humanizedTimeSpan',
     'models/authedAjax',
     'models/article',
     'models/contentApi',
@@ -8,6 +9,7 @@ define([
 ], function(
     ko,
     common,
+    humanizedTimeSpan,
     authedAjax,
     Article,
     contentApi,
@@ -143,8 +145,6 @@ define([
         var self = this;
         opts = opts || {};
 
-        self.state.loadIsPending(!opts.isRefresh);
-
         return authedAjax({
             url: common.config.apiBase + '/collection/' + this.id
         }).then(function(resp) {
@@ -230,7 +230,7 @@ define([
     };
 
     Collection.prototype.getTimeAgo = function(date) {
-        return date ? humanized_time_span(date) : '';
+        return date ? humanizedTimeSpan(date) : '';
     };
 
     return Collection;

@@ -1,3 +1,6 @@
+define([],
+function (){
+
 // Copyright (C) 2011 by Will Tomlins
 //
 // Github profile: http://github.com/layam
@@ -103,3 +106,7 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
 
   return render_date(get_format());
 }
+
+return humanized_time_span;
+
+});

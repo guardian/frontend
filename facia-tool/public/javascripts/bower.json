@@ -10,7 +10,6 @@
     "jasmine": "1.3",
     "sinon": "1.7",
     "underscore": "1.4",
-    "bootstrap.css": "2.1",
-    "js_humanized_time_span": "git@github.com:layam/js_humanized_time_span.git"
+    "bootstrap.css": "2.1"
   }
 }

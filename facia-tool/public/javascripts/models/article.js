@@ -1,14 +1,14 @@
 define([
     'models/common',
+    'models/humanizedTimeSpan',
     'models/authedAjax',
-    'knockout',
-    'js!humanizedTimeSpan'
+    'knockout'
 ],
 function (
     common,
+    humanizedTimeSpan,
     authedAjax,
-    ko,
-    placeholder
+    ko
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
@@ -37,7 +37,7 @@ function (
 
         // Computeds
         this.humanDate = ko.computed(function(){
-            return this.meta.webPublicationDate() ? humanized_time_span(this.meta.webPublicationDate()) : '&nbsp;';
+            return this.meta.webPublicationDate() ? humanizedTimeSpan(this.meta.webPublicationDate()) : '&nbsp;';
         }, this);
         this.totalHitsFormatted = ko.computed(function(){
             return common.util.numberWithCommas(this.state.totalHits());
