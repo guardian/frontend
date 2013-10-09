@@ -25,7 +25,7 @@ trait Formats {
   implicit val galleryFormat: Writes[Gallery] = new Writes[Gallery] {
     def writes(gallery: Gallery): JsValue = toJson(
       Map(
-        "pictures" -> gallery.crops.map(toJson(_))
+        "pictures" -> gallery.largestCrops.map(toJson(_))
       )
     )
   }
