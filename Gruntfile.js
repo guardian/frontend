@@ -479,10 +479,19 @@ module.exports = function (grunt) {
 
         // Recompile on change
         watch: {
-            files: ['common/**/*.js', 'common/**/*.scss'],
-            tasks: ['compile'],
-            options: {
-                spawn: false
+            js: {
+                files: ['common/**/*.js'],
+                tasks: ['requirejs:compile'],
+                options: {
+                    spawn: false
+                }
+            },
+            sass: {
+                files: ['common/**/*.scss'],
+                tasks: ['sass:compile'],
+                options: {
+                    spawn: false
+                }
             }
         }
     });
