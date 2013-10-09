@@ -3,7 +3,7 @@ define([], function () {
         $.ajax(opts)
         .always(function(data, status, xhr) {
             console.log(arguments);
-            if (xhr.status === 303) {
+            if (xhr.status === 403) {
                 window.location.href = '/logout';
                 return;
             }
