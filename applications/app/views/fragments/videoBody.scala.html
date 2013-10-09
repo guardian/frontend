@@ -1,4 +1,5 @@
 @(page: VideoPage)(implicit request: RequestHeader)
+@import conf.Switches._
 
 @defining(page.video){ video =>
     <h2 class="article-zone tone-@VisualTone(video) tone-accent-border">
