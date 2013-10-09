@@ -46,11 +46,13 @@ trait AuthLogging {
 class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with implicits.Dates {
   import Play.current
 
+  def authFailResult(request: Request[AnyContent]): SimpleResult = Redirect(loginUrl).withSession(("loginFromUrl", request.uri))
+
   override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
     if (withinAllowedTime(request) || Play.isTest)
       Future { f(request).withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)) }
     else
-      Future { Redirect(loginUrl).withSession(("loginFromUrl", request.uri)) }
+      Future { authFailResult(request) }
   }
 
   def withinAllowedTime(request: Request[AnyContent]): Boolean =
