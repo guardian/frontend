@@ -41,6 +41,18 @@ define([
                 }
             };
 
+        function fetchConfigsList() {
+            return authedAjax({
+                url: common.config.apiBase + '/config'
+            }).then(function(resp) {
+                if (!(_.isArray(resp) && resp.length > 0)) {
+                    window.alert("Oops, no page definitions were found! Please contact support.");
+                    return;
+                }
+                model.configs(resp.sort());
+            });
+        };
+
         function getConfig() {
             return common.util.queryParams().front;
         }
@@ -50,13 +62,6 @@ define([
             renderCollections();
         }
 
-        function toggleViewer() {
-            model.showViewer(!model.showViewer());
-            if (model.showViewer()) {
-                model.viewer.render();
-            }
-        }
-
         function renderConfig() {
             model.config(getConfig());
         }
@@ -64,7 +69,11 @@ define([
         function renderCollections() {
             model.collections.removeAll();
 
-            fetchConfig(getConfig())
+            if (!getConfig()) { return; }
+
+            authedAjax({
+                url: common.config.apiBase + '/config/' + getConfig()
+            })
             .then(function(collections){
                 model.collections(
                     (collections || []).map(function(collection){
@@ -199,26 +208,12 @@ define([
             startPoller = function() {}; // make idempotent
         }
 
-        function fetchConfigs() {
-            return authedAjax({
-                url: common.config.apiBase + '/config'
-            }).then(function(resp) {
-                if (!(_.isArray(resp) && resp.length > 0)) {
-                    window.console.log("ERROR: No configs were found");
-                    return;
-                }
-                model.configs(resp.sort());
-            });
-        };
-
-        function fetchConfig(id) {
-            if (!id) {
-                return;
+        function toggleViewer() {
+            model.showViewer(!model.showViewer());
+            if (model.showViewer()) {
+                model.viewer.render();
             }
-            return authedAjax({
-                url: common.config.apiBase + '/config/' + id
-            });
-        };
+        }
 
         function flushClipboard() {
             model.clipboard.removeAll();
@@ -283,13 +278,12 @@ define([
                         fillColor: false,
                         composite: i > 0
                     });
-
                 });
             }
         };
 
         this.init = function() {
-            fetchConfigs()
+            fetchConfigsList()
             .then(function(){
                 renderConfig();
                 window.onpopstate = renderConfig;
