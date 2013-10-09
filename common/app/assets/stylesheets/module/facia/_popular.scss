@@ -2,11 +2,11 @@
     @include mq($to: tablet) {
         @include first-row(1);
         .item:first-child {
-            @include card;
+            @include card($with-image: true);
         }
         .item:nth-child(2),
         .item:nth-child(3) {
-            @include card($without-extras: true);
+            @include card;
         }
         .item:nth-child(n + 4) {
             @include card-headline;
@@ -14,14 +14,20 @@
     }
     @include mq(tablet, desktop) {
         @include row(2);
+        .item:nth-child(-n+2) {
+            @include card($with-image: true);
+        }
         .item:nth-child(n+3) {
-            @include card($without-extras: true);
+            @include card;
         }
     }
     @include mq(desktop, wide) {
         @include row(3);
+        .item:nth-child(-n+3) {
+            @include card($with-image: true);
+        }
         .item:nth-child(n+4) {
-            @include card($without-extras: true);
+            @include card;
         }
     }
     @include mq(wide) {
@@ -44,7 +50,7 @@
             float: left;
         }
         .item:nth-child(n+2) {
-            @include card($without-extras: true);
+            @include card;
         }
         .item:nth-child(3) {
             padding-top: $gs-baseline;
