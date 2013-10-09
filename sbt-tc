@@ -1,17 +1,9 @@
 #!/bin/bash
 
-#Node package management for Grunt build steps
+set -o xtrace
+set -o nounset
+set -o errexit
 
-export PATH=dev/gems/bin:$PATH
-
-bundle install --binstubs dev/gems/bin --path dev/gems
-npm install
-
-NPM_EXIT=$?
-
-if [ $NPM_EXIT == "1" ]; then
-   exit 1
-fi
 
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
