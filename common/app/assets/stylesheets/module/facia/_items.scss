@@ -56,7 +56,6 @@ $meta: $c-neutral2;
 .item {
     @include box-sizing(border-box);
     position: relative;
-    margin-top: 18px;
     @include mq(tablet) {
         display: inline-block;
         vertical-align: top;
@@ -68,12 +67,11 @@ $meta: $c-neutral2;
     }
 }
 .item__title {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
     @include box-sizing(border-box);
     border-top: 2px solid $c-newsAccent;
-    @include mq($to: tablet) {
-        @include fs-headline(3);
-        min-height: gs-height(2);
-    }
+    @include fs-headline(2);
     @include mq(tablet) {
         @include fs-headline(4);
         min-height: gs-height(3) + $gs-baseline;
@@ -240,7 +238,7 @@ a.item__link {
     @include mq($to: tablet) {
         width: 100%;
         .item__title {
-            min-height: 0;
+            @include fs-headline(3);
         }
         &.item--without-image .item__standfirst {
             display: block;
@@ -251,11 +249,6 @@ a.item__link {
         .item__image-container,
         .item__duration {
             display: none;
-        }
-        @include mq(tablet) {
-            .item__title {
-                @include fs-headline(3, $size-only: true);
-            }
         }
     }
     @if $not-first-row {
@@ -271,7 +264,6 @@ a.item__link {
         @include fs-headline(1, $size-only: true);
     }
     .item__title {
-        min-height: 0;
         @include fs-headline(1, $size-only: true);
         padding-top: 2px;
         border-top-color: $c-neutral5;
@@ -299,6 +291,7 @@ a.item__link {
     border-left: 1px dotted $c-neutral5;
     .item__title {
         @include fs-headline(1, $size-only: true);
+        min-height: gs-height(2);
     }
     .item__byline {
         @include fs-header(1, $size-only: true);
