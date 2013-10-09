@@ -21,7 +21,7 @@
     "moment": "~2.1.0",
     "grunt-mkdir": "~0.1.1",
     "grunt-contrib-imagemin": "~0.3.0",
-    "grunt-hash": "~0.4.0",
+    "grunt-hash": "git://github.com/guardian/grunt-hash.git",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3"
   },
