@@ -27,28 +27,29 @@
     }
 
     @include mq(rightCol) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
         max-width: none;
     }
 
     @include mq(leftCol) {
-        padding-left: $a-leftCol-width + $gs-gutter*2;
+        padding-left: $a-leftCol-width + $gs-gutter;
     }
 
     @include mq(wide) {
-        padding-left:  gs-span(3) + $gs-gutter*2;
+        padding-left:  gs-span(3) + $gs-gutter;
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 
-    .box-indent & {
+    .article-zone-no-indent & {
         padding-left: 0 !important;
         margin-left: 0;
     }
 
-    &.sport-header { // TODO: temporary until football gets side cols
-        margin-left: 0;
-        padding-left: $gs-gutter;
+    &.sport-header,
+    &.article-zone--sport { // TODO: temporary until football gets side cols
+        padding-left: 0;
+        margin-left: $gs-gutter;
     }
 }
 

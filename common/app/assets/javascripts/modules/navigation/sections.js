@@ -125,8 +125,7 @@ define([
                 for(var i=0; i < sections.length; i++) {
                     var zones = Object.keys(sections[i].zones);
 
-                    if (zones.indexOf('/' + config.page.section) !== -1 ||
-                        sections[i].sectionId === config.page.section) {
+                    if (zones.indexOf('/' + config.page.pageId) !== -1) {
                         return sections[i];
                     }
                 }

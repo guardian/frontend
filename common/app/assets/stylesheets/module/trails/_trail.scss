@@ -7,13 +7,13 @@
     overflow: hidden;
     margin: 0;
     padding: $baseline 0 $baseline*6;
+
     .relative-timestamp {
         display: inline-block;
     }
-}
-
-.trail + .trail {
-    border-top: 1px solid $medianMushroom;
+    & + & {
+        border-top: 1px solid $c-neutral5;
+    }
 }
 
 .trail--gallery,
@@ -26,29 +26,26 @@
     @include fs-headline(2);
     margin-top: $baseline;
     margin-bottom: $baseline*6 - 3px;
+
     @include mq(tablet) {
-        @include fs-headline(3, true);
+        @include fs-headline(4, true);
         margin-bottom: $baseline*8 - 3px;
     }
 }
-
-    .trail__headline a,
-    .trail__headline a:hover,
-    .trail__headline a:focus,
-    .trail__headline a:active,
-    .trail h2 a {
-        color: $c-neutral1;
-    }
-
-    .trail__headline a:active {
-        text-decoration: underline;
-    }
-
-    .trail__headline-kicker {
-        display: block;
-        color: #F9AF41;
-    }
-
+.trail__headline a,
+.trail__headline a:hover,
+.trail__headline a:focus,
+.trail__headline a:active,
+.trail h2 a {
+    color: $c-neutral1;
+}
+.trail__headline a:active {
+    text-decoration: underline;
+}
+.trail__headline-kicker {
+    display: block;
+    color: #F9AF41;
+}
 .trail__img {
     display: none;
 
@@ -56,16 +53,12 @@
         display: block;
     }
 }
-
 .trail__text {
     @include fs-bodyCopy(1);
     text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
-    }
-
-    @include mq(tablet) {
+        @include fs-bodyCopy(3, true);
         clear: none;
     }
 }
@@ -75,42 +68,31 @@
    Trail counters
    ========================================================================== */
 
+.trail__count {
+    position: absolute;
+    top: $baseline;
+    right: 0;
+
+    a {
+        display: inline-block;
+    }
+    i {
+        vertical-align: -3px;
+        margin-right: 4px;
+    }
+}
 .trail__count a,
 .trail__count a:hover,
 .trail__count a:focus,
 .trail__count a:active,
 .trail .relative-timestamp {
-    color: #767676;
+    color: $c-neutral2;
     @include fs-data(2);
 
     @include mq(tablet) {
         @include fs-data(3, true);
     }
 }
-
-.trail__count {
-
-    position: absolute;
-    top: $baseline;
-    right: 0;
-
-    a,
-    a:hover,
-    a:focus,
-    a:active {
-        display: inline-block;
-    }
-
-    i {
-        vertical-align: -3px;
-        margin-right: 4px;
-    }
-    .relative-timestamp + & {
-        border-left: 1px solid $c-neutral5;
-        margin-left: 6px;
-    }
-}
-
 .trail__count--commentcount {
     a,
     a:hover,
@@ -119,21 +101,14 @@
         color: inherit;
     }
 }
+.trail__count--imagecount {
+    right: $gutter/2;
+}
 
 
 /* ==========================================================================
    Trail modifiers
    ========================================================================== */
-
-.trail--has-image {
-    .trail__text {
-        padding-bottom: $baseline*4;
-    }
-
-    img {
-        vertical-align: bottom;
-    }
-}
 
 .trail--featured {
     .trail__headline {
@@ -145,8 +120,15 @@
             margin-bottom: $baseline*8;
         }
     }
+    &.trail--has-image {
+        .trail__text {
+            padding-bottom: $baseline*4;
+        }
+        img {
+            vertical-align: bottom;
+        }
+    }
 }
-
 .trail--thumbnail {
     .trail__img {
         float: left;
@@ -157,8 +139,14 @@
         overflow: hidden;
         height: 71px;
         width: 120px;
+
         @include mq(mobileLandscape) {
             margin-right: $gs-gutter;
+        }
+
+        @include mq(tablet) {
+            height: gs-height(2);
+            width: gs-span(2);
         }
 
         img {
@@ -169,11 +157,6 @@
         .ab-expandable-trails--on & {
             margin-bottom: 0;
         }
-    }
-
-    .trail__break {
-        clear: both;
-        margin-bottom: $baseline*5;
     }
 }
 
@@ -192,19 +175,15 @@
     &:first-child {
         margin-top: -8px;
     }
-
     .front-section &:first-child {
         margin-top: 8px;
     }
-
     .i-gallery {
         margin-top: 0;
     }
-
     ul {
         background-color: #ffffff;
     }
-
     .trail__headline {
         margin-left: $gutter/2;
         margin-right: $gutter/2;
@@ -212,14 +191,12 @@
     .relative-timestamp {
         margin-left: $gutter/2;
     }
+    & + & {
+        margin: $baseline * 4 0;
+    }
 }
-
-.trail--gallery + .trail--gallery {
-    margin: $baseline * 4 0;
-}
-
 .trail--expandable {
-    &.has-image {
+    &.trail--has-image {
         .trail__img {
             float: left;
         }
@@ -237,7 +214,6 @@
 .matches-container .trail__text {
     display: none;
 }
-
 .competition .trail {
     margin-top: $baseline*3;
     border-bottom: none;

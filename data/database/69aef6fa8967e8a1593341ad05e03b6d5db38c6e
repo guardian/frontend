@@ -1,0 +1,2102 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/02/french-breast-implant-scandal-france",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-02T14:09:27Z",
+      "webTitle":"French watchdog 'did not act fast enough on faulty PIP breast implants'",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/02/french-breast-implant-scandal-france",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/02/french-breast-implant-scandal-france",
+      "fields":{
+        "newspaperPageNumber":"25",
+        "trailText":"Report shows agency knew of dangers of substandard silicone prostheses in 2006 but did not prevent their use until 2010",
+        "headline":"French watchdog 'did not act fast enough on faulty PIP breast implants'",
+        "body":"<p>The French state medical watchdog did not act fast enough on reports of faulty breast implants marketed by the company Poly Implant Prothèse, allowing thousands of women to continue having the substandard silicone prostheses fitted at a potential risk to their health, according to an internal document seen by the <a href=\"http://www.mediapart.fr/journal/france/250913/protheses-pip-un-rapport-interne-met-en-cause-lagence-du-medicament\" title=\"\">investigative website Mediapart</a>.</p><p>The discovery that the French firm PIP, which at one time was the third-biggest global supplier of breast implants, had been cutting costs for 10 years by using an illegal, untested, home-made concoction of industrial-grade and agricultural silicone instead of medical silicone approved for humans, sparked an <a href=\"http://www.guardian.co.uk/world/french-breast-implant-scandal?INTCMP=SRCH\" title=\"\">international scandal</a>.</p><p>Jean-Claude Mas, the firm's founder, and four of his senior staff stood trial earlier this year over the botched implants which were sold from 2001 to 2010. They were accused of aggravated fraud and cutting costs by using the concoction in most of the PIP implants that were sold around the world. It was one of the biggest trials ever held in France and a verdict is expected in December. Mas could face up to five years in prison.</p><p>It is estimated that more than 300,000 women in 65 countries may have had PIP implants fitted, including in reconstruction surgery after cancer. About 47,000 women in the UK have had PIP implants, just under 900 on the NHS, mostly for post-cancer breast reconstruction. In France, nearly 15,000 women have chosen to have their implants removed or replaced. At least 4,000 reported PIP implants rupturing.</p><p>At the time of the trial, lawyers for women who had the implants said the French health authorities responsible for monitoring implants should be in the dock as well for failing to prevent the scandal. France's medical safety watchdog, then named Afssaps, has been criticised by the victims for not acting fast enough.</p><p>But the Mediapart investigation, which quotes from a confidential international report highly critical of Afssaps's handling of the case, said this was the first time an internal document has flagged up the fault of the agency.</p><p>Mediapart reported that the French watchdog had learned of an increased risk of the implants rupturing in 2006. The implants were taken off the market in 2010, but Mediapart said the report suggested the watchdog could have acted as early as 2007 or 2008 and prevented thousands more women having the implants.</p><p>Philippe Courtois, lawyer for the French PIP victims, told France Inter radio that many felt it was \"shameful and scandalous\" that the agency could have acted earlier and demanded the watchdog be placed under formal investigation by the state.</p><p>Dominique Maraninchi, head of the medical watchdog, now renamed ANSM, said a full public report in 2012 into the agency's role had been sufficient. He denied any cover-up or dissimulation.</p><p>In December 2011, the French health ministry advised women with PIP implants to have them removed as a precaution, cautioning that, while there was no proven cancer risk, they could rupture. Last year, medical experts investigating the consequences of the PIP scandal in the UK concluded that the substandard silicone gel <a href=\"http://www.guardian.co.uk/world/2012/jun/18/pip-breast-implants\" title=\"\">did not pose a significant risk</a> to women's health in the long term.</p><!-- Guardian Watermark: internal-code/content/418857271|2013-10-07T10:21:28Z|039fb5907c3810948c8325e92f5656507d383548 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-02T23:58:28Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+        "standfirst":"Report shows agency knew of dangers of substandard silicone prostheses in 2006 but did not prevent their use until 2010",
+        "shortUrl":"http://gu.com/p/3j89q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+        "wordcount":"511",
+        "commentable":"false",
+        "internalContentCode":"418857271",
+        "allowUgc":"false",
+        "internalOctopusCode":"8145257",
+        "isPremoderated":"false",
+        "byline":"Angelique Chrisafis in Paris",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-10-03",
+        "internalPageCode":"1974401",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-05T14:09:27Z"
+      },
+      "tags":[{
+        "id":"world/french-breast-implant-scandal",
+        "type":"keyword",
+        "webTitle":"Breast implant scandal",
+        "webUrl":"http://www.theguardian.com/world/french-breast-implant-scandal",
+        "apiUrl":"http://content.guardianapis.com/world/french-breast-implant-scandal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418865039",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720893197/FRANCE-WOMEN-HEALTH-CANCE-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"54",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720894242/FRANCE-WOMEN-HEALTH-CANCE-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"340",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720895274/FRANCE-WOMEN-HEALTH-CANCE-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"130",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"84",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720897366/FRANCE-WOMEN-HEALTH-CANCE-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"132",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720898383/FRANCE-WOMEN-HEALTH-CANCE-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"168",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720899408/FRANCE-WOMEN-HEALTH-CANCE-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"180",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720900413/FRANCE-WOMEN-HEALTH-CANCE-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"228",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720901492/FRANCE-WOMEN-HEALTH-CANCE-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"276",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720902600/FRANCE-WOMEN-HEALTH-CANCE-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"372",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720901492/FRANCE-WOMEN-HEALTH-CANCE-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"276",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"PIP founder Jean-Claude Mas stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418865040",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"84",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"society/2013/jan/29/royal-college-surgeons-cosmetic-surgery-guidelines",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-01-29T00:00:02Z",
+      "webTitle":"Royal College of Surgeons calls for end to 'casual' cosmetic treatments",
+      "webUrl":"http://www.theguardian.com/society/2013/jan/29/royal-college-surgeons-cosmetic-surgery-guidelines",
+      "apiUrl":"http://content.guardianapis.com/society/2013/jan/29/royal-college-surgeons-cosmetic-surgery-guidelines",
+      "fields":{
+        "newspaperPageNumber":"11",
+        "trailText":"New guidelines say only fully qualified doctors with surgical training should carry out procedures on medical premises",
+        "headline":"Royal College of Surgeons calls for end to 'casual' cosmetic treatments",
+        "body":"<p>Only fully qualified surgeons should be permitted to carry out breast enlargements and other forms of cosmetic surgery, while \"Botox parties\" and \"filler parties\" in homes should be banned, say new guidelines from the Royal College of Surgeons.</p><p>The college, issuing its guidance ahead of a major review by NHS medical director Sir Bruce Keogh, says the relaxed attitude towards cosmetic surgery of the past has to end. Those who carry it out must do so on medical premises and be properly qualified. Those who inject Botox or fillers should be doctors, dentists or nurses.</p><p>The profession has a responsibility to set standards to which it expected surgeons to work, said Professor Norman Williams, president of the college. \"We have serious concerns that not all those who offer cosmetic procedures are adequately qualified, or that patients are getting accurate information prior to treatment.\"</p><p>Financial deals and discounts that act as incentives to patients to sign up for surgery should be banned. Doctors and surgeons should consider sending would-be patients for assessment by a clinical psychologist before they give them any treatment. Patients should be asked before surgery about eating disorders and the doctor should document any signs of Body Dysmorphic Disorder – where somebody is obsessed with what they believe is a defect in their appearance.</p><p>Doctors have a duty to manage their patients' expectations as to what the cosemtic surgery will do for them. \"They should not imply that patients will feel 'better' or 'look nicer', and should instead use unambiguous language like 'bigger' or 'smaller' to describe what that patient is trying to change,\" says the college.</p><p>Only those who have qualified as a medical doctor and then undertaken post-graduate surgical training should carry out invasive procedures such as breast surgery or liposuction.</p><!-- Guardian Watermark: internal-code/content/403151916|2013-10-07T10:21:28Z|74cc2883cca3e81e7c75952520e451e9fcf67f6f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T17:20:57Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398713784/Royal-College-of-Surgeons-005.jpg",
+        "standfirst":"New guidelines say only fully qualified doctors with surgical training should carry out procedures on medical premises",
+        "shortUrl":"http://gu.com/p/3dcqq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398713784/Royal-College-of-Surgeons-005.jpg",
+        "wordcount":"290",
+        "commentable":"true",
+        "internalContentCode":"403151916",
+        "allowUgc":"false",
+        "internalOctopusCode":"7181797",
+        "isPremoderated":"false",
+        "byline":"Sarah Boseley, health editor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-01-29",
+        "internalPageCode":"1859678",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-02-01T00:00:02Z"
+      },
+      "tags":[{
+        "id":"society/nhs",
+        "type":"keyword",
+        "webTitle":"NHS",
+        "webUrl":"http://www.theguardian.com/society/nhs",
+        "apiUrl":"http://content.guardianapis.com/society/nhs",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"education/medicine",
+        "type":"keyword",
+        "webTitle":"Medicine",
+        "webUrl":"http://www.theguardian.com/education/medicine",
+        "apiUrl":"http://content.guardianapis.com/education/medicine",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"world/french-breast-implant-scandal",
+        "type":"keyword",
+        "webTitle":"Breast implant scandal",
+        "webUrl":"http://www.theguardian.com/world/french-breast-implant-scandal",
+        "apiUrl":"http://content.guardianapis.com/world/french-breast-implant-scandal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/plastic-surgery",
+        "type":"keyword",
+        "webTitle":"Plastic surgery",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/plastic-surgery",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/plastic-surgery",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/sarahboseley",
+        "type":"contributor",
+        "webTitle":"Sarah Boseley",
+        "webUrl":"http://www.theguardian.com/profile/sarahboseley",
+        "apiUrl":"http://content.guardianapis.com/profile/sarahboseley",
+        "bio":"<p>Sarah Boseley is the <a href=\"http://www.guardian.co.uk/society/health\">health editor of the Guardian</a> . She has won a number of awards for her work on HIV/Aids in Africa, including the One World Media Award (twice) and the European section of the Lorenzo Natali prize, awarded by the European Commission</p>",
+        "rcsId":"GNL004752",
+        "r2ContributorId":"16411",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/sarah_boseley_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-403152538",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398710119/Royal-College-of-Surgeons-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"54",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398711447/Royal-College-of-Surgeons-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"340",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398712661/Royal-College-of-Surgeons-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"130",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398713784/Royal-College-of-Surgeons-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"84",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398714894/Royal-College-of-Surgeons-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"132",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398716037/Royal-College-of-Surgeons-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"168",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398718165/Royal-College-of-Surgeons-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"180",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398719293/Royal-College-of-Surgeons-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"228",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398720513/Royal-College-of-Surgeons-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"276",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398721811/Royal-College-of-Surgeons-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"372",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398720513/Royal-College-of-Surgeons-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"276",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-403152539",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359398713784/Royal-College-of-Surgeons-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Romain Blanquart",
+            "altText":"Royal College of Surgeons issues cosmetic surgery guidelines",
+            "height":"84",
+            "credit":"Romain Blanquart/AP",
+            "caption":"The Royal College of Surgeons say those who inject Botox or fillers should be properly qualified doctors, dentists or nurses. Photograph: Romain Blanquart/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/16/pip-breast-implant-bosses-trial",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-16T17:20:20Z",
+      "webTitle":"PIP breast implant bosses' trial for aggravated fraud begins in France",
+      "webUrl":"http://www.theguardian.com/world/2013/apr/16/pip-breast-implant-bosses-trial",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/16/pip-breast-implant-bosses-trial",
+      "fields":{
+        "newspaperPageNumber":"19",
+        "trailText":"Company founder Jean-Claude Mas and four managers accused of supplying faulty implants that triggered a global health scare",
+        "headline":"PIP breast implant bosses' trial for aggravated fraud begins in France",
+        "body":"<p>The first trial over the global <a href=\"http://www.guardian.co.uk/world/french-breast-implant-scandal?INTCMP=SRCH\" title=\"\">scandal of faulty breast implants</a> made with cheap industrial silicone not fit for humans opens on Wednesday, with hundreds of women expected to attend to tell of their suffering.</p><p>Jean-Claude Mas, the founder of the French firm Poly Implant Prothèse (PIP), and four of his senior staff will stand trial for aggravated fraud and face up to five years' jail and a €37,500 (£32,000) fine if convicted.</p><p>The firm, which was once the third biggest global supplier of breast implants, is accused of cutting costs for 10 years by using an illegal homemade concoction of industrial-grade and agricultural silicone not fit for use on humans.</p><p>PIP hid evidence of the non-medical silicone during visits by European inspectors who approved the implants. Use of the cheaper, substandard silicone saved the company €1m a year.</p><p>The Marseille trial, the first of three likely cases over the scandal, will be one of the biggest ever held in France. Proceedings are too vast to be held in the courthouse and so, at a cost of €800,000, will instead be held at a vast conference centre, more often used to host mass campaign rallies by Nicolas Sarkozy or bathroom shows and trade fairs.</p><p>There are more than 5,100 women plaintiffs in the case. Most are French but about 200 are from abroad, mainly Argentinian and Austrian. More than 300 lawyers are involved in the trial.</p><p>The scandal emerged in 2010 after surgeons raised the alarm over the abnormally high incidences of rupture of PIP implants, which were later found to have a far higher rate of splitting than other brands. PIP was closed and its implants taken off the market after use of the non-authorised silicone gel was discovered.</p><p>Gendarmes searching the business in southern France found cans of industrial silicone in a van. In December 2011, the French health ministry advised women with PIP implants to have them removed as a precaution, saying that while there was no proven cancer risk, they could rupture. A separate investigation into possible involuntary homicide was opened following the 2010 cancer death of a French woman with PIP implants.</p><p>Last year, medical experts investigating the consequences of the PIP scandal in the UK concluded that substandard silicone gel did <a href=\"http://www.guardian.co.uk/world/2012/jun/18/pip-breast-implants\" title=\"\">not pose a significant risk</a> to women's health in the long term.</p><p>PIP used to make more than 100,000 implants a year, exporting 80%, and was  known for its good value and reasonable price. It is estimated that more than 300,000 women in 65 countries may have had PIP implants fitted, including in reconstruction surgery after mastectomies for cancer. About 47,000 British women have had PIP implants, most privately, but just under 900 had the implants on the NHS mainly for breast reconstruction after cancer.</p><p>In France, of the 30,000 women who had PIP implants, almost half have had them removed and about <a href=\"http://www.guardian.co.uk/lifeandstyle/2011/dec/14/france-faulty-breast-implant-scandal\" title=\"\">4,000 reported their implants rupturing</a>.</p><p>The trial will scrutinise the working practices of Mas, 73, who founded PIP after holding a range of jobs from insurance to Cognac sales and selling sterilisation material for dentists.</p><p>He has been described as a kind of guru figure, who ran the business with a firm hand and in a cult of secrecy. When he was finally arrested at his farmhouse in southern France, he denied that the substandard implants posed any health risks, dismissing the complainants as \"fragile people, or people who are doing this for money\".</p><p>Last year, he was jailed for several months for failing to pay €100,000 bail.</p><p>Several French women and cancer survivors who had PIP implants have spoken of their psychological and physical suffering after implants ruptured or leaked.</p><p>Some said they suffered depression and anxiety, or are dependent on sleeping tablets. One factory worker told the Guardian it as like \"having a ticking time bomb in your body\".</p><p>Dominique Terrier from Normandy, among the women who will attend the trial, told France 3: \"The pain we went through was psychological and physical… we were mutilated, re-operated on. It's not easy to survive that after cancer.\"</p><p>One French group of women with PIP implants said of the court case: \"We're waiting to be recognised as victims, to face the person who has destroyed our lives, we need recognition and justice to be able to start again and rebuild ourselves.\"</p><!-- Guardian Watermark: internal-code/content/407309715|2013-10-07T10:21:28Z|ca1cca3cfb5dbd069f8e35d8e1b72b48a75a1d12 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T21:21:12Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131157938/Lawyers-of-women-affected-005.jpg",
+        "standfirst":"Company founder Jean-Claude Mas and four managers accused of supplying faulty implants that triggered a global health scare",
+        "shortUrl":"http://gu.com/p/3f76p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131157938/Lawyers-of-women-affected-005.jpg",
+        "wordcount":"704",
+        "commentable":"false",
+        "internalContentCode":"407309715",
+        "allowUgc":"false",
+        "internalOctopusCode":"7490233",
+        "isPremoderated":"false",
+        "byline":"Angelique Chrisafis in Paris",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-04-17",
+        "internalPageCode":"1894858",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-19T17:20:20Z"
+      },
+      "tags":[{
+        "id":"world/french-breast-implant-scandal",
+        "type":"keyword",
+        "webTitle":"Breast implant scandal",
+        "webUrl":"http://www.theguardian.com/world/french-breast-implant-scandal",
+        "apiUrl":"http://content.guardianapis.com/world/french-breast-implant-scandal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/plastic-surgery",
+        "type":"keyword",
+        "webTitle":"Plastic surgery",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/plastic-surgery",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/plastic-surgery",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-407311591",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131154363/Lawyers-of-women-affected-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"54",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131155455/Lawyers-of-women-affected-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"340",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131156756/Lawyers-of-women-affected-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"130",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131157938/Lawyers-of-women-affected-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"84",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131159108/Lawyers-of-women-affected-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"132",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131160270/Lawyers-of-women-affected-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"168",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131161581/Lawyers-of-women-affected-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"180",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131162766/Lawyers-of-women-affected-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"228",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131163897/Lawyers-of-women-affected-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"276",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131165204/Lawyers-of-women-affected-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"372",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131163897/Lawyers-of-women-affected-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"276",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-407311592",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/16/1366131157938/Lawyers-of-women-affected-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Anne-Christine Poujoulat",
+            "altText":"Lawyers of women affected by PIP",
+            "height":"84",
+            "credit":"Anne-Christine Poujoulat/AFP/Getty Images",
+            "caption":"Lawyers carry files to the courthouse in Marseille where five managers from French company PIP face fraud charges. Photograph: Anne-Christine Poujoulat/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/17/pip-breast-implant-victims-trial",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-17T15:15:20Z",
+      "webTitle":"PIP breast implant victims express fury at 'catastrophic' fraud trial",
+      "webUrl":"http://www.theguardian.com/world/2013/apr/17/pip-breast-implant-victims-trial",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/17/pip-breast-implant-victims-trial",
+      "fields":{
+        "newspaperPageNumber":"18",
+        "trailText":"Hundreds of women attend trial of PIP boss Jean-Claude Mas and four senior staff, but lawyers say case has taken too long to come to court<br />",
+        "headline":"PIP breast implant victims express fury at 'catastrophic' fraud trial",
+        "body":"<p>Hundreds of women who were fitted with faulty breast implants made with cheap industrial silicone not fit for humans have expressed their anger outside a courtroom on the first day of one of the biggest trials ever held in France.</p><p>Jean-Claude Mas, the founder of Poly Implant Prothèse (PIP), and four of his senior staff are on trial for aggravated fraud, accused of cutting costs for 10 years by using an illegal homemade concoction of industrial-grade and agricultural silicone in most of its implants.</p><p>The firm, which at one time was the third biggest global supplier of breast implants, <a href=\"http://www.guardian.co.uk/world/french-breast-implant-scandal\" title=\"\">became the focus of an international scandal</a> over the botched implants, which were on the market from 2001 to 2010. It is estimated that more than 300,000 women in 65 countries may have had PIP implants fitted, including in breast reconstruction procedures after mastectomies. In France, nearly 15,000 have chosen to have their implants removed or replaced. At least 4,000 reported PIP implants rupturing.</p><p>Dressed in a blue anorak, Mas, 73, appeared in the dock as the judge read the charge sheet which said using a substandard, non-authorised gel in implants had posed dangers to women's health and a higher rate of rupture. Mas spoke only to give his address and say he was retired and lived on a €1,800 monthly pension. This prompted cries of outrage from the hundreds of female plaintiffs in court. PIP reportedly saved €1m a year from the scam.</p><p>Before the hearing several women questioned how Mas, who had worked in various jobs such as Cognac sales and insurance before setting up as the implants manufacturer in southern France, could have cynically cheated health inspectors to make cheaper, untested implant gel with apparently no concern for women's health.</p><p>\"We were cheated physically, psychologically and morally, I just want him to explain to us why he did it,\" said Christine Michelini, 51, from Caen, who will be a witness in the trial. She was fitted with a PIP implant after cancer treatment and was operated on several times, finally having the implant removed.</p><p>Christine Micchi, 48, a sales assistant from Aix-en-Provence, paid €4,000 for PIP implants in 2007 for cosmetic reasons. She said: \"Two years later, they ruptured. I had them removed, more surgery, more scars, and now I have leaked silicone in my body that has to be constantly monitored. At the start, I was on antidepressants. We hear talk of the industrial silicone used in these implants which might normally be used for electrical cables or car oils. It's a constant worry.\"</p><p>With over 5,100 plaintiffs and 300 lawyers, <a href=\"http://www.guardian.co.uk/world/2013/apr/16/pip-breast-implant-bosses-trial\" title=\"\">the trial is one of the biggest ever held in France</a> and is taking place at a congress centre, because the courthouse was not big enough. Legal argument over the way the trial was being held took up most of the first day.</p><p>Outside court, Jean-Claude Guidocolli, lawyer for 10 victims, called the trial \"catastrophic\" because it had taken too long to come to court, \"allowing the defendants to organise their insolvency\" and limit potential for compensation.</p><p>He said: \"From a human perspective, it is terrible: the victims are seated at the back, 100 metres behind the accused, when all they wanted was to see Mas's face. They feel frustration and anger.\"</p><p>He said health authorities responsible for monitoring implants should be in the dock as well, not among the plaintiffs. Alexandra Blachère, a former waitress from Besançon who had her PIP implants replaced and now runs an association for women with faulty implants, said: \"The women have a need for justice and recognition. Many with problems initially weren't listened to by surgeons who said, 'It's all in your head.'\"</p><p>The hearing, the first of three potential trials over PIP, will last until 17 May. Mas faces up to five years in prison and a €37,500 fine.</p><p>A separate investigation into possible involuntary homicide was opened following the 2010 cancer death of a French woman with PIP implants. In December 2011, the French health ministry advised women with PIP implants to have them removed as a precaution, cautioning that while there was no proven cancer risk, they could rupture.</p><p>Last year, medical experts investigating the consequences of the PIP scandal in the UK concluded that the substandard <a href=\"http://www.guardian.co.uk/world/2012/jun/18/pip-breast-implants\" title=\"\">silicone gel did not pose a significant risk </a>to women's health in the long term.</p><!-- Guardian Watermark: internal-code/content/407381988|2013-10-07T10:21:28Z|c8392c29f7d8bd9eedce90f0ef5480bb4c29bf71 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T21:21:45Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211673070/Jean-Claude-Mas-founder-o-005.jpg",
+        "standfirst":"Hundreds of women attend trial of PIP boss Jean-Claude Mas and four senior staff, but lawyers say case has taken too long to come to court<br />",
+        "shortUrl":"http://gu.com/p/3f7q9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211673070/Jean-Claude-Mas-founder-o-005.jpg",
+        "wordcount":"713",
+        "commentable":"false",
+        "internalContentCode":"407381988",
+        "allowUgc":"false",
+        "internalOctopusCode":"7494317",
+        "isPremoderated":"false",
+        "byline":"Angelique Chrisafis in Marseille",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-04-18",
+        "internalPageCode":"1895382",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-20T15:15:20Z"
+      },
+      "tags":[{
+        "id":"world/french-breast-implant-scandal",
+        "type":"keyword",
+        "webTitle":"Breast implant scandal",
+        "webUrl":"http://www.theguardian.com/world/french-breast-implant-scandal",
+        "apiUrl":"http://content.guardianapis.com/world/french-breast-implant-scandal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"lifeandstyle/plastic-surgery",
+        "type":"keyword",
+        "webTitle":"Plastic surgery",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/plastic-surgery",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/plastic-surgery",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-407382627",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211669263/Jean-Claude-Mas-founder-o-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"54",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211670562/Jean-Claude-Mas-founder-o-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"340",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211671876/Jean-Claude-Mas-founder-o-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"130",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211673070/Jean-Claude-Mas-founder-o-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"84",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211674168/Jean-Claude-Mas-founder-o-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"132",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211675379/Jean-Claude-Mas-founder-o-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"168",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211676630/Jean-Claude-Mas-founder-o-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"180",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211677966/Jean-Claude-Mas-founder-o-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"228",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211679627/Jean-Claude-Mas-founder-o-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"276",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211680836/Jean-Claude-Mas-founder-o-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"372",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211679627/Jean-Claude-Mas-founder-o-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"276",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-407382628",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366211673070/Jean-Claude-Mas-founder-o-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas, founder of Poly Implant Prothèse, at his trial for fraud",
+            "height":"84",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Jean-Claude Mas, founder of Poly Implant Prothèse, and four of his senior staff are accused of cutting costs for 10 years by using cheap industrial silicone not fit for humans in their breast implants. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/24/pip-breast-implant-boss-apologises",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-24T17:48:50Z",
+      "webTitle":"PIP breast implant boss apologises",
+      "webUrl":"http://www.theguardian.com/world/2013/apr/24/pip-breast-implant-boss-apologises",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/24/pip-breast-implant-boss-apologises",
+      "fields":{
+        "newspaperPageNumber":"20",
+        "trailText":"Jean-Claude Mas says sorry for first time to women who bought his firm's sub-standard implants filled with industrial silicone",
+        "headline":"PIP breast implant boss apologises",
+        "body":"<p>The head of a French company accused of selling sub-standard breast implants apologised for the first time on Wednesday, days after denying that the gel concoction used to fill them posed any danger to women.</p><p>The breast implant scandal triggered a global health scare and thousands of lawsuits after inspectors discovered vats of industrial-grade silicone outside French company Poly Implant Prothèse (PIP) in 2010.</p><p>\"I apologise to the plaintiffs for the gel used by PIP since 1992,\" Jean-Claude Mas, the founder and longtime chief executive of the company told reporters on the sidelines of the sixth day of the trial into the global scandal.</p><p>\"The anxiety syndrome described [in court by experts and witnesses] is real. I understand that they are suffering and that they are afraid,\" he said of women around the world who had bought his product. Some 300,000 of the implants were sold in France and internationally in the course of a decade before authorities pulled them from the market in March 2010.Mas and four executives from PIP – once the third-largest global supplier of breast implants – are charged with aggravated fraud and face five years each in prison plus fines.</p><!-- Guardian Watermark: internal-code/content/407791184|2013-10-07T10:21:28Z|9d174d67c7c79db1943191f4004239327c526ea6 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T21:50:49Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825688610/Jean-Claude-Mas-outside-t-005.jpg",
+        "standfirst":"Jean-Claude Mas says sorry for first time to women who bought his firm's sub-standard implants filled with industrial silicone",
+        "shortUrl":"http://gu.com/p/3fct9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825688610/Jean-Claude-Mas-outside-t-005.jpg",
+        "wordcount":"192",
+        "commentable":"false",
+        "internalContentCode":"407791184",
+        "allowUgc":"false",
+        "internalOctopusCode":"7522986",
+        "isPremoderated":"false",
+        "byline":"Reuters in Marseille",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-04-25",
+        "internalPageCode":"1898811",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-27T17:48:50Z"
+      },
+      "tags":[{
+        "id":"world/french-breast-implant-scandal",
+        "type":"keyword",
+        "webTitle":"Breast implant scandal",
+        "webUrl":"http://www.theguardian.com/world/french-breast-implant-scandal",
+        "apiUrl":"http://content.guardianapis.com/world/french-breast-implant-scandal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/plastic-surgery",
+        "type":"keyword",
+        "webTitle":"Plastic surgery",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/plastic-surgery",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/plastic-surgery",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-407791564",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825684740/Jean-Claude-Mas-outside-t-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"54",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825686110/Jean-Claude-Mas-outside-t-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"340",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825687507/Jean-Claude-Mas-outside-t-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"130",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825688610/Jean-Claude-Mas-outside-t-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"84",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825689768/Jean-Claude-Mas-outside-t-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"132",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825690993/Jean-Claude-Mas-outside-t-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"168",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825692183/Jean-Claude-Mas-outside-t-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"180",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825693378/Jean-Claude-Mas-outside-t-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"228",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825694590/Jean-Claude-Mas-outside-t-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"276",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825696053/Jean-Claude-Mas-outside-t-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"372",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825694590/Jean-Claude-Mas-outside-t-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"276",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-407791565",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366825688610/Jean-Claude-Mas-outside-t-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Franck Pennant",
+            "altText":"Jean-Claude Mas outside the courthouse where he is standing trial for fraud",
+            "height":"84",
+            "credit":"Franck Pennant/AFP/Getty Images",
+            "caption":"Poly Implant Prothèse boss Jean-Claude Mas outside the courthouse where he is standing trial for fraud. Photograph: Franck Pennant/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/may/09/pip-breast-implant-report-questioned",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-05-08T23:00:00Z",
+      "webTitle":"PIP breast implant campaigners question findings of independent report",
+      "webUrl":"http://www.theguardian.com/world/2013/may/09/pip-breast-implant-report-questioned",
+      "apiUrl":"http://content.guardianapis.com/world/2013/may/09/pip-breast-implant-report-questioned",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"<p>Two scientists say they are worried about chemical in the silicone filling that could affect  the development of a foetus</p>",
+        "headline":"PIP breast implant campaigners question findings of independent report",
+        "body":"<p>The PIP breast implants that were fraudulently filled with industrial-grade silicone may have caused their recipients harm, claim two environmental scientists and campaigners who dispute the findings of the independent inquiry into the scandal, which concluded there was no significant risk.</p><p>Writing in the Journal of the Royal Society of Medicine, the pair say they are particularly concerned about a chemical in the silicone filling that has been identified as an endocrine-disruptor – a substance that could potentially have an effect on the development of a foetus in the womb.</p><p>The article, by Andre Menache, director of consumer protection organisation Antidote Europe, and Dr Victoria Martindale, an environmental campaigner, is opinion and not based on any new evidence, but the note of caution it sounds was supported by one of the main professional associations of plastic surgeons. The British Association of Aesthetic Plastic Surgeons (baaps.org.uk) says the remains of ruptured implants removed from women should have been tested.</p><p>\"Whilst the article in question is entirely an opinion piece and not presenting any new data, at the BAAPS we do agree – as we have said before – that there remain many unanswered questions regarding the possible effects of these chemical compounds,\" said Rajiv Grover, president of the BAAPS.</p><p>\"We reiterate our call for analysis to be conducted on collected samples taken 'in vivo' rather than off-the-shelf, as it would also be advantageous to examine what impact body temperature and conditions have on them. It was only change occurring in implants inside the body which triggered a recall of soya bean (Trilucent) implants years ago.\"</p><p>The BAAPS says that all the PIP implants should be removed. \"We have remained constant in our view – these defective devices have no place within the human body,\" said Grover. \"The whole sector and in particular the patients affected, deserve more thorough answers.\"</p><p>Around 47,000 women in the UK were given PIP breast implants, manufactured by a French company whose owner is now on trial in France. After the scandal broke in March 2010, some had them removed. The NHS offered removal for free, although not replacement, when it became clear that not all of the private clinics would agree to take them out without a charge.</p><p>An inquiry, under NHS medical director Sir Bruce Keogh, concluded that the implants did not cause actual harm. \"We disagree with their conclusion,\" write Menache and Martindale in their article. They also have concerns, they say, about the regulatory and quality control procedures that failed to safeguard thousands of women from the health risks associated with PIP breast implants.</p><p>\"Considering these known risks and the fact that most women receiving breast implants were of reproductive age, we would expect the MHRA and the Department of Health to fulfil its duty of care and thoroughly investigate these risks as well as provide full information to patients,\" said Menache.</p><!-- Guardian Watermark: internal-code/content/408527068|2013-10-07T10:21:28Z|072803195b3ffc785fd87d8673c33308ed745529 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T22:31:11Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045330202/FRANCE-IMPLANTS-005.jpg",
+        "standfirst":"Two scientists say they are worried about chemical in the silicone filling that could affect  the development of a foetus",
+        "shortUrl":"http://gu.com/p/3fyaz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045330202/FRANCE-IMPLANTS-005.jpg",
+        "wordcount":"471",
+        "commentable":"false",
+        "internalContentCode":"408527068",
+        "allowUgc":"false",
+        "internalOctopusCode":"7577123",
+        "isPremoderated":"false",
+        "byline":"Sarah Boseley, health editor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-05-09",
+        "internalPageCode":"1905171",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-05-11T23:00:02Z"
+      },
+      "tags":[{
+        "id":"world/french-breast-implant-scandal",
+        "type":"keyword",
+        "webTitle":"Breast implant scandal",
+        "webUrl":"http://www.theguardian.com/world/french-breast-implant-scandal",
+        "apiUrl":"http://content.guardianapis.com/world/french-breast-implant-scandal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/plastic-surgery",
+        "type":"keyword",
+        "webTitle":"Plastic surgery",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/plastic-surgery",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/plastic-surgery",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/sarahboseley",
+        "type":"contributor",
+        "webTitle":"Sarah Boseley",
+        "webUrl":"http://www.theguardian.com/profile/sarahboseley",
+        "apiUrl":"http://content.guardianapis.com/profile/sarahboseley",
+        "bio":"<p>Sarah Boseley is the <a href=\"http://www.guardian.co.uk/society/health\">health editor of the Guardian</a> . She has won a number of awards for her work on HIV/Aids in Africa, including the One World Media Award (twice) and the European section of the Lorenzo Natali prize, awarded by the European Commission</p>",
+        "rcsId":"GNL004752",
+        "r2ContributorId":"16411",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/sarah_boseley_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-408538764",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045326807/FRANCE-IMPLANTS-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"54",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045327902/FRANCE-IMPLANTS-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"340",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045329084/FRANCE-IMPLANTS-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"130",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045330202/FRANCE-IMPLANTS-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"84",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045332030/FRANCE-IMPLANTS-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"132",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045333212/FRANCE-IMPLANTS-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"168",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045334524/FRANCE-IMPLANTS-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"180",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045335696/FRANCE-IMPLANTS-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"228",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045336944/FRANCE-IMPLANTS-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"276",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045338066/FRANCE-IMPLANTS-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"372",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045336944/FRANCE-IMPLANTS-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"276",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-408538765",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/8/1368045330202/FRANCE-IMPLANTS-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Eric Gaillard",
+            "altText":"FRANCE-IMPLANTS/",
+            "height":"84",
+            "credit":"Eric Gaillard/Reuters",
+            "caption":"An independent inquiry into the PIP breast implant scandal concluded there was no significant risk to women. Photograph: Eric Gaillard/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/02/french-breast-implant-scandal-france",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-02T14:09:27Z",
+      "webTitle":"French watchdog 'did not act fast enough on faulty PIP breast implants'",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/02/french-breast-implant-scandal-france",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/02/french-breast-implant-scandal-france",
+      "fields":{
+        "newspaperPageNumber":"25",
+        "trailText":"Report shows agency knew of dangers of substandard silicone prostheses in 2006 but did not prevent their use until 2010",
+        "headline":"French watchdog 'did not act fast enough on faulty PIP breast implants'",
+        "body":"<p>The French state medical watchdog did not act fast enough on reports of faulty breast implants marketed by the company Poly Implant Prothèse, allowing thousands of women to continue having the substandard silicone prostheses fitted at a potential risk to their health, according to an internal document seen by the <a href=\"http://www.mediapart.fr/journal/france/250913/protheses-pip-un-rapport-interne-met-en-cause-lagence-du-medicament\" title=\"\">investigative website Mediapart</a>.</p><p>The discovery that the French firm PIP, which at one time was the third-biggest global supplier of breast implants, had been cutting costs for 10 years by using an illegal, untested, home-made concoction of industrial-grade and agricultural silicone instead of medical silicone approved for humans, sparked an <a href=\"http://www.guardian.co.uk/world/french-breast-implant-scandal?INTCMP=SRCH\" title=\"\">international scandal</a>.</p><p>Jean-Claude Mas, the firm's founder, and four of his senior staff stood trial earlier this year over the botched implants which were sold from 2001 to 2010. They were accused of aggravated fraud and cutting costs by using the concoction in most of the PIP implants that were sold around the world. It was one of the biggest trials ever held in France and a verdict is expected in December. Mas could face up to five years in prison.</p><p>It is estimated that more than 300,000 women in 65 countries may have had PIP implants fitted, including in reconstruction surgery after cancer. About 47,000 women in the UK have had PIP implants, just under 900 on the NHS, mostly for post-cancer breast reconstruction. In France, nearly 15,000 women have chosen to have their implants removed or replaced. At least 4,000 reported PIP implants rupturing.</p><p>At the time of the trial, lawyers for women who had the implants said the French health authorities responsible for monitoring implants should be in the dock as well for failing to prevent the scandal. France's medical safety watchdog, then named Afssaps, has been criticised by the victims for not acting fast enough.</p><p>But the Mediapart investigation, which quotes from a confidential international report highly critical of Afssaps's handling of the case, said this was the first time an internal document has flagged up the fault of the agency.</p><p>Mediapart reported that the French watchdog had learned of an increased risk of the implants rupturing in 2006. The implants were taken off the market in 2010, but Mediapart said the report suggested the watchdog could have acted as early as 2007 or 2008 and prevented thousands more women having the implants.</p><p>Philippe Courtois, lawyer for the French PIP victims, told France Inter radio that many felt it was \"shameful and scandalous\" that the agency could have acted earlier and demanded the watchdog be placed under formal investigation by the state.</p><p>Dominique Maraninchi, head of the medical watchdog, now renamed ANSM, said a full public report in 2012 into the agency's role had been sufficient. He denied any cover-up or dissimulation.</p><p>In December 2011, the French health ministry advised women with PIP implants to have them removed as a precaution, cautioning that, while there was no proven cancer risk, they could rupture. Last year, medical experts investigating the consequences of the PIP scandal in the UK concluded that the substandard silicone gel <a href=\"http://www.guardian.co.uk/world/2012/jun/18/pip-breast-implants\" title=\"\">did not pose a significant risk</a> to women's health in the long term.</p><!-- Guardian Watermark: internal-code/content/418857271|2013-10-07T10:21:28Z|039fb5907c3810948c8325e92f5656507d383548 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-02T23:58:28Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+        "standfirst":"Report shows agency knew of dangers of substandard silicone prostheses in 2006 but did not prevent their use until 2010",
+        "shortUrl":"http://gu.com/p/3j89q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+        "wordcount":"511",
+        "commentable":"false",
+        "internalContentCode":"418857271",
+        "allowUgc":"false",
+        "internalOctopusCode":"8145257",
+        "isPremoderated":"false",
+        "byline":"Angelique Chrisafis in Paris",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-10-03",
+        "internalPageCode":"1974401",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-05T14:09:27Z"
+      },
+      "tags":[{
+        "id":"world/french-breast-implant-scandal",
+        "type":"keyword",
+        "webTitle":"Breast implant scandal",
+        "webUrl":"http://www.theguardian.com/world/french-breast-implant-scandal",
+        "apiUrl":"http://content.guardianapis.com/world/french-breast-implant-scandal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418865039",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720893197/FRANCE-WOMEN-HEALTH-CANCE-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"54",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720894242/FRANCE-WOMEN-HEALTH-CANCE-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"340",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720895274/FRANCE-WOMEN-HEALTH-CANCE-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"130",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"84",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720897366/FRANCE-WOMEN-HEALTH-CANCE-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"132",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720898383/FRANCE-WOMEN-HEALTH-CANCE-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"168",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720899408/FRANCE-WOMEN-HEALTH-CANCE-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"180",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720900413/FRANCE-WOMEN-HEALTH-CANCE-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"228",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720901492/FRANCE-WOMEN-HEALTH-CANCE-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"276",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720902600/FRANCE-WOMEN-HEALTH-CANCE-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"372",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720901492/FRANCE-WOMEN-HEALTH-CANCE-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"276",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"PIP founder Jean-Claude Mas stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418865040",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380720896261/FRANCE-WOMEN-HEALTH-CANCE-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Eric Estrade",
+            "altText":"FRANCE-WOMEN-HEALTH-CANCER-IMPLANT-FILES",
+            "height":"84",
+            "credit":"Eric Estrade/AFP/Getty Images",
+            "caption":"The founder of the firm, Jean-Claude Mas,stood trial earlier this year; he could face five years in jail. Photograph: Eric Estrade/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -14,7 +14,6 @@ import scala.collection.JavaConversions._
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import play.Play
 import org.apache.commons.lang.StringEscapeUtils
 import conf.Switches.ShowUnsupportedEmbedsSwitch
 
@@ -44,11 +43,11 @@ object SectionFront extends Style { val className = "section-front" }
  */
 object Masthead extends Style { val className = "masthead" }
 
-case class SectionZone(val collectionType: String = "news") extends Style {
+case class SectionZone(val tone: String = "news") extends Style {
   val className = "section-zone"
 }
 
-case class Container(val section: String, val showMore: Boolean = false) extends Style {
+case class Container(val containerType: String = "news", val tone: String = "news", val showMore: Boolean = false) extends Style {
   val className = "container"
 }
 
@@ -165,7 +164,7 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
-      if(!fig.hasClass("element-comment")) {
+      if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
@@ -407,7 +406,7 @@ object Format {
 
 object cleanTrailText {
   def apply(text: String)(implicit edition: Edition): Html = {
-    `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
+    withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }
 
@@ -422,13 +421,6 @@ object StripHtmlTagsAndUnescapeEntities{
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)
     unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
   }
-}
-
-object Head {
-  def css = if (Play.isDev) volatileCss else persistantCss
-
-  private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
-  private lazy val persistantCss: String = volatileCss
 }
 
 object CricketMatch {

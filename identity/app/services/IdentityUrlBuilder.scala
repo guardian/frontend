@@ -7,7 +7,7 @@ import java.net.URLEncoder
 class IdentityUrlBuilder @Inject()(conf: IdentityConfiguration) {
 
   def queryParams(idRequest: IdentityRequest): List[(String, String)] = {
-    val params = List("returnUrl" -> idRequest.returnUrl, "type" -> idRequest.omnitureData.registrationType)
+    val params = List("returnUrl" -> idRequest.returnUrl, "type" -> idRequest.trackingData.registrationType)
     params.flatMap(param => if (param._2.isDefined) Some(param._1 -> param._2.get) else None)
   }
 

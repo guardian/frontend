@@ -4,7 +4,7 @@
 
 @report(trail: Trail, text: String) = {
     @if(component.currentPage.exists(_.url == trail.url)){
-        <li class="tabs__tab tabs__tab--selected"><a href="#">@text</a></li>
+        <li class="tabs__tab tabs__tab--selected tone-colour tone-accent-border"><a href="#">@text</a></li>
     } else {
         <li class="tabs__tab"><a href="@LinkTo{@trail.url}" data-link-name="@text">@text</a></li>
     }

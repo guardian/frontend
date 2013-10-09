@@ -16,7 +16,7 @@
 }
 .d-thread .d-thread {
     padding-left: 28px; /* aligns with top level comment's body */
-    border-left: $gutter/2 solid $darkMushroom;
+    border-left: $gutter/2 solid $c-neutral5;
 
     @include mq(768px) {
         padding-left: 44px;
@@ -26,10 +26,10 @@
 .d-comment {
     color: $c-neutral1;
     font-family: sans-serif;
-    border-top: 1px solid $medianMushroom;
+    border-top: 1px solid $c-neutral6;
 }
 .d-comment--has-replies + .d-comment {
-    border-top: 2px solid $darkMushroom;
+    border-top: 2px solid $c-neutral5;
 }
 
 .d-comment--blocked > .d-comment__inner {
@@ -43,7 +43,7 @@
 // ie: http://path/to/url#comment-123
 //     highlights comment with ID 123
 .d-comment:target > .d-comment__inner {
-    background: $mushroom;
+    background: $c-neutral7;
 
     $highlightBleedingOffset: $gutter/4;
     padding-left: $highlightBleedingOffset;
@@ -306,7 +306,7 @@
     padding: $baseline*2 8px $baseline*6 6px;
     text-align: left;
     overflow: auto;
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     position: relative;
 
     .d-commentcount {
@@ -324,5 +324,5 @@
 
 .d-show-cta:hover,
 .d-show-cta:focus {
-    background-color: $darkMushroom;
+    background-color: $c-neutral5;
 }
