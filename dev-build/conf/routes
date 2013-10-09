@@ -143,6 +143,9 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json               
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                              controllers.GalleryController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                   controllers.GalleryController.render(path)
 
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                            controllers.ImageContentController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                                 controllers.ImageContentController.render(path)
+
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                                                controllers.VideoController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                     controllers.VideoController.render(path)
 
