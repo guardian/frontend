@@ -1,0 +1,94 @@
+@(page: ImageContentPage)(implicit request: RequestHeader)
+@import conf.Switches._
+
+@defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
+    <h2 class="article-zone tone-@VisualTone(image) tone-accent-border">
+        <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
+    </h2>
+
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(image)">
+        <article id="article" class="article"
+                 itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
+            <div class="article-v2__inner">
+                <header class="article__head">
+
+                    @fragments.headline(image.headline)
+
+                    @fragments.standfirst(image)
+
+                    @fragments.article.dateline(image.webPublicationDate, image.isLive)
+
+                </header>
+
+                <div class="after-header"></div>
+            </div>
+            <div class="article-v2__columning-wrapper">
+                <div class="article-v2__main-column">
+
+                    @image.mainPicture.map{ mainPicture =>
+                        @image.mainPicture(width=220).map{ smallCrop =>
+                            @fragments.img(mainPicture, smallCrop)
+                        }
+                    }
+
+                    <div class="article__meta-container">
+                        @fragments.byline(image.byline, image)
+
+                        @fragments.article.dateline(image.webPublicationDate, secondary=true)
+                        <div class="js-comment-count"></div>
+                    </div>
+
+                    <div class="social-wrapper">
+                        @fragments.social(image)
+                    </div>
+                </div>
+                <div class="article-v2__secondary-column" aria-hidden="true">
+                    <div class="article-v2__secondary-column__inner">
+                        <div class="u-table">
+                            <div class="u-table__row">
+                                <div class="u-table__cell u-table__cell--top">
+                                    <h2 class="article__meta-heading tone-colour">Share this article</h2>
+                                    @fragments.social(image, "next to content")
+                                </div>
+                            </div>
+                            <div class="u-table__row">
+                                <div class="u-table__cell u-table__cell--bottom">
+                                    @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
+                                        @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "hidden")
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div class="article-v2__inner">
+            @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
+                <h3 id="comments" class="article__sub-head tone-colour tone-border">Comments</h3>
+                <div class="article__discussion"></div>
+
+                <div class="d-show-cta-wrapper">
+                    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@image.shortUrlId}"
+                       data-is-ajax data-link-name="View all comments">
+                        View all comments
+                        <span class="d-commentcount speech-bubble tone-background tone-border">
+                            <span class="js-commentcount__number"></span>
+                        </span>
+                        <i class="i i-arrow-grey-down"></i>
+                    </a>
+                </div>
+            }
+            @if(storyPackage.nonEmpty) {
+                <aside role="complementary" data-link-context="@image.section">
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+                </aside>
+            } else {
+                <aside class="js-related" role="complementary" data-link-context="related@image.url"></aside>
+            }
+
+            <div class="js-popular article__popular" role="complementary"></div>
+        </div>
+    </div>
+}

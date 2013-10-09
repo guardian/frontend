@@ -1,8 +1,11 @@
 @()(implicit request: RequestHeader)
 <!--[if (gt IE 8) | (IEMobile)]><!-->
 <style type="text/css">
-    @Html(Head.css)
+    @Html(Static.css.head)
 </style>
+@if(IsFacia(request)) {
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/facia.min.css")" />
+}
 <!--<![endif]-->
 <!--[if (lt IE 9) & (!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.head.min.css")" />
