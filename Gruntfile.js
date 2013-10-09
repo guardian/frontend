@@ -210,7 +210,7 @@ module.exports = function (grunt) {
                 },{
                     expand: true,
                     cwd: 'common/app/public/images/',
-                    src: ['**/*.{png,gif,jpg}'],
+                    src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
                     dest: 'static/target/compiled/images/'
                 }]
             }
