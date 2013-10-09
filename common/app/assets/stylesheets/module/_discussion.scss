@@ -239,7 +239,8 @@
         left: 6px;
         border-width: 0 0 8px 8px;
         border-style: solid;
-        border-color: transparent inherit;
+        border-color: transparent;
+        border-left-color: inherit;
     }
 }
 

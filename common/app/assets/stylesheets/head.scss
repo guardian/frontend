@@ -49,6 +49,8 @@
 @import "module/_media";
 @import "module/_article";
 @import "module/_headers";
+@import "module/_social";
+    @include socialOnPageLoad;
 
 
 /* ==========================================================================
@@ -68,7 +70,9 @@
 
 @import "state/_state";
 
-/* Zone colours
+
+/* ==========================================================================
+   Colours
    ========================================================================== */
 
 @import "theme/_zones";
