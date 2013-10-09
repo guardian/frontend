@@ -104,6 +104,8 @@ define([
     Collection.prototype.processDraft = function(goLive) {
         var self = this;
 
+        this.state.loadIsPending(true);
+
         authedAjax({
             type: 'post',
             url: common.config.apiBase + '/collection/' + this.id,
@@ -117,13 +119,13 @@ define([
         });
 
         this.state.hasDraft(false);
-        this.state.loadIsPending(true);
     };
 
     Collection.prototype.drop = function(item) {
         var self = this;
 
         self.state.loadIsPending(true);
+
         authedAjax({
             type: 'delete',
             url: common.config.apiBase + '/collection/' + self.id,
@@ -141,11 +143,12 @@ define([
         var self = this;
         opts = opts || {};
 
+        self.state.loadIsPending(!opts.isRefresh);
+
         return authedAjax({
             url: common.config.apiBase + '/collection/' + this.id
         }).then(function(resp) {
             self.state.loadIsPending(false);
-
             self.state.hasDraft(_.isArray(resp.draft));
 
             if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
