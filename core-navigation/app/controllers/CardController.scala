@@ -1,6 +1,7 @@
 package controllers
 
 import common._
+import model._
 import java.net.URI
 import org.jsoup.Jsoup
 import play.api.mvc.{ Controller, Action }
