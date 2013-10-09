@@ -16,8 +16,7 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
     Id.getUserFromCookie = function() {
         if(userFromCookieCache === "empty") {
             var cookieData = Cookies.get('GU_U'),
-                userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null,
-                user;
+                userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
 
             if (userData) {
                 userFromCookieCache = {
