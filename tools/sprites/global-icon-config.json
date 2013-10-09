@@ -1,6 +1,6 @@
 {
 	"src": "../../common/app/assets/images/global/",
-    "imgDest": "../../static/target/compiled/images/global",
+    "imgDest": "../../common/app/assets/images/global",
     "cssDest": "../../common/app/assets/stylesheets/theme/",
     "datasvgcss" : "_global-icons-svg.scss",
     "urlpngcss" : "_global-icons-sprite.scss",

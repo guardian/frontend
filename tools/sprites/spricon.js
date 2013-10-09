@@ -10,7 +10,6 @@
     var fs = require('fs');
     var spawn = require('child_process').spawn;
     var crypto = require('crypto');
-    var mkdirp = require('../../node_modules/mkdirp/index');
     var SVGO = require('../../node_modules/svgo/lib/svgo');
     var utils = {};
     var config;
@@ -123,13 +122,13 @@
 
         // create the output directory
         if (!fs.existsSync( config.imgDest )) {
-            mkdirp.sync( config.imgDest );
+            fs.mkdirSync( config.imgDest );
         }
 
         console.info( "Ouput css file created." );
 
         console.info( "Cleaning SVG" );
-        cleanSVG(config.src, function(){
+        cleanSVG(config.imgDest, function(){
 
 
                 // take it to phantomjs to do the rest
