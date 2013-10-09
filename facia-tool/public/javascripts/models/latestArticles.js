@@ -3,15 +3,15 @@ define([
     'models/article',
     'models/ophanApi',
     'models/cache',
-    'knockout',
-    'Reqwest'
+    'models/authedAjax',
+    'knockout'
 ], function (
     common,
     Article,
     ophanApi,
     cache,
-    ko,
-    Reqwest
+    authedAjax,
+    ko
 ) {
     return function(opts) {
 
@@ -25,8 +25,6 @@ define([
         this.term       = ko.observable(common.util.queryParams().q || '');
         this.section    = ko.observable('');
         this.page       = ko.observable(1);
-
-        var reqwest = opts.reqwest || Reqwest;
 
         this.isTermAnItem = function() {
             return self.term().match(/\//);
@@ -62,11 +60,13 @@ define([
                     propName = 'results';
                 }
 
-                reqwest({
-                    url: url,
-                    type: 'jsonp',
-                    success: function(resp) {
-                        var rawArticles = resp.response && resp.response[propName] ? resp.response[propName] : [];
+                authedAjax(
+                    {
+                        url: url,
+                        dataType: 'json'
+                    },
+                    function(data) {
+                        var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
 
                         self.flush();
 
@@ -77,9 +77,9 @@ define([
                         })
 
                         ophanApi.decorateItems(self.articles());
-                    },
-                    error: function() {}
-                });
+                    }
+                );
+
             }, 250);
 
             return true; // ensure default click happens on all the bindings

@@ -1,12 +1,12 @@
 define([
     'Config',
-    'Reqwest',
+    'models/authedAjax',
     'models/common',
     'models/cache'
 ],
 function (
     Config,
-    Reqwest,
+    authedAjax,
     common,
     cache
 ){
@@ -88,10 +88,11 @@ function (
     function fetchData(id, callback) {
         cache.put('ophan', id, {failed: true});
 
-        Reqwest({
-            url: '/ophan/pageviews/' + id,
-            type: 'json'
-        }).then(
+        authedAjax(
+            {
+                url: '/ophan/pageviews/' + id,
+                dataType: 'json'
+            },
             function (resp) {
                 _.each(resp.seriesData, function(s){
                     s.data.pop(); // Drop the last data point

@@ -1,10 +1,10 @@
 define([
-    'Reqwest',
+    'models/authedAjax',
     'models/common',
     'models/cache'
 ],
 function (
-    Reqwest,
+    authedAjax,
     common,
     cache
 ){
@@ -45,16 +45,17 @@ function (
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');
-            new Reqwest({
-                url: apiUrl,
-                type: 'jsonp'
-            }).then(
+
+            authedAjax(
+                {
+                    url: apiUrl,
+                    dataType: 'json'
+                },
                 function(results) {
                     if (results.response && results.response.results) {
                         callback(results.response.results);
                     }
-                },
-                function(xhr) { console.log(xhr); } // error
+                }
             );
         }
     }

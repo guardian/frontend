@@ -1,7 +1,7 @@
 define([
-    'Reqwest',
     'knockout',
     'models/common',
+    'models/authedAjax',
     'models/collection',
     'models/article',
     'models/latestArticles',
@@ -9,9 +9,9 @@ define([
     'models/ophanApi',
     'models/viewer',
 ], function(
-    reqwest,
     knockout,
     common,
+    authedAjax,
     Collection,
     Article,
     LatestArticles,
@@ -172,13 +172,13 @@ define([
                 }
             }
 
-            reqwest({
-                method: opts.delete ? 'delete' : 'post',
+            authedAjax({
                 url: common.config.apiBase + '/collection/' + collection.id,
-                type: 'json',
+                type: opts.delete ? 'delete' : 'post',
+                dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(apiProps)
-            }).always(function(resp) {
+            }, function(resp) {
                 collection.load();
             });
 
@@ -200,33 +200,27 @@ define([
         }
 
         function fetchConfigs(callback) {
-            reqwest({
+            authedAjax({
                 url: common.config.apiBase + '/config',
-                type: 'json'
-            }).then(
-                function(resp) {
-                    if (!(_.isArray(resp) && resp.length > 0)) {
-                        window.console.log("ERROR: No configs were found");
-                        return;
-                    }
-                    model.configs(resp.sort());
-                    if (_.isFunction(callback)) { callback(); }
-                },
-                function(xhr) { window.console.log("ERROR: There was a problem listing the configs"); }
-            );
+                dataType: 'json'
+            }, function(resp) {
+                if (!(_.isArray(resp) && resp.length > 0)) {
+                    window.console.log("ERROR: No configs were found");
+                    return;
+                }
+                model.configs(resp.sort());
+                if (_.isFunction(callback)) { callback(); }
+            });
         };
 
         function fetchConfig(id, callback) {
             if (!(id && _.isFunction(callback))) {
                 return;
             }
-            reqwest({
+            authedAjax({
                 url: common.config.apiBase + '/config/' + id,
-                type: 'json'
-            }).then(
-                callback,
-                function(xhr) { window.console.log("ERROR: There was a problem fetching the config for " + id); }
-            );
+                dataType: 'json'
+            }, callback);
         };
 
         function flushClipboard() {

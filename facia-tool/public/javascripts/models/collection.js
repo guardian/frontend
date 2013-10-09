@@ -1,16 +1,14 @@
 define([
-    'Reqwest',
-    'EventEmitter',
     'knockout',
     'models/common',
+    'models/authedAjax',
     'models/article',
     'models/contentApi',
     'models/ophanApi'
 ], function(
-    reqwest,
-    eventEmitter,
     ko,
     common,
+    authedAjax,
     Article,
     contentApi,
     ophanApi
@@ -106,20 +104,17 @@ define([
     Collection.prototype.processDraft = function(goLive) {
         var self = this;
 
-        reqwest({
-            url: common.config.apiBase + '/collection/' + this.id,
-            method: 'post',
-            type: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
-        }).then(
+        authedAjax({
+                url: common.config.apiBase + '/collection/' + this.id,
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(goLive ? {publish: true} : {discard: true})
+            },
             function(resp) {
                 self.load({
                     callback: function(){ self.setLiveMode(); }
                 });
-            },
-            function(xhr) {
-                self.state.loadIsPending(false);
             }
         );
         this.state.hasDraft(false);
@@ -130,22 +125,20 @@ define([
         var self = this;
 
         self.state.loadIsPending(true);
-        reqwest({
-            method: 'delete',
-            url: common.config.apiBase + '/collection/' + self.id,
-            type: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                item: item.meta.id(),
-                live:   self.state.liveMode(),
-                draft: !self.state.liveMode()
-            })
-        }).then(
+        authedAjax(
+            {
+                type: 'delete',
+                url: common.config.apiBase + '/collection/' + self.id,
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    item: item.meta.id(),
+                    live:   self.state.liveMode(),
+                    draft: !self.state.liveMode()
+                }),
+            },
             function(resp) {
                 self.load();
-            },
-            function(xhr) {
-                self.state.loadIsPending(false);
             }
         );
     };
@@ -154,10 +147,11 @@ define([
         var self = this;
         opts = opts || {};
 
-        reqwest({
-            url: common.config.apiBase + '/collection/' + this.id,
-            type: 'json'
-        }).always(
+        authedAjax(
+            {
+                url: common.config.apiBase + '/collection/' + this.id,
+                dataType: 'json'
+            },
             function(resp) {
                 self.state.loadIsPending(false);
 
@@ -231,19 +225,22 @@ define([
         this.state.editingConfig(false);
         this.state.loadIsPending(true);
 
-        reqwest({
-            url: common.config.apiBase + '/collection/' + this.id,
-            method: 'post',
-            type: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                config: {
-                    displayName: this.collectionMeta.displayName()
-                }
-            })
-        }).always(function(){
-            self.load();
-        });
+        authedAjax(
+            {
+                url: common.config.apiBase + '/collection/' + this.id,
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    config: {
+                        displayName: this.collectionMeta.displayName()
+                    }
+                })
+            },
+            function(){
+                self.load();
+            }
+        );
     };
 
     Collection.prototype.getTimeAgo = function(date) {

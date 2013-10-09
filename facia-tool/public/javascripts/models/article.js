@@ -1,13 +1,14 @@
 define([
     'models/common',
+    'models/authedAjax',
     'knockout',
-    'Reqwest',
     'js!humanizedTimeSpan'
 ],
 function (
     common,
+    authedAjax,
     ko,
-    reqwest
+    placeholder
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
@@ -61,10 +62,10 @@ function (
     Article.prototype.saveConfig = function(listId) {
         var self = this;
         // If a config property (a) is set and (b) differs from the meta value, include it in post.
-        reqwest({
+        authedAjax({
             url: common.config.apiBase + '/collection/' + listId + '/' + this.meta.id(),
-            method: 'post',
-            type: 'json',
+            type: 'post',
+            dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
                 config: _.chain(this.config)
@@ -73,28 +74,11 @@ function (
                     .map(function(p){ return [p[0], p[1]()]; })
                     .object()
                     .value()
-        })
-        }).always(function(){
+            })
+        }, function(){
             self.stopEditingConfig();
         });
     }
-
-    Article.prototype.addCommentCount = function() {
-        var url = 'http://discussion.guardianapis.com/discussion-api/discussion/p/' +
-            this.shortId() + '/comments/count',
-            self = this;
-        if(this.shortId()) {
-            reqwest({
-                url: '/json/proxy/' + url,
-                type: 'json',
-                success: function(resp) {
-                    self.comments(resp.numberOfComments);
-                },
-                complete: function() {
-                }
-            });
-        }
-    };
 
     return Article;
 });
