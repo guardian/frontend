@@ -8,11 +8,11 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         // View
         this.view = {
             render: function (html) {
-                bonzo(options.prependTo).before(html);
+                bonzo(options.prependTo)[options.attachMethod || 'before'](html);
                 common.mediator.emit('modules:footballtables:render');
             }
         };
-        
+
         // Model
         this.load = function (query) {
             var that = this;
@@ -37,7 +37,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
             var query = this.queryString,
                 path = this.path,
                 competition = options.competition;
-            
+
             return path + query + competition;
         };
 
@@ -52,7 +52,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         };
 
     }
-    
+
     return FootballTables;
 
 });
