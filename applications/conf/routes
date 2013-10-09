@@ -15,8 +15,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                 controll
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                      controllers.GalleryController.render(path)
 
 # Image Content paths
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/cartoon/.*>.json                 controllers.ImageContentController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/cartoon/.*>                      controllers.ImageContentController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json   controllers.ImageContentController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>        controllers.ImageContentController.render(path)
 
 # Video paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                   controllers.VideoController.renderJson(path)
