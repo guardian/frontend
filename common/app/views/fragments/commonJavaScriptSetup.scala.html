@@ -52,7 +52,17 @@
                 }
             }
         }
+        function loadFontsAsynchronously() {
+            var f, x;
 
+            x = document.getElementById('gu');
+            f = document.createElement('link');
+            f.rel = 'stylesheet';
+            f.href = '@Static("stylesheets/webfonts.min.css")';
+            window.setTimeout(function() {
+                x.parentNode.insertBefore(f, x);
+            }, 0);
+        }
         function loadFontsFromStorage(prefs, key) {
 
             var showFonts = false,
@@ -94,7 +104,12 @@
         @if(CssFromStorageSwitch.isSwitchedOn) {
             loadCssFromStorage();
         }
-        loadFontsFromStorage();
+
+        if (navigator.userAgent.match(/(Windows)|(XBLWP)|(ZuneWP)/)) {
+            loadFontsAsynchronously();
+        } else {
+            loadFontsFromStorage();
+        }
 
         guardian.config = @fragments.javaScriptConfig(item, switches);
 
