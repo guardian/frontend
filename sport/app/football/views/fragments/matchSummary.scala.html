@@ -27,7 +27,7 @@
   }
 
     @if(theMatch.homeTeam.aggregateScore){
-        <p class="match-summary__aggregate"><span>(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</span></p>
+        <p class="match-summary__aggregate">(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</p>
     }
 
     @theMatch.comments.map{ comments => <h5 class="match-summary__comment">@comments.replace("(", "").replace(")", "")</h5>}
