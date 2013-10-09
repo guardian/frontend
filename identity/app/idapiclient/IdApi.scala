@@ -23,15 +23,10 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   // AUTH
 
-<<<<<<< HEAD
-  def authApp(auth: Auth, trackingData: OmnitureTracking): Future[Response[AccessTokenResponse]] = {
-    val response = http.POST(apiUrl("auth"), None, auth.parameters ++ trackingData.parameters ++ clientAuth.parameters, auth.headers ++ clientAuth.headers)
-=======
   def authApp(auth: Auth, trackingData: TrackingData): Future[Response[AccessTokenResponse]] = {
     val params = buildParams(Some(auth), Some(trackingData))
     val headers = buildHeaders(Some(auth))
     val response = http.GET(apiUrl("auth"), params, headers)
->>>>>>> origin/master
     response map jsonBodyParser.extract[AccessTokenResponse](jsonField("accessToken"))
   }
 
@@ -79,26 +74,15 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def resetPassword( token : String, newPassword : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-<<<<<<< HEAD
     val response = http.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
     response map jsonBodyParser.extractUnit
-=======
-    val response = http.POST(apiUrl(apiPath), Some(postBody), buildParams(), buildHeaders())
-    response map jsonBodyParser.extract[Unit]({_ => JNothing})
->>>>>>> origin/master
   }
 
   def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset","send-password-reset-email")
-<<<<<<< HEAD
-    val params = Iterable(("email-address", emailAddress), ("type", "reset"))
-    val response = http.GET(apiUrl(apiPath), params ++ clientAuth.parameters, clientAuth.headers)
-    response map jsonBodyParser.extractUnit
-=======
     val params = buildParams(tracking = Some(trackingParameters), extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
     val response = http.GET(apiUrl(apiPath), params, buildHeaders())
     response map jsonBodyParser.extract[Unit]({_ => JNothing})
->>>>>>> origin/master
   }
 
   def register(user: User, trackingParameters: TrackingData): Future[Response[User]] = {
