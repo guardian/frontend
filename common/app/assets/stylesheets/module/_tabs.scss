@@ -39,7 +39,7 @@
         min-height: $gs-column-height;
         text-align: left;
         color: inherit;
-        padding: $baseline $gs-gutter/2 0;
+        padding: $baseline 8px 0;
         display: block;
         text-decoration: none;
         background-color: $c-neutral6;
@@ -50,9 +50,13 @@
             text-decoration: none;
         }
 
-        @include mq($to: 300px) {
+        @include mq($to: tablet) {
             font-size: 14px;
             font-size: 1.4rem;
+        }
+
+        @include mq(tablet) {
+            padding: $baseline $gs-gutter/2 0;
         }
     }
 }
