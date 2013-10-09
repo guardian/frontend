@@ -3,7 +3,7 @@
 # ~~~~
 
 # For dev machines
-GET        /assets/*file                                    controllers.Assets.at(path="/public", file)
+GET        /assets/*path                                    dev.DevAssetsController.at(path)
 
 GET        /most-read                                       controllers.MostPopularController.render(path = "")
 GET        /most-read.json                                  controllers.MostPopularController.render(path = "")

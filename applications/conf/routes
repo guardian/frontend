@@ -3,7 +3,7 @@
 # ~~~~
 
 # For dev machines
-GET        /assets/*file                                                controllers.Assets.at(path="/public", file)
+GET         /assets/*path                                               dev.DevAssetsController.at(path)
 
 # Section paths
 GET        /sections                                                    controllers.SectionsController.renderSections()

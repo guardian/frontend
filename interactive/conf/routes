@@ -3,7 +3,7 @@
 # ~~~~
 
 # For dev machines
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET        /assets/*path        dev.DevAssetsController.at(path)
 
-GET     /*path.json                 controllers.InteractiveController.renderInteractiveJson(path)
-GET     /*path                      controllers.InteractiveController.renderInteractive(path)
+GET        /*path.json          controllers.InteractiveController.renderInteractiveJson(path)
+GET        /*path               controllers.InteractiveController.renderInteractive(path)
