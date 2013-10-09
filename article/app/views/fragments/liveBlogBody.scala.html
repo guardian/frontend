@@ -84,7 +84,7 @@
                         </div>
                     </div>
 
-                    @if(article.keywords.nonEmpty){
+                    @if(article.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
                         <div class="article__keywords" data-link-name="live blog keywords">
                             @fragments.keywordList(article.keywords)
                         </div>
