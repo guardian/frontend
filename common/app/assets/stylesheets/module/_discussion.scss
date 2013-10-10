@@ -345,7 +345,7 @@
     border: 1px solid $c-neutral3;
     height: 50px;
     margin: $baseline*2 0;
-    padding: ($baseline*2) ($gutter/2);
+    padding: $baseline*2 $gutter/2;
     resize: vertical;
     width: 100%;
 }
