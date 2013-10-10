@@ -434,6 +434,8 @@ object VisualTone {
   private val News = "news"
   private val Feature = "feature"
 
+  val default = News
+
   private val toneMappings = Map(
     ("tone/comment", Comment),
     ("tone/letters", Comment),
@@ -454,7 +456,6 @@ object VisualTone {
   )
 
 
-  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
+  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(default)
 
-  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
 }
