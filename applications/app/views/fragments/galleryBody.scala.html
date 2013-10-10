@@ -62,16 +62,6 @@
                     </div>
                 </div>
 
-                <div class="article__meta-container">
-                    @fragments.byline(gallery.byline, gallery)
-                    @fragments.article.dateline(gallery.webPublicationDate, secondary=true)
-                    <div class="js-comment-count"></div>
-                </div>
-
-                <div class="ab-gallerytest--newstyle" data-link-name="Gallery thumbnail sheet">
-                    @fragments.galleryThumbs(gallery)
-                </div>
-
                 @fragments.standfirst(gallery)
 
                 @if(gallery.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
