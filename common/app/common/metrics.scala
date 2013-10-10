@@ -249,6 +249,20 @@ object FootballMetrics {
   )
 }
 
+object FaciaMetrics {
+
+  object JsonParsingErrorCount extends CountMetric(
+    "facia-front",
+    "facia-json-error",
+    "Facia JSON parsing errors",
+    "Number of errors whilst parsing JSON out of S3"
+  )
+
+  val all: Seq[Metric] = Seq(
+    JsonParsingErrorCount
+  )
+}
+
 object FaciaToolMetrics {
 
   object ApiUsageCount extends CountMetric(
@@ -301,6 +315,7 @@ object Metrics {
 
   lazy val discussion = DiscussionMetrics.all
   lazy val admin = AdminMetrics.all
+  lazy val facia = FaciaMetrics.all
   lazy val faciaTool = FaciaToolMetrics.all
   lazy val porter = PorterMetrics.all
   lazy val coreNavigation = CoreNavivationMetrics.all
