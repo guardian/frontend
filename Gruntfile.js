@@ -557,7 +557,6 @@ module.exports = function (grunt) {
         'copy:compile',
         'hash'
     ]);
-    grunt.registerTask('compile:css', ['sass:compile']);
 
     // Test tasks
     grunt.registerTask('test:integration', ['test:integration:allexceptadmin']); // ...until Facia fix the admin tests they broke.
@@ -574,7 +573,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['compile', 'jshint:common', 'jasmine', 'test:integration']);
 
     // Analyse tasks
-    grunt.registerTask('analyse', ['compile:css', 'cssmetrics:common']);
+    grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:common:css', ['sass:compile', 'cssmetrics:common']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
