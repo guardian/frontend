@@ -1,5 +1,8 @@
+define([],
+function (){
+
 // Copyright (C) 2011 by Will Tomlins
-// 
+//
 // Github profile: http://github.com/layam
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -8,10 +11,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +33,7 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
       { ceiling: 86400, text: "$hours hours ago" },
       { ceiling: 2629744, text: "$days days ago" },
       { ceiling: 31556926, text: "$months months ago" },
-      { ceiling: null, text: "$years years ago" }      
+      { ceiling: null, text: "$years years ago" }
     ],
     future: [
       { ceiling: 60, text: "in $seconds seconds" },
@@ -50,17 +53,17 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
     [60, 'minutes'],
     [1, 'seconds']
   ];
-  
+
   date = new Date(date);
   ref_date = ref_date ? new Date(ref_date) : new Date();
   var seconds_difference = (ref_date - date) / 1000;
-  
+
   var tense = 'past';
   if (seconds_difference < 0) {
     tense = 'future';
     seconds_difference = 0-seconds_difference;
   }
-  
+
   function get_format() {
     for (var i=0; i<date_formats[tense].length; i++) {
       if (date_formats[tense][i].ceiling == null || seconds_difference <= date_formats[tense][i].ceiling) {
@@ -69,7 +72,7 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
     }
     return null;
   }
-  
+
   function get_time_breakdown() {
     var seconds = seconds_difference;
     var breakdown = {};
@@ -88,7 +91,7 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
     });
     return depluralize_time_ago_text(time_ago_text, breakdown);
   }
-  
+
   function depluralize_time_ago_text(time_ago_text, breakdown) {
     for(var i in breakdown) {
       if (breakdown[i] == 1) {
@@ -100,6 +103,10 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
     }
     return time_ago_text;
   }
-          
+
   return render_date(get_format());
 }
+
+return humanized_time_span;
+
+});
