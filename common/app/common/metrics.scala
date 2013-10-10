@@ -286,13 +286,6 @@ object FaciaToolMetrics {
     "Number of expired requests coming into an endpoint using ExpiringAuthAction"
   )
 
-  object LoginCount extends CountMetric(
-    "facia-api",
-    "facia-auth-logins",
-    "Facia auth logins",
-    "Number of logins"
-  )
-
   object DraftPublishCount extends CountMetric(
     "facia-api",
     "facia-draft-publish",
@@ -302,7 +295,7 @@ object FaciaToolMetrics {
 
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
-    LoginCount, DraftPublishCount
+    DraftPublishCount
   )
 }
 
