@@ -38,6 +38,7 @@ RecommendComments.options = {
 
 /**
  * @param {Element} context
+ * @param {Object=} options
  */
 RecommendComments.init = function(context, options) {
     var buttons = qwery('.'+ RecommendComments.CONFIG.classes.button, context);
@@ -56,10 +57,8 @@ RecommendComments.init = function(context, options) {
     }
 };
 
-
 /**
  * @param {Element} context
- * @param {String} buttonClass
  */
 RecommendComments.bindEvents = function(context) {
     bean.on(context, 'click', '.'+ RecommendComments.CONFIG.classes.button, RecommendComments.handleClick);
@@ -109,6 +108,7 @@ RecommendComments.success = function(resp) {
         RecommendComments.getEvent('success'),
         {
             id: parseInt(this.getAttribute('data-comment-id'), 10),
+            userId: parseInt(this.getAttribute('data-user-id'), 10),
             count: parseInt(this.getAttribute('data-recommend-count'), 10)
         }
     );

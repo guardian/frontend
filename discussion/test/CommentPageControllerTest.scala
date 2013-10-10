@@ -16,12 +16,12 @@ class CommentPageControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied" in Fake {
-    val fakeRequest = FakeRequest(GET, "/discussion/p/37v3a?callback=" + callbackName).withHeaders("host" -> "localhost:9000")
-    val result = DiscussionApp.commentPage("p/37v3a")(fakeRequest)
+    val fakeRequest = FakeRequest(GET, "/discussion/p/37v3a.json?callback=" + callbackName).withHeaders("host" -> "localhost:9000")
+    val result = DiscussionApp.commentPageJson("p/37v3a")(fakeRequest)
 
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(callbackName + "({\"html\"") // the callback
+    contentAsString(result).substring(0, 200) should startWith(callbackName + "({") // the callback
   }
 
 }
