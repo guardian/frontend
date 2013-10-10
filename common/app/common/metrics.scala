@@ -251,7 +251,45 @@ object FootballMetrics {
 
 object FaciaToolMetrics {
 
-  val all: Seq[Metric] = Nil
+  object ApiUsageCount extends CountMetric(
+    "facia-api",
+    "facia-api-usage",
+    "Facia API usage count",
+    "Number of requests to the Facia API from clients (The tool)"
+  )
+
+  object ProxyCount extends CountMetric(
+    "facia-api",
+    "facia-proxy-usage",
+    "Facia proxy usage count",
+    "Number of requests to the Facia proxy endpoints (Ophan and Content API) from clients"
+  )
+
+  object ExpiredRequestCount extends CountMetric(
+    "facia-api",
+    "facia-auth-expired",
+    "Facia auth endpoints expired requests",
+    "Number of expired requests coming into an endpoint using ExpiringAuthAction"
+  )
+
+  object LoginCount extends CountMetric(
+    "facia-api",
+    "facia-auth-logins",
+    "Facia auth logins",
+    "Number of logins"
+  )
+
+  object DraftPublishCount extends CountMetric(
+    "facia-api",
+    "facia-draft-publish",
+    "Facia draft publish count",
+    "Number of drafts that have been published"
+  )
+
+  val all: Seq[Metric] = Seq(
+    ApiUsageCount, ProxyCount, ExpiredRequestCount,
+    LoginCount, DraftPublishCount
+  )
 }
 
 
