@@ -19,7 +19,7 @@ trait CommentBoxController extends DiscussionController {
             case PrivateProfileFields(true, isPremod, _) => views.html.fragments.commentBox(isPremod, profile.avatar)
           }
           Cached(60){
-            JsonComponent("html" -> box.toString)
+            JsonComponent("html" -> box.toString).withHeaders("Access-Control-Allow-Credentials" -> "true")
           }
       } recover {
         case t: Throwable => JsonComponent("error" -> t.getMessage)
