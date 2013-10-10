@@ -9,8 +9,6 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
 import services.S3FrontsApi
 import scala.concurrent.Future
-import akka.util.Timeout
-import scala.concurrent.duration._
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -152,8 +150,8 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
   }
 
   def refresh() =
-    getItems flatMap { newConfigList =>
-      queryAgent.alter { oldConfigList =>
+    getItems map { newConfigList =>
+      queryAgent.send { oldConfigList =>
         lazy val oldConfigMap = oldConfigList.map{_.map{case (config, collection) => (config.id, collection)}.toMap}
         Option {
           newConfigList flatMap { collectionConfig =>
@@ -166,7 +164,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
             }
           }
         }
-      }(Timeout(60.seconds))
+      }
     }
 
 
@@ -191,7 +189,7 @@ class PageFront(val id: String, edition: Edition) {
 trait ConfigAgent extends ExecutionContexts {
   private val configAgent = AkkaAgent[List[String]](Nil)
 
-  def refresh() = configAgent.alter(old => S3FrontsApi.listConfigsIds)(Timeout(10.seconds))
+  def refresh() = configAgent.send(S3FrontsApi.listConfigsIds)
 
   def close() = configAgent.close()
 
