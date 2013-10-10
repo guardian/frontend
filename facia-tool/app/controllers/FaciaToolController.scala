@@ -59,6 +59,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         val identity = Identity(request).get
         blockAction.publish.filter {_ == true}
           .map { _ =>
+            FaciaToolMetrics.DraftPublishCount.increment()
             FaciaApi.publishBlock(id, identity)
             Ok
           }
