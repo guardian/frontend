@@ -219,7 +219,9 @@ define([
 
             getCommentBox: function() {
                 ajax({
-                    url: '/discussion/comment-box.json'
+                    url: '/discussion/comment-box.json',
+                    crossOrigin: true,
+                    withCredentials: true
                 }).then(self.renderCommentBoxes);
             },
 
