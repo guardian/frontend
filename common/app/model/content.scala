@@ -117,7 +117,10 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
     "og:url" -> webUrl,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
-
+    
+  override def cards: List[(String, Any)] = super.cards ++ List(
+    "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
+  )
 
   // Inherited from Trail.Elements
   override lazy val images: List[ImageElement] = imageMap("main")
@@ -255,7 +258,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   
   override lazy val images: List[ImageElement] = imageMap("gallery")
   
-  override def cards: List[(String, Any)] = super.openGraph ++ List(
+  override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
   ) ++ images.sortBy(_.index).take(5).zipWithIndex.map{ case(image, index) => s"twitter:image$index:src" -> image }
@@ -275,7 +278,7 @@ class ImageContent(private val delegate: ApiContent) extends Content(delegate) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   
-  override def cards: List[(String, Any)] = super.openGraph ++ List(
+  override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "photo"
   )
 }
