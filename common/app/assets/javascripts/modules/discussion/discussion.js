@@ -60,7 +60,7 @@ define([
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
                         self.mediaPrimaryNode        = context.querySelector(mediaPrimary);
-                        self.discussionClosed        = (self.discussionContainerNode.getAttribute('data-discusison-closed') === 'true');
+                        self.discussionClosed        = (self.discussionContainerNode.getAttribute('data-discussion-closed') === 'true');
                         self.showCommentBox          = (!self.discussionClosed && user);
 
                         if (self.discussionContainerNode.isInitialised) {
