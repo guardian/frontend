@@ -44,7 +44,6 @@ define([
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                                     '<div class="d-actions"><a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
-            clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
             user                  = Id.getUserFromCookie(),
             self;
