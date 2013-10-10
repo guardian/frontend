@@ -46,13 +46,14 @@ object FindStyle {
       ("au/sport/cricket/regular-stories", SectionZone(showMore = true)),
       ("au/sport/afl/regular-stories", SectionZone(showMore = true)),
       ("au/sport/nrl/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/rugby-union/regular-stories", SectionZone(showMore = true)),
       ("au/sport/tennis/regular-stories", SectionZone(showMore = true)),
       ("au/sport/golf/regular-stories", SectionZone(showMore = true)),
       ("au/sport/motorsports/regular-stories", SectionZone(showMore = true)),
       ("au/sport/cycling/regular-stories", SectionZone(showMore = true)),
       ("au/sport/us-sport/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/boxing/regular-stories", SectionZone(showMore = true))
+      ("au/sport/boxing/regular-stories", SectionZone(showMore = true)),
+      ("au/football/a-league/regular-stories", SectionZone(showMore = true)),
+      ("au/sport/rugbyleague/regular-stories", SectionZone(showMore = true))
     )),
     ("uk", Map(
       ("uk/news/regular-stories", Container(showMore = true)),
