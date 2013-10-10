@@ -9,11 +9,13 @@ class ProfileTest extends FlatSpec with ShouldMatchers{
 
   "Profile" should "parse JSON Profile with no optional fields" in{
     val jsonStr = """{"userProfile": {
+      |  "userId": "Bob1",
       |  "avatar": "http://foo.com/pic",
       |  "displayName": "Bob"
       |}}""".stripMargin
     val json = Json.parse(jsonStr)
     val profile = Profile(json)
+    profile.userId should be("Bob1")
     profile.avatar should be("http://foo.com/pic")
     profile.displayName should be("Bob")
     profile.isStaff should be(false)
@@ -23,6 +25,7 @@ class ProfileTest extends FlatSpec with ShouldMatchers{
 
   it should "parse JSON Profile with optional fields" in{
     val jsonStr = """{"userProfile": {
+                    |  "userId": "Bob1",
                     |  "avatar": "http://foo.com/pic",
                     |  "displayName": "Bob",
                     |  "badge": [{"name": "Staff"}],
