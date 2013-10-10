@@ -10,6 +10,7 @@ frontend-section.properties
 frontend-video.properties
 frontend-applications.properties
 
+*.min.css
 *.csv
 *.iml
 *.box
@@ -37,7 +38,6 @@ local.sbt
 node_modules
 
 common/conf/assets/assets.map
-common/conf/assets/head.min.css
 
 dev/gems
 dev/casperjs

@@ -1,6 +1,7 @@
 package controllers
 
 import common._
+import model._
 import java.net.URI
 import org.jsoup.Jsoup
 import play.api.mvc.{ Controller, Action }
@@ -36,7 +37,7 @@ object CardController extends Controller with Logging with ExecutionContexts {
     host match {
       case a if (whiteList.contains(a)) => WS.url(r).get().map { response =>
           response.status match {
-            case 200 =>
+            case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)
 
               val image = Option(fragment.select("meta[property=og:image]").attr("content"))
@@ -54,13 +55,14 @@ object CardController extends Controller with Logging with ExecutionContexts {
                 ("modified_time", fragment.select("meta[property=article:modified_time]").attr("content")),
                 ("host", a.replaceAll("^www\\.", ""))
               )).asInstanceOf[JsObject])
+            }
             case _ => NotFound
           }
         }
 
       case w if (w.startsWith("en.wikipedia.org")) => WS.url(r).get().map { response =>
           response.status match {
-            case 200 =>
+            case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)
               val firstParagraph = fragment.select("#mw-content-text > p").first
               firstParagraph.select(".reference").remove()
@@ -73,6 +75,7 @@ object CardController extends Controller with Logging with ExecutionContexts {
                 ("site_name", "Wikipedia"),
                 ("host", "wikipedia.org")
               )).asInstanceOf[JsObject])
+            }
             case _ => NotFound
           }
         }
