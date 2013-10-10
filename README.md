@@ -66,9 +66,11 @@ And one called _~/.gu/frontend.properties_, ( alternatively _/gu/etc/frontend.pr
 content.api.key=XXXX
 content.api.host=http://XXXX
 pa.api.key=XXXX
+ophan.api.host=XXX
+ophan.api.key=XXXX
 ```
 
-Get the correct key and host from another developer on the project (or for external developers, sign up for a key at http://guardian.mashery.com).
+Get the correct keys and hosts from another developer on the project (for external developers, sign up for a ContentApi key at http://guardian.mashery.com).
 
 To set up a proxy
 

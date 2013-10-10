@@ -7,11 +7,6 @@ resolvers ++= Seq(
   Classpaths.typesafeResolver
 )
 
-// Libraries required for building the project specification files.
-libraryDependencies ++= Seq(
-  "commons-codec" % "commons-codec" % "1.8"
-)
-
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.5.1")
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.2.0")

@@ -46,7 +46,7 @@
 
                     <div class="js-gallery-holder gallery-container">
                         <ul class="unstyled">
-                        @gallery.crops.zipWithRowInfo.map{ case(image, row) =>
+                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
                             @if(row.rowNum == index) {
                                 <li class="js-gallery-item-@row.rowNum js-current-gallery-slide" data-image="true"
                                 data-index="@row.rowNum" data-total="@gallery.size">
