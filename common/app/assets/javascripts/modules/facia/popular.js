@@ -21,8 +21,8 @@ define([
         itemTmpl  = function(trail) {
             return updateTmpl(
                 '<li class="item">' +
-                    '<h2 class="item__title tone-accent-border"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
-                    '<p class="item__standfirst">@trail.trailText</p>' +
+                    '<a href="@trail.url" class="item__link tone-accent-border"><h2 class="item__title">@trail.headline</h2></a>' +
+                    '<div class="item__standfirst"><p>@trail.trailText</p></div>' +
                     '<div class="item__meta item__meta--grey">' +
                         '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
                             '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
@@ -67,10 +67,13 @@ define([
 
                         // only show images for the first 3 items
                         if (index < 3 && trail.mainPicture) {
-                            var imageContainer = $item.addClass('item--with-image')
-                                .append(imageTmpl(trail))[0];
+                            var $imageContainer = bonzo(bonzo.create(
+                                imageTmpl(trail)
+                            ));
+                            $item.addClass('item--with-image');
+                            common.$g('.item__link', $item).prepend($imageContainer);
                             if (index < 3) {
-                                new ImageUpgrade(imageContainer, index === 0)
+                                new ImageUpgrade($imageContainer[0], index === 0)
                                     .upgrade();
                             }
                         }
@@ -78,7 +81,7 @@ define([
                         // add item to the items
                         $items.append($item);
                     });
-                    // add the popular collection before the sports zone
+                    // add the popular collection before the last collection
                     bonzo(bonzo.create(collectionTmpl))
                         .append($items)
                         .insertAfter('.collection:last-child');
