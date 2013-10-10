@@ -191,10 +191,8 @@ CommentBox.prototype.setFormState = function(disabled) {
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
-        this.elem.setAttribute('data-disabled', true);
     } else {
         submitButton.removeAttribute('disabled');
-        this.elem.setAttribute('data-disabled', true);
     }
 };
 
