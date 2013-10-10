@@ -578,6 +578,5 @@ module.exports = function (grunt) {
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
-    
     grunt.registerTask('snap', ['env:casperjs', 'clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
 };
