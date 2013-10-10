@@ -48,7 +48,7 @@
                     </p>
 
                     <div class="gallery-container">
-                        @gallery.crops.zipWithRowInfo.map{ case(image, row) =>
+                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
                             @if(row.rowNum == index) {
                                 <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
                                 src="@image.path" />

@@ -1,12 +1,12 @@
 define([
     'Config',
-    'Reqwest',
+    'models/authedAjax',
     'models/common',
     'models/cache'
 ],
 function (
     Config,
-    Reqwest,
+    authedAjax,
     common,
     cache
 ){
@@ -25,7 +25,8 @@ function (
             }
 
             setTimeout(function(){
-                fetchData(id, function(resp){
+                fetchData(id)
+                .then(function(resp){
                     decorateItem(
                         item,
                         cache.put('ophan', id, {
@@ -85,20 +86,17 @@ function (
         }
     }
 
-    function fetchData(id, callback) {
+    function fetchData(id) {
         cache.put('ophan', id, {failed: true});
 
-        Reqwest({
-            url: '/ophan/pageviews/' + id,
-            type: 'json'
-        }).then(
-            function (resp) {
-                _.each(resp.seriesData, function(s){
-                    s.data.pop(); // Drop the last data point
-                })
-                callback(resp);
-            }
-        );
+        return authedAjax({
+            url: '/ophan/pageviews/' + id
+        }).then(function (resp) {
+            _.each(resp.seriesData, function(s){
+                s.data.pop(); // Drop the last data point
+            })
+            return resp;
+        });
     }
 
     return {

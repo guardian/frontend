@@ -1,8 +1,9 @@
 @(page: CommentPage)(implicit request: RequestHeader)
 
-<div class="d-discussion">
+<div class="d-discussion"
+     data-page-count="@page.pages">
 	<div class="d-discussion__header">
-		<span class="d-discussion__disclaimer d-meta-item">Comments sorted by oldest first</span>
+		<span class="d-discussion__disclaimer d-meta-item">Comments sorted by newest first</span>
 	</div>
 	<ul class="d-thread">
 	    @page.comments.map{ comment =>
