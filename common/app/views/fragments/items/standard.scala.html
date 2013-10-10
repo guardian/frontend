@@ -1,7 +1,7 @@
-@(trail: Trail, index: Int, mainItem: Boolean = false)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, mainItem: Boolean = false, limit: Boolean = false)(implicit request: RequestHeader)
 
 @defining(VisualTone(trail)) { tone =>
-    <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@tone @if(index >= 5){u-h}" data-link-name="trail | @{index + 1}"
+    <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@tone @if(limit && index >= 5){u-h}" data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }>
         <h@if(mainItem){1}else{2} class="item__title tone-accent-border">
             @if(trail.isLive){
