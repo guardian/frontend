@@ -127,13 +127,9 @@ input[type=text] {
 
 .list-header__timings {
     font-size: 10px;
-    color: #666666;
-    padding: 0 0 0 10px;
+    color: #999999;
+    padding: 0 0 0 11px;
     float: left;
-}
-
-.list-header__timings__last-updated {
-    font-weight: bold;
 }
 
 .list-header__status {
