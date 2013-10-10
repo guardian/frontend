@@ -25,13 +25,9 @@ DELETE        /collection/*id            controllers.FaciaToolController.deleteT
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.listConfigs
 
-# API endpoint proxying for https
-GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path, callback)
-GET           /api/tag                   controllers.FaciaContentApiProxy.tag(q, callback)
-GET           /api/item/*path            controllers.FaciaContentApiProxy.item(path, callback)
+# endpoints for proxying https
+GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
-
-# Ophan proxying for https
 GET           /ophan/pageviews/*path     controllers.FaciaOphanApiController.pageViews(path)
 
 GET           /admin                     controllers.FaciaToolController.admin()

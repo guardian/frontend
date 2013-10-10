@@ -4,16 +4,16 @@ define([
     'models/article',
     'models/ophanApi',
     'models/cache',
-    'knockout',
-    'Reqwest'
+    'models/authedAjax',
+    'knockout'
 ], function (
     common,
     autoComplete,
     Article,
     ophanApi,
     cache,
-    ko,
-    Reqwest
+    authedAjax,
+    ko
 ) {
     return function(opts) {
 
@@ -33,8 +33,6 @@ define([
         this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []),
 
         this.page       = ko.observable(1);
-
-        var reqwest = opts.reqwest || Reqwest;
 
         this.isTermAnItem = function() {
             return (self.term() || '').match(/\//);
@@ -69,17 +67,18 @@ define([
             autoComplete({
                 query:    self.filter(),
                 path:    (self.filterType() || {}).path,
-                receiver: self.suggestions
+
+            })
+            .then(function(results) {
+                self.suggestions(results)
             });
         };
 
         // Grab articles from Content Api
         this.search = function(opts) {
-            var count;
+            var count = counter += 1;
 
             opts = opts || {};
-            counter += 1;
-            count = counter;
 
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
@@ -104,25 +103,22 @@ define([
                     propName = 'results';
                 }
 
-                reqwest({
-                    url: url,
-                    type: 'jsonp',
-                    success: function(resp) {
-                        if (count !== counter) { return; }
+                authedAjax({
+                    url: url
+                }).then(function(data) {
+                    var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
 
-                        var rawArticles = resp.response && resp.response[propName] ? resp.response[propName] : [];
+                    if (count !== counter) { return; }
 
-                        self.flush(rawArticles.length === 0 ? "...sorry, no articles were found." : "");
+                    self.flush(rawArticles.length === 0 ? "...sorry, no articles were found." : "");
 
-                        ([].concat(rawArticles)).forEach(function(article, index){
-                            article.index = index;
-                            self.articles.push(new Article(article));
-                            cache.put('contentApi', article.id, article);
-                        })
+                    ([].concat(rawArticles)).forEach(function(article, index){
+                        article.index = index;
+                        self.articles.push(new Article(article));
+                        cache.put('contentApi', article.id, article);
+                    })
 
-                        ophanApi.decorateItems(self.articles());
-                    },
-                    error: function() {}
+                    ophanApi.decorateItems(self.articles());
                 });
             }, 300);
 

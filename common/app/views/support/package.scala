@@ -14,7 +14,6 @@ import scala.collection.JavaConversions._
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import play.Play
 import org.apache.commons.lang.StringEscapeUtils
 import conf.Switches.ShowUnsupportedEmbedsSwitch
 
@@ -405,7 +404,7 @@ object Format {
 
 object cleanTrailText {
   def apply(text: String)(implicit edition: Edition): Html = {
-    `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
+    withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }
 
@@ -420,13 +419,6 @@ object StripHtmlTagsAndUnescapeEntities{
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)
     unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
   }
-}
-
-object Head {
-  def css = if (Play.isDev) volatileCss else persistantCss
-
-  private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
-  private lazy val persistantCss: String = volatileCss
 }
 
 object CricketMatch {

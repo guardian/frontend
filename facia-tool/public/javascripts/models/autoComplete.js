@@ -1,11 +1,11 @@
 define([
-    'Reqwest',
     'models/common',
+    'models/authedAjax',
     'models/cache'
 ],
 function (
-    Reqwest,
     common,
+    authedAjax,
     cache
 ){
     var maxItems = 50,
@@ -17,7 +17,7 @@ function (
             path = opts.path || "tags",
             url  = "/" + path + "?q=" + q,
             data,
-            count;
+            count = counter += 1;
 
         if(!q.match(/[a-z0-9]+/i)) {
             receiver([]);
@@ -25,18 +25,15 @@ function (
         }
 
         data = cache.get('contentApi', url);
-        counter += 1;
 
         if(data) {
             receiver(data);
         } else {
             receiver([{_alert : "searching for " + path + "..."}]);
-            count = counter;
 
-            new Reqwest({
-                url: common.config.apiSearchBase + url + "&page-size=" + maxItems,
-                type: 'jsonp'
-            }).always(
+            authedAjax({
+                url: common.config.apiSearchBase + url + "&page-size=" + maxItems
+            }).then(
                 function(resp) {
                     var results;
 
