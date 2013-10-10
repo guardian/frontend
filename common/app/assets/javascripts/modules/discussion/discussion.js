@@ -198,21 +198,21 @@ define([
             },
 
             renderCommentBar: function() {
-                var discussionElem = bonzo(this.discussionContainerNode),
-                    showMoreBtnElem = bonzo(this.showMoreBtnNode),
+                var $discussionElem = bonzo(this.discussionContainerNode),
+                    $showMoreBtnElem = bonzo(this.showMoreBtnNode),
                     showElem;
 
                 if (self.discussionClosed) {
                     showElem = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
-                    discussionElem.prepend(showElem);
+                    $discussionElem.prepend(showElem);
                     return;
                 }
 
                 else if (!user) {
                     var url = config.page.idUrl +'/{1}?returnUrl='+ window.location.href;
                     showElem = '<div class="d-bar d-bar--signin">Open for comments. <a href="'+ url.replace('{1}', 'signin') +'">Sign in</a> or <a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> to join the discussion.</div>';
-                    discussionElem.prepend(showElem);
-                    showMoreBtnElem.after(showElem);
+                    $discussionElem.prepend(showElem);
+                    $showMoreBtnElem.after(showElem);
                     return;
                 }
             },
@@ -227,49 +227,49 @@ define([
                 if (resp.error) { return; }
                 var html = resp.html,
                     topBox, bottomBox,
-                    discussionElem = bonzo(self.discussionContainerNode),
-                    topBoxElem = bonzo(bonzo.create(html)),
-                    bottomBoxElem = bonzo(bonzo.create(html));
+                    $discussionElem = bonzo(self.discussionContainerNode),
+                    $topBoxElem = bonzo(bonzo.create(html)),
+                    $bottomBoxElem = bonzo(bonzo.create(html));
 
-                discussionElem.before(topBoxElem);
-                discussionElem.after(bottomBoxElem);
+                $discussionElem.before($topBoxElem);
+                $discussionElem.after($bottomBoxElem);
 
                 topBox = new CommentBox(context, common.mediator, {
                     apiRoot: apiRoot,
                     discussionId: discussionId,
                     condensed: true
                 });
-                topBox.attachTo(topBoxElem[0]);
+                topBox.attachTo($topBoxElem[0]);
                 topBox.on('post:success', self.addComment.bind(self, false));
 
                 bottomBox = new CommentBox(context, common.mediator, {
                     apiRoot: apiRoot,
                     discussionId: discussionId
                 });
-                bottomBox.attachTo(bottomBoxElem[0]);
+                bottomBox.attachTo($bottomBoxElem[0]);
                 bottomBox.on('post:success', self.addComment.bind(self, true));
 
-                bottomBoxElem.after('<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
+                $bottomBoxElem.after('<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
                     'Want our fully featured commenting experience? Head to our old site.</a>');
             },
 
             addComment: function(takeToTop, resp) {
                 // TODO (jamesgorrie): this is weird, but we don't have templating
                 var discussionContainerNode = self.discussionContainerNode[0],
-                    thread = bonzo(qwery('.d-thread', discussionContainerNode)),
-                    comment = bonzo(qwery('.d-comment', discussionContainerNode)).clone().removeClass('d-comment--blocked')[0],
-                    actions = bonzo(comment.querySelector('.d-comment__actions')),
-                    datetime = bonzo(comment.querySelector('time')),
-                    author = bonzo(comment.querySelector('.d-comment__author')),
-                    body = bonzo(comment.querySelector('.d-comment__body')),
-                    avatar = bonzo(comment.querySelector('.d-comment__avatar'))[0];
+                    $thread = bonzo(qwery('.d-thread', discussionContainerNode)),
+                    $comment = bonzo(qwery('.d-comment', discussionContainerNode)).clone().removeClass('d-comment--blocked')[0],
+                    $actions = bonzo($comment.querySelector('.d-comment__actions')),
+                    $datetime = bonzo($comment.querySelector('time')),
+                    $author = bonzo($comment.querySelector('.d-comment__author')),
+                    $body = bonzo($comment.querySelector('.d-comment__body')),
+                    $avatar = bonzo($comment.querySelector('.d-comment__avatar'))[0];
 
-                comment.id = 'comment-'+ resp.id;
-                author.html(user.displayName);
-                datetime.html('Just now');
+                $comment.id = 'comment-'+ resp.id;
+                $author.html(user.displayName);
+                $datetime.html('Just now');
 
-                body.html('<p>'+ resp.body.replace('\n\n', '</p><p>') +'</p>');
-                thread.prepend(comment);
+                $body.html('<p>'+ resp.body.replace('\n\n', '</p><p>') +'</p>');
+                $thread.prepend($comment);
 
                 if (takeToTop) {
                     window.location.hash = '';
@@ -278,7 +278,7 @@ define([
 
                 // This is stored in the DOM like so
                 // To spare us another call to the discussion API
-                avatar.src = qwery('.js-avatar-url', discussionContainerNode)[0].getAttribute('data-avatar-url');
+                $avatar.src = qwery('.js-avatar-url', discussionContainerNode)[0].getAttribute('data-avatar-url');
             },
 
             showMoreReplies: function(el) {
