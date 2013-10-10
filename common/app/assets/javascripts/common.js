@@ -16,7 +16,6 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                 });
             }
         },
-
         extend : function(destination, source) {
             for (var property in source) {
                 destination[property] = source[property];
