@@ -34,7 +34,7 @@ define([
             ophanCallsPerSecond:   4,     // n.b. times number of blocks
             collectionsPollMs:     10000, // 10 seconds
             latestArticlesPollMs:  30000, // 10 seconds
-            cacheExpiryMs:         120000, // 2 mins
+            cacheExpiryMs:         60000, // 1 min
             defaultToLiveMode:     true,
 
             apiBase:               '',

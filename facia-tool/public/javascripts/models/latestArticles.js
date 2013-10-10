@@ -60,18 +60,16 @@ define([
         };
 
         this.clearTerm = function() {
-            this.term('');
+            self.term('');
         };
 
         this.autoComplete = function() {
             autoComplete({
                 query:    self.filter(),
-                path:    (self.filterType() || {}).path,
-
+                path:    (self.filterType() || {}).path
             })
-            .then(function(results) {
-                self.suggestions(results)
-            });
+            .progress(self.suggestions)
+            .then(self.suggestions);
         };
 
         // Grab articles from Content Api

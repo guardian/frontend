@@ -12,50 +12,52 @@ function (
         counter = 0;
 
     return function (opts) {
-        var receiver = opts.receiver || function () {},
+        var defer = $.Deferred(),
             q = opts.query || '',
             path = opts.path || "tags",
             url  = "/" + path + "?q=" + q,
-            data,
-            count = counter += 1;
+            count = counter += 1,
+            results;
 
         if(!q.match(/[a-z0-9]+/i)) {
-            receiver([]);
-            return;
+            defer.resolve([]);
         }
 
-        data = cache.get('contentApi', url);
+        results = cache.get('contentApi', url);
 
-        if(data) {
-            receiver(data);
+        if(results) {
+            defer.resolve(results);
         } else {
-            receiver([{_alert : "searching for " + path + "..."}]);
+            defer.notify([{_alert : "searching for " + path + "..."}]);
 
             authedAjax({
                 url: common.config.apiSearchBase + url + "&page-size=" + maxItems
             }).then(
                 function(resp) {
-                    var results;
+                    var results = resp.response && resp.response.results ? resp.response.results : false;
 
-                    if (count !== counter) {
+                    if (!results) {
+                        defer.resolve();
                         return;
                     }
 
-                    results = resp.response && resp.response.results ? resp.response.results : false;
+                    cache.put('contentApi', url, results);
 
-                    if (!results) {
-                        receiver([{_alert : "...sorry, there was an error."}]);
+                    if (count !== counter) {
+                        defer.resolve();
                         return;
                     }
 
                     if (results.length === 0) {
-                        results = [{_alert : "...sorry, no " + path + " found."}];
+                        defer.resolve([{_alert : "...sorry, no " + path + " found."}]);
+                        return;
                     }
 
-                    cache.put('contentApi', url, results);
-                    receiver(results);
+                    defer.resolve(results);
                 }
             );
         }
+
+        return defer;
     }
 });
