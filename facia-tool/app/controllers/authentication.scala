@@ -5,10 +5,27 @@ import common.ExecutionContexts
 import play.api.mvc._
 import play.api.libs.openid.OpenID
 import scala.concurrent.Future
+import play.api.mvc.Results._
+import play.api.mvc.SimpleResult
+import play.api.libs.json.{JsNumber, JsString, JsObject, Json}
 
 object Authenticated extends AuthAction(routes.Login.login.url)
 
 object ExpiringAuthentication extends ExpiringAuthAction("/login")
+
+object AjaxExpiringAuthentication extends ExpiringAuthAction("/login") {
+  lazy val errorResponse =
+    JsObject(
+      Seq("error" -> JsObject(
+        Seq(
+            "status" -> JsNumber(403),
+            "message" -> JsString("Forbidden")
+            )
+        )
+      )
+    )
+  override def authFailResult(request: Request[AnyContent]): SimpleResult = Forbidden(Json.toJson(errorResponse))
+}
 
 object Login extends LoginController with Controller with ExecutionContexts {
 

@@ -1,7 +1,7 @@
-@(trail: Trail, index: Int, mainItem: Boolean = false)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, mainItem: Boolean = false, limit: Boolean = false)(implicit request: RequestHeader)
 
 @defining(VisualTone(trail)) { tone =>
-    <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@tone" data-link-name="trail | @{index + 1}"
+    <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@tone @if(limit && index >= 5){u-h}" data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }>
         <h@if(mainItem){1}else{2} class="item__title tone-accent-border">
             @if(trail.isLive){
@@ -37,7 +37,9 @@
         @trail.mainPicture.map{ mainPicture =>
             <div class="item__image-container">
                 <a href="@LinkTo{@trail.url}" class="item__link">
-                    <img class="item__image" alt="" data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)" />
+                    <img class="item__image" alt=""
+                         data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)"
+                         data-src-mobile="@ImgSrc(mainPicture, FrontItemMobile)" data-src-main-mobile="@ImgSrc(mainPicture, FrontItemMainMobile)" />
                 </a>
             </div>
         }

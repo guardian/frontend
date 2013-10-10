@@ -1,16 +1,16 @@
 define([
-    'Reqwest',
-    'EventEmitter',
     'knockout',
     'models/common',
+    'models/humanizedTimeSpan',
+    'models/authedAjax',
     'models/article',
     'models/contentApi',
     'models/ophanApi'
 ], function(
-    reqwest,
-    eventEmitter,
     ko,
     common,
+    humanizedTimeSpan,
+    authedAjax,
     Article,
     contentApi,
     ophanApi
@@ -106,79 +106,64 @@ define([
     Collection.prototype.processDraft = function(goLive) {
         var self = this;
 
-        reqwest({
-            url: common.config.apiBase + '/collection/' + this.id,
-            method: 'post',
-            type: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
-        }).then(
-            function(resp) {
-                self.load({
-                    callback: function(){ self.setLiveMode(); }
-                });
-            },
-            function(xhr) {
-                self.state.loadIsPending(false);
-            }
-        );
-        this.state.hasDraft(false);
         this.state.loadIsPending(true);
+
+        authedAjax({
+            type: 'post',
+            url: common.config.apiBase + '/collection/' + this.id,
+            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
+        })
+        .then(function() {
+            self.load();
+        })
+        .then(function() {
+            self.setLiveMode();
+        });
+
+        this.state.hasDraft(false);
     };
 
     Collection.prototype.drop = function(item) {
         var self = this;
 
         self.state.loadIsPending(true);
-        reqwest({
-            method: 'delete',
+
+        authedAjax({
+            type: 'delete',
             url: common.config.apiBase + '/collection/' + self.id,
-            type: 'json',
-            contentType: 'application/json',
             data: JSON.stringify({
                 item: item.meta.id(),
                 live:   self.state.liveMode(),
                 draft: !self.state.liveMode()
-            })
-        }).then(
-            function(resp) {
-                self.load();
-            },
-            function(xhr) {
-                self.state.loadIsPending(false);
-            }
-        );
+            }),
+        }).then(function() {
+            self.load();
+        });
     };
 
     Collection.prototype.load = function(opts) {
         var self = this;
         opts = opts || {};
 
-        reqwest({
-            url: common.config.apiBase + '/collection/' + this.id,
-            type: 'json'
-        }).always(
-            function(resp) {
-                self.state.loadIsPending(false);
+        return authedAjax({
+            url: common.config.apiBase + '/collection/' + this.id
+        }).then(function(resp) {
+            self.state.loadIsPending(false);
+            self.state.hasDraft(_.isArray(resp.draft));
 
-                self.state.hasDraft(_.isArray(resp.draft));
-
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
-                    // noop
-                } else {
-                    self.populateLists(resp);
-                }
-
-                if (!self.state.editingConfig()) {
-                    common.util.populateObservables(self.collectionMeta, resp)
-                    self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
-                }
-
-                self.decorate();
-
-                if (_.isFunction(opts.callback)) { opts.callback(); }
+            if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
+                // noop
+            } else {
+                self.populateLists(resp);
             }
-        );
+
+            if (!self.state.editingConfig()) {
+                common.util.populateObservables(self.collectionMeta, resp)
+                self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
+            }
+
+            self.decorate();
+        });
     };
 
     Collection.prototype.populateLists = function(opts) {
@@ -231,23 +216,21 @@ define([
         this.state.editingConfig(false);
         this.state.loadIsPending(true);
 
-        reqwest({
+        authedAjax({
             url: common.config.apiBase + '/collection/' + this.id,
-            method: 'post',
-            type: 'json',
-            contentType: 'application/json',
+            type: 'post',
             data: JSON.stringify({
                 config: {
                     displayName: this.collectionMeta.displayName()
                 }
             })
-        }).always(function(){
+        }).then(function(){
             self.load();
         });
     };
 
     Collection.prototype.getTimeAgo = function(date) {
-        return date ? humanized_time_span(date) : '';
+        return date ? humanizedTimeSpan(date) : '';
     };
 
     return Collection;
