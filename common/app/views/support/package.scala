@@ -43,7 +43,7 @@ object SectionFront extends Style { val className = "section-front" }
  */
 object Masthead extends Style { val className = "masthead" }
 
-case class SectionZone(val tone: String = "news") extends Style {
+case class SectionZone(val tone: String = "news", val showMore: Boolean = false) extends Style {
   val className = "section-zone"
 }
 

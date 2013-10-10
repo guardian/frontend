@@ -284,9 +284,9 @@ a.item__link {
         .item__image-container {
             display: block;
         }
-    }
-    &.item--without-image .item__standfirst {
-        display: block;
+        &.item--without-image .item__standfirst {
+            display: block;
+        }
     }
     .item__live-indicator {
         @include fs-data(1, true);
