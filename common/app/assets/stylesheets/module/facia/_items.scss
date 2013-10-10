@@ -50,6 +50,7 @@
 
 .items {
     font-size: 0;
+    overflow: hidden;
 }
 .item {
     @include box-sizing(border-box);
@@ -187,6 +188,7 @@
 @mixin row-start {
     padding-left: 0;
     border-left-style: none;
+    clear: left;
 }
 @mixin row-end {
     padding-right: 0;
@@ -255,11 +257,10 @@
 }
 @mixin card-half-width($with-image: false) {
     width: 50%;
-    display: inline-block;
-    vertical-align: top;
     padding-left: $gs-gutter/2 - 1;
     padding-right: $gs-gutter/2;
     border-left: 1px dotted $c-neutral5;
+    float: left;
     .item__title,
     .item__byline {
         @include fs-header(1, $size-only: true);
