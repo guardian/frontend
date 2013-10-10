@@ -20,7 +20,7 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   def signout = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     request.cookies.get("SC_GU_U").map { cookie =>
-      api.unauth(idRequest.omnitureData, UserCookie(cookie.value)).map { response =>
+      api.unauth(idRequest.trackingData, UserCookie(cookie.value)).map { response =>
         response.left.foreach(errors => logger.info(s"Error returned from API signout: ${errors.map(_.description).mkString(", ")}"))
         performSignout(request)
       }
