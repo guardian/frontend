@@ -36,7 +36,6 @@ trait MetaData {
   
   def cards: List[(String, Any)] = List(
     "twitter:site" -> "@guardian",
-    "twitter:card" -> "summary",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
     "twitter:app:name:googleplay" -> "The Guardian",
