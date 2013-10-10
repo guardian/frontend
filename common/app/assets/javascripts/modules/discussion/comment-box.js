@@ -108,7 +108,6 @@ CommentBox.prototype.postComment = function(e) {
         comment.GU_U = cookies.get('GU_U');
 
         this.setFormState(true);
-
         return ajax({
             url: url,
             type: 'json',
@@ -154,7 +153,12 @@ CommentBox.prototype.success = function(comment, resp) {
  * @param {Reqwest=} resp (optional)
  */
 CommentBox.prototype.fail = function(xhr) {
-    var response = JSON.parse(xhr.responseText);
+    var response;
+    // if our API is down, it returns HTML
+    // this is not so good for JSON.parse
+    try { response = JSON.parse(xhr.responseText); }
+        catch (e) { response = {}; }
+
     this.setFormState();
 
     if (xhr.status === 420) {
