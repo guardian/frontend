@@ -234,6 +234,8 @@
 }
 @mixin card-headline {
     float: left;
+    display: block;
+    width: 100%;
     .item__link {
         border-top-color: $c-neutral5;
         border-top-width: 1px;

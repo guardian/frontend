@@ -76,7 +76,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
         this.addShowMore = function() {
             var $collection = _$items.parent(),
                 collectionType = $collection.attr('data-collection-type') + '-' + $collection.attr('data-section'),
-                $overflowStories = common.$g('.item:nth-child(n + ' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
+                $overflowStories = common.$g('.item:nth-child(n+' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
             // hide stories
             $overflowStories.addClass('u-h');
             // add toggle button, if we have hidden stories
