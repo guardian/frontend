@@ -137,15 +137,10 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} resp
  */
 CommentBox.prototype.success = function(comment, resp) {
-    comment.id = parseInt(resp.message, 10);
-    if (resp.status === 'ok') {
-        this.getElem('body').value = '';
-        this.setFormState();
-        this.emit('post:success', comment);
-        this.mediator.emit('discussion:commentbox:post:success', resp);
-    } else {
-        this.fail();
-    }
+    this.getElem('body').value = '';
+    this.setFormState();
+    this.emit('post:success', comment);
+    this.mediator.emit('discussion:commentbox:post:success', resp);
 };
 
 /**
