@@ -117,6 +117,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
 
+
   // Inherited from Trail.Elements
   override lazy val images: List[ImageElement] = imageMap("main")
   override lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
@@ -152,7 +153,7 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
   lazy val isReview = tones.exists(_.id == "tone/reviews")
-
+  
   // A legacy body have an embedded video at the top.
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -241,6 +242,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
+
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
@@ -249,8 +251,14 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
     "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
-
+  
   override lazy val images: List[ImageElement] = imageMap("gallery")
+  
+  override def cards: List[(String, Any)] = super.openGraph ++ List(
+    "twitter:card" -> "gallery",
+    "twitter:title" -> linkText
+  ) ++ images.sortBy(_.index).take(5).zipWithIndex.map{ case(image, index) => s"twitter:image$index:src" -> image }
+
 }
 
 class Interactive(private val delegate: ApiContent) extends Content(delegate) {
@@ -265,4 +273,8 @@ class ImageContent(private val delegate: ApiContent) extends Content(delegate) {
   lazy val contentType = "ImageContent"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
+  
+  override def cards: List[(String, Any)] = super.openGraph ++ List(
+    "twitter:card" -> "photo"
+  )
 }

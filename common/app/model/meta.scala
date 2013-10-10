@@ -33,10 +33,23 @@ trait MetaData {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId
   )
+  
+  def cards: List[(String, Any)] = List(
+    "twitter:site" -> "@guardian",
+    "twitter:card" -> "summary",
+    "twitter:app:name:iphone" -> "The Guardian",
+    "twitter:app:id:iphone" -> "409128287",
+    "twitter:app:name:googleplay" -> "The Guardian",
+    "twitter:app:id:googleplay" -> "com.guardian",
+    "twitter:app:url:googleplay" -> "http://".replace("http", "guardian")
+  )
 
   def cacheSeconds = 60
 }
 
+trait AritcleMetaData {
+
+}
 class Page(
   val id: String,
   val section: String,
