@@ -46,7 +46,6 @@ object FindStyle {
       ("au/sport/cricket/regular-stories", SectionZone(showMore = true)),
       ("au/sport/afl/regular-stories", SectionZone(showMore = true)),
       ("au/sport/nrl/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/rugby-union/regular-stories", SectionZone(showMore = true)),
       ("au/sport/tennis/regular-stories", SectionZone(showMore = true)),
       ("au/sport/golf/regular-stories", SectionZone(showMore = true)),
       ("au/sport/motorsports/regular-stories", SectionZone(showMore = true)),
