@@ -69,6 +69,9 @@ define([
 
                                 self.insertCommentCounts(commentCount);
                                 self.bindEvents();
+                            } else {
+                                // Remove the comments section when there is none
+                                common.$g('#comments, .js-show-discussion', context).remove();
                             }
                         });
                 }
