@@ -14,7 +14,7 @@ object OphanApi extends ExecutionContexts with Logging {
       host <- ophanApi.host
       key <- ophanApi.key
     } yield {
-      val url = "%s/%s&api-key=%s" format(host, path, key)
+      val url = s"$host/$path&api-key=$key"
       log.info("Making request to Ophan API: " + url)
       WS.url(url) withRequestTimeout ophanApi.timeout get() map (_.body)
     }) getOrElse {
@@ -28,15 +28,15 @@ object OphanApi extends ExecutionContexts with Logging {
   }
 
   def getBreakdown(platform: String, hours: Int): Future[String] = {
-    getBody("breakdown?platform=%s&hours=%d" format(platform, hours))
+    getBody(s"breakdown?platform=$platform&hours=$hours")
   }
 
   def getBreakdown(path: String): Future[String] = {
-    getBody("breakdown?path=/%s" format path)
+    getBody(s"breakdown?path=/$path")
   }
 
   def getMostRead(referrer: String, hours: Int): Future[JsValue] = {
-    getBodyAsJson("mostread?referrer=%s&hours=%d" format(referrer, hours))
+    getBodyAsJson(s"mostread?referrer=$referrer&hours=$hours")
   }
 
 }
