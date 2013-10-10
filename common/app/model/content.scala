@@ -22,6 +22,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
+  lazy val isClosedForComments: Boolean = fields.get("commentCloseDate").filter(_.parseISODateTimeNoMillis.isAfterNow).isEmpty
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
@@ -46,7 +47,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
     }.toMap.withDefaultValue(Nil)
   }
 
-  private lazy val fields = delegate.safeFields
+  private lazy val fields: Map[String, String] = delegate.safeFields
 
   // Inherited from Trail
   override lazy val webPublicationDate: DateTime = delegate.webPublicationDate
