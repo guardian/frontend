@@ -52,7 +52,9 @@ object FindStyle {
       ("au/sport/motorsports/regular-stories", SectionZone(showMore = true)),
       ("au/sport/cycling/regular-stories", SectionZone(showMore = true)),
       ("au/sport/us-sport/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/boxing/regular-stories", SectionZone(showMore = true))
+      ("au/sport/boxing/regular-stories", SectionZone(showMore = true)),
+      ("au/football/a-league/regular-stories", SectionZone(showMore = true)),
+      ("au/sport/rugbyleague/regular-stories", SectionZone(showMore = true))
     )),
     ("uk", Map(
       ("uk/news/regular-stories", Container(showMore = true)),
