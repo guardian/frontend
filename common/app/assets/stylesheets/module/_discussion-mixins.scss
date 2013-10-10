@@ -1,14 +1,18 @@
 @mixin d-comment__body {
     word-wrap: break-word;
-    line-height: 1.4;
 
     @include mq(768px) {
         line-height: 22px;
+
+        p {
+            @include fs-data(5);
+        }
     }
 
     p {
         margin-bottom: 12px;
     }
+    
     blockquote {
         margin-top: 0;
         margin-left: 0;
