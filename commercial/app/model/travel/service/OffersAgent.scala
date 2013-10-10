@@ -13,6 +13,7 @@ object OffersAgent extends Logging with ExecutionContexts {
 
   def refresh() {
     val offers = Await.result(OffersApi.getAllOffers, atMost = 20.seconds)
+    log.info(s"Loaded ${offers.size} travel offers")
     agent send Map("offers" -> offers)
   }
 
