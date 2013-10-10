@@ -136,7 +136,7 @@
                 console.info( "Now spawning phantomjs..." );
 
                 utils.spawn({
-                  cmd: 'phantomjs',
+                  cmd: '../../node_modules/phantomjs/bin/phantomjs',
                   args: [
                     'spricon-phantom.js',
                     config.src,

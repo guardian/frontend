@@ -1,1 +1,0 @@
-window.boosh = 'boosh';

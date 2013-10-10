@@ -200,6 +200,45 @@ module.exports = function (grunt) {
             }
         },
 
+        shell: {
+            // grunt-mkdir wouldn't do what it was told for this
+            webfontjson: {
+                command: 'mkdir -p static/target/compiled/fonts',
+
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                }
+            },
+
+            icons: {
+                command: [
+                    'cd tools/sprites/',
+                    'node spricon.js global-icon-config.json'
+                ].join('&&'),
+
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                }
+            },
+
+            // Should be later in file but can't separate shell task definition
+            hooks: {
+                // Copy the project's pre-commit hook into .git/hooks
+                command: 'cp git-hooks/pre-commit .git/hooks/',
+
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: false
+                }
+            }
+
+        },
+
         imagemin: {
             compile: {
                 files: [{
@@ -209,35 +248,15 @@ module.exports = function (grunt) {
                     dest: 'static/target/compiled/images/'
                 },{
                     expand: true,
+                    cwd: 'static/target/generated/images/',
+                    src: ['**/*.{png,gif,jpg}'],
+                    dest: 'static/target/compiled/images/'
+                },{
+                    expand: true,
                     cwd: 'common/app/public/images/',
                     src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
                     dest: 'static/target/compiled/images/'
                 }]
-            }
-        },
-
-        shell: {
-            // grunt-mkdir wouldn't do what it was told for this
-            webfontjson: {
-                command: 'mkdir -p static/target/compiled/fonts'
-            },
-
-            icons: {
-                command: [
-                    'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: false
-                }
-            },
-
-            // Should be later in file but can't separate shell task definition
-            hooks: {
-                // Copy the project's pre-commit hook into .git/hooks
-                command: 'cp git-hooks/pre-commit .git/hooks/'
             }
         },
 
