@@ -45,9 +45,6 @@ trait MetaData {
   def cacheSeconds = 60
 }
 
-trait AritcleMetaData {
-}
-
 class Page(
   val id: String,
   val section: String,
