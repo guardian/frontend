@@ -254,7 +254,7 @@ define([
 
                 // This comes in useful later
                 user.privateFields = userFields;
-                user.avata = resp.userProfile.avatar;
+                user.avatar = resp.userProfile.avatar;
 
                 if (!userFields.isPremoderated) {
                     bonzo($topBoxElem[0].querySelector('.d-comment-box__premod')).remove();
