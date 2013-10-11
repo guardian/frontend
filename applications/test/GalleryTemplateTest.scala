@@ -57,7 +57,7 @@ class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
     import browser._
     $("meta[property='twitter:card']").getAttributes("content").head should be ("gallery")
     $("meta[property='twitter:title']").getAttributes("content").head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
-    $("meta[property='twitter:image3:src']").getAttributes("content")  should be ("FIXME")
+    $("meta[property='twitter:image3:src']").getAttributes("content").head should endWith ("1340461458157/Simon-Bolivar-conducting--006.jpg")
   }
   
 }
