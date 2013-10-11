@@ -8,7 +8,7 @@ define([
         this.options = common.extend(this.DEFAULTS, options);
         this.el = this.options.context.getElementsByClassName(this.options.cls)[0];
         this.$el = bonzo(this.el);
-        this.top =  bonzo(this.options.context.querySelector(".js-mpu-upper[data-id=" + this.options.id + "]")).offset().top
+        this.top =  bonzo(this.options.context.querySelector(".js-mpu-upper[data-id=" + this.options.id + "]")).offset().top;
         this.bottom = bonzo(this.options.context.querySelector(".js-mpu-lower[data-id=" + this.options.id + "]")).offset().top - 250;
         this.bindListeners();
     };

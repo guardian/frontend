@@ -16,5 +16,5 @@ define(['common', 'bean', 'modules/inview'], function (common, bean, Inview) {
         var inview = new Inview('[data-inview-name]', context);
     }
 
-    return InView;
+    return InViewAdverts;
 });

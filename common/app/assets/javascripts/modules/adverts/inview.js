@@ -1,5 +1,6 @@
 define([
     'common',
+    'domwrite',
     'bean',
     'bonzo',
     'modules/adverts/document-write',
@@ -7,6 +8,7 @@ define([
     'modules/inview'
 ], function (
     common,
+    domwrite,
     bean,
     bonzo,
     documentWrite,
@@ -22,11 +24,9 @@ define([
 
     function loadAdvert(config, context, size) {
         return function(el) {
-            console.log('inside inview render callback');
-            name = el.getAttribute('data-' + size);
+            var name = el.getAttribute('data-' + size),
             slot = new DocumentWriteSlot(name, insertContainer(el), context);
             common.mediator.on('modules:adverts:docwrite:loaded', function() {
-                console.log('inside inview advert loaded');
                 domwrite.capture();
                 slot.render();
             });
@@ -34,7 +34,7 @@ define([
                 config: config,
                 slots: [slot]
             });
-        }
+        };
     }
 
     function labelParagraphs(context) {
@@ -48,7 +48,6 @@ define([
 
     function bindListeners(callback) {
         common.mediator.on('modules:inview:visible', function(el) {
-            console.log('inside inview event');
             if(el.getAttribute('data-inview-advert')) {
                 callback();
             }
@@ -56,7 +55,6 @@ define([
     }
 
     function InView(config, context, size) {
-        console.log('inside inview');
         bindListeners(loadAdvert(config, context, size));
         labelParagraphs(context);
 

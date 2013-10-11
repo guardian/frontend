@@ -1,4 +1,4 @@
-/* jshint loopfunc: true */
+/*jshint loopfunc: true */
 define([
     'common',
     'domwrite',
@@ -28,8 +28,7 @@ function (
     dimensionMap,
     audienceScience,
     quantcast,
-    StickyMpu,
-    inView
+    StickyMpu
 ) {
     
     var currConfig,
