@@ -302,9 +302,8 @@ define([
         optIn: function () {
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
-                var expiryDays = 365;
-                Cookies.add("GU_VIEW", "mobile", expiryDays);
-                Cookies.add("GU_FACIA", 'true', expiryDays);
+                Cookies.add("GU_VIEW", "mobile", 365);
+                Cookies.add("GU_ABFACIA", 'true', 5);
             }
         },
 
@@ -312,12 +311,12 @@ define([
         faciaToggle: function () {
             var faciaToggle = /#facia-opt-(.*)/.exec(window.location.hash);
             if (faciaToggle) {
-                var cookieName = 'GU_FACIA';
+                var cookieName = 'GU_ABFACIA';
+                var expiryDays = 5;
                 if (faciaToggle[1] === 'in') {
-                    var expiryDays = 365;
-                    Cookies.add(cookieName, 'true', 365);
+                    Cookies.add(cookieName, 'true', expiryDays);
                 } else {
-                    Cookies.cleanUp([cookieName]);
+                    Cookies.add(cookieName, 'false', expiryDays);
                 }
             }
         },
