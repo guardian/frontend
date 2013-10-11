@@ -1,0 +1,15 @@
+@(discussionClosed: Boolean, shortUrl: String)(implicit request: RequestHeader)
+<h3 id="comments" class="article__sub-head tone-colour tone-border">Comments</h3>
+<div class="article__discussion"
+     data-discussion-closed="@discussionClosed"></div>
+
+<div class="d-show-cta-wrapper">
+    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@shortUrl}"
+       data-is-ajax data-link-name="View all comments">
+        View all comments
+        <span class="d-commentcount speech-bubble tone-background tone-border">
+            <span class="js-commentcount__number"></span>
+        </span>
+        <i class="i i-arrow-grey-down"></i>
+    </a>
+</div>

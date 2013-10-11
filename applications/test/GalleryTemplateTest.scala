@@ -52,13 +52,12 @@ class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
     $("p.gallery-nav a.js-gallery-next").getTexts.toList should be(List("Next"))
     $("p.gallery-nav a.js-gallery-next").getAttributes("href").toList should be(List(WithHost("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?trail=true")))
   }
-
-  /*
-  it should "render caption and navigation on trail page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?trail=true") { browser =>
+   
+  it should "show the twitter card meta-data" in HtmlUnit("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>
     import browser._
-
-    // TODO: Decide what goes here.
-    $("p.trail").first.getText should include("Trail page here...")
+    $("meta[property='twitter:card']").getAttributes("content").head should be ("gallery")
+    $("meta[property='twitter:title']").getAttributes("content").head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
+    $("meta[property='twitter:image3:src']").getAttributes("content").head should endWith ("1340461458157/Simon-Bolivar-conducting--006.jpg")
   }
-  */
+  
 }

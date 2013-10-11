@@ -14,6 +14,7 @@
             <div
                 class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
                 data-comment-id="@comment.id"
+                data-user-id="@comment.profile.userId"
                 data-recommend-count="@comment.numRecommends"
                 title="@comment.numRecommends recommendations">
                 <i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>

@@ -1,7 +1,7 @@
 define([
-    'Reqwest',
     'knockout',
     'models/common',
+    'models/authedAjax',
     'models/collection',
     'models/article',
     'models/latestArticles',
@@ -9,9 +9,9 @@ define([
     'models/ophanApi',
     'models/viewer',
 ], function(
-    reqwest,
     knockout,
     common,
+    authedAjax,
     Collection,
     Article,
     LatestArticles,
@@ -41,6 +41,18 @@ define([
                 }
             };
 
+        function fetchConfigsList() {
+            return authedAjax({
+                url: common.config.apiBase + '/config'
+            }).then(function(resp) {
+                if (!(_.isArray(resp) && resp.length > 0)) {
+                    window.alert("Oops, no page definitions were found! Please contact support.");
+                    return;
+                }
+                model.configs(resp.sort());
+            });
+        };
+
         function getConfig() {
             return common.util.queryParams().front;
         }
@@ -50,20 +62,19 @@ define([
             renderCollections();
         }
 
-        function toggleViewer() {
-            model.showViewer(!model.showViewer());
-            if (model.showViewer()) {
-                model.viewer.render();
-            }
-        }
-
         function renderConfig() {
             model.config(getConfig());
         }
 
         function renderCollections() {
             model.collections.removeAll();
-            fetchConfig(getConfig(), function(collections){
+
+            if (!getConfig()) { return; }
+
+            authedAjax({
+                url: common.config.apiBase + '/config/' + getConfig()
+            })
+            .then(function(collections){
                 model.collections(
                     (collections || []).map(function(collection){
                         return new Collection(collection);
@@ -155,6 +166,8 @@ define([
                     draft: !collection.state.liveMode()
                 };
 
+            collection.state.loadIsPending(true);
+
             if (!opts.delete) {
                 list = $('.connectedList > .trail', $collection).map(function() {
                     return $(this).data('url')
@@ -172,17 +185,19 @@ define([
                 }
             }
 
-            reqwest({
-                method: opts.delete ? 'delete' : 'post',
+            if (apiProps.item === apiProps.position) {
+                // Adding an item next to itself. Reload then bail.
+                collection.load();
+                return;
+            }
+
+            authedAjax({
                 url: common.config.apiBase + '/collection/' + collection.id,
-                type: 'json',
-                contentType: 'application/json',
+                type: opts.delete ? 'delete' : 'post',
                 data: JSON.stringify(apiProps)
-            }).always(function(resp) {
+            }).then(function() {
                 collection.load();
             });
-
-            collection.state.loadIsPending(true);
         };
 
         function startPoller() {
@@ -199,35 +214,12 @@ define([
             startPoller = function() {}; // make idempotent
         }
 
-        function fetchConfigs(callback) {
-            reqwest({
-                url: common.config.apiBase + '/config',
-                type: 'json'
-            }).then(
-                function(resp) {
-                    if (!(_.isArray(resp) && resp.length > 0)) {
-                        window.console.log("ERROR: No configs were found");
-                        return;
-                    }
-                    model.configs(resp.sort());
-                    if (_.isFunction(callback)) { callback(); }
-                },
-                function(xhr) { window.console.log("ERROR: There was a problem listing the configs"); }
-            );
-        };
-
-        function fetchConfig(id, callback) {
-            if (!(id && _.isFunction(callback))) {
-                return;
+        function toggleViewer() {
+            model.showViewer(!model.showViewer());
+            if (model.showViewer()) {
+                model.viewer.render();
             }
-            reqwest({
-                url: common.config.apiBase + '/config/' + id,
-                type: 'json'
-            }).then(
-                callback,
-                function(xhr) { window.console.log("ERROR: There was a problem fetching the config for " + id); }
-            );
-        };
+        }
 
         function flushClipboard() {
             model.clipboard.removeAll();
@@ -292,13 +284,13 @@ define([
                         fillColor: false,
                         composite: i > 0
                     });
-
                 });
             }
         };
 
         this.init = function() {
-            fetchConfigs(function(){
+            fetchConfigsList()
+            .then(function(){
                 renderConfig();
                 window.onpopstate = renderConfig;
 
