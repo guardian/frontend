@@ -44,7 +44,7 @@ define([
     var popular =  {
 
         render:  function (config) {
-            var hasSection = config.page && config.page.section !== 'global';
+            var hasSection = config.page && config.page.section && config.page.section !== 'global';
             return ajax({
                 url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
                 type: 'json',
