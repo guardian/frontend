@@ -20,9 +20,10 @@ class ImageContentTemplateTest extends FlatSpec with ShouldMatchers {
       $("#article img").first.getAttribute("src") should endWith ("1381235669888/French-Nude-in-Body-Stock-010.jpg")
   }
 
-  it should "show the twitter card meta-data" in HtmlUnit("/artanddesign/picture/2013/oct/08/photography") {
+  ignore should "show the twitter card meta-data" in HtmlUnit("/artanddesign/picture/2013/oct/10/photography-chicago-fire") {
     browser =>
       import browser._
+      
       $("meta[property='twitter:card']").getAttributes("content").head should be ("photo")
       $("meta[property='twitter:image.src']").getAttributes("content").head should endWith ("1373927091862/Steve-Bell-cartoon-16.07.-001.jpg")
   }
