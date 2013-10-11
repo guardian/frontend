@@ -439,6 +439,9 @@ module.exports = function (grunt) {
             discussion: {
                 src: ['integration-tests/casper/tests/discussion/*.spec.js']
             },
+            gallery: {
+                src: ['integration-tests/casper/tests/gallery/*.spec.js']
+            },
             article: {
                 src: ['integration-tests/casper/tests/article/*.spec.js']
             },
@@ -567,6 +570,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration:admin', ['env:casperjs', 'casperjs:admin']);
     grunt.registerTask('test:integration:discussion', ['env:casperjs', 'casperjs:discussion']);
     grunt.registerTask('test:integration:article', ['env:casperjs', 'casperjs:article']);
+    grunt.registerTask('test:integration:gallery', ['env:casperjs', 'casperjs:gallery']);
     grunt.registerTask('test:integration:front', ['env:casperjs', 'casperjs:front']);
     grunt.registerTask('test:integration:corenavigation', ['env:casperjs', 'casperjs:corenavigation']);
 
