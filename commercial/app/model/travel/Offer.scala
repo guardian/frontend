@@ -5,7 +5,7 @@ import org.joda.time.format.DateTimeFormat
 import scala.xml.Node
 
 case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywords: Seq[String], countries: Seq[String])
+                 earliestDeparture: DateTime, keywords: List[Keyword], countries: Seq[String])
 
 object Offer {
 
@@ -28,3 +28,5 @@ object Offer {
   }
 
 }
+
+case class Keyword(id: String, name: String)
