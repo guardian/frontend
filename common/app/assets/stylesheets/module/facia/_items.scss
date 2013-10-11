@@ -72,9 +72,12 @@
 }
 .item__image-container {
     display: none;
-    overflow: hidden;
-    @include mq(tablet) {
-        height: gs-height(4);
+    .item--image-upgraded & {
+        margin-top: 2px;
+        overflow: hidden;
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
     }
 }
 .item__image {
@@ -183,6 +186,10 @@
         .item__link {
             border-top-style: none;
         }
+        .item__title,
+        .item__image-container {
+            margin-top: 0;
+        }
     }
 }
 @mixin row-start {
@@ -217,11 +224,8 @@
             min-height: gs-height(8);
         }
         .item__image-container,
-        &.item--without-image .item__standfirst {
+        &.item--no-image .item__standfirst {
             display: block;
-        }
-        &.item--with-image .item__link {
-            border-top-style: none;
         }
     } @else {
         @include mq(tablet) {
@@ -246,10 +250,8 @@
     }
     .item__title {
         padding-top: 0;
-        .i {
-            display: none;
-        }
     }
+    .item__title .i,
     .item__meta {
         display: none;
     }
@@ -264,21 +266,19 @@
     padding-right: $gs-gutter/2;
     border-left: 1px dotted $c-neutral5;
     float: left;
+    min-height: gs-height(2) + $gs-baseline;
     .item__title,
     .item__byline {
         @include fs-header(1, $size-only: true);
     }
     @if $with-image {
-        min-height: gs-height(4);
+        &.item--image-upgraded {
+            min-height: gs-height(4);
+        }
         .item__image-container,
-        &.item--without-image .item__standfirst {
+        &.item--no-image .item__standfirst {
             display: block;
         }
-        &.item--with-image .item__link {
-            border-top-style: none;
-        }
-    } @else {
-        min-height: gs-height(2) + $gs-baseline;
     }
     .item__live-indicator {
         @include fs-data(1, true);
@@ -292,10 +292,10 @@
         @include fs-headline(7, $size-only: true);
     }
     .item__image-container,
-    &.item--without-image .item__standfirst {
+    .item__image-standfirst {
         display: block;
     }
-    .item__image-container {
+    &.item--image-upgraded .item__image-container{
         height: gs-height(8);
     }
     @include mq(desktop) {
@@ -309,7 +309,7 @@
 @mixin card-triple-width {
     width: gs-span(12);
     min-height: gs-height(8);
-    &.item--with-image {
+    &.item--image-upgraded {
         width: gs-span(4);
         padding-left: gs-span(8) + $gs-gutter;
     }
@@ -320,7 +320,7 @@
     .item__standfirst {
         display: block;
     }
-    .item__image-container {
+    &.item--image-upgraded .item__image-container {
         height: 100%;
         width: gs-span(8);
         position: absolute;

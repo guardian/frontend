@@ -67,13 +67,9 @@ define([
 
                         // only show images for the first 3 items
                         if (index < 3 && trail.mainPicture) {
-                            var $imageContainer = bonzo(bonzo.create(
-                                imageTmpl(trail)
-                            ));
-                            $item.addClass('item--with-image');
-                            common.$g('.item__link', $item).prepend($imageContainer);
+                            common.$g('.item__link', $item).prepend(imageTmpl(trail));
                             if (index < 3) {
-                                new ImageUpgrade($imageContainer[0], index === 0)
+                                new ImageUpgrade($item[0], index === 0)
                                     .upgrade();
                             }
                         }
