@@ -29,7 +29,6 @@ define([
     ) {
 
     var Discussion = function(options) {
-        options.config.switches.discussionPostComment = true;
         var initialResponses      = 3,
             responsesIncrement    = 25,
             context               = options.context,
