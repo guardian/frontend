@@ -6,16 +6,9 @@
 @if(IsFacia(request)) {
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/facia.min.css")" />
 }
-<!--<![endif]-->
+<!--<![endif]-->                          Conf
 <!--[if (lt IE 9) & (!IEMobile)]>
-    @Configuration.environment.projectName match {
-        case "identity" => {
-            <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.head.identity.min.css")" />
-        }
-        case _ => {
-            <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.head.min.css")" />
-        }
-    }
+<link rel="stylesheet" type="text/css" href="@Static(Static.css.oldIePath)" />
 <![endif]-->
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
