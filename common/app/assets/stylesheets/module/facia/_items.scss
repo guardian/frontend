@@ -186,10 +186,11 @@
         .item__link {
             border-top-style: none;
         }
-        .item__title,
-        .item__image-container {
+        .item__image-container,
+        &.item--no-image .item__title {
             margin-top: 0;
         }
+
     }
 }
 @mixin row-start {
@@ -292,7 +293,7 @@
         @include fs-headline(7, $size-only: true);
     }
     .item__image-container,
-    .item__image-standfirst {
+    &.item--no-image .item__standfirst {
         display: block;
     }
     &.item--image-upgraded .item__image-container{
