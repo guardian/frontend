@@ -1,0 +1,1354 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T13:02:00Z",
+      "webTitle":"Christina Edkins' family express anger over errors that left man free to kill",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"<p>Uncle asks why Phillip Simelane, now detained indefinitely under Mental Health Act, was not being supervised before bus attack</p>",
+        "headline":"Christina Edkins' family express anger over errors that left man free to kill",
+        "body":"<video data-media-id=\"gu-video-418869459\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002Edkins-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002Edkins_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002Edkins_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/2/131002Edkins/131002Edkins.m3u8\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/10/02/131002Edkins_vpx.webm\"></source>\n      </video><p>The family of a schoolgirl stabbed to death on a bus by a man with paranoid schizophrenia has expressed deep concern that the killer was receiving no supervision or treatment despite a long history of violence and mental illness.</p><p>A series of reviews is under way to find out why Phillip Simelane was not being monitored or cared for when he carried out the random attack on 16-year-old Christina Edkins as she travelled to school, even though doctors had warned that he needed help.</p><p>Speaking on behalf of the family, Christina's great uncle, Chris Melia, said the teenager would still be alive if Simelane had been properly supervised after leaving prison three months before he carried out the attack. \"There is clearly not enough care taken to keep society safe,\" he said.</p><p>Ordering Simelane, 23, to be detained indefinitely under the Mental Health Act, Mrs Justice Thirwall said anyone who heard the facts would be disturbed that he was living in the community while so severely ill.</p><p>Simelane's previous crimes include attempting to stab his mother, Priscilla, and punching a police officer. He had received a police reprimand for possessing a knife when he was 17.</p><p>Police had been called to his mother's home in Walsall, in the West Midlands, 21 times because of concerns about his violent behaviour, the first time when he was just 14. His mother has said she tried in vain to get help for him.</p><p>Concerns about Simelane's mental health, his violence and his use of knives were all recorded on the police national computer and while he was in prison last year he did receive some treatment for his psychological problems.</p><p>But when he was released in December 2012 he did not come under the supervision of police, probation services or health services and was sleeping rough.</p><p>The Conservative MP James Morris, whose constituency includes Christina's school in Halesowen said he and the family would be campaigning for a law change so that anyone found carrying a knife is charged and jailed if convicted.</p><p>Morris, the chairman of the all-party parliamentary group on mental health, said he had met with the policing minister Damian Green and asked him to look into ways that the police, prisons and the probation service can work better with social services and the health service to ensure that serious mental health issues can be identified, diagnosed and treated earlier and more effectively. \"Serious questions must be asked about why warnings and recommendations regarding Simelane seem to have been ignored, with horrific consequences,\" he said.</p><p>On the morning of 7 March Christina, a bright pupil who hoped to become a nurse or carer, got on the number nine bus in Birmingham city centre and sat on the top deck. Simelane, wearing all the clothes he had for warmth, had boarded the bus two hours before and at one point was sleeping on the back seat.</p><p>Five minutes after Christina sat down, Simelane casually walked up to the teenager and lunged at her, stabbing her in the chest with a long kitchen knife that he had been carrying in a plastic bag.</p><p>Desperate efforts to save Christina failed and a huge manhunt was launched for her killer. Simelane was arrested when he returned to the scene of the crime four hours later.</p><p>When doctors examined Simelane in a secure psychiatric hospital over the past few months they discovered – for the first time – that he had probably had paranoid schizophrenia since his early teens.</p><p>He arrived in the UK from Swaziland with his family aged nine. From the age of 14 he began to get into trouble with the police for violence and threatening behaviour. His mother has said he became isolated, did not wash and rarely left his room. In 2012, Simelane served 101 days in prison for pointing a knife at his mother's stomach and threatening to stab her. During his arrest he punched a police officer.</p><p>He was out of prison for just seven days before being sent back in October 2012 after being caught with cocaine. While in prison he underwent mental health assessments and on at least two occasions a specialist registrar in psychiatry insisted he needed in-patient treatment.</p><p>But when he was released in December 2012 no care plan was in place.</p><p>Because his crimes were not considered the most serious he did not come under the MAPPA (multi-agency public protection arrangements) under which killers and sex offenders are monitored.</p><p>Simelane pleaded guilty to manslaughter on the grounds of diminished responsibility at Birmingham crown court. Through his lawyer he told Christina's family: \"I did not mean to kill that girl, I'm ashamed of what has happened and I would like to apologise.\" He has told doctors that he thought Christina was a threat to him.</p><p>The judge told Simelane: \"Your mental function was wholly abnormal. It is difficult to understand how it came about that in December 2012 someone with your level of illness should have been sleeping rough with no one to look after you. \"</p><p>Birmingham and Solihull mental health NHS foundation trust said: \"There are lessons to be learned for us and others involved in the care of Phillip Simelane to prevent such a tragedy happening again in the future.</p><p>Christina's family sat in court, each wearing a purple scarf or ribbon to remember the young teenager, who had bought a lilac prom dress before she died. In a statement to the court the girl's mother, Kathleen, said: \"It's too late for Christina, but somebody else's child could be saved by him being detained,\" she said.</p><!-- Guardian Watermark: internal-code/content/418833753|2013-10-07T10:21:28Z|db4afa92cbfcb58ec477718a9c32fbcce4d1770e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-02T22:48:57Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+        "standfirst":"Uncle asks why Phillip Simelane, now detained indefinitely under Mental Health Act, was not being supervised before bus attack",
+        "shortUrl":"http://gu.com/p/3j83b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+        "wordcount":"914",
+        "commentable":"false",
+        "internalContentCode":"418833753",
+        "allowUgc":"false",
+        "internalOctopusCode":"8144037",
+        "isPremoderated":"false",
+        "byline":"Steven Morris and Laura Dixon",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-03",
+        "internalPageCode":"1974224",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-05T10:22:00Z"
+      },
+      "tags":[{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418904587",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"84",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-418869459",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002Edkins-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002Edkins_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002Edkins_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002Edkins/131002Edkins.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002Edkins_vpx.webm",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"uk-news/video/2013/oct/02/christina-edkins-police-respond-questions-raised-handling-phillip-simelane-video",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T15:40:00Z",
+      "webTitle":"Christina Edkins case: police respond to questions over handling of Phillip Simelane - video",
+      "webUrl":"http://www.theguardian.com/uk-news/video/2013/oct/02/christina-edkins-police-respond-questions-raised-handling-phillip-simelane-video",
+      "apiUrl":"http://content.guardianapis.com/uk-news/video/2013/oct/02/christina-edkins-police-respond-questions-raised-handling-phillip-simelane-video",
+      "fields":{
+        "trailText":"<p>West Midlands police superintendent Richard Baker discusses the case of Christina Edkins, after Philip Simelane pleaded guilty for her manslaughter</p>",
+        "headline":"Christina Edkins case: police respond to questions raised over handling of Phillip Simelane - video",
+        "body":"<video data-media-id=\"gu-video-418869459\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726857072/Christina-Edkins-011.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002Edkins-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002Edkins_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/2/131002Edkins/131002Edkins.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002Edkins_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/10/02/131002Edkins_vpx.webm\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/418869459|2013-10-07T10:21:28Z|25ac288d5b124ad0d4e535bd13f3a34835d2539f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-02T22:48:57Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726849484/Christina-Edkins-005.jpg",
+        "standfirst":"West Midlands police superintendent Richard Baker discusses the case of Christina Edkins, after Philip Simelane pleaded guilty for her manslaughter. Phillip Simelane, 23, stabbed 16-year-old Christina Edkins in a random attack in Birmingham as she sat on the top deck of a bus during the morning rush hour. Simelane has been sentenced to be detained indefinitely under the Mental Health Act",
+        "shortUrl":"http://gu.com/p/3j8ef",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726849484/Christina-Edkins-005.jpg",
+        "commentable":"false",
+        "internalContentCode":"418869459",
+        "allowUgc":"false",
+        "internalOctopusCode":"8145833",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1974525",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-05T15:40:33Z"
+      },
+      "tags":[{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418869459",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726846122/Christina-Edkins-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"54",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726847221/Christina-Edkins-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"340",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726848350/Christina-Edkins-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"130",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726849484/Christina-Edkins-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"84",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726850763/Christina-Edkins-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"132",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726852127/Christina-Edkins-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"168",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726853431/Christina-Edkins-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"180",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726854541/Christina-Edkins-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"228",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726855845/Christina-Edkins-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"276",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726857072/Christina-Edkins-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"372",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726858220/Christina-Edkins-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"360",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726859424/Christina-Edkins-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"90",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726860583/Christina-Edkins-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"225",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726861701/Christina-Edkins-015.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"360",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726862883/Christina-Edkins-016.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"230",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002Edkins-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002Edkins_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002Edkins_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002Edkins/131002Edkins.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002Edkins_vpx.webm",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        }]
+      },{
+        "id":"gu-image-418871772",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380726849484/Christina-Edkins-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Christina Edkins",
+            "height":"84",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T13:02:00Z",
+      "webTitle":"Christina Edkins' family express anger over errors that left man free to kill",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/christina-edkins-man-pleads-guilty",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"<p>Uncle asks why Phillip Simelane, now detained indefinitely under Mental Health Act, was not being supervised before bus attack</p>",
+        "headline":"Christina Edkins' family express anger over errors that left man free to kill",
+        "body":"<video data-media-id=\"gu-video-418869459\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002Edkins-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002Edkins_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002Edkins_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/2/131002Edkins/131002Edkins.m3u8\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/10/02/131002Edkins_vpx.webm\"></source>\n      </video><p>The family of a schoolgirl stabbed to death on a bus by a man with paranoid schizophrenia has expressed deep concern that the killer was receiving no supervision or treatment despite a long history of violence and mental illness.</p><p>A series of reviews is under way to find out why Phillip Simelane was not being monitored or cared for when he carried out the random attack on 16-year-old Christina Edkins as she travelled to school, even though doctors had warned that he needed help.</p><p>Speaking on behalf of the family, Christina's great uncle, Chris Melia, said the teenager would still be alive if Simelane had been properly supervised after leaving prison three months before he carried out the attack. \"There is clearly not enough care taken to keep society safe,\" he said.</p><p>Ordering Simelane, 23, to be detained indefinitely under the Mental Health Act, Mrs Justice Thirwall said anyone who heard the facts would be disturbed that he was living in the community while so severely ill.</p><p>Simelane's previous crimes include attempting to stab his mother, Priscilla, and punching a police officer. He had received a police reprimand for possessing a knife when he was 17.</p><p>Police had been called to his mother's home in Walsall, in the West Midlands, 21 times because of concerns about his violent behaviour, the first time when he was just 14. His mother has said she tried in vain to get help for him.</p><p>Concerns about Simelane's mental health, his violence and his use of knives were all recorded on the police national computer and while he was in prison last year he did receive some treatment for his psychological problems.</p><p>But when he was released in December 2012 he did not come under the supervision of police, probation services or health services and was sleeping rough.</p><p>The Conservative MP James Morris, whose constituency includes Christina's school in Halesowen said he and the family would be campaigning for a law change so that anyone found carrying a knife is charged and jailed if convicted.</p><p>Morris, the chairman of the all-party parliamentary group on mental health, said he had met with the policing minister Damian Green and asked him to look into ways that the police, prisons and the probation service can work better with social services and the health service to ensure that serious mental health issues can be identified, diagnosed and treated earlier and more effectively. \"Serious questions must be asked about why warnings and recommendations regarding Simelane seem to have been ignored, with horrific consequences,\" he said.</p><p>On the morning of 7 March Christina, a bright pupil who hoped to become a nurse or carer, got on the number nine bus in Birmingham city centre and sat on the top deck. Simelane, wearing all the clothes he had for warmth, had boarded the bus two hours before and at one point was sleeping on the back seat.</p><p>Five minutes after Christina sat down, Simelane casually walked up to the teenager and lunged at her, stabbing her in the chest with a long kitchen knife that he had been carrying in a plastic bag.</p><p>Desperate efforts to save Christina failed and a huge manhunt was launched for her killer. Simelane was arrested when he returned to the scene of the crime four hours later.</p><p>When doctors examined Simelane in a secure psychiatric hospital over the past few months they discovered – for the first time – that he had probably had paranoid schizophrenia since his early teens.</p><p>He arrived in the UK from Swaziland with his family aged nine. From the age of 14 he began to get into trouble with the police for violence and threatening behaviour. His mother has said he became isolated, did not wash and rarely left his room. In 2012, Simelane served 101 days in prison for pointing a knife at his mother's stomach and threatening to stab her. During his arrest he punched a police officer.</p><p>He was out of prison for just seven days before being sent back in October 2012 after being caught with cocaine. While in prison he underwent mental health assessments and on at least two occasions a specialist registrar in psychiatry insisted he needed in-patient treatment.</p><p>But when he was released in December 2012 no care plan was in place.</p><p>Because his crimes were not considered the most serious he did not come under the MAPPA (multi-agency public protection arrangements) under which killers and sex offenders are monitored.</p><p>Simelane pleaded guilty to manslaughter on the grounds of diminished responsibility at Birmingham crown court. Through his lawyer he told Christina's family: \"I did not mean to kill that girl, I'm ashamed of what has happened and I would like to apologise.\" He has told doctors that he thought Christina was a threat to him.</p><p>The judge told Simelane: \"Your mental function was wholly abnormal. It is difficult to understand how it came about that in December 2012 someone with your level of illness should have been sleeping rough with no one to look after you. \"</p><p>Birmingham and Solihull mental health NHS foundation trust said: \"There are lessons to be learned for us and others involved in the care of Phillip Simelane to prevent such a tragedy happening again in the future.</p><p>Christina's family sat in court, each wearing a purple scarf or ribbon to remember the young teenager, who had bought a lilac prom dress before she died. In a statement to the court the girl's mother, Kathleen, said: \"It's too late for Christina, but somebody else's child could be saved by him being detained,\" she said.</p><!-- Guardian Watermark: internal-code/content/418833753|2013-10-07T10:21:28Z|db4afa92cbfcb58ec477718a9c32fbcce4d1770e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-02T22:48:57Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+        "standfirst":"Uncle asks why Phillip Simelane, now detained indefinitely under Mental Health Act, was not being supervised before bus attack",
+        "shortUrl":"http://gu.com/p/3j83b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+        "wordcount":"914",
+        "commentable":"false",
+        "internalContentCode":"418833753",
+        "allowUgc":"false",
+        "internalOctopusCode":"8144037",
+        "isPremoderated":"false",
+        "byline":"Steven Morris and Laura Dixon",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-03",
+        "internalPageCode":"1974224",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-05T10:22:00Z"
+      },
+      "tags":[{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418904587",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/2/1380710131242/Phillip-Simelane-case-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands Police",
+            "altText":"Phillip Simelane case",
+            "height":"84",
+            "credit":"West Midlands Police/PA",
+            "caption":"Christina Edkins was stabbed to death on a bus on her way to school. Photograph: West Midlands Police/PA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-418869459",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002Edkins-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002Edkins_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002Edkins_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002Edkins/131002Edkins.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002Edkins_vpx.webm",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002Edkins_8145833.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002Edkins_8145833.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/02/christina-edkins-stabbing-family-horror-pain",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-02T10:54:08Z",
+      "webTitle":"Christina Edkins stabbing: family describe 'horror, distress and pain'",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/02/christina-edkins-stabbing-family-horror-pain",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/02/christina-edkins-stabbing-family-horror-pain",
+      "fields":{
+        "trailText":"Family issues statement as Phillip Simelane admits killing 16-year-old on bus in Halesowen, West Midlands",
+        "headline":"Christina Edkins stabbing: family describe 'horror, distress and pain'",
+        "body":"<p>The family of the &quot;beautiful, bright, caring girl&quot; whose life <a href=\"http://www.theguardian.com/uk-news/2013/oct/02/christina-edkins-man-pleads-guilty\" title=\"\">Phillip Simelane took away with one single violent act</a> have described their struggle to come to terms with the loss.</p><p>Christina Edkins' parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday.</p><p>Jason and Kathleen Edkins and Christina's brother, Ryan, and sister, Joanne, also made it clear that questions remain over why Simelane had not been supervised after his release from jail at the end of 2012.</p><p>Her great-uncle, Chris Melia, added that if 23-year-old Simelane had been properly monitored after his release, the attack on the top deck of the No 9 bus on the morning of 7 March, would not have happened.</p><p>The teenager's family thanked all those whose &quot;many acts of kindness&quot; have made their trauma a little easier to bear, including good wishes from people who had never known the schoolgirl but who had been touched by her loss.</p><p>Christina, they said, came from an ordinary, quiet and hard-working family and was loved by everyone.</p><p>It was her caring nature that lent a desire to become a nurse or a midwife, her parents said.</p><p>They also revealed the pride in finding out she had passed 11 GCSEs, tempered with the bittersweet knowledge she was not there to open her own results letter, nor wear the lilac dress she bought for the school prom.</p><p>Students and teachers at Leasowes high school in Halesowen, West Midlands, paid their own tribute to Christina, dedicating the prom to her memory and writing their own personal messages in the school's yearbook, which her mother and father found &quot;deeply moving&quot;.</p><p>In a statement, her family said they had been pulled apart by the &quot;horror, distress and pain&quot; of Simelane's devastating crime, and had been robbed of their privacy by the high profile of the case.</p><p>&quot;Nothing will restore Christina to us,&quot; they said.</p><p>&quot;The loss of a child is the worst thing that can happen, made even more grievous by such a senseless crime.</p><p>&quot;The family are all innocent victims and must pay the penalty as we stand helplessly by and watch the lives of the people we love shattered like glass, knowing we can never put the fragile pieces back together.&quot;</p><p>Welcoming the outcome of the court hearing, the family said it would &quot;bring an element of resolution in that the sentence passed means the public is protected from this man&quot;.</p><p>They added: &quot;However, he was allowed the freedom not only to take the life of an innocent child but, in doing so, to ensure the lives of the people whom she loved are forever affected as a result of his crime.&quot;</p><p>Despite the family's loss, Melia said there was &quot;no feeling of vengeance or retribution&quot; toward Simelane. &quot;It's just a matter of 'get him out of society',&quot; he added.</p><!-- Guardian Watermark: internal-code/content/418839457|2013-10-07T10:21:28Z|491b00ca8be0ad0cc113f7aa92059446c53c4564 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-02T10:54:08Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711176219/Schoolgirl-bus-stabbing-005.jpg",
+        "standfirst":"Family issues statement as Phillip Simelane admits killing 16-year-old on bus in Halesowen, West Midlands",
+        "shortUrl":"http://gu.com/p/3j84z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711176219/Schoolgirl-bus-stabbing-005.jpg",
+        "wordcount":"477",
+        "commentable":"false",
+        "internalContentCode":"418839457",
+        "allowUgc":"false",
+        "internalOctopusCode":"8144068",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "internalPageCode":"1974264",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-05T10:54:08Z"
+      },
+      "tags":[{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/knifecrime",
+        "type":"keyword",
+        "webTitle":"Knife crime",
+        "webUrl":"http://www.theguardian.com/uk/knifecrime",
+        "apiUrl":"http://content.guardianapis.com/uk/knifecrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418840232",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711173044/Schoolgirl-bus-stabbing-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"54",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711174073/Schoolgirl-bus-stabbing-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"340",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711175183/Schoolgirl-bus-stabbing-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"130",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711176219/Schoolgirl-bus-stabbing-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"84",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711177267/Schoolgirl-bus-stabbing-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"132",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711178323/Schoolgirl-bus-stabbing-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"168",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711179417/Schoolgirl-bus-stabbing-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"180",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711180505/Schoolgirl-bus-stabbing-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"228",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711181575/Schoolgirl-bus-stabbing-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"276",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711182643/Schoolgirl-bus-stabbing-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"372",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711181575/Schoolgirl-bus-stabbing-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"276",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418840233",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380711176219/Schoolgirl-bus-stabbing-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Schoolgirl bus stabbing",
+            "height":"84",
+            "credit":"West Midlands police/PA",
+            "caption":"Christina Edkins, whose parents and siblings said the senselessness of the crime had made their grief that much harder to bear on top of the loss of the schoolgirl, just two weeks after her 16th birthday. \r Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"society/2013/oct/04/christina-edkins-killer-mother-phillip-simelane",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-10-04T17:27:27Z",
+      "webTitle":"Christina Edkins's killer was badly let down by system, says his mother",
+      "webUrl":"http://www.theguardian.com/society/2013/oct/04/christina-edkins-killer-mother-phillip-simelane",
+      "apiUrl":"http://content.guardianapis.com/society/2013/oct/04/christina-edkins-killer-mother-phillip-simelane",
+      "fields":{
+        "newspaperPageNumber":"6",
+        "trailText":"Phillip Simelane, who has paranoid schizophrenia, 'was crying out for help' before attack on schoolgirl",
+        "headline":"Christina Edkins's killer was badly let down by system, says his mother",
+        "body":"<p>The mother of a man with paranoid schizophrenia who was detained for stabbing a schoolgirl to death on a bus has said her son was \"crying out for help\" before the attack but was \"badly let down by the system\".</p><p>Against the advice of a number of psychiatrists, Phillip Simelane was released on to the streets, with \"no treatment, no place to go and nowhere to live\", his mother said.</p><p>While \"desperately sad\" about the death of Christina Edkins, 16, the mother, who asked to be named only as Priscilla, said she believed both families had been let down by the system. She said she loved her son and was glad that at last he was receiving treatment.</p><p>Earlier this week a judge at Birmingham crown court ordered that Simelane, 23, be detained indefinitely under the Mental Health Act after he pleaded guilty to manslaughter on the grounds of diminished responsibility.</p><p>An inquiry led by the Birmingham and Solihull mental health trust is examining the actions of different agencies that came into contact with him before the attack to examine how he was left without care.</p><p>He was released from jail three months after serving a sentence for threatening his mother with a knife. While in prison experts said he should receive help after he was freed but he received no support. It was only after he killed Christina as she travelled to school that he was diagnosed with paranoid schizophrenia.</p><p>Priscilla said on Friday: \"Phillip was ill – he was suffering from paranoid schizophrenia – and, as the psychiatrist in the case has stated, his actions were a direct result of his illness. It wouldn't have happened had he not been suffering from this illness.</p><p>\"At the time this happened Phillip was crying out for help and yet that help just wasn't there for him. He was receiving no treatment, had no place to go and nowhere to live – he was even forbidden by the authorities to live in our house even though I wanted to help him.</p><p>\"This is all despite the fact that several psychiatrists had said he should have been having treatment. He has been badly let down by the system and the authorities, as have both families.\"</p><p>Mrs Justice Thirlwall said during the sentencing that anyone who heard the facts of the case would be disturbed to hear that Simelane was \"living in the community with an illness of that severity, living rough with no medical help or indeed any other help at all\".</p><p>The court had heard this week that Priscilla had made repeated requests for help as his behaviour deteriorated. A bright student, he had started to become paranoid as a teenager. He became more withdrawn, stopped washing, and said he was afraid to leave his room. He attacked Christina because he perceived her as a threat.</p><p>Priscilla, who is co-operating with the inquiry, added: \"I hope very much that going forward much better systems and processes are put in place to help people with illnesses like Phillip to make sure that there isn't a repeat of a tragedy like this. I love my son and am comforted that at least he is now getting the treatment he has needed for a long time.\"</p><!-- Guardian Watermark: internal-code/content/419103704|2013-10-07T10:21:28Z|4c146681999088825011250f52f84b4442e67a86 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-04T23:10:30Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906958901/Phillip-Simelane-004.jpg",
+        "standfirst":"Phillip Simelane, who has paranoid schizophrenia, 'was crying out for help' before attack on schoolgirl",
+        "shortUrl":"http://gu.com/p/3jagj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906958901/Phillip-Simelane-004.jpg",
+        "wordcount":"531",
+        "commentable":"false",
+        "internalContentCode":"419103704",
+        "allowUgc":"false",
+        "internalOctopusCode":"8156534",
+        "isPremoderated":"false",
+        "byline":"Laura Dixon and Steven Morris",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-05",
+        "internalPageCode":"1976041",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-07T17:27:27Z"
+      },
+      "tags":[{
+        "id":"society/mental-health",
+        "type":"keyword",
+        "webTitle":"Mental health",
+        "webUrl":"http://www.theguardian.com/society/mental-health",
+        "apiUrl":"http://content.guardianapis.com/society/mental-health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"society/social-care",
+        "type":"keyword",
+        "webTitle":"Social care",
+        "webUrl":"http://www.theguardian.com/society/social-care",
+        "apiUrl":"http://content.guardianapis.com/society/social-care",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"uk/birmingham",
+        "type":"keyword",
+        "webTitle":"Birmingham",
+        "webUrl":"http://www.theguardian.com/uk/birmingham",
+        "apiUrl":"http://content.guardianapis.com/uk/birmingham",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/laura-dixon",
+        "type":"contributor",
+        "webTitle":"Laura Dixon",
+        "webUrl":"http://www.theguardian.com/profile/laura-dixon",
+        "apiUrl":"http://content.guardianapis.com/profile/laura-dixon",
+        "r2ContributorId":"58994",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419105835",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906955648/Phillip-Simelane-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"54",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906956808/Phillip-Simelane-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"130",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906957864/Phillip-Simelane-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"340",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906958901/Phillip-Simelane-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"84",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906959898/Phillip-Simelane-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"132",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906961121/Phillip-Simelane-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"168",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906962189/Phillip-Simelane-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"180",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906963209/Phillip-Simelane-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"228",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906964226/Phillip-Simelane-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"276",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906965260/Phillip-Simelane-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"372",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906964226/Phillip-Simelane-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"276",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419105836",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380906958901/Phillip-Simelane-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"West Midlands police",
+            "altText":"Phillip Simelane",
+            "height":"84",
+            "credit":"West Midlands police/PA",
+            "caption":"Phillip Simelane, 23, who had 'no treatment, no place to go and nowhere to live' despite psychiatrists' advice, his mother said. Photograph: West Midlands police/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

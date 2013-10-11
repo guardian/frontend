@@ -1,11 +1,14 @@
 import com.google.inject.Guice
 import conf.{TestModule, DevModule, RequestMeasurementMetrics, ProdModule}
 import filters.HeaderLoggingFilter
-import play.api.mvc.WithFilters
-import play.api.{Mode, Play}
 import play.api.Play.current
+import play.api._
+import play.api.mvc._
+import play.api.mvc.Results._
+import scala.concurrent.Future
+import utils.SafeLogging
 
-object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetrics.asFilters: _*) {
+object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetrics.asFilters: _*) with SafeLogging {
   private lazy val injector = {
     val module =
       Play.mode match {
@@ -19,5 +22,32 @@ object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetri
 
   override def getControllerInstance[A](clazz: Class[A]) = {
     injector.getInstance(clazz)
+  }
+
+  override def onError(request: RequestHeader, ex: Throwable) = {
+    logger.error("Serving error page", ex)
+    if (Play.mode == Mode.Prod) {
+      Future.successful(InternalServerError(views.html.errors._50x()))
+    } else {
+      super.onError(request, ex)
+    }
+  }
+
+  override def onHandlerNotFound(request: RequestHeader) = {
+    logger.info(s"Serving 404, no handler found for ${request.path}")
+    if (Play.mode == Mode.Prod) {
+      Future.successful(NotFound(views.html.errors._404()))
+    } else {
+      super.onHandlerNotFound(request)
+    }
+  }
+
+  override def onBadRequest(request: RequestHeader, error: String) = {
+    logger.info(s"Serving 400, could not bind request to handler for ${request.uri}")
+    if (Play.mode == Mode.Prod) {
+      Future.successful(BadRequest("Bad Request: " + error))
+    } else {
+      super.onBadRequest(request, error)
+    }
   }
 }

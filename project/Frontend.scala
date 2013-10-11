@@ -3,14 +3,13 @@ package com.gu
 import sbt._
 import sbt.Keys._
 import play.Project._
-import SbtGruntPlugin._
 
 object Frontend extends Build with Prototypes {
 
-  val common = grunt("common").settings(
+  val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.6",
+      "com.gu.openplatform" %% "content-api-client" % "2.7",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -27,8 +26,7 @@ object Frontend extends Build with Prototypes {
 
       "org.jboss.dna" % "dna-common" % "0.6",
       "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
-    ),
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:common"))
+    )
   )
   val commonWithTests = common % "test->test;compile->compile"
 
@@ -41,7 +39,8 @@ object Frontend extends Build with Prototypes {
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
       "pa._",
-      "feed._"
+      "feed._",
+      "football.controllers._"
     )
   )
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
@@ -54,7 +53,7 @@ object Frontend extends Build with Prototypes {
     )
   )
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    templatesImport ++= Seq("discussion._")
+    templatesImport ++= Seq("discussion._", "discussion.model._")
   )
 
   val router = application("router")
@@ -66,10 +65,8 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
-  )
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests, admin)
+  val admin = application("admin").dependsOn(commonWithTests).aggregate(common)
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
   val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
@@ -129,11 +126,11 @@ object Frontend extends Build with Prototypes {
     interactive,
     sport,
     coreNavigation,
-    image,
     discussion,
     router,
     diagnostics,
-    identity)
+    identity,
+    admin)
 
   val faciaDev = application("facia-dev-build").dependsOn(
     facia,
@@ -146,7 +143,8 @@ object Frontend extends Build with Prototypes {
     discussion,
     router,
     diagnostics,
-    identity)
+    identity
+  )
 
   val main = root().aggregate(
     common,

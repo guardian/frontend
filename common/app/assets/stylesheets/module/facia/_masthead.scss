@@ -10,7 +10,7 @@
                     border-top-style: none;
                 }
             }
-            &:nth-child(n + 2) {
+            &:nth-child(n+2) {
                 .item__standfirst,
                 .item__image-container {
                     display: none;
@@ -176,7 +176,7 @@
             @include mq(tablet) {
                 @include box-sizing(content-box);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 width: gs-span(4);
                 .item__title {
                     min-height: gs-height(3);
@@ -233,10 +233,10 @@
                 }
             }
         }
-        .item:nth-child(n + 2) {
+        .item:nth-child(n+2) {
             @include mq(tablet, wide) {
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 width: gs-span(4);
                 .item__title {
                     min-height: gs-height(3) + $gs-baseline;
@@ -250,7 +250,7 @@
                 @include box-sizing(content-box);
                 padding-left: $gs-gutter/2 - 1;
                 padding-right: $gs-gutter/2;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 width: gs-span(4);
                 .item__title {
                     min-height: gs-height(3);
@@ -330,11 +330,11 @@
             }
         }
         @include mq(tablet, wide) {
-            .item:nth-child(n + 2){
+            .item:nth-child(n+2){
                 @include box-sizing(content-box);
                 width: gs-span(4);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 .item__title {
                     min-height: gs-height(2) - 8;
                     @include font-size(20, 24);
@@ -347,7 +347,7 @@
                 border-top-style: none;
                 padding-top: 0;
             }
-            .item:nth-child(n + 3) {
+            .item:nth-child(n+3) {
                 padding-top: $gs-baseline;
             }
         }
@@ -355,7 +355,7 @@
             .item:nth-child(2) {
                 @include box-sizing(content-box);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 padding-right: $gs-gutter/2;
                 width: gs-span(4);
                 .item__title {
@@ -368,11 +368,11 @@
                     min-height: gs-height(4);
                 }
             }
-            .item:nth-child(n + 3) {
+            .item:nth-child(n+3) {
                 @include box-sizing(content-box);
                 width: gs-span(4);
                 padding-left: $gs-gutter/2 - 1;
-                border-left: 1px dotted $grey;
+                border-left: 1px dotted $c-neutral4;
                 .item__title {
                     min-height: gs-height(3) + $gs-baseline;
                 }

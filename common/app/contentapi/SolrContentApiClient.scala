@@ -10,7 +10,6 @@ import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
-  val supportedTypes = "type/gallery|type/article|type/video|type/sudoku"
 
   //NOTE - do NOT add body to this list
   val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl"
@@ -57,7 +56,6 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showElements("all")
                 .showReferences(references)
                 .showStoryPackage(true)
-                .tag(supportedTypes)
     query.response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
     query
   }
@@ -71,7 +69,6 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showReferences(references)
                 .showFields(trailFields)
                 .showElements("all")
-                .tag(supportedTypes)
     query.response.onFailure{case t: Throwable => log.warn("%s".format(t.toString))}
     query
   }

@@ -1,0 +1,3356 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":44243,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":4425,
+    "orderBy":"newest",
+    "edition":{
+      "id":"film",
+      "webTitle":"Film",
+      "webUrl":"http://www.theguardian.com/film",
+      "apiUrl":"http://content.guardianapis.com/film",
+      "code":"default"
+    },
+    "section":{
+      "id":"film",
+      "webTitle":"Film",
+      "webUrl":"http://www.theguardian.com/film",
+      "apiUrl":"http://content.guardianapis.com/film",
+      "editions":[{
+        "id":"film",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film",
+        "apiUrl":"http://content.guardianapis.com/film",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"film/2013/oct/07/danny-boyle-diamond-thief-heist-thriller-new-film",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T09:17:00Z",
+      "webTitle":"Danny Boyle conspires on diamond thief heist thriller",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/danny-boyle-diamond-thief-heist-thriller-new-film",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/danny-boyle-diamond-thief-heist-thriller-new-film",
+      "fields":{
+        "trailText":"<p>Slumdog Millionaire director aims to film real life story of 'Pink Panther' jewel robbers<br /></p>",
+        "headline":"Danny Boyle conspires on diamond thief heist thriller",
+        "body":"<p>Danny Boyle is getting back in the heist game. The Oscar-winning British director is set to shoot a feature adaptation of a recently released documentary <a href=\"http://variety.com/2013/film/news/danny-boyle-smash-and-grab-1200691598/\">about the world's most successful gang of diamond thieves</a>.</p><p>Boyle, whose art theft thriller <a href=\"http://www.theguardian.com/film/movie/92543/trance\">Trance</a> hit cinemas earlier this year, will base his new project on the film <a href=\"http://www.theguardian.com/film/2013/sep/26/smash-and-grab-pink-panthers-review\">Smash and Grab: The Story of the Pink Panthers</a>. Havana Marking's documentary centres on a crew of Balkan thieves who became notorious over more than a decade of activity. Reviewing the film in the Guardian last month, critic Mike McCahill described it as a documentary which \"pursues its subject from multiple angles, quizzing reporters, cops and sometime gang members, while carefully marshalled archive frames a deeper sociopolitical inquiry\".</p><p>Marking's film should give Boyle and his regular producer partner Christian Colson plenty to work with. It features genuine CCTV footage and interviews with members of the Pink Panthers, who are estimated to have pulled off heists worth more than $500m in Dubai, Switzerland, Japan, France, Liechtenstein, Germany, Luxembourg, Spain and Monaco. </p><p>The gang, which is believed to be several hundred members strong, picked up their flamboyant moniker after hiding a diamond worth more than £500,000 in a jar of face cream during a raid on a Mayfair jewellers in 1993. The tactic mimicked a heist seen in the 1975 Peter Sellers film The Return of the Pink Panther.</p><p>Boyle's adaptation is at an early stage of production but will be set up at his regular studio Fox Searchlight, Pathe, and his own unit Cloud Eight Films.</p><p><a href=\"http://www.theguardian.com/film/2013/sep/26/smash-and-grab-pink-panthers-review\">• Review of Smash and Grab: The Story of the Pink Panthers</a></p><!-- Guardian Watermark: internal-code/content/419232823|2013-10-07T10:05:55Z|55ea245ff2ecdea49bcdd811f52451e1a8f152bc -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T09:19:16Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366203078662/Danny-Boyle-003.jpg",
+        "standfirst":"Slumdog Millionaire director aims to film real life story of 'Pink Panther' jewel robbers<br /><br /><a href=\"http://www.theguardian.com/film/2013/mar/09/danny-boyle-queen-olympics-film\">• Jonathan Freedland meets Danny Boyle</a><br /><a href=\"http://www.theguardian.com/film/2013/aug/25/danny-boyle-philip-french-tribute\">• Danny Boyle on Philip French</a>",
+        "shortUrl":"http://gu.com/p/3jb8n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366203078662/Danny-Boyle-003.jpg",
+        "wordcount":"266",
+        "commentable":"true",
+        "internalContentCode":"419232823",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976558",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T09:17:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/danny-boyle",
+        "type":"keyword",
+        "webTitle":"Danny Boyle",
+        "webUrl":"http://www.theguardian.com/film/danny-boyle",
+        "apiUrl":"http://content.guardianapis.com/film/danny-boyle",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/thriller",
+        "type":"keyword",
+        "webTitle":"Thriller",
+        "webUrl":"http://www.theguardian.com/film/thriller",
+        "apiUrl":"http://content.guardianapis.com/film/thriller",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/crime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/film/crime",
+        "apiUrl":"http://content.guardianapis.com/film/crime",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419235229",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/8/22/1377187845521/Danny-Boyle-008.jpg",
+          "typeData":{
+            "source":"Murdo MacLeod",
+            "altText":"Danny Boyle",
+            "height":"276",
+            "credit":"Murdo MacLeod",
+            "caption":"On the hunt ... Danny Boyle. Photograph: Murdo MacLeod",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419235230",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366203078662/Danny-Boyle-003.jpg",
+          "typeData":{
+            "source":"Murdo MacLeod",
+            "altText":"Danny Boyle",
+            "height":"84",
+            "credit":"Murdo MacLeod",
+            "caption":"Danny Boyle. Photograph: Murdo MacLeod",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/07/woody-allen-blue-jasmine-withdrawn-india",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T08:49:48Z",
+      "webTitle":"Woody Allen pulls Blue Jasmine from Indian cinemas over anti-tobacco ad",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/woody-allen-blue-jasmine-withdrawn-india",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/woody-allen-blue-jasmine-withdrawn-india",
+      "fields":{
+        "trailText":"<p>Film-maker declined to allow mandatory warning scroll to be superimposed on smoking scenes</p>",
+        "headline":"Woody Allen pulls Blue Jasmine from Indian cinemas over anti-tobacco ad",
+        "body":"<video data-media-id=\"gu-video-415103521\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/8/15/130814BlueJasmine-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/8/15/130814BlueJasmine-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/8/15/130814BlueJasmine_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/8/15/130814BlueJasmine_vpx.webm\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/8/15/130814BlueJasmine/130814BlueJasmine.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/8/15/130814BlueJasmine_3gpLg16x9.3gp\"></source>\n      </video><p>Woody Allen has withdrawn his latest film Blue Jasmine from Indian release after it emerged that anti-smoking ads would be inserted into the film during scenes where characters are seen puffing on a cigarette.</p><p><a href=\"http://www.dnaindia.com/health/1898433/report-woody-allen-finds-indian-anti-tobacco-ad-distracting-cancels-film-screening\">According to DNA</a>, a regulation requires that a <a href=\"http://articles.timesofindia.indiatimes.com/2012-01-28/india/30673447_1_smoking-scenes-new-films-health-ministry\">warning scroll</a> is added to any scene containing smoking, as well the addition of anti-tobacco spots, that screens in Indian cinemas. The rule came into force in 2012.</p><p>Blue Jasmine contains two scenes that would have triggered the warning spots (which otherwise would face being cut). PVR Pictures, Blue Jasmine's Indian distributor, had planned to show the film on 25-30 screens last weekend, but the film was pulled.</p><p>Deepak Sharma, COO of PVR Pictures, said: \"Allen has the creative control as per the agreement. He wasn't comfortable with the disclaimer that we are required to run when some smoking scene is shown in films. He feels that when the scroll comes, attention goes to it rather than the scene.\" </p><p>\"We had to abide by the law and we don't have control over the film.\"</p><p><a href=\"http://www.theguardian.com/film/movie/155586/blue-jasmine\">• More on Blue Jasmine</a></p><!-- Guardian Watermark: internal-code/content/419226474|2013-10-07T10:05:55Z|eeafbfca14861097ca0db8cfeb2d549f0f1d84d9 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T08:49:48Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379520880596/Blue-Jasmine-003.jpg",
+        "standfirst":"Film-maker declined to allow mandatory warning scroll to be superimposed on smoking scenes<br /><br /><a href=\"http://www.theguardian.com/film/2013/sep/19/blue-jasmine-review\">• Peter Bradshaw's review of Blue Jasmine</a><br /><a href=\"http://www.theguardian.com/film/2013/oct/02/woody-allen-son-ronan-frank-sinatra-mia-farrow\">• Mia Farrow: Woody Allen's son Ronan may be Frank Sinatra's</a>",
+        "shortUrl":"http://gu.com/p/3jb88",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379520880596/Blue-Jasmine-003.jpg",
+        "wordcount":"177",
+        "commentable":"true",
+        "internalContentCode":"419226474",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Andrew Pulver",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976543",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T08:49:48Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/woodyallen",
+        "type":"keyword",
+        "webTitle":"Woody Allen",
+        "webUrl":"http://www.theguardian.com/film/woodyallen",
+        "apiUrl":"http://content.guardianapis.com/film/woodyallen",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"world/india",
+        "type":"keyword",
+        "webTitle":"India",
+        "webUrl":"http://www.theguardian.com/world/india",
+        "apiUrl":"http://content.guardianapis.com/world/india",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andrewpulver",
+        "type":"contributor",
+        "webTitle":"Andrew Pulver",
+        "webUrl":"http://www.theguardian.com/profile/andrewpulver",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewpulver",
+        "bio":"<p>Andrew Pulver is Film editor, guardian.co.uk</p>",
+        "rcsId":"GNL004602",
+        "r2ContributorId":"15370",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345733137119/AndrewPulver.jpg",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/smoking",
+        "type":"keyword",
+        "webTitle":"Smoking",
+        "webUrl":"http://www.theguardian.com/society/smoking",
+        "apiUrl":"http://content.guardianapis.com/society/smoking",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419231780",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379520880596/Blue-Jasmine-003.jpg",
+          "typeData":{
+            "source":"REX/Everett Collection",
+            "photographer":"REX/Everett Collection",
+            "altText":"Blue Jasmine",
+            "height":"84",
+            "credit":"REX/Everett Collection/REX/Everett Collection",
+            "caption":"Peter Sarsgaard and Cate Blanchett in Woody Allen's Blue Jasmine.  Photograph: REX/Everett Collection",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-415103521",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/8/15/130814BlueJasmine-16x9.mp4",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/8/15/130814BlueJasmine_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/8/15/130814BlueJasmine_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/8/15/130814BlueJasmine-720.mp4",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/8/15/130814BlueJasmine/130814BlueJasmine.m3u8",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/8/15/130814BlueJasmine_vpx.webm",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/07/peter-jackson-hobbit-production-costs",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T07:48:00Z",
+      "webTitle":"Peter Jackson's Hobbit trilogy production costs revealed at $560m",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/peter-jackson-hobbit-production-costs",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/peter-jackson-hobbit-production-costs",
+      "fields":{
+        "trailText":"<p>Cost of director's three-film adaptation of JRR Tolkien's book exposed after a budget report was filed in New Zealand</p>",
+        "headline":"Peter Jackson's Hobbit trilogy production costs revealed at $560m",
+        "body":"<p>Peter Jackson's fantasy trilogy The Hobbit has so far cost more than half a billion dollars, making it one of the most expensive back to back film shoots of all time.</p><p>Jackson's film series is currently budgeted at 676 million New Zealand dollars, which is $561m or £349m, <a href=\"mailto:http://www.hollywoodreporter.com/news/peter-jacksons-hobbit-trilogy-has-643506\">according to a financial report filed in Wellington on Friday</a>. The figure, which provides a rare insight into the cost of Hollywood blockbusters, is more than twice the level of Jackson's previous trilogy The Lord of the Rings, based on JRR Tolkien's later tale of Middle Earth.</p><p>Costs for the three films have rocketed due to Jackson's decision to shoot in 3D and at 48 frames per second for additional image clarity. The final figure, once reshoots on the two remaining films are taken into account, is likely to be even higher. There may also have been extra costs incurred when Jackson chose to release three movies rather than the original two.</p><figure data-media-id='gu-image-419227639'><img src='http://static.guim.co.uk/sys-images/Film/Pix/pictures/2009/9/24/1253809758821/Hobbiton-001.jpg' alt='Hobbiton' width='460' height='276' class='gu-image'/><figcaption>A $560 million trip to Hobbiton Photograph: Pierre Vinet/AP</figcaption></figure><p> Nevertheless, studios Warner Bros and MGM will most likely consider their money to have been well spent. The first film in the trilogy alone, The Hobbit: An Unexpected Journey, has so far taken more than $1bn at the global box office despite lukewarm reviews in comparison to Jackson's previous films set in Middle Earth. More controversial could be the $98m which the New Zealand tax payer has contributed to the film series through a series of incentives brokered by Jackson in 2010 <a href=\"http://www.theguardian.com/film/2010/oct/27/the-hobbit-deal-new-zealand \">after strike threats led him to threaten to film in eastern Europe or Australia</a>. </p><p>The budgetary documents, filed online by New Zealand's Companies Office, suggest The Hobbit is one of the most expensive operations in which two or more films have been shot at once, though it is likely to have been beaten by the first three Pirates of the Caribbean films in terms of overall cost. By way of comparison, the back to back shoot for that series' At World's End and Dead Man's Chest has been estimated at between $450m and $525m. The Star Wars prequels cost $343m, according to Box Office Mojo, while Sam Raimi's Spider-Man trilogy is estimated at close to $500m.</p><p>The Hobbit is the tale of a hairy footed homunculus named Bilbo Baggins who sets out with 13 dwarves and a wizard, Gandalf, to wrest a priceless treasure from a sly old dragon. The next instalment in the trilogy, The Desolation of Smaug, is due out in December, with the final chapter, There and Back Again, set for December 2014.</p><h2>More on The Hobbit</h2><p>• <a href=\"http://www.theguardian.com/film/filmblog/2013/oct/01/hobbit-desolation-of-smaug-new-trailer\">Watch the trailer for The Desolation of Smaug</a><br />• <a href=\"http://www.theguardian.com/film/2012/dec/09/hobbit-an-unexpected-journey-review\">The Hobbit: An Unexpected Journey - Peter Bradshaw's review</a></p><!-- Guardian Watermark: internal-code/content/419225433|2013-10-07T10:05:55Z|2d079322fef27a6366559b916e7be62131ecd82c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T07:59:25Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667423304/Gandalf-in-The-Hobbit-An--005.jpg",
+        "standfirst":"Cost of director's three-film adaptation of JRR Tolkien's book exposed after a budget report was filed in New Zealand<br /><br />• <a href=\"http://www.theguardian.com/film/filmblog/2013/oct/01/hobbit-desolation-of-smaug-new-trailer\">Watch the trailer for The Desolation of Smaug</a><br />• <a href=\"http://www.theguardian.com/film/2012/dec/09/hobbit-an-unexpected-journey-review\">The Hobbit: An Unexpected Journey - Peter Bradshaw's review</a>",
+        "shortUrl":"http://gu.com/p/3jb83",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667423304/Gandalf-in-The-Hobbit-An--005.jpg",
+        "wordcount":"435",
+        "commentable":"true",
+        "internalContentCode":"419225433",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976538",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T07:48:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/peterjackson",
+        "type":"keyword",
+        "webTitle":"Peter Jackson",
+        "webUrl":"http://www.theguardian.com/film/peterjackson",
+        "apiUrl":"http://content.guardianapis.com/film/peterjackson",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"books/jrrtolkien",
+        "type":"keyword",
+        "webTitle":"JRR Tolkien",
+        "webUrl":"http://www.theguardian.com/books/jrrtolkien",
+        "apiUrl":"http://content.guardianapis.com/books/jrrtolkien",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/sciencefictionandfantasy",
+        "type":"keyword",
+        "webTitle":"Science fiction and fantasy",
+        "webUrl":"http://www.theguardian.com/film/sciencefictionandfantasy",
+        "apiUrl":"http://content.guardianapis.com/film/sciencefictionandfantasy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419227637",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667429187/Gandalf-in-The-Hobbit-An--010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"James Fisher",
+            "altText":"Gandalf in The Hobbit: An Unexpected Journey",
+            "height":"276",
+            "credit":"James Fisher/AP",
+            "caption":"Costs a lot to live this green ... Ian McKellen as Gandalf in The Hobbit: An Unexpected Journey. Photograph: James Fisher/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419227638",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667423304/Gandalf-in-The-Hobbit-An--005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"James Fisher",
+            "altText":"Gandalf in The Hobbit: An Unexpected Journey",
+            "height":"84",
+            "credit":"James Fisher/AP",
+            "caption":"Now where have we seen this before? ... Ian McKellen as Gandalf in The Hobbit: An Unexpected Journey. Photograph: James Fisher/AP",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419227639",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2009/9/24/1253809758821/Hobbiton-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Pierre Vinet",
+            "altText":"Hobbiton",
+            "height":"276",
+            "credit":"Pierre Vinet/AP",
+            "caption":"A $560 million trip to Hobbiton Photograph: Pierre Vinet/AP",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/07/film-today",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T05:29:43Z",
+      "webTitle":"Film today: The Hobbit: An Unexpected Price Tag",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/film-today",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/film-today",
+      "fields":{
+        "trailText":"<p>All the goings-on in the film world on Monday 7 October</p>",
+        "headline":"Film today: The Hobbit: An Unexpected Price Tag",
+        "body":"<h2>In the news today ...</h2><p>- Peter Jackson's Hobbit trilogy has cost a most precious $560 million to date.</p><p>- Danny Boyle is planning a jewel heist movie based on the documentary Smash and Grab.</p><p>- Danny Dyer's film company went bust owing 50 monkies to the tax man.</p><p>- No ta: Woody Allen has refused to show Blue Jasmine in India because of the country's legal requirement to run health ads on smoking scenes. </p><p>- Oliver Stone has lead a protest against a US military base in Korea.</p><p>- Italian director Carlo Lizzani has died after falling from a balcony. He was 91.</p><h2>Elsewhere on the site</h2><video data-media-id=\"gu-video-416689780\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/9/6/130906GravityTrailer-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/9/6/130906GravityTrailer_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/9/6/130906GravityTrailer-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/9/6/130906GravityTrailer_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/9/6/130906GravityTrailer/130906GravityTrailer.m3u8\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/9/6/130906GravityTrailer_vpx.webm\"></source>\n      </video><p> - Jeremy Kay will be reporting on the out of this world takings for Alfonso Cuarón's Gravity as he rounds up the week at the US box office.</p><p>- What?! No Run for Your Wife?! Quentin Tarantino has revealed his top ten movies of the year so far. Ben Child will be picking through them.</p><p>- That big softy Andrew Pulver will be revealing our top ten romantic films of all time. </p><p>- Henry Barnes will take to our Why I Love ... series to sing the praises of fictional movie pop songs.</p><h2>You may have missed</h2><p>Here's what happened on the site over the weekend ... </p><video data-media-id=\"gu-video-418959257\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/3/131003Filth2-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/3/131003Filth2_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/3/131003Filth2/131003Filth2.m3u8\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/10/03/131003Filth2_vpx.webm\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/3/131003Filth2_3gpLg16x9.3gp\"></source>\n      </video><p> - Mark Kermode done some writings about <a href=\"http://http://www.theguardian.com/film/2013/oct/06/sunshine-on-leith-filth-review\">Filth, Sunshine on Leith and the other current cinema releases</a>.</p><p>- John Patterson explained <a href=\"http://http://www.theguardian.com/film/2013/oct/07/the-conspiracy-paranoia-john-patterson\">how The Conspiracy has made paranoia fun again</a>.</p><p>- <a href=\"http://http://www.theguardian.com/culture/2013/oct/06/michael-j-fox-sitcom-parkinsons-alcoholism-divorce\">Michael J Fox talked comedy, Parkinson's and hoverboards</a> with Hadley Freeman.</p><p>- Stuart Heritage <a href=\"http://www.theguardian.com/film/2013/oct/05/friends-with-benefits-recap-sex\">watched Justin Timberlake make dirty sex noises</a> as he liveblogged Friends With Benefits.</p><p>- And <a href=\"http://www.theguardian.com/film/video/2013/oct/04/sunshine-on-leith-filth-video-review\">The Guardian Film Show</a> got mucky with Filth, lovey with Sunshine on Leith, sexy with Thanks for Sharing and apocalypticy with How I Live Now.</p><!-- Guardian Watermark: internal-code/content/419211374|2013-10-07T10:05:55Z|977241d80ced79f91d6d154af5ca6684d0b6df1e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T05:29:43Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756977159/2012-THE-HOBBIT----UNEXPE-005.jpg",
+        "standfirst":"All the goings-on in the film world on Monday 7 October",
+        "shortUrl":"http://gu.com/p/3jb77",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756977159/2012-THE-HOBBIT----UNEXPE-005.jpg",
+        "wordcount":"285",
+        "commentable":"true",
+        "internalContentCode":"419211374",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Henry Barnes",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976515",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T05:29:43Z"
+      },
+      "tags":[{
+        "id":"film/series/film-today",
+        "type":"series",
+        "webTitle":"Film today",
+        "webUrl":"http://www.theguardian.com/film/series/film-today",
+        "apiUrl":"http://content.guardianapis.com/film/series/film-today",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/henrybarnes",
+        "type":"contributor",
+        "webTitle":"Henry Barnes",
+        "webUrl":"http://www.theguardian.com/profile/henrybarnes",
+        "apiUrl":"http://content.guardianapis.com/profile/henrybarnes",
+        "bio":"<p>Henry Barnes is the site editor of theguardian.com/film. He also produces the site's film video and writes about film and music.</p>",
+        "r2ContributorId":"19723",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/21/1358772912329/Guardian-film-staff-membe-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419213349",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756984496/2012-THE-HOBBIT----UNEXPE-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Sportsphoto Ltd/Allstar",
+            "altText":"2012, THE HOBBIT -  UNEXPECTED JOURNEY",
+            "height":"276",
+            "credit":"Sportsphoto Ltd/Allstar/PR",
+            "caption":"Yours for $560 million ... The Hobbit. Photograph: Sportsphoto Ltd/Allstar",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419213350",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756977159/2012-THE-HOBBIT----UNEXPE-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Sportsphoto Ltd/Allstar",
+            "altText":"2012, THE HOBBIT -  UNEXPECTED JOURNEY",
+            "height":"84",
+            "credit":"Sportsphoto Ltd/Allstar/PR",
+            "caption":"Lethal at the US box office … Martin Freeman as Bilbo Baggins. Photograph: Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-418959257",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/3/131003Filth2-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/3/131003Filth2_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/03/131003Filth2_vpx.webm",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/3/131003Filth2_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/3/131003Filth2/131003Filth2.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        }]
+      },{
+        "id":"gu-video-416689780",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/6/130906GravityTrailer-16x9.mp4",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/6/130906GravityTrailer-720.mp4",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/6/130906GravityTrailer_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/6/130906GravityTrailer_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/6/130906GravityTrailer/130906GravityTrailer.m3u8",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/6/130906GravityTrailer_vpx.webm",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/07/the-conspiracy-paranoia-john-patterson",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T05:00:00Z",
+      "webTitle":"The Conspiracy makes paranoia fun again",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/the-conspiracy-paranoia-john-patterson",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/the-conspiracy-paranoia-john-patterson",
+      "fields":{
+        "newspaperPageNumber":"20",
+        "trailText":"<p>Christopher MacBride's faux-documentary uses found footage to spin its tale of the shadowy Tarsus Group</p>",
+        "headline":"The Conspiracy makes paranoia fun again",
+        "body":"<p>Faux-documentary The Conspiracy pulls off two tricks that alone warrant 82 crisply compelling minutes of your time: it makes conspiracy theories fun again (or perhaps it just makes them funny, as well as quite scary); and it finds new life in the increasingly threadbare found-footage genre.</p><p>Two small-scale Canadian documentarians named Aaron Poole and Jim Gilbert – the actors' real names – are profiling a conspiracy theorist named Terrance, who bears a žižek-y resemblance to those derelicts you see waving tin cups on freeway off-ramps, but who is building his own unified field theory of every conspiracy ever out of newspaper clippings, push-pins and pieces of string on his apartment wall. When Terrance disappears, the more credulous Aaron develops his theories, while Jim the sceptic holds his tongue. Key recurring elements lead them to the secretive Tarsus Group, some unspeakable combination of the Parallax Corporation, the Carlyle and <a href=\"http://www.theguardian.com/world/bilderberg\" title=\"\">Bilderberg</a> groups, the Illuminati, and the orgiastic overdogs of <a href=\"http://www.theguardian.com/film/movie/76659/eyes.wide.shut\" title=\"\">Eyes Wide Shut</a>. Their hidden hand, Aaron comes to believe, can be discerned at work in the run-up to history's most momentous events. The film-makers' obsession with Tarsus leads them to infiltrate, with concealed mini-cams, one of the the group's highly secret bacchanalian gatherings of the obscenely rich and the monumentally powerful, all reminiscent of the nude male powermonger frolics at Bohemian Grove each summer.</p><p>What's interesting is that the conspiracy theories themselves don't matter that much. Some of them are rightwing and delusional, others leftwing and ditto. Writer-director Christopher MacBride seems more interested in the paranoid mindset itself, that delicious frisson of fear and panicked exhilaration that sets in when paranoia bites deep. His characters have their apartments turned over and are followed in the streets by mysterious black SUVs and fascistic-looking bicyclists – and being documentary makers, they document everything. Armed with tie-pin cameras, they crash the seemingly benign and polite super-secret retreat, naive enough to still consider themselves the hunters and not the prey.</p><p>The Conspiracy is intentionally cheap-looking, with a lot of different stocks and exposure levels, occlusions and blackouts, but MacBride turns his apparently meagre resources into a movie that's both plausible and watchable (and not merely in the sense that all his moving cameras don't induce nausea in the viewer). It can be faulted for its predictability, but the film-making is surefooted and confident. It's a movie for anyone who secretly fears (yet also craves) the idea that 10 powerful men in a single room control the universe. Well, don't they?</p><!-- Guardian Watermark: internal-code/content/418867953|2013-10-07T10:05:55Z|65353780267968d52307ec0db5fbeac3ee13be29 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T05:00:02Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726176812/the-conspiracy-003.jpg",
+        "standfirst":"Christopher MacBride's faux-documentary uses found footage to spin its tale of the shadowy Tarsus Group",
+        "shortUrl":"http://gu.com/p/3j8ex",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726176812/the-conspiracy-003.jpg",
+        "wordcount":"411",
+        "commentable":"true",
+        "internalContentCode":"418867953",
+        "allowUgc":"false",
+        "internalOctopusCode":"8140263",
+        "isPremoderated":"false",
+        "byline":"John Patterson",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-05",
+        "internalPageCode":"1974511",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-11T23:05:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/theguide/reviews",
+        "type":"newspaper-book-section",
+        "webTitle":"Previews",
+        "webUrl":"http://www.theguardian.com/theguardian/theguide/reviews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/theguide/reviews",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/theguide",
+        "type":"newspaper-book",
+        "webTitle":"The Guide",
+        "webUrl":"http://www.theguardian.com/theguardian/theguide",
+        "apiUrl":"http://content.guardianapis.com/theguardian/theguide",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/johnpatterson",
+        "type":"contributor",
+        "webTitle":"John Patterson",
+        "webUrl":"http://www.theguardian.com/profile/johnpatterson",
+        "apiUrl":"http://content.guardianapis.com/profile/johnpatterson",
+        "bio":"<p>John Patterson writes about film and is based in Los Angeles.</p>",
+        "rcsId":"GNL297119",
+        "r2ContributorId":"15873",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_patterson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418971849",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726173325/the-conspiracy-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"54",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726175133/the-conspiracy-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"130",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726176812/the-conspiracy-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"84",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726178516/the-conspiracy-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"132",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726180252/the-conspiracy-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"168",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726181971/the-conspiracy-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"180",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726183885/the-conspiracy-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"228",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726185599/the-conspiracy-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"276",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726185599/the-conspiracy-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"276",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418971850",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726176812/the-conspiracy-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"the-conspiracy",
+            "height":"84",
+            "credit":"PR",
+            "caption":"The Conspiracy.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/06/ac-lyles",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-06T15:58:56Z",
+      "webTitle":"AC Lyles obituary",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/06/ac-lyles",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/06/ac-lyles",
+      "fields":{
+        "newspaperPageNumber":"30",
+        "trailText":"Veteran film producer and friend to many  of Hollywood's stars",
+        "headline":"AC Lyles obituary",
+        "body":"<p>The office walls of the film producer AC Lyles, who has died aged 95, were plastered with celebrity photographs. He seemed to know everybody in Hollywood, from presidents and governors to the great names of film, such as Elizabeth Taylor, Bob Hope and Bing Crosby. James Cagney, William Holden and Ronald Reagan were close personal friends.</p><p>Lyles worked for the same company, Paramount, for most of his life, starting as a mailroom office boy in 1937, after the studio's head, Adolph Zukor, gave in to his weekly letters begging for a job.</p><p>Indeed, he maintained that he had decided on his ninth birthday that he was going to be a producer. At the age of 10, he had a cleaning job at the Paramount cinema in his home town of Jacksonville, Florida, and seeing the silent film Wings, starring Clara Bow, reinforced this aspiration. When he was 14, he interviewed visiting stars for the Jacksonville Journal, his local paper, always concentrating on those with Paramount contracts. When Zukor came to the theatre, it was the chance he had been waiting for. The mogul told him to \"keep in touch\", and once he had left school, Lyles set off for Los Angeles.</p><p>In 1939, he became director of the studio's publicity department, one of the most crucial jobs in the film industry. Working on publicity for B-movies brought him into contact with the \"Dollar Bills\" – Bill Pine and Bill Thomas – renowned for economical film-making. Lyles in turn convinced the studio that he could work in this vein, using his contacts with well-established stars and squeezing budgets as necessary.</p><p>After he had assisted the producer of The Mountain (1956), a climbing drama with Spencer Tracy and Robert Wagner, Cagney asked him to produce the only film that the gangster actor ever directed, Short Cut to Hell (1957). Lyles recalled some time later: \"I don't think he liked telling actors what to do.\"</p><p>Among the pictures that Lyles went on to produce, Hostile Guns (1967) and Buckskin (1968) were much to the familiar western pattern of the good guys in white hats, helped by the honest sheriff, chasing the baddies out of town. He had his own production company – working, of course, under the Paramount banner – with titles such as The Young and the Brave (1963), Law of The Lawless (1964) and Red Tomahawk (1967).</p><p>For a time he worked in television, with a number of celebrated series to his credit. On loan to CBS, he produced the mammoth hit Rawhide (1959), which starred the young Clint Eastwood. His final credit came in his 80s as consulting producer on another western series, the HBO success Deadwood (2005-06).</p><p>Lyles has a star on Hollywood Boulevard's Walk of Fame and in recent years continued his work for Paramount as a goodwill ambassador; he also headed a number of charities. He had encouraged Reagan at the start of his political career, when he was seeking election as governor of California. Once the former actor had become president, he appointed Lyles to his advisory committee on private sector initiatives, and unofficially made him the man to arrange stars' visits to the White House.</p><p>The well turned-out and friendly Lyles would have made a good president himself – or at least would have been well-cast acting one. But that was not for him. \"I never wanted to act,\" he said. \"Not even a walk-on in the pictures that I made.\" However, he did appear in various TV documentaries.</p><p>In 1948, Lyles married the actor <a href=\"http://www.glamourgirlsofthesilverscreen.com/show.php?id=278\" title=\"Martha Vickers profile\">Martha Vickers</a>, but they divorced the following year. In 1955, he married Martha French and she survives him.</p><p>• Andrew Craddock Lyles, film producer, born 17 May 1918; died 27 September 2013</p><!-- Guardian Watermark: internal-code/content/419187775|2013-10-07T10:05:55Z|97f40f292c8d94ace1e09aed88cfddd337836e52 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-06T23:06:37Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072988875/AC-Lyles-right-with-Jane--004.jpg",
+        "standfirst":"Veteran film producer and friend to many  of Hollywood's stars",
+        "shortUrl":"http://gu.com/p/3jb32",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072988875/AC-Lyles-right-with-Jane--004.jpg",
+        "wordcount":"612",
+        "commentable":"true",
+        "internalContentCode":"419187775",
+        "allowUgc":"false",
+        "internalOctopusCode":"8160512",
+        "isPremoderated":"true",
+        "byline":"Michael Freedland",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-07",
+        "internalPageCode":"1976402",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-13T13:59:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"film/film-industry",
+        "type":"keyword",
+        "webTitle":"Film industry",
+        "webUrl":"http://www.theguardian.com/film/film-industry",
+        "apiUrl":"http://content.guardianapis.com/film/film-industry",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"tone/obituaries",
+        "type":"tone",
+        "webTitle":"Obituaries",
+        "webUrl":"http://www.theguardian.com/tone/obituaries",
+        "apiUrl":"http://content.guardianapis.com/tone/obituaries",
+        "references":[]
+      },{
+        "id":"profile/michael-freedland",
+        "type":"contributor",
+        "webTitle":"Michael Freedland",
+        "webUrl":"http://www.theguardian.com/profile/michael-freedland",
+        "apiUrl":"http://content.guardianapis.com/profile/michael-freedland",
+        "r2ContributorId":"40346",
+        "references":[]
+      },{
+        "id":"tv-and-radio/us-television",
+        "type":"keyword",
+        "webTitle":"US television",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/us-television",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/us-television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"film/clinteastwood",
+        "type":"keyword",
+        "webTitle":"Clint Eastwood",
+        "webUrl":"http://www.theguardian.com/film/clinteastwood",
+        "apiUrl":"http://content.guardianapis.com/film/clinteastwood",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"world/ronald-reagan",
+        "type":"keyword",
+        "webTitle":"Ronald Reagan",
+        "webUrl":"http://www.theguardian.com/world/ronald-reagan",
+        "apiUrl":"http://content.guardianapis.com/world/ronald-reagan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"film/paramount-pictures",
+        "type":"keyword",
+        "webTitle":"Paramount Pictures",
+        "webUrl":"http://www.theguardian.com/film/paramount-pictures",
+        "apiUrl":"http://content.guardianapis.com/film/paramount-pictures",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/obituaries",
+        "type":"newspaper-book-section",
+        "webTitle":"Obituaries",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/obituaries",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/obituaries",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419189211",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072983288/AC-Lyles-right-with-Jane--001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"54",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072985556/AC-Lyles-right-with-Jane--002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"340",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072987267/AC-Lyles-right-with-Jane--003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"130",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072988875/AC-Lyles-right-with-Jane--004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"84",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072991198/AC-Lyles-right-with-Jane--005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"132",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072992884/AC-Lyles-right-with-Jane--006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"168",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072994467/AC-Lyles-right-with-Jane--007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"180",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072996298/AC-Lyles-right-with-Jane--008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"228",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072998384/AC-Lyles-right-with-Jane--009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"276",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381073000105/AC-Lyles-right-with-Jane--010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"372",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072998384/AC-Lyles-right-with-Jane--009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"276",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005. Photograph: Michael Buckner/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419189212",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381072988875/AC-Lyles-right-with-Jane--004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Michael Buckner",
+            "altText":"AC Lyles, right, with Jane Russell in 2005",
+            "height":"84",
+            "credit":"Michael Buckner/Getty Images",
+            "caption":"AC Lyles, right, with Jane Russell in 2005 Photograph: Michael Buckner/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/06/british-film-the-last-passenger",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-05T23:05:48Z",
+      "webTitle":"Suspense, trains, brand new special effects: the return of the British action thriller",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/06/british-film-the-last-passenger",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/06/british-film-the-last-passenger",
+      "fields":{
+        "newspaperPageNumber":"11",
+        "trailText":"Vintage rolling stock and a touch of the old Hitchcockian drama play their part in a riposte to Hollywood",
+        "headline":"Suspense, trains, brand new special effects: the return of the British action thriller",
+        "body":"<p>From the warm waters of <em>Pirates of the Caribbean</em> to the fairytale castle in <em>Snow White and the Huntsman</em>, British film studios now regularly create exotic sets for blockbusters. Last year, however, the largest production space at Shepperton, called the &quot;H-Stage&quot;, was dominated by the more mundane hulks of two reclaimed British railway carriages, dating from the slam-door days.</p><p>The battered train is the unlikely focus of an attempt to bring back the action thriller to this country. <em>Last Passenger</em>, which stars Dougray Scott and opens in cinemas next week, is the debut feature from director Omid Nooshin, a former art student from Guildford, Surrey, who aims to reclaim Britain's reputation for Hitchcockian suspense and couple it with special effects that rival Hollywood.</p><p>&quot;British film-makers love spectacle and adventure, but that doesn't mean they necessarily get to make those movies,&quot; said Nooshin.</p><p>On set last year, Scott was asked to repeatedly leap free of the gas flame burners that surrounded the carriages as Nooshin filmed his character's attempts to save the other passengers. Playing the part of a doctor and single father trapped on what should have been a normal train journey home from London, Scott was clearly enjoying the opportunity to bring terror to the screen.</p><p>&quot;I don't see why we shouldn't make as exciting films here, if not better, than they do in America,&quot; the star told the <em>Observer</em> after a morning's shooting. &quot;We have a different tone, grittier perhaps, but that can make it more real.&quot;</p><p>It all became too real during the shooting of the final sequence of the film, as the train falls apart. &quot;Our train caught fire during one take and we had to evacuate while the fire was extinguished,&quot; said Nooshin. &quot;It was good to get out in the daylight. By that point we'd been cooped up on the train for nearly five weeks, and more than a few of us were going stir crazy.&quot;</p><p>The old rolling stock used was hunted down on the internet and found in a field in Wales. It provides the location for the whole film, the story of an attempt to kidnap a train and send it hurtling to its doom.</p><p>The director, who wrote the screenplay with Andy Love, had the idea sitting on a train alone one night. His first task was to convince his producers and potential backers that with clever technology the right impact could be created without a large special effects team. He did this by making a &pound;500 trailer, filming it in a few hours with a heritage train on loan from the Bluebell Railway in Sussex. On the strength of this footage, Path&eacute; and then the British Film Institute and Pinewood Studios, the owner of Shepperton, stepped forward with some finance.</p><p>Working with 90&nbsp;tonnes of train supported on a hydraulic cradle was not easy. Nooshin admits he thought the project was in trouble &quot;all the time&quot;, particularly on the first day of principal photography. &quot;That's when the magnitude of what you're up against hits you hardest, when you have to dig deep to push on through. We were making <em>Last Passenger</em> for a fraction of the budget of similar movies, so time and resources were often stretched to breaking point. It forces you to be tenacious,&quot; he said.</p><p>Scott, his director believes, makes a perfect Hitchcockian hero: &quot;American action stars tend to play cool under pressure. Everyone knows the shot of the badass hero strolling nonchalantly away from an explosion without turning around. That trope is emblematic of a fantasy bravado. And while Dougray certainly has a self-assured masculinity, it's coupled with an underlying vulnerability which makes him more relatable,&quot; he said.</p><p>Hitchcock got us to care about his heroes by making sure they had some emotional or even physical issues, like Jimmy Stewart's broken leg in <em>Rear Window</em>. &quot;Dougray is strong on the outside but partly broken on the inside, so it's not a foregone conclusion he will save the day,&quot; said Nooshin.</p><p>Scott co-stars with Kara Tointon, the former <em>EastEnders</em> actress and one-time winner of <em>Strictly Come Dancing</em>, but neither of them could have made their dilemma convincing without a new kind of rear projection technique invented for use on the film, much cheaper than the &quot;green screening&quot; that is the custom in Hollywood. Six screens allowed a 360-degree perspective that maintains the impression of movement outside the train windows.</p><p>&quot;When you're making a sci-fi or fantasy, the audience cut you more slack because they know intuitively what they're watching is fabricated, and have no personal frame of reference for that world. But everyone has ridden a train, so you better ensure the illusion is flawless,&quot; said Nooshin, who is now working on a sci-fi production.</p><p>Will audiences buy into his different, British kind of action thriller? Nooshin said that for him the appeal was putting personal experience, rather than screen cliches, into his plot. &quot;Taking those elements and throwing them into the kind of scenario usually associated with Hollywood was entertaining to me, but I guess it's for others to say how British the tone is,&quot; he said.</p><!-- Guardian Watermark: internal-code/content/419119254|2013-10-07T10:05:55Z|9c733ca409d2f7d99e07f58d57a1f27d74c44fed -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-05T23:18:56Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924153388/The-Last-Passenger-005.jpg",
+        "standfirst":"Vintage rolling stock and a touch of the old Hitchcockian drama play their part in a riposte to Hollywood",
+        "shortUrl":"http://gu.com/p/3jak7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924153388/The-Last-Passenger-005.jpg",
+        "wordcount":"838",
+        "commentable":"true",
+        "internalContentCode":"419119254",
+        "allowUgc":"false",
+        "internalOctopusCode":"8155476",
+        "isPremoderated":"false",
+        "byline":"Vanessa Thorpe, arts and media correspondent",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-10-06",
+        "internalPageCode":"1976137",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-12T22:42:00Z"
+      },
+      "tags":[{
+        "id":"film/actionandadventure",
+        "type":"keyword",
+        "webTitle":"Action and adventure",
+        "webUrl":"http://www.theguardian.com/film/actionandadventure",
+        "apiUrl":"http://content.guardianapis.com/film/actionandadventure",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/bfi",
+        "type":"keyword",
+        "webTitle":"BFI",
+        "webUrl":"http://www.theguardian.com/film/bfi",
+        "apiUrl":"http://content.guardianapis.com/film/bfi",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/alfredhitchcock",
+        "type":"keyword",
+        "webTitle":"Alfred Hitchcock",
+        "webUrl":"http://www.theguardian.com/film/alfredhitchcock",
+        "apiUrl":"http://content.guardianapis.com/film/alfredhitchcock",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theobserver/news/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/theobserver/news/uknews",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news/uknews",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/news",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theobserver/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/vanessathorpe",
+        "type":"contributor",
+        "webTitle":"Vanessa Thorpe",
+        "webUrl":"http://www.theguardian.com/profile/vanessathorpe",
+        "apiUrl":"http://content.guardianapis.com/profile/vanessathorpe",
+        "bio":"<p>Vanessa Thorpe is arts and media correspondent on the Observer</p>",
+        "rcsId":"GNL004779",
+        "r2ContributorId":"16548",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/1/1367419199456/Vanessa-Thorpe.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419119303",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924146877/The-Last-Passenger-002.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"54",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924148599/The-Last-Passenger-003.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"340",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924152178/The-Last-Passenger-004.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"130",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924153388/The-Last-Passenger-005.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"84",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924154570/The-Last-Passenger-006.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"132",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924155773/The-Last-Passenger-007.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"168",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924156969/The-Last-Passenger-008.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"180",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924158303/The-Last-Passenger-009.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"228",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924159682/The-Last-Passenger-010.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"276",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924160925/The-Last-Passenger-011.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"372",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924159682/The-Last-Passenger-010.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"276",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419119304",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/10/4/1380924153388/The-Last-Passenger-005.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"The Last Passenger",
+            "height":"84",
+            "credit":"theguardian.com",
+            "caption":"A scene from the Britsh action film The Last Passenger starring Dougray Scott and Kara Tointon. Photograph: theguardian.com",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/06/guy-lodge-dvds-bfi-player",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-05T23:05:33Z",
+      "webTitle":"Guy Lodge's DVDs and downloads",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/06/guy-lodge-dvds-bfi-player",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/06/guy-lodge-dvds-bfi-player",
+      "fields":{
+        "newspaperPageNumber":"24",
+        "trailText":"<p>Britain's biggest film archive is online, free and open for business, writes <strong>Guy Lodge</strong></p>",
+        "headline":"Guy Lodge's DVDs and downloads",
+        "body":"<video data-media-id=\"gu-video-417109436\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/9/12/130911SelfishGiant-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/9/12/130911SelfishGiant-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/9/12/130911SelfishGiant_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/9/12/130911SelfishGiant_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/9/12/130911SelfishGiant_vpx.webm\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/9/12/130911SelfishGiant/130911SelfishGiant.m3u8\"></source>\n      </video><p>With autumn fully in swing and the couch an increasingly appealing entertainment venue, it seems appropriate to lead with this week's best streaming-related news: the long-awaited introduction of the British Film Institute's on-demand service. <a href=\"http://www.bfi.org.uk/bfi-player\" title=\"\"><strong>BFI Player</strong></a><strong>  </strong>launches on Wednesday with seven \"collections\" offering more than 1,000 viewing items between them. Much of the content will tie in to the <a href=\"http://www.bfi.org.uk/lff\" title=\"\">London film festival</a> and the BFI's current <a href=\"http://www.bfi.org.uk/gothic\" title=\"\">gothic</a> season, though it's also a welcome outlet for the greatest film archive in Britain.</p><p>One channel will be devoted to the collected works of Edwardian documentary trailblazers <a href=\"http://en.wikipedia.org/wiki/Mitchell_and_Kenyon\" title=\"\">Mitchell and Kenyon</a>; another to selections from <em>Sight &amp; Sound</em>'s <a href=\"http://www.bfi.org.uk/news/50-greatest-films-all-time\" title=\"\">greatest films of all-time poll</a>. New releases will also be streamed, beginning later this month with Clio Barnard's magnificent northern fable <a href=\"http://www.theguardian.com/film/movie/155239/selfish-giant\" title=\"\"><em>The Selfish Giant</em></a>. Most exciting of all, about 60% of the BFI Player's content will be free to view – I expect we'll be returning to this goldmine frequently in the future.</p><p>In the same year that geek god Joss Whedon (last responsible for Marvel's <a href=\"http://www.theguardian.com/film/movie/144027/avengers\" title=\"\"><em>The Avengers</em></a>) brought out his modern-dress version of <a href=\"http://www.youtube.com/watch?v=reYclxg3kts\" title=\"\"><strong>Much Ado About Nothing</strong></a><em> </em>(Kaleidoscope, 12), shot on the fly in his own Californian manse, James Earl Jones and Vanessa Redgrave have been pilloried by London's <a href=\"http://www.theguardian.com/stage/2013/sep/22/much-ado-midsummer-herd-review\" title=\"\">theatre critics</a> for their geriatric take on the Bard's eternally youthful romcom.</p><p>If Whedon fares a little better it's because his ensemble – gathered from his own loquacious TV shows, lending the impression of tightly knit theatre company with a sideline in shampoo ads – have the requisite verbal snap and agility for the material. There's not a Redgrave in the bunch, but that's beside the point. This is <em>Much Ado</em> as snark-era sitcom, scarcely disguised by the scrappy black-and-white photography – which is flattered by a smaller screen. Many loved it; I found it as smug and throwaway in tone as all Whedon's work.</p><figure data-media-id='gu-image-419112999'><img src='http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/10/4/1380886542752/Bachelorette-001.jpg' alt='Bachelorette' width='220' height='220' class='gu-image'/><figcaption>Kirsten Dunst in the 'scabrously funny' Bachelorette. Photograph: Allstar</figcaption></figure><p>Two of the week's most enjoyable DVD releases sound distinctly unappealing on paper. <a href=\"http://www.youtube.com/watch?v=jS0St2NMk1Q\" title=\"\"><strong>Come As You Are</strong></a><strong>&nbsp;</strong>(Eureka, 15) is a road-trip comedy in which three young special needs men head to Spain to lose their virginity; you might be grimacing already, but there's a sincere sweetness and warm sense of community to the trio's antics. You only hope they don't run into the three toxic antiheroines of <a href=\"http://www.youtube.com/watch?v=w2KKLUrVP20\" title=\"\"><strong>Bachelorette</strong></a><strong> </strong>(Lionsgate, 15), a scabrously funny entry in the admittedly overpopulated wed-com genre. Unfairly dismissed as a <a href=\"http://www.theguardian.com/film/movie/142098/bridesmaids\" title=\"\"><em>Bridesmaids</em></a> cash-in, its study of the crueller side of female friendship cuts wincingly close to the bone, and <a href=\"http://www.theguardian.com/film/kirsten-dunst\" title=\"\">Kirsten Dunst</a> is tremendous as a critically insecure queen bee.</p><p>American cultural commentators were fixated last week on the finale of <strong> </strong><a href=\"http://www.theguardian.com/tv-and-radio/breaking-bad\" title=\"\"><strong>Breaking Bad</strong></a><strong>. </strong>A TV series built on the age-old fusion of cancer drama and Albuquerque methamphetamine production, it's pitched halfway between Tolstoy and Elmore Leonard. If, like me, you're still playing catch-up, you'll be glad to know that every episode is now to be found on <a href=\"https://signup.netflix.com/\">Netflix</a>.</p><!-- Guardian Watermark: internal-code/content/418994849|2013-10-07T10:05:55Z|adbe11981245620c32f3757639b91de6488f4cf5 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-05T23:09:25Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/10/3/1380821095026/Kirsten-Dunst-DVDs-005.jpg",
+        "standfirst":"Britain's biggest film archive is online, free and open for business",
+        "shortUrl":"http://gu.com/p/3j9ty",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/10/3/1380821095026/Kirsten-Dunst-DVDs-005.jpg",
+        "wordcount":"474",
+        "commentable":"true",
+        "internalContentCode":"418994849",
+        "allowUgc":"false",
+        "internalOctopusCode":"8150551",
+        "isPremoderated":"false",
+        "byline":"Guy Lodge",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-10-06",
+        "internalPageCode":"1975368",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T17:10:00Z"
+      },
+      "tags":[{
+        "id":"film/series/guy-lodge-on-dvds-and-downloads",
+        "type":"series",
+        "webTitle":"Guy Lodge on DVDs and downloads",
+        "webUrl":"http://www.theguardian.com/film/series/guy-lodge-on-dvds-and-downloads",
+        "apiUrl":"http://content.guardianapis.com/film/series/guy-lodge-on-dvds-and-downloads",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/dvdreviews",
+        "type":"keyword",
+        "webTitle":"DVD and video reviews",
+        "webUrl":"http://www.theguardian.com/film/dvdreviews",
+        "apiUrl":"http://content.guardianapis.com/film/dvdreviews",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/guylodge",
+        "type":"contributor",
+        "webTitle":"Guy Lodge",
+        "webUrl":"http://www.theguardian.com/profile/guylodge",
+        "apiUrl":"http://content.guardianapis.com/profile/guylodge",
+        "bio":"<p>Guy Lodge is a London-based film journalist whose work also appears in Variety, Time Out and entertainment website HitFix. Follow him on Twitter at <a href=\"https://twitter.com/guylodge\">@GuyLodge</a>.</p>",
+        "r2ContributorId":"55276",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theobserver/new-review/critics",
+        "type":"newspaper-book-section",
+        "webTitle":"Critics",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review/critics",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review/critics",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theobserver/new-review",
+        "type":"newspaper-book",
+        "webTitle":"The New Review",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419112998",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/10/3/1380821095026/Kirsten-Dunst-DVDs-005.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "altText":"Kirsten Dunst, DVDs",
+            "height":"84",
+            "credit":"Sportsphoto Ltd/Allstar",
+            "caption":"'A critically insecure queen bee': Kirsten Dunst in the 'scabrously funny' Bachelorette. Photograph: Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419112999",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/10/4/1380886542752/Bachelorette-001.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd./Allstar",
+            "altText":"Bachelorette",
+            "height":"220",
+            "credit":"Sportsphoto Ltd./Allstar",
+            "caption":"Kirsten Dunst in the 'scabrously funny' Bachelorette. Photograph: Allstar",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-video-417109436",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/12/130911SelfishGiant-16x9.mp4",
+          "typeData":{
+            "source":"Moonspun Films",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/12/130911SelfishGiant_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Moonspun Films",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/12/130911SelfishGiant_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Moonspun Films",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/12/130911SelfishGiant/130911SelfishGiant.m3u8",
+          "typeData":{
+            "source":"Moonspun Films",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/12/130911SelfishGiant-720.mp4",
+          "typeData":{
+            "source":"Moonspun Films",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/12/130911SelfishGiant_vpx.webm",
+          "typeData":{
+            "source":"Moonspun Films",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130911SelfishGiant_8064172.jpg",
+            "width":"480",
+            "durationSeconds":"9"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/06/the-to-do-list-review",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-05T23:05:17Z",
+      "webTitle":"The To Do List – review",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/06/the-to-do-list-review",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/06/the-to-do-list-review",
+      "fields":{
+        "newspaperPageNumber":"25",
+        "trailText":"<p>A Porky's-style coming-of-age comedy for the girls rather than the guys, but every bit as awful, writes <strong>Mark Kermode</strong></p>",
+        "headline":"The To Do List – review",
+        "body":"<p>Reading this on a mobile? <a href=\"http://www.youtube.com/watch?v=UKGigK17eSs\" title=\"\">Click here</a></p><p><a href=\"http://www.theguardian.com/film/movie/122746/bucket.list\" title=\"\"><em>The Bucket List</em></a> had two terminally ill old men compiling a list of things to do before they died, but both were lucky enough to peg out without having to suffer this movie.</p><p>It's arguable that there's something empowering about a <em>Porky's</em>-style comedy in which the girls (rather than the guys) are in the driving seat, with star Aubrey Plaza declaring that \"I don't think that I had ever read a script about a girl who is trying to lose her virginity that is realistic and pushes the envelope\".</p><p>Yet writer/director Maggie Carey's clodhopping coming-of-age yarn merely proves that terrible teen movies are now a source of equal-ops embarrassment for both genders. Plaza plays the straight-A student who resolves to work her way through the sexual lexicon, with hand jobs, blow-jobs, and rim jobs all flagged up to dismally unfunny effect.</p><p>Drawings of foreskins and discussions of lube get a look-in too, as does the sight of parents having inappropriate sex. Eventually (inevitably?) someone gets to eat a poo. Who says comedy is dead?</p><!-- Guardian Watermark: internal-code/content/418878425|2013-10-07T10:05:55Z|8c159195b434f5cbb8afb0ed8b6d4d4e75817959 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-05T23:05:18Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380733001349/A-source-of-equal-ops-emb-005.jpg",
+        "standfirst":"A Porky's-style coming-of-age comedy for the girls rather than the guys, but every bit as awful",
+        "shortUrl":"http://gu.com/p/3j8j5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380733001349/A-source-of-equal-ops-emb-005.jpg",
+        "wordcount":"177",
+        "commentable":"true",
+        "internalContentCode":"418878425",
+        "starRating":"1",
+        "allowUgc":"false",
+        "internalOctopusCode":"8146696",
+        "isPremoderated":"false",
+        "byline":"Mark Kermode",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-10-06",
+        "internalPageCode":"1974650",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T00:05:00Z"
+      },
+      "tags":[{
+        "id":"film/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/film/comedy",
+        "apiUrl":"http://content.guardianapis.com/film/comedy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"theobserver/new-review/critics",
+        "type":"newspaper-book-section",
+        "webTitle":"Critics",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review/critics",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review/critics",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theobserver/new-review",
+        "type":"newspaper-book",
+        "webTitle":"The New Review",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/markkermode",
+        "type":"contributor",
+        "webTitle":"Mark Kermode",
+        "webUrl":"http://www.theguardian.com/profile/markkermode",
+        "apiUrl":"http://content.guardianapis.com/profile/markkermode",
+        "rcsId":"GNL008099",
+        "r2ContributorId":"16060",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/18/1268911836035/Mark-Kermode.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418882988",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380733001349/A-source-of-equal-ops-emb-005.jpg",
+          "typeData":{
+            "source":"Sportsphoto/Allstar",
+            "altText":"A source of equal-ops embarrassment': Aubrey Plaza in Maggie Carey's dismal The To Do List.",
+            "height":"84",
+            "credit":"Sportsphoto/Allstar",
+            "caption":"A source of equal-ops embarrassment': Aubrey Plaza in Maggie Carey's dismal The To Do List. Photograph: Sportsphoto/Allstar",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/06/how-i-live-now-review",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-05T23:05:16Z",
+      "webTitle":"How I Live Now – review",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/06/how-i-live-now-review",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/06/how-i-live-now-review",
+      "fields":{
+        "newspaperPageNumber":"25",
+        "trailText":"<p>An adaptation of Meg Rosoff's tale of an American girl in England during world war three fails to sparkle, writes <strong>Mark Kermode</strong></p>",
+        "headline":"How I Live Now – review",
+        "body":"<p>Reading this on a mobile? <a href=\"http://www.youtube.com/watch?v=7It6b6QPhDQ\" title=\"\">Click here</a></p><p>In Australia, they have <em>Tomorrow, When the War Began</em>, the first in a trilogy of films based on John Marsden's novels in which plucky teens get their shit together when their homeland is invaded by evil foreigners.  Here, we have this adaptation of Meg Rosoff's award-winning book (it scooped the <a href=\"http://books.guardian.co.uk/childrensfictionprize2004/\" title=\"\"><em>Guardian</em>'s children's fiction prize in 2004</a>) about a stroppy American girl sojourning in England when the third world war breaks out and a nuclear explosion flattens London.</p><p>Saoirse Ronan is Daisy, the uppity incomer who refuses to muck in with her bohemian British counterparts until her heart is captured by handsome cousin Edmond (the omnipresent George MacKay) and her frosty facade begins to crack. But when war tears the boys and girls apart, Daisy must discover previously untapped strengths to ensure her survival and retrieve lost love.</p><p>While Rosoff's novel was published with different covers variously designed to attract both teenage and adult readers, the movie's producers are clear that \"we've fully embraced it as a teenage love story aimed toward a teenage audience\". Ronan certainly makes an engaging heroine who will click with the same fans who embraced <a href=\"http://www.theguardian.com/film/movie/142857/hunger-games\" title=\"\"><em>The Hunger Games</em></a>, but the harsh 15-rated grimness (piles of rotting corpses, sexual threat, fleeting but harrowing violence etc) limits the film's potential audience.</p><p>Daisy's defining voice has been moderated too, the internal monologue of the book transmuted into fractured whispered phrases in the transition to the screen. The result is an uncertain affair, powerfully played and sporadically affecting, but lacking the singular clarity of vision that becomes Daisy's survivalist mantra.</p><!-- Guardian Watermark: internal-code/content/418876323|2013-10-07T10:05:55Z|bb0bdd2f8589d0680495b8d6118f5a46a80fc6eb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-05T23:05:16Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380731668153/Saoirse-Ronan-as-Daisy-in-005.jpg",
+        "standfirst":"An adaptation of Meg Rosoff's tale of an American girl caught in England during world war three fails to sparkle",
+        "shortUrl":"http://gu.com/p/3j8tv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380731668153/Saoirse-Ronan-as-Daisy-in-005.jpg",
+        "wordcount":"263",
+        "commentable":"true",
+        "internalContentCode":"418876323",
+        "starRating":"3",
+        "allowUgc":"false",
+        "internalOctopusCode":"8146508",
+        "isPremoderated":"false",
+        "byline":"Mark Kermode",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-10-06",
+        "internalPageCode":"1974618",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T00:05:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"theobserver/new-review/critics",
+        "type":"newspaper-book-section",
+        "webTitle":"Critics",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review/critics",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review/critics",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theobserver/new-review",
+        "type":"newspaper-book",
+        "webTitle":"The New Review",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/markkermode",
+        "type":"contributor",
+        "webTitle":"Mark Kermode",
+        "webUrl":"http://www.theguardian.com/profile/markkermode",
+        "apiUrl":"http://content.guardianapis.com/profile/markkermode",
+        "rcsId":"GNL008099",
+        "r2ContributorId":"16060",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/18/1268911836035/Mark-Kermode.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419102378",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380731668153/Saoirse-Ronan-as-Daisy-in-005.jpg",
+          "typeData":{
+            "source":"Nicola Dove",
+            "altText":"Saoirse Ronan as Daisy in How I Live Now",
+            "height":"84",
+            "credit":"Nicola Dove",
+            "caption":"Saoirse Ronan as Daisy in How I Live Now. Photograph: Nicola Dove",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[{
+      "id":"film/2013/oct/07/peter-jackson-hobbit-production-costs",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T07:48:00Z",
+      "webTitle":"Peter Jackson's Hobbit trilogy production costs revealed at $560m",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/peter-jackson-hobbit-production-costs",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/peter-jackson-hobbit-production-costs",
+      "fields":{
+        "trailText":"<p>Cost of director's three-film adaptation of JRR Tolkien's book exposed after a budget report was filed in New Zealand</p>",
+        "headline":"Peter Jackson's Hobbit trilogy production costs revealed at $560m",
+        "body":"<p>Peter Jackson's fantasy trilogy The Hobbit has so far cost more than half a billion dollars, making it one of the most expensive back to back film shoots of all time.</p><p>Jackson's film series is currently budgeted at 676 million New Zealand dollars, which is $561m or £349m, <a href=\"mailto:http://www.hollywoodreporter.com/news/peter-jacksons-hobbit-trilogy-has-643506\">according to a financial report filed in Wellington on Friday</a>. The figure, which provides a rare insight into the cost of Hollywood blockbusters, is more than twice the level of Jackson's previous trilogy The Lord of the Rings, based on JRR Tolkien's later tale of Middle Earth.</p><p>Costs for the three films have rocketed due to Jackson's decision to shoot in 3D and at 48 frames per second for additional image clarity. The final figure, once reshoots on the two remaining films are taken into account, is likely to be even higher. There may also have been extra costs incurred when Jackson chose to release three movies rather than the original two.</p><figure data-media-id='gu-image-419227639'><img src='http://static.guim.co.uk/sys-images/Film/Pix/pictures/2009/9/24/1253809758821/Hobbiton-001.jpg' alt='Hobbiton' width='460' height='276' class='gu-image'/><figcaption>A $560 million trip to Hobbiton Photograph: Pierre Vinet/AP</figcaption></figure><p> Nevertheless, studios Warner Bros and MGM will most likely consider their money to have been well spent. The first film in the trilogy alone, The Hobbit: An Unexpected Journey, has so far taken more than $1bn at the global box office despite lukewarm reviews in comparison to Jackson's previous films set in Middle Earth. More controversial could be the $98m which the New Zealand tax payer has contributed to the film series through a series of incentives brokered by Jackson in 2010 <a href=\"http://www.theguardian.com/film/2010/oct/27/the-hobbit-deal-new-zealand \">after strike threats led him to threaten to film in eastern Europe or Australia</a>. </p><p>The budgetary documents, filed online by New Zealand's Companies Office, suggest The Hobbit is one of the most expensive operations in which two or more films have been shot at once, though it is likely to have been beaten by the first three Pirates of the Caribbean films in terms of overall cost. By way of comparison, the back to back shoot for that series' At World's End and Dead Man's Chest has been estimated at between $450m and $525m. The Star Wars prequels cost $343m, according to Box Office Mojo, while Sam Raimi's Spider-Man trilogy is estimated at close to $500m.</p><p>The Hobbit is the tale of a hairy footed homunculus named Bilbo Baggins who sets out with 13 dwarves and a wizard, Gandalf, to wrest a priceless treasure from a sly old dragon. The next instalment in the trilogy, The Desolation of Smaug, is due out in December, with the final chapter, There and Back Again, set for December 2014.</p><h2>More on The Hobbit</h2><p>• <a href=\"http://www.theguardian.com/film/filmblog/2013/oct/01/hobbit-desolation-of-smaug-new-trailer\">Watch the trailer for The Desolation of Smaug</a><br />• <a href=\"http://www.theguardian.com/film/2012/dec/09/hobbit-an-unexpected-journey-review\">The Hobbit: An Unexpected Journey - Peter Bradshaw's review</a></p><!-- Guardian Watermark: internal-code/content/419225433|2013-10-07T10:05:55Z|2d079322fef27a6366559b916e7be62131ecd82c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T07:59:25Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667423304/Gandalf-in-The-Hobbit-An--005.jpg",
+        "standfirst":"Cost of director's three-film adaptation of JRR Tolkien's book exposed after a budget report was filed in New Zealand<br /><br />• <a href=\"http://www.theguardian.com/film/filmblog/2013/oct/01/hobbit-desolation-of-smaug-new-trailer\">Watch the trailer for The Desolation of Smaug</a><br />• <a href=\"http://www.theguardian.com/film/2012/dec/09/hobbit-an-unexpected-journey-review\">The Hobbit: An Unexpected Journey - Peter Bradshaw's review</a>",
+        "shortUrl":"http://gu.com/p/3jb83",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667423304/Gandalf-in-The-Hobbit-An--005.jpg",
+        "wordcount":"435",
+        "commentable":"true",
+        "internalContentCode":"419225433",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976538",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T07:48:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/peterjackson",
+        "type":"keyword",
+        "webTitle":"Peter Jackson",
+        "webUrl":"http://www.theguardian.com/film/peterjackson",
+        "apiUrl":"http://content.guardianapis.com/film/peterjackson",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"books/jrrtolkien",
+        "type":"keyword",
+        "webTitle":"JRR Tolkien",
+        "webUrl":"http://www.theguardian.com/books/jrrtolkien",
+        "apiUrl":"http://content.guardianapis.com/books/jrrtolkien",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/sciencefictionandfantasy",
+        "type":"keyword",
+        "webTitle":"Science fiction and fantasy",
+        "webUrl":"http://www.theguardian.com/film/sciencefictionandfantasy",
+        "apiUrl":"http://content.guardianapis.com/film/sciencefictionandfantasy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419227637",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667429187/Gandalf-in-The-Hobbit-An--010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"James Fisher",
+            "altText":"Gandalf in The Hobbit: An Unexpected Journey",
+            "height":"276",
+            "credit":"James Fisher/AP",
+            "caption":"Costs a lot to live this green ... Ian McKellen as Gandalf in The Hobbit: An Unexpected Journey. Photograph: James Fisher/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419227638",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2012/9/3/1346667423304/Gandalf-in-The-Hobbit-An--005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"James Fisher",
+            "altText":"Gandalf in The Hobbit: An Unexpected Journey",
+            "height":"84",
+            "credit":"James Fisher/AP",
+            "caption":"Now where have we seen this before? ... Ian McKellen as Gandalf in The Hobbit: An Unexpected Journey. Photograph: James Fisher/AP",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419227639",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2009/9/24/1253809758821/Hobbiton-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Pierre Vinet",
+            "altText":"Hobbiton",
+            "height":"276",
+            "credit":"Pierre Vinet/AP",
+            "caption":"A $560 million trip to Hobbiton Photograph: Pierre Vinet/AP",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/07/danny-boyle-diamond-thief-heist-thriller-new-film",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T09:17:00Z",
+      "webTitle":"Danny Boyle conspires on diamond thief heist thriller",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/danny-boyle-diamond-thief-heist-thriller-new-film",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/danny-boyle-diamond-thief-heist-thriller-new-film",
+      "fields":{
+        "trailText":"<p>Slumdog Millionaire director aims to film real life story of 'Pink Panther' jewel robbers<br /></p>",
+        "headline":"Danny Boyle conspires on diamond thief heist thriller",
+        "body":"<p>Danny Boyle is getting back in the heist game. The Oscar-winning British director is set to shoot a feature adaptation of a recently released documentary <a href=\"http://variety.com/2013/film/news/danny-boyle-smash-and-grab-1200691598/\">about the world's most successful gang of diamond thieves</a>.</p><p>Boyle, whose art theft thriller <a href=\"http://www.theguardian.com/film/movie/92543/trance\">Trance</a> hit cinemas earlier this year, will base his new project on the film <a href=\"http://www.theguardian.com/film/2013/sep/26/smash-and-grab-pink-panthers-review\">Smash and Grab: The Story of the Pink Panthers</a>. Havana Marking's documentary centres on a crew of Balkan thieves who became notorious over more than a decade of activity. Reviewing the film in the Guardian last month, critic Mike McCahill described it as a documentary which \"pursues its subject from multiple angles, quizzing reporters, cops and sometime gang members, while carefully marshalled archive frames a deeper sociopolitical inquiry\".</p><p>Marking's film should give Boyle and his regular producer partner Christian Colson plenty to work with. It features genuine CCTV footage and interviews with members of the Pink Panthers, who are estimated to have pulled off heists worth more than $500m in Dubai, Switzerland, Japan, France, Liechtenstein, Germany, Luxembourg, Spain and Monaco. </p><p>The gang, which is believed to be several hundred members strong, picked up their flamboyant moniker after hiding a diamond worth more than £500,000 in a jar of face cream during a raid on a Mayfair jewellers in 1993. The tactic mimicked a heist seen in the 1975 Peter Sellers film The Return of the Pink Panther.</p><p>Boyle's adaptation is at an early stage of production but will be set up at his regular studio Fox Searchlight, Pathe, and his own unit Cloud Eight Films.</p><p><a href=\"http://www.theguardian.com/film/2013/sep/26/smash-and-grab-pink-panthers-review\">• Review of Smash and Grab: The Story of the Pink Panthers</a></p><!-- Guardian Watermark: internal-code/content/419232823|2013-10-07T10:05:55Z|55ea245ff2ecdea49bcdd811f52451e1a8f152bc -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T09:19:16Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366203078662/Danny-Boyle-003.jpg",
+        "standfirst":"Slumdog Millionaire director aims to film real life story of 'Pink Panther' jewel robbers<br /><br /><a href=\"http://www.theguardian.com/film/2013/mar/09/danny-boyle-queen-olympics-film\">• Jonathan Freedland meets Danny Boyle</a><br /><a href=\"http://www.theguardian.com/film/2013/aug/25/danny-boyle-philip-french-tribute\">• Danny Boyle on Philip French</a>",
+        "shortUrl":"http://gu.com/p/3jb8n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366203078662/Danny-Boyle-003.jpg",
+        "wordcount":"266",
+        "commentable":"true",
+        "internalContentCode":"419232823",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976558",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T09:17:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/danny-boyle",
+        "type":"keyword",
+        "webTitle":"Danny Boyle",
+        "webUrl":"http://www.theguardian.com/film/danny-boyle",
+        "apiUrl":"http://content.guardianapis.com/film/danny-boyle",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/thriller",
+        "type":"keyword",
+        "webTitle":"Thriller",
+        "webUrl":"http://www.theguardian.com/film/thriller",
+        "apiUrl":"http://content.guardianapis.com/film/thriller",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/crime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/film/crime",
+        "apiUrl":"http://content.guardianapis.com/film/crime",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419235229",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/8/22/1377187845521/Danny-Boyle-008.jpg",
+          "typeData":{
+            "source":"Murdo MacLeod",
+            "altText":"Danny Boyle",
+            "height":"276",
+            "credit":"Murdo MacLeod",
+            "caption":"On the hunt ... Danny Boyle. Photograph: Murdo MacLeod",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419235230",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/17/1366203078662/Danny-Boyle-003.jpg",
+          "typeData":{
+            "source":"Murdo MacLeod",
+            "altText":"Danny Boyle",
+            "height":"84",
+            "credit":"Murdo MacLeod",
+            "caption":"Danny Boyle. Photograph: Murdo MacLeod",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/07/woody-allen-blue-jasmine-withdrawn-india",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T08:49:48Z",
+      "webTitle":"Woody Allen pulls Blue Jasmine from Indian cinemas over anti-tobacco ad",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/woody-allen-blue-jasmine-withdrawn-india",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/woody-allen-blue-jasmine-withdrawn-india",
+      "fields":{
+        "trailText":"<p>Film-maker declined to allow mandatory warning scroll to be superimposed on smoking scenes</p>",
+        "headline":"Woody Allen pulls Blue Jasmine from Indian cinemas over anti-tobacco ad",
+        "body":"<video data-media-id=\"gu-video-415103521\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/8/15/130814BlueJasmine-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/8/15/130814BlueJasmine-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/8/15/130814BlueJasmine_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/8/15/130814BlueJasmine_vpx.webm\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/8/15/130814BlueJasmine/130814BlueJasmine.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/8/15/130814BlueJasmine_3gpLg16x9.3gp\"></source>\n      </video><p>Woody Allen has withdrawn his latest film Blue Jasmine from Indian release after it emerged that anti-smoking ads would be inserted into the film during scenes where characters are seen puffing on a cigarette.</p><p><a href=\"http://www.dnaindia.com/health/1898433/report-woody-allen-finds-indian-anti-tobacco-ad-distracting-cancels-film-screening\">According to DNA</a>, a regulation requires that a <a href=\"http://articles.timesofindia.indiatimes.com/2012-01-28/india/30673447_1_smoking-scenes-new-films-health-ministry\">warning scroll</a> is added to any scene containing smoking, as well the addition of anti-tobacco spots, that screens in Indian cinemas. The rule came into force in 2012.</p><p>Blue Jasmine contains two scenes that would have triggered the warning spots (which otherwise would face being cut). PVR Pictures, Blue Jasmine's Indian distributor, had planned to show the film on 25-30 screens last weekend, but the film was pulled.</p><p>Deepak Sharma, COO of PVR Pictures, said: \"Allen has the creative control as per the agreement. He wasn't comfortable with the disclaimer that we are required to run when some smoking scene is shown in films. He feels that when the scroll comes, attention goes to it rather than the scene.\" </p><p>\"We had to abide by the law and we don't have control over the film.\"</p><p><a href=\"http://www.theguardian.com/film/movie/155586/blue-jasmine\">• More on Blue Jasmine</a></p><!-- Guardian Watermark: internal-code/content/419226474|2013-10-07T10:05:55Z|eeafbfca14861097ca0db8cfeb2d549f0f1d84d9 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T08:49:48Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379520880596/Blue-Jasmine-003.jpg",
+        "standfirst":"Film-maker declined to allow mandatory warning scroll to be superimposed on smoking scenes<br /><br /><a href=\"http://www.theguardian.com/film/2013/sep/19/blue-jasmine-review\">• Peter Bradshaw's review of Blue Jasmine</a><br /><a href=\"http://www.theguardian.com/film/2013/oct/02/woody-allen-son-ronan-frank-sinatra-mia-farrow\">• Mia Farrow: Woody Allen's son Ronan may be Frank Sinatra's</a>",
+        "shortUrl":"http://gu.com/p/3jb88",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379520880596/Blue-Jasmine-003.jpg",
+        "wordcount":"177",
+        "commentable":"true",
+        "internalContentCode":"419226474",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Andrew Pulver",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976543",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T08:49:48Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/woodyallen",
+        "type":"keyword",
+        "webTitle":"Woody Allen",
+        "webUrl":"http://www.theguardian.com/film/woodyallen",
+        "apiUrl":"http://content.guardianapis.com/film/woodyallen",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"world/india",
+        "type":"keyword",
+        "webTitle":"India",
+        "webUrl":"http://www.theguardian.com/world/india",
+        "apiUrl":"http://content.guardianapis.com/world/india",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andrewpulver",
+        "type":"contributor",
+        "webTitle":"Andrew Pulver",
+        "webUrl":"http://www.theguardian.com/profile/andrewpulver",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewpulver",
+        "bio":"<p>Andrew Pulver is Film editor, guardian.co.uk</p>",
+        "rcsId":"GNL004602",
+        "r2ContributorId":"15370",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345733137119/AndrewPulver.jpg",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/smoking",
+        "type":"keyword",
+        "webTitle":"Smoking",
+        "webUrl":"http://www.theguardian.com/society/smoking",
+        "apiUrl":"http://content.guardianapis.com/society/smoking",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419231780",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379520880596/Blue-Jasmine-003.jpg",
+          "typeData":{
+            "source":"REX/Everett Collection",
+            "photographer":"REX/Everett Collection",
+            "altText":"Blue Jasmine",
+            "height":"84",
+            "credit":"REX/Everett Collection/REX/Everett Collection",
+            "caption":"Peter Sarsgaard and Cate Blanchett in Woody Allen's Blue Jasmine.  Photograph: REX/Everett Collection",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-415103521",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/8/15/130814BlueJasmine-16x9.mp4",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/8/15/130814BlueJasmine_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/8/15/130814BlueJasmine_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/8/15/130814BlueJasmine-720.mp4",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/8/15/130814BlueJasmine/130814BlueJasmine.m3u8",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/8/15/130814BlueJasmine_vpx.webm",
+          "typeData":{
+            "source":"Sony Pictures Classics",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/15/130814BlueJasmine_7953307.jpg",
+            "width":"480",
+            "durationSeconds":"40"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/07/film-today",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-07T05:29:43Z",
+      "webTitle":"Film today: The Hobbit: An Unexpected Price Tag",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/07/film-today",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/07/film-today",
+      "fields":{
+        "trailText":"<p>All the goings-on in the film world on Monday 7 October</p>",
+        "headline":"Film today: The Hobbit: An Unexpected Price Tag",
+        "body":"<h2>In the news today ...</h2><p>- Peter Jackson's Hobbit trilogy has cost a most precious $560 million to date.</p><p>- Danny Boyle is planning a jewel heist movie based on the documentary Smash and Grab.</p><p>- Danny Dyer's film company went bust owing 50 monkies to the tax man.</p><p>- No ta: Woody Allen has refused to show Blue Jasmine in India because of the country's legal requirement to run health ads on smoking scenes. </p><p>- Oliver Stone has lead a protest against a US military base in Korea.</p><p>- Italian director Carlo Lizzani has died after falling from a balcony. He was 91.</p><h2>Elsewhere on the site</h2><video data-media-id=\"gu-video-416689780\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/9/6/130906GravityTrailer-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/9/6/130906GravityTrailer_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/9/6/130906GravityTrailer-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/9/6/130906GravityTrailer_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/9/6/130906GravityTrailer/130906GravityTrailer.m3u8\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/9/6/130906GravityTrailer_vpx.webm\"></source>\n      </video><p> - Jeremy Kay will be reporting on the out of this world takings for Alfonso Cuarón's Gravity as he rounds up the week at the US box office.</p><p>- What?! No Run for Your Wife?! Quentin Tarantino has revealed his top ten movies of the year so far. Ben Child will be picking through them.</p><p>- That big softy Andrew Pulver will be revealing our top ten romantic films of all time. </p><p>- Henry Barnes will take to our Why I Love ... series to sing the praises of fictional movie pop songs.</p><h2>You may have missed</h2><p>Here's what happened on the site over the weekend ... </p><video data-media-id=\"gu-video-418959257\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/3/131003Filth2-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/3/131003Filth2_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/3/131003Filth2/131003Filth2.m3u8\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/10/03/131003Filth2_vpx.webm\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/3/131003Filth2_3gpLg16x9.3gp\"></source>\n      </video><p> - Mark Kermode done some writings about <a href=\"http://http://www.theguardian.com/film/2013/oct/06/sunshine-on-leith-filth-review\">Filth, Sunshine on Leith and the other current cinema releases</a>.</p><p>- John Patterson explained <a href=\"http://http://www.theguardian.com/film/2013/oct/07/the-conspiracy-paranoia-john-patterson\">how The Conspiracy has made paranoia fun again</a>.</p><p>- <a href=\"http://http://www.theguardian.com/culture/2013/oct/06/michael-j-fox-sitcom-parkinsons-alcoholism-divorce\">Michael J Fox talked comedy, Parkinson's and hoverboards</a> with Hadley Freeman.</p><p>- Stuart Heritage <a href=\"http://www.theguardian.com/film/2013/oct/05/friends-with-benefits-recap-sex\">watched Justin Timberlake make dirty sex noises</a> as he liveblogged Friends With Benefits.</p><p>- And <a href=\"http://www.theguardian.com/film/video/2013/oct/04/sunshine-on-leith-filth-video-review\">The Guardian Film Show</a> got mucky with Filth, lovey with Sunshine on Leith, sexy with Thanks for Sharing and apocalypticy with How I Live Now.</p><!-- Guardian Watermark: internal-code/content/419211374|2013-10-07T10:05:55Z|977241d80ced79f91d6d154af5ca6684d0b6df1e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T05:29:43Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756977159/2012-THE-HOBBIT----UNEXPE-005.jpg",
+        "standfirst":"All the goings-on in the film world on Monday 7 October",
+        "shortUrl":"http://gu.com/p/3jb77",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756977159/2012-THE-HOBBIT----UNEXPE-005.jpg",
+        "wordcount":"285",
+        "commentable":"true",
+        "internalContentCode":"419211374",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Henry Barnes",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976515",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T05:29:43Z"
+      },
+      "tags":[{
+        "id":"film/series/film-today",
+        "type":"series",
+        "webTitle":"Film today",
+        "webUrl":"http://www.theguardian.com/film/series/film-today",
+        "apiUrl":"http://content.guardianapis.com/film/series/film-today",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/henrybarnes",
+        "type":"contributor",
+        "webTitle":"Henry Barnes",
+        "webUrl":"http://www.theguardian.com/profile/henrybarnes",
+        "apiUrl":"http://content.guardianapis.com/profile/henrybarnes",
+        "bio":"<p>Henry Barnes is the site editor of theguardian.com/film. He also produces the site's film video and writes about film and music.</p>",
+        "r2ContributorId":"19723",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/21/1358772912329/Guardian-film-staff-membe-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419213349",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756984496/2012-THE-HOBBIT----UNEXPE-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Sportsphoto Ltd/Allstar",
+            "altText":"2012, THE HOBBIT -  UNEXPECTED JOURNEY",
+            "height":"276",
+            "credit":"Sportsphoto Ltd/Allstar/PR",
+            "caption":"Yours for $560 million ... The Hobbit. Photograph: Sportsphoto Ltd/Allstar",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419213350",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/12/17/1355756977159/2012-THE-HOBBIT----UNEXPE-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Sportsphoto Ltd/Allstar",
+            "altText":"2012, THE HOBBIT -  UNEXPECTED JOURNEY",
+            "height":"84",
+            "credit":"Sportsphoto Ltd/Allstar/PR",
+            "caption":"Lethal at the US box office … Martin Freeman as Bilbo Baggins. Photograph: Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-418959257",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/3/131003Filth2-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/3/131003Filth2_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/03/131003Filth2_vpx.webm",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/3/131003Filth2_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/3/131003Filth2/131003Filth2.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/3/131003Filth2_8149289.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/3/131003Filth2_8149289.jpg",
+            "width":"480",
+            "durationSeconds":"25"
+          }
+        }]
+      },{
+        "id":"gu-video-416689780",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/6/130906GravityTrailer-16x9.mp4",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/6/130906GravityTrailer-720.mp4",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/6/130906GravityTrailer_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/6/130906GravityTrailer_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/6/130906GravityTrailer/130906GravityTrailer.m3u8",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/6/130906GravityTrailer_vpx.webm",
+          "typeData":{
+            "source":"Warner Bros",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/6/130906GravityTrailer_8043207.jpg",
+            "width":"480",
+            "durationSeconds":"29"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/05/friends-with-benefits-recap-sex",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-05T18:00:02Z",
+      "webTitle":"Friends With Benefits recap: unsexy bestie sex",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/05/friends-with-benefits-recap-sex",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/05/friends-with-benefits-recap-sex",
+      "fields":{
+        "trailText":"<p>If you'd like to hear Justin Timberlake make a cunnilingus noise or listen to music worse than the score of Sleepless in Seattle, your luck could be in, tonight (Saturday) on Channel 4 at 9pm. <strong>Stuart Heritage</strong> hits the play button</p>",
+        "headline":"Friends With Benefits recap: unsexy bestie sex",
+        "body":"<p><em>\"Cancer being cured is awesome\" – Dylan</em></p><p>Usually when different studios release films with identical plots at the same time, there's a clear winner. <a href=\"http://www.theguardian.com/film/movie/34362/truman.show\" title=\"\">The Truman Show</a> is better than <a href=\"http://www.theguardian.com/film/movie/81693/edtv\" title=\"\">EDtv</a>, for example. Top Gun is better than Iron Eagle. Big is better than Vice Versa, and 18 Again!, and Like Father, Like Son. The list goes on.</p><p>But when <a href=\"http://www.theguardian.com/film/movie/143308/friends-with-benefits\" title=\"\">Friends With Benefits</a> and <a href=\"http://www.theguardian.com/film/movie/140299/no-strings-attached\" title=\"\">No Strings Attached</a> were released within nanoseconds of each other in 2011, it was just too close to call. Both were films about friends who sleep with each other. Both starred actresses from Black Swan (Natalie Portman and Mila Kunis). Both starred incredibly wealthy men who are talented in other fields and yet for some reason persist in wanting to be actors (Ashton Kutcher and Justin Timberlake). Both had titles that were Craigslist code for \"an empty sexual encounter to be performed without commitment or enjoyment\". Both had posters that made you want to punch everyone involved in the throat. But neither film was better than the other, because they both sort of sucked. Friends With Benefits – the Timberlake/Kunis version of the story – is on TV first, so let's see if time has improved it.</p><p><em>\"Shut up, Katherine Heigl, you stupid little liar!\" – Jamie</em></p><figure data-media-id='gu-image-418995820'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819975032/Mila-Kunis-and-Justin-Tim-010.jpg' alt='Mila Kunis and Justin Timberlake in Friends With Benefits' width='460' height='276' class='gu-image'/><figcaption>Saying it with ink … Mila Kunis as Jamie and Justin Timberlake as Dylan Photograph: Glen Wilson</figcaption></figure><p> Reading this on mobile? <a href=\"http://www.youtube.com/watch?v=iJS-wWqVAyk\">Click here to watch trailer.<br /></a></p><p>The idea that Friends With Benefits returns to again and again is the one that says all <a href=\"http://www.theguardian.com/film/2008/dec/16/romance-rom-coms\" title=\"\">romcoms</a> are a lie. We meet the Mila Kunis character outside a screening of <a href=\"http://www.theguardian.com/film/movie/81528/pretty-woman\" title=\"\">Pretty Woman</a>, where she's reminded how unrealistic it is. The film keeps cutting to an overblown fake romcom where Jason Segel and Rashida Jones ride around New York in a horse and carriage calling each other \"flapjack\". There's at least one comment about how terrible the music in romantic comedies are. The message is clear: this isn't a romcom.</p><p>Except it quite obviously is. If anything, the music in Friends With Benefits is worse than the music in, say, Sleepless in Seattle; either the sort of tinpot wicky-wack scratchy guff that middle-aged men with ponytails think kids listen to at parties, or soggy ukulele nonsense. And, just like all romcoms, there's a kooky best friend. Better yet, a gay best friend who says things like: \"I like cock, so I'm strickerly dickerly.\" And the catalyst for the ending comes in the form of a suddenly wise Alzheimer's patient, a plot device that <a href=\"http://www.theguardian.com/film/movie/116455/holiday\" title=\"\">The Holiday</a> would have turned down for being too sappy.</p><p><em>\"I'm just gonna shut myself down emotionally. Like George Clooney\" – Jamie</em></p><p>But even though it's a by-the-numbers romcom at heart, Friends With Benefits is under the impression that it's much edgier than that. It's about sex, remember? Strings-free sex. Emotionless sex. The unsexiest sex you will ever witness. You see, even though about 20 minutes of this film are taken up with sex, it's incredibly sexless sex. You'll remain profoundly unstirred by any of it. It's like watching a Ken doll listlessly rub up against something that was rejected from the <a href=\"http://www.theguardian.com/world/2011/apr/22/bratz-dolls-case-resolved-payout\" title=\"\">Bratz</a> range for looking too uninterested, interspersed with endless one-note bibbety-bab <a href=\"http://www.theguardian.com/media/2002/apr/20/marklawson\" title=\"\">Ally McBeal</a> dialogue and, during the first rush of passion, what sounds alarmingly like the theme-tune to <a href=\"http://www.theguardian.com/tv-and-radio/2011/feb/15/cable-girl-hot-in-cleveland\" title=\"\">Hot in Cleveland</a>. And you get to hear <a href=\"http://www.theguardian.com/culture/justin-timberlake\" title=\"\">Justin Timberlake</a> make a cunnilingus noise in it. He was still allowed to make films after that. I can't for the life of me work out why.</p><p>Friends With Benefits, then. An anti-romcom that loves romcoms. A sex comedy that isn't sexy or comedic. Perhaps No Strings Attached wins this after all.</p><h2>Observations</h2><p>• The film opens with Justin Timberlake casually editing the layout of a website called ProofUrban on a giant touchscreen monitor. It's like we're supposed to hate him. Maybe next time let's go for something subtler, like him forcing an orphan to watch while he tramples on a kitten's skull.</p><p>• Similarly, Mila Kunis expresses a fondness for flashmobs; a personality signifier that could have just as easily been expressed with, say, a single shot of her drowning a nun in a toilet.</p><p>• This film introduces the concept of a LOMBARD – which stands for Lots Of Money But A Real Dullard. Which is weird, because when I watch this, I think of STEFAN - Stop This Execrable Film Abruptly Now.</p><p>• Given the amount that <a href=\"http://www.theguardian.com/tv-and-radio/louis-ck\" title=\"\">Louis CK</a> is quoted or referenced in this film, it's hard to know whether he should sue or spend the rest of his life remotely apologising from a place of self-imposed exile.</p><p>• Perhaps the sole redeeming aspect of this film: Timberlake's entirely unnecessary inability to get on any sort of aeroplane without being vocally rude about <a href=\"http://www.theguardian.com/world/2009/jan/16/new-york-plane-crash-hudson-river-sullenberger-pilot\" title=\"\">Chesley B Sullenberger</a>, the man who landed his passenger jet on the Hudson River.</p><!-- Guardian Watermark: internal-code/content/418993535|2013-10-07T10:05:55Z|974d274faa9554b563e384420cc14f25d1462749 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-05T18:00:02Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819618313/Mila-Kunis-and-Justin-Tim-005.jpg",
+        "standfirst":"If you'd like to hear Justin Timberlake make a cunnilingus noise or listen to music worse than the score of Sleepless in Seattle, your luck could be in, tonight (Saturday) on Channel 4 at 9pm. <strong>Stuart Heritage</strong> hits the play button",
+        "shortUrl":"http://gu.com/p/3j9hn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819618313/Mila-Kunis-and-Justin-Tim-005.jpg",
+        "wordcount":"778",
+        "commentable":"true",
+        "internalContentCode":"418993535",
+        "allowUgc":"false",
+        "internalOctopusCode":"8151104",
+        "isPremoderated":"false",
+        "byline":"Stuart Heritage",
+        "publication":"theguardian.com",
+        "internalPageCode":"1975343",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T21:00:00Z"
+      },
+      "tags":[{
+        "id":"film/series/filmrecap",
+        "type":"series",
+        "webTitle":"Film recap",
+        "webUrl":"http://www.theguardian.com/film/series/filmrecap",
+        "apiUrl":"http://content.guardianapis.com/film/series/filmrecap",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/film/comedy",
+        "apiUrl":"http://content.guardianapis.com/film/comedy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/justin-timberlake",
+        "type":"keyword",
+        "webTitle":"Justin Timberlake",
+        "webUrl":"http://www.theguardian.com/culture/justin-timberlake",
+        "apiUrl":"http://content.guardianapis.com/culture/justin-timberlake",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/mila-kunis",
+        "type":"keyword",
+        "webTitle":"Mila Kunis",
+        "webUrl":"http://www.theguardian.com/film/mila-kunis",
+        "apiUrl":"http://content.guardianapis.com/film/mila-kunis",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/stuart-heritage",
+        "type":"contributor",
+        "webTitle":"Stuart Heritage",
+        "webUrl":"http://www.theguardian.com/profile/stuart-heritage",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-heritage",
+        "bio":"<p>Stuart Heritage writes about film, TV and music for the Guardian</p>",
+        "r2ContributorId":"32922",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/8/1362748164877/Stuart-Heritage.jpg",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418995818",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819613381/Mila-Kunis-and-Justin-Tim-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"54",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819615142/Mila-Kunis-and-Justin-Tim-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"340",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819616736/Mila-Kunis-and-Justin-Tim-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"130",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819618313/Mila-Kunis-and-Justin-Tim-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"84",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819619868/Mila-Kunis-and-Justin-Tim-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"132",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819621418/Mila-Kunis-and-Justin-Tim-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"168",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819623004/Mila-Kunis-and-Justin-Tim-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"180",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819624639/Mila-Kunis-and-Justin-Tim-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"228",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819626352/Mila-Kunis-and-Justin-Tim-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"276",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819627996/Mila-Kunis-and-Justin-Tim-011.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"372",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819626352/Mila-Kunis-and-Justin-Tim-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"276",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418995819",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819618313/Mila-Kunis-and-Justin-Tim-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"David Giesbrecht",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits, 2011",
+            "height":"84",
+            "credit":"David Giesbrecht/PR",
+            "caption":"In it together … Mila Kunis and Justin Timberlake in Friends With Benefits, 2011 Photograph: David Giesbrecht",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418995820",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380819975032/Mila-Kunis-and-Justin-Tim-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Glen Wilson",
+            "altText":"Mila Kunis and Justin Timberlake in Friends With Benefits",
+            "height":"276",
+            "credit":"Glen Wilson/PR",
+            "caption":"Saying it with ink … Mila Kunis as Jamie and Justin Timberlake as Dylan Photograph: Glen Wilson",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

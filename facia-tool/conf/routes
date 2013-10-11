@@ -16,22 +16,18 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 #######################################################
 
 # Fronts
-GET           /                          controllers.FrontsController.index()
-GET           /config/*id                controllers.FrontsController.getConfig(id)
+GET           /                          controllers.FaciaToolController.index()
+GET           /config/*id                controllers.FaciaToolController.getConfig(id)
 
-GET           /collection/*id            controllers.FrontsController.readBlock(id)
-POST          /collection/*id            controllers.FrontsController.updateBlock(id)
-DELETE        /collection/*id            controllers.FrontsController.deleteTrail(id)
-GET           /collection                controllers.FrontsController.listCollections
-GET           /config                    controllers.FrontsController.listConfigs
+GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
+POST          /collection/*id            controllers.FaciaToolController.updateBlock(id)
+DELETE        /collection/*id            controllers.FaciaToolController.deleteTrail(id)
+GET           /collection                controllers.FaciaToolController.listCollections
+GET           /config                    controllers.FaciaToolController.listConfigs
 
-# API endpoint proxying for https
-GET           /api/proxy/*path           controllers.Api.proxy(path, callback)
-GET           /api/tag                   controllers.Api.tag(q, callback)
-GET           /api/item/*path            controllers.Api.item(path, callback)
-GET           /json/proxy/*absUrl        controllers.Api.json(absUrl)
+# endpoints for proxying https
+GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
+GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+GET           /ophan/pageviews/*path     controllers.FaciaOphanApiController.pageViews(path)
 
-# Ophan proxying for https
-GET           /ophan/pageviews/*path     controllers.OphanApiController.pageViews(path)
-
-GET           /admin                     controllers.FrontsController.admin()
+GET           /admin                     controllers.FaciaToolController.admin()

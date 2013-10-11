@@ -2,12 +2,10 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
-    <div class="article-wrapper monocolumn-wrapper">
-        <div class="article-v2__inner">
-            <h2 class="article-zone type-1">
-                <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
-            </h2>
-        </div>
+    <h2 class="article-zone tone-@VisualTone(article) tone-accent-border">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+    </h2>
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live}"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
@@ -17,7 +15,7 @@
                     @if(LiveCricketSwitch.isSwitchedOn) {
                         @article.cricketMatch.map { id =>
                             <div class="after-headline">
-                                <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                                <a class="cta-small zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
                                     itemprop="significantLink"
                                     id="schema-WebPage">View full scorecard<i class="i i-sport-arrow-small"></i></a>
                             </div>
@@ -86,12 +84,16 @@
                         </div>
                     </div>
 
-                    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                        <div class="article__discussion" id="comments"></div>
+                    @if(article.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                        <div class="article__keywords" data-link-name="live blog keywords">
+                            @fragments.keywordList(article.keywords)
+                        </div>
                     }
+
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
+
                 </div>
                 <div class="article-v2__secondary-column" aria-hidden="true">
                     <div class="article-v2__secondary-column__inner">
@@ -108,9 +110,7 @@
                                         </div>
                                     }
                                     @if(Switches.SocialSwitch.isSwitchedOn) {
-                                        <div class="from-content-api from-content-api--small">
-                                            <h2>Share this live blog</h2>
-                                        </div>
+                                        <h2 class="article__meta-heading tone-colour">Share this live blog</h2>
                                     }
                                     @fragments.social(article, "next to content")
                                 </div>
@@ -131,12 +131,7 @@
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                <div class="d-show-cta-wrapper">
-                    <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
-                       data-is-ajax data-link-name="View all comments">
-                        View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
-                    </a>
-                </div>
+                @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             }
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" data-link-context="@article.section">

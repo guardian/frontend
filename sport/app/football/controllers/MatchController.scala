@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import model._
@@ -38,7 +38,7 @@ object MatchController extends Controller with Football with Requests with Loggi
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
   def renderMatchIdJson(matchId: String) = renderMatchId(matchId)
-  def renderMatchId(matchId: String) = render(Competitions.findMatch(matchId))
+  def renderMatchId(matchId: String) = render(Competitions().findMatch(matchId))
 
   def renderMatchJson(year: String, month: String, day: String, home: String, away: String) = renderMatch(year, month, day, home, away)
   def renderMatch(year: String, month: String, day: String, home: String, away: String) = {
@@ -46,7 +46,7 @@ object MatchController extends Controller with Football with Requests with Loggi
     val date = dateFormat.parseDateTime(year + month + day).toDateMidnight
 
     (TeamMap.findTeamIdByUrlName(home), TeamMap.findTeamIdByUrlName(away)) match {
-      case (Some(homeId), Some(awayId)) => render(Competitions.matchFor(date, homeId, awayId))
+      case (Some(homeId), Some(awayId)) => render(Competitions().matchFor(date, homeId, awayId))
       case _ => render(None)
     }
   }

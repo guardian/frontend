@@ -1,8 +1,11 @@
 @()(implicit request: RequestHeader)
 <!--[if (gt IE 8) | (IEMobile)]><!-->
 <style type="text/css">
-    @Html(Head.css)
+    @Html(Static.css.head)
 </style>
+@if(IsFacia(request)) {
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/facia.min.css")" />
+}
 <!--<![endif]-->
 <!--[if (lt IE 9) & (!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.head.min.css")" />
@@ -10,8 +13,10 @@
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style type="text/css">
-    .i,.caption:before,figcaption:before { background-image: url(@Static("images/global/sprite.png")); }
+    .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(@Static("images/global/sprite.png")); }
     .is-updating { background-image: url(@Static("images/auto-update-activity.gif")); }
+    .tweet { background-image: url(@Static("images/twitter/bird.png")); }
+    .svg .tweet { background-image: url(@Static("images/twitter/bird.svg")); }
 </style>
 
 <!--[if (lt IE 9) & (!IEMobile)]>
@@ -19,3 +24,4 @@
 <![endif]-->
 
 <style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.js")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.js")"></style>
+<style class="initial" data-cache-name="WebAgateSans" data-min-width="980" data-cache-file-woff="@Static("fonts/WebAgateSans.woff.js")" data-cache-file-ttf="@Static("fonts/WebAgateSans.ttf.js")"></style>

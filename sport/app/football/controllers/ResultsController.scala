@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import conf._
@@ -78,11 +78,11 @@ object ResultsController extends ResultsRenderer with Logging {
 
   def renderJson(date: Option[DateMidnight] = None) = render(date)
   def render(date: Option[DateMidnight] = None) = Action { implicit request =>
-    renderResults(page, Competitions.withTodaysMatchesAndPastResults, None, date, None)
+    renderResults(page, Competitions().withTodaysMatchesAndPastResults, None, date, None)
   }
 
   def routeCompetition(tag: String) = {
-    Competitions.withTag(tag) map { CompetitionResultsController.render(tag, _) }
+    Competitions().withTag(tag) map { CompetitionResultsController.render(tag, _) }
   }
 
   def routeTeam(tag: String) = {
@@ -105,7 +105,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
   def renderForJson(year: String, month: String, day: String, competitionName: String) = renderFor(year, month, day, competitionName)
   def renderFor(year: String, month: String, day: String, competitionName: String) = render(
     competitionName,
-    Competitions.withTag(competitionName).get,
+    Competitions().withTag(competitionName).get,
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
@@ -119,7 +119,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
     )
     renderResults(
       page,
-      Competitions.withTodaysMatchesAndPastResults.withCompetitionFilter(competition.url),
+      Competitions().withTodaysMatchesAndPastResults.withCompetitionFilter(competition.url),
       Some(competitionName),
       date,
       Some(competition)
@@ -136,9 +136,9 @@ object TeamResultsController extends Controller with Logging with CompetitionRes
 
   def render(teamName: String, teamId: String) = Action { implicit request =>
 
-    Competitions.findTeam(teamId).map { team =>
+    Competitions().findTeam(teamId).map { team =>
 
-      val fixtures = Competitions.withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
+      val fixtures = Competitions().withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
       val startDate = new DateMidnight
       val upcomingFixtures = fixtures.filter(_.fixture.date <= startDate).reverse
 

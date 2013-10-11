@@ -1,12 +1,11 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@import conf.Switches._
 
-<div class="article-wrapper monocolumn-wrapper">
-    <div class="article-v2__inner">
-        <h2 class="article-zone type-1">
-            <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
-        </h2>
-    </div>
+<h2 class="article-zone tone-@VisualTone(gallery) tone-accent-border">
+    <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+</h2>
 
+<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article-v2__inner">
@@ -23,10 +22,10 @@
                     <p class="js-gallery-nav gallery-nav type-11">
 
                         @if(index > 1) {
-                            <a class="js-gallery-prev gallery-prev control" data-link-name="Gallery Previous" data-is-ajax="true"
+                            <a class="js-gallery-prev gallery-prev control tone-colour" data-link-name="Gallery Previous" data-is-ajax="true"
                             href="?index=@(index - 1)">Previous</a>
                         } else {
-                            <a class="js-gallery-prev gallery-prev is-off control" data-link-name="Gallery Previous" data-is-ajax="true"
+                            <a class="js-gallery-prev gallery-prev is-off control tone-colour" data-link-name="Gallery Previous" data-is-ajax="true"
                             href="javascript://">Previous</a>
                         }
 
@@ -37,17 +36,17 @@
                         </span>
 
                         @if(index < gallery.size) {
-                            <a class="gallery-next js-gallery-next control" data-link-name="Gallery Next" data-is-ajax="true"
+                            <a class="gallery-next js-gallery-next control tone-colour" data-link-name="Gallery Next" data-is-ajax="true"
                             href="?index=@(index + 1)">Next</a>
                         } else {
-                            <a class="js-gallery-next gallery-next control" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
+                            <a class="js-gallery-next gallery-next control tone-colour" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
                             href="?trail=true">Next</a>
                         }
                     </p>
 
                     <div class="js-gallery-holder gallery-container">
                         <ul class="unstyled">
-                        @gallery.crops.zipWithRowInfo.map{ case(image, row) =>
+                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
                             @if(row.rowNum == index) {
                                 <li class="js-gallery-item-@row.rowNum js-current-gallery-slide" data-image="true"
                                 data-index="@row.rowNum" data-total="@gallery.size">
@@ -83,14 +82,19 @@
 
                 @fragments.standfirst(gallery)
 
+                @if(gallery.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                    <div class="article__keywords" data-link-name="gallery keywords">
+                        @fragments.keywordList(gallery.keywords)
+                    </div>
+                }
+
                 <div class="social-wrapper">
                     @fragments.social(gallery)
                 </div>
             </div>
             <div class="article-v2__secondary-column" aria-hidden="true">
-                <div class="article-v2__secondary-column__inner">
+                <h2 class="article__meta-heading tone-colour">Share this gallery</h2>
                 @fragments.social(gallery, "next to content")
-                </div>
             </div>
         </div>
     </article>

@@ -1,18 +1,24 @@
-@(config: Config, collection: Collection, style: SectionZone)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: SectionZone, containerIndex: Int)(implicit request: RequestHeader)
 
-<section class="collection collection--@style.className collection--@{config.section}-section collection--@style.collectionType-type js-collection--display-toggle"
-         data-link-name="block | @collection.displayName.getOrElse(config.id)"
-         data-collection-type="@style.className"
-         data-section="@config.section">
+@if(collection.items.nonEmpty) {
+    <section class="collection collection--@style.className js-collection--display-toggle tone-@style.tone"
+             data-link-name="block | @config.id"
+             data-collection-type="@style.className"
+             data-section="@config.section">
 
-    @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
-        <h2 class="collection__title">@title</h2>
-    }
-
-    <ul class="unstyled items item-count-@collection.items.size js-items--show-more items--cards">
-        @collection.items.zipWithIndex.map{ case (trail, index) =>
-            @fragments.items.standard(trail, index)
+        @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
+            @if(title.nonEmpty) {
+                <h2 class="collection__title tone-background tone-accent-border">
+                    <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
+                </h2>
+            }
         }
-    </ul>
 
-</section>
+        <ul class="unstyled items item-count-@collection.items.size @if(style.showMore){js-items--show-more} items--without-sport-stats">
+            @collection.items.zipWithIndex.map{ case (trail, index) =>
+                @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0, limit = style.showMore)
+            }
+        </ul>
+
+    </section>
+}

@@ -9,6 +9,8 @@ trait MetaData {
   def section: String
   def webTitle: String
   def analyticsName: String
+  def url: String  = s"/$id"
+  def linkText: String = webTitle
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -30,6 +32,14 @@ trait MetaData {
   def openGraph: List[(String, Any)] = List(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId
+  )
+  
+  def cards: List[(String, Any)] = List(
+    "twitter:site" -> "@guardian",
+    "twitter:app:name:iphone" -> "The Guardian",
+    "twitter:app:id:iphone" -> "409128287",
+    "twitter:app:name:googleplay" -> "The Guardian",
+    "twitter:app:id:googleplay" -> "com.guardian"
   )
 
   def cacheSeconds = 60
@@ -61,15 +71,17 @@ trait Elements {
   def videos: List[VideoElement]
   def thumbnail: Option[ImageElement]
   def mainPicture: Option[ImageAsset]
+  def mainVideo: Option[VideoElement]
 
   private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
   // Find the the lowest index imageContainer.
   private lazy val mainImageElement: Option[ImageContainer] = imageElements.find(!_.largestImage.isEmpty)
-  lazy val crops: List[ImageAsset] = imageElements.flatMap(_.imageCrops)
+  private lazy val crops: List[ImageAsset] = imageElements.flatMap(_.imageCrops)
   lazy val videoAssets: List[VideoAsset] = videos.flatMap(_.videoAssets)
 
   // Return the biggest main picture crop.
   lazy val largestMainPicture: Option[ImageAsset] = mainImageElement.flatMap(_.largestImage)
+  lazy val largestCrops: List[ImageAsset] = imageElements.flatMap(_.largestImage)
 }
 
 trait Tags {

@@ -23,16 +23,14 @@ body:after {
 .dateline {
     font-family: $sans-serif;
     margin: 0 0 $baseline*2;
-    color: #666;
+    color: $c-neutral2;
     @extend %type-11;
 }
 
 .relative-timestamp {
     display: block;
-    height: 10px;
-    color: #777;
+    color: $c-neutral2;
     margin: 0;
-    padding: 0 0 $baseline*3;
 }
 
 .relative-timestamp span {
@@ -40,8 +38,7 @@ body:after {
 }
 
 .relative-timestamp__icon {
-    margin-right: 5px;
-    margin-bottom: -1px;
+    vertical-align: -3px;
 }
 
 ol,

@@ -1,17 +1,9 @@
 #!/bin/bash
 
-#Node package management for Grunt build steps
+set -o xtrace
+set -o nounset
+set -o errexit
 
-export PATH=dev/gems/bin:$PATH
-
-bundle install --binstubs dev/gems/bin --path dev/gems
-npm install
-
-NPM_EXIT=$?
-
-if [ $NPM_EXIT == "1" ]; then
-   exit 1
-fi
 
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
@@ -54,5 +46,4 @@ cat /dev/null | java -Xmx4096M -XX:MaxPermSize=2048m \
   -DAPP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
   $BUILD_PARAMS \
   $IVY_PARAMS \
-  $SBT_EXTRA_PARAMS \
   -jar `dirname $0`/dev/sbt-launch-0.13.0.jar "$@"

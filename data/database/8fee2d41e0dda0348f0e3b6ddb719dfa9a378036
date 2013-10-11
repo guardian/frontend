@@ -1,0 +1,2872 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":10,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":1,
+    "orderBy":"newest",
+    "results":[{
+      "id":"science/2013/sep/26/nasa-curiosity-rover-mars-soil-water",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-09-26T18:14:54Z",
+      "webTitle":"Nasa's Curiosity rover finds water in Martian soil",
+      "webUrl":"http://www.theguardian.com/science/2013/sep/26/nasa-curiosity-rover-mars-soil-water",
+      "apiUrl":"http://content.guardianapis.com/science/2013/sep/26/nasa-curiosity-rover-mars-soil-water",
+      "fields":{
+        "trailText":"<p>Dirt sample reveals two pints of liquid water per cubic feet, not freely accessible but bound to other minerals in the soil</p>",
+        "headline":"Nasa's Curiosity rover finds water in Martian soil",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j4m6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216930638/Curiosity-rover-on-Mars-003.jpg",
+        "wordcount":"796",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"science/mars",
+        "type":"keyword",
+        "webTitle":"Mars",
+        "webUrl":"http://www.theguardian.com/science/mars",
+        "apiUrl":"http://content.guardianapis.com/science/mars",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/curiosity-rover",
+        "type":"keyword",
+        "webTitle":"Curiosity rover",
+        "webUrl":"http://www.theguardian.com/science/curiosity-rover",
+        "apiUrl":"http://content.guardianapis.com/science/curiosity-rover",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/nasa",
+        "type":"keyword",
+        "webTitle":"Nasa",
+        "webUrl":"http://www.theguardian.com/science/nasa",
+        "apiUrl":"http://content.guardianapis.com/science/nasa",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/alokjha",
+        "type":"contributor",
+        "webTitle":"Alok Jha",
+        "webUrl":"http://www.theguardian.com/profile/alokjha",
+        "apiUrl":"http://content.guardianapis.com/profile/alokjha",
+        "bio":"<p>Alok Jha is a science correspondent at the Guardian. In addition to writing news and comment, he presents the <a href=\"http://www.theguardian.com/science/series/science\">Science Weekly podcast</a>. A physics graduate from Imperial College London, he has been at the Guardian since the launch of the science supplement, Life, in 2003. He is the author of <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780857386120\">The Doomsday Handbook: 50 Ways to the End of the World </a> and <a href=\"http://www.amazon.co.uk/How-Live-Forever-Interesting-Science/dp/1849164827\">How To Live Forever And 34 Other Really Interesting Uses for Science</a>, both published by Quercus. You can find him on Twitter at  <a href=\"https://twitter.com/alokjha\">@alokjha</a> and his personal website is at <a href=\"http://www.alokjha.com\">alokjha.com </a></p>",
+        "rcsId":"GNL006494",
+        "r2ContributorId":"15338",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alok_jha_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418379175",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216925722/Curiosity-rover-on-Mars-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"54",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216929544/Curiosity-rover-on-Mars-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"130",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216930638/Curiosity-rover-on-Mars-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"84",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216931683/Curiosity-rover-on-Mars-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"132",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216932842/Curiosity-rover-on-Mars-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"168",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216933896/Curiosity-rover-on-Mars-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"180",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216934944/Curiosity-rover-on-Mars-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"228",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216936028/Curiosity-rover-on-Mars-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"276",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216936028/Curiosity-rover-on-Mars-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"276",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418379176",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380216930638/Curiosity-rover-on-Mars-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Nasa",
+            "altText":"Curiosity rover on Mars",
+            "height":"84",
+            "credit":"Nasa/Getty Images",
+            "caption":"Nasa scientists have confirmed in a paper published in journal Science that Curiosity has found water molecules in Martian soil.  Photograph: Nasa/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/26/pasta-firm-barilla-boycott-gay",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-26T16:36:23Z",
+      "webTitle":"Pasta firm Barilla boycotted over 'classic family' remarks",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/26/pasta-firm-barilla-boycott-gay",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/26/pasta-firm-barilla-boycott-gay",
+      "fields":{
+        "trailText":"Chairman Guido Barilla causes outrage in Italy after saying he would not consider using a gay family to advertise his products",
+        "headline":"Pasta firm Barilla boycotted over 'classic family' remarks",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4jb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213071240/Barilla-005.jpg",
+        "wordcount":"534",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/italy",
+        "type":"keyword",
+        "webTitle":"Italy",
+        "webUrl":"http://www.theguardian.com/world/italy",
+        "apiUrl":"http://content.guardianapis.com/world/italy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/gay-rights",
+        "type":"keyword",
+        "webTitle":"Gay rights",
+        "webUrl":"http://www.theguardian.com/world/gay-rights",
+        "apiUrl":"http://content.guardianapis.com/world/gay-rights",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/sexuality",
+        "type":"keyword",
+        "webTitle":"Sexuality",
+        "webUrl":"http://www.theguardian.com/society/sexuality",
+        "apiUrl":"http://content.guardianapis.com/society/sexuality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"media/advertising",
+        "type":"keyword",
+        "webTitle":"Advertising",
+        "webUrl":"http://www.theguardian.com/media/advertising",
+        "apiUrl":"http://content.guardianapis.com/media/advertising",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/lizzydavies",
+        "type":"contributor",
+        "webTitle":"Lizzy Davies",
+        "webUrl":"http://www.theguardian.com/profile/lizzydavies",
+        "apiUrl":"http://content.guardianapis.com/profile/lizzydavies",
+        "bio":"<p>Lizzy Davies is Rome correspondent for the Guardian. She previously worked for the paper in Paris, and for the Observer and Independent as a news editor</p>",
+        "r2ContributorId":"25822",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418365591",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213068083/Barilla-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"54",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213069162/Barilla-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"340",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213070223/Barilla-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"130",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213071240/Barilla-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"84",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213072221/Barilla-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"132",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213073321/Barilla-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"168",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213074595/Barilla-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"180",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213075643/Barilla-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"228",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213076711/Barilla-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"276",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213077811/Barilla-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"372",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213076711/Barilla-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"276",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418365592",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380213071240/Barilla-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Frank Augsteinb",
+            "altText":"Barilla",
+            "height":"84",
+            "credit":"Frank Augsteinb/AP",
+            "caption":"Guido Barilla is accused by Aurelio Mancuso, chairman of Equality Italia, of being deliberately provocative. Photograph: Frank Augsteinb/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/26/kick-bounty-out-maternity-wards-parenting-clubs",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-26T13:48:41Z",
+      "webTitle":"It's time to kick Bounty out of maternity wards",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/26/kick-bounty-out-maternity-wards-parenting-clubs",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/26/kick-bounty-out-maternity-wards-parenting-clubs",
+      "fields":{
+        "trailText":"<p>A grieving woman prompted <strong>Vicky Garner</strong> to act against commercial reps for parenting clubs on maternity wards. Here she explains more about why she launched her campaignmore about why she launched her campaign</p>",
+        "headline":"It's time to kick Bounty out of maternity wards",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4cz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202272203/Mother-with-newborn-baby-002.jpg",
+        "wordcount":"926",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/vicky-garner",
+        "type":"contributor",
+        "webTitle":"Vicky Garner",
+        "webUrl":"http://www.theguardian.com/profile/vicky-garner",
+        "apiUrl":"http://content.guardianapis.com/profile/vicky-garner",
+        "r2ContributorId":"58872",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380201719244/Vicky-Garner-byline-003.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/the-womens-blog-with-jane-martinson",
+        "type":"blog",
+        "webTitle":"The women's blog with Jane Martinson",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"lifeandstyle/parents-and-parenting",
+        "type":"keyword",
+        "webTitle":"Parents and parenting",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/parents-and-parenting",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/parents-and-parenting",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/family",
+        "type":"keyword",
+        "webTitle":"Family",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/family",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/family",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/nhs",
+        "type":"keyword",
+        "webTitle":"NHS",
+        "webUrl":"http://www.theguardian.com/society/nhs",
+        "apiUrl":"http://content.guardianapis.com/society/nhs",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/child-benefit",
+        "type":"keyword",
+        "webTitle":"Child benefit",
+        "webUrl":"http://www.theguardian.com/society/child-benefit",
+        "apiUrl":"http://content.guardianapis.com/society/child-benefit",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/communities",
+        "type":"keyword",
+        "webTitle":"Communities",
+        "webUrl":"http://www.theguardian.com/society/communities",
+        "apiUrl":"http://content.guardianapis.com/society/communities",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/children",
+        "type":"keyword",
+        "webTitle":"Children",
+        "webUrl":"http://www.theguardian.com/society/children",
+        "apiUrl":"http://content.guardianapis.com/society/children",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/hospitals",
+        "type":"keyword",
+        "webTitle":"Hospitals",
+        "webUrl":"http://www.theguardian.com/society/hospitals",
+        "apiUrl":"http://content.guardianapis.com/society/hospitals",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418345287",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202269028/Mother-with-newborn-baby-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"340",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"479"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202272203/Mother-with-newborn-baby-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"84",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202273515/Mother-with-newborn-baby-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"132",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202274774/Mother-with-newborn-baby-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"168",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202276102/Mother-with-newborn-baby-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"180",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202277430/Mother-with-newborn-baby-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"228",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202278890/Mother-with-newborn-baby-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"276",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202280225/Mother-with-newborn-baby-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"372",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202281672/Mother-with-newborn-baby-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"54",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202282918/Mother-with-newborn-baby-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"64",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"64"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202284196/Mother-with-newborn-baby-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"140",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202278890/Mother-with-newborn-baby-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"276",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418345288",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380202272203/Mother-with-newborn-baby-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Karen Strauss",
+            "altText":"Mother with newborn baby",
+            "height":"84",
+            "credit":"Karen Strauss/Getty Images",
+            "caption":"'Every new parent is at the start of their own very personal journey.' Photograph: Karen Strauss/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"global-development/2013/sep/26/qatar-world-cup-migrant-workers-dead",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-09-26T12:08:58Z",
+      "webTitle":"Qatar World Cup construction 'will leave 4,000 migrant workers dead'",
+      "webUrl":"http://www.theguardian.com/global-development/2013/sep/26/qatar-world-cup-migrant-workers-dead",
+      "apiUrl":"http://content.guardianapis.com/global-development/2013/sep/26/qatar-world-cup-migrant-workers-dead",
+      "fields":{
+        "trailText":"<strong>Exclusive: </strong>International Trade Union Confederation claims about 12 labourers will die each week unless action is taken",
+        "headline":"Qatar World Cup construction 'will leave 4,000 migrant workers dead'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j4aq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027196541/Qatar-Nepal-001.jpg",
+        "wordcount":"1020",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"global-development/series/modern-day-slavery-in-focus",
+        "type":"series",
+        "webTitle":"Modern-day slavery in focus",
+        "webUrl":"http://www.theguardian.com/global-development/series/modern-day-slavery-in-focus",
+        "apiUrl":"http://content.guardianapis.com/global-development/series/modern-day-slavery-in-focus",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/qatar",
+        "type":"keyword",
+        "webTitle":"Qatar",
+        "webUrl":"http://www.theguardian.com/world/qatar",
+        "apiUrl":"http://content.guardianapis.com/world/qatar",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/slavery",
+        "type":"keyword",
+        "webTitle":"Slavery",
+        "webUrl":"http://www.theguardian.com/world/slavery",
+        "apiUrl":"http://content.guardianapis.com/world/slavery",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nepal",
+        "type":"keyword",
+        "webTitle":"Nepal",
+        "webUrl":"http://www.theguardian.com/world/nepal",
+        "apiUrl":"http://content.guardianapis.com/world/nepal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"football/world-cup-2022",
+        "type":"keyword",
+        "webTitle":"World Cup 2022",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2022",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2022",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/fifa",
+        "type":"keyword",
+        "webTitle":"Fifa",
+        "webUrl":"http://www.theguardian.com/football/fifa",
+        "apiUrl":"http://content.guardianapis.com/football/fifa",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"profile/robertbooth",
+        "type":"contributor",
+        "webTitle":"Robert Booth",
+        "webUrl":"http://www.theguardian.com/profile/robertbooth",
+        "apiUrl":"http://content.guardianapis.com/profile/robertbooth",
+        "bio":"<p>Robert Booth is a news reporter on the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a>. He previously worked on The Sunday Times and edited Building Design, the architecture newspaper</p>",
+        "r2ContributorId":"19584",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418331911",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027196541/Qatar-Nepal-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"84",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-418135745",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/24/130924NepalQatar-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/24/130924NepalQatar_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/24/130924NepalQatar_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/24/130924NepalQatar/130924NepalQatar.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/26/afghan-interpreter-janis-shinwari-visa-revoked",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-26T11:45:00Z",
+      "webTitle":"The US promised a visa to my Afghan interpreter. Now it's been revoked | Matt Zeller",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/26/afghan-interpreter-janis-shinwari-visa-revoked",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/26/afghan-interpreter-janis-shinwari-visa-revoked",
+      "fields":{
+        "trailText":"<p><strong>Matt Zeller:</strong> My interpreter saved my life. Now the Taliban want to kill him, and the US is stalling on his visa. This isn't right</p>",
+        "headline":"The US promised a visa to my Afghan interpreter. Now it's been revoked",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j3px",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380131826367/matt_zeller_janis_shinwari_140.jpg",
+        "wordcount":"694",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-military",
+        "type":"keyword",
+        "webTitle":"US military",
+        "webUrl":"http://www.theguardian.com/world/us-military",
+        "apiUrl":"http://content.guardianapis.com/world/us-military",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.theguardian.com/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/matt-zeller",
+        "type":"contributor",
+        "webTitle":"Matt Zeller",
+        "webUrl":"http://www.theguardian.com/profile/matt-zeller",
+        "apiUrl":"http://content.guardianapis.com/profile/matt-zeller",
+        "bio":"<p>Matt Zeller is an Afghan war veteran and Truman National Security Project fellow. He is author of <a href=\"http://www.amazon.com/Watches-Without-Time-American-Afghanistan/dp/1935982206\">Watches Without Time: An American Soldier in Afghanistan</a> and currently works as a consultant in the Washington DC area. Follow him on Twitter: <a href=\"https://twitter.com/mattczeller\">@mattczeller </a></p>",
+        "r2ContributorId":"58861",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380147085514/Matt_Zeller.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418274424",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380131801044/matt_zeller_janis_shinwari.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Matt Zeller Janis Shinwari",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"US army soldier Matt Zeller with his Afghan interpreter Janis Shinwari. Photo: From Matt Zeller",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418274425",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380131826367/matt_zeller_janis_shinwari_140.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Matt Zeller Janis Shinwari",
+            "height":"84",
+            "credit":"Public domain",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/sep/26/robocop-statue-detroit-kickstarter",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-09-26T11:44:53Z",
+      "webTitle":"RoboCop statue to watch over Detroit after Kickstarter campaign raises $67,436",
+      "webUrl":"http://www.theguardian.com/film/2013/sep/26/robocop-statue-detroit-kickstarter",
+      "apiUrl":"http://content.guardianapis.com/film/2013/sep/26/robocop-statue-detroit-kickstarter",
+      "fields":{
+        "trailText":"<p>Crowdfunding site raises money in just six days to build 10ft bronze statue of RoboCop ahead of movie remake with Joel Kinnaman</p>",
+        "headline":"RoboCop statue to guard Detroit after successful Kickstarter campaign",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j493",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194903926/robocop-003.jpg",
+        "wordcount":"324",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"world/detroit",
+        "type":"keyword",
+        "webTitle":"Detroit",
+        "webUrl":"http://www.theguardian.com/world/detroit",
+        "apiUrl":"http://content.guardianapis.com/world/detroit",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/michigan",
+        "type":"keyword",
+        "webTitle":"Michigan",
+        "webUrl":"http://www.theguardian.com/world/michigan",
+        "apiUrl":"http://content.guardianapis.com/world/michigan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/kickstarter",
+        "type":"keyword",
+        "webTitle":"Kickstarter",
+        "webUrl":"http://www.theguardian.com/technology/kickstarter",
+        "apiUrl":"http://content.guardianapis.com/technology/kickstarter",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418329023",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194900466/robocop-001.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"54",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194902390/robocop-002.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"130",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194903926/robocop-003.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"84",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194905261/robocop-004.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"132",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194906495/robocop-005.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"168",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194907699/robocop-006.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"180",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194908892/robocop-007.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"228",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194910118/robocop-008.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"276",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194910118/robocop-008.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"276",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit. Photograph: Cine Text/Allstar/Sportsphoto Ltd",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418329024",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380194903926/robocop-003.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd. / Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"robocop",
+            "height":"84",
+            "credit":"Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "caption":"RoboCop, the dystopian 80s sci-fi law-and-order film, has inspired a civic artwork in Detroit.  Photograph: Cine Text / Allstar/Sportsphoto Ltd. / Allstar",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/26/atheism-to-be-taught-irish-schoolchildren",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-26T11:12:07Z",
+      "webTitle":"Atheism to be taught to Irish schoolchildren ",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/26/atheism-to-be-taught-irish-schoolchildren",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/26/atheism-to-be-taught-irish-schoolchildren",
+      "fields":{
+        "trailText":"Up to 16,000 primary-school pupils in non-denominational sector will get tuition in atheism, while the rest will be offered courses on the internet and on smartphone apps",
+        "headline":"Atheism to be taught to Irish schoolchildren",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j48e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193552552/Richard-Dawkins-005.jpg",
+        "wordcount":"614",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/ireland",
+        "type":"keyword",
+        "webTitle":"Ireland",
+        "webUrl":"http://www.theguardian.com/world/ireland",
+        "apiUrl":"http://content.guardianapis.com/world/ireland",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/atheism",
+        "type":"keyword",
+        "webTitle":"Atheism",
+        "webUrl":"http://www.theguardian.com/world/atheism",
+        "apiUrl":"http://content.guardianapis.com/world/atheism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/schools",
+        "type":"keyword",
+        "webTitle":"Schools",
+        "webUrl":"http://www.theguardian.com/education/schools",
+        "apiUrl":"http://content.guardianapis.com/education/schools",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/henrymcdonald",
+        "type":"contributor",
+        "webTitle":"Henry McDonald",
+        "webUrl":"http://www.theguardian.com/profile/henrymcdonald",
+        "apiUrl":"http://content.guardianapis.com/profile/henrymcdonald",
+        "bio":"<p>Henry McDonald is the Observer's Belfast correspondent</p>",
+        "rcsId":"GNL004658",
+        "r2ContributorId":"15264",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/23/1316792668937/henry-mcdonald.jpg",
+        "references":[]
+      },{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.theguardian.com/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/primary-schools",
+        "type":"keyword",
+        "webTitle":"Primary schools",
+        "webUrl":"http://www.theguardian.com/education/primary-schools",
+        "apiUrl":"http://content.guardianapis.com/education/primary-schools",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"science/dawkins",
+        "type":"keyword",
+        "webTitle":"Richard Dawkins",
+        "webUrl":"http://www.theguardian.com/science/dawkins",
+        "apiUrl":"http://content.guardianapis.com/science/dawkins",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/philosophy",
+        "type":"keyword",
+        "webTitle":"Philosophy",
+        "webUrl":"http://www.theguardian.com/world/philosophy",
+        "apiUrl":"http://content.guardianapis.com/world/philosophy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418322204",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193547423/Richard-Dawkins-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"54",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193549474/Richard-Dawkins-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"340",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193551177/Richard-Dawkins-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"130",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193552552/Richard-Dawkins-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"84",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193553790/Richard-Dawkins-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"132",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193555061/Richard-Dawkins-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"168",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193556310/Richard-Dawkins-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"180",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193557672/Richard-Dawkins-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"228",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193559044/Richard-Dawkins-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"276",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193560369/Richard-Dawkins-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"372",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193559044/Richard-Dawkins-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"276",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418322205",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380193552552/Richard-Dawkins-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Murdo MacLeod",
+            "altText":"Richard Dawkins",
+            "height":"84",
+            "credit":"Murdo MacLeod/Guardian",
+            "caption":"Richard Dawkins' The Magic of Reality is a key text in the first ever atheist curriculum for Irish schoolchildren. Photograph: Murdo MacLeod for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"global-development/2013/sep/25/qatar-nepalese-workers-poverty-camps",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-09-25T17:25:00Z",
+      "webTitle":"At 16, Ganesh got a job in Qatar. Two months later he was dead",
+      "webUrl":"http://www.theguardian.com/global-development/2013/sep/25/qatar-nepalese-workers-poverty-camps",
+      "apiUrl":"http://content.guardianapis.com/global-development/2013/sep/25/qatar-nepalese-workers-poverty-camps",
+      "fields":{
+        "trailText":"<p>Nepalese workers go to Qatar to find a way out of poverty. Instead, many are trapped into 12-hour days and nights in overcrowded, filthy camps. Some never make it home alive</p>",
+        "headline":"At 16, Ganesh got a job in Qatar. Two months later he was dead",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j398",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113188703/coffins-kathmandu-airport-003.jpg",
+        "wordcount":"1970",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"global-development/series/modern-day-slavery-in-focus",
+        "type":"series",
+        "webTitle":"Modern-day slavery in focus",
+        "webUrl":"http://www.theguardian.com/global-development/series/modern-day-slavery-in-focus",
+        "apiUrl":"http://content.guardianapis.com/global-development/series/modern-day-slavery-in-focus",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/qatar",
+        "type":"keyword",
+        "webTitle":"Qatar",
+        "webUrl":"http://www.theguardian.com/world/qatar",
+        "apiUrl":"http://content.guardianapis.com/world/qatar",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"global-development/migration",
+        "type":"keyword",
+        "webTitle":"Migration",
+        "webUrl":"http://www.theguardian.com/global-development/migration",
+        "apiUrl":"http://content.guardianapis.com/global-development/migration",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/nepal",
+        "type":"keyword",
+        "webTitle":"Nepal",
+        "webUrl":"http://www.theguardian.com/world/nepal",
+        "apiUrl":"http://content.guardianapis.com/world/nepal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/slavery",
+        "type":"keyword",
+        "webTitle":"Slavery",
+        "webUrl":"http://www.theguardian.com/world/slavery",
+        "apiUrl":"http://content.guardianapis.com/world/slavery",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"football/world-cup-2022",
+        "type":"keyword",
+        "webTitle":"World Cup 2022",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2022",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2022",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/pete-pattison",
+        "type":"contributor",
+        "webTitle":"Pete Pattisson",
+        "webUrl":"http://www.theguardian.com/profile/pete-pattison",
+        "apiUrl":"http://content.guardianapis.com/profile/pete-pattison",
+        "bio":"<p>Pete Pattisson is a video and photo journalist based in Kathmandu.</p>",
+        "r2ContributorId":"58794",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379935436422/petepattison.jpg",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418331338",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113185102/coffins-kathmandu-airport-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"54",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113187421/coffins-kathmandu-airport-002.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"130",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113188703/coffins-kathmandu-airport-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"84",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113190053/coffins-kathmandu-airport-004.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"132",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113191329/coffins-kathmandu-airport-005.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"168",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113192666/coffins-kathmandu-airport-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"180",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113193965/coffins-kathmandu-airport-007.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"228",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113195223/coffins-kathmandu-airport-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"276",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113195223/coffins-kathmandu-airport-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"276",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of two Nepalese workers killed in Qatar, at Kathmandu airport before delivery to their families. Photograph: Peter Pattisson/guardian.co.uk",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418331339",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113188703/coffins-kathmandu-airport-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"coffins-kathmandu-airport",
+            "height":"84",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"The coffins of Phatwari Chaudhari and Asharam Tharu wait to be driven home from Kathmandu airport. Chaudhari and Tharu were two of five Nepalese workers killed in an accident on the Lusail city building site. Photograph: Peter Pattison/guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418331340",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/png",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380114457803/MapQatarstadiums.png",
+          "typeData":{
+            "source":"Graphic",
+            "altText":"Map: Qatar stadiums",
+            "height":"777",
+            "credit":"Graphic",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418331341",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380113351568/ganesh-bishwakarma-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"ganesh-bishwakarma",
+            "height":"276",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"Tilak Bahadur Bishwakarma holds a photo of his son, Ganesh, 16, who died in Qatar from a cardiac arrest, six weeks after leaving Nepal.  Photograph: Peter Pattisson/guardian.co.uk",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/25/revealed-qatars-world-cup-slaves",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-09-25T16:46:00Z",
+      "webTitle":"Revealed: Qatar's World Cup 'slaves'",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/25/revealed-qatars-world-cup-slaves",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/25/revealed-qatars-world-cup-slaves",
+      "fields":{
+        "trailText":"<p><strong>Exclusive: </strong>Abuse and exploitation of migrant workers preparing emirate for 2022</p>",
+        "headline":"Revealed: Qatar's World Cup 'slaves'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jvhz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027196541/Qatar-Nepal-001.jpg",
+        "wordcount":"1551",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"global-development/series/modern-day-slavery-in-focus",
+        "type":"series",
+        "webTitle":"Modern-day slavery in focus",
+        "webUrl":"http://www.theguardian.com/global-development/series/modern-day-slavery-in-focus",
+        "apiUrl":"http://content.guardianapis.com/global-development/series/modern-day-slavery-in-focus",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/slavery",
+        "type":"keyword",
+        "webTitle":"Slavery",
+        "webUrl":"http://www.theguardian.com/world/slavery",
+        "apiUrl":"http://content.guardianapis.com/world/slavery",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/qatar",
+        "type":"keyword",
+        "webTitle":"Qatar",
+        "webUrl":"http://www.theguardian.com/world/qatar",
+        "apiUrl":"http://content.guardianapis.com/world/qatar",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nepal",
+        "type":"keyword",
+        "webTitle":"Nepal",
+        "webUrl":"http://www.theguardian.com/world/nepal",
+        "apiUrl":"http://content.guardianapis.com/world/nepal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"football/world-cup-2022",
+        "type":"keyword",
+        "webTitle":"World Cup 2022",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2022",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2022",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/fifa",
+        "type":"keyword",
+        "webTitle":"Fifa",
+        "webUrl":"http://www.theguardian.com/football/fifa",
+        "apiUrl":"http://content.guardianapis.com/football/fifa",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/pete-pattison",
+        "type":"contributor",
+        "webTitle":"Pete Pattisson",
+        "webUrl":"http://www.theguardian.com/profile/pete-pattison",
+        "apiUrl":"http://content.guardianapis.com/profile/pete-pattison",
+        "bio":"<p>Pete Pattisson is a video and photo journalist based in Kathmandu.</p>",
+        "r2ContributorId":"58794",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379935436422/petepattison.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418338928",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027196541/Qatar-Nepal-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"84",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418338929",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380123617011/Nepal-embassy-record-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":" ",
+            "altText":"Nepal embassy record",
+            "height":"276",
+            "credit":" /guardian.co.uk",
+            "caption":"Record of deaths in July 2013, from all causes, held by the Nepalese embassy in Doha.  Photograph:  /guardian.co.uk",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418338930",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379694291346/grieving-parents-Nepal-007.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Peter Pattison",
+            "altText":"grieving parents Nepal",
+            "height":"276",
+            "credit":"Peter Pattison/guardian.co.uk",
+            "caption":"Dalli Kahtri and her husband, Lil Man, hold photos of their sons, both of whom died while working as migrants in Malaysia and Qatar. Their younger son (foreground photo) died in Qatar from a heart attack, aged 20.\r\n Photograph: Peter Pattison/guardian.co.uk",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-418135745",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/24/130924NepalQatar-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/24/130924NepalQatar_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/24/130924NepalQatar_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/24/130924NepalQatar/130924NepalQatar.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"global-development/video/2013/sep/25/qatar-migrant-workers-world-cup-host-video",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-09-25T15:41:00Z",
+      "webTitle":"Qatar: the migrant workers forced to work for no pay in World Cup host country - video",
+      "webUrl":"http://www.theguardian.com/global-development/video/2013/sep/25/qatar-migrant-workers-world-cup-host-video",
+      "apiUrl":"http://content.guardianapis.com/global-development/video/2013/sep/25/qatar-migrant-workers-world-cup-host-video",
+      "fields":{
+        "trailText":"<p>Much of the Gulf state's expansion is being built by some of the poorest migrant workers in the world</p>",
+        "headline":"Qatar: the migrant workers forced to work for no pay in World Cup host country - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j2h4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027196541/Qatar-Nepal-001.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"global-development/series/modern-day-slavery-in-focus",
+        "type":"series",
+        "webTitle":"Modern-day slavery in focus",
+        "webUrl":"http://www.theguardian.com/global-development/series/modern-day-slavery-in-focus",
+        "apiUrl":"http://content.guardianapis.com/global-development/series/modern-day-slavery-in-focus",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/slavery",
+        "type":"keyword",
+        "webTitle":"Slavery",
+        "webUrl":"http://www.theguardian.com/world/slavery",
+        "apiUrl":"http://content.guardianapis.com/world/slavery",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/qatar",
+        "type":"keyword",
+        "webTitle":"Qatar",
+        "webUrl":"http://www.theguardian.com/world/qatar",
+        "apiUrl":"http://content.guardianapis.com/world/qatar",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nepal",
+        "type":"keyword",
+        "webTitle":"Nepal",
+        "webUrl":"http://www.theguardian.com/world/nepal",
+        "apiUrl":"http://content.guardianapis.com/world/nepal",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/pete-pattison",
+        "type":"contributor",
+        "webTitle":"Pete Pattisson",
+        "webUrl":"http://www.theguardian.com/profile/pete-pattison",
+        "apiUrl":"http://content.guardianapis.com/profile/pete-pattison",
+        "bio":"<p>Pete Pattisson is a video and photo journalist based in Kathmandu.</p>",
+        "r2ContributorId":"58794",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379935436422/petepattison.jpg",
+        "references":[]
+      },{
+        "id":"profile/anniekelly",
+        "type":"contributor",
+        "webTitle":"Annie Kelly",
+        "webUrl":"http://www.theguardian.com/profile/anniekelly",
+        "apiUrl":"http://content.guardianapis.com/profile/anniekelly",
+        "bio":"<p>Annie Kelly writes on global development, human rights and social affairs for the Guardian and Observer.  She is currently working on the Guardian's <a href=\"http://www.guardian.co.uk/global-development/series/modern-day-slavery-in-focus\">Modern-day slavery in focus</a> project</p>",
+        "rcsId":"GNL006454",
+        "r2ContributorId":"15396",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/About/General/2009/7/16/1247742880431/Annie-Kelly-001.jpg",
+        "references":[]
+      },{
+        "id":"profile/mustafa-khalili",
+        "type":"contributor",
+        "webTitle":"Mustafa Khalili",
+        "webUrl":"http://www.theguardian.com/profile/mustafa-khalili",
+        "apiUrl":"http://content.guardianapis.com/profile/mustafa-khalili",
+        "bio":"<p>Mustafa Khalili is a multimedia editor for news at the Guardian. Previously he worked as a photojournalist, covering such subjects as celebrity culture in the UK and armed conflict in the Middle East. You can follow him on Twitter: <a href=\"http://twitter.com/#!/muskhalili\">@muskhalili</a></p>",
+        "r2ContributorId":"31262",
+        "references":[]
+      },{
+        "id":"profile/lucy-lamble",
+        "type":"contributor",
+        "webTitle":"Lucy Lamble",
+        "webUrl":"http://www.theguardian.com/profile/lucy-lamble",
+        "apiUrl":"http://content.guardianapis.com/profile/lucy-lamble",
+        "bio":"<p>Lucy Lamble is <a href=\"http://www.guardian.co.uk/global-development\">global development</a> editor. <br />She previously worked for the BBC in London, Luton and Lagos.<br />If you have ideas for the development team, please mail development<br />@guardian.co.uk</p>",
+        "r2ContributorId":"45039",
+        "references":[]
+      },{
+        "id":"global-development/migration",
+        "type":"keyword",
+        "webTitle":"Migration",
+        "webUrl":"http://www.theguardian.com/global-development/migration",
+        "apiUrl":"http://content.guardianapis.com/global-development/migration",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/employment",
+        "type":"keyword",
+        "webTitle":"Employment",
+        "webUrl":"http://www.theguardian.com/global-development/employment",
+        "apiUrl":"http://content.guardianapis.com/global-development/employment",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"football/world-cup-2022",
+        "type":"keyword",
+        "webTitle":"World Cup 2022",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2022",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2022",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418135745",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027071329/Qatar-Nepal-Composite----001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal Composite - ",
+            "height":"360",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \nScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027106888/Qatar-Nepal-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"372",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027196541/Qatar-Nepal-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"84",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027198016/Qatar-Nepal-002.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"132",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027199261/Qatar-Nepal-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"168",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027200649/Qatar-Nepal-004.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"180",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027201898/Qatar-Nepal-005.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"228",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027203166/Qatar-Nepal-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"276",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027260178/Qatar-Nepal-002.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"130",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027261401/Qatar-Nepal-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"54",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027311024/Qatar-Nepal--001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal ",
+            "height":"360",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/24/130924NepalQatar-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/24/130924NepalQatar_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/24/130924NepalQatar_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/24/130924NepalQatar/130924NepalQatar.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        }]
+      },{
+        "id":"gu-image-418332124",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/24/1380027196541/Qatar-Nepal-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Qatar Nepal",
+            "height":"84",
+            "credit":"guardian.co.uk",
+            "caption":"Qatar, one of the richest countries on the planet is being built on the slave labour of the world's poorest - men who are not being paid, are being held in conditions of forced labour and who are in increasing numbers being worked to death in the process. \rScores of young Nepali migrant workers are dying in the process Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

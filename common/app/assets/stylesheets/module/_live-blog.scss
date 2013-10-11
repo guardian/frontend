@@ -5,14 +5,11 @@
 .published-time {
     @extend %type-9;
     display: block;
-    border-top: 2px solid $darkMushroom;
-    padding: $baseline*4 0 $baseline;
+    border-top: 1px dotted $c-neutral3;
+    padding: $baseline 0 $baseline;
     margin-top: $baseline*2;
 }
 
-    .is-summary .published-time {
-        border-color: $articleOrange;
-    }
 
 .block-time {
     line-height: 15px;
@@ -24,8 +21,8 @@
 }
 
 .updated-time {
-    margin-bottom: $baseline*4;
-    @extend %type-11;
+    margin: $baseline 0 $baseline*4;
+    @include fs-data(1);
     color: #777;
 }
 
@@ -38,46 +35,11 @@
     padding-top: 0;
 }
 
-
-/* Block titles
+/* Blocks
    ========================================================================== */
-
-.block-title,
-.from-content-api .block-title,
-.live-blog .block-title {
-    margin-bottom: 10px;
+.block {
+    margin-bottom: $baseline*6;
 }
-
-    .is-summary > .block-title,
-    .is-key-event > .block-title {
-        color: $articleOrange;
-    }
-
-
-/* Block quotes
-   ========================================================================== */
-
-.block blockquote {
-    padding-left: 20px;
-    border-left: 5px solid $darkMushroom;
-    margin: 20px 0;
-
-    &:before,
-    &:after {
-        display: none !important;
-    }
-}
-
-    .block .quoted {
-        border-left: none;
-        padding: 0;
-        margin: 0 0 10px;
-
-        &:before,
-        &:after {
-            display: inline-block !important;
-        }
-    }
 
 
 /* Tweets
@@ -88,16 +50,9 @@
     width: 10000px;
     max-width: 100%;
     background-color: #f4f4f4;
-    background-image: url(../images/twitter/bird.35592800bb7681abe5ef1cc7e44b8fcd.png) !important;
     background-position: $baseline*2 $gutter/2 !important;
     background-repeat: no-repeat;
-    border-top: $baseline solid #3299d0;
-
-    @if ($svg-support) {
-        .svg & {
-            background-image: url(../images/twitter/bird.d1a2ed26432057c3d224a813c7e1221c.svg) !important;
-        }
-    }
+    border-top: $baseline/2 solid #3299d0;
 }
     .element-tweet {
         margin: $baseline*3 0 $baseline*4;
@@ -105,7 +60,13 @@
     .tweet,
     .from-content-api blockquote.tweet {
         border-left-width: 0;
-        padding: $baseline*2;
+        padding: $baseline*1.5 $baseline*2;
+        font-style: normal;
+        @include fs-data(4);
+
+        @include mq(tablet) {
+            @include fs-data(5, true);
+        }
     }
 
     .tweet:before,
@@ -124,9 +85,9 @@
 
     .tweet-date {
         display: block;
-        color: #28acdb;
+        color: $c-neutral3;
         padding-left: 40px;
-        margin-bottom: $baseline*2;
+        margin-bottom: $baseline*4;
     }
 
 
@@ -162,5 +123,5 @@
     opacity: 0;
     height: 0;
     overflow: hidden;
-    background-color: $mushroom;
+    background-color: $c-neutral7;
 }

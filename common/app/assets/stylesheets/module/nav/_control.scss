@@ -19,7 +19,7 @@
 
     &.is-active {
         background-color: #fff !important;
-        color: $blue;
+        color: $c-brandBlue;
     }
 }
 
@@ -48,7 +48,7 @@
     float: right;
     width: auto;
     height: 28px;
-    padding: 15px $gutter 15px 0;
+    padding: 16px $gutter 15px 0;
 
     @include mq(tablet) {
         position: absolute;
@@ -66,14 +66,14 @@
         background-color: transparent !important;
     }
     @include mq(1152px) {
-        border-right: 1px solid $darkMushroom;
+        border-right: 1px solid $c-neutral5;
         padding-right: $gutter - 1;
     }
 }
 
 .control__menu.i {
     float: right;
-    margin-top: 8px;
+    margin-top: 7px;
     text-indent: -1000em;
 }
 
@@ -101,7 +101,7 @@ span.control__menu.i-menu {
         position: relative;
         margin-right: $gutter - 3;
         border-color: #BBBBBB;
-        background-color: $darkMushroom;
+        background-color: $c-neutral5;
     }
 }
 .control--sections.is-active .i-nav-divider {
@@ -122,11 +122,11 @@ span.control__menu.i-menu {
         float: right;
         height: 28px;
         margin: 0;
-        padding: 17px 0 13px 0;
+        padding: 18px 0 13px 0;
         color: #fff;
 
         &.is-active {
-            color: $blue;
+            color: $c-brandBlue;
         }
 
         @include mq(tablet) {
@@ -162,7 +162,7 @@ span.control__menu.i-menu {
     }
 
 .control--topstories .i-top-stories {
-    margin: 5px $gutter 0 $gutter/2;
+    margin: 2px $gutter 0 $gutter/2;
 
     @include mq(tablet) {
         margin-left: 0;
@@ -181,7 +181,7 @@ span.control__menu.i-menu {
 .control--search {
     float:right;
     height: 28px;
-    padding: 15px $gutter 15px 0;
+    padding: 16px $gutter 15px 0;
     border: none;
 
     @include mq(tablet) {
@@ -192,7 +192,7 @@ span.control__menu.i-menu {
 }
 
 .control--search .i-search {
-    margin-top: $baseline*2;
+    margin-top: 5px;
     margin-left: 6px;
     margin-right: 2px;
 }
@@ -205,14 +205,14 @@ span.control__menu.i-menu {
 .control--profile {
     float: right;
     height: 28px;
-    padding: 17px 0 13px $gutter/2;
+    padding: 18px 0 13px;
     width: auto;
 
     &,
     &:active,
     &:hover,
     &:focus     { color: #fff; }
-    &.is-active { color: $blue; }
+    &.is-active { color: $c-brandBlue; }
 
     @include mq(tablet) {
         position: absolute;
@@ -222,26 +222,26 @@ span.control__menu.i-menu {
     }
 }
 
+.control--profile .i-profile {
+    margin: 2px 12px 0 10px;
+
+    @include mq(tablet) {
+        margin-left: 0;
+    }
+}
+
 .control__info {
     display: none;
     height: 28px;
     vertical-align: top;
     line-height: 28px;
     margin-right: $gutter/2;
-    margin-left: $gutter/2;
+    margin-left: 14px;
 
     @include mq(544px) {
         display: inline-block;
         max-width: 110px;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-}
-
-.control--profile .i-profile {
-    margin: 5px $gutter 0 $gutter/2;
-
-    @include mq(tablet) {
-        margin-left: 0;
     }
 }

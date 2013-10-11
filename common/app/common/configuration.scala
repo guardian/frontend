@@ -5,6 +5,7 @@ import com.gu.management.{ Manifest => ManifestFile }
 import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
 import java.net.InetAddress
 import play.api.Play
+import play.api.Play.current
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import conf.Configuration
@@ -32,6 +33,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
 
     val stage = apply("STAGE", "unknown")
+
+    val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
+
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
   }
 
   object switches {
@@ -50,6 +55,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object debug {
     lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
+    lazy val beaconUrl: String = configuration.getStringProperty("beacon.url").getOrElse("")
   }
 
   override def toString(): String = configuration.toString
@@ -84,6 +90,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
+  object cookies {
+    lazy val lastSeenKey: String = "lastseen"
+    lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
+  }
+
   object proxy {
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 
@@ -104,7 +115,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ajax {
-    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val url =
+      if (environment.secure) configuration.getStringProperty("ajax.secureUrl").getOrElse("")
+      else configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
   }
 
@@ -117,7 +130,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object static {
-    lazy val path = configuration.getMandatoryStringProperty("static.path")
+    lazy val path =
+      if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
+      else configuration.getMandatoryStringProperty("static.path")
   }
 
   object images {
@@ -125,8 +140,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object assets {
-    lazy val path = configuration.getMandatoryStringProperty("assets.path")
-    lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
+    lazy val path =
+      if (environment.secure) configuration.getMandatoryStringProperty("assets.securePath")
+      else configuration.getMandatoryStringProperty("assets.path")
   }
 
   object oas {

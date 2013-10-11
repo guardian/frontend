@@ -82,6 +82,7 @@
 
 .form-field__note--right {
     float: right;
+    margin-left: $gutter;
 }
 
 .label {
@@ -94,7 +95,7 @@
 }
 
 .text-input {
-    border: 1px solid $grey;
+    border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
     color: #545454;
@@ -108,14 +109,15 @@
     width: 100%;
 
     &:focus {
-        border-color: $darkGrey;
+        border-color: $c-neutral2;
     }
 }
 
 .submit-input {
-    background: $linkBlue;
+    background: $c-newsDefault;
     border: 0 none;
     color: #fff;
+    cursor: pointer;
     font-size: 14px;
     font-size: 1.4rem;
     margin: 0 $gutter 0 0;
@@ -124,12 +126,16 @@
 
     &:hover,
     &:focus {
-        background: darken($linkBlue, 5%);
+        background: darken($c-newsDefault, 5%);
     }
 
     &:active {
         background: #000;
     }
+}
+
+.submit-input[disabled] {
+    background: $c-neutral5;
 }
 
 .check-label {

@@ -1,9 +1,8 @@
 package services
 
-import play.api.mvc.{AnyContent, Request}
+import play.api.mvc.RequestHeader
 import conf.IdentityConfiguration
 import com.google.inject.Inject
-import common.Logging
 import utils.SafeLogging
 
 
@@ -12,7 +11,7 @@ class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends SafeLoggi
   val returnUrlDomains = List(conf.id.domain)
   val defaultReturnUrl = "http://www." + conf.id.domain
 
-  def getVerifiedReturnUrl(request: Request[AnyContent]): Option[String] = {
+  def getVerifiedReturnUrl(request: RequestHeader): Option[String] = {
     getVerifiedReturnUrl(
       request
         .getQueryString("returnUrl")

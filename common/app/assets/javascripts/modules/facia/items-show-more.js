@@ -7,33 +7,33 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 var breakpointOptions = {
                     wide: {
                         default: 4,
-                        news: 9,
-                        sport: 9,
-                        commentisfree: 5,
-                        culture: 5,
-                        popular: 3
+                        'container-news': 9,
+                        'container-sport': 9,
+                        'container-commentisfree': 5,
+                        'container-culture': 5,
+                        'container-popular': 3
                     },
                     desktop: {
                         default: 3,
-                        news: 6,
-                        sport: 6,
-                        commentisfree: 3,
-                        culture: 3
+                        'container-news': 6,
+                        'container-sport': 6,
+                        'container-commentisfree': 3,
+                        'container-culture': 3
                     },
                     tablet: {
                         default: 2,
-                        news: 5,
-                        sport: 5,
-                        commentisfree: 3,
-                        culture: 3
+                        'container-news': 5,
+                        'container-sport': 5,
+                        'container-commentisfree': 3,
+                        'container-culture': 3
                     },
                     mobile: {
                         default: 2,
-                        news: 5,
-                        sport: 5,
-                        commentisfree: 3,
-                        culture: 3,
-                        popular: 3
+                        'container-news': 5,
+                        'container-sport': 5,
+                        'container-commentisfree': 3,
+                        'container-culture': 3,
+                        'container-popular': 3
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
@@ -45,9 +45,16 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 mobile: 5
             }[detect.getBreakpoint()],
             _renderToggle = function($items) {
-                var $button = bonzo(bonzo.create('<button class="items__show-more">Show more news</button>'))
-                    .insertAfter($items);
+                var buttonText = 'Show more',
+                    $button = bonzo(bonzo.create('<button class="items__show-more" data-link-name="' + buttonText + ' | 0">' + buttonText + '</button>'))
+                        .insertAfter($items);
                 bean.on($button[0], 'click', function(e) {
+                    // increment button counter
+                    var newDataAttr = $button.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
+                        // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
+                        return prefix + (parseInt(count, 10) + 1);
+                    });
+                    $button.attr('data-link-name', newDataAttr);
                     // show x more, depending on current breakpoint
                     var moreHidden = qwery('.item.u-h', $items[0]).some(function(item, index) {
                             if (index === _rowSize) {
@@ -55,14 +62,20 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                             }
                             bonzo(item).removeClass('u-h');
                         });
+                    // listen to the clickstream, as happens later, before removing
                     if (!moreHidden) {
-                        $button.remove();
+                        common.mediator.on('module:clickstream:click', function(clickSpec) {
+                            if (bonzo(clickSpec.target)[0] === $button[0]) {
+                                $button.remove();
+                            }
+                        });
                     }
                 });
             };
 
         this.addShowMore = function() {
-            var collectionType = _$items.parent().attr('data-collection-type'),
+            var $collection = _$items.parent(),
+                collectionType = $collection.attr('data-collection-type') + '-' + $collection.attr('data-section'),
                 $overflowStories = common.$g('.item:nth-child(n + ' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
             // hide stories
             $overflowStories.addClass('u-h');

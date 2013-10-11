@@ -4,26 +4,32 @@ define([
     'qwery',
     'bean',
     'ajax',
+    'modules/analytics/discussion',
+    'modules/discussion/comment-box',
     'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
     'modules/inview',
-    'modules/detect'
+    'modules/detect',
+    'modules/id'
 ], function (
     common,
     bonzo,
     qwery,
     bean,
     ajax,
+    tracking,
+    CommentBox,
     RecommendComments,
     userPrefs,
     ClickStream,
     Inview,
-    Detect
+    Detect,
+    Id
     ) {
 
     var Discussion = function(options) {
-
+        options.config.switches.discussionPostComment = true;
         var initialResponses      = 3,
             responsesIncrement    = 25,
             context               = options.context,
@@ -37,11 +43,10 @@ define([
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
-                '<div class="d-actions">' +
-                '<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
-                    'Want to comment? Visit the desktop site</a>' +
-                '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
+                                    '<div class="d-actions"><a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
+            apiRoot               = config.page.discussionApiRoot,
+            user                  = Id.getUserFromCookie(),
             self;
 
         return {
@@ -55,8 +60,10 @@ define([
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
                         self.mediaPrimaryNode        = context.querySelector(mediaPrimary);
+                        self.discussionClosed        = (self.discussionContainerNode.getAttribute('data-discussion-closed') === 'true');
+                        self.showCommentBox          = (!self.discussionClosed && user);
 
-                        if(self.discussionContainerNode.isInitialised) {
+                        if (self.discussionContainerNode.isInitialised) {
                             return;
                         } else {
                             self.discussionContainerNode.isInitialised = true;
@@ -69,6 +76,7 @@ define([
 
                                 self.insertCommentCounts(commentCount);
                                 self.bindEvents();
+                                self.bindTracking();
                             }
                         });
                 }
@@ -77,8 +85,8 @@ define([
 
             insertCommentCounts: function(commentCount) {
                 var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
-                    html = '<a href="#comments" class="js-show-discussion commentcount" data-link-name="Comment count">' +
-                           '  <i class="i i-comment-count-small"></i>' + commentCount +
+                    html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
+                           '  <i class="i"></i>' + commentCount +
                            '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                            '</a>';
 
@@ -131,13 +139,18 @@ define([
                         // Hide the 'Show more button' if there's no more messages on the server
                         self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
 
-                        commentsHaveLoaded = true;
                         currentPage = response.currentPage;
-
-                        RecommendComments.init(context, { apiRoot: config.page.discussionApiRoot });
 
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                         loadingInProgress = false;
+
+                        // We do this onload here as to only jump the page around once
+                        if (config.switches.discussionPostComment && !commentsHaveLoaded && !self.showCommentBox) {
+                            self.renderCommentBar();
+                        }
+
+                        RecommendComments.init(context, { apiRoot: apiRoot });
+                        commentsHaveLoaded = true;
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
@@ -184,6 +197,92 @@ define([
 
             },
 
+            renderCommentBar: function() {
+                var $discussionElem = bonzo(this.discussionContainerNode),
+                    $showMoreBtnElem = bonzo(this.showMoreBtnNode),
+                    showElem;
+
+                if (self.discussionClosed) {
+                    showElem = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
+                    $discussionElem.prepend(showElem);
+                    return;
+                }
+
+                else if (!user) {
+                    var url = config.page.idUrl +'/{1}?returnUrl='+ window.location.href;
+                    showElem = '<div class="d-bar d-bar--signin">Open for comments. <a href="'+ url.replace('{1}', 'signin') +'">Sign in</a> or <a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> to join the discussion.</div>';
+                    $discussionElem.prepend(showElem);
+                    $showMoreBtnElem.after(showElem);
+                    return;
+                }
+            },
+
+            getCommentBox: function() {
+                ajax({
+                    url: '/discussion/comment-box.json',
+                    crossOrigin: true,
+                    withCredentials: true
+                }).then(self.renderCommentBoxes);
+            },
+
+            renderCommentBoxes: function(resp) {
+                if (resp.error) { return; }
+                var html = resp.html,
+                    topBox, bottomBox,
+                    $discussionElem = bonzo(self.discussionContainerNode),
+                    $topBoxElem = bonzo(bonzo.create(html)),
+                    $bottomBoxElem = bonzo(bonzo.create(html));
+
+                $discussionElem.before($topBoxElem);
+                $discussionElem.after($bottomBoxElem);
+
+                topBox = new CommentBox(context, common.mediator, {
+                    apiRoot: apiRoot,
+                    discussionId: discussionId,
+                    condensed: true
+                });
+                topBox.attachTo($topBoxElem[0]);
+                topBox.on('post:success', self.addComment.bind(self, false));
+
+                bottomBox = new CommentBox(context, common.mediator, {
+                    apiRoot: apiRoot,
+                    discussionId: discussionId
+                });
+                bottomBox.attachTo($bottomBoxElem[0]);
+                bottomBox.on('post:success', self.addComment.bind(self, true));
+
+                $bottomBoxElem.after('<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
+                    'Want our fully featured commenting experience? Head to our old site.</a>');
+            },
+
+            addComment: function(takeToTop, resp) {
+                // TODO (jamesgorrie): this is weird, but we don't have templating
+                var discussionContainerNode = self.discussionContainerNode[0],
+                    $thread = bonzo(qwery('.d-thread', discussionContainerNode)),
+                    $comment = bonzo(qwery('.d-comment', discussionContainerNode)).clone().removeClass('d-comment--blocked')[0],
+                    $actions = bonzo($comment.querySelector('.d-comment__actions')),
+                    $datetime = bonzo($comment.querySelector('time')),
+                    $author = bonzo($comment.querySelector('.d-comment__author')),
+                    $body = bonzo($comment.querySelector('.d-comment__body')),
+                    $avatar = bonzo($comment.querySelector('.d-comment__avatar'))[0];
+
+                $comment.id = 'comment-'+ resp.id;
+                $author.html(user.displayName);
+                $datetime.html('Just now');
+
+                $body.html('<p>'+ resp.body.replace('\n\n', '</p><p>') +'</p>');
+                $thread.prepend($comment);
+
+                if (takeToTop) {
+                    window.location.hash = '';
+                    window.location.hash = 'comment-'+ resp.id;
+                }
+
+                // This is stored in the DOM like so
+                // To spare us another call to the discussion API
+                $avatar.src = qwery('.js-avatar-url', discussionContainerNode)[0].getAttribute('data-avatar-url');
+            },
+
             showMoreReplies: function(el) {
                 var threadNode = el.parentNode,
                     totalResponses = threadNode._responses,
@@ -209,6 +308,10 @@ define([
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
             },
 
+            bindTracking: function() {
+                tracking.init();
+            },
+
             bindEvents: function() {
                 // Setup events
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
@@ -219,6 +322,9 @@ define([
                     if (!commentsHaveLoaded) {
                         // Don't request again if we've already done it
                         self.loadDiscussion();
+                        if (config.switches.discussionPostComment && self.showCommentBox) {
+                            self.getCommentBox();
+                        }
                     }
 
                     common.mediator.emit('modules:discussion:show');
@@ -248,15 +354,6 @@ define([
                     bean.fire(context.querySelector('.js-show-discussion'), 'click');
                 }
 
-                // Auto load comments on desktop sizes
-                if (/desktop|extended/.test(Detect.getLayoutMode())) {
-                    var inview = new Inview('#comments', context);
-                    bean.on(context, 'inview', '#comments', function(e) {
-                        self.loadDiscussion();
-                        bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
-                        bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
-                    });
-                }
             }
         };
 

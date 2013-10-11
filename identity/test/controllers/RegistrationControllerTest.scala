@@ -4,13 +4,13 @@ import org.scalatest.path
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import test.{TestRequest, Fake}
-import idapiclient.{EmailPassword, OmnitureTracking, IdApiClient}
+import idapiclient.{TrackingData, EmailPassword, IdApiClient}
 import services._
 import play.api.test.Helpers._
-import play.api.test.{FakeHeaders, FakeRequest}
+import play.api.test.FakeRequest
 import com.gu.identity.model.User
 import org.mockito.Mockito._
-import org.mockito.Matchers
+import org.mockito.{ArgumentMatcher, Matchers}
 import scala.concurrent.Future
 import client.Error
 import idapiclient.responses.{CookieResponse, CookiesResponse}
@@ -26,23 +26,26 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   val urlBuilder = mock[IdentityUrlBuilder]
   val userCreationService = mock[UserCreationService]
   val createdUser = mock[User]
-  val omnitureData = mock[OmnitureTracking]
+  val trackingData = mock[TrackingData]
 
-  val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/comeback"))
+  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/comeback"), Some("123.456.789.12"))
   val conf = new IdentityConfiguration
   val signinService = new PlaySigninService(conf)
   val user = User("test@example.com", "123")
   val xForwardedFor = "123.456.789.12, 12.345.678.91"
 
-  when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean]))
+  when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean], Matchers.any[Option[String]]))
     .thenReturn(user)
   when(requestParser.apply(Matchers.anyObject())).thenReturn(identityRequest)
+  when(trackingData.ipAddress).thenReturn(Some("123.456.789.12"))
 
   val registrationController = new RegistrationController(returnUrlVerifier, userCreationService, api, requestParser, urlBuilder, signinService)
 
   "the renderRegistrationForm" - {
     "should render the registration form" in Fake {
-      val result = registrationController.renderForm()(TestRequest())
+      val request = TestRequest()
+      when(returnUrlVerifier.getVerifiedReturnUrl(request)).thenReturn(Some("http://example.com/return"))
+      val result = registrationController.renderForm()(request)
       status(result) should equal(OK)
     }
   }
@@ -52,9 +55,10 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       val badFakeRequest = FakeRequest(POST, "/register")
         .withFormUrlEncodedBody("user.primaryEmailAddress" -> "test@example.com")
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
+      when(returnUrlVerifier.getVerifiedReturnUrl(badFakeRequest)).thenReturn(Some("http://example.com/return"))
       "so the api is not called" in Fake {
         registrationController.processForm()(badFakeRequest)
-        verify(api, never).register(Matchers.any[User], Matchers.same(omnitureData), Matchers.any[Option[String]])
+        verify(api, never).register(Matchers.any[User], Matchers.same(trackingData))
       }
    }
 
@@ -66,46 +70,47 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       val fakeRequest = FakeRequest(POST, "/register")
         .withFormUrlEncodedBody("user.primaryEmailAddress" -> email, "user.publicFields.username" -> username, "user.password" -> password )
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
-      when(api.register(Matchers.same(user), Matchers.same(omnitureData), Matchers.any[Option[String]])).thenReturn(Future.successful(Right(createdUser)))
-      when(api.authBrowser(EmailPassword(email, password), omnitureData)).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+      when(api.register(Matchers.same(user), Matchers.same(trackingData))).thenReturn(Future.successful(Right(createdUser)))
+      when(api.authBrowser(EmailPassword(email, password), trackingData)).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+      when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
       "should create the user with the username, email and password required" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(userCreationService).createUser("test@example.com", "username", "password", false, false)
+        verify(userCreationService).createUser(Matchers.eq("test@example.com"), Matchers.eq("username"), Matchers.eq("password"), Matchers.eq(false), Matchers.eq(false), Matchers.any[Option[String]])
       }
 
       "should pass marketing values to the create user service" in Fake {
         val fakeRequest = FakeRequest(POST, "/register")
           .withFormUrlEncodedBody("user.primaryEmailAddress" -> "test@example.com", "user.publicFields.username" -> "username", "user.password" -> "password", "receive_gnm_marketing" -> "true", "receive_third_party_marketing" -> "true" )
+        when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
+
         registrationController.processForm()(fakeRequest)
-        verify(userCreationService).createUser("test@example.com", "username", "password", true, true)
+        verify(userCreationService).createUser("test@example.com", "username", "password", true, true, Some("123.456.789.12"))
       }
 
       "should pass the created user to the api object to the api" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(api).register(Matchers.same(user), Matchers.anyObject(), Matchers.anyObject())
+        verify(api).register(Matchers.same(user), Matchers.anyObject())
       }
 
       "shuold pass the the omniture data to the the api" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(api).register(Matchers.anyObject(), Matchers.same(omnitureData), Matchers.anyObject())
+        verify(api).register(Matchers.anyObject(), Matchers.same(trackingData))
       }
 
       "should provide user IP, exrtacted from the X-Forwarded-For header value" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(api).register(Matchers.anyObject(), Matchers.anyObject(), Matchers.eq(Some("123.456.789.12")))
-      }
 
-      "should try to sign the user in after registration" ignore  {
-        // The nested async cause this test fo fail - and we've no way of refactoring them as yet
-        when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
-        registrationController.processForm()(fakeRequest)
-        //verify(api).register(Matchers.eq(user), Matchers.same(omnitureData))
-        verify(api).authBrowser(auth, omnitureData)
+        object TrackingDataIpMatcher extends ArgumentMatcher {
+          def matches(argument: scala.Any): Boolean = argument match {
+            case TrackingData(_, _, _, Some("123.456.789.12"), _, _) => true
+            case _ => false
+          }
+        }
+        verify(api).register(Matchers.anyObject(), Matchers.argThat(TrackingDataIpMatcher))
       }
 
       "should set login cookies on valid auth response" in Fake {
-        when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
         val result = registrationController.processForm()(fakeRequest)
         val responseCookies : Cookies = cookies(result)
@@ -126,12 +131,12 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
       val badPassword = List(Error("Invalid password:", "Password should be between 6 and 20 characters long:", 500, Some("user.password")))
 
-     when(api.register(Matchers.same(user), Matchers.same(omnitureData), Matchers.any[Option[String]]))
+     when(api.register(Matchers.same(user), Matchers.same(trackingData)))
        .thenReturn(Future.successful(Left(badPassword)))
 
-     "there is no attempt to sign the user in" in Fake {
+      "there is no attempt to sign the user in" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(api).register(Matchers.anyObject(), Matchers.same(omnitureData), Matchers.anyObject())
+        verify(api).register(Matchers.anyObject(), Matchers.same(trackingData))
         verifyNoMoreInteractions(api)
      }
    }
@@ -145,12 +150,13 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
       val errors = List(Error("Message", "Description", 500, Some("Context")))
 
-      when(api.register(Matchers.same(user), Matchers.same(omnitureData), Matchers.any[Option[String]]))
+      when(api.register(Matchers.same(user), Matchers.same(trackingData)))
         .thenReturn(Future.successful(Right(createdUser)))
-      when(api.authBrowser(EmailPassword(email, password), omnitureData)).thenReturn(Future.successful(Left(errors)))
+      when(api.authBrowser(EmailPassword(email, password), trackingData)).thenReturn(Future.successful(Left(errors)))
+      when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
       when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
-      "there are no cookies on the response" in Fake {
+     "there are no cookies on the response" in Fake {
         val result = registrationController.processForm()(fakeRequest)
         val responseCookies : Cookies = cookies(result)
         responseCookies.get("testCookie") match {

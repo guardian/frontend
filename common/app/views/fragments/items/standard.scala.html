@@ -1,35 +1,45 @@
-@(trail: Trail, index: Int)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, mainItem: Boolean = false, limit: Boolean = false)(implicit request: RequestHeader)
 
-<li class="item @trail.trailType.map("item--" + _) @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}"
-    @trail.discussionId.map{ id => data-discussion-id="@id" }>
-    <h2 class="item__title">
-        <a href="@LinkTo{@trail.url}" class="item__link">
-            @if(trail.trailType == Option("comment")) {
-                <span class="i i-quotes-green"></span>
+@defining(VisualTone(trail)) { tone =>
+    <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@tone @if(limit && index >= 5){u-h}" data-link-name="trail | @{index + 1}"
+        @trail.discussionId.map{ id => data-discussion-id="@id" }>
+        <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
+            @trail.mainPicture.map{ mainPicture =>
+                <div class="item__image-container">
+                    <img class="item__image" alt=""
+                         data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)"
+                         data-src-mobile="@ImgSrc(mainPicture, FrontItemMobile)" data-src-main-mobile="@ImgSrc(mainPicture, FrontItemMainMobile)" />
+                </div>
             }
-            @RemoveOuterParaHtml(trail.headline)
+            <h@if(mainItem){1}else{2} class="item__title">
+                @if(trail.isLive){
+                    <span class="item__live-indicator">Live</span>
+                }
+                @if(tone == "comment") {
+                    <span class="i i-quote-light-grey"></span>
+                }
+                @RemoveOuterParaHtml(trail.headline)
+            </h@if(mainItem){1}else{2}>
         </a>
-    </h2>
-    @if(trail.trailType == Option("comment")) {
-        <p class="item__byline">@trail.byline</p>
-    }
-    @trail.trailText.map { text =>
-        <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
-    }
-    <div class="item__meta item__meta--grey">
-        <time class="item__timestamp js-item__timestamp"
-              itemprop="datePublished"
-              datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-              data-timestamp="@trail.webPublicationDate.getMillis">
-            <i class="i"></i>
-            <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-        </time>
-    </div>
-    @trail.mainPicture(620).map{ mainPicture =>
-        <div class="item__image-container">
-            <a href="@LinkTo{@trail.url}" class="item__link">
-                <img class="item__image" src="@mainPicture.path" alt="" />
-            </a>
+        @if(tone == "comment") {
+            @trail.byline.map { byLine =>
+                <p class="item__byline tone-colour">@Html(byLine)</p>
+            }
+        }
+        @trail.trailText.map { text =>
+            <div class="item__standfirst">
+                <p>@cleanTrailText(text)(Edition(request))</p>
+            </div>
+        }
+        <div class="item__meta">
+            <time class="item__timestamp js-item__timestamp"
+                  itemprop="datePublished"
+                  datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                  data-timestamp="@trail.webPublicationDate.getMillis"
+                  data-relativeformat="short">
+                <i class="i i-clock-light-grey"></i>
+                <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+            </time>
         </div>
-    }
-</li>
+    </li>
+}

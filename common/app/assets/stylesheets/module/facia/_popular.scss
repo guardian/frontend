@@ -2,11 +2,11 @@
     @include mq($to: tablet) {
         @include first-row(1);
         .item:first-child {
-            @include card;
+            @include card($with-image: true);
         }
         .item:nth-child(2),
         .item:nth-child(3) {
-            @include card($without-extras: true);
+            @include card;
         }
         .item:nth-child(n + 4) {
             @include card-headline;
@@ -14,14 +14,20 @@
     }
     @include mq(tablet, desktop) {
         @include row(2);
-        .item:nth-child(n + 3) {
-            @include card($without-extras: true);
+        .item:nth-child(-n+2) {
+            @include card($with-image: true);
+        }
+        .item:nth-child(n+3) {
+            @include card;
         }
     }
     @include mq(desktop, wide) {
         @include row(3);
-        .item:nth-child(n + 4) {
-            @include card($without-extras: true);
+        .item:nth-child(-n+3) {
+            @include card($with-image: true);
+        }
+        .item:nth-child(n+4) {
+            @include card;
         }
     }
     @include mq(wide) {
@@ -31,20 +37,20 @@
         }
         // stylings for beggining and end of rows
         .item:first-child,
-        .item:nth-child(4n + 4) {
+        .item:nth-child(4n+4) {
             @include row-start;
         }
         .item:nth-child(2),
         .item:nth-child(3),
-        .item:nth-child(4n + 7) {
+        .item:nth-child(4n+7) {
             @include row-end;
         }
         .item:first-child {
             @include card-triple-width;
             float: left;
         }
-        .item:nth-child(n + 2) {
-            @include card($without-extras: true);
+        .item:nth-child(n+2) {
+            @include card;
         }
         .item:nth-child(3) {
             padding-top: $gs-baseline;

@@ -1,53 +1,72 @@
 .collection--container {
-    &.section--news,
-    &.section--sport {
+    &.collection--news,
+    &.collection--sport {
         @include mq($to: tablet) {
             @include row(1);
             .item:nth-child(1) {
-                @include card;
+                @include card($with-image: true);
             }
-            .item:nth-child(2),
-            .item:nth-child(3) {
-                @include card-half-width;
+            .items--without-sport-stats {
+                .item:nth-child(2),
+                .item:nth-child(3) {
+                    @include card-half-width($with-image: true);
+                }
+                .item:nth-child(4),
+                .item:nth-child(5) {
+                    @include card-half-width;
+                }
+                .item:nth-child(2),
+                .item:nth-child(4) {
+                    @include row-start;
+                }
+                .item:nth-child(3),
+                .item:nth-child(5) {
+                    @include row-end;
+                }
+                .item:nth-child(n+6) {
+                    @include card-headline;
+                }
             }
-            .item:nth-child(4),
-            .item:nth-child(5) {
-                @include card-half-width($without-image: true);
-            }
-            .item:nth-child(2),
-            .item:nth-child(4) {
-                @include row-start;
-            }
-            .item:nth-child(3),
-            .item:nth-child(5) {
-                @include row-end;
-            }
-            .item:nth-child(n + 6) {
-                @include card-headline;
+            .items--with-sport-stats {
+                .item:nth-child(3),
+                .item:nth-child(4) {
+                    @include card-half-width($with-image: true);
+                }
+                .item:nth-child(5),
+                .item:nth-child(6) {
+                    @include card-half-width;
+                }
+                .item:nth-child(3),
+                .item:nth-child(5) {
+                    @include row-start;
+                }
+                .item:nth-child(4),
+                .item:nth-child(6) {
+                    @include row-end;
+                }
+                .item:nth-child(n+7) {
+                    @include card-headline;
+                }
             }
         }
     }
-    &.section--culture,
-    &.section--comments {
+    &.collection--culture,
+    &.collection--commentisfree {
         @include mq($to: tablet) {
-            .item:nth-child(n + 4) {
+            .item:nth-child(n+4) {
                 @include card-headline;
             }
         }
     }
-    &.section--culture {
-        .collection__title {
-            background-color: $pink;
-            border-color: $light-pink;
-        }
+    &.collection--culture {
         @include mq($to: tablet) {
             @include first-row(1);
             .item:nth-child(1) {
-                @include card;
+                @include card($with-image: true);
             }
             .item:nth-child(2),
             .item:nth-child(3) {
-                @include card-half-width;
+                @include card-half-width($with-image: true);
             }
             .item:nth-child(2) {
                 @include row-start;
@@ -57,21 +76,20 @@
             }
         }
     }
-    &.section--comments {
-        .collection__title {
-            background-color: $green;
-            border-color: $light-green;
-        }
+    &.collection--commentisfree {
         @include mq($to: tablet) {
             @include first-row(1);
             .item:first-child {
-                @include card;
+                @include card($with-image: true);
             }
             .item:nth-child(2),
             .item:nth-child(3) {
-                @include card($without-extras: true);
+                @include card;
             }
         }
+    }
+    &.collection--football-nav {
+        margin-top: $baseline*6;
     }
     @include mq(tablet) {
         @include first-row(1);
@@ -85,50 +103,64 @@
     @include mq(tablet, desktop) {
         @include first-row(1);
         .item:first-child,
-        .item:nth-child(2n + 2) {
+        .item:nth-child(2n+2) {
             @include row-start;
         }
         .item:first-child,
-        .item:nth-child(2n + 3) {
+        .item:nth-child(2n+3) {
             @include row-end;
         }
-        &.section--news,
-        &.section--sport {
-            .item:nth-child(n + 6) {
-                @include card($without-extras: true);
+        &.collection--news,
+        &.collection--sport {
+            .item:nth-child(n+2):nth-child(-n+5) {
+                @include card($with-image: true);
+            }
+            .item:nth-child(n+6) {
+                @include card;
             }
         }
-        &.section--culture,
-        &.section--comments {
-            .item:nth-child(n + 4) {
-                @include card($without-extras: true);
+        &.collection--culture,
+        &.collection--commentisfree {
+            .item:nth-child(2),
+            .item:nth-child(3) {
+                @include card($with-image: true);
+            }
+            .item:nth-child(n+4) {
+                @include card;
             }
         }
     }
     @include mq(desktop, wide) {
         @include first-row(2);
         .item:nth-child(3) {
-            @include card($without-extras: true, $not-first-row: true);
+            @include card($not-first-row: true);
         }
         .item:first-child,
-        .item:nth-child(3n + 4) {
+        .item:nth-child(3n+4) {
             @include row-start;
         }
         .item:nth-child(2),
         .item:nth-child(3),
-        .item:nth-child(3n + 6) {
+        .item:nth-child(3n+6) {
             @include row-end;
         }
-        &.section--news,
-        &.section--sport {
-            .item:nth-child(n + 7) {
-                @include card($without-extras: true);
+        &.collection--news,
+        &.collection--sport {
+            .item:nth-child(2),
+            .item:nth-child(n+4):nth-child(-n+6) {
+                @include card($with-image: true);
+            }
+            .item:nth-child(n+6) {
+                @include card;
             }
         }
-        &.section--culture,
-        &.section--comments {
-            .item:nth-child(n + 4) {
-                @include card($without-extras: true);
+        &.collection--culture,
+        &.collection--commentisfree {
+            .item:nth-child(2) {
+                @include card($with-image: true);
+            }
+            .item:nth-child(n+3) {
+                @include card;
             }
         }
     }
@@ -136,27 +168,67 @@
         @include first-row(3);
         .item:nth-child(4),
         .item:nth-child(5){
-            @include card($without-extras: true, $not-first-row: true);
+            @include card($not-first-row: true);
         }
         .item:first-child,
-        .item:nth-child(4n + 6) {
+        .item:nth-child(4n+6) {
             @include row-start;
         }
         .item:nth-child(3),
         .item:nth-child(5),
-        .item:nth-child(4n + 9) {
+        .item:nth-child(4n+9) {
             @include row-end;
         }
-        &.section--news,
-        &.section--sport {
-            .item:nth-child(n + 10) {
-                @include card($without-extras: true);
+        &.collection--news,
+        &.collection--sport {
+            .item:nth-child(3),
+            .item:nth-child(2),
+            .item:nth-child(n+6):nth-child(-n+9) {
+                @include card($with-image: true);
+            }
+            .item:nth-child(n+10) {
+                @include card;
             }
         }
-        &.section--culture,
-        &.section--comments {
-            .item:nth-child(n + 6) {
-                @include card($without-extras: true);
+        &.collection--culture,
+        &.collection--commentisfree {
+            .item:nth-child(2),
+            .item:nth-child(3) {
+                @include card($with-image: true);
+            }
+            .item:nth-child(n+4) {
+                @include card;
+            }
+        }
+    }
+    .item--sport-stats {
+        @include mq(tablet) {
+            min-height: gs-height(8) - 6;
+        }
+        .competition-table {
+            border-bottom-style: none;
+            @include mq($to: desktop) {
+                padding-top: 2px;
+                border-top: 2px solid $c-newsAccent;
+            }
+            @include mq(desktop) {
+                border-top-style: none;
+                padding-top: 0;
+            }
+            h3 {
+                @include fs-headline(3);
+                @include mq(tablet) {
+                    @include fs-headline(4, $size-only: true);
+                }
+            }
+            .match-desc__team {
+                width: 87px;
+            }
+            .match-desc__result {
+                width: 30px;
+            }
+            .cta {
+                margin-bottom: 0;
             }
         }
     }

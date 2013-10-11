@@ -23,7 +23,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  signInService : PlaySigninService)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = new IdentityPage("/signin", "Sign in", "signin")
+  val page = IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
     Forms.tuple(
@@ -49,14 +49,14 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     def onError(formWithErrors: Form[(String, String, Boolean)]): Future[SimpleResult] = {
       logger.info("Invalid login form submission")
       Future {
-        Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+        Ok(views.html.signin(page.signinValidationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
       }
     }
 
     def onSuccess(form: (String, String, Boolean)): Future[SimpleResult] = form match {
       case (email, password, rememberMe) =>
         logger.trace("authing with ID API")
-        val authResponse = api.authBrowser(EmailPassword(email, password), idRequest.omnitureData)
+        val authResponse = api.authBrowser(EmailPassword(email, password), idRequest.trackingData)
         signInService.getCookies(authResponse, rememberMe) map {
           case Left(errors) => {
             logger.error(errors.toString())
@@ -67,7 +67,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                 else error.description
               formFold.withError(error.context.getOrElse(""), errorMessage)
             }
-            Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+            Ok(views.html.signin(page.signinAuthenticationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
           }
           case Right(responseCookies) => {
             logger.trace("Logging user in")

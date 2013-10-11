@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import conf._
@@ -77,11 +77,11 @@ object FixturesController extends FixtureRenderer with Logging with ExecutionCon
 
   def renderJson(date: Option[DateMidnight] = None) = render(date)
   def render(date: Option[DateMidnight] = None) = Action { implicit request =>
-    renderFixtures(page, Competitions.withTodaysMatchesAndFutureFixtures, date, None, None)
+    renderFixtures(page, Competitions().withTodaysMatchesAndFutureFixtures, date, None, None)
   }
 
   def routeCompetition(tag: String) = {
-    Competitions.withTag(tag) map { CompetitionFixturesController.render(tag, _) }
+    Competitions().withTag(tag) map { CompetitionFixturesController.render(tag, _) }
   }
 
   def routeTeam(tag: String) = {
@@ -104,7 +104,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
   def renderForJson(year: String, month: String, day: String, competitionName: String) = renderFor(year, month, day, competitionName)
   def renderFor(year: String, month: String, day: String, competitionName: String) = render(
     competitionName,
-    Competitions.withTag(competitionName).map { comp => comp }.get,
+    Competitions().withTag(competitionName).map { comp => comp }.get,
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
@@ -119,7 +119,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
     renderFixtures(
       page,
-      Competitions.withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competition.url),
+      Competitions().withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competition.url),
       date,
       Some(competitionName),
       Some(competition)
@@ -136,9 +136,9 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
 
   def render(teamName: String, teamId: String) = Action { implicit request =>
 
-    Competitions.findTeam(teamId).map { team =>
+    Competitions().findTeam(teamId).map { team =>
 
-      val fixtures = Competitions.withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
+      val fixtures = Competitions().withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
       val startDate = new DateMidnight
       val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate)
 
@@ -158,8 +158,8 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
 
   def renderComponentJson(teamId: String) = renderComponent(teamId)
   def renderComponent(teamId: String) = Action { implicit request =>
-    Competitions.findTeam(teamId).map { team =>
-      val fixtures = Competitions.withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
+    Competitions().findTeam(teamId).map { team =>
+      val fixtures = Competitions().withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
 
       val startDate = new DateMidnight
 
