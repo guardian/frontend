@@ -43,7 +43,12 @@ define([
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
-                                    '<div class="d-actions"><a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
+                                    '<div class="d-actions">'+
+                                        '<a data-link-name="Comment on desktop" class="d-actions__link" href="/'+ config.page.pageId +'?view=desktop#start-of-comments">'+
+                                            'Want our fully featured commenting experience? Head to our old site.'+
+                                        '</a>'+
+                                        '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a>'+
+                                    '</div>',
             clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
             user                  = Id.getUserFromCookie(),
@@ -126,7 +131,7 @@ define([
                     crossOrigin: true,
                     success: function(response) {
                         if (currentPage === 0) {
-                            self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
+                            self.discussionContainerNode.innerHTML = response.html + actionsTemplate;
                             self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
                         } else {
                             var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
@@ -145,8 +150,12 @@ define([
                         loadingInProgress = false;
 
                         // We do this onload here as to only jump the page around once
-                        if (config.switches.discussionPostComment && !commentsHaveLoaded && !self.showCommentBox) {
-                            self.renderCommentBar();
+                        if (config.switches.discussionPostComment && !commentsHaveLoaded) {
+                            if (!self.showCommentBox) {
+                                self.renderCommentBar();
+                            } else {
+                                self.getCommentBox();
+                            }
                         }
 
                         RecommendComments.init(context, { apiRoot: apiRoot });
@@ -218,23 +227,42 @@ define([
             },
 
             getCommentBox: function() {
+                var url = config.page.discussionApiRoot + '/profile/' + user.id;
                 ajax({
-                    url: '/discussion/comment-box.json',
+                    url: url,
                     crossOrigin: true,
-                    withCredentials: true
+                    type: 'json',
+                    data: {
+                        GU_U: Id.getCookie()
+                    }
                 }).then(self.renderCommentBoxes);
             },
 
             renderCommentBoxes: function(resp) {
-                if (resp.error) { return; }
-                var html = resp.html,
-                    topBox, bottomBox,
+                // The user is logged in
+                if (resp.status !== 'ok' || !resp.userProfile.privateFields) {
+                    // the user shouldn't have reached this method
+                    return;
+                }
+                var topBox, bottomBox,
+                    userFields = resp.userProfile.privateFields,
+                    tmplId = userFields.canPostComment ? 'tmpl-comment-box' : 'tmpl-cannot-comment',
+                    html = document.getElementById(tmplId).innerHTML,
                     $discussionElem = bonzo(self.discussionContainerNode),
                     $topBoxElem = bonzo(bonzo.create(html)),
                     $bottomBoxElem = bonzo(bonzo.create(html));
 
+                // This comes in useful later
+                user.privateFields = userFields;
+                user.avata = resp.userProfile.avatar;
+
+                if (!userFields.isPremoderated) {
+                    bonzo($topBoxElem[0].querySelector('.d-comment-box__premod')).remove();
+                    bonzo($bottomBoxElem[0].querySelector('.d-comment-box__premod')).remove();
+                }
+
                 $discussionElem.before($topBoxElem);
-                $discussionElem.after($bottomBoxElem);
+                bonzo(self.showMoreBtnNode).after($bottomBoxElem);
 
                 topBox = new CommentBox(context, common.mediator, {
                     apiRoot: apiRoot,
@@ -250,9 +278,6 @@ define([
                 });
                 bottomBox.attachTo($bottomBoxElem[0]);
                 bottomBox.on('post:success', self.addComment.bind(self, true));
-
-                $bottomBoxElem.after('<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
-                    'Want our fully featured commenting experience? Head to our old site.</a>');
             },
 
             addComment: function(takeToTop, resp) {
@@ -264,7 +289,7 @@ define([
                     $datetime = bonzo($comment.querySelector('time')),
                     $author = bonzo($comment.querySelector('.d-comment__author')),
                     $body = bonzo($comment.querySelector('.d-comment__body')),
-                    $avatar = bonzo($comment.querySelector('.d-comment__avatar'))[0];
+                    $avatar = bonzo($comment.querySelector('.d-comment__avatar'));
 
                 $comment.id = 'comment-'+ resp.id;
                 $author.html(user.displayName);
@@ -280,7 +305,7 @@ define([
 
                 // This is stored in the DOM like so
                 // To spare us another call to the discussion API
-                $avatar.src = qwery('.js-avatar-url', discussionContainerNode)[0].getAttribute('data-avatar-url');
+                $avatar[0].src = user.avatar;
             },
 
             showMoreReplies: function(el) {
@@ -322,9 +347,6 @@ define([
                     if (!commentsHaveLoaded) {
                         // Don't request again if we've already done it
                         self.loadDiscussion();
-                        if (config.switches.discussionPostComment && self.showCommentBox) {
-                            self.getCommentBox();
-                        }
                     }
 
                     common.mediator.emit('modules:discussion:show');
