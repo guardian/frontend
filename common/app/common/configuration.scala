@@ -34,6 +34,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     val stage = apply("STAGE", "unknown")
 
+    val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
     val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
