@@ -43,7 +43,12 @@ define([
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
-                                    '<div class="d-actions"><a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
+                                    '<div class="d-actions">'+
+                                        '<a data-link-name="Comment on desktop" class="d-actions__link" href="/'+ config.page.pageId +'?view=desktop#start-of-comments">'+
+                                            'Want our fully featured commenting experience? Head to our old site.'+
+                                        '</a>'+
+                                        '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a>'+
+                                    '</div>',
             clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
             user                  = Id.getUserFromCookie(),
@@ -247,6 +252,10 @@ define([
                     $topBoxElem = bonzo(bonzo.create(html)),
                     $bottomBoxElem = bonzo(bonzo.create(html));
 
+                // This comes in useful later
+                user.privateFields = userFields;
+                user.avata = resp.userProfile.avatar;
+
                 if (!userFields.isPremoderated) {
                     bonzo($topBoxElem[0].querySelector('.d-comment-box__premod')).remove();
                     bonzo($bottomBoxElem[0].querySelector('.d-comment-box__premod')).remove();
@@ -269,9 +278,6 @@ define([
                 });
                 bottomBox.attachTo($bottomBoxElem[0]);
                 bottomBox.on('post:success', self.addComment.bind(self, true));
-
-                $bottomBoxElem.after('<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
-                    'Want our fully featured commenting experience? Head to our old site.</a>');
             },
 
             addComment: function(takeToTop, resp) {
@@ -283,7 +289,7 @@ define([
                     $datetime = bonzo($comment.querySelector('time')),
                     $author = bonzo($comment.querySelector('.d-comment__author')),
                     $body = bonzo($comment.querySelector('.d-comment__body')),
-                    $avatar = bonzo($comment.querySelector('.d-comment__avatar'))[0];
+                    $avatar = bonzo($comment.querySelector('.d-comment__avatar'));
 
                 $comment.id = 'comment-'+ resp.id;
                 $author.html(user.displayName);
@@ -299,7 +305,7 @@ define([
 
                 // This is stored in the DOM like so
                 // To spare us another call to the discussion API
-                $avatar.src = qwery('.js-avatar-url', discussionContainerNode)[0].getAttribute('data-avatar-url');
+                $avatar[0].src = user.avatar;
             },
 
             showMoreReplies: function(el) {
