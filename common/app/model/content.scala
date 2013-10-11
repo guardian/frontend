@@ -184,8 +184,8 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
   
   override def cards: List[(String, Any)] = super.cards ++ List(
-    "twitter:card" -> "summary"
-  )
+    "twitter:card" -> "summary_large_image"
+  ) ++ images.sortBy(_.index).flatMap(_.imageCrops).take(1).map( "twitter:image:src" -> _.path )
 
   override lazy val mainPicture: Option[ImageAsset] = {
     largestMainPicture.orElse(
@@ -269,8 +269,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
   ) ++ images.sortBy(_.index).flatMap(_.imageCrops).take(5).zipWithIndex.map{ case(image, index) =>
-    val srcIndex = index + 1
-    s"twitter:image$srcIndex:src" -> image.path
+    s"twitter:image$index:src" -> image.path
   }
 
 }
@@ -280,9 +279,6 @@ class Interactive(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
-  override def cards: List[(String, Any)] = super.cards ++ List(
-    "twitter:card" -> "summary"
-  )
 }
 
 class ImageContent(private val delegate: ApiContent) extends Content(delegate) {
@@ -293,5 +289,5 @@ class ImageContent(private val delegate: ApiContent) extends Content(delegate) {
   
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "photo"
-  )
+  ) ++ images.sortBy(_.index).flatMap(_.imageCrops).take(1).map( "twitter:image:src" -> _.path )
 }

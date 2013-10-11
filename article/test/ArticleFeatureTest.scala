@@ -449,9 +449,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
         Then("I should see twitter cards")
-        $("meta[property='twitter:site']").getAttributes("content")  should be ("@guardian")
-        $("meta[property='twitter:card']").getAttributes("content")  should be ("summary")
-        $("meta[property='twitter:app:url:googleplay']").getAttributes("content") should be ("guardian://www.theguardian.com")
+        $("meta[property='twitter:site']").getAttributes("content").head  should be ("@guardian")
+        $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
+        $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
+        $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
       }
     }
 
