@@ -33,6 +33,14 @@ trait MetaData {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId
   )
+  
+  def cards: List[(String, Any)] = List(
+    "twitter:site" -> "@guardian",
+    "twitter:app:name:iphone" -> "The Guardian",
+    "twitter:app:id:iphone" -> "409128287",
+    "twitter:app:name:googleplay" -> "The Guardian",
+    "twitter:app:id:googleplay" -> "com.guardian"
+  )
 
   def cacheSeconds = 60
 }
