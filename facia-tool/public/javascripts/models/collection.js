@@ -61,13 +61,16 @@ define([
     }
 
     Collection.prototype.createGroups = function(groupNames) {
-        var dropItem = this.drop.bind(this);
+        var self = this,
+            dropItem = this.drop.bind(this);
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
             return {
                 group: index,
                 name: name,
-                articles: ko.observableArray(),
+                collection: self,
+                articles:  ko.observableArray(),
+                underDrag: ko.observable(),
                 dropItem: dropItem
             };
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order

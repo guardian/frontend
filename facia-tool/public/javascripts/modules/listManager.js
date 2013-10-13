@@ -80,10 +80,37 @@ define([
                         return new Collection(collection);
                     })
                 );
-                connectSortableLists();
+                //connectSortableLists();
             });
         }
 
+        function startPoller() {
+            var period = common.config.collectionsPollMs || 60000;
+
+            setInterval(function(){
+                model.collections().forEach(function(list, index){
+                    setTimeout(function(){
+                        list.refresh();
+                    }, index * period / (model.collections().length + 1)); // stagger requests
+                });
+            }, period);
+
+            startPoller = function() {}; // make idempotent
+        }
+
+        function toggleViewer() {
+            model.showViewer(!model.showViewer());
+            if (model.showViewer()) {
+                model.viewer.render();
+            }
+        }
+
+        function flushClipboard() {
+            model.clipboard.removeAll();
+            clipboardEl.innerHTML = '';
+        };
+
+        /*
         function connectSortableLists() {
             var selector = '.connectedList',
                 sortables = $(selector),
@@ -200,32 +227,6 @@ define([
             });
         };
 
-        function startPoller() {
-            var period = common.config.collectionsPollMs || 60000;
-
-            setInterval(function(){
-                model.collections().forEach(function(list, index){
-                    setTimeout(function(){
-                        list.refresh();
-                    }, index * period / (model.collections().length + 1)); // stagger requests
-                });
-            }, period);
-
-            startPoller = function() {}; // make idempotent
-        }
-
-        function toggleViewer() {
-            model.showViewer(!model.showViewer());
-            if (model.showViewer()) {
-                model.viewer.render();
-            }
-        }
-
-        function flushClipboard() {
-            model.clipboard.removeAll();
-            clipboardEl.innerHTML = '';
-        };
-
         function onDragOver(event) {
             event.preventDefault();
         }
@@ -248,19 +249,141 @@ define([
             contentApi.decorateItems(model.clipboard());
             ophanApi.decorateItems(model.clipboard());
         }
+        */
 
-        model.config.subscribe(function(config) {
-            var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
-            model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
-            setConfig(config);
-        });
+        var fromList;
 
         knockout.bindingHandlers.makeDropabble = {
             init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                element.addEventListener('dragover',  onDragOver,  false);
-                element.addEventListener('drop',      onDrop,      false);
+
+                element.addEventListener('dragstart', function(event){
+                    fromList = knockout.dataFor(element);
+                }, false);
+
+                element.addEventListener('dragover', function(event){
+                    event.preventDefault();
+                    var targetList = knockout.dataFor(element);
+                    var targetItem = knockout.dataFor(event.target);
+                    targetList.underDrag(targetItem.constructor !== Article);
+                    _.each(targetList.articles(), function(item) {
+                        var underDrag = (item === targetItem);
+                        if (underDrag !== item.state.underDrag()) {
+                            item.state.underDrag(underDrag);
+                        }
+                    });
+                }, false);
+
+                element.addEventListener('dragleave', function(event){
+                    event.preventDefault();
+                    var targetList = knockout.dataFor(element);
+                    var targetItem = knockout.dataFor(event.target);
+                    targetList.underDrag(false);
+                    _.each(targetList.articles(), function(item) {
+                        if (item.state.underDrag()) {
+                            item.state.underDrag(false);
+                        }
+                    });
+                }, false);
+
+                element.addEventListener('drop', function(event){
+                    var targetList = knockout.dataFor(element),
+                        targetItem = knockout.dataFor(event.target),
+                        item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        after,
+                        insertAt;
+
+                    event.preventDefault();
+                    
+                    targetList.underDrag(false);
+                    _.each(targetList.articles(), function(item) {
+                        if (item.state.underDrag()) {
+                            item.state.underDrag(false);
+                        }
+                    });
+
+                    if (targetItem.constructor !== Article) {
+                        targetItem = _.last(targetList.articles ? targetList.articles() : undefined);
+                        after = !!targetItem;
+                    }
+
+                    if (common.util.urlHost(item).indexOf('google') > -1) {
+                        item = decodeURIComponent(common.util.parseQueryParams(item).url);
+                    }
+
+                    item = common.util.urlAbsPath(item);
+
+                    // for display only:
+                    if (targetList.articles) {                    
+                        insertAt = Math.max(0, targetList.articles().indexOf(targetItem));
+                        targetList.articles.splice(insertAt, 0, new Article({id: item}))
+                        contentApi.decorateItems(targetList.articles());
+                        ophanApi.decorateItems(targetList.articles());
+                    }
+
+                    saveStuff({
+                        from:     fromList && fromList.collection ? fromList.collection       : undefined,
+                        to:       targetList && targetList.collection ? targetList.collection : undefined,
+                        item:     item,
+                        position: targetItem && targetItem.meta ? targetItem.meta.id() : undefined,
+                        after: after
+                    })
+                }, false);
             }
         };
+
+        function saveStuff(opts) {
+            //console.log(opts);
+        }
+
+        function saveList(opts) {
+            var $collection = opts.listEl.parent(),
+                list,
+                index,
+
+                article     = knockout.dataFor(opts.itemEl[0]),
+                group       = knockout.dataFor(opts.listEl[0]),
+                collection  = knockout.dataFor($collection[0]),
+
+                apiProps = {
+                    item:   article.meta.id(),
+                    live:   collection.state.liveMode(),
+                    draft: !collection.state.liveMode()
+                };
+
+            collection.state.loadIsPending(true);
+
+            if (!opts.delete) {
+                list = $('.connectedList > .trail', $collection).map(function() {
+                    return $(this).data('url')
+                }).get();
+                index = list.indexOf(article.meta.id());
+
+                apiProps.position = list[index + 1];
+                if (!apiProps.position && list[index - 1]) {
+                    apiProps.position = list[index - 1];
+                    apiProps.after = true;
+                }
+
+                apiProps.itemMeta = {
+                    group: group.group
+                }
+            }
+
+            if (apiProps.item === apiProps.position) {
+                // Adding an item next to itself. Reload then bail.
+                collection.load();
+                return;
+            }
+
+            authedAjax({
+                url: common.config.apiBase + '/collection/' + collection.id,
+                type: opts.delete ? 'delete' : 'post',
+                data: JSON.stringify(apiProps)
+            }).then(function() {
+                collection.load();
+            });
+        };
+
 
         knockout.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
@@ -288,6 +411,12 @@ define([
             }
         };
 
+        model.config.subscribe(function(config) {
+            var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
+            model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
+            setConfig(config);
+        });
+
         this.init = function() {
             fetchConfigsList()
             .then(function(){
@@ -296,10 +425,10 @@ define([
 
                 knockout.applyBindings(model);
 
-                startPoller();
+                //startPoller();
 
                 model.latestArticles.search();
-                model.latestArticles.startPoller();
+                //model.latestArticles.startPoller();
             });
         };
 

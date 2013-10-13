@@ -5,6 +5,12 @@ html {
 body {
     padding: 10px;
     color: #000000;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 fieldset,
@@ -73,7 +79,12 @@ input[type=text] {
 }
 
 #collections .connectedList {
-    padding: 0 0 10px 0;
+    padding: 0 0 15px 0;
+    -webkit-transition: background-color 100ms linear;
+       -moz-transition: background-color 100ms linear;
+        -ms-transition: background-color 100ms linear;
+         -o-transition: background-color 100ms linear;
+            transition: background-color 100ms linear;
 }
 
 .pending {
@@ -221,9 +232,15 @@ a.list-header__status__control:visited {
     padding: 1px 3px 4px 4px;
     position: relative;
     border-radius: 2px;
+    background-color: #FFFFFF;
+    -webkit-transition: background-color 100ms linear;
+       -moz-transition: background-color 100ms linear;
+        -ms-transition: background-color 100ms linear;
+         -o-transition: background-color 100ms linear;
+            transition: background-color 100ms linear;
 }
 
-.draft-zones {
+.draft-zones .trail {
     background-color: #EEEEEE;
 }
 
@@ -472,4 +489,8 @@ iframe {
     border: 1px solid #999999;
     border-radius: 5px;
     box-shadow: 1px 1px 7px #666666;
+}
+
+.underDrag {
+    background: #CC0000 !important;
 }
