@@ -205,7 +205,7 @@ span.control__menu.i-menu {
 .control--profile {
     float: right;
     height: 28px;
-    padding: 18px 0 13px $gutter/2;
+    padding: 18px 0 13px;
     width: auto;
 
     &,
@@ -222,26 +222,26 @@ span.control__menu.i-menu {
     }
 }
 
+.control--profile .i-profile {
+    margin: 2px 12px 0 10px;
+
+    @include mq(tablet) {
+        margin-left: 0;
+    }
+}
+
 .control__info {
     display: none;
     height: 28px;
     vertical-align: top;
     line-height: 28px;
     margin-right: $gutter/2;
-    margin-left: $gutter/2;
+    margin-left: 14px;
 
     @include mq(544px) {
         display: inline-block;
         max-width: 110px;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-}
-
-.control--profile .i-profile {
-    margin: 2px $gutter 0 $gutter/2;
-
-    @include mq(tablet) {
-        margin-left: 0;
     }
 }

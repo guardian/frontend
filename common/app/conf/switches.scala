@@ -93,6 +93,10 @@ object Switches extends Collections {
     "If this switch is on, users can recommend comments",
     safeState = Off)
 
+  val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
+    "If this switch is on, users will be able to post comments",
+    safeState = Off)
+
   // Swipe Switches
 
   val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
@@ -156,6 +160,10 @@ object Switches extends Collections {
 
   val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
     "If this is switched on then unsupported embeds will be included in article bodies.",
+    safeState = Off)
+
+  val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
+    "If this is switched on then keywords will be shown at the end of articles.",
     safeState = Off)
 
   // A/B Test Switches
@@ -252,6 +260,7 @@ object Switches extends Collections {
     QuantcastSwitch,
     OmnitureDomReadySwitch,
     DiscussionSwitch,
+    DiscussionPostCommentSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
@@ -290,7 +299,8 @@ object Switches extends Collections {
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
-    AddVaryAcceptHeader
+    AddVaryAcceptHeader,
+    ArticleKeywordsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

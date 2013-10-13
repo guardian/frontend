@@ -11,7 +11,7 @@ set -o errexit
 #
 ################################################################################
 
-./grunt-tc compile test
+./grunt-tc clean compile jshint:common jasmine
 ./sbt-tc "project $1" compile test assembly
 
 

@@ -27,8 +27,13 @@
     <meta name="HandheldFriendly" content="True" />
 
     @item.openGraph.map{ case (key, value) =>
-    <meta property="@key" content="@value" /> }
-
+    <meta property="@key" content="@value" />
+    }
+    
+    @item.cards.map{ case (key, value) =>
+    <meta property="@key" content="@value" />
+    }
+    
     @if(Switches.iPhoneAppSwitch.isSwitchedOn){
         @defining(if(Edition(request).id == "US") conf.Configuration.ios.usAppId else conf.Configuration.ios.ukAppId) { id =>
     <meta name="apple-itunes-app" content="app-id=@id, app-argument=@item.id" />
