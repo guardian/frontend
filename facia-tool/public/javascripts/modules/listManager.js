@@ -25,6 +25,7 @@ define([
     return function(selector) {
 
         var self = this,
+            fromList,
             model = {
                 latestArticles: new LatestArticles(),
                 clipboard:      knockout.observableArray(),
@@ -110,149 +111,6 @@ define([
             clipboardEl.innerHTML = '';
         };
 
-        /*
-        function connectSortableLists() {
-            var selector = '.connectedList',
-                sortables = $(selector),
-                item,
-                fromList,
-                toList;
-
-            sortables.sortable({
-                helper: 'clone',
-                opacity: 0.9,
-                revert: 200,
-                scroll: true,
-                start: function(event, ui) {
-                    common.state.uiBusy = true;
-
-                    // Display the source item. (The clone gets dragged.)
-                    sortables.find('.trail:hidden').show();
-
-                    item = ui.item;
-                    toList = fromList = item.parent();
-                },
-                stop: function(event, ui) {
-                    var withinCollection = (fromList.data('collection') === toList.data('collection')),
-                        toListPersists = toList.hasClass('persisted'),
-                        fromListPersists = fromList.hasClass('persisted'),
-                        index,
-                        clone;
-
-                    common.state.uiBusy = false;
-
-                    // Save into toList
-                    if(toListPersists) {
-                        saveList({
-                            listEl: toList,
-                            itemEl: item
-                        });
-                    }
-
-                    // Delete out of fromList, if we've dragged between lists
-                    if(fromListPersists && toListPersists && !withinCollection) {
-                        saveList({
-                            listEl: fromList,
-                            itemEl: item,
-                            delete: true
-                        });
-                    }
-
-                    // If dragging to/from a non-persisted list (e.g. clipboard, or latest articles)
-                    // make a clone instead, and stick it in the toList, so that a "copy" is achieved
-                    if (!(fromListPersists && toListPersists)) {
-                        if(fromList !== toList) {
-                            index = toList.children().index(item);
-                            clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
-                            toList.children(':eq(' + index + ')').after(clone);
-                        }
-                        // So that the original stays in place:
-                        $(this).sortable('cancel');
-                    }
-
-                },
-                change: function(event, ui) {
-                    if(ui.sender) toList = ui.placeholder.parent();
-                },
-                connectWith: selector
-            }).disableSelection();
-        };
-
-        function saveList(opts) {
-            var $collection = opts.listEl.parent(),
-                list,
-                index,
-
-                article     = knockout.dataFor(opts.itemEl[0]),
-                group       = knockout.dataFor(opts.listEl[0]),
-                collection  = knockout.dataFor($collection[0]),
-
-                apiProps = {
-                    item:   article.meta.id(),
-                    live:   collection.state.liveMode(),
-                    draft: !collection.state.liveMode()
-                };
-
-            collection.state.loadIsPending(true);
-
-            if (!opts.delete) {
-                list = $('.connectedList > .trail', $collection).map(function() {
-                    return $(this).data('url')
-                }).get();
-                index = list.indexOf(article.meta.id());
-
-                apiProps.position = list[index + 1];
-                if (!apiProps.position && list[index - 1]) {
-                    apiProps.position = list[index - 1];
-                    apiProps.after = true;
-                }
-
-                apiProps.itemMeta = {
-                    group: group.group
-                }
-            }
-
-            if (apiProps.item === apiProps.position) {
-                // Adding an item next to itself. Reload then bail.
-                collection.load();
-                return;
-            }
-
-            authedAjax({
-                url: common.config.apiBase + '/collection/' + collection.id,
-                type: opts.delete ? 'delete' : 'post',
-                data: JSON.stringify(apiProps)
-            }).then(function() {
-                collection.load();
-            });
-        };
-
-        function onDragOver(event) {
-            event.preventDefault();
-        }
-
-        function onDrop(event) {
-            var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
-
-            if(!url) { return true; }
-
-            event.preventDefault();
-
-            if (common.util.urlHost(url).indexOf('google') > -1) {
-                url = decodeURIComponent(common.util.parseQueryParams(url).url);
-            };
-
-            model.clipboard.unshift(new Article({
-                id: common.util.urlAbsPath(url)
-            }));
-
-            contentApi.decorateItems(model.clipboard());
-            ophanApi.decorateItems(model.clipboard());
-        }
-        */
-
-        var fromList;
-
         knockout.bindingHandlers.makeDropabble = {
             init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
 
@@ -289,101 +147,95 @@ define([
                     var targetList = knockout.dataFor(element),
                         targetItem = knockout.dataFor(event.target),
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
-                        after,
+                        position,
+                        offset = 0,
                         insertAt;
 
                     event.preventDefault();
                     
                     targetList.underDrag(false);
                     _.each(targetList.articles(), function(item) {
-                        if (item.state.underDrag()) {
-                            item.state.underDrag(false);
-                        }
+                        item.state.underDrag(false);
                     });
 
                     if (targetItem.constructor !== Article) {
                         targetItem = _.last(targetList.articles ? targetList.articles() : undefined);
-                        after = !!targetItem;
+                        offset  = 0 + !!targetItem;
                     }
 
+                    position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
+                   
                     if (common.util.urlHost(item).indexOf('google') > -1) {
                         item = decodeURIComponent(common.util.parseQueryParams(item).url);
                     }
 
                     item = common.util.urlAbsPath(item);
 
+                    if (item === position) { // adding an item next to itself
+                        return;
+                    }
+
                     // for display only:
                     if (targetList.articles) {                    
-                        insertAt = Math.max(0, targetList.articles().indexOf(targetItem));
+                        insertAt = targetList.articles().indexOf(targetItem) + offset;
+                        insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
                         targetList.articles.splice(insertAt, 0, new Article({id: item}))
+                        
                         contentApi.decorateItems(targetList.articles());
                         ophanApi.decorateItems(targetList.articles());
                     }
 
-                    saveStuff({
-                        from:     fromList && fromList.collection ? fromList.collection       : undefined,
-                        to:       targetList && targetList.collection ? targetList.collection : undefined,
-                        item:     item,
-                        position: targetItem && targetItem.meta ? targetItem.meta.id() : undefined,
-                        after: after
+                    if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard
+                        return;
+                    }
+
+                    saveChanges(
+                        'post',
+                        targetList.collection,
+                        {
+                            item:     item,
+                            position: position,
+                            after:    offset > 0 ? true : undefined,
+                            live:     targetList.collection.state.liveMode(),
+                            draft:   !targetList.collection.state.liveMode(),
+                            itemMeta: {
+                                group: targetList.group
+                            }
+                        }
+                    )
+
+                    if (!fromList || fromList === targetList) {
+                        return;
+                    }
+
+                    // for display only:
+                    fromList.articles.remove(function(article) {
+                        return article.meta.id() === item;
                     })
+
+                    saveChanges(
+                        'delete',
+                        fromList.collection,
+                        {
+                            item:   item,
+                            live:   fromList.collection.state.liveMode(),
+                            draft: !fromList.collection.state.liveMode()
+                        }
+                    )
                 }, false);
             }
         };
 
-        function saveStuff(opts) {
-            //console.log(opts);
-        }
-
-        function saveList(opts) {
-            var $collection = opts.listEl.parent(),
-                list,
-                index,
-
-                article     = knockout.dataFor(opts.itemEl[0]),
-                group       = knockout.dataFor(opts.listEl[0]),
-                collection  = knockout.dataFor($collection[0]),
-
-                apiProps = {
-                    item:   article.meta.id(),
-                    live:   collection.state.liveMode(),
-                    draft: !collection.state.liveMode()
-                };
-
+        function saveChanges(method, collection, data) {
             collection.state.loadIsPending(true);
-
-            if (!opts.delete) {
-                list = $('.connectedList > .trail', $collection).map(function() {
-                    return $(this).data('url')
-                }).get();
-                index = list.indexOf(article.meta.id());
-
-                apiProps.position = list[index + 1];
-                if (!apiProps.position && list[index - 1]) {
-                    apiProps.position = list[index - 1];
-                    apiProps.after = true;
-                }
-
-                apiProps.itemMeta = {
-                    group: group.group
-                }
-            }
-
-            if (apiProps.item === apiProps.position) {
-                // Adding an item next to itself. Reload then bail.
-                collection.load();
-                return;
-            }
-
             authedAjax({
                 url: common.config.apiBase + '/collection/' + collection.id,
-                type: opts.delete ? 'delete' : 'post',
-                data: JSON.stringify(apiProps)
+                type: method,
+                data: JSON.stringify(data)
             }).then(function() {
                 collection.load();
             });
         };
-
 
         knockout.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
