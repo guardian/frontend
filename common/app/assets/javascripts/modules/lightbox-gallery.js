@@ -30,6 +30,7 @@ define(["bean",
             slideshowDelay = 5000, // in milliseconds
             captionControlHeight = 35, // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
             pushUrlChanges = true,
+            originalImagesHtml, // Used to keep a copy of the markup, before Swipe rewrites it
             $navArrows,
             $images;
 
@@ -201,8 +202,8 @@ define(["bean",
 
                     // Keep a copy of the original images markup, so we can
                     // easily restore it back when removing swipe
-                    imagesNode   = galleryNode.querySelector('.gallery__images');
-                    imagesNode._originalHtml = imagesNode.innerHTML;
+                    imagesNode = galleryNode.querySelector('.gallery__images');
+                    originalImagesHtml = imagesNode.innerHTML;
 
                     // If currentimage is out of bounds, start from the beginning
                     // Protects against ?index=0
@@ -392,7 +393,7 @@ define(["bean",
             if (orientation === 'landscape' && mode === 'fullimage') {
                 // In landscape, size all images to the height of the screen
                 $images.css({'height': contentHeight + 'px', 'width': 'auto'});
-            } else {
+            } else if (mode === 'fullimage') {
                 $images.css({'height': 'auto', 'width': '100%'});
             }
 
@@ -448,7 +449,7 @@ define(["bean",
         this.removeSwipe = function() {
             self.swipe.kill();
             bonzo(imagesNode).removeAttr('style')
-                             .html(imagesNode._originalHtml);
+                             .html(originalImagesHtml);
 
             bonzo(galleryNode).removeClass('gallery--swipe')
                               .css('height', 'auto');
