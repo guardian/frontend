@@ -78,8 +78,10 @@ define([
 
                     position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
 
-                    if (common.util.urlHost(item).indexOf('google') > -1) {
+                    // parse url query param if present, e.g. http://google.com/?url=...
+                    if (common.util.parseQueryParams(item).url) {
                         item = decodeURIComponent(common.util.parseQueryParams(item).url);
+                        console.log('PARSED: '+ item);
                     }
 
                     item = common.util.urlAbsPath(item);
