@@ -105,7 +105,9 @@
             loadCssFromStorage();
         }
 
-        if (navigator.userAgent.match(/Windows/)) {
+        var platformsGettingHintedFonts = /Windows/;
+
+        if (navigator.userAgent.match(platformsGettingHintedFonts)) {
             loadFontsAsynchronously();
         } else {
             loadFontsFromStorage();
