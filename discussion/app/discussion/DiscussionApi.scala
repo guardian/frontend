@@ -33,7 +33,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
   }
 
   def commentsFor(key: String, page: String): Future[CommentPage] = {
-    val size = if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
+    val size = if (ShortDiscussionSwitch.isSwitchedOn) 5 else 50
     val apiUrl = s"$apiRoot/discussion/$key?pageSize=$size&page=$page&orderBy=newest&showSwitches=true"
 
     def onError(r: Response) =

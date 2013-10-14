@@ -373,7 +373,8 @@ define([
 
                 // Go straight to comments if the link has #comments
                 // Or if we're desktop
-                if (location.hash === '#comments' || Detect.getLayoutMode() === 'desktop') {
+                var mode = Detect.getLayoutMode();
+                if (location.hash === '#comments' || mode === 'desktop' || mode === 'extended') {
                     self.showDiscussion();
                 } else {
                     var discussionInview = new Inview('#comments', context, { top: -document.documentElement.clientHeight, left: 0 });
