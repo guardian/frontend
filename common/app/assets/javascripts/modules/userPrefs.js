@@ -6,11 +6,11 @@ define(['modules/storage'], function(storage) {
     function set(name, value) {
         store.set(storagePrefix + name, value);
     }
-    
+
     function get(name) {
         return store.get(storagePrefix + name);
     }
-    
+
     function remove(name) {
         store.remove(storagePrefix + name);
     }
@@ -18,11 +18,11 @@ define(['modules/storage'], function(storage) {
     function switchOn(name) {
         store.set(storagePrefix + "switch." + name, true);
     }
-    
+
     function switchOff(name) {
         store.set(storagePrefix + "switch." + name, false);
     }
-    
+
     function removeSwitch(name) {
         store.remove(storagePrefix + "switch." + name);
     }
@@ -30,15 +30,15 @@ define(['modules/storage'], function(storage) {
     function isOn(name) {
         return store.get(storagePrefix + "switch." + name) === true;
     }
-    
+
     function isOff(name) {
         return store.get(storagePrefix + "switch." + name) === false;
     }
-   
+
     function isNumeric(str){
         return !isNaN(str);
     }
-    
+
     function isBoolean(str){
         return (str === "true" || str === "false");
     }
@@ -66,7 +66,7 @@ define(['modules/storage'], function(storage) {
             }
         }
     }
-   
+
     setPrefs(window.location);
 
     return {
