@@ -386,11 +386,6 @@ define(["bean",
             var orientation = detect.getOrientation(),
                 contentHeight = window.innerHeight - overlay.headerNode.offsetHeight;
 
-            // Make overlay large enough to allow the browser chrome to be hidden on mobile
-            if (detect.getLayoutMode() === 'mobile') {
-                overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
-            }
-
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
             $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
 
@@ -431,6 +426,12 @@ define(["bean",
                         currentImage = index + 1;
                         self.imageIndexNode.innerHTML = currentImage;
 
+                        // set the height of the gallery to the height of the current image
+                        // preventing a large scrollable space to appear underneath the image
+                        if (swipeActive) {
+                            galleryNode.style.height = galleryNode.querySelector('.js-gallery-item-'+currentImage).offsetHeight + 'px';
+                        }
+
                         self.alignNavArrows();
 
                         self.preloadImages();
@@ -449,7 +450,8 @@ define(["bean",
             bonzo(imagesNode).removeAttr('style')
                              .html(imagesNode._originalHtml);
 
-            bonzo(galleryNode).removeClass('gallery--swipe');
+            bonzo(galleryNode).removeClass('gallery--swipe')
+                              .css('height', 'auto');
 
             swipeActive = false;
         };
