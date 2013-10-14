@@ -184,26 +184,6 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
-    "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
-    safeState = Off)
-
-  val ABGalleryCta = Switch("A/B Tests", "ab-gallery-cta",
-    "If this is switched on an AB test runs to test different styles of CTAs to launch a gallery",
-    safeState = Off)
-
-  val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
-    "If this is switched on an AB test runs to trial the new swipe call to actions ",
-    safeState = Off)
-
-  val ABExpandableMostPopular = Switch("A/B Tests", "ab-expandable-most-popular",
-    "If this is switched on an AB test runs to trial the impact of having expandable content in most popular trails",
-    safeState = Off)
-
-  val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
-    "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
-    safeState = Off)
-
   val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
@@ -231,10 +211,6 @@ object Switches extends Collections {
   val FaciaSwitch = Switch("Facia", "facia",
     "Switch to redirect to facia if request has X-Gu-Facia=true",
     safeState = Off  )
-
-  val FaciaLoadTestSwitch = Switch("Facia", "facia-load-test",
-    "Switch to make an xhr request from all fronts to Facia, just to load-test it",
-    safeState = Off )
 
   // Image Switch
 
@@ -285,13 +261,7 @@ object Switches extends Collections {
     LiveSummarySwitch,
     LiveCricketSwitch,
     FaciaSwitch,
-    FaciaLoadTestSwitch,
     AdSlotImpressionStatsSwitch,
-    ABGalleryStyle,
-    ABGalleryCta,
-    ABSwipeCtas,
-    ABExpandableMostPopular,
-    ABRightHandCard,
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
     ABMostPopularFromFacebook,
