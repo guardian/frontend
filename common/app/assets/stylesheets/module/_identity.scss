@@ -57,6 +57,11 @@
 .nav--registration {
     margin-top: $baseline*9;
     text-align: center;
+
+    @include mq($to:tablet) {
+        font-size: 14px;
+        font-size: 1.4rem;
+    }
 }
 
 .nav--registration .nav__item + .nav__item:before {
