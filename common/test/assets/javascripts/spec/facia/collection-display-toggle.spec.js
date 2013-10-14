@@ -1,4 +1,11 @@
-define(['modules/facia/collection-display-toggle', 'helpers/fixtures', 'common', 'bonzo', 'bean', 'modules/userPrefs'], function(CollectionDisplayToggle, fixtures, common, bonzo, bean, userPrefs) {
+define([
+    'modules/facia/collection-display-toggle',
+    'helpers/fixtures',
+    'common',
+    'bonzo',
+    'bean',
+    'modules/userPrefs'
+], function(CollectionDisplayToggle, fixtures, common, bonzo, bean, userPrefs) {
 
     describe('Collection Display Toggle', function() {
 

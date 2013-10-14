@@ -4,7 +4,7 @@ define([
     'bonzo',
     'modules/facia/relativise-timestamp',
     'modules/facia/items-show-more',
-    'modules/facia/image-upgrade',
+    'modules/facia/image-upgrade'
 ], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore, ImageUpgrade) {
 
     var updateTmpl = function(tmpl, trail) {

@@ -11,21 +11,15 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
         beforeEach(function() {
             collection = bonzo.create(
                 '<section>' +
-                    '<ul>' +
-                        '<li class="item">Item 1</li>' +
-                        '<li class="item">Item 2</li>' +
-                        '<li class="item">Item 3</li>' +
-                        '<li class="item">Item 4</li>' +
-                        '<li class="item">Item 5</li>' +
-                        '<li class="item">Item 6</li>' +
-                        '<li class="item">Item 7</li>' +
-                        '<li class="item">Item 8</li>' +
-                        '<li class="item">Item 9</li>' +
-                        '<li class="item">Item 10</li>' +
-                    '</ul>' +
+                    '<ul></ul>' +
                 '</section>'
             )[0];
-            items = common.$g('ul', collection)[0],
+            items = common.$g('ul', collection)[0];
+            // add items
+            var i = 10;
+            while(i--) {
+                bonzo(items).append('<li class="item">item</li>');
+            }
             itemsShowMore = new ItemsShowMore(items);
             // add breakpoint style
             $style = bonzo(bonzo.create('<style></style>'))
@@ -66,12 +60,19 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
             expect($button.attr('data-link-name')).toEqual('Show more | 1');
         });
 
-        it('should remove button after clickstream event', function() {
+        it('should remove button if no more items, after clickstream event', function() {
             itemsShowMore.addShowMore();
             var button = common.$g('button', collection)[0];
             bean.fire(button, 'click');
             common.mediator.emit(clickstreamEvent, {target: button});
             expect(common.$g('button', collection).length).toEqual(0);
+        });
+
+        it('should not remove button if more items', function() {
+            $style.html('body:after { content: "mobile"; }');
+            itemsShowMore.addShowMore();
+            bean.fire(common.$g('button', collection)[0], 'click');
+            expect(common.$g('button', collection).length).toEqual(1);
         });
 
         it('should initially show 2 items at mobile breakpoint', function() {
