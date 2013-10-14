@@ -186,21 +186,6 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
   ) ++ images.sortBy(_.index).flatMap(_.imageCrops).take(1).map( "twitter:image:src" -> _.path )
-
-  override lazy val mainPicture: Option[ImageAsset] = {
-    largestMainPicture.orElse(
-      if (!videoAssets.isEmpty) {
-        val video = videoAssets.head
-        Some(ImageAsset(new Asset("image",
-                                  Some("image/jpeg"),
-                                  video.stillImageUrl,
-                                  Map("width" -> video.width.toString,
-                                      "height" -> video.height.toString)), 0))
-      } else {
-        None
-      }
-    ).orElse(thumbnail.flatMap(_.largestImage))
-  }
 }
 
 class LiveBlog(private val delegate: ApiContent) extends Article(delegate) {
