@@ -38,10 +38,7 @@ input[type=text] {
     width: 50%;
     padding: 15px 15px 10px 0;
     border-right: 1px solid #CCCCCC;
-}
-
-.finder input[type="text"] {
-    width: 49.5%;
+    color: #666666;
 }
 
 .finder__controls {
@@ -202,6 +199,11 @@ a.list-header__status__control:visited {
     float: right;
 }
 
+#list-picker select {
+    font-weight: bold;
+    font-size: 16px;
+}
+
 #collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -228,7 +230,6 @@ a.list-header__status__control:visited {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    cursor: move;
     padding: 1px 3px 4px 4px;
     position: relative;
     background-color: #FFFFFF;
@@ -241,10 +242,6 @@ a.list-header__status__control:visited {
 
 .draft-zones .trail {
     background-color: #EEEEEE;
-}
-
-.trail:hover {
-    background: #dddddd;
 }
 
 .trail.redundant {
@@ -277,6 +274,7 @@ a.list-header__status__control:visited {
     font-size: 13px;
     line-height: 16px;
     color: #000000;
+    cursor: move;
 }
 
 .collection .trail .webTitle {
@@ -350,17 +348,7 @@ input[type="text"] {
 }
 
 select {
-    height: 30px;
-    width: 160px;
     margin: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: #000000;
-}
-
-select:disabled {
-    opacity: 0.5;
 }
 
 button {
@@ -393,6 +381,10 @@ button {
     color: #999999;
     font-size: 12px;
     text-align: center;
+}
+
+#clipboard .trail {
+    background-color: #FFFFFF;
 }
 
 .needs-more {
@@ -492,4 +484,58 @@ iframe {
 
 .underDrag {
     background: #a7d9a0 !important;
+}
+
+.search-form {
+    position: relative;
+    padding: 0 40px 0 0;
+}
+
+.search-submit {
+    position: absolute;
+    right: 0;
+    top: 2px;
+}
+
+.search-term,
+.search-filter {
+    width: 39%;
+}
+
+.search-filters {
+    width: 18%;
+}
+
+.autocompleter {
+    display: inline-block;
+    position: relative;
+}
+
+.autocompleter input {
+    width: 100%;
+}
+
+.autocompleter .suggestions {
+    position: absolute;
+    z-index: 1;
+}
+
+.autocompleter .suggestion {
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+    background: #ffffff;
+    color: #666666;
+    border-left: 1px solid #cccccc;
+    padding: 0 7px 0 7px;
+}
+
+.linky {
+    cursor: pointer !important;
+    color: #0088cc !important;
+}
+
+.linky:hover {
+    color: #005580;
+    text-decoration: underline;
 }

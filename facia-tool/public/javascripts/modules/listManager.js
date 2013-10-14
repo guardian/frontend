@@ -25,10 +25,13 @@ define([
 
         var self = this,
             model = {
-                latestArticles: new LatestArticles(),
                 collections:    ko.observableArray(),
                 configs:        ko.observableArray(),
                 config:         ko.observable(),
+
+                latestArticles: new LatestArticles({
+                    filterTypes: common.config.filterTypes
+                }),
 
                 viewer:         viewer,
                 showViewer:     ko.observable(),
@@ -141,7 +144,7 @@ define([
 
         model.config.subscribe(function(config) {
             var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
-            model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
+            model.latestArticles.setSection(common.config.sectionSearches[section || 'default'] || section);
             setConfig(config);
         });
 
