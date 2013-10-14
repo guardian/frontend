@@ -8,39 +8,59 @@ function (
     common,
     cache
 ){
+    function validateItem (item) {
+        var data = cache.get('contentApi', item.meta.id()),
+            defer = $.Deferred();
+
+        if(data) {
+            populate(data, item);
+            defer.resolve();
+        } else {
+            fetchData([item.meta.id()])
+            .done(function(result){
+                result = result[0];
+                cache.put('contentApi', result.id, result);
+                populate(result, item);
+                defer.resolve();
+            }).fail(function(){
+                defer.reject();
+            });
+        }
+        return defer;
+    };
+
     function decorateItems (items) {
-        var fetch = [];
+        var ids = [];
 
         items.forEach(function(item){
             var data = cache.get('contentApi', item.meta.id());
             if(data) {
-                decorateItem(data, item);
+                populate(data, item);
             } else {
-                fetch.push(item.meta.id());
+                ids.push(item.meta.id());
             }
         });
 
-        fetchData(fetch)
-        .then(function(results){
+        fetchData(ids)
+        .done(function(results){
             results.forEach(function(article){
-                if (article.id) {
-                    cache.put('contentApi', article.id, article);
-                    _.filter(items,function(item){
-                        return item.meta.id() === article.id;
-                    }).forEach(function(item){
-                        decorateItem(article, item);
-                    });
-                }
+                cache.put('contentApi', article.id, article);
+                _.filter(items,function(item){
+                    return item.meta.id() === article.id;
+                }).forEach(function(item){
+                    populate(article, item);
+                });
             });
         });
     };
 
-    function decorateItem(fromObj, toKoObj) {
+    function populate(fromObj, toKoObj) {
         toKoObj.populate(fromObj);
     }
 
     function fetchData(ids) {
-        var apiUrl;
+        var apiUrl,
+            defer = $.Deferred();
 
         if (ids.length) {
             apiUrl = common.config.apiSearchBase + "/search?page-size=50&format=json&show-fields=all&show-tags=all";
@@ -48,19 +68,22 @@ function (
                 return encodeURIComponent(id);
             }).join(',');
 
-            return authedAjax({
+            authedAjax({
                 url: apiUrl
-            }).then(function(resp) {
-                if (resp.response && resp.response.results) {
-                    return resp.response.results;
+            }).always(function(resp) {
+                if (resp.response && resp.response.results && resp.response.results.length) {
+                    defer.resolve(resp.response.results);
+                } else {
+                    defer.reject();
                 }
             });
         }
-        return $.Deferred();
+        return defer;
     }
 
     return {
-        decorateItems: decorateItems
+        decorateItems: decorateItems,
+        validateItem:  validateItem
     }
 
 });
