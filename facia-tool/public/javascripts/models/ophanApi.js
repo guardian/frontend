@@ -87,8 +87,6 @@ function (
     }
 
     function fetchData(id) {
-        cache.put('ophan', id, {failed: true});
-
         return authedAjax({
             url: '/ophan/pageviews/' + id
         }).then(function (resp) {

@@ -15,7 +15,7 @@ define([
         }
 
         p[key] = {
-            data: data,
+            data: JSON.stringify(data),
             // Spread actual timeouts into the range of "two-times expiry"
             time: +new Date() + expiry * Math.random()
         };
@@ -34,7 +34,7 @@ define([
             delete obj;
             return;
         }
-        return obj.data;
+        return JSON.parse(obj.data);
     }
 
     return {
