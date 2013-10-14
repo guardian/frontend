@@ -53,24 +53,11 @@ input[type=text] {
 }
 
 .title {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    color: #666666;
-}
-
-.list-tool {
-    float: right;
-    cursor: pointer;
-    margin: 3px 2px 0 0;
-    opacity: 0.5;
-}
-
-.list-tool:hover {
-    opacity: inherit;
-}
-
-.list-tool:active {
-    opacity: 0.6;
+    color: #000000;
+    margin: 5px 0 0 0;
+    padding: 2px 0 0 0;
 }
 
 .droppable {
@@ -192,12 +179,17 @@ a.list-header__status__control:visited {
 }
 
 #list-picker {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: right;
+    width: 50%;
+    padding: 0 0 0 15px;
 }
 
 #list-picker select {
     font-weight: bold;
     font-size: 16px;
+    color: #000000;
 }
 
 #collections {
@@ -215,11 +207,11 @@ a.list-header__status__control:visited {
     float: left;
     padding: 0 0 5px 0;
     position: relative;
-    border-top: 2px solid #999999;
+    border-top: 1px solid #CCCCCC;
 }
 
 .collection:first-child {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .trail {
@@ -358,19 +350,23 @@ button {
     font-weight: bold;
 }
 
+.clipboard__title {
+    border-top: 1px solid #CCCCCC;
+}
+
 .clipboard__wrapper {
     position: relative;
     margin: 5px 0 27px 0;
 }
 
-#clipboard,
-#clipboard__overlay {
+.clipboard,
+.clipboard__overlay {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     min-height: 50px;
 }
 
-#clipboard__overlay {
+.clipboard__overlay {
     position: absolute;
     z-index: -1;
     border: 1px dashed #cccccc;
@@ -381,22 +377,19 @@ button {
     text-align: center;
 }
 
-#clipboard .trail {
-    background-color: #FFFFFF;
+.clipboard__flush {
+    float: right;
+    cursor: pointer;
+    margin: 12px 2px 0 0;
+    opacity: 0.5;
 }
 
-.needs-more {
-    border-left: 1px solid #666666;
-    border-right: 1px solid #666666;
-    background: #d61d00;
-    color: #ffffff;
-    padding: 0px 10px;
-    font-size: 12px;
-    text-transform: uppercase;
+.clipboard__flush:hover {
+    opacity: inherit;
 }
 
-.needs-more__num {
-    font-weight: bold;
+.clipboard__flush:active {
+    opacity: 0.6;
 }
 
 .collection-config {
