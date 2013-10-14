@@ -12,7 +12,8 @@ define([
     'modules/experiments/tests/right-hand-card',
     'modules/experiments/tests/live-blog-show-more',
     'modules/experiments/tests/most-popular-from-facebook',
-    'modules/experiments/tests/ultimate-paragraph-spacing'
+    'modules/experiments/tests/ultimate-paragraph-spacing',
+    'modules/experiments/tests/alpha-adverts'
 ], function (
     common,
     store,
@@ -26,7 +27,8 @@ define([
     RightHandCard,
     LiveBlogShowMore,
     MostPopularFromFacebook,
-    UltimateParagraphSpacing
+    UltimateParagraphSpacing,
+    AlphaAdverts
     ) {
 
     var TESTS = [
@@ -39,7 +41,8 @@ define([
             new RightHandCard(),
             new LiveBlogShowMore(),
             new MostPopularFromFacebook(),
-            new UltimateParagraphSpacing()
+            new UltimateParagraphSpacing(),
+            new AlphaAdverts()
         ],
         participationsKey = 'gu.ab.participations';
 

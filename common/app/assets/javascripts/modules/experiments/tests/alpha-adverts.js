@@ -1,5 +1,5 @@
 /*global guardian */
-define(['query', 'bonzo', 'analytics/adverts'], function (query, bonzo, inview) {
+define(['qwery', 'bonzo', 'modules/analytics/adverts'], function (qwery, bonzo, inview) {
 
     var AlphaAdverts = function () {
 
@@ -9,7 +9,7 @@ define(['query', 'bonzo', 'analytics/adverts'], function (query, bonzo, inview) 
 
         // Label up ad slots
         var labelSlots = function() {
-            bonzo(query('.ad-slot'), document).each(function() {
+            bonzo(qwery('.ad-slot'), document).each(function() {
                 this.setAttribute('data-inview-name', this.getAttribute('data-link-name'));
             });
         };
@@ -17,11 +17,10 @@ define(['query', 'bonzo', 'analytics/adverts'], function (query, bonzo, inview) 
         this.id = 'AlphaAdverts';
         this.expiry = '2013-11-30';
         this.audience = 1;
-        this.description = 'Test new advert formats for aplha release';
+        this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article') {
                 guardian.config.oasSiteIdHost = alphaOasUrl;
-                guardian.config.switches.adverts = false;
                 return true;
             } else {
                 return false;
@@ -32,7 +31,7 @@ define(['query', 'bonzo', 'analytics/adverts'], function (query, bonzo, inview) 
                 id: 'Inline', //Article A
                 test: function() {
                     var article = document.getElementsByClassName('js-article__container')[0];
-                    bonzo(query('p:nth-of-type('+ nParagraphs +'n)'), article).each(function() {
+                    bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function() {
                         bonzo(bonzo.create(inlineTmp)).attr({
                             'data-inview-name' : 'every '+ nParagraphs +'th para',
                             'data-inview-advert' : 'true',
