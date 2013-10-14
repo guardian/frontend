@@ -1,3 +1,4 @@
+/*global guardian:true */
 define('bootstraps/app', [
     "qwery",
     "common",
@@ -74,9 +75,7 @@ define('bootstraps/app', [
         },
 
         loadFonts: function(config, ua) {
-            var platformsGettingHintedFonts = /Windows/;
-
-            if (config.switches.webFonts && !ua.match(platformsGettingHintedFonts)) {
+            if (config.switches.webFonts && !guardian.platformsGettingHintedFonts.test(ua)) {
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 var f = new Fonts(fontStyleNodes, fileFormat);

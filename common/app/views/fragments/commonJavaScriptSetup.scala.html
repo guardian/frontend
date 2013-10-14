@@ -101,9 +101,9 @@
         @* we want this to happen ASAP to avoid FOUC *@
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
-        var platformsGettingHintedFonts = /Windows/;
+        guardian.platformsGettingHintedFonts = /Windows/;
 
-        if (navigator.userAgent.match(platformsGettingHintedFonts)) {
+        if (guardian.platformsGettingHintedFonts.test(navigator.userAgent)) {
             loadFontsAsynchronously();
         } else {
             loadFontsFromStorage();
