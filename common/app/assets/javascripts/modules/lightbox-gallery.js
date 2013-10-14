@@ -90,7 +90,13 @@ define(["bean",
 
             bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function(e) {
                 if (swipeActive && !isSwiping) {
-                    self.swipe.next();
+                    // If user taps in the left 15% of the screen, go backwards, otherwise go forwards
+                    var tappedPositionPerc = (e.pageX/galleryNode.offsetWidth * 100);
+                    if (tappedPositionPerc < 15) {
+                        self.swipe.prev();
+                    } else {
+                        self.swipe.next();
+                    }
                 }
             });
 
