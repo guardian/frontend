@@ -1,18 +1,16 @@
 define([
     'modules/facia/collection-display-toggle',
-    'helpers/fixtures',
     'common',
     'bonzo',
     'bean',
     'modules/userPrefs'
-], function(CollectionDisplayToggle, fixtures, common, bonzo, bean, userPrefs) {
+], function(CollectionDisplayToggle, common, bonzo, bean, userPrefs) {
 
     describe('Collection Display Toggle', function() {
 
         var collectionDisplayToggle,
             collection,
             $collection,
-            fixtureId = 'collection-display-toggle',
             collectionId = 'uk/culture/regular-stories',
             storageId = 'collection-states',
             assertState = function($collection, state) {
@@ -31,15 +29,10 @@ define([
             )[0];
             $collection = bonzo(collection);
             collectionDisplayToggle = new CollectionDisplayToggle(collection);
-            fixtures.render({
-                id: fixtureId,
-                fixtures: [collection]
-            });
-            window.localStorage.clear();
         });
 
         afterEach(function(){
-            fixtures.clean(fixtureId);
+            window.localStorage.clear();
         });
 
         it('should be able to initialise', function() {
@@ -53,7 +46,6 @@ define([
 
         it('initial state should be open', function() {
             collectionDisplayToggle.addToggle();
-            var $button = common.$g('button', collection);
             assertState($collection, 'open');
         });
 
