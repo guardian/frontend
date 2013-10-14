@@ -5,7 +5,7 @@ import org.joda.time.format.DateTimeFormat
 import scala.xml.Node
 
 case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywords: List[Keyword], countries: Seq[String])
+                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String])
 
 object Offer {
 
@@ -23,7 +23,7 @@ object Offer {
       (node \ "@fromprice").text.replace(".00", ""),
       dateFormat.parseDateTime((node \ "@earliestdeparture").text),
       Nil,
-      (node \\ "country") map (_.text)
+      (node \\ "country").map(_.text).toList
     )
   }
 

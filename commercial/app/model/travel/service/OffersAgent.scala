@@ -7,35 +7,64 @@ import conf.ContentApi
 
 object OffersAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Map[String, Seq[Offer]]](Map.empty)
+  private val agent = AkkaAgent[Map[String, List[Offer]]](Map.empty)
 
-  def allOffers: Seq[Offer] = agent().get("offers").getOrElse(Nil)
+  def allOffers: List[Offer] = agent().get("offers").getOrElse(Nil)
 
   def refresh() {
 
-    // TODO: reduce num of calls to content API
-    //   def tag(offers: Seq[Offer]): Future[Seq[Offer]] = {
-    def tag(offer: Offer): Future[Offer] = {
-      val countries = offer.countries mkString( """"""", """" """, """"""") replace("&", "") replace(",", "")
-      println(countries)
-      val response = ContentApi.tags.
-        stringParam("type", "keyword").
-        stringParam("section", "travel").
-        stringParam("q", countries).response
-      response map {
-        _.results map (tag => Keyword(tag.id, tag.webTitle))
-      } map (keywords => offer.copy(keywords = keywords))
+    def tagAssociatedCountries(offers: List[Offer]): Future[Map[String, List[Keyword]]] = {
+
+      def tagCountryBatch(countries: List[String]): Future[Map[String, List[Keyword]]] = {
+        val q = countries mkString( """"""", """" """", """"""") replace("&", "") replace(",", "")
+        ContentApi.tags.
+          stringParam("type", "keyword").
+          stringParam("section", "travel").
+          stringParam("q", q).
+          pageSize(countries.size).response map {
+          response =>
+            val keywords = response.results map (tag => Keyword(tag.id, tag.webTitle))
+            countries.foldLeft(Map[String, List[Keyword]]()) {
+              (countryKeywords, country) =>
+                countryKeywords + (country -> keywords.filter(keyword => keyword.name == country))
+            }
+        }
+      }
+
+      val countries = offers.flatMap(offer => offer.countries).distinct
+      for {
+        batches <- Future.sequence {
+          countries.grouped(50).toList.map(tagCountryBatch)
+        }
+      } yield batches.foldLeft(Map[String, List[Keyword]]())((combined, batch) => combined ++ batch)
+    }
+
+    def tagOffers(offers: List[Offer], countryTags: Map[String, List[Keyword]]): List[Offer] = {
+      offers.foldLeft(List[Offer]()) {
+        case (soFar, offer) =>
+
+          val tags = countryTags.filter {
+            case (country, _) => offer.countries.contains(country)
+          }.values.flatten.toList
+
+          soFar find (_.id == offer.id) match {
+            case Some(o) =>
+              val updated = o.copy(keywords = o.keywords ++ tags)
+              soFar.updated(soFar.indexOf(o), updated)
+            case None =>
+              soFar :+ offer.copy(keywords = tags)
+          }
+      }
     }
 
     OffersApi.getAllOffers onSuccess {
-      case offers =>
-        log.info(s"Loaded ${offers.size} travel offers")
-        tag(offers(0)) map {
-          taggedOffer =>
-            println(taggedOffer.keywords)
-            val taggedOffers = Seq(taggedOffer)
-            log.info(s"Tagged ${taggedOffers.size} travel offers")
-            agent send Map("offers" -> taggedOffers)
+      case untaggedOffers =>
+        log info s"Loaded ${untaggedOffers.size} travel offers"
+        tagAssociatedCountries(untaggedOffers) onSuccess {
+          case countryTags =>
+            val offers = tagOffers(untaggedOffers, countryTags)
+            log info s"Tagged ${offers.size} travel offers"
+            agent send Map("offers" -> offers)
         }
     }
   }

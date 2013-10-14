@@ -8,12 +8,12 @@ import model.travel.Offer
 
 object OffersApi extends ExecutionContexts {
 
-  def getAllOffers: Future[Seq[Offer]] = {
+  def getAllOffers: Future[List[Offer]] = {
     WS.url("http://extranet.gho.red2.co.uk/Offers/XmlOffers") withRequestTimeout 20000 get() map {
       response =>
-        (XML.loadString(response.body) \\ "offer").zipWithIndex map {
+        ((XML.loadString(response.body) \\ "offer").zipWithIndex map {
           case (xml, idx) => Offer(idx, xml)
-        }
+        }).toList
     }
   }
 
