@@ -14,6 +14,84 @@
     @include font-size($size, $line-height);
 }
 
+@mixin f-header {
+    font-family: $serifheadline;
+    font-weight: 900;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-header($level, $size-only: false) {
+    $header: nth($fs-headers, $level);
+
+    @include font-size(nth($header, 1), nth($header, 2));
+
+    @if $size-only == false {
+        @include f-header;
+    }
+}
+
+@mixin f-headline {
+    font-family: $serifheadline;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-headline($level, $size-only: false) {
+    $headline: nth($fs-headlines, $level);
+
+    @include font-size(nth($headline, 1), nth($headline, 2));
+
+    @if $size-only == false {
+        @include f-headline;
+    }
+}
+
+@mixin f-bodyHeading {
+    font-family: $serif;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+@mixin fs-bodyHeading($level, $size-only: false) {
+    $heading: nth($fs-bodyHeadings, $level);
+
+    @include font-size(nth($heading, 1), nth($heading, 2));
+
+    @if $size-only == false {
+        @include f-bodyHeading;
+    }
+}
+
+@mixin f-bodyCopy {
+    font-family: $serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
+}
+@mixin fs-bodyCopy($level, $size-only: false) {
+    $bodycopy: nth($fs-bodyCopy, $level);
+
+    @include font-size(nth($bodycopy, 1), nth($bodycopy, 2));
+
+    @if $size-only == false {
+        @include f-bodyCopy;
+    }
+}
+
+@mixin f-data {
+    font-family: $sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
+}
+@mixin fs-data($level, $size-only: false) {
+    $data: nth($fs-data, $level);
+
+    @include font-size(nth($data, 1), nth($data, 2));
+
+    @if $size-only == false {
+        @include f-data;
+    }
+}
+
 @mixin box-sizing($box) {
     -webkit-box-sizing: $box;
     -moz-box-sizing: $box;
@@ -43,14 +121,12 @@
 @mixin animation($args) {
     -webkit-animation: $args;
     -moz-animation: $args;
-    -ms-animation: $args;
     animation: $args;
 }
 
 @mixin keyframes($name) {
     @-webkit-keyframes $name { @content; }
     @-moz-keyframes $name { @content; }
-    @-ms-keyframes $name { @content; }
     @keyframes $name { @content; }
 }
 
@@ -64,6 +140,12 @@
     -webkit-box-shadow: $args;
     -moz-box-shadow: $args;
     box-shadow: $args;
+}
+
+@mixin background-size($args) {
+    -webkit-background-size: $args;
+    -moz-background-size: $args;
+    background-size: $args;
 }
 
 @mixin rotate($val) {
@@ -90,7 +172,6 @@
     position: relative;
     overflow: hidden;
 }
-
 
 @mixin old-ie {
     // Only use this content if we're dealing with old IE

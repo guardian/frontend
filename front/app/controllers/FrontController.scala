@@ -7,10 +7,7 @@ import conf._
 import play.api.mvc._
 import model.Trailblock
 import play.api.libs.json._
-import concurrent.Future
 
-
-// TODO, this needs a rethink, does not seem elegant
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -135,7 +132,13 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
       .filter(Switches.FaciaSwitch.isSwitchedOn && _ == "true" && path.nonEmpty)
       .map {_ => Ok.withHeaders("X-Accel-Redirect" -> s"/redirect/facia/$path")}
 
-  def render(path: String) = Action { implicit request =>
+  // Needed as aliases for reverse routing
+  def renderEditionFrontJson(path: String) = renderFront(path)
+  def renderEditionFront(path: String) = renderFront(path)
+  def renderEditionSectionFrontJson(path: String) = renderFront(path)
+  def renderEditionSectionFront(path: String) = renderFront(path)
+  def renderFrontJson(path: String) = renderFront(path)
+  def renderFront(path: String) = Action { implicit request =>
 
     faciaRedirect(path, request) getOrElse {
 
@@ -161,10 +164,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         }
 
         if (path != realPath) {
-          Redirect(request.path.endsWith(".json") match {
-            case true => s"/$realPath.json"
-            case _ => s"/$realPath"
-          })
+          LinkTo.redirectWithParameters(request, realPath)
         } else if (trailblocks.isEmpty) {
           InternalServerError
         } else {
@@ -186,8 +186,8 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     }
   }
 
+  def renderTrailsJson(path: String) = renderTrails(path)
   def renderTrails(path: String) = Action { implicit request =>
-
     faciaRedirect(path, request) getOrElse {
 
       val realPath = editionPath(path, Edition(request))

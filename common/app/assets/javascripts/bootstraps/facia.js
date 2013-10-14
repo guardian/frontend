@@ -1,37 +1,96 @@
 define([
     //Common libraries
-    "common",
+    'common',
+    'bonzo',
     //Modules
-    "modules/facia-popular",
-    "modules/masthead-relative-dates",
-    'modules/facia-items-show-more',
-    'modules/facia-collection-popular'
+    'modules/detect',
+    'modules/facia/popular',
+    'modules/facia/items-show-more',
+    'modules/facia/collection-display-toggle',
+    'modules/footballfixtures',
+    'modules/facia/image-upgrade'
 ], function (
     common,
+    bonzo,
+    detect,
     popular,
-    mastheadRelativeDates,
     ItemsShowMore,
-    CollectionPopular
+    CollectionDisplayToggle,
+    FootballFixtures,
+    ImageUpgrade
 ) {
 
     var modules = {
 
         showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                popular.render(context);
-            });
-        },
-
-        relativiseMastheadDates: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                mastheadRelativeDates.init(context);
+                popular.render(config);
             });
         },
 
         showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
                 common.$g('.js-items--show-more', context).each(function(items) {
-                    var t = new ItemsShowMore(items);
+                    new ItemsShowMore(items)
+                        .addShowMore();
+                });
+            });
+        },
+
+        showFootballFixtures: function(path) {
+            common.mediator.on('page:front:ready', function(config, context) {
+                if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport")) {
+                    // wrap the return sports stats component in an 'item'
+                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                        section = config.page.pageId === "" ? 'sport' : 'news',
+                        numVisible = config.page.pageId === "" ? 3 : 5;
+                    common.mediator.on('modules:footballfixtures:render', function() {
+                        var container = common.$g('.collection--' + section, context)
+                            .first()[0];
+                        // toggle class
+                        common.$g('.items', container)
+                            .removeClass('items--without-sport-stats')
+                            .addClass('items--with-sport-stats');
+                        // add it after the first item
+                        common.$g('.item:first-child', container)
+                            .after($statsItem);
+                        // now hide one of the shown ones (but not on mobile)
+                        if (detect.getBreakpoint() !== 'mobile') {
+                            common.$g('.item.u-h', container)
+                                .first()
+                                .previous()
+                                .addClass('u-h');
+                        }
+                    });
+                    new FootballFixtures({
+                        prependTo: $statsItem,
+                        attachMethod: 'append',
+                        competitions: ['500', '510', '100', '400'],
+                        contextual: false,
+                        expandable: true,
+                        numVisible: numVisible
+                    }).init();
+                }
+            });
+        },
+
+        showCollectionDisplayToggle: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                common.$g('.js-collection--display-toggle', context).each(function(collection) {
+                    new CollectionDisplayToggle(collection, config)
+                        .addToggle();
+                });
+            });
+        },
+
+        upgradeImages: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                common.$g('.collection', context).each(function(collection) {
+                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
+                    common.$g('.item', collection).each(function(item, index) {
+                        new ImageUpgrade(item, isContainer && (index === 0))
+                            .upgrade();
+                    });
                 });
             });
         }
@@ -41,9 +100,11 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-//            modules.showPopular();
-            modules.relativiseMastheadDates();
+            modules.showPopular();
             modules.showItemsShowMore();
+            modules.showFootballFixtures();
+            modules.showCollectionDisplayToggle();
+            modules.upgradeImages();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

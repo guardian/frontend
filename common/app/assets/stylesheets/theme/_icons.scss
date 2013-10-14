@@ -1,19 +1,13 @@
-.i-guardian-logo {
-    @media (-webkit-min-device-pixel-ratio: 2) {
-        background-position: 0 0;
-        background-size: 100%;
-        background-image: url('../images/guardian-logo%402x.3d645e8056e9d09e6d627953ce6116e3.png');
-    }
-}
-
 .top .i-arrow-small-up {
     margin-left: $baseline*2;
     position: relative;
     top: -1px;
 }
 
-.i-sport-arrow-small {
-    margin: 0 0 -1px $gutter/2;
+.i-sport-arrow--small {
+    @include transform(scale(0.6));
+    margin: 3px 0 0 3px;
+    vertical-align: top;
 }
 
 .is-active .i-menu {
@@ -72,7 +66,8 @@ figcaption:before {
     @extend .i-image;
     display: inline-block;
     content: '';
-    margin-right: 4px;
+    vertical-align: top;
+    margin: 1px 4px 0 0;
 
     @if ($svg-support) {
         .svg & {
@@ -81,41 +76,21 @@ figcaption:before {
     }
 }
 
-.story-picture__caption:before {
-    @extend .i-image-white;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-image-white;
-        }
-    }
-}
-
 //Quotes
-.from-content-api blockquote:before,
-.from-content-api .block .quoted:before {
+.from-content-api blockquote.quoted:before {
     @extend .i;
-    @extend .i-livequote-before;
+    @extend .i-quote-marks;
     content: '';
-    margin: 13px 0 0;
+    position: absolute;
+    margin-top: -3px;
 
     @if ($svg-support) {
         .svg & {
-            @extend .svg-i-livequote-before;
+            @extend .svg-i-quote-marks;
         }
     }
-}
 
-.from-content-api blockquote:after,
-.from-content-api .block .quoted:after {
-    @extend .i;
-    @extend .i-livequote-after;
-    content: '';
-    margin-bottom: 6px;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-livequote-after;
-        }
+    @include mq($to: tablet) {
+        @include transform(scale(0.8));
     }
 }

@@ -4,22 +4,14 @@
 
 
 # For dev machines
-GET     /assets/*file                                                    controllers.Assets.at(path="/public", file)
+GET        /assets/*path                                                                             dev.DevAssetsController.at(path)
 
-GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
-GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
+GET        /$path<(\w\w-edition)?>                                                                   controllers.FrontController.renderFront(path)
+GET        /$path<(\w\w-edition)?>.json                                                              controllers.FrontController.renderFrontJson(path)
 
-GET     /$path<(us|uk|au)?>                                                                         controllers.FrontController.render(path)
-GET     /$path<(us|uk|au)?>.json                                                                         controllers.FrontController.render(path)
-GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                     controllers.FrontController.render(path)
-GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json                controllers.FrontController.render(path)
-GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json         controllers.FrontController.renderTrails(path)
-
-# TODO these are legacy paths that can be deleted after www.theguardian.com go-live
-GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>                     controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>.json                controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>/trails.json         controllers.FrontController.renderTrails(path)
-
-
+GET        /$path<(us|uk|au)?>                                                                       controllers.FrontController.renderEditionFront(path)
+GET        /$path<(us|uk|au)?>.json                                                                  controllers.FrontController.renderEditionFrontJson(path)
+GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                    controllers.FrontController.renderEditionSectionFront(path)
+GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json               controllers.FrontController.renderEditionSectionFrontJson(path)
+GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails             controllers.FrontController.renderTrails(path)
+GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json        controllers.FrontController.renderTrailsJson(path)

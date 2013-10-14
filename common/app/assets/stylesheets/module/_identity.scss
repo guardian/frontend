@@ -35,7 +35,7 @@
 }
 
 .identity-section {
-    border-top: 1px solid $mushroom;
+    border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
     margin: $gutter 0;
     padding-top: $gutter - 1;
@@ -101,5 +101,43 @@
     .social-signin__icon--gplus {
         top: 9px;
         left: 10px;
+    }
+}
+
+.password-strength-indicator {
+    background-color: #ebebeb;
+    height: 8px;
+    margin-top: 4px;
+    position: relative;
+
+    /* Indicator bar */
+    &:after {
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 0;
+    }
+
+    &.score-0:after { width: 20%; background-color: #cc0a00; }
+    &.score-1:after { width: 40%; background-color: #ff4b00; }
+    &.score-2:after { width: 60%; background-color: #ff8b00; }
+    &.score-3:after { width: 80%; background-color: #00e643; }
+    &.score-4:after { width: 100%; background-color: #00b334; }
+
+    .password-strength {
+        display: inline-block;
+        height: 40px;
+        margin-top: 14px;
+    }
+}
+
+.registration-username-check {
+    .available {
+        color: #00b334;
+    }
+    .unavailable {
+        color: $newsRed;
     }
 }

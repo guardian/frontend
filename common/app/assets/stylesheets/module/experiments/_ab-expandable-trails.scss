@@ -57,7 +57,7 @@
     font-size: 14px;
     font-size: 1.4rem;
     text-align: left;
-    color: $linkBlue;
+    color: $c-newsDefault;
 
     i {
         @include transform(scaleX(0.9) translateY(-1px) translateX($gutter/4));

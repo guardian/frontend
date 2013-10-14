@@ -1,0 +1,66 @@
+@(model: TablesPage)(implicit request: RequestHeader)
+@import support._
+@import org.joda.time.DateTime
+
+<h2 class="article-zone type-1 sport-header">
+    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+</h2>
+
+<div class="live-matches-dateline box-indent">
+    <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
+</div>
+
+@filterBar(model.page.webTitle)
+
+@filters(model.filters, model.page, "tables")
+
+<ol class="competitions football-table-container box-indent" data-link-name="tables" role="main">
+
+    @model.tables.map{ table =>
+
+    <li class="league-table">
+
+        <a class="competition-title football-table-header football-table-link type-7 tone-colour" href="@table.competition.url" data-link-name="competition">
+            @table.competition.fullName
+            <i class="i i-sport-arrow"></i>
+        </a>
+
+        <table class="table-football">
+            @if(!table.multiGroup) {
+                <thead class="table-football-header">
+                    @tableColumnHeaders()
+                </thead>
+            }
+
+
+            @table.groups.map{ group =>
+            <tbody class="table-football-body">
+                @if(table.multiGroup) {
+                    @group.round.map { round =>
+                        @round.name.map { name =>
+                            <tr>
+                                <th colspan="20" class="table-football-leftaligned">@name</th>
+                            </tr>
+                            @* we repeat this nav for group tables *@
+                            @tableColumnHeaders()
+                        }
+                    }
+                }
+                @group.entries.zipWithRowInfo.map{ case (entry, row) => @tableRow(entry, row) }
+            </tbody>
+            }
+        </table>
+
+        @if(!model.singleCompetition) {
+            <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8 tone-colour">View full @table.competition.fullName table <i class="i i-sport-arrow i-sport-arrow--small"></i></a>
+        }
+
+    </li>
+    }
+</ol>
+
+<div class="box-indent article-zone-no-indent">
+    @footballCompetitionNav(model.comp)
+
+    @fragments.mostPopularPlaceholder("sport")
+</div>

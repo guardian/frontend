@@ -6,7 +6,7 @@
  * Network front feature tests 
  *
  **/
-casper.start(host + '/uk?view=mobile');
+casper.start(host + 'uk?view=mobile');
 
 /**
  * Scenario Outline: Users can view more top stories for a section

@@ -1,0 +1,33 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# authentication endpoints
+GET           /login                     controllers.Login.login
+POST          /login                     controllers.Login.loginPost
+GET           /openIDCallback            controllers.Login.openIDCallback
+GET           /logout                    controllers.Login.logout
+
+# static files
+GET           /assets/*file              controllers.Assets.at(path="/public", file)
+
+##################### NOTE ############################
+#all endpoints below this line should be authenticated#
+#######################################################
+
+# Fronts
+GET           /                          controllers.FaciaToolController.index()
+GET           /config/*id                controllers.FaciaToolController.getConfig(id)
+
+GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
+POST          /collection/*id            controllers.FaciaToolController.updateBlock(id)
+DELETE        /collection/*id            controllers.FaciaToolController.deleteTrail(id)
+GET           /collection                controllers.FaciaToolController.listCollections
+GET           /config                    controllers.FaciaToolController.listConfigs
+
+# endpoints for proxying https
+GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
+GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+GET           /ophan/pageviews/*path     controllers.FaciaOphanApiController.pageViews(path)
+
+GET           /admin                     controllers.FaciaToolController.admin()

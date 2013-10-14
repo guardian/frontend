@@ -5,8 +5,8 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
+import play.api.libs.json.Json
 
-// TODO, this needs a rethink, does not seem elegant
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -48,33 +48,36 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Money",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
     new FrontPage(isNetworkFront = false) {
       override val id = "commentisfree"
       override val section = "commentisfree"
-      override val webTitle = "commentisfree"
+      override val webTitle = "Comment is free"
       override lazy val analyticsName = "GFE:commentisfree"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Comment is free",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
     new FrontPage(isNetworkFront = false) {
       override val id = "business"
       override val section = "business"
-      override val webTitle = "business"
+      override val webTitle = "Business"
       override lazy val analyticsName = "GFE:business"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Business",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -87,7 +90,8 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -100,7 +104,8 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Film",
         "content-type" -> "Section",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     },
 
@@ -113,7 +118,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
-        "is-front" -> true
+        "is-front" -> true,
+        "is-facia" -> true
       )
     }
   )
@@ -133,8 +139,13 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
-  def render(path: String) = Action { implicit request =>
-
+  // Needed as aliases for reverse routing
+  def renderEditionFrontJson(path: String) = renderFront(path)
+  def renderEditionFront(path: String) = renderFront(path)
+  def renderEditionSectionFrontJson(path: String) = renderFront(path)
+  def renderEditionSectionFront(path: String) = renderFront(path)
+  def renderFrontJson(path: String) = renderFront(path)
+  def renderFront(path: String) = Action { implicit request =>
       val editionalisedPath = editionPath(path, Edition(request))
 
       FrontPage(editionalisedPath).flatMap { frontPage =>
@@ -143,24 +154,31 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
         faciaPageOption map { faciaPage =>
           if (path != editionalisedPath) {
-            Redirect(editionalisedPath)
+            LinkTo.redirectWithParameters(request, editionalisedPath)
           } else {
-            val htmlResponse = () => views.html.front(frontPage, faciaPage)
-            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
-            renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+            if (request.isJson) {
+              val html = views.html.fragments.frontBody(frontPage, faciaPage)
+              JsonComponent(
+                "html" -> html,
+                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
+                "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
+              )
+            }
+            else
+              Ok(views.html.front(frontPage, faciaPage))
           }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
 
+  def renderTrailsJson(path: String) = renderTrails(path)
   def renderTrails(path: String) = Action { implicit request =>
-
     val editionalisedPath = editionPath(path, Edition(request))
 
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.headOption)
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.filter(_._2.items.nonEmpty).headOption)
 
       if (path != editionalisedPath) {
         Redirect(editionalisedPath)

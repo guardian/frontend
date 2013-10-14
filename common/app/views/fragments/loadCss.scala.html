@@ -1,4 +1,4 @@
-@()
+@()(implicit request: RequestHeader)
 @import conf.Switches._
 
 @if(CssFromStorageSwitch.isSwitchedOn) {
@@ -63,11 +63,9 @@
                 xhr.send();
             }
 
-            if(guardian.isModernBrowser && !guardian.css.loaded) {
+            if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest()) {
                 loadCssWithAjax();
-            }
-
-            if(!guardian.isModernBrowser){
+            } else if(!guardian.isModernBrowser || !('withCredentials' in new XMLHttpRequest())){
                 loadCssWithLink();
             }
         })();

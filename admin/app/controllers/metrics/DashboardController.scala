@@ -1,14 +1,14 @@
-package controllers.metrics
+package controllers.admin
 
-import play.api.mvc.Controller
-import controllers.{AuthAction, AuthLogging}
 import common.Logging
+import controllers.AuthLogging
+import play.api.mvc.Controller
 import tools.CloudWatch
 
-
 object DashboardController extends Controller with Logging with AuthLogging {
-  def render() = AuthAction{ request =>
-      // thats right, we only do PROD metrcs
-      Ok(views.html.dashboard("PROD", CloudWatch.latency ++ CloudWatch.requestOkCount))
+  // We only do PROD metrics
+
+  def renderDashboard() = Authenticated { request =>
+    Ok(views.html.dashboard("PROD", CloudWatch.latency ++ CloudWatch.requestOkCount))
   }
 }

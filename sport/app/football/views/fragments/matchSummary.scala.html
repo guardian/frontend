@@ -1,0 +1,34 @@
+@(theMatch: FootballMatch)
+@import implicits.Football._
+
+@cleanScorers(teamScorers: Option[String]) = {
+    @teamScorers.map{ scorers => @scorers.replace("(", "").replace(")", "").replace(",", ", ") }.getOrElse(Html("&nbsp;"))
+}
+
+@defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
+  @if(theMatch.isLive || theMatch.isResult){
+    <h2 class="match-summary__team">
+        @homeTeam.name
+        <span class="match-summary__score">@homeTeam.score</span>
+    </h2>
+    @if(homeTeam.hasScored){
+        <p class="match-summary__scorers match-summary__scorers--home">@cleanScorers(homeTeam.scorers)</p>
+    }
+
+    <h2 class="match-summary__team match-summary__team--away">
+        @awayTeam.name
+        <span class="match-summary__score">@awayTeam.score</span>
+    </h2>
+    @if(awayTeam.hasScored){
+        <p class="match-summary__scorers match-summary__scorers--home">@cleanScorers(awayTeam.scorers)</p>
+    }
+  } else {
+    <h2 class="match-summary__team">@homeTeam.name v @awayTeam.name</h2>
+  }
+
+    @if(theMatch.homeTeam.aggregateScore){
+        <p class="match-summary__aggregate">(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</p>
+    }
+
+    @theMatch.comments.map{ comments => <h5 class="match-summary__comment">@comments.replace("(", "").replace(")", "")</h5>}
+}

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+
+################################################################################
+#
+# Build the static and executable jar packages for the $1 project.
+#
+################################################################################
+
+./grunt-tc clean compile jshint:common jasmine
+./sbt-tc "project $1" compile test assembly
+
+
+
+################################################################################
+#
+# Build the Magenta deployable.
+#
+################################################################################
+
+echo "Disting $1/target/artifacts.zip"
+
+
+# Clean old dist files
+rm -f "$1/target/artifacts.zip"
+rm -fr "$1/target/dist"
+mkdir -p "$1/target/dist/packages/frontend-$1"
+
+
+# Copy packages to dist directory
+cp "$1/conf/deploy.json" "$1/target/dist"
+cp "$1/target/scala-2.10/frontend-$1.jar" "$1/target/dist/packages/frontend-$1"
+cp -r "static/target/hashed" "$1/target/dist/packages/frontend-static"
+
+
+# And zip up the packet
+cd "$1/target/dist"
+zip -r "../artifacts.zip" .
+
+
+echo "##teamcity[publishArtifacts '$1/target/artifacts.zip => .']"
+echo "Done disting."

@@ -111,7 +111,7 @@ object NginxLog {
         path = fields(2).trim.split(" ").toList.drop(1).headOption
         userAgent = fields(6)
       } catch {
-        case _ => return
+        case _: Throwable => return
       }
 
       path filter { path => isMetric(path) && (!isHealthCheck(userAgent)) } foreach { _ =>

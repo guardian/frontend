@@ -2,7 +2,7 @@
     display: none;
     width: 100%;
     margin-bottom: $baseline * 4;
-    background: $mushroom;
+    background: $c-neutral7;
     height: 42px;
 
     .is-live &,
@@ -24,15 +24,26 @@
         display: table-cell;
         vertical-align: middle;
     }
+
+    .live-toggler {
+        border-right: 1px solid $c-neutral5;
+        max-width: gs-span(2);
+    }
 }
 .live-toggler {
     display: none;
-    padding: 6px 0;
-    line-height: 30px;
+    padding: $baseline*2 8px $baseline*6 6px;
     text-align: left;
+    position: relative;
 
     &.is-active {
         display: block;
+    }
+    
+    i {
+        position: absolute;
+        bottom: 6px;
+        right: 6px;
     }
 }
 .lt__label {
@@ -41,7 +52,7 @@
     padding-right: $gutter/2;
 }
 .lt__value {
-    color: $linkBlue;
+    color: $c-neutral1;
     padding-right: $gutter/2;
     white-space: nowrap;
 }
@@ -84,7 +95,6 @@
 /* Circle progress bar live toggler
    ========================================================================== */
 .live-toggler--circle {
-    border-left: 1px solid #c2c2b0;
     padding: 8px 18px;
     width: auto;
     float: right;

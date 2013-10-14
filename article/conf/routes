@@ -3,7 +3,7 @@
 # ~~~~
 
 # For dev machines
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*path               dev.DevAssetsController.at(path)
 
 GET     /*path.json                 controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
-GET     /*path                      controllers.ArticleController.render(path)
+GET     /*path                      controllers.ArticleController.renderArticle(path)

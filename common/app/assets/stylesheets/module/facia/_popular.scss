@@ -1,39 +1,60 @@
 .collection--popular {
-    @include mq(tablet) {
-        float: right;
-        clear: right;
-        width: gs-span(4);
-        min-height: gs-height(8);
-        padding-left: ($gs-gutter/2) - 1;
-        border-left: 1px solid $grey;
-    }
-    .items {
-        margin-top: $baseline*3;
-        counter-reset: most-read;
-        @include mq(tablet) {
-            min-height: gs-height(8);
+    @include mq($to: tablet) {
+        @include first-row(1);
+        .item:first-child {
+            @include card($with-image: true);
+        }
+        .item:nth-child(2),
+        .item:nth-child(3) {
+            @include card;
+        }
+        .item:nth-child(n + 4) {
+            @include card-headline;
         }
     }
-    .item {
-        padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline/3 $gs-gutter*2;
-        border-top: 1px dotted $grey;
-        color: #000000;
-        @include font($serifheadline, normal, 18);
-        min-height: gs-height(1) + $gs-baseline;
-        @include mq(tablet) {
-            min-height: gs-height(8)/5;
+    @include mq(tablet, desktop) {
+        @include row(2);
+        .item:nth-child(-n+2) {
+            @include card($with-image: true);
+        }
+        .item:nth-child(n+3) {
+            @include card;
         }
     }
-    .item:before {
-        content: counter(most-read);
-        counter-increment: most-read;
-        color: $grey;
-        position: absolute;
-        top: 0;
-        left: 0;
-        @include font-size(52);
+    @include mq(desktop, wide) {
+        @include row(3);
+        .item:nth-child(-n+3) {
+            @include card($with-image: true);
+        }
+        .item:nth-child(n+4) {
+            @include card;
+        }
     }
-    .item:last-child {
-        border-bottom: 1px solid $grey;
+    @include mq(wide) {
+        @include first-row(2);
+        .items {
+            overflow: hidden;
+        }
+        // stylings for beggining and end of rows
+        .item:first-child,
+        .item:nth-child(4n+4) {
+            @include row-start;
+        }
+        .item:nth-child(2),
+        .item:nth-child(3),
+        .item:nth-child(4n+7) {
+            @include row-end;
+        }
+        .item:first-child {
+            @include card-triple-width;
+            float: left;
+        }
+        .item:nth-child(n+2) {
+            @include card;
+        }
+        .item:nth-child(3) {
+            padding-top: $gs-baseline;
+            margin-top: 0;
+        }
     }
 }

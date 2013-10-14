@@ -3,40 +3,29 @@
 # ~~~~
 
 # For dev machines
-GET     /assets/*file                               controllers.Assets.at(path="/public", file)
+GET         /assets/*path                                               dev.DevAssetsController.at(path)
 
 # Section paths
-GET     /sections                                   controllers.SectionsController.render()
-GET     /sections.json                              controllers.SectionsController.renderJson()
-
-
-# Note: culture|sport|australia are routed to front.
-# i.e. don't need negative lookahead to exclude them.
-GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails.json          controllers.SectionController.renderJsonTrails(path)
-GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails               controllers.SectionController.renderTrails(path)
-GET    /$path<[\w\d-]*(/\w\w-edition)?>.json                 controllers.SectionController.renderJson(path)
-GET    /$path<[\w\d-]*(/\w\w-edition)?>                      controllers.SectionController.render(path)
+GET        /sections                                                    controllers.SectionsController.renderSections()
+GET        /sections.json                                               controllers.SectionsController.renderSectionsJson()
 
 # Gallery paths
-GET     /$path<[\w\d-]*/gallery/.*>/lightbox.json           controllers.GalleryController.renderLightbox(path)
-GET     /$path<[\w\d-]*/gallery/.*>.json                    controllers.GalleryController.render(path)
-GET     /$path<[\w\d-]*/gallery/.*>                         controllers.GalleryController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>/lightbox.json  controllers.GalleryController.renderLightbox(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>.json           controllers.GalleryController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>                controllers.GalleryController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json        controllers.GalleryController.renderLightbox(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                 controllers.GalleryController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                      controllers.GalleryController.render(path)
+
+# Image Content paths
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json   controllers.ImageContentController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>        controllers.ImageContentController.render(path)
 
 # Video paths
-GET     /$path<[\w\d-]*/video/.*>.json              controllers.VideoController.render(path)
-GET     /$path<[\w\d-]*/video/.*>                   controllers.VideoController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/video/.*>.json     controllers.VideoController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/video/.*>          controllers.VideoController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                   controllers.VideoController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                        controllers.VideoController.render(path)
 
-# Tag paths
-GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                 controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>.json            controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails          controllers.TagController.renderTrails(path)
-GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails.json     controllers.TagController.renderTrails(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.json             controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails           controllers.TagController.renderTrails(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.json      controllers.TagController.renderTrails(path)
+# Note: culture|sport|australia are already routed to front.
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json         controllers.IndexController.renderTrailsJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails              controllers.IndexController.renderTrails(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                controllers.IndexController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                     controllers.IndexController.render(path)
+
+GET        /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?> controllers.IndexController.renderCombiner(leftSide, rightSide)

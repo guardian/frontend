@@ -3,19 +3,16 @@ package controllers
 import common._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import services.Concierge
+import services._
 
-object RelatedController extends Controller with Logging with ExecutionContexts {
+object RelatedController extends Controller with Related with Logging with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
-    val related = Concierge.related(edition, path)
-
-    Async {
-      related map {
-        case Nil => JsonNotFound()
-        case trails => renderRelated(trails)
-      }
+    related(edition, path) map {
+      case Nil => JsonNotFound()
+      case trails => renderRelated(trails)
     }
   }
 
@@ -31,4 +28,3 @@ object RelatedController extends Controller with Logging with ExecutionContexts 
       Ok(html)
   }
 }
-

@@ -9,9 +9,9 @@
 
 .sport-miniscorecard__head {
     @extend %type-7;
-    background-color: $mushroom;
+    background-color: $c-neutral7;
     border-bottom: 1px solid #DEDEDD;
-    color: $sportBright;
+    color: $c-sportBright;
     display: block;
     font-weight: bold;
     margin-top: $baseline*2;
@@ -20,7 +20,7 @@
 }
 
 .sport-miniscorecard__body {
-    background-color: $mushroom;
+    background-color: $c-neutral7;
 
     td {
         @extend %type-10;

@@ -9,7 +9,7 @@
 **/
 
 
-casper.start(host + '/culture?view=mobile');
+casper.start(host + 'culture?view=mobile');
 
 var clearLocalStorage = function() {
     casper.evaluate(function() { window.localStorage.clear(); });
@@ -31,7 +31,7 @@ casper.test.begin('Page contains a culture block',function suite(test){
            'Culture should have a section block'
        );
       test.assertSelectorHasText(
-      cultureBlockSelector + ' > h1', 'Culture',
+      cultureBlockSelector + ' > h1', 'culture',
       'Culture section block should have a title'
       );
       test.done();

@@ -1,77 +1,40 @@
 package controllers
 
-import common.{ExecutionContexts, Logging}
-import play.api.mvc.{ Controller, Action, _ }
-import play.api.libs.ws.WS
-import scala.language.reflectiveCalls
+import common.{ ExecutionContexts, Logging }
+import conf.Switches._
+import play.api.http.MediaRange
+import play.api.libs.ws.{WS, Response}
+import play.api.mvc._
+import services.ImageResizer._
+import scala.concurrent.Future
 import views.support._
-
-import org.im4java.core.{ IMOperation }
-import model._
 
 object ImageController extends Controller with Logging with Implicits with ExecutionContexts {
 
   // URL validation: We're only going to accept proxy paths that match...
   val Path = """([/\w\.@~-]*)""".r
 
-  def render(target: String, mode: String, profile: String) = Action { implicit request =>
-    Profile.all.find(_.prefix == profile).map(renderImage(target, mode, _)).getOrElse(NotFound)
+  def render(target: String, profile: String) = Action.async { implicit request: RequestHeader =>
+    val dimensions = Profile.all find { _.prefix == profile }
+    val image: Option[Future[SimpleResult]] = dimensions map {renderImage(target, _)}
+
+    image.getOrElse(Future(NotFound))
   }
 
-  private def renderImage(target: String, mode: String, profile: Profile)(implicit request: RequestHeader): Result = {
-
+  def renderImage(target: String, profile: Profile)(implicit request: RequestHeader): Future[SimpleResult] = {
     val Path(sanitised) = target
     val path = "http://static.guim.co.uk/" + sanitised
     val imageCacheLifetime = 86400
 
-    Async {
-        WS.url(path).get().map{ response =>
-          response.status match {
-            case 200 =>
+    // Find the highest priority accept type
+    val requestedContentType = request.acceptedTypes.sorted(MediaRange.ordering)
+    val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg")|| media.accepts("image/webp"))
+    val wsRequest: Future[Response]  = WS.url(path).get()
 
-                val contentType = response.contentType
-                val format = contentType.fromLast("/")
-                val image = response.getAHCResponse.getResponseBodyAsStream.toBufferedImage
-
-                log.info("Resize %s (%s) to (%s,%s) at %s compression".format(path, format, profile.width, profile.height, profile.compression))
-
-                mode match {
-
-                  case "scalr" =>
-
-                    val resized = image.resize(profile.width.getOrElse(50), profile.height.getOrElse(50))
-                    val compressed = resized(format) compress profile.compression
-
-                    Cached(imageCacheLifetime) {
-                      Ok(compressed) as contentType
-                    }
-
-                  case "im4java" =>
-
-                    // configuration
-                    val operation = new IMOperation()
-                    operation.addImage
-
-                    (profile.width, profile.height) match {
-                      case (Some(width), Some(height)) => operation.resize(width, height)
-                      case (Some(width), None) => operation.resize(width)
-                      case _ => Unit
-                    }
-
-                    operation.quality(profile.compression.toDouble)
-                    operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
-
-                    val resized = model.image.Im4Java(image, operation, format)
-
-                    Cached(imageCacheLifetime) {
-                      Ok(resized) as contentType
-                    }
-                }
-
-            case 404 => NotFound
-          }
-        }
+    val renderSubtype = imageMimeType match {
+      case Some(media) if (media.mediaSubType == "webp" && ServeWebPImagesSwitch.isSwitchedOn) => renderWebp _
+      case _ => renderJpeg _
     }
+    wsRequest.map{renderSubtype(path, imageCacheLifetime, profile)}
   }
-
 }

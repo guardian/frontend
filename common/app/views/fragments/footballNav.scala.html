@@ -1,46 +1,17 @@
-@(urlBase: String, competitionName: Option[String] = None, competitionUrl: Option[String] = None)(implicit request: RequestHeader)
-@import common._
+@(page: model.MetaData)(implicit request: RequestHeader)
+@import model.{FootballNavigation, Tag, Link}
 
-<h3 class="article-zone type-2">
-    <a class="zone-color" href="@LinkTo{@competitionUrl.getOrElse("/football")}" data-link-name="football index">@competitionName.getOrElse("Football")</a>
-</h3>
-<div class="box-indent">
-    <div class="sections u-cf football-nav" data-link-name="football bottom nav">
-        <ul class="nav nav--columns nav--top-border-off sections u-cf">
-            @defining({
-                var linkList = List(
-                    Link("/football/competitions", "leagues and competitions", "Leagues & competitions")
-                )
-
-                if (competitionName.nonEmpty) {
-                    if (TeamCompetitions(competitionName.get)) {
-	                    linkList ::= Link("/football/teams#" + urlBase.split("/")(2), "teams", "Teams")
-                    }
-                } else {
-                    linkList ::=  Link("/football/teams", "teams", "Teams")
-                }
-
-                linkList :::= List(
-                    Link(urlBase + "/live", "livescores", "Live scores"),
-                    Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
-                    Link(urlBase + "/results", "results", "Results")
-                )
-
-                if(!competitionName.getOrElse("").contains("Cup")) {
-                    if (urlBase == "/football") {
-                      linkList ::= Link(urlBase + "/tables", "tables", "Tables")
-                    } else {
-                      linkList ::= Link(urlBase + "/table", "tables", "Tables")
-                    }
-                }
-
-                linkList
-
-            }) { links =>
-                @links.map{ l =>
-                    <li class="nav__item"><a class="nav__link" href="@LinkTo{@l.url}" data-link-name="@l.linkName">@l.linkText</a></li>
+@if(page.section == "football") {
+    @defining({page match {
+        case tag: Tag => Some(tag)
+        case _ => None
+    }}){ tag: Option[Tag] =>
+        @defining(tag.map(FootballNavigation.navFor).getOrElse(FootballNavigation.defaultNav)){ links =>
+            @defining(tag.filter(_.isFootballCompetition).map(_.name).getOrElse("Football")){ pageName =>
+                @defining(tag.filter(_.isFootballCompetition).map(_.url).getOrElse("/football")){ pageLink =>
+                    @html.fragments.footballNavLinks(Link(pageLink, pageName, pageName), links)
                 }
             }
-        </ul>
-    </div>
-</div>
+        }
+    }
+}

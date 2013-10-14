@@ -4,16 +4,16 @@
 
 
 # Lint stuff before committing
-SRC_PATTERN=".js"
+SRC_PATTERN="\.js"
 git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
     grunt jshint:common
 fi
 jsLintResult=$?
 
-git diff --cached --name-only | if grep "$SRC_PATTERN"
+git diff --cached --name-only | if grep "common/app/assets/javascripts/.*$SRC_PATTERN"
 then
-    grunt test:unit:common
+    grunt jasmine:common
 fi
 jsCommonResult=$?
 

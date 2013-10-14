@@ -4,7 +4,7 @@ import model._
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
 import conf.Switches.AutoRefreshSwitch
-import play.api.mvc.{PlainResult, RequestHeader, Results}
+import play.api.mvc.{ RequestHeader, Results, SimpleResult }
 import play.api.templates.Html
 import com.gu.management.Switchable
 import conf.Configuration
@@ -27,7 +27,7 @@ object JsonComponent extends Results {
     resultFor(request, json)
   }
 
-  def apply(items: (String, Any)*)(implicit request: RequestHeader) = {
+  def apply(items: (String, Any)*)(implicit request: RequestHeader): SimpleResult = {
     val json = jsonFor(items: _*)
     resultFor(request, json)
   }
@@ -63,8 +63,7 @@ object JsonComponent extends Results {
     ))
   }
 
-  private def resultFor(request: RequestHeader, json: String): PlainResult = {
-
+  private def resultFor(request: RequestHeader, json: String): SimpleResult = {
     // JSONP if it has a callback
     request.getQueryString("callback").map {
       case ValidCallback(callback) => Ok(s"$callback($json);").as("application/javascript")

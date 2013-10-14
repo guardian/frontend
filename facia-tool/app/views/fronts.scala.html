@@ -1,0 +1,237 @@
+@(env: String)
+
+@admin_main("Fronts editor", env, isAuthed = true) {
+
+    <div class="tool-title">Fronts Editor </div>
+    <div data-bind="visible: false">loading...</div>
+
+    <div id="list-picker" data-bind="visible: true" style="display: none">
+        <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select> &middot;
+        <button data-bind="visible: !showViewer(), click: actions.toggleViewer">View</button>
+
+        <!-- ko if: showViewer -->
+        <button data-bind="click: actions.toggleViewer">Edit</button> &middot;
+        <button data-bind="click: viewer.shuffleDown">&laquo;</button>
+        <button data-bind="click: viewer.shuffleUp"  >&raquo;</button>
+        <!-- /ko -->
+    </div>
+
+    <div data-bind="visible: showViewer, if: showViewer" style="display: none">
+        <div class="frames" data-bind="template: {name: 'template_breakpoint', foreach: viewer.breakpoints}"></div>
+    </div>
+
+    <div data-bind="visible: !showViewer(), if: !showViewer(), makeDropabble: true" style="display: none">
+        <div class="finder">
+            <i class="icon-trash list-tool" data-bind="click: actions.flushClipboard"></i>
+            <div class="title">Clipboard</div>
+            <div class="clipboard__wrapper">
+                <div id="clipboard__overlay" data-bind="visible: clipboard().length === 0">
+                    Drag articles and drop them here. <br />Works from Guardian, Ophan, and Google.</div>
+                <div id="clipboard" class="connectedList" data-bind="
+                    template: {name: 'template_article', foreach: clipboard}"></div>
+            </div>
+
+            <div data-bind="with: latestArticles">
+                <div class="title">Latest Articles</div>
+
+                <div class="search-form">
+                    <input class="search-term" type="text" placeholder="Search for word" data-bind='
+                        event: {keyup: search, afterpaste: search},
+                        value: term,
+                        valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+                    <select class="search-filters" data-bind="
+                        event: { change: clearFilter },
+                        options: filterTypes,
+                        optionsText: 'display',
+                        value: filterType"></select>
+
+                    <div class="search-filter autocompleter">
+                        <input type="text" placeholder="filter" data-bind='
+                            attr: {placeholder: filterType().placeholder},
+                            event: {keyup: autoComplete, afterpaste: autoComplete},
+                            value: filter,
+                            valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+                        <div class="suggestions" data-bind="foreach: suggestions">
+                            <!-- ko if: $data._alert -->
+                            <div class="suggestion" data-bind="text: _alert"></div>
+                            <!-- /ko -->
+                            <!-- ko if: $data.id -->
+                            <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+
+                    <button class="search-submit"><i class="icon-refresh" data-bind="click: refresh"></i></button>
+                </div>
+
+                <div data-bind="template: {name: 'template_search_controls'}"></div>
+
+                <div id="latest-articles" class="connectedList" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
+
+                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length > 0"></div>
+            </div>
+        </div>
+
+        <div id="collections" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
+    </div>
+
+    <!-- templates -->
+
+    <script type="text/html" id="template_breakpoint">
+        <div class="frame" data-bind="
+            style: {
+                'z-index': zIndex,
+                'left'   : left() + 'px'
+            }">
+
+            <div class="title" data-bind="text: name"></div>
+
+            <iframe data-bind="
+                attr: {
+                    src: $root.viewer.urlBase + '/' + $root.config() + '?view=mobile'
+                },
+                style: {
+                    'width'  : width + 15 + 'px', // +15 for vertical scrollbar
+                    'height' : height + 'px'
+                }"></iframe>
+        </div>
+    </script>
+
+    <script type="text/html" id="template_collection">
+        <div class="collection">
+            <div class="list-header">
+                <div class="list-header__title" data-bind="visible: !state.editingConfig()">
+                    <span class="list-header__saving" data-bind="visible: state.loadIsPending">SAVING</span>
+
+                    <a class="list-header__display" data-bind="
+                        visible: typeof configMeta.displayName() === 'undefined',
+                        text: collectionMeta.displayName() || 'Set title for ' + configMeta.roleName(),
+                        click: toggleEditingConfig"></a>
+
+                    <span class="list-header__display" data-bind="
+                        visible: typeof configMeta.displayName() !== 'undefined',
+                        text: configMeta.displayName"></span>
+
+                    <span class="list-header__display" data-bind="
+                        visible: configMeta.displayName() === '',
+                        text: configMeta.roleName"></span>
+
+                    <span class="list-header__id" data-bind="text: id"></span>
+                </div>
+
+                <div class="collection-config" data-bind="visible: state.editingConfig">
+                    <div>
+                        <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
+                    </div>
+                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
+                    <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
+                </div>
+
+                <div class="list-header__status">
+                    <div class="list-header__status__live" data-bind="
+                        css: {
+                            active: state.liveMode()
+                        }">
+                        <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
+                    </div>
+                    <div class="list-header__status__draft" data-bind="
+                        css: {
+                            'active':   !state.liveMode(),
+                            'has-draft': state.hasDraft()
+                        }">
+                        <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
+                            DRAFT
+                            <span data-bind="if: state.hasDraft() && state.liveMode()">EXISTS</span>
+                        </span>
+                        <span data-bind="if: !state.liveMode() && state.hasDraft()">
+                            &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish draft</a>
+                            &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="list-header__timings">
+                    <!-- ko if: state.timeAgo -->
+                        edited <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                        by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
+                    <!-- /ko -->
+                    <!-- ko ifnot: state.timeAgo -->
+                        empty
+                    <!-- /ko -->
+                </div>
+            </div>
+
+            <div data-bind="css: {'pending': state.loadIsPending}">
+                <div class="live-zones" data-bind="
+                    visible: state.liveMode,
+                    template: {name: 'template_zones', foreach: live}"></div>
+
+                <div class="draft-zones" data-bind="
+                    visible: !state.liveMode(),
+                    template: {name: 'template_zones', foreach: draft}"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/html" id="template_zones">
+        <!-- ko if: !_.isUndefined(name) -->
+        <div class="zone-name" data-bind="text: name"></div>
+        <!-- /ko -->
+        <div class="connectedList persisted" data-bind="
+            attr: { 'data-collection': $parent.id },
+            template: {name: 'template_article', foreach: articles}"></div>
+    </script>
+
+    <script type="text/html" id="template_search_controls">
+        <div class="finder__controls">
+            Page <span data-bind="text: page"></span>
+            <a data-bind="click: pageNext">next</a>
+            <a data-bind="click: pagePrev, visible: page() > 1">prev</a>
+            <a data-bind="click: refresh,  visible: page() > 2">top</a>
+        </div>
+    </script>
+
+    <script type="text/html" id="template_article">
+        <div class="trail u-cf" data-bind="
+            attr: {'data-url': meta.id},
+            css: {redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false}">
+
+            <div class="trail_tweaks u-cf" data-bind="visible: state.editingConfig">
+                <div>
+                    Headline override:
+                    <input type="text" data-bind="value: config.webTitle"/>
+                </div>
+                <input type="submit" class="btn" value="Save" data-bind="click: $parent.saveItemConfig"/>
+                <button class="btn" value="Cancel" data-bind="click: $parent.forceRefresh">Cancel</button>
+            </div>
+
+            <img data-bind="attr: {src: fields.thumbnail}" />
+
+            <div class="trail__remove" data-bind="click: $parent.dropItem">
+                <i class="icon-remove icon-white"></i>
+            </div>
+
+            <a class="trail_stats u-cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">
+                <div class="pageviews" data-bind="if: totalHitsFormatted(), text: totalHitsFormatted"></div>
+                <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
+            </a>
+
+            <!-- ko if: (config.webTitle() && (meta.webTitle() !== config.webTitle())) -->
+            <span class="webTitle webTitle--override" data-bind="html: config.webTitle"></span>
+            <!-- /ko -->
+
+            <a class="webTitle" target="_blank" data-bind="
+                html: meta.webTitle,
+                attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
+
+            <div class="trail__meta">
+                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
+                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
+            </div>
+
+        </div>
+    </script>
+
+    <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
+}

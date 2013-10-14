@@ -1,22 +1,18 @@
 package controllers
 
 import common._
-import conf._
+import conf.ContentApi
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action, Result }
-import scala.concurrent._
+import play.api.mvc.{ SimpleResult, RequestHeader, Controller, Action }
 import scala.collection.Seq
-import com.gu.openplatform.contentapi.ApiError
+import scala.concurrent._
 import scala.util.Random
 
 object RecentController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
-  def render() = Action { implicit request =>
-    val promiseOfRecentStories: Future[Seq[Trail]] = lookup(Edition(request))
-    Async {
-       promiseOfRecentStories map { trails =>
-         renderRecent(Random.shuffle(trails).head)
-       }
+  def renderRecent() = Action.async { implicit request =>
+    lookup(Edition(request)) map { trails =>
+      render(Random.shuffle(trails).head)
     }
   }
 
@@ -25,14 +21,13 @@ object RecentController extends Controller with Logging with JsonTrails with Exe
     ContentApi.search(edition)
       .orderBy("newest")
       .pageSize(50)
-      .response.map {response =>
-          SupportedContentFilter(response.results map { Content(_) })
+      .response.map { response =>
+        response.results map { Content(_) }
       }
   }
 
-  private def renderRecent(trail: Trail)(implicit request: RequestHeader) = {
+  private def render(trail: Trail)(implicit request: RequestHeader): SimpleResult = {
     val jsonResponse = () => views.html.fragments.cards.card(trail, "right", "More from around the Guardian", "Story pack card | latest")
     renderFormat(jsonResponse, 60)
   }
-
 }

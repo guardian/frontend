@@ -1,0 +1,38 @@
+.collection--section-zone {
+    @include mq($to: tablet) {
+        .item:nth-child(-n+2) {
+            @include card-half-width($with-image: true);
+        }
+        @include row(2);
+        .item:nth-child(n+3) {
+            @include card-headline;
+        }
+    }
+    @include mq(tablet, desktop) {
+        @include row(2);
+        .item:nth-child(-n+2) {
+            @include card($with-image: true);
+        }
+        .item:nth-child(n+3) {
+            @include card;
+        }
+    }
+    @include mq(desktop, wide) {
+        @include row(3);
+        .item:nth-child(-n+3) {
+            @include card($with-image: true);
+        }
+        .item:nth-child(n+4) {
+            @include card;
+        }
+    }
+    @include mq(wide) {
+        @include row(4);
+        .item:nth-child(-n+4) {
+            @include card($with-image: true);
+        }
+        .item:nth-child(n+5) {
+            @include card;
+        }
+    }
+}

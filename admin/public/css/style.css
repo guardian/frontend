@@ -29,7 +29,7 @@ input.invalid {
     background-color: #F2DEDE;
 }
 
-fieldset, 
+fieldset,
 input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -39,19 +39,19 @@ input[type=text] {
     height: inherit;
 }
 
-fieldset#controls { 
+fieldset#controls {
     margin-top: 30px;
     position: relative;
 }
 
-#clear-frontend { 
-    position: absolute; 
+#clear-frontend {
+    position: absolute;
     right: 0;
 }
 
 #environment {
     line-height: 40px;
-    position: absolute; 
+    position: absolute;
 }
 
 input[type=checkbox].status {
@@ -63,7 +63,7 @@ input[type=checkbox].status {
 
 #switchboard label {
     display: inline;
-    font-size: 20px; 
+    font-size: 20px;
 }
 
 #switchboard label:hover {
@@ -185,7 +185,7 @@ img.agent-picture {
     padding: 0 0 0px 18px;
     margin: 2px 0 0 -3px;
     position: absolute;
-    display: none; 
+    display: none;
     background-color: #ffffff;
 }
 
@@ -224,7 +224,7 @@ img.agent-picture {
 .colour-picker .colour {
     color: #5bb75b;
     display: none;
-    cursor: pointer; 
+    cursor: pointer;
     margin: 0 0 0 2px;
 }
 
@@ -238,9 +238,9 @@ img.agent-picture {
 
 .hoverable:hover { color: #5BB75B; cursor: pointer; }
 
-.alerts { 
-    right: 0; 
-    position: fixed;  
+.alerts {
+    right: 0;
+    position: fixed;
     margin-right: 42px;
 }
 
@@ -261,23 +261,23 @@ img.agent-picture {
     display: block;
 }
 
-.color-light, .color-dark { 
+.color-light, .color-dark {
     display: inline-block;
-    width: 9px; 
+    width: 9px;
     height: 9px;
     font-size: 15px;
     vertical-align: middle;
 }
 
-.color-light:hover, .color-dark:hover { 
+.color-light:hover, .color-dark:hover {
     cursor: pointer;
 }
 
-.color-light:hover, .color-light { 
-    color: #FFDB4D;    
+.color-light:hover, .color-light {
+    color: #FFDB4D;
 }
 
-.cta { 
+.cta {
     font-size: 11px;
     color: #cccccc;
 }
@@ -286,11 +286,11 @@ a.cta, .cta a {
     color: #5bb75b;
 }
 
-.cta:hover { 
+.cta:hover {
     cursor: pointer;
 }
 
-.synopsis, .story-title, input.story-title, .story-hero, input.story-hero, .event-agents, .event-places { 
+.synopsis, .story-title, input.story-title, .story-hero, input.story-hero, .event-agents, .event-places {
     margin-left: 22px;
 }
 
@@ -306,7 +306,7 @@ a.cta, .cta a {
     max-width: 150px;
 }
 
-.storify textarea { 
+.storify textarea {
     width: 90%;
     min-height: 120px;
     clear: both;
@@ -333,12 +333,12 @@ a.cta, .cta a {
     background: #CEE8C3;
 }
 
-.notableAssocition span { 
+.notableAssocition span {
     cursor: pointer;
     font-size: 12px;
 }
 
-.hasAssociation, .notableAssocition .muted:hover { 
+.hasAssociation, .notableAssocition .muted:hover {
     color: #E0AF1B;
 }
 
@@ -358,8 +358,9 @@ a.cta, .cta a {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
-    width: 350px;
-    padding: 10px;
+    width: 50%;
+    padding: 15px 15px 10px 0;
+    border-right: 1px solid #CCCCCC;
 }
 
 .fronts .finder input[type="text"] {
@@ -372,25 +373,11 @@ a.cta, .cta a {
     text-transform: uppercase;
 }
 
-.fronts header {
-    padding: 5px 5px 5px 10px;
-    overflow: auto;
-}
-
-.fronts header .tool-title {
-    margin: 7px 0 0 0;
-    float: left;
-}
-
-.fronts header .list-picker {
-    float: right;
-}
-
 .fronts .tool-title {
     font-size: 18px;
+    text-transform: uppercase;
 }
 
-.fronts .list-picker__title,
 .fronts .finder__title {
     font-size: 14px;
     font-weight: bold;
@@ -411,34 +398,8 @@ a.cta, .cta a {
     opacity: 0.6;
 }
 
-.fronts .list-picker__item {
-    color: #214583;
-    font-weight: bold;
-    display: inline-block;
-    padding-right: 5px;
-    margin-right:  5px;
-    border-right:  1px solid #cccccc;
-}
-
-.fronts .list-picker__item:last-child {
-    font-weight: bold;
-    display: inline-block;
-    padding-right: 0;
-    margin-right:  0;
-    border-right:  0;
-}
-
 .fronts #collections .connectedList {
     min-height: 50px;
-}
-
-.fronts .savingIndicator {
-    position: absolute;
-    right: 5px;
-    top: 3px;
-    color: #d61d00;
-    font-weight: bold;
-    font-size: 10px;
 }
 
 .fronts .pending {
@@ -456,51 +417,53 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__title {
-    padding: 0 0 0 7px;
+    padding: 2px 4px 1px 4px;
     height: 20px;
     overflow: hidden;
 }
 
-.fronts .collection:hover .list-header__title {
-    background: #CCCCCC;
-}
-
-.fronts .list-header__edition,
-.fronts .list-header__section,
+.fronts .list-header__saving,
+.fronts .list-header__part,
 .fronts .list-header__role,
-.fronts .list-header__display,
-.fronts .list-header__role__description {
+.fronts .list-header__display {
     font-size: 14px;
-    color: #999999;
 }
 
-.fronts .list-header__edition { color: #999999; font-weight: bold; text-transform: uppercase; }
-.fronts .list-header__section { color: #666666; font-weight: bold; text-transform: uppercase; }
-.fronts .list-header__role    { color: #333333; font-weight: bold; text-transform: uppercase; }
-.fronts .list-header__display { color: #333333; }
+.fronts .list-header__display {
+    font-style: italic;
+}
+.fronts .list-header__display--is-set {
+    font-style: normal;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+}
 
-.fronts .list-header__role__description { color: #ffffff; }
-.fronts .list-header__display--is-set { font-weight: bold; }
+.fronts .list-header__saving  { color: #d61d00; font-weight: bold; }
+.fronts .list-header__id      { display: none;}
 
-.fronts .list-header__meta {
+.fronts .list-header__role {
+    font-style: italic;
+    text-transform: lowercase;
+    color: #666666;
+}
+
+.fronts .collection:hover .list-header__id {
+    display: block;
+    float: right;
+    color: #999999;
+    font-size: 12px;
+}
+
+
+.fronts .list-header__timings {
     font-size: 10px;
     color: #666666;
     padding: 0 0 0 10px;
-}
-
-.fronts .list-header__role__description {
-    display: none;
-}
-
-.fronts .collection:hover .list-header__role__description {
-    display: inline-block;
-}
-
-.fronts .list-header__meta {
     float: left;
 }
 
-.fronts .list-header__meta__last-updated {
+.fronts .list-header__timings__last-updated {
     font-weight: bold;
 }
 
@@ -511,8 +474,7 @@ a.cta, .cta a {
 .fronts .list-header__status__draft {
     font-size: 10px;
     float: left;
-    padding: 0 6px;
-    margin: 0 1px;
+    padding: 0 5px 0 4px;
     height: 19px;
     cursor: pointer;
     color: #999999;
@@ -531,7 +493,7 @@ a.cta, .cta a {
 .fronts .list-header__status__draft.active {
     height: 20px;
     color: #d61d00;
-    background-color: #ededed;    
+    background-color: #ededed;
 }
 
 .fronts a.list-header__status__control {
@@ -560,8 +522,13 @@ a.cta, .cta a {
     margin: 0 2px 0 0;
 }
 
+.fronts #list-picker,
 .fronts #collections {
-    margin: 0 0 0 350px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 15px;
+    width: 50%;
+    float: right;
 }
 
 .fronts .collection {
@@ -569,13 +536,16 @@ a.cta, .cta a {
     box-sizing: border-box;
     width: 100%;
     float: left;
-    padding: 0 0 20px 0;
-    border-top: 3px solid #999999;
+    padding: 0 0 5px 0;
     position: relative;
 }
 
+.fronts .collection--isMajor {
+    border-top: 3px solid #999999;
+}
+
 .fronts .collection:first-child {
-    margin-top: 35px;
+    margin-top: 10px;
 }
 
 .fronts .trail {
@@ -583,22 +553,20 @@ a.cta, .cta a {
     box-sizing: border-box;
     overflow: hidden;
     cursor: move;
-    background-color: #ededed;
-    padding: 2px 5px 7px 6px;
-    border-bottom: 1px dashed #CCCCCC;
+    padding: 1px 3px 4px 4px;
     position: relative;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #FFFFFF;
 }
 
-.fronts .trail:last-child {
-    border-bottom: 0;
-}
-
-.fronts .is-live .trail {
-    background-color: #ffffff;
+.fronts .is-draft .trail {
+    background-color: #EEEEEE;
 }
 
 .fronts .trail:hover {
-    background-color: rgb(223, 240, 216);
+    background: #dddddd;
 }
 
 .fronts .trail.redundant {
@@ -606,7 +574,7 @@ a.cta, .cta a {
 }
 
 .fronts .trail.ui-sortable-placeholder {
-    height: 60px !important;
+    height: 5px !important;
     background-color: #47ae38 !important;
     visibility: visible !important;
 }
@@ -615,13 +583,8 @@ a.cta, .cta a {
     float: left;
     width: 75px;
     height: 45px;
-    margin: 5px 0 0 0;
+    margin: 3px 0 0 0;
     background-color: #EEEEEE;
-}
-
-.fronts .collection .trail img,
-.fronts .trail:hover img {
-    display: block;    
 }
 
 .fronts .trail p {
@@ -630,8 +593,7 @@ a.cta, .cta a {
 }
 
 .fronts .trail .webTitle {
-    margin-top: 2px;
-    margin-left: 80px;
+    margin: 0 140px 0 80px;
     display: block;
     text-decoration: none;
     font-size: 13px;
@@ -641,7 +603,6 @@ a.cta, .cta a {
 
 .fronts .collection .trail .webTitle {
     font-size: 15px;
-    margin-right: 140px;
 }
 
 .fronts .trail .webTitle--override {
@@ -657,22 +618,10 @@ a.cta, .cta a {
 }
 
 .fronts .trail .trail__meta {
-    float: left;
-    clear: left;
-    width: 75px;
-    height: 16px;
     color: #999999;
     font-size: 10px;
-    line-height: 10px;
-    margin-top: 4px;
-}
-
-.fronts .collection .trail .trail__meta {
-    float: right;
-    clear: right;
-    text-align: right;
-    width: inherit;
-    margin-right: 32px;
+    line-height: 14px;
+    margin: 0 0 0 80px;
 }
 
 .fronts .trail .trail__meta a {
@@ -687,15 +636,31 @@ a.cta, .cta a {
     cursor: pointer;
 }
 
-.fronts .trail .trail__actions {
+.fronts .trail .trail__remove {
     display: none;
 }
 
-.fronts .collection .trail:hover .trail__actions {
-    display: block;
+.fronts .collection .trail .trail__remove {
     position: absolute;
-    top: 2px;
-    right: 3px;
+    top: 0;
+    right: 0;
+    background: #CCCCCC;
+    width: 14px;
+    height: 20px;
+    padding: 0px 3px;
+    cursor: pointer;
+    z-index: 99;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.fronts .collection .trail:hover .trail__remove {
+    display: block;
+}
+
+.fronts .collection .trail .trail__remove:hover {
+    background: #999999;
 }
 
 .fronts .trail_tweaks {
@@ -712,6 +677,10 @@ a.cta, .cta a {
     height: 30px;
     width: 160px;
     margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
 }
 
 .fronts select:disabled {
@@ -728,7 +697,7 @@ a.cta, .cta a {
 
 .fronts .clipboard__wrapper {
     position: relative;
-    margin: 5px 0 40px 0;
+    margin: 5px 0 27px 0;
 }
 
 .fronts #clipboard,
@@ -741,7 +710,7 @@ a.cta, .cta a {
 .fronts #clipboard__overlay {
     position: absolute;
     z-index: -1;
-    border: 2px dashed #cccccc;
+    border: 1px dashed #cccccc;
     width: 100%;
     padding: 5px;
     color: #999999;
@@ -756,40 +725,40 @@ a.cta, .cta a {
     color: #ffffff;
     padding: 0px 10px;
     font-size: 12px;
-    text-transform: uppercase;    
+    text-transform: uppercase;
 }
 
 .fronts .needs-more__num {
     font-weight: bold;
 }
 
-.fronts .list-config {
-    padding: 2px 7px 7px 7px;
+.fronts .collection-config {
+    padding: 5px 7px 7px 7px;
     font-size: 10px;
     background: #CCCCCC;
     color: #000000;
 }
 
-.fronts .list-config.editable {
+.fronts .collection-config.editable {
     background-color: #eee;
 }
 
-.fronts .list-config a {
+.fronts .collection-config a {
     color: #666666;
     cursor: pointer;
 }
 
-.fronts .list-config input {
+.fronts .collection-config input {
 }
 
-.fronts .list-config input.tiny {
+.fronts .collection-config input.tiny {
     width: 40px;
     text-align: right;
 }
 
 .fronts .trail_stats {
-    width: 180px;
-    height: 30px;
+    width: 130px;
+    height: 40px;
     float: right;
     clear: right;
     font-size: 9px;
@@ -802,7 +771,7 @@ a.cta, .cta a {
     font-weight: bold;
     position: absolute;
     bottom: -2px;
-    left: 150px;
+    left: 100px;
 }
 
 .fronts .pageviews-graph canvas {
@@ -820,7 +789,7 @@ a.cta, .cta a {
 }
 
 #usage h1, #usage h2, #usage h3 {
-    font-weight: normal; 
+    font-weight: normal;
 }
 
 .browser-table {
@@ -852,7 +821,7 @@ a.cta, .cta a {
 }
 
 table.browser-table, table.browser-table th, table.browser-table td {
-    border-width: 0px !important; 
+    border-width: 0px !important;
 }
 
 .table-striped tbody td, .table-striped tbody th {

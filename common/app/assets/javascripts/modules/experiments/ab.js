@@ -11,11 +11,12 @@ define([
     'modules/experiments/tests/expandable-mostpopular',
     'modules/experiments/tests/right-hand-card',
     'modules/experiments/tests/live-blog-show-more',
-    'modules/experiments/tests/most-popular-from-facebook'
+    'modules/experiments/tests/most-popular-from-facebook',
+    'modules/experiments/tests/ultimate-paragraph-spacing'
 ], function (
     common,
     store,
-    
+
     ExperimentInlineLinkCard,
     Aa,
     GalleryStyle,
@@ -24,7 +25,8 @@ define([
     ExperimentExpandableMostPopular,
     RightHandCard,
     LiveBlogShowMore,
-    MostPopularFromFacebook
+    MostPopularFromFacebook,
+    UltimateParagraphSpacing
     ) {
 
     var TESTS = [
@@ -36,7 +38,8 @@ define([
             new ExperimentExpandableMostPopular(),
             new RightHandCard(),
             new LiveBlogShowMore(),
-            new MostPopularFromFacebook()
+            new MostPopularFromFacebook(),
+            new UltimateParagraphSpacing()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -65,21 +68,6 @@ define([
 
     function clearParticipations() {
         return store.remove(participationsKey);
-    }
-
-    function initTracking(test, variantId) {
-        var dataLinkTest = [],
-            currentDataLinkTest = common.$g(document.body).attr('data-link-test');
-        if (currentDataLinkTest) {
-            dataLinkTest.push(currentDataLinkTest);
-        }
-
-        var testName = ['AB', test.id + ' test', variantId]. join(' | ');
-        if (!currentDataLinkTest || currentDataLinkTest.indexOf(testName) === -1) {
-            dataLinkTest.push(testName);
-        }
-
-        common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
 
     function getActiveTests() {
@@ -130,7 +118,6 @@ define([
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
                     variant.test(context);
-                    initTracking(test, variantId);
                     return true;
                 }
         });
@@ -194,6 +181,37 @@ define([
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
+        },
+
+        isEventApplicableToAnActiveTest: function (event) {
+            var participations = Object.keys(getParticipations());
+            return participations.some(function (id) {
+                var listOfEventStrings = getTest(id).events;
+                return listOfEventStrings.some(function (ev) {
+                    return event.indexOf(ev) === 0;
+                });
+            });
+        },
+
+        getActiveTestsEventIsApplicableTo: function (event) {
+
+            function startsWith(string, prefix) {
+                return string.indexOf(prefix) === 0;
+            }
+
+            var eventTag = event.tag;
+            return eventTag && getActiveTests().filter(function (test) {
+                var testEvents = test.events;
+                return testEvents && testEvents.some(function (testEvent) {
+                    return startsWith(eventTag, testEvent);
+                });
+            }).map(function (test) {
+                return test.id;
+            });
+        },
+
+        getTestVariant: function(testId) {
+            return getParticipations()[testId].variant;
         },
 
         getParticipations: getParticipations,

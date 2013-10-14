@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
+define(['common', 'ajax'], function (common, ajax) {
 
     function MatchNav() {
 
@@ -18,7 +18,7 @@ define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
         this.load = function (url, context) {
             var that = this;
             ajax({
-                url: url + '.json',
+                url: url,
                 type: 'json',
                 crossOrigin: true
             }).then(
