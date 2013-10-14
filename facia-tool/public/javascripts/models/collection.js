@@ -61,13 +61,16 @@ define([
     }
 
     Collection.prototype.createGroups = function(groupNames) {
-        var dropItem = this.drop.bind(this);
+        var self = this,
+            dropItem = this.drop.bind(this);
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
             return {
                 group: index,
                 name: name,
-                articles: ko.observableArray(),
+                collection: self,
+                articles:  ko.observableArray(),
+                underDrag: ko.observable(),
                 dropItem: dropItem
             };
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
@@ -168,12 +171,6 @@ define([
 
     Collection.prototype.populateLists = function(opts) {
         if (common.state.uiBusy) { return; }
-
-        // Knockout doesn't flush elements previously dragged into containers when it regenerates their DOM content.
-        // So, find then manually empty the containers.
-        this.elements = this.elements || $('[data-collection="' + this.id + '"]');
-        this.elements.empty();
-
         this.importList(opts.live, this.live);
         this.importList(opts.draft || opts.live, this.draft);
     };
