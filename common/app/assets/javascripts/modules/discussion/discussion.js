@@ -48,7 +48,6 @@ define([
                                         '</a>'+
                                         '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a>'+
                                     '</div>',
-            clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
             user                  = Id.getUserFromCookie(),
             self;
