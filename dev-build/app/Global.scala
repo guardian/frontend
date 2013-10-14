@@ -2,7 +2,7 @@ import common.ExecutionContexts
 import conf.RequestMeasurementMetrics
 import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
-import play.api.mvc._
+import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
@@ -11,11 +11,15 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
     def apply(rh: RequestHeader) = {
       next(rh).map{ result =>
         val header = result.header
-        if (header.status == 200 && !header.headers.keySet.contains("Cache-Control")) {
-
+        val path = rh.path
+        if (
+          header.status == 200 &&
+            !header.headers.keySet.contains("Cache-Control") &&
+            !path.startsWith("/assets/") // these are only used on DEV machines
+        ) {
           // nice big warning to devs if they are working on something uncached
           println("\n\n\n---------------------------- WARNING ------------------------------------")
-          println(s"URL ${rh.path} has NO CACHE-CONTROL header")
+          println(s"URL $path has 0x06 NO CACHE-CONTROL header")
           println("-------------------------------------------------------------------------------\n\n\n")
         }
         result

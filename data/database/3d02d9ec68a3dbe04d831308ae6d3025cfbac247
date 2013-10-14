@@ -1,0 +1,287 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"artanddesign/picture/2013/oct/08/photography",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-08T12:48:00Z",
+      "webTitle":"Early erotica - a picture from the past",
+      "webUrl":"http://www.theguardian.com/artanddesign/picture/2013/oct/08/photography",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/picture/2013/oct/08/photography",
+      "fields":{
+        "trailText":"<p>A body stocking was used in some early erotic photography as a means of avoiding censure and censorship</p>",
+        "headline":"Early erotica - a picture from the past",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jccg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235668442/French-Nude-in-Body-Stock-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"artanddesign/series/pictures-from-the-past",
+        "type":"series",
+        "webTitle":"Pictures from the past",
+        "webUrl":"http://www.theguardian.com/artanddesign/series/pictures-from-the-past",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/series/pictures-from-the-past",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"profile/ranjit-dhaliwal",
+        "type":"contributor",
+        "webTitle":"Ranjit Dhaliwal",
+        "webUrl":"http://www.theguardian.com/profile/ranjit-dhaliwal",
+        "apiUrl":"http://content.guardianapis.com/profile/ranjit-dhaliwal",
+        "bio":"<p>Ranjit Dhaliwal is development picture editor for <a href=\"http://www.guardian.co.uk\">guardian.co.uk</a></p>",
+        "r2ContributorId":"41119",
+        "references":[]
+      },{
+        "id":"type/picture",
+        "type":"type",
+        "webTitle":"Picture",
+        "webUrl":"http://www.theguardian.com/pictures",
+        "apiUrl":"http://content.guardianapis.com/pictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419375207",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235651025/French-Nude-in-Body-Stock-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"90",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235654751/French-Nude-in-Body-Stock-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"225",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235656185/French-Nude-in-Body-Stock-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"360",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235659941/French-Nude-in-Body-Stock-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"1536",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235662445/French-Nude-in-Body-Stock-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"1536",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235664475/French-Nude-in-Body-Stock-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"645",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"424"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235669888/French-Nude-in-Body-Stock-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"132",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235671365/French-Nude-in-Body-Stock-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"168",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235672863/French-Nude-in-Body-Stock-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"180",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235674404/French-Nude-in-Body-Stock-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"228",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235676120/French-Nude-in-Body-Stock-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"276",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235677520/French-Nude-in-Body-Stock-015.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"372",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235679308/French-Nude-in-Body-Stock-016.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"1116",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235681558/French-Nude-in-Body-Stock-017.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"1536",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381236659773/French-Nude-in-Body-Stock-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"700",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"466"
+          }
+        }]
+      },{
+        "id":"gu-image-419375208",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/8/1381235668442/French-Nude-in-Body-Stock-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Galerie Bilderwelt",
+            "altText":"French Nude in Body Stocking",
+            "height":"84",
+            "credit":"Galerie Bilderwelt/Getty Images",
+            "caption":"A woman wears a body stocking and bridal veil kneels in prayer in a French cabinet card from 1900.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
