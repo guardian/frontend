@@ -1,6 +1,7 @@
 define([
     'knockout',
     'models/common',
+    'models/droppable',
     'models/authedAjax',
     'models/collection',
     'models/article',
@@ -9,8 +10,9 @@ define([
     'models/ophanApi',
     'models/viewer',
 ], function(
-    knockout,
+    ko,
     common,
+    droppable,
     authedAjax,
     Collection,
     Article,
@@ -19,22 +21,23 @@ define([
     ophanApi,
     viewer
 ) {
-    var clipboardEl = document.querySelector('#clipboard'),
-        loc = window.location;
-
     return function(selector) {
 
         var self = this,
-            fromList,
             model = {
                 latestArticles: new LatestArticles(),
-                clipboard:      knockout.observableArray(),
-                collections:    knockout.observableArray(),
-                configs:        knockout.observableArray(),
-                config:         knockout.observable(),
+                collections:    ko.observableArray(),
+                configs:        ko.observableArray(),
+                config:         ko.observable(),
 
                 viewer:         viewer,
-                showViewer:     knockout.observable(),
+                showViewer:     ko.observable(),
+
+                clipboard: {
+                    articles:  ko.observableArray(),
+                    underDrag: ko.observable(),
+                    keepCopy:  true
+                },
 
                 actions: {
                     flushClipboard: flushClipboard,
@@ -59,7 +62,7 @@ define([
         }
 
         function setConfig(id) {
-            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('front', id));
+            history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
             renderCollections();
         }
 
@@ -107,139 +110,12 @@ define([
         }
 
         function flushClipboard() {
-            model.clipboard.removeAll();
-            clipboardEl.innerHTML = '';
+            model.clipboard.articles.removeAll();
         };
 
-        knockout.bindingHandlers.makeDropabble = {
-            init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-
-                element.addEventListener('dragstart', function(event){
-                    fromList = knockout.dataFor(element);
-                }, false);
-
-                element.addEventListener('dragover', function(event){
-                    event.preventDefault();
-                    var targetList = knockout.dataFor(element);
-                    var targetItem = knockout.dataFor(event.target);
-                    targetList.underDrag(targetItem.constructor !== Article);
-                    _.each(targetList.articles(), function(item) {
-                        var underDrag = (item === targetItem);
-                        if (underDrag !== item.state.underDrag()) {
-                            item.state.underDrag(underDrag);
-                        }
-                    });
-                }, false);
-
-                element.addEventListener('dragleave', function(event){
-                    event.preventDefault();
-                    var targetList = knockout.dataFor(element);
-                    var targetItem = knockout.dataFor(event.target);
-                    targetList.underDrag(false);
-                    _.each(targetList.articles(), function(item) {
-                        if (item.state.underDrag()) {
-                            item.state.underDrag(false);
-                        }
-                    });
-                }, false);
-
-                element.addEventListener('drop', function(event){
-                    var targetList = knockout.dataFor(element),
-                        targetItem = knockout.dataFor(event.target),
-                        item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
-                        position,
-                        offset = 0,
-                        insertAt;
-
-                    event.preventDefault();
-                    
-                    targetList.underDrag(false);
-                    _.each(targetList.articles(), function(item) {
-                        item.state.underDrag(false);
-                    });
-
-                    if (targetItem.constructor !== Article) {
-                        targetItem = _.last(targetList.articles ? targetList.articles() : undefined);
-                        offset  = 0 + !!targetItem;
-                    }
-
-                    position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
-                   
-                    if (common.util.urlHost(item).indexOf('google') > -1) {
-                        item = decodeURIComponent(common.util.parseQueryParams(item).url);
-                    }
-
-                    item = common.util.urlAbsPath(item);
-
-                    if (item === position) { // adding an item next to itself
-                        return;
-                    }
-
-                    // for display only:
-                    if (targetList.articles) {                    
-                        insertAt = targetList.articles().indexOf(targetItem) + offset;
-                        insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
-                        targetList.articles.splice(insertAt, 0, new Article({id: item}))
-                        
-                        contentApi.decorateItems(targetList.articles());
-                        ophanApi.decorateItems(targetList.articles());
-                    }
-
-                    if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard
-                        return;
-                    }
-
-                    saveChanges(
-                        'post',
-                        targetList.collection,
-                        {
-                            item:     item,
-                            position: position,
-                            after:    offset > 0 ? true : undefined,
-                            live:     targetList.collection.state.liveMode(),
-                            draft:   !targetList.collection.state.liveMode(),
-                            itemMeta: {
-                                group: targetList.group
-                            }
-                        }
-                    )
-
-                    if (!fromList || fromList === targetList) {
-                        return;
-                    }
-
-                    // for display only:
-                    fromList.articles.remove(function(article) {
-                        return article.meta.id() === item;
-                    })
-
-                    saveChanges(
-                        'delete',
-                        fromList.collection,
-                        {
-                            item:   item,
-                            live:   fromList.collection.state.liveMode(),
-                            draft: !fromList.collection.state.liveMode()
-                        }
-                    )
-                }, false);
-            }
-        };
-
-        function saveChanges(method, collection, data) {
-            collection.state.loadIsPending(true);
-            authedAjax({
-                url: common.config.apiBase + '/collection/' + collection.id,
-                type: method,
-                data: JSON.stringify(data)
-            }).then(function() {
-                collection.load();
-            });
-        };
-
-        knockout.bindingHandlers.sparkline = {
+        ko.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
-                var graphs = knockout.utils.unwrapObservable(valueAccessor()),
+                var graphs = ko.utils.unwrapObservable(valueAccessor()),
                     max;
 
                 if (!_.isArray(graphs)) { return; };
@@ -270,17 +146,19 @@ define([
         });
 
         this.init = function() {
+            droppable.init();
+
             fetchConfigsList()
             .then(function(){
                 renderConfig();
                 window.onpopstate = renderConfig;
 
-                knockout.applyBindings(model);
+                ko.applyBindings(model);
 
-                //startPoller();
+                startPoller();
 
                 model.latestArticles.search();
-                //model.latestArticles.startPoller();
+                model.latestArticles.startPoller();
             });
         };
 

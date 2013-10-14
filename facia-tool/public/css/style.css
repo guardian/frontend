@@ -78,13 +78,13 @@ input[type=text] {
     opacity: 0.6;
 }
 
-#collections .connectedList {
-    padding: 0 0 15px 0;
-    -webkit-transition: background-color 100ms linear;
-       -moz-transition: background-color 100ms linear;
-        -ms-transition: background-color 100ms linear;
-         -o-transition: background-color 100ms linear;
-            transition: background-color 100ms linear;
+.droppable {
+    padding: 0 0 25px 0;
+    -webkit-transition: background-color 50ms;
+       -moz-transition: background-color 50ms;
+        -ms-transition: background-color 50ms;
+         -o-transition: background-color 50ms;
+            transition: background-color 50ms;
 }
 
 .pending {
@@ -231,13 +231,12 @@ a.list-header__status__control:visited {
     cursor: move;
     padding: 1px 3px 4px 4px;
     position: relative;
-    border-radius: 2px;
     background-color: #FFFFFF;
-    -webkit-transition: background-color 100ms linear;
-       -moz-transition: background-color 100ms linear;
-        -ms-transition: background-color 100ms linear;
-         -o-transition: background-color 100ms linear;
-            transition: background-color 100ms linear;
+    -webkit-transition: background-color 50ms;
+       -moz-transition: background-color 50ms;
+        -ms-transition: background-color 50ms;
+         -o-transition: background-color 50ms;
+            transition: background-color 50ms;
 }
 
 .draft-zones .trail {
@@ -307,7 +306,7 @@ a.list-header__status__control:visited {
     display: none;
 }
 
-.persisted .trail:hover .trail__meta a {
+.trail:hover .trail__meta a {
     display: inline-block;
     color: #666666;
     border-left: 1px #dddddd solid;
@@ -390,7 +389,7 @@ button {
     z-index: -1;
     border: 1px dashed #cccccc;
     width: 100%;
-    padding: 5px;
+    padding: 4px 5px;
     color: #999999;
     font-size: 12px;
     text-align: center;
@@ -492,5 +491,5 @@ iframe {
 }
 
 .underDrag {
-    background: #CC0000 !important;
+    background: #a7d9a0 !important;
 }
