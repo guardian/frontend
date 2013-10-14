@@ -31,3 +31,6 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                     controll
 # Interactive paths 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json  controllers.InteractiveController.renderInteractiveJson(path) 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>       controllers.InteractiveController.renderInteractive(path) 
+
+# Tag combiners
+GET        /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?> controllers.IndexController.renderCombiner(leftSide, rightSide)
