@@ -137,7 +137,6 @@
     font-size: 1.3rem;
     margin-bottom: $baseline;
     padding-left: $gutter;
-    position: relative;
 
     @include mq($to:tablet) {
         padding-left: 20px;
@@ -146,13 +145,17 @@
 
 .check-label--helper {
     position: relative;
-    top: $baseline;
+    top: $baseline*2;
 }
 
 [type=checkbox] {
+    float: left;
     height: 13px;
-    left: 0;
-    position: absolute;
-    top: 3px;
+    margin-left: -$gutter;
+    margin-top: 4px;
     width: 13px;
+
+    @include mq($to:tablet) {
+        margin-left: -20px;
+    }
 }
