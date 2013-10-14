@@ -1,5 +1,3 @@
-$meta: $c-neutral2;
-
 .collection {
     position: relative;
 }
@@ -52,11 +50,12 @@ $meta: $c-neutral2;
 
 .items {
     font-size: 0;
+    overflow: hidden;
 }
 .item {
     @include box-sizing(border-box);
     position: relative;
-    margin-top: 18px;
+    margin-top: $gs-baseline*(3/2);
     @include mq(tablet) {
         display: inline-block;
         vertical-align: top;
@@ -67,13 +66,28 @@ $meta: $c-neutral2;
         width: gs-span(4);
     }
 }
-.item__title {
-    @include box-sizing(border-box);
+.item__link {
+    display: block;
     border-top: 2px solid $c-newsAccent;
-    @include fs-headline(2);
+}
+.item__image-container {
+    display: none;
+    .item--image-upgraded & {
+        margin-top: 2px;
+        overflow: hidden;
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
+    }
+}
+.item__image {
+    display: block;
+    margin: 0 auto;
+    @include mq($to: tablet) {
+        width: 100%;
+    }
     @include mq(tablet) {
-        @include fs-headline(4);
-        min-height: gs-height(3) + $gs-baseline;
+        height: 100%;
     }
 }
 .item__live-indicator {
@@ -86,31 +100,30 @@ $meta: $c-neutral2;
     top: -4px;
     font-weight: bold;
 }
-a.item__link {
-    color: inherit;
+.item__title {
+    @include box-sizing(border-box);
+    @include fs-headline(2);
+    margin-top: 2px;
+    @include mq(tablet) {
+        @include fs-headline(4);
+    }
 }
 .item__byline {
     margin: $gs-baseline/3 0 0;
     @include fs-header(4);
 }
+.item__standfirst,
+.item__meta {
+    color: $c-neutral2;
+}
 .item__standfirst {
     display: none;
     margin: 20px 0 0;
     @include fs-bodyHeading(1);
-    color: $c-neutral2;
-}
-.item--without-image .item__standfirst {
-    @include mq(tablet) {
-        display: block;
-        min-height: gs-height(4) - $gs-baseline - 2;
-    }
 }
 .item__meta {
-    color: $meta;
     @include fs-data(2);
-    margin-top: gs-height(1) - 16;
     overflow: hidden;
-    min-height: 16px;
     .item__timestamp,
     .trail__count {
         position: relative;
@@ -142,24 +155,6 @@ a.item__link {
         }
     }
 }
-.item__image-container {
-    display: none;
-    margin-top: $gs-baseline/2;
-    overflow: hidden;
-    @include mq(tablet) {
-        height: gs-height(4);
-    }
-}
-.item__image {
-    display: block;
-    margin: 0 auto;
-    @include mq($to: tablet) {
-        width: 100%;
-    }
-    @include mq(tablet) {
-        height: 100%;
-    }
-}
 .items__show-more {
     background-color: #f1f1f1;
     border-style: none;
@@ -177,34 +172,31 @@ a.item__link {
     .item__title {
         position: relative;
         padding-top: $gs-baseline*2 + 2;
-    }
-    .item__link .i {
-        position: absolute;
-        left: 0;
-        top: 2px;
+        .i {
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
     }
 }
 
 @mixin first-row($first-row-size) {
     .item:nth-child(-n+#{$first-row-size}) {
         margin-top: $gs-baseline/2;
-        .item__title {
-            padding-top: 0;
+        .item__link {
             border-top-style: none;
         }
-        &.tone-comment {
-            .item__title {
-                padding-top: $gs-baseline*2;
-            }
-            .item__link .i {
-                top: 0;
-            }
+        .item__image-container,
+        &.item--no-image .item__title {
+            margin-top: 0;
         }
+
     }
 }
 @mixin row-start {
     padding-left: 0;
     border-left-style: none;
+    clear: left;
 }
 @mixin row-end {
     padding-right: 0;
@@ -224,40 +216,43 @@ a.item__link {
 }
 @mixin card($with-image: false, $not-first-row: false) {
     @include mq($to: tablet) {
-        width: 100%;
         .item__title {
             @include fs-headline(3);
         }
     }
     @if $with-image {
-        .item__image-container {
+        @include mq(tablet) {
+            min-height: gs-height(8);
+        }
+        .item__image-container,
+        &.item--no-image .item__standfirst {
             display: block;
         }
     } @else {
-          &.item--without-image .item__standfirst {
-              display: none;
-          }
+        @include mq(tablet) {
+            min-height: gs-height(4) + $gs-baseline;
+        }
     }
     @if $not-first-row {
-        padding-top: $gs-baseline;
         margin-top: 0;
     }
 }
 @mixin card-headline {
-    padding: 0;
-    border-left-style: none;
+    float: left;
+    display: block;
+    width: 100%;
+    .item__link {
+        border-top-color: $c-neutral5;
+        border-top-width: 1px;
+    }
     .item__title,
     .item__byline {
         @include fs-headline(1, $size-only: true);
     }
     .item__title {
-        padding-top: 2px;
-        border-top-color: $c-neutral5;
-        border-top-width: 1px;
-        .i {
-            display: none
-        }
+        padding-top: 0;
     }
+    .item__title .i,
     .item__meta {
         display: none;
     }
@@ -268,23 +263,21 @@ a.item__link {
 }
 @mixin card-half-width($with-image: false) {
     width: 50%;
-    display: inline-block;
-    vertical-align: top;
     padding-left: $gs-gutter/2 - 1;
     padding-right: $gs-gutter/2;
     border-left: 1px dotted $c-neutral5;
-    .item__title {
-        @include fs-headline(1, $size-only: true);
-        min-height: gs-height(2);
-    }
+    float: left;
+    min-height: gs-height(2) + $gs-baseline;
+    .item__title,
     .item__byline {
         @include fs-header(1, $size-only: true);
     }
     @if $with-image {
-        .item__image-container {
-            display: block;
+        &.item--image-upgraded {
+            min-height: gs-height(4);
         }
-        &.item--without-image .item__standfirst {
+        .item__image-container,
+        &.item--no-image .item__standfirst {
             display: block;
         }
     }
@@ -295,14 +288,15 @@ a.item__link {
 }
 @mixin card-double-width {
     width: gs-span(8);
+    min-height: gs-height(12);
     .item__title {
         @include fs-headline(7, $size-only: true);
     }
-    .item__standfirst {
-        min-height: gs-height(8) - $gs-baseline - 2;
-    }
-    .item__image-container {
+    .item__image-container,
+    &.item--no-image .item__standfirst {
         display: block;
+    }
+    &.item--image-upgraded .item__image-container{
         height: gs-height(8);
     }
     @include mq(desktop) {
@@ -315,20 +309,19 @@ a.item__link {
 }
 @mixin card-triple-width {
     width: gs-span(12);
-    height: gs-height(8);
-    &.item--with-image {
+    min-height: gs-height(8);
+    &.item--image-upgraded {
         width: gs-span(4);
         padding-left: gs-span(8) + $gs-gutter;
     }
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
+    .item__image-container,
     .item__standfirst {
         display: block;
-        min-height: gs-height(4) - $gs-baseline - 2;
     }
-    .item__image-container {
-        display: block;
+    &.item--image-upgraded .item__image-container {
         height: 100%;
         width: gs-span(8);
         position: absolute;

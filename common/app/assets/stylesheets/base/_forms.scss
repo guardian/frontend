@@ -117,6 +117,7 @@
     background: $c-newsDefault;
     border: 0 none;
     color: #fff;
+    cursor: pointer;
     font-size: 14px;
     font-size: 1.4rem;
     margin: 0 $gutter 0 0;
@@ -131,6 +132,10 @@
     &:active {
         background: #000;
     }
+}
+
+.submit-input[disabled] {
+    background: $c-neutral5;
 }
 
 .check-label {

@@ -13,3 +13,5 @@ Does not show external references (e.g. football competitions)
 Things that should not have related content do have related content: /uk/2012/aug/29/eva-rausing-information-murder-olaf-palme
 
 Related content does not return exactly the same thing (I don not really consider this to be a problem).
+
+Returns draft content when it should not.

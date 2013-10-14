@@ -20,15 +20,17 @@ module.exports = function (grunt) {
         sass: {
             compile: {
                 files: {
-                    // head.min.css must go where Play can find it from resources at runtime,
+                    // head css must go where Play can find it from resources at runtime,
                     // Everything else goes into frontend-static bundling.
                     'common/conf/assets/head.min.css': 'common/app/assets/stylesheets/head.scss',
+                    'common/conf/assets/head.identity.min.css': 'common/app/assets/stylesheets/head.identity.scss',
                     'static/target/compiled/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
                     'static/target/compiled/stylesheets/facia.min.css': 'common/app/assets/stylesheets/facia.scss',
                     'static/target/compiled/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
                     'static/target/compiled/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'static/target/compiled/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
+                    'static/target/compiled/stylesheets/old-ie.head.identity.min.css': 'common/app/assets/stylesheets/old-ie.head.identity.scss',
                     'static/target/compiled/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss'
                 },
 
@@ -495,6 +497,7 @@ module.exports = function (grunt) {
             compile: [
                 'static/target',
                 'common/conf/assets/head.min.css',
+                'common/conf/assets/head.identity.min.css',
                 'common/conf/assets/assets.map'
             ],
 
@@ -574,6 +577,7 @@ module.exports = function (grunt) {
 
     // Analyse tasks
     grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:common:css', ['sass:compile', 'cssmetrics:common']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);

@@ -3,10 +3,12 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
     /**
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change
-     * TODO(james): Allow this to show policies too (not needed yet)
+     * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
      */
     var Id = {},
         userFromCookieCache = "empty";
+
+    Id.cookieName = 'GU_U';
 
     /**
      * The array returned from the cookie is in the format
@@ -15,9 +17,8 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
      */
     Id.getUserFromCookie = function() {
         if(userFromCookieCache === "empty") {
-            var cookieData = Cookies.get('GU_U'),
-                userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
-
+            var cookieData = Cookies.get(Id.cookieName),
+            userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
                 userFromCookieCache = {
                     id: userData[0],
@@ -32,6 +33,13 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
 
         return userFromCookieCache;
     };
+
+    /**
+     * @return {string}
+     */
+    Id.getCookie = function() {
+        return Cookies.get(Id.cookieName);
+    },
 
     /**
      * Handles unicode chars correctly

@@ -58,6 +58,9 @@
         <div class="navbar-inner">
             <div id="environment">
                 <span class="label label-warning">Environment: @env.toLowerCase</span>
+                @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
+                    <span class="label label-important">Editing @Configuration.facia.stage.toUpperCase!</span>
+                }
             </div>
             @if(isAuthed){
                 <ul class="nav pull-right">

@@ -24,9 +24,9 @@
     }
 }
 .d-comment {
-    color: $c-neutral1;
-    font-family: sans-serif;
     border-top: 1px solid $c-neutral6;
+    color: $c-neutral1;
+    font-family: $sans-serif;
 }
 .d-comment--has-replies + .d-comment {
     border-top: 2px solid $c-neutral5;
@@ -72,18 +72,8 @@
     line-height: 1.3;
     word-wrap: break-word;
 }
-.d-comment__author {
-    font-family: $serif;
-}
 
 @include mq(768px) {
-    .d-comment__avatar {
-        width: 60px;
-        height: 60px;
-    }
-    .d-comment__author {
-        font-size: 1.28571428571em;
-    }
     .d-comment__author + .d-badge {
         top: -.15em;
     }
@@ -326,4 +316,49 @@
 .d-show-cta:hover,
 .d-show-cta:focus {
     background-color: $c-neutral5;
+}
+
+/* Comment Box
+   ========================================================================== */
+.d-bar {
+    background-color: $c-neutral5;
+    padding: $baseline*3 $gutter $baseline*3 $gutter;
+    margin-bottom: $baseline*3;
+}
+
+.d-comment-box {}
+
+.d-comment-box--condensed {
+    .d-comment-box__content {
+        display: none;
+    }
+
+    .d-comment-box__add-comment {
+        display: block;
+    }
+}
+
+.d-comment-box__body {
+    @include fs-data(4);
+    @include box-sizing(border-box);
+    
+    border: 1px solid $c-neutral3;
+    height: 50px;
+    margin: $baseline*2 0;
+    padding: $baseline*2 $gutter/2;
+    resize: vertical;
+    width: 100%;
+}
+
+.d-comment-box__body--expanded {
+    height: 150px;
+}
+
+.d-comment-box__error {
+    background: #ffcc66;
+    padding: $baseline*2 $gutter;
+}
+
+.d-comment-box__add-comment {
+    display: none;
 }
