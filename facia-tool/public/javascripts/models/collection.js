@@ -171,12 +171,6 @@ define([
 
     Collection.prototype.populateLists = function(opts) {
         if (common.state.uiBusy) { return; }
-
-        // Knockout doesn't flush elements previously dragged into containers when it regenerates their DOM content.
-        // So, find then manually empty the containers.
-        this.elements = this.elements || $('[data-collection="' + this.id + '"]');
-        this.elements.empty();
-
         this.importList(opts.live, this.live);
         this.importList(opts.draft || opts.live, this.draft);
     };
