@@ -81,7 +81,6 @@ define([
                     // parse url query param if present, e.g. http://google.com/?url=...
                     if (common.util.parseQueryParams(item).url) {
                         item = decodeURIComponent(common.util.parseQueryParams(item).url);
-                        console.log('PARSED: '+ item);
                     }
 
                     item = common.util.urlAbsPath(item);
