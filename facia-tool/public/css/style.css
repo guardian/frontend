@@ -6,11 +6,9 @@ body {
     padding: 10px;
     color: #000000;
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+              user-select: none;
 }
 
 fieldset,
@@ -79,8 +77,6 @@ input[type=text] {
     padding: 0 0 25px 0;
     -webkit-transition: background-color 50ms;
        -moz-transition: background-color 50ms;
-        -ms-transition: background-color 50ms;
-         -o-transition: background-color 50ms;
             transition: background-color 50ms;
 }
 
@@ -233,11 +229,9 @@ a.list-header__status__control:visited {
     padding: 1px 3px 4px 4px;
     position: relative;
     background-color: #FFFFFF;
-    -webkit-transition: background-color 50ms;
-       -moz-transition: background-color 50ms;
-        -ms-transition: background-color 50ms;
-         -o-transition: background-color 50ms;
-            transition: background-color 50ms;
+    -webkit-transition: background-color 100ms;
+       -moz-transition: background-color 100ms;
+            transition: background-color 100ms;
 }
 
 .draft-zones .trail {
@@ -275,6 +269,10 @@ a.list-header__status__control:visited {
     line-height: 16px;
     color: #000000;
     cursor: move;
+}
+
+.trail .webTitle:hover {
+    color: #438835;
 }
 
 .collection .trail .webTitle {
