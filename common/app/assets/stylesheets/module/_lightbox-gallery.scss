@@ -232,11 +232,6 @@ i.gallery__watermark {
 .gallerycaption {
     color: #aaaaaa;
     text-align: left;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 60;
 
     a {
         color: #ffffff;
@@ -244,6 +239,14 @@ i.gallery__watermark {
 
     &:before {
         display: none; // Hide the caption icon
+    }
+
+    @include mq($and: '(orientation: landscape)') {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 60;
     }
 }
 
