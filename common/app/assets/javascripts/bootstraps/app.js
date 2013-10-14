@@ -74,7 +74,9 @@ define('bootstraps/app', [
         },
 
         loadFonts: function(config, ua) {
-            if(config.switches.webFonts) {
+            var platformsGettingHintedFonts = /Windows/;
+
+            if (config.switches.webFonts && !ua.match(platformsGettingHintedFonts)) {
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 var f = new Fonts(fontStyleNodes, fileFormat);
