@@ -443,6 +443,18 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         $(".article__keywords a").size should be (5)
       }
     }
+    
+    scenario("Twitter cards"){
+      Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
+      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
+        import browser._
+        Then("I should see twitter cards")
+        $("meta[property='twitter:site']").getAttributes("content").head  should be ("@guardian")
+        $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
+        $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
+        $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
+      }
+    }
 
   }
 }

@@ -93,19 +93,7 @@
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                <h3 id="comments" class="article__sub-head tone-colour tone-border">Comments</h3>
-                <div class="article__discussion"></div>
-
-                <div class="d-show-cta-wrapper">
-                    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@article.shortUrlId}"
-                       data-is-ajax data-link-name="View all comments">
-                        View all comments
-                        <span class="d-commentcount speech-bubble tone-background tone-border">
-                            <span class="js-commentcount__number"></span>
-                        </span>
-                        <i class="i i-arrow-grey-down"></i>
-                    </a>
-                </div>
+                @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             }
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" data-link-context="@article.section">

@@ -88,12 +88,8 @@ define([
                 common.$g('.collection', context).each(function(collection) {
                     var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
                     common.$g('.item', collection).each(function(item, index) {
-                        // is this the first item in a container?
-                        var isMain = isContainer && (index === 0);
-                        common.$g('.item__image-container', item).each(function(imageContainer) {
-                            new ImageUpgrade(imageContainer, isMain)
-                                .upgrade();
-                        });
+                        new ImageUpgrade(item, isContainer && (index === 0))
+                            .upgrade();
                     });
                 });
             });

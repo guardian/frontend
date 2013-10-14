@@ -32,18 +32,39 @@
             </div>
 
             <div data-bind="with: latestArticles">
-                <i class="icon-refresh list-tool" data-bind="click: refresh"></i>
                 <div class="title">Latest Articles</div>
 
-                <input id="searchTerm" type="text" placeholder="url or keyword" data-bind='
-                    event: {keyup: search, afterpaste: search},
-                    value: term,
-                    valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                <div class="search-form">
+                    <input class="search-term" type="text" placeholder="Search for word" data-bind='
+                        event: {keyup: search, afterpaste: search},
+                        value: term,
+                        valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
-                <input id="searchSection" type="text" placeholder="section" data-bind='
-                    event: {keyup: search, afterpaste: search},
-                    value: section,
-                    valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                    <select class="search-filters" data-bind="
+                        event: { change: clearFilter },
+                        options: filterTypes,
+                        optionsText: 'display',
+                        value: filterType"></select>
+
+                    <div class="search-filter autocompleter">
+                        <input type="text" placeholder="filter" data-bind='
+                            attr: {placeholder: filterType().placeholder},
+                            event: {keyup: autoComplete, afterpaste: autoComplete},
+                            value: filter,
+                            valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+                        <div class="suggestions" data-bind="foreach: suggestions">
+                            <!-- ko if: $data._alert -->
+                            <div class="suggestion" data-bind="text: _alert"></div>
+                            <!-- /ko -->
+                            <!-- ko if: $data.id -->
+                            <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+
+                    <button class="search-submit"><i class="icon-refresh" data-bind="click: refresh"></i></button>
+                </div>
 
                 <div data-bind="template: {name: 'template_search_controls'}"></div>
 
@@ -132,11 +153,11 @@
                 </div>
                 <div class="list-header__timings">
                     <!-- ko if: state.timeAgo -->
-                        Updated <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                        edited <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
                         by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                     <!-- /ko -->
                     <!-- ko ifnot: state.timeAgo -->
-                        Empty
+                        empty
                     <!-- /ko -->
                 </div>
             </div>

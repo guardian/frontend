@@ -38,12 +38,14 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
             },
-            _rowSize = {
-                wide: 8,
-                desktop: 6,
-                tablet: 4,
-                mobile: 5
-            }[detect.getBreakpoint()],
+            _rowSize = function() {
+                return {
+                    wide: 8,
+                    desktop: 6,
+                    tablet: 4,
+                    mobile: 5
+                }[detect.getBreakpoint()];
+            },
             _renderToggle = function($items) {
                 var buttonText = 'Show more',
                     $button = bonzo(bonzo.create('<button class="items__show-more" data-link-name="' + buttonText + ' | 0">' + buttonText + '</button>'))
@@ -57,7 +59,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     $button.attr('data-link-name', newDataAttr);
                     // show x more, depending on current breakpoint
                     var moreHidden = qwery('.item.u-h', $items[0]).some(function(item, index) {
-                            if (index === _rowSize) {
+                            if (index === _rowSize()) {
                                 return true;
                             }
                             bonzo(item).removeClass('u-h');
@@ -76,7 +78,9 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
         this.addShowMore = function() {
             var $collection = _$items.parent(),
                 collectionType = $collection.attr('data-collection-type') + '-' + $collection.attr('data-section'),
-                $overflowStories = common.$g('.item:nth-child(n + ' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
+                $overflowStories = common.$g('.item:nth-child(n+' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
+            // show stories
+            common.$g('.item:nth-child(-n + ' + (_getShownSize(collectionType)) + ')', _$items[0]).removeClass('u-h');
             // hide stories
             $overflowStories.addClass('u-h');
             // add toggle button, if we have hidden stories

@@ -31,7 +31,7 @@ casper.test.begin('Read top level comments', function(test) {
             return document.querySelectorAll('.d-comment--top-level').length;
         }, 10, 'Then I can see 10 top level comments');
 
-        test.assertSelectorHasText('.d-comment__author', 'monkeyface', 'And the first comment is authored by "monkeyface"');
+        test.assertSelectorHasText('.d-comment__author', 'helenf888', 'And the first comment is authored by "helenf888"');
 
         test.done();
 

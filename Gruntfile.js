@@ -20,15 +20,17 @@ module.exports = function (grunt) {
         sass: {
             compile: {
                 files: {
-                    // head.min.css must go where Play can find it from resources at runtime,
+                    // head css must go where Play can find it from resources at runtime,
                     // Everything else goes into frontend-static bundling.
                     'common/conf/assets/head.min.css': 'common/app/assets/stylesheets/head.scss',
+                    'common/conf/assets/head.identity.min.css': 'common/app/assets/stylesheets/head.identity.scss',
                     'static/target/compiled/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
                     'static/target/compiled/stylesheets/facia.min.css': 'common/app/assets/stylesheets/facia.scss',
                     'static/target/compiled/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
                     'static/target/compiled/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'static/target/compiled/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
+                    'static/target/compiled/stylesheets/old-ie.head.identity.min.css': 'common/app/assets/stylesheets/old-ie.head.identity.scss',
                     'static/target/compiled/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
                     'static/target/compiled/stylesheets/webfonts.min.css': 'common/app/assets/stylesheets/webfonts.scss'
                 },
@@ -201,6 +203,45 @@ module.exports = function (grunt) {
             }
         },
 
+        shell: {
+            // grunt-mkdir wouldn't do what it was told for this
+            webfontjson: {
+                command: 'mkdir -p static/target/compiled/fonts',
+
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                }
+            },
+
+            icons: {
+                command: [
+                    'cd tools/sprites/',
+                    'node spricon.js global-icon-config.json'
+                ].join('&&'),
+
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                }
+            },
+
+            // Should be later in file but can't separate shell task definition
+            hooks: {
+                // Copy the project's pre-commit hook into .git/hooks
+                command: 'cp git-hooks/pre-commit .git/hooks/',
+
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: false
+                }
+            }
+
+        },
+
         imagemin: {
             compile: {
                 files: [{
@@ -210,30 +251,15 @@ module.exports = function (grunt) {
                     dest: 'static/target/compiled/images/'
                 },{
                     expand: true,
+                    cwd: 'static/target/generated/images/',
+                    src: ['**/*.{png,gif,jpg}'],
+                    dest: 'static/target/compiled/images/'
+                },{
+                    expand: true,
                     cwd: 'common/app/public/images/',
                     src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
                     dest: 'static/target/compiled/images/'
                 }]
-            }
-        },
-
-        shell: {
-            // grunt-mkdir wouldn't do what it was told for this
-            webfontjson: {
-                command: 'mkdir -p static/target/compiled/fonts'
-            },
-
-            icons: {
-                command: [
-                    'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json'
-                ].join('&&')
-            },
-
-            // Should be later in file but can't separate shell task definition
-            hooks: {
-                // Copy the project's pre-commit hook into .git/hooks
-                command: 'cp git-hooks/pre-commit .git/hooks/'
             }
         },
 
@@ -472,6 +498,7 @@ module.exports = function (grunt) {
             compile: [
                 'static/target',
                 'common/conf/assets/head.min.css',
+                'common/conf/assets/head.identity.min.css',
                 'common/conf/assets/assets.map'
             ],
 
@@ -551,6 +578,7 @@ module.exports = function (grunt) {
 
     // Analyse tasks
     grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:common:css', ['sass:compile', 'cssmetrics:common']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
