@@ -87,17 +87,17 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
 
-            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__item', function() {
+            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function(e) {
                 if (swipeActive && !isSwiping) {
                     self.swipe.next();
                 }
             });
 
-            bean.on(overlay.bodyNode,    'touchmove', '.gallery__item', function() {
+            bean.on(overlay.bodyNode,    'touchmove', '.gallery__img', function() {
                 isSwiping = true;
             });
 
-            bean.on(overlay.bodyNode,    'touchend', '.gallery__item', function() {
+            bean.on(overlay.bodyNode,    'touchend', '.gallery__img', function() {
                 // This prevents a click event firing at the same time as swipe is finishing
                 setTimeout(function() {
                     isSwiping = false;
