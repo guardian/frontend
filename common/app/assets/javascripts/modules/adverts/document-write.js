@@ -1,3 +1,4 @@
+/*global guardian */
 define([
     'common',
     'ajax',
@@ -22,8 +23,7 @@ define([
 
     function getPageUrl(config) {
         var id = (config.pageId === '') ? '' : config.pageId + '/';
-        //return config.oasSiteIdHost + '/' + id + 'oas.html';
-        return 'm.code.dev-theguardian.com' + '/' + id + 'oas.html';
+        return guardian.config.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {

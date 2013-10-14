@@ -36,6 +36,24 @@
     }
 }
 
+.ad-slot--inline {
+    min-height: auto;
+    padding: 0;
+    padding-bottom-bottom: $baseline;
+
+    .ad-container {
+        line-height: 0;
+
+    }
+
+    @include mq(tablet) {
+        width: auto;
+        float: left;
+        padding-top: $baseline;
+        padding-right: $gs-gutter;
+    }
+}
+
 .ad-slot-middle-banner-ad {
     background-color: #fff;
     min-height: 0;

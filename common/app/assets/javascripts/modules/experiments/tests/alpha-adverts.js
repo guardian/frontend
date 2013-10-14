@@ -5,7 +5,7 @@ define(['qwery', 'bonzo', 'modules/analytics/adverts'], function (qwery, bonzo, 
 
         var nParagraphs = '10',
             alphaOasUrl = 'www.theguardian-alpha.com',
-            inlineTmp = '<div class="ad-slot ad-slot-inview"><div class="ad-container"></div></div>';
+            inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>';
 
         // Label up ad slots
         var labelSlots = function() {
