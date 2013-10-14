@@ -209,17 +209,12 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
   }
 }
 
-case class VideoPosterCleaner(videos: Seq[VideoAsset]) extends HtmlCleaner {
+case class VideoPosterCleaner(poster: Option[ImageAsset]) extends HtmlCleaner {
 
   def clean(body: Document): Document = {
-    body.getElementsByTag("video").filter(_.hasClass("gu-video")).foreach { videoTag =>
-      videoTag.getElementsByTag("source").headOption.foreach{ source =>
-        val file = Some(source.attr("src"))
-        videos.find(_.url == file).foreach{ video =>
-          video.stillImageUrl.foreach{ poster =>
-            videoTag.attr("poster", poster)
-          }
-        }
+    poster.map{ posterImage =>
+      body.getElementsByTag("video").filter(_.hasClass("data-media-id")).foreach { videoTag =>
+        videoTag.attr("poster", posterImage.url.getOrElse(""))
       }
     }
     body
