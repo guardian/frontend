@@ -12,3 +12,5 @@ GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json               controllers.FaciaController.renderEditionSectionFrontJson(path)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails             controllers.FaciaController.renderTrails(path)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json        controllers.FaciaController.renderTrailsJson(path)
+
+GET        /responsive-viewer                                                                        controllers.FaciaController.renderResponsiveViewer()

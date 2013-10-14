@@ -1,0 +1,56 @@
+@()<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            breakpoints = [
+                { width:  320,  height: 480,  name: "Mobile" },
+                { width:  1295, height: 1024, name: "Desktop" },
+                { width:  768,  height: 1024, name: "Tablet portrait" },
+                { width:  1024, height: 768,  name: "Tablet landscape" }
+            ]
+        </script>
+        <style>
+            iframe {
+                border: 1px solid #999999;
+                border-radius: 4px;
+            }
+            h2 {
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .frames { position: relative; }
+            .frames > div { position: absolute; }
+        </style>
+    </head>
+    <body>
+        <div class="frames"></div>
+        <script>
+            function init() {
+                var url = window.location.hash.substring(1),
+                    sbWidth = 15, // scrollbar width
+                    html = '',
+                    leftAcc = 0;
+
+                if (!url) { return; }
+
+                breakpoints.forEach(function(bp) {
+                    html +=
+                        '<div style="left:' + leftAcc + 'px">' +
+                            '<h2>' + bp.name + '</h2>' +
+                            '<iframe sandbox="allow-same-origin allow-forms allow-scripts" seamless ' +
+                                'src="' + url + '" ' +
+                                'width="' + (bp.width + sbWidth) + '" ' +
+                                'height="' + bp.height + '"></iframe>' +
+                        '</div>';
+                    leftAcc += bp.width + sbWidth + 13;
+                })
+
+                document.querySelector('.frames').innerHTML = html;
+            }
+
+            init();
+            window.onhashchange = init;
+        </script>
+    </body>
+</html>
