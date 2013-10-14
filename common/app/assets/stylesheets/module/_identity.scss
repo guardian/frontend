@@ -31,7 +31,12 @@
     margin-left: auto;
     margin-right: auto;
     max-width: gs-span(6);
-    padding: $baseline*12 $gutter;
+    padding: $baseline*12 $gs-gutter/2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 .identity-section {
