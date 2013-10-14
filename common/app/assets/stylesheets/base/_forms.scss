@@ -107,9 +107,15 @@
     padding: 8px 8px 7px;
     @include rounded-corners(0);
     width: 100%;
+    -webkit-appearance: none;
 
     &:focus {
         border-color: $c-neutral2;
+    }
+
+    @include mq($to:tablet) {
+        font-size: 16px;
+        font-size: 1.6rem;
     }
 }
 
