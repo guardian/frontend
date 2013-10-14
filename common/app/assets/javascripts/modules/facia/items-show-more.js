@@ -7,33 +7,33 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 var breakpointOptions = {
                     wide: {
                         default: 4,
-                        'container-news': 9,
-                        'container-sport': 9,
-                        'container-commentisfree': 5,
-                        'container-culture': 5,
-                        'container-popular': 3
+                        news: 9,
+                        sport: 9,
+                        commentisfree: 5,
+                        culture: 5,
+                        popular: 3
                     },
                     desktop: {
                         default: 3,
-                        'container-news': 6,
-                        'container-sport': 6,
-                        'container-commentisfree': 3,
-                        'container-culture': 3
+                        news: 6,
+                        sport: 6,
+                        commentisfree: 3,
+                        culture: 3
                     },
                     tablet: {
                         default: 2,
-                        'container-news': 5,
-                        'container-sport': 5,
-                        'container-commentisfree': 3,
-                        'container-culture': 3
+                        news: 5,
+                        sport: 5,
+                        commentisfree: 3,
+                        culture: 3
                     },
                     mobile: {
                         default: 2,
-                        'container-news': 5,
-                        'container-sport': 5,
-                        'container-commentisfree': 3,
-                        'container-culture': 3,
-                        'container-popular': 3
+                        news: 5,
+                        sport: 5,
+                        commentisfree: 3,
+                        culture: 3,
+                        popular: 3
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
@@ -49,7 +49,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
             _renderToggle = function($items) {
                 var buttonText = 'Show more',
                     $button = bonzo(bonzo.create('<button class="items__show-more" data-link-name="' + buttonText + ' | 0">' + buttonText + '</button>'))
-                        .insertAfter($items);
+                                  .insertAfter($items);
                 bean.on($button[0], 'click', function(e) {
                     // increment button counter
                     var newDataAttr = $button.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
@@ -77,7 +77,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
 
         this.addShowMore = function() {
             var $collection = _$items.parent(),
-                collectionType = $collection.attr('data-collection-type') + '-' + $collection.attr('data-section'),
+                collectionType = $collection.attr('data-type'),
                 $overflowStories = common.$g('.item:nth-child(n+' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
             // show stories
             common.$g('.item:nth-child(-n + ' + (_getShownSize(collectionType)) + ')', _$items[0]).removeClass('u-h');

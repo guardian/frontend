@@ -1,81 +1,97 @@
-define(['modules/facia/image-upgrade', 'bonzo', 'common'], function(ImageUpgrade, bonzo, common) {
+define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(ItemsShowMore, bonzo, common, bean) {
 
-    describe('Image Upgrade', function() {
+    describe('Items Show More', function() {
 
-        var imageUpgrade,
-            item,
-            $item,
-            // store existing connection and performance values
-            windowPerformance = window.performance,
-            navigatorConnection = navigator.connection,
-            $style = bonzo(bonzo.create('<style></style>'))
-                         .html('body:after { content: "wide"; }');
+        var itemsShowMore,
+            collection,
+            items,
+            $style,
+            clickstreamEvent = 'module:clickstream:click';
 
         beforeEach(function() {
-            item = bonzo.create(
-                '<li class="item--no-image">' +
-                    '<div class="item__image-container">' +
-                        '<img class="item__image" data-src="src" data-src-main="src-main" data-src-mobile="src-mobile" data-src-main-mobile="src-main-mobile" />' +
-                    '</div>' +
-                '</li>'
-            );
-            $item = bonzo(item);
-            window.performance = null;
-            navigator.connection = null;
+            collection = bonzo.create(
+                '<section>' +
+                    '<ul>' +
+                        '<li class="item">Item 1</li>' +
+                        '<li class="item">Item 2</li>' +
+                        '<li class="item">Item 3</li>' +
+                        '<li class="item">Item 4</li>' +
+                        '<li class="item">Item 5</li>' +
+                        '<li class="item">Item 6</li>' +
+                        '<li class="item">Item 7</li>' +
+                        '<li class="item">Item 8</li>' +
+                        '<li class="item">Item 9</li>' +
+                        '<li class="item">Item 10</li>' +
+                    '</ul>' +
+                '</section>'
+            )[0];
+            items = common.$g('ul', collection)[0],
+            itemsShowMore = new ItemsShowMore(items);
             // add breakpoint style
-            $style.appendTo('head');
+            $style = bonzo(bonzo.create('<style></style>'))
+                .html('body:after { content: "wide"; }')
+                .appendTo('head');
         });
 
         afterEach(function() {
-            window.performance = windowPerformance;
-            navigator.connection = navigatorConnection;
             $style.remove();
+            common.mediator.off(clickstreamEvent);
         });
 
         it('should be able to initialise', function() {
-            var imageUpgrade = new ImageUpgrade(item);
-            expect(imageUpgrade).toBeDefined();
+            expect(itemsShowMore).toBeDefined();
         });
 
-        it('should upgrade image', function() {
-            var imageUpgrade = new ImageUpgrade(item);
-            imageUpgrade.upgrade();
-            expect($item.hasClass('item--no-image')).toBeFalsy();
-            expect($item.hasClass('item--image-upgraded')).toBeTruthy();
-            expect(common.$g('img', $item[0]).attr('src')).toEqual('src');
+        it('should append button after items', function() {
+            itemsShowMore.addShowMore();
+            expect(bonzo(items).next()[0].nodeName.toLowerCase()).toEqual('button');
         });
 
-        it('should upgrade image to main if required', function() {
-            var imageUpgrade = new ImageUpgrade(item, true);
-            imageUpgrade.upgrade();
-            expect(common.$g('img', $item[0]).attr('src')).toEqual('src-main');
+        it('should not append button if displaying all items', function() {
+            common.$g('.item:nth-child(n+2)', collection).remove();
+            itemsShowMore.addShowMore();
+            expect(common.$g('button', collection).length).toEqual(0);
         });
 
-        it('should not upgrade if connection speed is "low"', function() {
-            var imageUpgrade = new ImageUpgrade(item);
-            navigator = {
-                connection: {
-                    type: 3
-                }
-            };
-            imageUpgrade.upgrade();
-            expect($item.hasClass('item--no-image')).toBeTruthy();
-            expect($item.hasClass('item--image-upgraded')).toBeFalsy();
-            expect(common.$g('img', $item[0]).attr('src')).toBeFalsy();
+        it('should show items when button clicked', function() {
+            itemsShowMore.addShowMore();
+            bean.fire(common.$g('button', collection)[0], 'click');
+            expect(common.$g('.item', items).hasClass('u-h')).toBeFalsy();
         });
 
-        it('should display mobile images if at mobile breakpoint', function() {
-            var imageUpgrade = new ImageUpgrade(item);
+        it('should update "data-link-name" after click', function() {
+            itemsShowMore.addShowMore();
+            var $button = common.$g('button', collection);
+            bean.fire($button[0], 'click');
+            expect($button.attr('data-link-name')).toEqual('Show more | 1');
+        });
+
+        it('should remove button after clickstream event', function() {
+            itemsShowMore.addShowMore();
+            var button = common.$g('button', collection)[0];
+            bean.fire(button, 'click');
+            common.mediator.emit(clickstreamEvent, {target: button});
+            expect(common.$g('button', collection).length).toEqual(0);
+        });
+
+        it('should initially show 2 items at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
-            imageUpgrade.upgrade();
-            expect(common.$g('img', $item[0]).attr('src')).toEqual('src-mobile');
+            itemsShowMore.addShowMore();
+            expect(common.$g('.item.u-h', items).length).toEqual(8);
         });
 
-        it('should display main mobile images if required', function() {
-            var imageUpgrade = new ImageUpgrade(item, true);
+        it('should initially 5 items in the "news" container at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
-            imageUpgrade.upgrade();
-            expect(common.$g('img', $item[0]).attr('src')).toEqual('src-main-mobile');
+            bonzo(collection).attr('data-type', 'news');
+            itemsShowMore.addShowMore();
+            expect(common.$g('.item.u-h', items).length).toEqual(5);
+        });
+
+        it('should show 5 more at mobile breakpoint', function() {
+            $style.html('body:after { content: "mobile"; }');
+            itemsShowMore.addShowMore();
+            bean.fire(common.$g('button', collection)[0], 'click');
+            expect(common.$g('.item.u-h', items).length).toEqual(3);
         });
 
     });

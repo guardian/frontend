@@ -8,8 +8,7 @@ define(['modules/facia/image-upgrade', 'bonzo', 'common'], function(ImageUpgrade
             // store existing connection and performance values
             windowPerformance = window.performance,
             navigatorConnection = navigator.connection,
-            $style = bonzo(bonzo.create('<style></style>'))
-                         .html('body:after { content: "wide"; }');
+            $style;
 
         beforeEach(function() {
             item = bonzo.create(
@@ -20,10 +19,13 @@ define(['modules/facia/image-upgrade', 'bonzo', 'common'], function(ImageUpgrade
                 '</li>'
             );
             $item = bonzo(item);
+            imageUpgrade = new ImageUpgrade(item);
             window.performance = null;
             navigator.connection = null;
             // add breakpoint style
-            $style.appendTo('head');
+            $style = bonzo(bonzo.create('<style></style>'))
+                .html('body:after { content: "wide"; }')
+                .appendTo('head');
         });
 
         afterEach(function() {
@@ -33,12 +35,10 @@ define(['modules/facia/image-upgrade', 'bonzo', 'common'], function(ImageUpgrade
         });
 
         it('should be able to initialise', function() {
-            var imageUpgrade = new ImageUpgrade(item);
             expect(imageUpgrade).toBeDefined();
         });
 
         it('should upgrade image', function() {
-            var imageUpgrade = new ImageUpgrade(item);
             imageUpgrade.upgrade();
             expect($item.hasClass('item--no-image')).toBeFalsy();
             expect($item.hasClass('item--image-upgraded')).toBeTruthy();
@@ -52,7 +52,6 @@ define(['modules/facia/image-upgrade', 'bonzo', 'common'], function(ImageUpgrade
         });
 
         it('should not upgrade if connection speed is "low"', function() {
-            var imageUpgrade = new ImageUpgrade(item);
             navigator = {
                 connection: {
                     type: 3
@@ -65,7 +64,6 @@ define(['modules/facia/image-upgrade', 'bonzo', 'common'], function(ImageUpgrade
         });
 
         it('should display mobile images if at mobile breakpoint', function() {
-            var imageUpgrade = new ImageUpgrade(item);
             $style.html('body:after { content: "mobile"; }');
             imageUpgrade.upgrade();
             expect(common.$g('img', $item[0]).attr('src')).toEqual('src-mobile');
