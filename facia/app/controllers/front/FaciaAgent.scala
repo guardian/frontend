@@ -52,7 +52,6 @@ trait ParseConfig extends ExecutionContexts with Logging {
 }
 
 trait ParseCollection extends ExecutionContexts with Logging {
-  private lazy val defaultMax = 15
 
   def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
     // get the running order from the apiwith
