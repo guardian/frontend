@@ -25,7 +25,9 @@ object Frontend extends Build with Prototypes {
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
-      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
+      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
+
+      "org.apache.commons" % "commons-math3" % "3.2"
     )
   )
   val commonWithTests = common % "test->test;compile->compile"
@@ -33,7 +35,6 @@ object Frontend extends Build with Prototypes {
   val front = application("front").dependsOn(commonWithTests).aggregate(common)
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
-  val interactive = application("interactive").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
@@ -48,7 +49,6 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "org.imgscalr" % "imgscalr-lib" % "4.2",
       "org.im4java" % "im4java" % "1.4.0",
-      "commons-io" % "commons-io" % "2.0.1",
       "commons-lang" % "commons-lang" % "2.5"
     )
   )
@@ -123,7 +123,6 @@ object Frontend extends Build with Prototypes {
     facia,
     article,
     applications,
-    interactive,
     sport,
     coreNavigation,
     discussion,
@@ -136,7 +135,6 @@ object Frontend extends Build with Prototypes {
     facia,
     article,
     applications,
-    interactive,
     sport,
     coreNavigation,
     image,
@@ -152,7 +150,6 @@ object Frontend extends Build with Prototypes {
     facia,
     article,
     applications,
-    interactive,
     sport,
     coreNavigation,
     image,
