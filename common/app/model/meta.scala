@@ -65,8 +65,16 @@ trait Elements {
   def imageOfWidth(width: Int): Option[ImageAsset] = crops.filter(_.width == width).headOption.orElse(mainPicture)
 
   // Find a main picture crop which matches this width.
-  def mainPicture(width: Int): Option[ImageAsset] = mainImageElement.flatMap(_.imageCrops.filter(_.width == width).headOption)
-                                                    .headOption.orElse(mainPicture)
+  def mainPicture(width: Int): Option[ImageAsset] = {
+    mainImageElement.flatMap(_.imageCrops.filter(_.width == width).headOption).orElse(mainPicture)
+  }
+
+  // Find a main picture crop which matches this aspect ratio.
+  def mainPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageAsset] = {
+    mainImageElement.flatMap(_.imageCrops.filter( image =>
+      image.aspectRatioWidth == aspectWidth && image.aspectRatioHeight == aspectHeight).headOption)
+  }
+
   def images: List[ImageElement]
   def videos: List[VideoElement]
   def thumbnail: Option[ImageElement]
