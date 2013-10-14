@@ -8,12 +8,12 @@ define(['modules/facia/collection-display-toggle', 'helpers/fixtures', 'common',
             fixtureId = 'collection-display-toggle',
             collectionId = 'uk/culture/regular-stories',
             storageId = 'collection-states',
-            assertClosed = function($collection) {
+            assertState = function($collection, state) {
                 var $button = common.$g('button', $collection[0]);
-                expect($collection.attr('data-toggle-state')).toBe('hidden');
-                expect($collection.hasClass('collection--rolled-up')).toBeTruthy();
-                expect($button.text()).toBe('Show');
-                expect($button.attr('data-link-name')).toBe('Hide');
+                expect($collection.attr('data-toggle-state')).toBe(state === 'open' ? 'displayed' : 'hidden');
+                expect($collection.hasClass('collection--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
+                expect($button.text()).toBe(state === 'open' ? 'Hide' : 'Show');
+                expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
             };
 
         beforeEach(function(){
@@ -47,17 +47,14 @@ define(['modules/facia/collection-display-toggle', 'helpers/fixtures', 'common',
         it('initial state should be open', function() {
             collectionDisplayToggle.addToggle();
             var $button = common.$g('button', collection);
-            expect($collection.attr('data-toggle-state')).toBe('displayed');
-            expect($collection.hasClass('collection--rolled-up')).toBeFalsy();
-            expect($button.text()).toBe('Hide');
-            expect($button.attr('data-link-name')).toBe('Show');
+            assertState($collection, 'open');
         });
 
         it('should be able to close collection', function() {
             collectionDisplayToggle.addToggle();
             // click button
             bean.fire(common.$g('button', collection)[0], 'click');
-            assertClosed($collection);
+            assertState($collection, 'closed');
         });
 
         it('should store state as user preference', function() {
@@ -78,7 +75,7 @@ define(['modules/facia/collection-display-toggle', 'helpers/fixtures', 'common',
             prefs[collectionId] = 'closed';
             userPrefs.set(storageId, prefs);
             collectionDisplayToggle.addToggle();
-            assertClosed($collection);
+            assertState($collection, 'closed');
         });
 
     });
