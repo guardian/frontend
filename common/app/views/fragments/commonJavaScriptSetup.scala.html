@@ -101,16 +101,16 @@
         @* we want this to happen ASAP to avoid FOUC *@
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
-        @if(CssFromStorageSwitch.isSwitchedOn) {
-            loadCssFromStorage();
-        }
-
         var platformsGettingHintedFonts = /Windows/;
 
         if (navigator.userAgent.match(platformsGettingHintedFonts)) {
             loadFontsAsynchronously();
         } else {
             loadFontsFromStorage();
+        }
+
+        @if(CssFromStorageSwitch.isSwitchedOn) {
+            loadCssFromStorage();
         }
 
         guardian.config = @fragments.javaScriptConfig(item, switches);
