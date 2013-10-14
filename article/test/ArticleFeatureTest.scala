@@ -303,8 +303,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size (0)
 
-        And("the embedded video should have a poster")
-        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/mainwebsite/poster/2013/3/26/130326HuntReform_7409761.jpg")
+        And("the embedded video should not show a poster when there are no images in the video element")
+        findFirst("video").getAttribute("poster") should be("")
       }
     }
 
@@ -316,8 +316,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         Then("the main picture should be shown")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
 
-        And("the embedded video should have a poster")
-        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/bc/281851582/281851582_1019162777001_110624Glastothreewords-4863219.jpg?pubId=281851582")
+        And("the embedded video should not have a poster when there are no images in the video element")
+        findFirst("video").getAttribute("poster") should be("")
       }
     }
 
