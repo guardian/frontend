@@ -281,7 +281,7 @@ define([
             addComment: function(takeToTop, resp) {
                 // TODO (jamesgorrie): this is weird, but we don't have templating
                 var discussionContainerNode = self.discussionContainerNode[0],
-                    $thread = bonzo(qwery('.d-thread', discussionContainerNode)),
+                    $thread = bonzo(qwery('.d-thread', discussionContainerNode)).first(),
                     $comment = bonzo(qwery('.d-comment', discussionContainerNode)).clone().removeClass('d-comment--blocked')[0],
                     $actions = bonzo($comment.querySelector('.d-comment__actions')),
                     $datetime = bonzo($comment.querySelector('time')),
