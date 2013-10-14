@@ -5,6 +5,10 @@ html {
 body {
     padding: 10px;
     color: #000000;
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+              user-select: none;
 }
 
 fieldset,
@@ -49,28 +53,18 @@ input[type=text] {
 }
 
 .title {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    color: #666666;
+    color: #000000;
+    margin: 5px 0 0 0;
+    padding: 2px 0 0 0;
 }
 
-.list-tool {
-    float: right;
-    cursor: pointer;
-    margin: 3px 2px 0 0;
-    opacity: 0.5;
-}
-
-.list-tool:hover {
-    opacity: inherit;
-}
-
-.list-tool:active {
-    opacity: 0.6;
-}
-
-#collections .connectedList {
-    padding: 0 0 10px 0;
+.droppable {
+    padding: 0 0 25px 0;
+    -webkit-transition: background-color 50ms;
+       -moz-transition: background-color 50ms;
+            transition: background-color 50ms;
 }
 
 .pending {
@@ -185,12 +179,17 @@ a.list-header__status__control:visited {
 }
 
 #list-picker {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: right;
+    width: 50%;
+    padding: 0 0 0 15px;
 }
 
 #list-picker select {
     font-weight: bold;
     font-size: 16px;
+    color: #000000;
 }
 
 #collections {
@@ -208,29 +207,27 @@ a.list-header__status__control:visited {
     float: left;
     padding: 0 0 5px 0;
     position: relative;
-    border-top: 2px solid #999999;
+    border-top: 1px solid #CCCCCC;
 }
 
 .collection:first-child {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .trail {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    cursor: move;
     padding: 1px 3px 4px 4px;
     position: relative;
-    border-radius: 2px;
+    background-color: #FFFFFF;
+    -webkit-transition: background-color 100ms;
+       -moz-transition: background-color 100ms;
+            transition: background-color 100ms;
 }
 
-.draft-zones {
+.draft-zones .trail {
     background-color: #EEEEEE;
-}
-
-.trail:hover {
-    background: #dddddd;
 }
 
 .trail.redundant {
@@ -263,6 +260,11 @@ a.list-header__status__control:visited {
     font-size: 13px;
     line-height: 16px;
     color: #000000;
+    cursor: move;
+}
+
+.trail .webTitle:hover {
+    color: #438835;
 }
 
 .collection .trail .webTitle {
@@ -292,7 +294,7 @@ a.list-header__status__control:visited {
     display: none;
 }
 
-.persisted .trail:hover .trail__meta a {
+.trail:hover .trail__meta a {
     display: inline-block;
     color: #666666;
     border-left: 1px #dddddd solid;
@@ -348,45 +350,46 @@ button {
     font-weight: bold;
 }
 
+.clipboard__title {
+    border-top: 1px solid #CCCCCC;
+}
+
 .clipboard__wrapper {
     position: relative;
     margin: 5px 0 27px 0;
 }
 
-#clipboard,
-#clipboard__overlay {
+.clipboard,
+.clipboard__overlay {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     min-height: 50px;
 }
 
-#clipboard__overlay {
+.clipboard__overlay {
     position: absolute;
     z-index: -1;
     border: 1px dashed #cccccc;
     width: 100%;
-    padding: 5px;
+    padding: 4px 5px;
     color: #999999;
     font-size: 12px;
     text-align: center;
 }
 
-#clipboard .trail {
-    background-color: #FFFFFF;
+.clipboard__flush {
+    float: right;
+    cursor: pointer;
+    margin: 12px 2px 0 0;
+    opacity: 0.5;
 }
 
-.needs-more {
-    border-left: 1px solid #666666;
-    border-right: 1px solid #666666;
-    background: #d61d00;
-    color: #ffffff;
-    padding: 0px 10px;
-    font-size: 12px;
-    text-transform: uppercase;
+.clipboard__flush:hover {
+    opacity: inherit;
 }
 
-.needs-more__num {
-    font-weight: bold;
+.clipboard__flush:active {
+    opacity: 0.6;
 }
 
 .collection-config {
@@ -468,6 +471,10 @@ iframe {
     border: 1px solid #999999;
     border-radius: 5px;
     box-shadow: 1px 1px 7px #666666;
+}
+
+.underDrag {
+    background: #a7d9a0 !important;
 }
 
 .search-form {

@@ -20,15 +20,18 @@
         <div class="frames" data-bind="template: {name: 'template_breakpoint', foreach: viewer.breakpoints}"></div>
     </div>
 
-    <div data-bind="visible: !showViewer(), if: !showViewer(), makeDropabble: true" style="display: none">
+    <div data-bind="visible: !showViewer(), if: !showViewer()" style="display: none">
         <div class="finder">
-            <i class="icon-trash list-tool" data-bind="click: actions.flushClipboard"></i>
-            <div class="title">Clipboard</div>
-            <div class="clipboard__wrapper">
-                <div id="clipboard__overlay" data-bind="visible: clipboard().length === 0">
+
+            <i class="icon-trash clipboard__flush" data-bind="click: actions.flushClipboard"></i>
+            <div class="title clipboard__title">Clipboard</div>
+            <div class="clipboard__wrapper" data-bind="with: clipboard">
+                <div class="clipboard__overlay" data-bind="visible: articles().length === 0">
                     Drag articles and drop them here. <br />Works from Guardian, Ophan, and Google.</div>
-                <div id="clipboard" class="connectedList" data-bind="
-                    template: {name: 'template_article', foreach: clipboard}"></div>
+                <div class="clipboard" class="droppable" data-bind="
+                    makeDropabble: true,
+                    css: {underDrag: underDrag},
+                    template: {name: 'template_article', foreach: articles}"></div>
             </div>
 
             <div data-bind="with: latestArticles">
@@ -68,7 +71,7 @@
 
                 <div data-bind="template: {name: 'template_search_controls'}"></div>
 
-                <div id="latest-articles" class="connectedList" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
+                <div id="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
 
                 <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length > 0"></div>
             </div>
@@ -178,8 +181,9 @@
         <!-- ko if: !_.isUndefined(name) -->
         <div class="zone-name" data-bind="text: name"></div>
         <!-- /ko -->
-        <div class="connectedList persisted" data-bind="
-            attr: { 'data-collection': $parent.id },
+        <div class="droppable" data-bind="
+            makeDropabble: true,
+            css: {underDrag: underDrag},
             template: {name: 'template_article', foreach: articles}"></div>
     </script>
 
@@ -195,7 +199,10 @@
     <script type="text/html" id="template_article">
         <div class="trail u-cf" data-bind="
             attr: {'data-url': meta.id},
-            css: {redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false}">
+            css: {
+                underDrag: state.underDrag,
+                redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false
+            }">
 
             <div class="trail_tweaks u-cf" data-bind="visible: state.editingConfig">
                 <div>
@@ -206,7 +213,7 @@
                 <button class="btn" value="Cancel" data-bind="click: $parent.forceRefresh">Cancel</button>
             </div>
 
-            <img data-bind="attr: {src: fields.thumbnail}" />
+            <img data-bind="attr: {src: fields.thumbnail}" draggable="false" />
 
             <div class="trail__remove" data-bind="click: $parent.dropItem">
                 <i class="icon-remove icon-white"></i>
@@ -226,7 +233,7 @@
                 attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
 
             <div class="trail__meta">
-                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
+                <span data-bind="html: humanDate"></span>
                 <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
             </div>
 
