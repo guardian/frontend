@@ -1,11 +1,19 @@
 package model
 
 import com.gu.openplatform.contentapi.model.Asset
+import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
 
 case class ImageAsset(private val delegate: Asset, val index: Int) {
 
   private lazy val fields: Map[String,String] = delegate.typeData
+  private lazy val aspectRatio: Fraction = {
+    val heightAsRatio: Int = height match {
+      case 0 => 1
+      case denom:Int => denom
+    }
+    new Fraction(width, heightAsRatio)
+  }
 
   lazy val mediaType: String = delegate.`type`
 
@@ -25,7 +33,8 @@ case class ImageAsset(private val delegate: Asset, val index: Int) {
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
 
-  lazy val aspectRatio: Double = width.toDouble / height.toDouble
+  lazy val aspectRatioWidth: Int = aspectRatio.getNumerator
+  lazy val aspectRatioHeight: Int = aspectRatio.getDenominator
 }
 
 case class VideoAsset(private val delegate: Asset) {
