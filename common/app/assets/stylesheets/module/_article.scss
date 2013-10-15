@@ -17,7 +17,7 @@
     }
 
     @include mq(tablet) {
-        min-height: auto;
+        min-height: 0;
         padding: $baseline*3 0;
         border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 
