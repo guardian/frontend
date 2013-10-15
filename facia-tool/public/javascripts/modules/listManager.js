@@ -1,4 +1,5 @@
 define([
+    'Config',
     'knockout',
     'models/common',
     'models/droppable',
@@ -7,9 +8,9 @@ define([
     'models/article',
     'models/latestArticles',
     'models/contentApi',
-    'models/ophanApi',
-    'models/viewer',
+    'models/ophanApi'
 ], function(
+    Config,
     ko,
     common,
     droppable,
@@ -18,36 +19,35 @@ define([
     Article,
     LatestArticles,
     contentApi,
-    ophanApi,
-    viewer
+    ophanApi
 ) {
     return function(selector) {
 
         var self = this,
             model = {
-                collections:    ko.observableArray(),
-                configs:        ko.observableArray(),
-                config:         ko.observable(),
+                collections: ko.observableArray(),
+                configs: ko.observableArray(),
+                config: ko.observable(),
 
                 latestArticles: new LatestArticles({
                     filterTypes: common.config.filterTypes
                 }),
 
-                viewer:         viewer,
-                showViewer:     ko.observable(),
-
                 clipboard: {
-                    articles:  ko.observableArray(),
+                    articles: ko.observableArray(),
                     underDrag: ko.observable(),
-                    callback:  updateLayout,
+                    callback: updateLayout,
+                    dropItem: function(item) {
+                        model.clipboard.articles.remove(item);
+                        updateLayout();
+                    },
                     keepCopy:  true
-                },
-
-                actions: {
-                    flushClipboard: flushClipboard,
-                    toggleViewer:   toggleViewer
                 }
             };
+
+        model.previewUrl = ko.computed(function() {
+            return common.config.previewUrls[Config.env] + '/responsive-viewer#/' + model.config();
+        })
 
         function fetchConfigsList() {
             return authedAjax({
@@ -106,18 +106,6 @@ define([
             startPoller = function() {}; // make idempotent
         }
 
-        function toggleViewer() {
-            model.showViewer(!model.showViewer());
-            if (model.showViewer()) {
-                model.viewer.render();
-            }
-        }
-
-        function flushClipboard() {
-            model.clipboard.articles.removeAll();
-            updateLayout();
-        };
-
         ko.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
                 var graphs = ko.utils.unwrapObservable(valueAccessor()),
@@ -167,13 +155,13 @@ define([
 
                 ko.applyBindings(model);
 
+                updateLayout();
+                window.onresize = updateLayout;
+
                 startPoller();
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
-
-                updateLayout();
-                window.onresize = updateLayout;
             });
         };
 

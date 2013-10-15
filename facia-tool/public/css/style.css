@@ -43,6 +43,7 @@ input[type=text] {
     padding: 0 15px 0 0;
     margin-top: 10px;
     color: #666666;
+    border-right: 1px solid #cccccc;
 }
 
 .finder__controls {
@@ -191,16 +192,16 @@ a.list-header__status__control:visited {
     margin: 0 2px 0 0;
 }
 
-#list-picker {
+.list-picker {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: right;
     width: 50%;
-    padding: 0 0 0 15px;
+    padding: 0 0 0 18px;
     height: 30px;
 }
 
-#list-picker select {
+.list-picker select {
     font-weight: bold;
     font-size: 16px;
     color: #000000;
@@ -216,6 +217,7 @@ a.list-header__status__control:visited {
 }
 
 .collections__inner {
+    padding: 0 10px 0 0;
     border-top: 1px solid #CCCCCC;
 }
 
@@ -315,9 +317,6 @@ a.list-header__status__control:visited {
 
 .trail .trail__remove {
     display: none;
-}
-
-.collection .trail .trail__remove {
     position: absolute;
     top: 4px;
     right: 13px;
@@ -330,11 +329,11 @@ a.list-header__status__control:visited {
     border-radius: 2px;
 }
 
-.collection .trail:hover .trail__remove {
+.droppable .trail:hover .trail__remove {
     display: block;
 }
 
-.collection .trail .trail__remove:hover {
+.droppable .trail .trail__remove:hover {
     background: #999999;
 }
 
@@ -361,6 +360,14 @@ button {
     font-weight: bold;
 }
 
+.clipboard,
+.clipboard__overlay {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 53px;
+    padding: 0 15px 0 0;
+}
+
 .clipboard__title {
     border-top: 1px solid #CCCCCC;
 }
@@ -368,13 +375,6 @@ button {
 .clipboard__wrapper {
     position: relative;
     margin: 5px 0 27px 0;
-}
-
-.clipboard,
-.clipboard__overlay {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    min-height: 53px;
 }
 
 .clipboard__overlay {
@@ -386,21 +386,6 @@ button {
     color: #999999;
     font-size: 12px;
     text-align: center;
-}
-
-.clipboard__flush {
-    float: right;
-    cursor: pointer;
-    margin: 8px 2px 0 0;
-    opacity: 0.5;
-}
-
-.clipboard__flush:hover {
-    opacity: inherit;
-}
-
-.clipboard__flush:active {
-    opacity: 0.6;
 }
 
 .collection-config {
@@ -490,31 +475,37 @@ iframe {
 
 .search-form {
     position: relative;
-    padding: 0 40px 0 0;
+    height: 35px;
 }
 
-.search-submit {
+.search-term {
     position: absolute;
-    right: 0;
-    top: 2px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 35%;
+    padding: 0 15px 0 0;
 }
 
-.search-term,
-.search-filter {
-    width: 39%;
-}
-
-.search-filters {
-    width: 18%;
+.search-term input {
+    width: 100%;
 }
 
 .autocompleter {
+    position: absolute;
+    left: 40%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     display: inline-block;
-    position: relative;
+    width: 50%;
+}
+
+.autocompleter select {
+    width: 40%;
 }
 
 .autocompleter input {
-    width: 100%;
+    width: 55%;
 }
 
 .autocompleter .suggestions {
@@ -529,7 +520,14 @@ iframe {
     background: #ffffff;
     color: #666666;
     border-left: 1px solid #cccccc;
-    padding: 0 7px 0 7px;
+    padding: 0 10px;
+}
+
+.search-submit {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 40px;
 }
 
 .linky {
@@ -540,4 +538,8 @@ iframe {
 .linky:hover {
     color: #005580;
     text-decoration: underline;
+}
+
+.preview-link {
+    float: right;
 }
