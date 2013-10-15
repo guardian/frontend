@@ -465,6 +465,9 @@ module.exports = function (grunt) {
             front: {
                 src: ['integration-tests/casper/tests/front/*.js']
             },
+            facia: {
+                src: ['integration-tests/casper/tests/facia/*.js']
+            },
             corenavigation: {
                 src: ['integration-tests/casper/tests/core-navigation/*.js']
             },
