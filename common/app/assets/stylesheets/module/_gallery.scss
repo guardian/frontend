@@ -56,13 +56,13 @@
 }
 
 .gallery-swipe .gallery-prev {
-    @extend .i !optional;
-    @extend .i-filter-arrow-left !optional;
+    @extend .i;
+    @extend .i-filter-arrow-left;
 }
 
 .gallery-swipe .gallery-next {
-    @extend .i !optional;
-    @extend .i-filter-arrow-right !optional;
+    @extend .i;
+    @extend .i-filter-arrow-right;
 }
 
 .gallery-swipe .gallery-prev ,
