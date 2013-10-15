@@ -80,7 +80,8 @@
     margin-bottom: 6px;
 }
 
-.text-input {
+.text-input,
+.textarea {
     border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
