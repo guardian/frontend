@@ -55,9 +55,10 @@ define([
                 test: function() {
                     var viewport = detect.getLayoutMode();
                     if(viewport === 'mobile'){
-                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name');
+                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name', 'Top sticky banner');
                         var s = new Sticky({
-                            cls: 'ad-slot--top-banner-ad'
+                            cls: 'ad-slot--top-banner-ad',
+                            id: 'Top'
                         });
                     }
                     inview(document);
