@@ -579,17 +579,10 @@ module.exports = function (grunt) {
     ]);
 
     // Test tasks
-    grunt.registerTask('test:integration', ['test:integration:allexceptadmin']); // ...until Facia fix the admin tests they broke.
-
-    grunt.registerTask('test:integration:all', ['env:casperjs', 'casperjs:all']);
-    grunt.registerTask('test:integration:allexceptadmin', ['env:casperjs', 'casperjs:allexceptadmin']);
-
-    grunt.registerTask('test:integration:admin', ['env:casperjs', 'casperjs:admin']);
-    grunt.registerTask('test:integration:discussion', ['env:casperjs', 'casperjs:discussion']);
-    grunt.registerTask('test:integration:article', ['env:casperjs', 'casperjs:article']);
-    grunt.registerTask('test:integration:front', ['env:casperjs', 'casperjs:front']);
-    grunt.registerTask('test:integration:corenavigation', ['env:casperjs', 'casperjs:corenavigation']);
-
+    grunt.registerTask('test:integration', function(app) {
+        app = app || 'allexceptadmin';
+        grunt.task.run(['env:casperjs', 'casperjs:' + app]);
+    });
     grunt.registerTask('test', ['compile', 'jshint:common', 'jasmine', 'test:integration']);
 
     // Analyse tasks
