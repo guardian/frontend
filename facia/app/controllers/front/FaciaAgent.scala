@@ -169,14 +169,12 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
       queryAgent.send { oldConfigList =>
         lazy val oldConfigMap = oldConfigList.map{_.map{case (config, collection) => (config.id, collection)}.toMap}
         Option {
-          newConfigList flatMap { collectionConfig =>
-            collectionConfig match {
-              case (config, Left(exception)) => {
-                log.warn("Updating ID %s failed".format(config.id))
-                oldConfigMap.flatMap{_.get(config.id).map(oldCollection => (config, oldCollection))}
-              }
-              case (config, Right(newCollection)) => Some((config, newCollection))
+          newConfigList flatMap {
+            case (config, Left(exception)) => {
+              log.warn("Updating ID %s failed".format(config.id))
+              oldConfigMap.flatMap{_.get(config.id).map(oldCollection => (config, oldCollection))}
             }
+            case (config, Right(newCollection)) => Some((config, newCollection))
           }
         }
       }
