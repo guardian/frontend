@@ -37,6 +37,14 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
   }
 
+  def unauth(trackingData: TrackingData, auth: Auth): Future[Response[Unit]] = {
+    val response = http.POST(apiUrl("unauth"), None,
+      clientAuth.parameters ++ trackingData.parameters ++ auth.parameters,
+      clientAuth.headers ++ trackingData.parameters ++ auth.headers
+    )
+    response map jsonBodyParser.extractUnit
+  }
+
   // USERS
 
   def user(userId: String, auth: Auth = Anonymous): Future[Response[User]] = {
@@ -66,8 +74,8 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def resetPassword( token : String, newPassword : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-    val response = http.POST(apiUrl(apiPath), Some(postBody), buildParams(), buildHeaders())
-    response map jsonBodyParser.extract[Unit]({_ => JNothing})
+    val response = http.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
+    response map jsonBodyParser.extractUnit
   }
 
   def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {

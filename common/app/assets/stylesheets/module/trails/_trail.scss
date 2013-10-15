@@ -17,6 +17,7 @@
 }
 
 .trail--gallery,
+.trail + .trail--gallery,
 .trail--gallery + .trail {
     border-top: none;
     padding-top: $baseline*3;
@@ -170,7 +171,6 @@
 .trail--gallery {
     background-color: #F9F9F6;
     padding-bottom: 3px;
-    border-bottom: 0;
 
     &:first-child {
         margin-top: -8px;

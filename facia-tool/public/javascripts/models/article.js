@@ -1,13 +1,14 @@
 define([
     'models/common',
-    'knockout',
-    'Reqwest',
-    'js!humanizedTimeSpan'
+    'models/humanizedTimeSpan',
+    'models/authedAjax',
+    'knockout'
 ],
 function (
     common,
-    ko,
-    reqwest
+    humanizedTimeSpan,
+    authedAjax,
+    ko
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
@@ -28,6 +29,7 @@ function (
             'webTitle']);
 
         this.state = common.util.asObservableProps([
+            'underDrag',
             'editingConfig',
             'shares',
             'comments',
@@ -36,7 +38,7 @@ function (
 
         // Computeds
         this.humanDate = ko.computed(function(){
-            return this.meta.webPublicationDate() ? humanized_time_span(this.meta.webPublicationDate()) : '&nbsp;';
+            return this.meta.webPublicationDate() ? humanizedTimeSpan(this.meta.webPublicationDate()) : '&nbsp;';
         }, this);
         this.totalHitsFormatted = ko.computed(function(){
             return common.util.numberWithCommas(this.state.totalHits());
@@ -61,11 +63,9 @@ function (
     Article.prototype.saveConfig = function(listId) {
         var self = this;
         // If a config property (a) is set and (b) differs from the meta value, include it in post.
-        reqwest({
+        authedAjax({
             url: common.config.apiBase + '/collection/' + listId + '/' + this.meta.id(),
-            method: 'post',
-            type: 'json',
-            contentType: 'application/json',
+            type: 'post',
             data: JSON.stringify({
                 config: _.chain(this.config)
                     .pairs()
@@ -73,28 +73,11 @@ function (
                     .map(function(p){ return [p[0], p[1]()]; })
                     .object()
                     .value()
-        })
-        }).always(function(){
+            })
+        }).then(function(){
             self.stopEditingConfig();
         });
     }
-
-    Article.prototype.addCommentCount = function() {
-        var url = 'http://discussion.guardianapis.com/discussion-api/discussion/p/' +
-            this.shortId() + '/comments/count',
-            self = this;
-        if(this.shortId()) {
-            reqwest({
-                url: '/json/proxy/' + url,
-                type: 'json',
-                success: function(resp) {
-                    self.comments(resp.numberOfComments);
-                },
-                complete: function() {
-                }
-            });
-        }
-    };
 
     return Article;
 });

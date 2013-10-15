@@ -238,7 +238,8 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
     }
 
     function getBreakpoint() {
-        var breakpoint = window.getComputedStyle(document.body, ':after').getPropertyValue('content');
+        // default to mobile
+        var breakpoint = window.getComputedStyle(document.body, ':after').getPropertyValue('content') || 'mobile';
         // firefox seems to wrap the value in quotes
         return breakpoint.replace(/^"([^"]*)"$/, "$1");
     }

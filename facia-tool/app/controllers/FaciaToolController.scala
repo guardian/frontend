@@ -20,28 +20,28 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     Redirect("/")
   }
 
-  def listCollections = ExpiringAuthentication { request =>
+  def listCollections = AjaxExpiringAuthentication { request =>
     Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
-  def listConfigs = ExpiringAuthentication { request =>
+  def listConfigs = AjaxExpiringAuthentication { request =>
     Ok(Json.toJson(S3FrontsApi.listConfigsIds))
   }
 
-  def readBlock(id: String) = ExpiringAuthentication { request =>
+  def readBlock(id: String) = AjaxExpiringAuthentication { request =>
     S3FrontsApi.getBlock(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def getConfig(id: String) = ExpiringAuthentication { request =>
+  def getConfig(id: String) = AjaxExpiringAuthentication { request =>
     S3FrontsApi.getConfig(id) map {json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
 
-  def updateBlock(id: String): Action[AnyContent] = ExpiringAuthentication { request =>
+  def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
@@ -73,13 +73,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = ExpiringAuthentication { request =>
+  def updateTrail(id: String, trailId: String) = AjaxExpiringAuthentication { request =>
     request.body.asJson.map{ json =>
     }
     Ok
   }
 
-  def deleteTrail(id: String) = ExpiringAuthentication { request =>
+  def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get

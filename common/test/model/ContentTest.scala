@@ -8,6 +8,7 @@ import com.gu.openplatform.contentapi.model.{ Asset, Element =>ApiElement, Conte
 
 class ContentTest extends FlatSpec with ShouldMatchers {
 
+
   "Trail" should "be populated properly" in {
 
     val imageElement = ApiElement(
@@ -101,6 +102,32 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     testContent.mainPicture.get.caption should be(Some("video poster"))
   }
 
+  it should "detect if content is commentable" in{
+    val noFields = article.copy(fields = None)
+    Content(noFields).isCommentable should be(false)
+
+    val notCommentable= article.copy(fields = Some(Map("commentable" -> "false")))
+    Content(notCommentable).isCommentable should be(false)
+
+    val commentable = article.copy(fields = Some(Map("commentable" -> "true")))
+    commentable.safeFields.get("commentable") should be(Some("true"))
+    Content(commentable).isCommentable should be(true)
+
+  }
+
+  it should "detect if content is closed for comments" in{
+    val noFields = article.copy(fields = None)
+    Content(noFields).isClosedForComments should be(true)
+
+    val future = new DateTime().plusDays(3).toISODateTimeNoMillisString
+    val openComments= article.copy(fields = Some(Map("commentCloseDate" -> future)))
+    Content(openComments).isClosedForComments should be(false)
+
+    val past = new DateTime().minus(3).toISODateTimeNoMillisString
+    val closedComments = article.copy(fields = Some(Map("commentCloseDate" -> past)))
+    Content(closedComments).isClosedForComments should be(true)
+  }
+
   private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
@@ -112,6 +139,9 @@ class ContentTest extends FlatSpec with ShouldMatchers {
                  List(tag(s"type/${contentType}")), Nil,Nil, Some(elements), None, Nil, None)
     )
   }
+
+  private val article: ApiContent = ApiContent("/content", None, None, DateTime.now, "webTitle", "webUrl", "apiUrl", None,
+    List(tag("type/article")), Nil,Nil, None, None, Nil, None)
 
   private def image(  id: String,
                       relation: String,
