@@ -402,6 +402,7 @@ define(["bean",
 
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
+            self.layout();
         };
 
         this.layout = function() {
