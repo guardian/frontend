@@ -11,7 +11,11 @@
                              src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
                              alt="@image.altText"
                              data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
-                             data-fullsrc="@image.path"
+                             @if(image.width >= 1024) {
+                                 data-fullsrc="@image.url.map(ImgSrc(_, GalleryLargeImage))"
+                             } else {
+                                 data-fullsrc="@image.path"
+                             }
                              data-width="@image.width"
                              data-height="@image.height"
                         />
