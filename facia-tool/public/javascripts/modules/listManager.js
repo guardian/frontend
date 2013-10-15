@@ -39,6 +39,7 @@ define([
                 clipboard: {
                     articles:  ko.observableArray(),
                     underDrag: ko.observable(),
+                    callback:  updateLayout,
                     keepCopy:  true
                 },
 
@@ -114,6 +115,7 @@ define([
 
         function flushClipboard() {
             model.clipboard.articles.removeAll();
+            updateLayout();
         };
 
         ko.bindingHandlers.sparkline = {
@@ -148,7 +150,7 @@ define([
             setConfig(config);
         });
 
-        function initScrollables() {
+        function updateLayout() {
             var height = $(window).height();
             $('.scrollable').each(function() {
                 $(this).height(Math.max(100, height - $(this).offset().top) - 1)
@@ -170,8 +172,8 @@ define([
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
 
-                initScrollables();
-                window.onresize = initScrollables;
+                updateLayout();
+                window.onresize = updateLayout;
             });
         };
 

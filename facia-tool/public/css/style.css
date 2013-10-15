@@ -3,6 +3,7 @@ html {
 }
 
 body {
+    overflow-y: hidden;
     margin: 0;
     padding: 10px  10px 0 10px;
     color: #000000;
@@ -373,7 +374,7 @@ button {
 .clipboard__overlay {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    min-height: 50px;
+    min-height: 53px;
 }
 
 .clipboard__overlay {
@@ -390,7 +391,7 @@ button {
 .clipboard__flush {
     float: right;
     cursor: pointer;
-    margin: 12px 2px 0 0;
+    margin: 8px 2px 0 0;
     opacity: 0.5;
 }
 
