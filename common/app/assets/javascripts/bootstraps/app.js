@@ -9,6 +9,7 @@ define('bootstraps/app', [
     'modules/fonts',
     'modules/debug',
     "modules/router",
+    'modules/discussion/api',
     "bootstraps/common",
     "bootstraps/front",
     "bootstraps/facia",
@@ -32,6 +33,7 @@ define('bootstraps/app', [
     Fonts,
     Debug,
     Router,
+    DiscussionApi,
     bootstrapCommon,
     Front,
     Facia,
@@ -51,6 +53,10 @@ define('bootstraps/app', [
 
         initialiseAjax: function(config) {
             ajax.init(config);
+        },
+
+        initialiseDiscussionApi: function(config) {
+            DiscussionApi.init(config);
         },
 
         attachGlobalErrorHandler: function (config) {
@@ -96,6 +102,7 @@ define('bootstraps/app', [
                 contextHtml = context.cloneNode(false).innerHTML;
 
             modules.initialiseAjax(config);
+            modules.initialiseDiscussionApi(config);
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);

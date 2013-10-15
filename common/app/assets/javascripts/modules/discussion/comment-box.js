@@ -1,13 +1,11 @@
 define([
-    'ajax',
     'bean',
+    'modules/discussion/api',
     'modules/component',
-    'modules/cookies'
 ], function(
-    ajax,
     bean,
-    Component,
-    cookies
+    DiscussionApi,
+    Component
 ) {
 
 /**
@@ -104,18 +102,10 @@ CommentBox.prototype.postComment = function(e) {
     }
 
     if (this.errors.length === 0) {
-        var url = this.options.apiRoot +'/discussion/'+ this.getDiscussionId() +'/comment';
-        comment.GU_U = cookies.get('GU_U');
-
         this.setFormState(true);
-        return ajax({
-            url: url,
-            type: 'json',
-            method: 'post',
-            crossOrigin: true,
-            data: comment,
-            headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
-        }).then(this.success.bind(this, comment), this.fail.bind(this));
+        DiscussionApi
+            .postComment(this.getDiscussionId(), comment)
+            .then(this.success.bind(this, comment), this.fail.bind(this));
     }
 };
 

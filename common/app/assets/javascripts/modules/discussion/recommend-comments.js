@@ -1,9 +1,14 @@
 define([
     'common',
     'bean',
-    'ajax',
-    'qwery'
-], function(common, bean, ajax, qwery) {
+    'qwery',
+    'modules/discussion/api',
+], function(
+    common,
+    bean,
+    qwery,
+    DiscussionApi
+) {
 
 /**
  * @type {Object}
@@ -18,22 +23,12 @@ RecommendComments.CONFIG = {
         active: 'd-comment__recommend--active',
         userRecommended: 'd-comment__recommend--user-recommended'
     },
-    endpoints: {
-        recommend: '/comment/:id/recommend'
-    },
     events: {
         prefix: 'discussion:comment:recommend:',
         init: 'initialised',
         success: 'success',
         fail: 'fail'
     }
-};
-
-/**
- * @type {Object.<string.*>}
- */
-RecommendComments.options = {
-    apiRoot: null
 };
 
 /**
@@ -89,15 +84,7 @@ RecommendComments.handleClick = function(e) {
  * @return {Reqwest}
  */
 RecommendComments.recommendComment = function(id) {
-    var url = RecommendComments.options.apiRoot + RecommendComments.CONFIG.endpoints.recommend.replace(':id', id);
-
-    return ajax({
-        url: url,
-        type: 'json',
-        method: 'post',
-        crossOrigin: true,
-        headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
-    });
+    return DiscussionApi.recommendComment(id);
 };
 
 /**

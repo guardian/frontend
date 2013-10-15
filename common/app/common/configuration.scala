@@ -164,8 +164,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiRoot = configuration.getStringProperty("discussion.apiRoot").getOrElse{
       throw new IllegalStateException("no value for key discussion.apiRoot")
     }
-    lazy val apiHeader = configuration.getStringProperty("discussion.apiHeader").getOrElse{
-      throw new IllegalStateException("no value for key discussion.apiHeader")
+    lazy val apiClientHeader = configuration.getStringProperty("discussion.apiClientHeader").getOrElse{
+      throw new IllegalStateException("no value for key discussion.apiClientHeader")
     }
   }
 
@@ -178,7 +178,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,
-      "discussionApiHeader" -> discussion.apiHeader
+      "discussionApiHeader" -> discussion.apiClientHeader
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
