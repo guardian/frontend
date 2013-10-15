@@ -2,6 +2,7 @@ import common.ExecutionContexts
 import conf.RequestMeasurementMetrics
 import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
+import model.CoreNavigationLifecycle
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
 // obviously this is only for devbuild and should never end up in one of our
@@ -28,5 +29,5 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
   }
 }
 
-object Global extends WithFilters(DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*) with MostPopularLifecycle
-  with FrontLifecycle with DevParametersLifecycle
+object Global extends WithFilters(DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*)
+  with CoreNavigationLifecycle with FrontLifecycle with DevParametersLifecycle
