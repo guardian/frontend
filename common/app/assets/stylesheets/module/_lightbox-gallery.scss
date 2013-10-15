@@ -287,6 +287,7 @@ i.gallery__watermark {
     height: 29px;
     display: block;
     padding: 0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
     .gallery__arrow-cta {
         margin: 0 auto;
