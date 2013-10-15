@@ -53,13 +53,20 @@ trait ParseConfig extends ExecutionContexts with Logging {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
-  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
+  def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
     // get the running order from the apiwith
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
     val response: Future[Response] = WS.url(collectionUrl).withRequestTimeout(2000).get()
     for {
-      collectionList <- parseResponse(response, edition, id)
+      collectionList <- {
+        val curatedList: Future[List[Content]] = parseResponse(response, edition, id)
+        //Potential to fail the chain if we are warmed up
+        if (isWarmedUp)
+          curatedList
+        else
+          curatedList fallbackTo { Future.successful(Nil) }
+      }
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
     } yield Collection(collectionList ++ contentApiList, displayName)
@@ -146,12 +153,16 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 }
 
-class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
-  private lazy val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](None)
+class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging with FaciaDefaults {
+  private val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](Option(List(configTuple(id))))
 
   def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
-    val futureConfig = getConfig(id) map {config =>
-      config map {c => c -> getCollection(c.id, c, edition)}
+    val futureConfig = getConfig(id) fallbackTo {
+      log.warn("Error getting config from S3: %s".format(id))
+      val result: List[Config] = queryAgent().map(_.map(_._1)).getOrElse(Nil)
+      Future.successful(result.toSeq)
+    } map {config =>
+      config map {c => c -> getCollection(c.id, c, edition, items.isDefined)}
     }
 
     futureConfig.map(_.toVector).flatMap{ configMapping =>
@@ -183,7 +194,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
 
   def close() = queryAgent.close()
 
-  def items = queryAgent()
+  def items = queryAgent().filter(_.exists(_._2.items.nonEmpty))
 }
 
 object Query {
