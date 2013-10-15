@@ -3,7 +3,8 @@ html {
 }
 
 body {
-    padding: 10px;
+    margin: 0;
+    padding: 10px  10px 0 10px;
     color: #000000;
     -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -23,6 +24,10 @@ input[type=text] {
     position: absolute;
 }
 
+.scrollable {
+    overflow-y: scroll;
+}
+
 .u-cf:before,
 .u-cf:after{content:"";display:table}
 .u-cf:after{clear:both}
@@ -34,8 +39,8 @@ input[type=text] {
     float: left;
     clear: left;
     width: 50%;
-    padding: 15px 15px 10px 0;
-    border-right: 1px solid #CCCCCC;
+    padding: 0 15px 0 0;
+    margin-top: 10px;
     color: #666666;
 }
 
@@ -46,17 +51,24 @@ input[type=text] {
 }
 
 .tool-title {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
-    margin: 0 5px 0 0;
+    padding: 5px 0 0 0;
     font-size: 18px;
     text-transform: uppercase;
+    height: 30px;
+}
+
+.tool-title span {
+    color: #999999;
+    text-transform: lowercase;
 }
 
 .title {
     font-size: 16px;
     font-weight: bold;
     color: #000000;
-    margin: 5px 0 0 0;
     padding: 2px 0 0 0;
 }
 
@@ -184,6 +196,7 @@ a.list-header__status__control:visited {
     float: right;
     width: 50%;
     padding: 0 0 0 15px;
+    height: 30px;
 }
 
 #list-picker select {
@@ -192,12 +205,17 @@ a.list-header__status__control:visited {
     color: #000000;
 }
 
-#collections {
+.collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding-left: 15px;
     width: 50%;
     float: right;
+    margin-top: 10px;
+}
+
+.collections__inner {
+    border-top: 1px solid #CCCCCC;
 }
 
 .collection {
@@ -207,11 +225,7 @@ a.list-header__status__control:visited {
     float: left;
     padding: 0 0 5px 0;
     position: relative;
-    border-top: 1px solid #CCCCCC;
-}
-
-.collection:first-child {
-    margin-top: 10px;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .trail {
@@ -304,8 +318,8 @@ a.list-header__status__control:visited {
 
 .collection .trail .trail__remove {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 4px;
+    right: 13px;
     background: #CCCCCC;
     width: 14px;
     height: 20px;

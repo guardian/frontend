@@ -2,12 +2,12 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="tool-title">Fronts Editor </div>
-    <div data-bind="visible: false">loading...</div>
+    <div class="tool-title">Fronts Editor <span data-bind="visible: false">loading...</span></div>
 
     <div id="list-picker" data-bind="visible: true" style="display: none">
-        <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select> &middot;
-        <button data-bind="visible: !showViewer(), click: actions.toggleViewer">View</button>
+        <span class="">Editing front:</span>
+        <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
+        <!--button data-bind="visible: !showViewer(), click: actions.toggleViewer">View</button-->
 
         <!-- ko if: showViewer -->
         <button data-bind="click: actions.toggleViewer">Edit</button> &middot;
@@ -71,13 +71,13 @@
 
                 <div data-bind="template: {name: 'template_search_controls'}"></div>
 
-                <div id="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
-
-                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length > 0"></div>
+                <div class="latest-articles scrollable" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
             </div>
         </div>
 
-        <div id="collections" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
+        <div class="collections">
+            <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
+        </div>
     </div>
 
     <!-- templates -->

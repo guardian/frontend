@@ -148,6 +148,13 @@ define([
             setConfig(config);
         });
 
+        function initScrollables() {
+            var height = $(window).height();
+            $('.scrollable').each(function() {
+                $(this).height(Math.max(100, height - $(this).offset().top) - 1)
+            });
+        };
+
         this.init = function() {
             droppable.init();
 
@@ -162,6 +169,9 @@ define([
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
+
+                initScrollables();
+                window.onresize = initScrollables;
             });
         };
 
