@@ -3,7 +3,7 @@
 
 /**
  *
- * Live Blog feature tests
+ * g ermfeature tests
  *
  **/
 

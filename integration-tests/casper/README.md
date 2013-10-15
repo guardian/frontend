@@ -9,5 +9,5 @@ To override default host (`http://localhost:9000/`)
 
 To run individual specs
 ``grunt casperjs:discussion``
-
+                                                        =
 If you add a new test file, add a corresponding grunt task for it under `casperjs` in `Gruntfile.js`
