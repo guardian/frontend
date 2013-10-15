@@ -9,26 +9,34 @@ import play.api.libs.ws.WS
 
 object OphanApi extends ExecutionContexts with Logging {
 
-  private def getAsString(path: String): Future[String] = {
-    val url = "%s/%s&api-key=%s" format(ophanApi.host, path, ophanApi.key)
-    log.info("Making request to Ophan API: " + url)
-    WS.url(url) withRequestTimeout ophanApi.timeout get() map (_.body)
+  private def getBody(path: String): Future[String] = {
+    (for {
+      host <- ophanApi.host
+      key <- ophanApi.key
+    } yield {
+      val url = s"$host/$path&api-key=$key"
+      log.info("Making request to Ophan API: " + url)
+      WS.url(url) withRequestTimeout ophanApi.timeout get() map (_.body)
+    }) getOrElse {
+      log.error("Ophan host or key not configured")
+      Future("{}")
+    }
   }
 
-  private def getAsJson(path: String): Future[JsValue] = {
-    getAsString(path) map (jsonString => Json.parse(jsonString))
+  private def getBodyAsJson(path: String): Future[JsValue] = {
+    for (body <- getBody(path)) yield Json.parse(body)
   }
 
   def getBreakdown(platform: String, hours: Int): Future[String] = {
-    getAsString("breakdown?platform=%s&hours=%d" format(platform, hours))
+    getBody(s"breakdown?platform=$platform&hours=$hours")
   }
 
   def getBreakdown(path: String): Future[String] = {
-    getAsString("breakdown?path=/%s" format path)
+    getBody(s"breakdown?path=/$path")
   }
 
   def getMostRead(referrer: String, hours: Int): Future[JsValue] = {
-    getAsJson("mostread?referrer=%s&hours=%d" format(referrer, hours))
+    getBodyAsJson(s"mostread?referrer=$referrer&hours=$hours")
   }
 
 }
