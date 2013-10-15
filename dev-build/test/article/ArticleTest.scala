@@ -2,7 +2,7 @@ package article
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import common.{Grunt, Server}
+import common.Grunt
 
 class ArticleTest extends FlatSpec with ShouldMatchers {
 
