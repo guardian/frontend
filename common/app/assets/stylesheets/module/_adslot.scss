@@ -28,7 +28,7 @@
     background-color: #fff;
 }
 
-.ad-slot-top-banner-ad {
+.ad-slot--top-banner-ad {
     background-color: #f0f0f0;
 
     @include mq(tablet) {
@@ -54,24 +54,24 @@
     }
 }
 
-.ad-slot-middle-banner-ad {
+.ad-slot--middle-banner-ad {
     background-color: #fff;
     min-height: 0;
     border-bottom: 1px solid $c-neutral6;
 }
 
-.ad-slot-middle-banner-ad .ad-container {
+.ad-slot--middle-banner-ad .ad-container {
     max-height: 50px;
     padding: 5px 0 10px 0;
 }
 
-.ad-slot-mpu-banner-ad {
+.ad-slot--mpu-banner-ad {
     width: 300px;
     height: 250px;
     overflow: hidden;
 }
 
-.ad-slot-bottom-sticky-banner-ad {
+.ad-slot--bottom-sticky-banner-ad {
     position: fixed;
     bottom: 0px;
 
