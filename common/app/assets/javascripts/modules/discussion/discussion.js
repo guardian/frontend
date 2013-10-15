@@ -9,8 +9,8 @@ define([
     'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
-    'modules/inview',
     'modules/detect',
+    'modules/inview',
     'modules/id'
 ], function (
     common,
@@ -23,8 +23,8 @@ define([
     RecommendComments,
     userPrefs,
     ClickStream,
-    Inview,
     Detect,
+    Inview,
     Id
     ) {
 
@@ -327,6 +327,18 @@ define([
                 }
             },
 
+            showDiscussion: function() {
+                bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
+                bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
+
+                if (!commentsHaveLoaded) {
+                    // Don't request again if we've already done it
+                    self.loadDiscussion();
+                }
+
+                common.mediator.emit('modules:discussion:show');
+            },
+
             buildShowMoreLabel: function(num) {
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
             },
@@ -338,16 +350,7 @@ define([
             bindEvents: function() {
                 // Setup events
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
-
-                    bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
-                    bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
-
-                    if (!commentsHaveLoaded) {
-                        // Don't request again if we've already done it
-                        self.loadDiscussion();
-                    }
-
-                    common.mediator.emit('modules:discussion:show');
+                    self.showDiscussion();
                     location.hash = 'comments';
                 });
 
@@ -368,13 +371,19 @@ define([
                     self.showMoreReplies(e.currentTarget);
                 });
 
-
                 // Go straight to comments if the link has #comments
-                if (location.hash === '#comments') {
-                    bean.fire(context.querySelector('.js-show-discussion'), 'click');
+                // Or if we're desktop
+                var mode = Detect.getLayoutMode();
+                if (location.hash === '#comments' || mode === 'desktop' || mode === 'extended') {
+                    self.showDiscussion();
+                } else {
+                    var discussionInview = new Inview('#comments', context, { top: -document.documentElement.clientHeight, left: 0 });
+                    bean.on(document.getElementById('comments'), 'inview', function() {
+                        self.showDiscussion();
+                    });
                 }
 
-            }
+            },
         };
 
     };

@@ -1,10 +1,11 @@
 define(["common", "bean"], function (common, bean) {
 
-    function Inview(selector, context) {
+    function Inview(selector, context, offset) {
         var self = this;
 
         this.selector = selector || '.js-inview';
         this.context  = context || document;
+        this.offset = offset || { top: 0, left: 0 };
         this.refresh();
         this.checkForVisibleNodes();
 
@@ -30,10 +31,13 @@ define(["common", "bean"], function (common, bean) {
     };
 
     Inview.prototype.isVisible = function(el) {
-        var rect = el.getBoundingClientRect();
+        var rect = el.getBoundingClientRect(),
+            h = window.innerHeight || document.body.clientHeight,
+            w = window.innerWidth || document.body.clientWidth;
+
         return el.style.display !== 'none' &&
-               rect.top < (window.innerHeight || document.body.clientHeight) &&
-               rect.left < (window.innerWidth || document.body.clientWidth);
+               rect.top < (h - this.offset.top) &&
+               rect.left < (w - this.offset.left);
     };
 
     return Inview;
