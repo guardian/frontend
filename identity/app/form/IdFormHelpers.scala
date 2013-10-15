@@ -23,8 +23,7 @@ object IdFormHelpers {
   }
 
   def Input(field: Field, args: (Symbol, Any)*): Input = {
-    val updatedArgs = updateArgs(args, 'autocomplete -> "off", 'autocapitalize -> "off", 'autocorrect -> "off")
-    new Input("text", field, updatedArgs:_*)
+    new Input("text", field, args:_*)
   }
 
   private def updateArgs(args: Seq[(Symbol, Any)], defaults: (Symbol, Any)*): Seq[(Symbol, Any)] = {
