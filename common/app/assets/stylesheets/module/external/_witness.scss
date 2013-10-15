@@ -110,7 +110,7 @@
 }
 
 .element-witness-text .element-witness--main {
-    @extend .svg-i-quote-marks !optional;
+    @extend .svg-i-quote-marks;
     background-position: $baseline*2 0 !important;
 }
 

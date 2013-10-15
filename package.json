@@ -7,7 +7,7 @@
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-requirejs": "~0.3.4",
     "grunt-webfontjson": "~0.0.2",
-    "grunt-contrib-sass": "~0.4.0",
+    "grunt-contrib-sass": "~0.3.0",
     "svgo": "~0.2.3",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-shell": "~0.2.1",

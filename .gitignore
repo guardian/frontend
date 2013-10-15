@@ -11,7 +11,6 @@ frontend-video.properties
 frontend-applications.properties
 
 *.min.css
-*.min.css.map
 *.csv
 *.iml
 *.box

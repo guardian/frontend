@@ -11,7 +11,7 @@
 .trail__expander-trigger:checked {
     + .trail__expander-wrapper {
         .trail__headline {
-            @extend .article__headline !optional;
+            @extend .article__headline;
         }
         .trail__expander-headline {
             float: none;
