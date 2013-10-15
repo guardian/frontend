@@ -31,7 +31,7 @@ define([], function () {
             } else if(status === "waiting") {
                 callbacks.push(callback);
             } else {
-                callback(callbackArguments);
+                callback.apply(null, callbackArguments);
             }
         }
 
