@@ -90,6 +90,20 @@ define(["bean",
 
             bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__item', function(e) {
                 if (swipeActive && !isSwiping) {
+                    // Check if the tap has happened within the caption control areas
+                    var currentItemEl = galleryNode.querySelector('.js-gallery-item-'+currentImage),
+                        captionAreaHit = false;
+
+                    common.$g('.gallerycaption, .captioncontrol', currentItemEl).each(function(el) {
+                        if (bonzo.isAncestor(el, e.target)) {
+                            captionAreaHit = true;
+                        }
+                    });
+
+                    // If the tap is within the caption area, then do nothing
+                    if (captionAreaHit) { return; }
+
+
                     // If user taps in the left 25% of the screen, go backwards, otherwise go forwards
                     var tappedPositionPerc = (e.pageX/galleryNode.offsetWidth * 100);
                     if (tappedPositionPerc < 25) {
@@ -394,6 +408,12 @@ define(["bean",
             var orientation = detect.getOrientation(),
                 contentHeight = window.innerHeight - overlay.headerNode.offsetHeight;
 
+            // set the height of the gallery to the height of the current image
+            // preventing a large scrollable space to appear underneath the image
+            if (swipeActive) {
+                galleryNode.style.height = galleryNode.querySelector('.js-gallery-item-'+currentImage).offsetHeight + 'px';
+            }
+
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
             $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
 
@@ -434,13 +454,7 @@ define(["bean",
                         currentImage = index + 1;
                         self.imageIndexNode.innerHTML = currentImage;
 
-                        // set the height of the gallery to the height of the current image
-                        // preventing a large scrollable space to appear underneath the image
-                        if (swipeActive) {
-                            galleryNode.style.height = galleryNode.querySelector('.js-gallery-item-'+currentImage).offsetHeight + 'px';
-                        }
-
-                        self.alignNavArrows();
+                        self.layout();
 
                         self.preloadImages();
 
