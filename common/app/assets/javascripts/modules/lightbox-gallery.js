@@ -88,11 +88,11 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
 
-            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function(e) {
+            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__item', function(e) {
                 if (swipeActive && !isSwiping) {
-                    // If user taps in the left 15% of the screen, go backwards, otherwise go forwards
+                    // If user taps in the left 25% of the screen, go backwards, otherwise go forwards
                     var tappedPositionPerc = (e.pageX/galleryNode.offsetWidth * 100);
-                    if (tappedPositionPerc < 15) {
+                    if (tappedPositionPerc < 25) {
                         self.swipe.prev();
                     } else {
                         self.swipe.next();
@@ -100,18 +100,18 @@ define(["bean",
                 }
             });
 
-            bean.on(overlay.bodyNode,    'touchmove', '.gallery__img', function() {
+            bean.on(overlay.bodyNode, 'touchmove', '.gallery__item', function() {
                 isSwiping = true;
             });
 
-            bean.on(overlay.bodyNode,    'touchend', '.gallery__img', function() {
+            bean.on(overlay.bodyNode, 'touchend', '.gallery__item', function() {
                 // This prevents a click event firing at the same time as swipe is finishing
                 setTimeout(function() {
                     isSwiping = false;
                 }, 250);
             });
 
-            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery__item', function(el) {
+            bean.on(overlay.bodyNode, 'click', '.gallery--grid-mode .gallery__item', function(el) {
                 var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
                 self.goTo(index);
             });
@@ -341,6 +341,7 @@ define(["bean",
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
                 el.src = el.getAttribute('data-src');
+                el.removeAttribute('style');
             });
 
             // Update CTAs
