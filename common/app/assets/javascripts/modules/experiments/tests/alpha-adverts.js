@@ -1,5 +1,11 @@
 /*global guardian */
-define(['qwery', 'bonzo', 'modules/analytics/adverts'], function (qwery, bonzo, inview) {
+define([
+    'qwery',
+    'bonzo',
+    'modules/detect',
+    'modules/analytics/adverts',
+    'modules/adverts/sticky'
+], function (qwery, bonzo, detect, inview, Sticky) {
 
     var AlphaAdverts = function () {
 
@@ -47,7 +53,14 @@ define(['qwery', 'bonzo', 'modules/analytics/adverts'], function (qwery, bonzo, 
             {
                 id: 'Adhesive', //Article B
                 test: function() {
-
+                    var viewport = detect.getLayoutMode();
+                    if(viewport === 'mobile'){
+                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name');
+                        var s = new Sticky({
+                            cls: 'ad-slot--top-banner-ad'
+                        });
+                    }
+                    inview(document);
                     return true;
                 }
             },
