@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+
+################################################################################
+#
+# Build the static and executable jar packages for the $1 project.
+#
+################################################################################
+
+./grunt-tc clean compile jshint:common jasmine
+./sbt-tc "project dev-build" "test-only $1.*"
