@@ -276,8 +276,7 @@
         &.item--image-upgraded {
             min-height: gs-height(4);
         }
-        .item__image-container,
-        &.item--no-image .item__standfirst {
+        .item__image-container {
             display: block;
         }
     }
