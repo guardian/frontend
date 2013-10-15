@@ -26,7 +26,6 @@ i.gallery__watermark {
 }
 
 .gallery__item {
-    cursor: pointer;
     overflow: hidden;
 }
 
@@ -58,6 +57,7 @@ i.gallery__watermark {
         display: inline-block;
         vertical-align: top;
         margin: $baseline * 2;
+        cursor: pointer;
 
         @include mq(tablet) {
             margin: 6px 5px;
