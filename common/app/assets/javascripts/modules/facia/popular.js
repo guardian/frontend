@@ -41,7 +41,7 @@ define([
             );
         };
 
-    var popular =  {
+    return  {
 
         render:  function (config) {
             var hasSection = config.page && config.page.section && config.page.section !== 'global';
@@ -51,7 +51,7 @@ define([
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    if (resp.fullTrails.length === 0) {
+                    if (!resp || !resp.fullTrails || resp.fullTrails.length === 0) {
                         return;
                     }
                     var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>'));
@@ -94,7 +94,5 @@ define([
         }
 
     };
-
-    return popular;
 
 });
