@@ -90,17 +90,17 @@
         position: relative;
         text-align: center;
         text-indent: 24px;
-        width: 220px;
+        width: 218px;
     }
 
     .social-signin__action--fb {
         background-color: #3b5998;
-        margin-right: $gutter/2;
+        margin-right: $gs-gutter/2;
     }
 
     .social-signin__action--gplus {
         background-color: #dd4b39;
-        margin-left: $gutter/2;
+        margin-left: $gs-gutter/2;
     }
 
     .social-signin__icon {

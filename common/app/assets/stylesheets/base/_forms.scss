@@ -136,7 +136,7 @@
     font-size: 13px;
     font-size: 1.3rem;
     margin-bottom: $baseline;
-    padding-left: 20px;
+    padding-left: $gs-gutter;
 }
 
 .check-label--helper {
@@ -146,7 +146,7 @@
 [type=checkbox] {
     float: left;
     height: 13px;
-    margin-left: -20px;
+    margin-left: -$gs-gutter;
     margin-top: 3px;
     width: 13px;
 }
