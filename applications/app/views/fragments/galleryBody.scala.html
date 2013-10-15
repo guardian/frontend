@@ -11,7 +11,6 @@
         <div class="article-v2__inner">
             <header class="article__head">
                 @fragments.headline(gallery.headline)
-                @fragments.standfirst(gallery)
                 @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
             </header>
         </div>
@@ -61,6 +60,8 @@
                         }
                     </div>
                 </div>
+
+                @fragments.standfirst(gallery)
 
                 @if(gallery.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
                     <div class="article__keywords" data-link-name="gallery keywords">
