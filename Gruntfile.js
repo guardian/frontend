@@ -560,7 +560,6 @@ module.exports = function (grunt) {
         'shell:webfontjson',
         'webfontjson',
         'shell:icons',
-        'imagemin:compile',
         'copy:compile',
         'hash'
     ]);

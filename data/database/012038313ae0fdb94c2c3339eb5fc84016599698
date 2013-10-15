@@ -1,0 +1,2836 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":10,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":1,
+    "orderBy":"newest",
+    "results":[{
+      "id":"environment/ng-interactive/2013/oct/14/greenpeace",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-10-14T14:25:00Z",
+      "webTitle":"Who are the Greenpeace Arctic 30? - interactive",
+      "webUrl":"http://www.theguardian.com/environment/ng-interactive/2013/oct/14/greenpeace",
+      "apiUrl":"http://content.guardianapis.com/environment/ng-interactive/2013/oct/14/greenpeace",
+      "fields":{
+        "trailText":"<p>Who are the 30 men and women of the Greenpeace Arctic Sunrise and what inspired them?</p>",
+        "headline":"Who are the Greenpeace Arctic 30? - interactive",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jfbb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/10/14/1381763910630/Greenpeace-Arctic-30-004.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/arctic-30-protesters",
+        "type":"keyword",
+        "webTitle":"Arctic 30 protesters",
+        "webUrl":"http://www.theguardian.com/environment/arctic-30-protesters",
+        "apiUrl":"http://content.guardianapis.com/environment/arctic-30-protesters",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/greenpeace",
+        "type":"keyword",
+        "webTitle":"Greenpeace",
+        "webUrl":"http://www.theguardian.com/environment/greenpeace",
+        "apiUrl":"http://content.guardianapis.com/environment/greenpeace",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/activism",
+        "type":"keyword",
+        "webTitle":"Activism",
+        "webUrl":"http://www.theguardian.com/environment/activism",
+        "apiUrl":"http://content.guardianapis.com/environment/activism",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/arctic",
+        "type":"keyword",
+        "webTitle":"Arctic",
+        "webUrl":"http://www.theguardian.com/world/arctic",
+        "apiUrl":"http://content.guardianapis.com/world/arctic",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.theguardian.com/world/russia",
+        "apiUrl":"http://content.guardianapis.com/world/russia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.theguardian.com/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/tracymcveigh",
+        "type":"contributor",
+        "webTitle":"Tracy McVeigh",
+        "webUrl":"http://www.theguardian.com/profile/tracymcveigh",
+        "apiUrl":"http://content.guardianapis.com/profile/tracymcveigh",
+        "bio":"<p>Tracy McVeigh is a chief reporter for the <a href=\"http://observer.guardian.co.uk/\">Observer</a></p>",
+        "rcsId":"GNL491043",
+        "r2ContributorId":"15299",
+        "references":[]
+      },{
+        "id":"profile/erichilaire",
+        "type":"contributor",
+        "webTitle":"Eric Hilaire",
+        "webUrl":"http://www.theguardian.com/profile/erichilaire",
+        "apiUrl":"http://content.guardianapis.com/profile/erichilaire",
+        "bio":"<p>Eric Hilaire is the assistant picture editor for <a href=\"http://www.guardian.co.uk/environment\">environment</a> and <a href=\"http://www.guardian.co.uk/science\">science</a></p>",
+        "r2ContributorId":"23749",
+        "references":[]
+      },{
+        "id":"environment/fossil-fuels",
+        "type":"keyword",
+        "webTitle":"Fossil fuels",
+        "webUrl":"http://www.theguardian.com/environment/fossil-fuels",
+        "apiUrl":"http://content.guardianapis.com/environment/fossil-fuels",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/jessicaaldred",
+        "type":"contributor",
+        "webTitle":"Jessica Aldred",
+        "webUrl":"http://www.theguardian.com/profile/jessicaaldred",
+        "apiUrl":"http://content.guardianapis.com/profile/jessicaaldred",
+        "bio":"<p>Jessica Aldred is the <a href=\"http://www.guardian.co.uk/environment\">environment</a> production editor and writes on wildlife and conservation </p>",
+        "rcsId":"GNL000906",
+        "r2ContributorId":"15817",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/12/14/jessica_aldred_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419933533",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/10/14/1381763910630/Greenpeace-Arctic-30-004.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "altText":"Greenpeace Arctic 30",
+            "height":"84",
+            "credit":"Greenpeace",
+            "caption":"Some of the 30 Greenpeace activist arrested by Russia security in the Arctic: Photograph: Greenpeace",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"artanddesign/video/2013/oct/14/banksy-central-park-new-york-video",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-14T11:22:00Z",
+      "webTitle":"Banksy sells work for $60 in Central Park, New York – video",
+      "webUrl":"http://www.theguardian.com/artanddesign/video/2013/oct/14/banksy-central-park-new-york-video",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/video/2013/oct/14/banksy-central-park-new-york-video",
+      "fields":{
+        "trailText":"<p>British street artist Banksy sets up a pop-up stall in New York's Central Park, selling original signed canvases of his work</p>",
+        "headline":"Banksy sells work for $60 in Central Park, New York – video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jgjk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748710215/Banksy-sells-original-wor-010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"artanddesign/banksy",
+        "type":"keyword",
+        "webTitle":"Banksy",
+        "webUrl":"http://www.theguardian.com/artanddesign/banksy",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/banksy",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-419901931",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748694222/Banksy-sells-original-wor-001.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"230",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748696329/Banksy-sells-original-wor-002.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"360",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748698064/Banksy-sells-original-wor-003.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"90",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748699720/Banksy-sells-original-wor-004.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"225",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748701382/Banksy-sells-original-wor-005.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"360",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748704757/Banksy-sells-original-wor-007.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"54",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748706375/Banksy-sells-original-wor-008.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"340",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748708352/Banksy-sells-original-wor-009.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"130",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748710215/Banksy-sells-original-wor-010.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"84",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748712053/Banksy-sells-original-wor-011.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"132",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748713655/Banksy-sells-original-wor-012.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"168",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748715354/Banksy-sells-original-wor-013.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"180",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748717028/Banksy-sells-original-wor-014.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"228",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748718591/Banksy-sells-original-wor-015.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"276",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748720229/Banksy-sells-original-wor-016.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"372",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014banksysells_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014banksysells-16x9.mp4",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014banksysells_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/14/131014banksysells/131014banksysells.m3u8",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        }]
+      },{
+        "id":"gu-image-419903592",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748710215/Banksy-sells-original-wor-010.jpg",
+          "typeData":{
+            "source":"Banksy NY",
+            "photographer":"Banksy NY",
+            "altText":"Banksy sells original work for just $60 in Central Park – video",
+            "height":"84",
+            "credit":"Banksy NY/Banksy NY",
+            "caption":"British artist Banksy sets up a pop up stall in Central Park, New York, selling original signed canvases of his work\r Photograph: Banksy NY",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/14/breastfeeding-pictures-poses-facebook-bans",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-14T09:32:07Z",
+      "webTitle":"Breastfeeding won't seem normal until we see more pictures of it | Susan Bright",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/14/breastfeeding-pictures-poses-facebook-bans",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/14/breastfeeding-pictures-poses-facebook-bans",
+      "fields":{
+        "trailText":"<p><strong>Susan Bright: </strong>From cliched poses to Facebook bans, society has a problem with realistic images of breastfeeding and postpartum bodies</p>",
+        "headline":"Breastfeeding won't seem normal until we see more pictures of it",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jgg6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742520608/Breastfeeding-003.jpg",
+        "wordcount":"774",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"lifeandstyle/breastfeeding",
+        "type":"keyword",
+        "webTitle":"Breastfeeding",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/breastfeeding",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/breastfeeding",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"lifeandstyle/parents-and-parenting",
+        "type":"keyword",
+        "webTitle":"Parents and parenting",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/parents-and-parenting",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/parents-and-parenting",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/susan-bright",
+        "type":"contributor",
+        "webTitle":"Susan Bright",
+        "webUrl":"http://www.theguardian.com/profile/susan-bright",
+        "apiUrl":"http://content.guardianapis.com/profile/susan-bright",
+        "bio":"<p>Susan Bright is the curator of Home Truths: Photography &amp; Motherhood which is on show at <a href=\"http://www.thephotographersgallery.org.uk\">The Photographers' Gallery</a> and <a href=\"www.foundlingmuseum.org.uk\">The Foundling Museum</a> in London until 5 January 2014. A book of the exhibition is available from <a href=\"www.artbookspublishing.co.uk\">Art/Books</a></p>",
+        "r2ContributorId":"59079",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381500522300/Susan-Bright.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/childbirth",
+        "type":"keyword",
+        "webTitle":"Childbirth",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/childbirth",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/childbirth",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/duchess-of-cambridge",
+        "type":"keyword",
+        "webTitle":"The Duchess of Cambridge",
+        "webUrl":"http://www.theguardian.com/uk/duchess-of-cambridge",
+        "apiUrl":"http://content.guardianapis.com/uk/duchess-of-cambridge",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"media/news-photography",
+        "type":"keyword",
+        "webTitle":"News photography",
+        "webUrl":"http://www.theguardian.com/media/news-photography",
+        "apiUrl":"http://content.guardianapis.com/media/news-photography",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419903906",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742514923/Breastfeeding-001.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"54",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742519136/Breastfeeding-002.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"130",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742520608/Breastfeeding-003.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"84",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742521944/Breastfeeding-004.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"132",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742523216/Breastfeeding-005.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"168",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742524488/Breastfeeding-006.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"180",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742525710/Breastfeeding-007.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"228",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742526969/Breastfeeding-008.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"276",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742526969/Breastfeeding-008.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"276",
+            "credit":"Getty",
+            "caption":"Breastfeeding is not represented in popular culture, yet women are shamed if they do not do it, says Susan Bright. Photograph: Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419903907",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742520608/Breastfeeding-003.jpg",
+          "typeData":{
+            "source":"Getty",
+            "altText":"Breastfeeding",
+            "height":"84",
+            "credit":"Getty",
+            "caption":"Breast feeding Photograph: Getty",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/14/feminism-capitalist-handmaiden-neoliberal",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-14T05:30:00Z",
+      "webTitle":"How feminism became capitalism's handmaiden - and how to reclaim it | Nancy Fraser",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/14/feminism-capitalist-handmaiden-neoliberal",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/14/feminism-capitalist-handmaiden-neoliberal",
+      "fields":{
+        "trailText":"<strong>Nancy Fraser:</strong> A movement that started out as a critique of capitalist exploitation ended up contributing key ideas to its latest neoliberal phase",
+        "headline":"How feminism became capitalism's handmaiden - and how to reclaim it",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jg84",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673278437/Check-out-operator-in-a-T-003.jpg",
+        "wordcount":"1040",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/feminism",
+        "type":"keyword",
+        "webTitle":"Feminism",
+        "webUrl":"http://www.theguardian.com/world/feminism",
+        "apiUrl":"http://content.guardianapis.com/world/feminism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/nancy-fraser",
+        "type":"contributor",
+        "webTitle":"Nancy Fraser",
+        "webUrl":"http://www.theguardian.com/profile/nancy-fraser",
+        "apiUrl":"http://content.guardianapis.com/profile/nancy-fraser",
+        "bio":"<p>Nancy Fraser is professor of philosophy and politics at the New School for Social Research in New York. An Einstein fellow at the John F Kennedy Institute of the Free University of Berlin, she also holds the chair in global justice at the Collège d'Etudes Mondiales, Paris. In winter 2014, she will be visiting professor of gender studies at Cambridge University. Her most recent book is Fortunes of Feminism: From State-Managed Capitalism to Neoliberal Crisis (Verso, 2013).</p>",
+        "r2ContributorId":"58971",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381736836878/_Nancy-Fraser.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419833822",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673274254/Check-out-operator-in-a-T-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"54",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673276993/Check-out-operator-in-a-T-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"130",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673278437/Check-out-operator-in-a-T-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"84",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673279748/Check-out-operator-in-a-T-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"132",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673281210/Check-out-operator-in-a-T-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"168",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673284127/Check-out-operator-in-a-T-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"180",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673285734/Check-out-operator-in-a-T-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"228",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673287134/Check-out-operator-in-a-T-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"276",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673287134/Check-out-operator-in-a-T-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"276",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419833823",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/13/1381673278437/Check-out-operator-in-a-T-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Robert Convery",
+            "altText":"Check out operator in a Tesco supermarket",
+            "height":"84",
+            "credit":"Robert Convery/Alamy",
+            "caption":"‘We should break the spurious link between our critique of the family wage and flexible capitalism by militating for a form of life that de-centres waged work and valorises unwaged activities, including – but not only – carework.’ Photograph: Robert Convery/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"artanddesign/2013/oct/14/banksy-sells-original-paintings-new-york-booth",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-14T01:05:13Z",
+      "webTitle":"Banksy sells original works worth a fortune for £38 each in New York booth",
+      "webUrl":"http://www.theguardian.com/artanddesign/2013/oct/14/banksy-sells-original-paintings-new-york-booth",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/oct/14/banksy-sells-original-paintings-new-york-booth",
+      "fields":{
+        "trailText":"<p>Street artist sets up pop-up booth in Central Park and makes just $420 (£263) for paintings worth hundreds of thousands</p>",
+        "headline":"Banksy sells original works worth a fortune for £38 each in New York booth",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jgdx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381712673211/Banksy-rat-stencil--003.jpg",
+        "wordcount":"216",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"artanddesign/banksy",
+        "type":"keyword",
+        "webTitle":"Banksy",
+        "webUrl":"http://www.theguardian.com/artanddesign/banksy",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/banksy",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/sophie-robehmed",
+        "type":"contributor",
+        "webTitle":"Sophie Robehmed",
+        "webUrl":"http://www.theguardian.com/profile/sophie-robehmed",
+        "apiUrl":"http://content.guardianapis.com/profile/sophie-robehmed",
+        "bio":"<p>Sophie Robehmed is a British-Lebanese print, online and broadcast journalist. You can get in touch with her at <a href=\"http://www.sophierobehmed.co.uk\">www.sophierobehmed.co.uk</a> or follow her on Twitter <a href=\"https://twitter.com/sophierobehmed\">@sophierobehmed</a></p>",
+        "r2ContributorId":"38604",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381697365383/Sophie-Robehmed-contribut-003.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419904626",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381712673211/Banksy-rat-stencil--003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"ArtAngel ",
+            "altText":"Banksy rat stencil ",
+            "height":"84",
+            "credit":"ArtAngel /Alamy",
+            "caption":"This is the latest publicity stunt from Banksy, who likes nothing more than stirring up the art world.  Photograph: ArtAngel /Alamy",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-419901931",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014banksysells_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014banksysells-16x9.mp4",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014banksysells_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/14/131014banksysells/131014banksysells.m3u8",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/14/london-estate-agents-discriminate-black-people-bbc-investigation",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-13T23:31:00Z",
+      "webTitle":"Estate agents discriminate against black people, finds BBC investigation",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/14/london-estate-agents-discriminate-black-people-bbc-investigation",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/14/london-estate-agents-discriminate-black-people-bbc-investigation",
+      "fields":{
+        "trailText":"<p>Posing as a landlord, reporter uncovers London agents willing to meet request flat should not be let to African-Caribbean renters</p>",
+        "headline":"Estate agents discriminate against black people, finds BBC investigation",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jg8g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675821398/Estate-agents-discriminat-006.jpg",
+        "wordcount":"797",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/renting",
+        "type":"keyword",
+        "webTitle":"Renting property",
+        "webUrl":"http://www.theguardian.com/money/renting",
+        "apiUrl":"http://content.guardianapis.com/money/renting",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"world/race",
+        "type":"keyword",
+        "webTitle":"Race issues",
+        "webUrl":"http://www.theguardian.com/world/race",
+        "apiUrl":"http://content.guardianapis.com/world/race",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/bbc",
+        "type":"keyword",
+        "webTitle":"BBC",
+        "webUrl":"http://www.theguardian.com/media/bbc",
+        "apiUrl":"http://content.guardianapis.com/media/bbc",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alexandratopping",
+        "type":"contributor",
+        "webTitle":"Alexandra Topping",
+        "webUrl":"http://www.theguardian.com/profile/alexandratopping",
+        "apiUrl":"http://content.guardianapis.com/profile/alexandratopping",
+        "bio":"<p>Alexandra Topping is a news reporter for the Guardian</p>",
+        "r2ContributorId":"19530",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/10/06/alexandra_topping_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419880599",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675811691/Estate-agents-discriminat-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"54",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675814010/Estate-agents-discriminat-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"340",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675815739/Estate-agents-discriminat-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"130",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675817362/Estate-agents-discriminat-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"720",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675819295/Estate-agents-discriminat-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"1536",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675821398/Estate-agents-discriminat-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"84",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675822985/Estate-agents-discriminat-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"132",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675824515/Estate-agents-discriminat-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"168",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675826114/Estate-agents-discriminat-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"180",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675827795/Estate-agents-discriminat-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"228",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675829450/Estate-agents-discriminat-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"276",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675831019/Estate-agents-discriminat-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"372",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675832741/Estate-agents-discriminat-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"1116",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675835055/Estate-agents-discriminat-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"1536",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675829450/Estate-agents-discriminat-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"276",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419880600",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675821398/Estate-agents-discriminat-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"84",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents said although they could not openly bar black people they could prevent them taking up the flat by pretending it had already be let, or by falsely promising to call back, according to the Inside Out programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/13/homeless-nyc-people-you-meet",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-13T11:00:00Z",
+      "webTitle":"What you learn about humanity from living on the streets | Mary, homeless in New York",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/13/homeless-nyc-people-you-meet",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/13/homeless-nyc-people-you-meet",
+      "fields":{
+        "trailText":"<p><strong>Mary, homeless in New York:</strong> Since I became homeless, people have stolen my belongings and assumed I'm a prostitute. A few have been incredibly kind</p>",
+        "headline":"What you learn about humanity from living on the streets",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jdmd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/1/18/1295367485304/A-homeless-man-003.jpg",
+        "wordcount":"1314",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/the-other-1-percent",
+        "type":"series",
+        "webTitle":"The other 1%",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/the-other-1-percent",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/the-other-1-percent",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/homelessness",
+        "type":"keyword",
+        "webTitle":"Homelessness",
+        "webUrl":"http://www.theguardian.com/society/homelessness",
+        "apiUrl":"http://content.guardianapis.com/society/homelessness",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/housing",
+        "type":"keyword",
+        "webTitle":"Housing",
+        "webUrl":"http://www.theguardian.com/society/housing",
+        "apiUrl":"http://content.guardianapis.com/society/housing",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/subprimecrisis",
+        "type":"keyword",
+        "webTitle":"US housing and sub-prime crisis",
+        "webUrl":"http://www.theguardian.com/business/subprimecrisis",
+        "apiUrl":"http://content.guardianapis.com/business/subprimecrisis",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/mary-homeless-new-york",
+        "type":"contributor",
+        "webTitle":"Mary",
+        "webUrl":"http://www.theguardian.com/profile/mary-homeless-new-york",
+        "apiUrl":"http://content.guardianapis.com/profile/mary-homeless-new-york",
+        "bio":"<p>Mary has a college degree and has done graduate school work. She became homeless in New York City after she lost her job and was evicted from her rent-controlled apartment in the early 2000s.</p>",
+        "r2ContributorId":"59090",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366815232702/Anonymous-woman-on-grey.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419818220",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381337198461/Homeless_NYC_460.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Homeless NYC",
+            "height":"276",
+            "credit":"Guardian",
+            "caption":"The author reads a morning newspaper on a tree-lined street in Manhattan. All of her belongings are in bags beside her. Her image has been intentionally blurred at her request. Photograph: Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419818221",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/1/18/1295367485304/A-homeless-man-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"A homeless man",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Homelessness is on the rise. Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"music/2013/oct/11/david-byrne-internet-content-world",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-10-11T14:53:49Z",
+      "webTitle":"David Byrne: 'The internet will suck all creative content out of the world'",
+      "webUrl":"http://www.theguardian.com/music/2013/oct/11/david-byrne-internet-content-world",
+      "apiUrl":"http://content.guardianapis.com/music/2013/oct/11/david-byrne-internet-content-world",
+      "fields":{
+        "trailText":"<p>The boom in digital streaming may generate profits for record labels and free content for consumers, but it spells disaster for today's artists, says<strong> David Byrne</strong></p>",
+        "headline":"David Byrne: 'The internet will suck all creative content out of the world'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jdag",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321383753/David-Byrne-005.jpg",
+        "wordcount":"2095",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"music/david-byrne",
+        "type":"keyword",
+        "webTitle":"David Byrne",
+        "webUrl":"http://www.theguardian.com/music/david-byrne",
+        "apiUrl":"http://content.guardianapis.com/music/david-byrne",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"technology/digital-music-and-audio",
+        "type":"keyword",
+        "webTitle":"Digital music and audio",
+        "webUrl":"http://www.theguardian.com/technology/digital-music-and-audio",
+        "apiUrl":"http://content.guardianapis.com/technology/digital-music-and-audio",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/spotify",
+        "type":"keyword",
+        "webTitle":"Spotify",
+        "webUrl":"http://www.theguardian.com/technology/spotify",
+        "apiUrl":"http://content.guardianapis.com/technology/spotify",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/david-byrne-contributor",
+        "type":"contributor",
+        "webTitle":"David Byrne",
+        "webUrl":"http://www.theguardian.com/profile/david-byrne-contributor",
+        "apiUrl":"http://content.guardianapis.com/profile/david-byrne-contributor",
+        "bio":"<p>David Byrne is an artist and musician. He was a co-founder of the band Talking Heads, and he has displayed his art installations in Belfast, Toronto, Stockholm, San Francisco, Tokyo, and Sydney. <a href=\"http://www.davidbyrne.com/\">Visit his website.</a></p>",
+        "r2ContributorId":"58963",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380822981368/David-Byrne140.jpg",
+        "references":[]
+      },{
+        "id":"music/metal",
+        "type":"keyword",
+        "webTitle":"Metal",
+        "webUrl":"http://www.theguardian.com/music/metal",
+        "apiUrl":"http://content.guardianapis.com/music/metal",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/coldplay",
+        "type":"keyword",
+        "webTitle":"Coldplay",
+        "webUrl":"http://www.theguardian.com/music/coldplay",
+        "apiUrl":"http://content.guardianapis.com/music/coldplay",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/classicalmusicandopera",
+        "type":"keyword",
+        "webTitle":"Classical music",
+        "webUrl":"http://www.theguardian.com/music/classicalmusicandopera",
+        "apiUrl":"http://content.guardianapis.com/music/classicalmusicandopera",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419724664",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321378716/David-Byrne-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"54",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321380360/David-Byrne-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"340",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321382036/David-Byrne-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"130",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321383753/David-Byrne-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"84",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321385620/David-Byrne-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"132",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321387203/David-Byrne-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"168",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321388826/David-Byrne-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"180",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321390417/David-Byrne-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"228",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321392447/David-Byrne-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"276",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321394045/David-Byrne-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"372",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321392447/David-Byrne-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"276",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"‘I’ve pulled as much of my catalogue from Spotify as I can’ … David Byrne. Photograph: Chris Sembrot for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419724665",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/9/1381321383753/David-Byrne-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Chris Sembrot",
+            "altText":"David Byrne",
+            "height":"84",
+            "credit":"Chris Sembrot/Guardian",
+            "caption":"'I've pulled as much of my catalogue from Spotify as I can' … David Byrne Photograph: Chris Sembrot for the Guardian",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419724666",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/10/1381397946340/Aimee-Mann-performs-at-th-009.jpg",
+          "typeData":{
+            "source":"Jeff Barclay/Music Pics / Rex Fe",
+            "photographer":"Jeff Barclay/Music Pics / Rex Fe",
+            "altText":"Aimee Mann performs at the Royal Festival Hall, London, Britain - 28 Jan 2013",
+            "height":"276",
+            "credit":"Jeff Barclay/Music Pics / Rex Fe/Jeff Barclay/Music Pics / Rex Fe",
+            "caption":"Speaking out … Aimee Mann. Photograph: Jeff Barclay/Music Pics/Rex Fe",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/2013/oct/05/daily-rituals-creative-minds-mason-currey",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-05T08:00:00Z",
+      "webTitle":"Rise and shine: the daily routines of history's most creative minds",
+      "webUrl":"http://www.theguardian.com/science/2013/oct/05/daily-rituals-creative-minds-mason-currey",
+      "apiUrl":"http://content.guardianapis.com/science/2013/oct/05/daily-rituals-creative-minds-mason-currey",
+      "fields":{
+        "trailText":"<p>Benjamin Franklin spent his mornings naked. Patricia Highsmith ate only&nbsp;bacon and eggs.&nbsp;The&nbsp;path to greatness is paved with a thousand tiny rituals (and a fair bit of substance abuse) – but six key rules emerge, says <strong>Oliver Burkeman</strong></p>",
+        "headline":"Rise and shine: the daily routines of history's most creative minds",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j6qb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642828788/Daily-rituals-005.jpg",
+        "wordcount":"2841",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"science/psychology",
+        "type":"keyword",
+        "webTitle":"Psychology",
+        "webUrl":"http://www.theguardian.com/science/psychology",
+        "apiUrl":"http://content.guardianapis.com/science/psychology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"music/ludwig-van-beethoven",
+        "type":"keyword",
+        "webTitle":"Ludwig van Beethoven",
+        "webUrl":"http://www.theguardian.com/music/ludwig-van-beethoven",
+        "apiUrl":"http://content.guardianapis.com/music/ludwig-van-beethoven",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"books/marcelproust",
+        "type":"keyword",
+        "webTitle":"Marcel Proust",
+        "webUrl":"http://www.theguardian.com/books/marcelproust",
+        "apiUrl":"http://content.guardianapis.com/books/marcelproust",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/ernesthemingway",
+        "type":"keyword",
+        "webTitle":"Ernest Hemingway",
+        "webUrl":"http://www.theguardian.com/books/ernesthemingway",
+        "apiUrl":"http://content.guardianapis.com/books/ernesthemingway",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"money/work-and-careers",
+        "type":"keyword",
+        "webTitle":"Work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-and-careers",
+        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/work-life-balance",
+        "type":"keyword",
+        "webTitle":"Work-life balance",
+        "webUrl":"http://www.theguardian.com/money/work-life-balance",
+        "apiUrl":"http://content.guardianapis.com/money/work-life-balance",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/oliverburkeman",
+        "type":"contributor",
+        "webTitle":"Oliver Burkeman",
+        "webUrl":"http://www.theguardian.com/profile/oliverburkeman",
+        "apiUrl":"http://content.guardianapis.com/profile/oliverburkeman",
+        "bio":"<p>Oliver Burkeman is a Guardian writer based in New York. Read his <a href=\"http://www.guardian.co.uk/commentisfree/oliver-burkemans-blog\">blog</a> here. He is the author of The Antidote: Happiness for People Who Can't Stand Positive Thinking</p>",
+        "rcsId":"GNL001559",
+        "r2ContributorId":"16207",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/oliver_burkeman_140x140.jpg",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/extract",
+        "type":"tone",
+        "webTitle":"Extracts",
+        "webUrl":"http://www.theguardian.com/tone/extract",
+        "apiUrl":"http://content.guardianapis.com/tone/extract",
+        "references":[]
+      },{
+        "id":"books/sigmundfreud",
+        "type":"keyword",
+        "webTitle":"Sigmund Freud",
+        "webUrl":"http://www.theguardian.com/books/sigmundfreud",
+        "apiUrl":"http://content.guardianapis.com/books/sigmundfreud",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/whauden",
+        "type":"keyword",
+        "webTitle":"WH Auden",
+        "webUrl":"http://www.theguardian.com/books/whauden",
+        "apiUrl":"http://content.guardianapis.com/books/whauden",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/sylviaplath",
+        "type":"keyword",
+        "webTitle":"Sylvia Plath",
+        "webUrl":"http://www.theguardian.com/books/sylviaplath",
+        "apiUrl":"http://content.guardianapis.com/books/sylviaplath",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/david-foster-wallace",
+        "type":"keyword",
+        "webTitle":"David Foster Wallace",
+        "webUrl":"http://www.theguardian.com/books/david-foster-wallace",
+        "apiUrl":"http://content.guardianapis.com/books/david-foster-wallace",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/alice-munro",
+        "type":"keyword",
+        "webTitle":"Alice Munro",
+        "webUrl":"http://www.theguardian.com/books/alice-munro",
+        "apiUrl":"http://content.guardianapis.com/books/alice-munro",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/ingmarbergman",
+        "type":"keyword",
+        "webTitle":"Ingmar Bergman",
+        "webUrl":"http://www.theguardian.com/film/ingmarbergman",
+        "apiUrl":"http://content.guardianapis.com/film/ingmarbergman",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"theguardian/weekend/features2",
+        "type":"newspaper-book-section",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend/features2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend/features2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/weekend",
+        "type":"newspaper-book",
+        "webTitle":"Weekend",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419342897",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642837641/Daily-rituals-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Jean Julien",
+            "altText":"Daily rituals",
+            "height":"276",
+            "credit":"Jean Julien/Guardian",
+            "caption":"Click on image for full illustration. Illustration: Jean Julien for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642820839/Daily-rituals-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Jean Julien",
+            "altText":"Daily rituals",
+            "height":"700",
+            "credit":"Jean Julien/Guardian",
+            "caption":"Illustration: Jean Julien for the Guardian",
+            "width":"600"
+          }
+        }]
+      },{
+        "id":"gu-image-419342899",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642828788/Daily-rituals-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Jean Julien",
+            "altText":"Daily rituals",
+            "height":"84",
+            "credit":"Jean Julien/Guardian",
+            "caption":"Click on image for full illustration. Illustration: Jean Julien for the Guardian",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419342900",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380704720008/Georgia-OKeeffe-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":" ",
+            "altText":"Georgia O'Keeffe",
+            "height":"310",
+            "credit":" /AP",
+            "caption":"Georgia O'Keeffe: one of a majority of very early morning risers. Photograph: AP",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342901",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380704966448/TS-Eliot-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Hulton Archive",
+            "altText":"TS Eliot",
+            "height":"310",
+            "credit":"Hulton Archive/Getty Images",
+            "caption":"TS Eliot’s day job at Lloyds bank gave him crucial financial security. Photograph: Hulton Archive/Getty Images",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342902",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380705148183/Tchaikovsky-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Hulton Archive",
+            "altText":"Tchaikovsky",
+            "height":"310",
+            "credit":"Hulton Archive/Getty Images",
+            "caption":"Tchaikovsky 'believed he had to take a walk of exactly two hours a day and that if he returned even a few minutes early, great misfortunes would befall him.' Photograph: Hulton Archive/Getty Images",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342903",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380705754166/Patricia-Highsmith-001.jpg",
+          "typeData":{
+            "source":"Corbis Sygma ",
+            "photographer":" ",
+            "altText":"Patricia Highsmith",
+            "height":"310",
+            "credit":" /Corbis Sygma ",
+            "caption":"Patricia Highsmith, among others, ate virtually the same thing for every meal, in her case bacon and fried eggs. Photograph: Corbis Sygma ",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342904",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380706053022/Ayn-Rand-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"New York Times Co.",
+            "altText":"Ayn Rand",
+            "height":"310",
+            "credit":"New York Times Co./Getty Images",
+            "caption":"Ayn Rand took Benzedrine. Photograph: New York Times Co/Getty Images",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342905",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380706701505/Agatha-Christie-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"-",
+            "altText":"Agatha Christie",
+            "height":"310",
+            "credit":"-/AFP/Getty Images",
+            "caption":"Agatha Christie didn’t have a desk. Any stable tabletop for her typewriter would do.\r\n Photograph: AFP/Getty Images",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/feb/09/aldi-100-percent-horsemeat-beef-products",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-02-09T13:20:00Z",
+      "webTitle":"Aldi confirms up to 100% horsemeat in beef products",
+      "webUrl":"http://www.theguardian.com/business/2013/feb/09/aldi-100-percent-horsemeat-beef-products",
+      "apiUrl":"http://content.guardianapis.com/business/2013/feb/09/aldi-100-percent-horsemeat-beef-products",
+      "fields":{
+        "trailText":"Supermarket says it is angry with supplier Comigel after tests reveal 30% and 100% horsemeat in withdrawn ready meals",
+        "headline":"Aldi confirms up to 100% horsemeat in beef products",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3dky9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408740757/Aldi-has-confirmed-horsem-005.jpg",
+        "wordcount":"1375",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/fooddrinks",
+        "type":"keyword",
+        "webTitle":"Food & drink industry",
+        "webUrl":"http://www.theguardian.com/business/fooddrinks",
+        "apiUrl":"http://content.guardianapis.com/business/fooddrinks",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/meat-industry",
+        "type":"keyword",
+        "webTitle":"The meat industry",
+        "webUrl":"http://www.theguardian.com/environment/meat-industry",
+        "apiUrl":"http://content.guardianapis.com/environment/meat-industry",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/aldi",
+        "type":"keyword",
+        "webTitle":"Aldi",
+        "webUrl":"http://www.theguardian.com/business/aldi",
+        "apiUrl":"http://content.guardianapis.com/business/aldi",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/food",
+        "type":"keyword",
+        "webTitle":"Food",
+        "webUrl":"http://www.theguardian.com/environment/food",
+        "apiUrl":"http://content.guardianapis.com/environment/food",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/farming",
+        "type":"keyword",
+        "webTitle":"Farming",
+        "webUrl":"http://www.theguardian.com/environment/farming",
+        "apiUrl":"http://content.guardianapis.com/environment/farming",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"lifeandstyle/meat",
+        "type":"keyword",
+        "webTitle":"Meat",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/meat",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/meat",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/supermarkets",
+        "type":"keyword",
+        "webTitle":"Supermarkets",
+        "webUrl":"http://www.theguardian.com/business/supermarkets",
+        "apiUrl":"http://content.guardianapis.com/business/supermarkets",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/food-safety",
+        "type":"keyword",
+        "webTitle":"Food safety",
+        "webUrl":"http://www.theguardian.com/world/food-safety",
+        "apiUrl":"http://content.guardianapis.com/world/food-safety",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/food-and-drink",
+        "type":"keyword",
+        "webTitle":"Food & drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"uk/horsemeat-scandal",
+        "type":"keyword",
+        "webTitle":"Horsemeat scandal",
+        "webUrl":"http://www.theguardian.com/uk/horsemeat-scandal",
+        "apiUrl":"http://content.guardianapis.com/uk/horsemeat-scandal",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-403774995",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408736506/Aldi-has-confirmed-horsem-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"54",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408737848/Aldi-has-confirmed-horsem-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"340",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408739357/Aldi-has-confirmed-horsem-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"130",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408740757/Aldi-has-confirmed-horsem-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"84",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408742159/Aldi-has-confirmed-horsem-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"132",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408743616/Aldi-has-confirmed-horsem-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"168",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408745179/Aldi-has-confirmed-horsem-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"180",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408746672/Aldi-has-confirmed-horsem-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"228",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408748126/Aldi-has-confirmed-horsem-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"276",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408749651/Aldi-has-confirmed-horsem-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"372",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408748126/Aldi-has-confirmed-horsem-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"276",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today’s Special frozen beef lasagne and spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-403774996",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/9/1360408740757/Aldi-has-confirmed-horsem-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"Aldi has confirmed horsemeat has been found in its withdrawn beef products",
+            "height":"84",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Aldi withdrew its Today's Special frozen beef lasagne spaghetti bolognese products earlier in the week as a precaution. Photograph: Felix Clay for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
