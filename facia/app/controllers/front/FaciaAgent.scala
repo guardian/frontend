@@ -22,12 +22,20 @@ object Seg {
   }
 }
 
-trait ParseConfig extends ExecutionContexts {
+trait ParseConfig extends ExecutionContexts with Logging {
   def getConfigMap(id: String): Future[Seq[JsValue]] = {
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/config/$id/config.json"
     WS.url(configUrl).withRequestTimeout(2000).get map { r =>
-      val json = parse(r.body)
-      json.asOpt[Seq[JsValue]] getOrElse Nil
+      try {
+        val json = parse(r.body)
+        json.asOpt[Seq[JsValue]] getOrElse Nil
+      } catch {
+        case e: Throwable => {
+          log.warn("Could not parse config for %s".format(id))
+          FaciaMetrics.JsonParsingErrorCount.increment()
+          throw e
+        }
+      }
     }
   }
   def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { configMap =>
@@ -52,7 +60,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
     log.info(s"loading running order configuration from: $collectionUrl")
     val response: Future[Response] = WS.url(collectionUrl).withRequestTimeout(2000).get()
     for {
-      collectionList <- parseResponse(response, edition)
+      collectionList <- parseResponse(response, edition, id)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
     } yield Collection(collectionList ++ contentApiList, displayName)
@@ -62,18 +70,26 @@ trait ParseCollection extends ExecutionContexts with Logging {
     (parse(r.body) \ "displayName").asOpt[String].filter(_.nonEmpty)
   }
 
-  private def parseResponse(response: Future[Response], edition: Edition): Future[List[Content]] = {
+  private def parseResponse(response: Future[Response], edition: Edition, id: String): Future[List[Content]] = {
     response.flatMap { r =>
       r.status match {
         case 200 =>
-          val bodyJson = parse(r.body)
+          try {
+            val bodyJson = parse(r.body)
 
-          // extract the articles
-          val articles: Seq[String] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-            (trail \ "id").as[String]
+            // extract the articles
+            val articles: Seq[String] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
+              (trail \ "id").as[String]
+            }
+
+            getArticles(articles, edition)
+          } catch {
+            case e: Throwable => {
+              log.warn("Could not parse collection JSON for %s".format(id))
+              FaciaMetrics.JsonParsingErrorCount.increment()
+              throw e
+            }
           }
-
-          getArticles(articles, edition)
 
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
