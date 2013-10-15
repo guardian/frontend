@@ -14,6 +14,7 @@ GET        /discussion/*shortUrl.json                                           
 GET        /discussion/*shortUrl                                                                     controllers.DiscussionApp.commentPage(shortUrl)
 
 # Core Navigation
+GET         /404                                                                                      controllers.NotFoundController.render404()
 GET         /most-read                                                                                controllers.MostPopularController.render(path = "")
 GET         /most-read.json                                                                           controllers.MostPopularController.render(path = "")
 GET         /most-read/card.json                                                                      controllers.MostPopularController.renderCard()
