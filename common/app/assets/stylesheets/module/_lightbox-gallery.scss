@@ -54,7 +54,7 @@ i.gallery__watermark {
     }
 
     .gallery__item {
-        display: inline-block;
+        float: left;
         vertical-align: top;
         margin: $baseline * 2;
         cursor: pointer;
