@@ -257,7 +257,7 @@ a.list-header__status__control:visited {
     margin: 0 140px 0 80px;
     display: block;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 16px;
     color: #000000;
     cursor: move;
@@ -265,10 +265,6 @@ a.list-header__status__control:visited {
 
 .trail .webTitle:hover {
     color: #438835;
-}
-
-.collection .trail .webTitle {
-    font-size: 15px;
 }
 
 .trail .webTitle--override {
