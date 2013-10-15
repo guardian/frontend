@@ -26,11 +26,11 @@ object MostPopularAgent extends Logging with ExecutionContexts {
   def refresh(edition: Edition) = ContentApi.item("/", edition)
     .showMostViewed(true)
     .response.map{ response =>
-    val mostViewed = response.mostViewed map { Content(_) } take 10
-    agent.alter{ old =>
-      old + (edition.id -> mostViewed)
-    }(Timeout(5.seconds))
-  }
+      val mostViewed = response.mostViewed map { Content(_) } take 10
+      agent.alter{ old =>
+        old + (edition.id -> mostViewed)
+      }(Timeout(5.seconds))
+    }
 }
 
 
