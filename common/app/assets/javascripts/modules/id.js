@@ -1,5 +1,5 @@
 /*global escape:true */
-define(['common', 'modules/cookies'], function(common, Cookies) {
+define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], function(common, Cookies, asyncCallMerger, ajax) {
     /**
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change
@@ -9,6 +9,12 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
         userFromCookieCache = "empty";
 
     Id.cookieName = 'GU_U';
+
+    var idApiRoot = null;
+
+    Id.init = function(conf) {
+        idApiRoot = conf.page.idApiUrl;
+    };
 
     /**
      * The array returned from the cookie is in the format
@@ -39,7 +45,29 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
      */
     Id.getCookie = function() {
         return Cookies.get(Id.cookieName);
-    },
+    };
+
+    /**
+     * Gets the currently logged in user data from the identity api
+     * @param {function} callback
+     */
+    Id.getUserFromApi = asyncCallMerger.mergeCalls(
+        function(mergingCallback) {
+            return ajax({
+                url: idApiRoot + "/user/me",
+                type: 'jsonp',
+                crossOrigin: true
+            }).then(
+                function(response) {
+                    if(response.status === 'ok') {
+                        mergingCallback(response.user);
+                    } else {
+                        mergingCallback(null);
+                    }
+                }
+            );
+        }
+    );
 
     /**
      * Handles unicode chars correctly
