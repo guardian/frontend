@@ -40,6 +40,16 @@
     }
 }
 
+.is-signed-in .i-profile {
+    @extend .i-profile-signed-in;
+
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-profile-signed-in;
+        }
+    }
+}
+
 .is-active .i-profile {
     @extend .i-profile-active;
 
