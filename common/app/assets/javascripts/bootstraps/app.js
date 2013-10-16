@@ -11,7 +11,6 @@ define('bootstraps/app', [
     "modules/router",
     "bootstraps/common",
     "bootstraps/front",
-    "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
     "bootstraps/video",
@@ -36,7 +35,6 @@ define('bootstraps/app', [
     Router,
     bootstrapCommon,
     Front,
-    Facia,
     Football,
     Article,
     Video,
@@ -122,10 +120,8 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context, contextHtml);
 
-                // Fronts
-                if (qwery('.facia-container').length) {
-                    Facia.init(config, context);
-                } else if (config.page.isFront){
+                // Front
+                if (config.page.isFront) {
                     Front.init(config, context);
                 }
 
