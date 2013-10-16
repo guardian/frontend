@@ -12,7 +12,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def renderCombiner(leftSide: String, rightSide: String) = Action.async{ implicit request =>
     index(Edition(request), leftSide, rightSide).map {
-      case Left(page) => if (IsFacia(request)) renderFaciaFront(page) else renderFront(page)
+      case Left(page) => renderFaciaFront(page)
       case Right(other) => other
     }
   }
@@ -21,7 +21,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def render(path: String) = Action.async { implicit request =>
     index(Edition(request), path) map {
-      case Left(model) => if (IsFacia(request)) renderFaciaFront(model) else renderFront(model)
+      case Left(model) => renderFaciaFront(model)
       case Right(other) => other
     }
   }
@@ -31,20 +31,6 @@ trait IndexController extends Controller with Index with Logging with Paging wit
     index(Edition(request), path) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
-    }
-  }
-
-  // TODO delete after Facia release
-  private def renderFront(model: IndexPage)(implicit request: RequestHeader) = {
-    Cached(model.page){
-      if (request.isJson)
-        JsonComponent(
-          "html" -> views.html.fragments.indexBody(model),
-          "trails" -> model.trails.map(_.url),
-          "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.page, Switches.all).body)
-        )
-      else
-        Ok(views.html.index(model))
     }
   }
 
