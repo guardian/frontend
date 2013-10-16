@@ -23,5 +23,5 @@ casper.test.begin("Display related content", function(test) {
 
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get("xunit") + "article.xml");
+    this.test.renderResult./ss(true, 0, this.cli.get("xunit") + "article.xml");
 });
