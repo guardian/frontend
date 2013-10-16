@@ -455,6 +455,9 @@ module.exports = function (grunt) {
             article: {
                 src: ['integration-tests/casper/tests/article/*.spec.js']
             },
+            applications: {
+                src: ['integration-tests/casper/tests/applications/*.spec.js']
+            },
             front: {
                 src: ['integration-tests/casper/tests/front/*.js']
             },
