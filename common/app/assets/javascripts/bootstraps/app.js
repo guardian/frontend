@@ -10,7 +10,7 @@ define('bootstraps/app', [
     'modules/debug',
     "modules/router",
     "bootstraps/common",
-    "bootstraps/front",
+    "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
     "bootstraps/video",
@@ -34,7 +34,7 @@ define('bootstraps/app', [
     Debug,
     Router,
     bootstrapCommon,
-    Front,
+    Facia,
     Football,
     Article,
     Video,
@@ -122,7 +122,7 @@ define('bootstraps/app', [
 
                 // Front
                 if (config.page.isFront) {
-                    Front.init(config, context);
+                    Facia.init(config, context);
                 }
 
                 //Football
