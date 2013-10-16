@@ -6,7 +6,7 @@ import common.{Grunt, Server}
 
 class FaciaTest extends FlatSpec with ShouldMatchers {
 
-  "Facia" should "pass integration tests" in Server{
+  ignore should "pass integration tests" in Server{
     Grunt("facia") should be (0)
   }
 
