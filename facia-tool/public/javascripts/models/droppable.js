@@ -133,7 +133,11 @@ define([
                             }
                         )
 
-                        if (!fromList || !fromList.collection || fromList.keepCopy || fromList === targetList) {
+                        if (!fromList || !fromList.collection || fromList.keepCopy) {
+                            return;
+                        }
+
+                        if (fromList.collection.id === targetList.collection.id) {
                             return;
                         }
 
