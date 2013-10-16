@@ -443,6 +443,19 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         $(".article__keywords a").size should be (5)
       }
     }
+
+    scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords"){
+      Given("I am on an article entitled 'Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick'")
+
+      ArticleKeywordsSwitch.switchOn
+
+      HtmlUnit("/info/2013/aug/26/2"){ browser =>
+        import browser._
+
+        Then("I should not see a keywords list")
+        $(".article__keywords *").size should be (0)
+      }
+    }
     
     scenario("Twitter cards"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")

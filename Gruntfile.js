@@ -454,14 +454,12 @@ module.exports = function (grunt) {
             },
             article: {
                 src: [
-                    'integration-tests/casper/tests/article/*.spec.js',
-                    'integration-tests/casper/tests/common/*.spec.js'
+
                 ]
             },
             applications: {
                 src: [
-                    'integration-tests/casper/tests/applications/*.spec.js',
-                    'integration-tests/casper/tests/common/*.spec.js'
+                    'integration-tests/casper/tests/applications/*.spec.js'
                 ]
             },
             front: {
@@ -561,7 +559,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
