@@ -460,8 +460,7 @@ module.exports = function (grunt) {
             },
             applications: {
                 src: [
-                    'integration-tests/casper/tests/applications/*.spec.js',
-                    'integration-tests/casper/tests/common/*.spec.js'
+                    'integration-tests/casper/tests/applications/*.spec.js'
                 ]
             },
             front: {
