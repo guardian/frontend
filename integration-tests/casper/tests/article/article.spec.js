@@ -21,18 +21,6 @@ casper.test.begin("Display related content", function(test) {
     });
 });
 
-casper.test.begin("Most read tabs", function(test) {
-    casper.waitForText('Most read', function() {
-        test.assertVisible('#tabs-popular-1', "Most read in section is visible");
-        test.assertNotVisible('#tabs-popular-2', "Most read in the Guardian is not visible");
-        casper.click('a[href="#tabs-popular-2"]');
-        test.assertNotVisible('#tabs-popular-1', "Most read in the Guardian is visible");
-        test.assertVisible('#tabs-popular-2', "Most read in section is not visible");
-        test.done();
-    }, function timeout() {
-        test.fail('Failed to transclude most read tabs');
-    });
-});
 
 casper.run(function() {
     this.test.renderResults(true, 0, this.cli.get("xunit") + "article.xml");
