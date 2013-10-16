@@ -1,7 +1,7 @@
 @(keywords: Seq[Tag], visibleKeywords: Int = 5)(implicit request: RequestHeader)
 
 @defining(keywords.filterNot(_.isSectionTag).take(visibleKeywords)) { keywordsList => 
-    @if(keywordsList.size > 0) {
+    @if(keywordsList.nonEmpty) {
         <ul class="inline-list" itemprop="keywords">
             <li class="inline-list__item">Tags:</li>
             @keywordsList.zipWithRowInfo.map{ case(keyword, row) =>
