@@ -2,10 +2,15 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+
 # For dev machines
-GET        /assets/*path        dev.DevAssetsController.at(path)
+GET    /assets/*path                 dev.DevAssetsController.at(path)
 
 
-# Temporary test endpoints
-GET        /testout             controllers.Application.test
-GET        /testin              controllers.Application.refreshAllOffers
+# Travel offers
+# -------------
+
+GET    /commercial/travel/offers     controllers.TravelOffers.listOffers
+
+# To trigger travel offers data refresh on dev machine
+GET    /commercial/travel/devload    controllers.TravelOffers.refresh
