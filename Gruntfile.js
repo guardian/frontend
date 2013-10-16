@@ -242,27 +242,6 @@ module.exports = function (grunt) {
 
         },
 
-        imagemin: {
-            compile: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/assets/images/',
-                    src: ['**/*.png'],
-                    dest: 'static/target/compiled/images/'
-                },{
-                    expand: true,
-                    cwd: 'static/target/generated/images/',
-                    src: ['**/*.{png,gif,jpg}'],
-                    dest: 'static/target/compiled/images/'
-                },{
-                    expand: true,
-                    cwd: 'common/app/public/images/',
-                    src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
-                    dest: 'static/target/compiled/images/'
-                }]
-            }
-        },
-
         copy: {
             compile: {
                 files: [{
@@ -541,7 +520,7 @@ module.exports = function (grunt) {
             },
             icons: {
                 files: ['common/app/assets/images/**/*'],
-                tasks: ['imagemin:compile', 'copy:compile', 'hash']
+                tasks: ['copy:compile', 'hash']
             }
         }
     });
