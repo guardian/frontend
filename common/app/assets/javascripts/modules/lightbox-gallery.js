@@ -130,12 +130,12 @@ define(["bean",
                 self.goTo(index);
             });
 
-            bean.on(window, 'orientationchange', function() {
+            bean.on(window, 'orientationchange', common.debounce(function() {
                 self.layout();
                 if (detect.getOrientation() === 'landscape') {
                     self.jumpToContent();
                 }
-            });
+            }));
 
             bean.on(window, 'resize', common.debounce(function() {
                 self.layout();
