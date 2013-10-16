@@ -17,11 +17,17 @@ object Server extends TestSettings {
     classOf[FootballStatsPlugin].getName
   ) ++ super.disabledPlugins
 
-
   def apply(block: => Unit) = {
     running(TestServer(9000,
-      FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
-        withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
+      new FakeApplication(
+        additionalPlugins = testPlugins,
+        withoutPlugins = disabledPlugins,
+        withGlobal = globalSettingsOverride){
+
+        // Yeah I know... Play calls Start and Stop on ALL plugins regardless of whether you want them or not...
+        override lazy val plugins = FakeApplication().plugins.filterNot(p => withoutPlugins.exists(_ == p.getClass.getName))
+
+      }), HTMLUNIT) { browser =>
       block
     }
   }
