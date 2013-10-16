@@ -163,7 +163,8 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
       val result: List[Config] = queryAgent().map(_.map(_._1)).getOrElse(Nil)
       Future.successful(result.toSeq)
     } map {config =>
-      config map {c => c -> getCollection(c.id, c, edition, items.isDefined)}
+      val isWarmedUp = items.isDefined
+      config map {c => c -> getCollection(c.id, c, edition, isWarmedUp)}
     }
 
     futureConfig.map(_.toVector).flatMap{ configMapping =>
