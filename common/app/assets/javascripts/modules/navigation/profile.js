@@ -54,6 +54,7 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
         $content.html(user ? user.displayName : Profile.CONFIG.signinText);
 
         if (user) {
+            $container.addClass('is-signed-in');
             $popup.html('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
         } else {
             $popup.remove();

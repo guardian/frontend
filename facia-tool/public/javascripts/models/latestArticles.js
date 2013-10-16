@@ -1,5 +1,6 @@
 define([
     'models/common',
+    'models/autoComplete',
     'models/article',
     'models/ophanApi',
     'models/cache',
@@ -7,6 +8,7 @@ define([
     'knockout'
 ], function (
     common,
+    autoComplete,
     Article,
     ophanApi,
     cache,
@@ -15,26 +17,65 @@ define([
 ) {
     return function(opts) {
 
-        var page = 1,
-            self = this,
+        var self = this,
             deBounced,
             opts = opts || {},
-            container = document.querySelector('#latest-articles');
+            counter = 0,
+            container = document.querySelector('.latest-articles');
 
         this.articles   = ko.observableArray();
+
         this.term       = ko.observable(common.util.queryParams().q || '');
-        this.section    = ko.observable('');
+        this.suggestions= ko.observableArray();
+
+        this.filter     = ko.observable();
+        this.filterType = ko.observable();
+        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []),
+
         this.page       = ko.observable(1);
 
         this.isTermAnItem = function() {
-            return self.term().match(/\//);
+            return (self.term() || '').match(/\//);
         }
 
-        this.term.subscribe(function(){ self.search({flushFirst: true}); });
-        this.section.subscribe(function(){ self.search({flushFirst: true}); });
+        this.term.subscribe(function(){
+            self.search();
+        });
+
+        this.setFilter = function(item) {
+            self.filter(item && item.id ? item.id : item);
+            self.suggestions.removeAll();
+            self.search();
+        };
+
+        this.clearFilter = function() {
+            self.filter('');
+            self.suggestions.removeAll();
+        };
+
+        this.setSection = function(str) {
+            self.filterType(opts.filterTypes.section);
+            self.setFilter(str);
+            self.clearTerm();
+        };
+
+        this.clearTerm = function() {
+            self.term('');
+        };
+
+        this.autoComplete = function() {
+            autoComplete({
+                query:    self.filter(),
+                path:    (self.filterType() || {}).path
+            })
+            .progress(self.suggestions)
+            .then(self.suggestions);
+        };
 
         // Grab articles from Content Api
         this.search = function(opts) {
+            var count = counter += 1;
+
             opts = opts || {};
 
             clearTimeout(deBounced);
@@ -49,14 +90,14 @@ define([
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
                     self.term(common.util.urlAbsPath(self.term()));
-                    var url = '/api/proxy/' + self.term() + '?show-fields=all&format=json';
+                    url = common.config.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
-                    url  = '/api/proxy/search?show-fields=all&format=json';
+                    url  = common.config.apiSearchBase + '/search?show-fields=all&format=json';
                     url += '&page-size=' + (common.config.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += '&q=' + encodeURIComponent(self.term());
-                    url += '&section=' + encodeURIComponent(self.section());
+                    url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
                     propName = 'results';
                 }
 
@@ -65,7 +106,9 @@ define([
                 }).then(function(data) {
                     var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
 
-                    self.flush();
+                    if (count !== counter) { return; }
+
+                    self.flush(rawArticles.length === 0 ? "...sorry, no articles were found." : "");
 
                     ([].concat(rawArticles)).forEach(function(article, index){
                         article.index = index;
@@ -75,8 +118,7 @@ define([
 
                     ophanApi.decorateItems(self.articles());
                 });
-
-            }, 250);
+            }, 300);
 
             return true; // ensure default click happens on all the bindings
         };
@@ -85,22 +127,22 @@ define([
             self.articles.removeAll();
             // clean up any dragged-in articles
             container.innerHTML = message || '';
-        }
+        };
 
         this.refresh = function() {
             self.page(1);
             self.search();
-        }
+        };
 
         this.pageNext = function() {
             self.page(self.page() + 1);
             self.search();
-        }
+        };
 
         this.pagePrev = function() {
             self.page(_.max([1, self.page() - 1]));
             self.search();
-        }
+        };
 
         this.startPoller = function() {
             setInterval(function(){
@@ -110,7 +152,7 @@ define([
             }, common.config.latestArticlesPollMs || 60000);
 
             this.startPoller = function() {}; // make idempotent
-        }
+        };
 
     };
 });

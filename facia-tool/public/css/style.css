@@ -3,8 +3,14 @@ html {
 }
 
 body {
-    padding: 10px;
+    overflow-y: hidden;
+    margin: 0;
+    padding: 10px  10px 0 10px;
     color: #000000;
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+              user-select: none;
 }
 
 fieldset,
@@ -19,6 +25,10 @@ input[type=text] {
     position: absolute;
 }
 
+.scrollable {
+    overflow-y: scroll;
+}
+
 .u-cf:before,
 .u-cf:after{content:"";display:table}
 .u-cf:after{clear:both}
@@ -30,12 +40,10 @@ input[type=text] {
     float: left;
     clear: left;
     width: 50%;
-    padding: 15px 15px 10px 0;
-    border-right: 1px solid #CCCCCC;
-}
-
-.finder input[type="text"] {
-    width: 49.5%;
+    padding: 0 15px 0 0;
+    margin-top: 10px;
+    color: #666666;
+    border-right: 1px solid #cccccc;
 }
 
 .finder__controls {
@@ -45,35 +53,32 @@ input[type=text] {
 }
 
 .tool-title {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
-    margin: 0 5px 0 0;
+    padding: 5px 0 0 0;
     font-size: 18px;
     text-transform: uppercase;
+    height: 30px;
+}
+
+.tool-title span {
+    color: #999999;
+    text-transform: lowercase;
 }
 
 .title {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    color: #666666;
+    color: #000000;
+    padding: 2px 0 0 0;
 }
 
-.list-tool {
-    float: right;
-    cursor: pointer;
-    margin: 3px 2px 0 0;
-    opacity: 0.5;
-}
-
-.list-tool:hover {
-    opacity: inherit;
-}
-
-.list-tool:active {
-    opacity: 0.6;
-}
-
-#collections .connectedList {
-    padding: 0 0 10px 0;
+.droppable {
+    padding: 0 0 25px 0;
+    -webkit-transition: background-color 50ms;
+       -moz-transition: background-color 50ms;
+            transition: background-color 50ms;
 }
 
 .pending {
@@ -187,16 +192,33 @@ a.list-header__status__control:visited {
     margin: 0 2px 0 0;
 }
 
-#list-picker {
+.list-picker {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: right;
+    width: 50%;
+    padding: 0 0 0 18px;
+    height: 30px;
 }
 
-#collections {
+.list-picker select {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+}
+
+.collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding-left: 15px;
     width: 50%;
     float: right;
+    margin-top: 10px;
+}
+
+.collections__inner {
+    padding: 0 10px 0 0;
+    border-top: 1px solid #CCCCCC;
 }
 
 .collection {
@@ -206,29 +228,23 @@ a.list-header__status__control:visited {
     float: left;
     padding: 0 0 5px 0;
     position: relative;
-    border-top: 2px solid #999999;
-}
-
-.collection:first-child {
-    margin-top: 30px;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .trail {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    cursor: move;
     padding: 1px 3px 4px 4px;
     position: relative;
-    border-radius: 2px;
+    background-color: #FFFFFF;
+    -webkit-transition: background-color 100ms;
+       -moz-transition: background-color 100ms;
+            transition: background-color 100ms;
 }
 
-.draft-zones {
+.draft-zones .trail {
     background-color: #EEEEEE;
-}
-
-.trail:hover {
-    background: #dddddd;
 }
 
 .trail.redundant {
@@ -258,13 +274,14 @@ a.list-header__status__control:visited {
     margin: 0 140px 0 80px;
     display: block;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 16px;
     color: #000000;
+    cursor: move;
 }
 
-.collection .trail .webTitle {
-    font-size: 15px;
+.trail .webTitle:hover {
+    color: #438835;
 }
 
 .trail .webTitle--override {
@@ -290,7 +307,7 @@ a.list-header__status__control:visited {
     display: none;
 }
 
-.persisted .trail:hover .trail__meta a {
+.trail:hover .trail__meta a {
     display: inline-block;
     color: #666666;
     border-left: 1px #dddddd solid;
@@ -300,12 +317,9 @@ a.list-header__status__control:visited {
 
 .trail .trail__remove {
     display: none;
-}
-
-.collection .trail .trail__remove {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 4px;
+    right: 13px;
     background: #CCCCCC;
     width: 14px;
     height: 20px;
@@ -315,11 +329,11 @@ a.list-header__status__control:visited {
     border-radius: 2px;
 }
 
-.collection .trail:hover .trail__remove {
+.droppable .trail:hover .trail__remove {
     display: block;
 }
 
-.collection .trail .trail__remove:hover {
+.droppable .trail .trail__remove:hover {
     background: #999999;
 }
 
@@ -334,17 +348,7 @@ input[type="text"] {
 }
 
 select {
-    height: 30px;
-    width: 160px;
     margin: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: #000000;
-}
-
-select:disabled {
-    opacity: 0.5;
 }
 
 button {
@@ -356,41 +360,32 @@ button {
     font-weight: bold;
 }
 
+.clipboard,
+.clipboard__overlay {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 53px;
+    padding: 0 15px 0 0;
+}
+
+.clipboard__title {
+    border-top: 1px solid #CCCCCC;
+}
+
 .clipboard__wrapper {
     position: relative;
     margin: 5px 0 27px 0;
 }
 
-#clipboard,
-#clipboard__overlay {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    min-height: 50px;
-}
-
-#clipboard__overlay {
+.clipboard__overlay {
     position: absolute;
     z-index: -1;
     border: 1px dashed #cccccc;
     width: 100%;
-    padding: 5px;
+    padding: 4px 5px;
     color: #999999;
     font-size: 12px;
     text-align: center;
-}
-
-.needs-more {
-    border-left: 1px solid #666666;
-    border-right: 1px solid #666666;
-    background: #d61d00;
-    color: #ffffff;
-    padding: 0px 10px;
-    font-size: 12px;
-    text-transform: uppercase;
-}
-
-.needs-more__num {
-    font-weight: bold;
 }
 
 .collection-config {
@@ -472,4 +467,79 @@ iframe {
     border: 1px solid #999999;
     border-radius: 5px;
     box-shadow: 1px 1px 7px #666666;
+}
+
+.underDrag {
+    background: #a7d9a0 !important;
+}
+
+.search-form {
+    position: relative;
+    height: 35px;
+}
+
+.search-term {
+    position: absolute;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 35%;
+    padding: 0 15px 0 0;
+}
+
+.search-term input {
+    width: 100%;
+}
+
+.autocompleter {
+    position: absolute;
+    left: 40%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 50%;
+}
+
+.autocompleter select {
+    width: 40%;
+}
+
+.autocompleter input {
+    width: 55%;
+}
+
+.autocompleter .suggestions {
+    position: absolute;
+    z-index: 1;
+}
+
+.autocompleter .suggestion {
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+    background: #ffffff;
+    color: #666666;
+    border-left: 1px solid #cccccc;
+    padding: 0 10px;
+}
+
+.search-submit {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 40px;
+}
+
+.linky {
+    cursor: pointer !important;
+    color: #0088cc !important;
+}
+
+.linky:hover {
+    color: #005580;
+    text-decoration: underline;
+}
+
+.preview-link {
+    float: right;
 }

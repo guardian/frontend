@@ -3,7 +3,7 @@ define([
     'modules/detect',
     'modules/experiments/ab',
     'modules/storage',
-    'components/gu-id/id',
+    'modules/id',
     'modules/errors'
 ], function(
     common,
@@ -101,6 +101,11 @@ define([
             s.pageName  = config.page.analyticsName;
 
             s.prop1     = config.page.headline || '';
+
+            if(id.getUserFromCookie()) {
+                s.prop2   = "GUID:" + id.getUserFromCookie().id;
+            }
+
             s.prop3     = config.page.publication || '';
 
 
@@ -123,7 +128,7 @@ define([
             s.prop19     = platform;
             s.eVar19     = platform;
 
-            s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
+            s.prop31    = id.getUserFromCookie() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
 
@@ -142,9 +147,10 @@ define([
             if (config.page.section === "identity")  {
                 s.prop11 = 'Users';
                 s.prop9 = "userid";
+                s.eVar27 = config.page.omnitureErrorMessage || '';
                 s.eVar42 = config.page.returnUrl || '';
                 s.hier2="GU/Users/Registration";
-                s.events = s.apl(s.events, config.page.registrationEvent, ',');
+                s.events = s.apl(s.events, config.page.omnitureEvent, ',');
             }
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';

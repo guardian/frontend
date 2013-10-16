@@ -22,8 +22,7 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -36,8 +35,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Sport",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -190,6 +188,10 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         renderFormat(response, response, frontPage)
       }
     }.getOrElse(NotFound)
+  }
+
+  def renderResponsiveViewer() = Action {
+    Ok(views.html.fragments.responsiveViewer())
   }
 
 }

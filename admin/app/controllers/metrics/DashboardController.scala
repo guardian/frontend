@@ -9,6 +9,6 @@ object DashboardController extends Controller with Logging with AuthLogging {
   // We only do PROD metrics
 
   def renderDashboard() = Authenticated { request =>
-    Ok(views.html.dashboard("PROD", CloudWatch.latency ++ CloudWatch.requestOkCount))
+    Ok(views.html.dashboard("PROD", CloudWatch.latencyFullStack, CloudWatch.requestOkFullStack))
   }
 }

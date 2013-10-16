@@ -43,7 +43,7 @@ object SectionFront extends Style { val className = "section-front" }
  */
 object Masthead extends Style { val className = "masthead" }
 
-case class SectionZone(val tone: String = "news") extends Style {
+case class SectionZone(val tone: String = "news", val showMore: Boolean = false) extends Style {
   val className = "section-zone"
 }
 
@@ -209,17 +209,12 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
   }
 }
 
-case class VideoPosterCleaner(videos: Seq[VideoAsset]) extends HtmlCleaner {
+case class VideoPosterCleaner(poster: Option[ImageAsset]) extends HtmlCleaner {
 
   def clean(body: Document): Document = {
-    body.getElementsByTag("video").filter(_.hasClass("gu-video")).foreach { videoTag =>
-      videoTag.getElementsByTag("source").headOption.foreach{ source =>
-        val file = Some(source.attr("src"))
-        videos.find(_.url == file).foreach{ video =>
-          video.stillImageUrl.foreach{ poster =>
-            videoTag.attr("poster", poster)
-          }
-        }
+    poster.map{ posterImage =>
+      body.getElementsByTag("video").filter(_.hasClass("data-media-id")).foreach { videoTag =>
+        videoTag.attr("poster", posterImage.url.getOrElse(""))
       }
     }
     body
@@ -326,8 +321,9 @@ object OmnitureAnalyticsData {
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
     val publication = data.get("publication").getOrElse("")
-    val registrationEvent = data.get("registrationEvent").getOrElse("")
+    val omnitureEvent = data.get("omnitureEvent").getOrElse("")
     val registrationType = data.get("registrationType").getOrElse("")
+    val omnitureErrorMessage = data.get("omnitureErrorMessage").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -359,8 +355,9 @@ object OmnitureAnalyticsData {
       ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
       ("c56", jsSupport),
-      ("event", registrationEvent),
-      ("v23", registrationType)
+      ("event", omnitureEvent),
+      ("v23", registrationType),
+      ("e27", omnitureErrorMessage)
     )
 
 

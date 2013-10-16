@@ -47,19 +47,21 @@ define([
                     common.mediator.on('modules:footballfixtures:render', function() {
                         var container = common.$g('.collection--' + section, context)
                             .first()[0];
-                        // toggle class
-                        common.$g('.items', container)
-                            .removeClass('items--without-sport-stats')
-                            .addClass('items--with-sport-stats');
-                        // add it after the first item
-                        common.$g('.item:first-child', container)
-                            .after($statsItem);
-                        // now hide one of the shown ones (but not on mobile)
-                        if (detect.getBreakpoint() !== 'mobile') {
-                            common.$g('.item.u-h', container)
-                                .first()
-                                .previous()
-                                .addClass('u-h');
+                        if (container) {
+                            // toggle class
+                            common.$g('.items', container)
+                                .removeClass('items--without-sport-stats')
+                                .addClass('items--with-sport-stats');
+                            // add it after the first item
+                            common.$g('.item:first-child', container)
+                                .after($statsItem);
+                            // now hide one of the shown ones (but not on mobile)
+                            if (detect.getBreakpoint() !== 'mobile') {
+                                common.$g('.item.u-h', container)
+                                    .first()
+                                    .previous()
+                                    .addClass('u-h');
+                            }
                         }
                     });
                     new FootballFixtures({
@@ -88,12 +90,8 @@ define([
                 common.$g('.collection', context).each(function(collection) {
                     var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
                     common.$g('.item', collection).each(function(item, index) {
-                        // is this the first item in a container?
-                        var isMain = isContainer && (index === 0);
-                        common.$g('.item__image-container', item).each(function(imageContainer) {
-                            new ImageUpgrade(imageContainer, isMain)
-                                .upgrade();
-                        });
+                        new ImageUpgrade(item, isContainer && (index === 0))
+                            .upgrade();
                     });
                 });
             });

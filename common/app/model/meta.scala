@@ -33,6 +33,14 @@ trait MetaData {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId
   )
+  
+  def cards: List[(String, Any)] = List(
+    "twitter:site" -> "@guardian",
+    "twitter:app:name:iphone" -> "The Guardian",
+    "twitter:app:id:iphone" -> "409128287",
+    "twitter:app:name:googleplay" -> "The Guardian",
+    "twitter:app:id:googleplay" -> "com.guardian"
+  )
 
   def cacheSeconds = 60
 }
@@ -57,8 +65,16 @@ trait Elements {
   def imageOfWidth(width: Int): Option[ImageAsset] = crops.filter(_.width == width).headOption.orElse(mainPicture)
 
   // Find a main picture crop which matches this width.
-  def mainPicture(width: Int): Option[ImageAsset] = mainImageElement.flatMap(_.imageCrops.filter(_.width == width).headOption)
-                                                    .headOption.orElse(mainPicture)
+  def mainPicture(width: Int): Option[ImageAsset] = {
+    mainImageElement.flatMap(_.imageCrops.filter(_.width == width).headOption).orElse(mainPicture)
+  }
+
+  // Find a main picture crop which matches this aspect ratio.
+  def mainPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageAsset] = {
+    mainImageElement.flatMap(_.imageCrops.filter( image =>
+      image.aspectRatioWidth == aspectWidth && image.aspectRatioHeight == aspectHeight).headOption)
+  }
+
   def images: List[ImageElement]
   def videos: List[VideoElement]
   def thumbnail: Option[ImageElement]

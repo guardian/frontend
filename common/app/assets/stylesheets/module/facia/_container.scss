@@ -2,7 +2,7 @@
     &.collection--news,
     &.collection--sport {
         @include mq($to: tablet) {
-            @include row(1);
+            @include first-row(1);
             .item:nth-child(1) {
                 @include card($with-image: true);
             }

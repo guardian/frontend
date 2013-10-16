@@ -1,19 +1,27 @@
-@(trail: Trail, index: Int, mainItem: Boolean = false)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, mainItem: Boolean = false, limit: Boolean = false)(implicit request: RequestHeader)
 
 @defining(VisualTone(trail)) { tone =>
-    <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image} tone-@tone @if(index >= 5){u-h}" data-link-name="trail | @{index + 1}"
+    <li class="item item--no-image tone-@tone @if(limit && index >= 5){u-h}" data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }>
-        <h@if(mainItem){1}else{2} class="item__title tone-accent-border">
-            @if(trail.isLive){
-                <span class="item__live-indicator">Live</span>
+        <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
+
+            @trail.mainPicture(5,3).map{ mainPicture =>
+                <div class="item__image-container">
+                    <img class="item__image" alt=""
+                         data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)"
+                         data-src-mobile="@ImgSrc(mainPicture, FrontItemMobile)" data-src-main-mobile="@ImgSrc(mainPicture, FrontItemMainMobile)" />
+                </div>
             }
-            <a href="@LinkTo{@trail.url}" class="item__link">
+            <h@if(mainItem){1}else{2} class="item__title">
+                @if(trail.isLive){
+                    <span class="item__live-indicator">Live</span>
+                }
                 @if(tone == "comment") {
                     <span class="i i-quote-light-grey"></span>
                 }
                 @RemoveOuterParaHtml(trail.headline)
-            </a>
-        </h@if(mainItem){1}else{2}>
+            </h@if(mainItem){1}else{2}>
+        </a>
         @if(tone == "comment") {
             @trail.byline.map { byLine =>
                 <p class="item__byline tone-colour">@Html(byLine)</p>
@@ -34,14 +42,5 @@
                 <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
             </time>
         </div>
-        @trail.mainPicture.map{ mainPicture =>
-            <div class="item__image-container">
-                <a href="@LinkTo{@trail.url}" class="item__link">
-                    <img class="item__image" alt=""
-                         data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)"
-                         data-src-mobile="@ImgSrc(mainPicture, FrontItemMobile)" data-src-main-mobile="@ImgSrc(mainPicture, FrontItemMainMobile)" />
-                </a>
-            </div>
-        }
     </li>
 }
