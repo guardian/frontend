@@ -14,13 +14,6 @@ var collection = '.collection--sport',
  **/
 casper.start(host + 'uk?view=mobile');
 
-casper.thenOpen(host + 'uk?view=mobile', {
-    method: 'get',
-    headers: {
-        'X-Gu-Facia':'true'
-    }
-});
-
 /**
  * Scenario: Users can hide collections
  *    Given I visit the network front
