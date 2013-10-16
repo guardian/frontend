@@ -59,17 +59,19 @@ trait ParseCollection extends ExecutionContexts with Logging {
     log.info(s"loading running order configuration from: $collectionUrl")
     val response: Future[Response] = WS.url(collectionUrl).withRequestTimeout(2000).get()
     for {
-      collectionList <- {
-        val curatedList: Future[List[Content]] = parseResponse(response, edition, id)
-        //Potential to fail the chain if we are warmed up
-        if (isWarmedUp)
-          curatedList
-        else
-          curatedList fallbackTo { Future.successful(Nil) }
-      }
+      collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
     } yield Collection(collectionList ++ contentApiList, displayName)
+  }
+
+  def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean) = {
+    val curatedList: Future[List[Content]] = parseResponse(response, edition, id)
+    //Potential to fail the chain if we are warmed up
+    if (isWarmedUp)
+      curatedList
+    else
+      curatedList fallbackTo { Future.successful(Nil) }
   }
 
   private def parseDisplayName(response: Future[Response]): Future[Option[String]] = response.map {r =>
