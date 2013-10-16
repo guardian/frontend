@@ -21,14 +21,9 @@
     <li class="gallerythumbs__item">
         <a href="@LinkTo{@gallery.url?index=@image.index}" data-link-name="@info.rowNum | gallery thumb">
             <img class="gallerythumbs__img"
-            @if(info.rowNum == 1 && orientation == "landscapes") {
                 data-lowsrc="@image.url.map(ImgSrc(_, GalleryLargeTrail))"
                 data-thumb-width="480"
-            } else {
-                data-lowsrc="@image.url.map(ImgSrc(_, GallerySmallTrail))"
-                data-thumb-width="280"
-            }
-            alt="@image.altText.getOrElse("")"
+                alt="@image.altText.getOrElse("")"
             />
         </a>
     </li>
