@@ -42,7 +42,7 @@
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
-    margin: $gutter 0;
+    margin: $baseline*4 0;
     padding-top: $gutter - 1;
 
     .identity-section__head {
