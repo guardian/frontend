@@ -8,6 +8,6 @@ class SectionTemplateTest extends FlatSpec with ShouldMatchers {
 
   it should "render front title" in HtmlUnit("/uk-news") { browser =>
     import browser._
-    $("h1").first.getText should be ("uk news")
+    $("h2 a").first.getText should be ("UK news")
   }
 }
