@@ -36,13 +36,6 @@ casper.test.begin("Show key events only / all posts", function(test) {
     }, 10000);
 });
 
-casper.test.begin("Display Most Popular", function(test){
-    test.assertVisible("#tabs-popular-1", "Section most popular is visible");
-    casper.click("[data-link-name='tab 2 The Guardian']")
-    test.assertVisible("#tabs-popular-2", "Global most popular is visible");
-    test.done();
-});
-
 casper.test.begin("Display latest summary before events on small viewports", function(test) {
     if (casper.exists('.js-article__summary')) {
         casper.viewport(320, 480);

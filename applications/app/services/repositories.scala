@@ -16,9 +16,10 @@ case class IndexPage(page: MetaData, trails: Seq[Trail])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
-  private val SinglePart = """([\w\d\.-]+)""".r
 
   def index(edition: Edition, leftSide: String, rightSide: String) = {
+
+    val section = leftSide.split('/').head
 
     // if the first tag is just one part then change it to a section tag...
     val firstTag = leftSide match {
@@ -28,7 +29,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     // if the second tag is just one part then it is in the same section as the first tag...
     val secondTag = rightSide match {
-      case SinglePart(wordsForUrl) => s"${firstTag.split("/")(0)}/$wordsForUrl"
+      case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
+      case SeriesInSameSection(series) => s"$section/$series"
       case other => other
     }
 
@@ -82,6 +84,11 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id).take(20)
     tag map { IndexPage(_, allTrails) }
   }
+
+  // for some reason and for the life of me I cannot figure it out, this does not compile if these
+  // are at the top of the file :(
+  val SinglePart = """([\w\d\.-]+)""".r
+  val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
 }
 
 trait ImageQuery extends ConciergeRepository with QueryDefaults {

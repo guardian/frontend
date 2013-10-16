@@ -47,19 +47,21 @@ define([
                     common.mediator.on('modules:footballfixtures:render', function() {
                         var container = common.$g('.collection--' + section, context)
                             .first()[0];
-                        // toggle class
-                        common.$g('.items', container)
-                            .removeClass('items--without-sport-stats')
-                            .addClass('items--with-sport-stats');
-                        // add it after the first item
-                        common.$g('.item:first-child', container)
-                            .after($statsItem);
-                        // now hide one of the shown ones (but not on mobile)
-                        if (detect.getBreakpoint() !== 'mobile') {
-                            common.$g('.item.u-h', container)
-                                .first()
-                                .previous()
-                                .addClass('u-h');
+                        if (container) {
+                            // toggle class
+                            common.$g('.items', container)
+                                .removeClass('items--without-sport-stats')
+                                .addClass('items--with-sport-stats');
+                            // add it after the first item
+                            common.$g('.item:first-child', container)
+                                .after($statsItem);
+                            // now hide one of the shown ones (but not on mobile)
+                            if (detect.getBreakpoint() !== 'mobile') {
+                                common.$g('.item.u-h', container)
+                                    .first()
+                                    .previous()
+                                    .addClass('u-h');
+                            }
                         }
                     });
                     new FootballFixtures({

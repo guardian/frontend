@@ -57,9 +57,14 @@ define([
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
                         offset = 0,
+                        article,
                         insertAt;
 
                     event.preventDefault();
+
+                    if (!targetList.articles || !targetList.underDrag) {
+                        return;
+                    }
 
                     targetList.underDrag(false);
                     _.each(targetList.articles(), function(item) {
@@ -73,7 +78,8 @@ define([
 
                     position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
 
-                    if (common.util.urlHost(item).indexOf('google') > -1) {
+                    // parse url query param if present, e.g. http://google.com/?url=...
+                    if (common.util.parseQueryParams(item).url) {
                         item = decodeURIComponent(common.util.parseQueryParams(item).url);
                     }
 
@@ -83,60 +89,76 @@ define([
                         return;
                     }
 
-                    // for display only:
-                    if (targetList.articles) {
-                        insertAt = targetList.articles().indexOf(targetItem) + offset;
-                        insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
-                        targetList.articles.splice(insertAt, 0, new Article({id: item}))
-
-                        contentApi.decorateItems(targetList.articles());
-                        ophanApi.decorateItems(targetList.articles());
+                    if (targetList.collection) {
+                        targetList.collection.state.loadIsPending(true);
                     }
 
-                    if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard
-                        return;
-                    }
+                    insertAt = targetList.articles().indexOf(targetItem) + offset;
+                    insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
+ 
+                    article = new Article({id: item});
+                    targetList.articles.splice(insertAt, 0, article)
 
-                    saveChanges(
-                        'post',
-                        targetList.collection,
-                        {
-                            item:     item,
-                            position: position,
-                            after:    offset > 0 ? true : undefined,
-                            live:     targetList.collection.state.liveMode(),
-                            draft:   !targetList.collection.state.liveMode(),
-                            itemMeta: {
-                                group: targetList.group
-                            }
+                    contentApi.validateItem(article)
+                    .fail(function() {
+                        if (targetList.collection) {
+                            targetList.collection.state.loadIsPending(false);
                         }
-                    )
-
-                    if (!fromList || fromList.keepCopy || fromList === targetList) {
-                        return;
-                    }
-
-                    // for display only:
-                    fromList.articles.remove(function(article) {
-                        return article.meta.id() === item;
+                        targetList.articles.remove(article);
+                        window.alert('Sorry, that content wasn\'t recognised');
                     })
+                    .done(function() {
+                        ophanApi.decorateItems([article]);
 
-                    saveChanges(
-                        'delete',
-                        fromList.collection,
-                        {
-                            item:   item,
-                            live:   fromList.collection.state.liveMode(),
-                            draft: !fromList.collection.state.liveMode()
+                        if (_.isFunction(targetList.callback)) {
+                            targetList.callback();
                         }
-                    )
+
+                        if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard, so no need for persistence
+                            return;
+                        }
+
+                        saveChanges(
+                            'post',
+                            targetList.collection,
+                            {
+                                item:     item,
+                                position: position,
+                                after:    offset > 0 ? true : undefined,
+                                live:     targetList.collection.state.liveMode(),
+                                draft:   !targetList.collection.state.liveMode(),
+                                itemMeta: {
+                                    group: targetList.group
+                                }
+                            }
+                        )
+
+                        if (!fromList || !fromList.collection || fromList.keepCopy || fromList === targetList) {
+                            return;
+                        }
+
+                        fromList.collection.state.loadIsPending(true);
+                        
+                        fromList.articles.remove(function(article) {
+                            return article.meta.id() === item;
+                        })
+
+                        saveChanges(
+                            'delete',
+                            fromList.collection,
+                            {
+                                item:   item,
+                                live:   fromList.collection.state.liveMode(),
+                                draft: !fromList.collection.state.liveMode()
+                            }
+                        )
+                    });
                 }, false);
             }
         };
     };
 
     function saveChanges(method, collection, data) {
-        collection.state.loadIsPending(true);
         authedAjax({
             url: common.config.apiBase + '/collection/' + collection.id,
             type: method,
