@@ -1,7 +1,7 @@
 package client.parser
 
 import net.liftweb.json.{Formats, MappingException, DefaultFormats}
-import net.liftweb.json.JsonAST.JValue
+import net.liftweb.json.JsonAST.{JNothing, JValue}
 import net.liftweb.json.JsonParser._
 import client.{Logging, Error, Response}
 import client.connection.HttpResponse
@@ -35,4 +35,11 @@ trait JsonBodyParser extends Logging {
       }
     }
   }
+
+  def extractUnit(httpResponseResponse: Response[HttpResponse]): Response[Unit] = {
+    extract[Unit](_ => JNothing)(httpResponseResponse)
+  }
+}
+object JsonBodyParser {
+  def jsonField(field: String)(json: JValue): JValue = json \ field
 }

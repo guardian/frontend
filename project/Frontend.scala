@@ -25,15 +25,19 @@ object Frontend extends Build with Prototypes {
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
-      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
+      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
+
+      "org.apache.commons" % "commons-math3" % "3.2"
     )
   )
-  val commonWithTests = common % "test->test;compile->compile"
+
+  def withTests(project: Project) = project % "test->test;compile->compile"
+
+  val commonWithTests = withTests(common)
 
   val front = application("front").dependsOn(commonWithTests).aggregate(common)
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
-  val interactive = application("interactive").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
@@ -48,12 +52,11 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "org.imgscalr" % "imgscalr-lib" % "4.2",
       "org.im4java" % "im4java" % "1.4.0",
-      "commons-io" % "commons-io" % "2.0.1",
       "commons-lang" % "commons-lang" % "2.5"
     )
   )
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    templatesImport ++= Seq("discussion._")
+    templatesImport ++= Seq("discussion._", "discussion.model._")
   )
 
   val router = application("router")
@@ -120,25 +123,26 @@ object Frontend extends Build with Prototypes {
     unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "test" / "resources")
   )
 
-  val dev = application("dev-build").dependsOn(
-    front,
-    facia,
-    article,
-    applications,
-    interactive,
-    sport,
-    coreNavigation,
-    discussion,
-    router,
-    diagnostics,
-    identity,
-    admin)
+  val dev = application("dev-build")
+    .dependsOn(
+      withTests(article)
+    ).dependsOn(
+      front,
+      facia,
+      applications,
+      sport,
+      coreNavigation,
+      discussion,
+      router,
+      diagnostics,
+      identity,
+      admin
+    )
 
   val faciaDev = application("facia-dev-build").dependsOn(
     facia,
     article,
     applications,
-    interactive,
     sport,
     coreNavigation,
     image,
@@ -154,7 +158,6 @@ object Frontend extends Build with Prototypes {
     facia,
     article,
     applications,
-    interactive,
     sport,
     coreNavigation,
     image,

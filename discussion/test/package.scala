@@ -1,8 +1,9 @@
 package test
 
+import java.io.File
 import recorder.HttpRecorder
 import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap, Cookie}
-import play.api.libs.ws.Response
+import play.api.libs.ws.{WS, Response}
 import play.api.Application
 import java.util
 import java.net.URI
@@ -55,8 +56,9 @@ object DiscussionApiHttpRecorder extends HttpRecorder[Response] {
 
 class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
 
-  override protected def GET(url: String) = DiscussionApiHttpRecorder.load(url, Map.empty){
-    super.GET(url)
+  protected val apiRoot = conf.Configuration.discussion.apiRoot
+  protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
+    WS.url(url).withRequestTimeout(2000).get()
   }
 
 }

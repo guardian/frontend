@@ -1,15 +1,6 @@
 /* Base form styles
    ========================================================================== */
 
-[type=checkbox] {
-    height: 13px;
-    margin-left: $baseline;
-    position: relative;
-    top: -2px;
-    vertical-align: bottom;
-    width: 13px;
-}
-
 .form {
     margin-top: $baseline*6;
     margin-bottom: $baseline*6;
@@ -21,10 +12,12 @@
     margin-right: 0;
 }
 
-.form__note {
+.form__note,
+.form-field__note {
     font-family: $sans-serif;
-    font-size: 12px;
-    font-size: 1.2rem;
+    font-size: 13px;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
 }
 
 .form-fields {
@@ -64,13 +57,6 @@
     margin-top: 6px;
 }
 
-.form-field__note {
-    font-family: $sans-serif;
-    font-size: 12px;
-    font-size: 1.2rem;
-    margin-bottom: 12px;
-}
-
 .form-field__note--below {
     margin-bottom: 0;
     margin-top: 6px;
@@ -94,7 +80,8 @@
     margin-bottom: 6px;
 }
 
-.text-input {
+.text-input,
+.textarea {
     border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
@@ -107,9 +94,15 @@
     padding: 8px 8px 7px;
     @include rounded-corners(0);
     width: 100%;
+    -webkit-appearance: none;
 
     &:focus {
         border-color: $c-neutral2;
+    }
+
+    @include mq($to:tablet) {
+        font-size: 16px;
+        font-size: 1.6rem;
     }
 }
 
@@ -117,6 +110,7 @@
     background: $c-newsDefault;
     border: 0 none;
     color: #fff;
+    cursor: pointer;
     font-size: 14px;
     font-size: 1.4rem;
     margin: 0 $gutter 0 0;
@@ -133,14 +127,36 @@
     }
 }
 
+.submit-input[disabled] {
+    background: $c-neutral5;
+}
+
 .check-label {
     display: inline-block;
     font-family: $sans-serif;
     font-size: 13px;
     font-size: 1.3rem;
+    margin-bottom: $baseline;
+    padding-left: $gutter;
+
+    @include mq($to:tablet) {
+        padding-left: 20px;
+    }
 }
 
 .check-label--helper {
     position: relative;
-    top: $baseline;
+    top: $baseline*2;
+}
+
+[type=checkbox] {
+    float: left;
+    height: 13px;
+    margin-left: -$gutter;
+    margin-top: 4px;
+    width: 13px;
+
+    @include mq($to:tablet) {
+        margin-left: -20px;
+    }
 }

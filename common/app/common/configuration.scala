@@ -34,6 +34,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     val stage = apply("STAGE", "unknown")
 
+    val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
     val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
@@ -69,8 +70,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ophanApi {
-    lazy val key = configuration.getMandatoryStringProperty("ophan.api.key")
-    lazy val host = configuration.getMandatoryStringProperty("ophan.api.host")
+    lazy val key = configuration.getStringProperty("ophan.api.key")
+    lazy val host = configuration.getStringProperty("ophan.api.host")
     lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
