@@ -15,8 +15,8 @@ define([
             ],
             previewUrls: {
                 dev:  'http://localhost:9000',
-                code: 'http://frontend-facialoa-1jpljv3prub79-415796347.eu-west-1.elb.amazonaws.com',
-                prod: 'http://frontend-facialoa-i92tz7oeax7w-1091080586.eu-west-1.elb.amazonaws.com'
+                code: 'http://m.code.dev-theguardian.com',
+                prod: 'http://www.theguardian.com'
             },
             filterTypes: {
                 section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },
