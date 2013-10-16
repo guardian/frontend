@@ -65,7 +65,11 @@
     @include mq(desktop) {
         background-color: transparent !important;
     }
-    @include mq(1152px) {
+    @include mq(1157px, 1299px) {
+        border-right: 1px solid $c-neutral5;
+        padding-right: $gutter - 1;
+    }
+    @include mq(1316px) { // When the layout starts to be centered
         border-right: 1px solid $c-neutral5;
         padding-right: $gutter - 1;
     }
