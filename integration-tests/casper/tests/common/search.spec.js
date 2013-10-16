@@ -3,7 +3,7 @@
 
 /**
  *
- * Most popular feature tests
+ * Search feature tests
  *
  **/
 
