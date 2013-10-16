@@ -1,0 +1,57 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"info/2013/aug/26/2",
+      "sectionId":"info",
+      "sectionName":"Info",
+      "webPublicationDate":"2013-08-26T10:02:13Z",
+      "webTitle":"Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick",
+      "webUrl":"http://www.theguardian.com/info/2013/aug/26/2",
+      "apiUrl":"http://content.guardianapis.com/info/2013/aug/26/2",
+      "fields":{
+        "trailText":"<p>Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick</p>",
+        "headline":"Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick",
+        "body":"<p>This blog was taken down on 26 August 2013 as it has been discovered to have been based on a hoax. </p><!-- Guardian Watermark: internal-code/content/415848123|2013-10-16T15:17:42Z|63f61a9c31d939713187cb196160abbbb4241290 -->",
+        "showInRelatedContent":"false",
+        "lastModified":"2013-08-26T10:02:13Z",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tavq",
+        "wordcount":"21",
+        "commentable":"false",
+        "internalContentCode":"415848123",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1955933",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-29T10:02:13Z"
+      },
+      "tags":[{
+        "id":"info/info",
+        "type":"keyword",
+        "webTitle":"Information",
+        "webUrl":"http://www.theguardian.com/info/info",
+        "apiUrl":"http://content.guardianapis.com/info/info",
+        "sectionId":"info",
+        "sectionName":"Info",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[]
+  }
+}
