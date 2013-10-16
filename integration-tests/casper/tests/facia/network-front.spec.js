@@ -2,53 +2,36 @@
 'use strict';
 
 var collection = '.collection--sport',
-    button = collection + ' .collection__display-toggle',
-    clearLocalStorage = function(casper) {
-        casper.evaluate(function() { window.localStorage.clear(); });
-    };
+    button = collection + ' .collection__display-toggle';
 
 /**
  *
  * Network front feature tests
  *
  **/
-casper.start(host + 'uk?view=mobile');
-
-/**
- * Scenario: Users can hide collections
- *    Given I visit the network front
- *    When I hide a collection
- *    Then the collection will be hidden
- **/
-casper.test.begin('Users can hide collections', function(test) {
-    casper.then(function() {
-        clearLocalStorage(this);
-        this.reload();
-    });
-    casper.waitForSelector(button, function() {
-        this.click(button);
-    });
-    casper.waitWhileVisible(collection + ' .items', function() {
-        test.assertNotVisible(collection + ' .items', 'collection is hidden');
-        test.done();
+casper.test.setUp(function() {
+    casper.start(host + 'uk?view=mobile', function() {
+        clearLocalStorage();
     });
 });
 
 /**
-* Scenario: Users can show hidden collections
-*     Given I visit the network front
-*         And a collection is hidden
-*     When I show a collection
-*     Then the collection will be shown
-**/
-casper.test.begin('Users can show hidden collections', function(test) {
-    casper.waitForSelector(button, function(){
+ * Scenario: Users can hide collections
+ *    Given I visit the network front
+ *    When I hide and show a collection
+ *    Then the collection will be hidden and shown
+ **/
+casper.test.begin('Users can hide and show collections', function(test) {
+    casper.waitForSelector(button, function() {
         this.click(button);
-    });
-    casper.waitUntilVisible(collection + ' .items', function(){
+        test.assertNotVisible(collection + ' .items', 'collection is hidden');
+        this.click(button);
         test.assertVisible(collection + ' .items', 'collection is shown');
-        test.done();
     });
+
+    casper.run(function() {
+        test.done();
+    })
 });
 
 /**
@@ -58,18 +41,17 @@ casper.test.begin('Users can show hidden collections', function(test) {
 *    Then the collection should be closed
 **/
 casper.test.begin('Collections remember user\'s preference of state', function(test) {
-    casper.then(function() {
-        clearLocalStorage(this);
-        this.reload();
-    });
     casper.waitForSelector(button, function(){
         this.click(button);
         this.reload();
     });
     casper.waitWhileVisible(collection + ' .items', function(){
         test.assertNotVisible(collection + ' .items', 'collection is hidden');
-        test.done();
     });
+
+    casper.run(function() {
+        test.done();
+    })
 });
 
 /**
@@ -85,8 +67,11 @@ casper.test.begin('Users can show more items in a collection', function(test) {
         var currentItemsShown = this.evaluate(function() { return document.querySelectorAll('.collection--news .item:not(.u-h)').length; })
         this.click(showMoreSelector);
         test.assertNotEquals('.collection--news .item:not(.u-h)', currentItemsShown, 'showing more items');
-        test.done();
     });
+
+    casper.run(function() {
+        test.done();
+    })
 });
 
 /**
@@ -97,8 +82,11 @@ casper.test.begin('Users can show more items in a collection', function(test) {
 casper.test.begin('First item in a collection displays an image', function(test) {
     casper.waitForSelector('.collection .item--image-upgraded', function(){
         test.assertExists('.collection .item--image-upgraded', 'item\'s image shown');
-        test.done();
     });
+
+    casper.run(function() {
+        test.done();
+    })
 });
 
 /**
@@ -109,8 +97,11 @@ casper.test.begin('First item in a collection displays an image', function(test)
 casper.test.begin('Timestamps are relative', function(test) {
     casper.then(function() {
         test.assertTruthy(this.getElementAttribute('.timestamp__text', 'title'), 'timestamp relativised');
-        test.done();
     });
+
+    casper.run(function() {
+        test.done();
+    })
 });
 
 /**
@@ -121,8 +112,11 @@ casper.test.begin('Timestamps are relative', function(test) {
 casper.test.begin('Items display their comment count', function(test) {
     casper.waitForSelector('.trail__count--commentcount', function(){
         test.assertExists('.trail__count--commentcount', 'comment count exists');
-        test.done();
     });
+
+    casper.run(function() {
+        test.done();
+    })
 });
 
 /**
@@ -133,10 +127,9 @@ casper.test.begin('Items display their comment count', function(test) {
 casper.test.begin('Popular collection appears at the bottom of the page', function(test) {
     casper.waitForSelector('.collection--popular', function(){
         test.assertExists('.collection--popular', 'popular collection displayed');
-        test.done();
     });
-});
 
-casper.run(function() {
-    casper.test.renderResults(true, 0, this.cli.get('xunit') + 'network-front.xml');
+    casper.run(function() {
+        test.done();
+    })
 });

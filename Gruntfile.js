@@ -428,12 +428,13 @@ module.exports = function (grunt) {
             }
         },
 
+        casperjsLogFile: 'results.xml',
         casperjs: {
             options: {
                 // Pre-prod environments have self-signed SSL certs
                 ignoreSslErrors: 'yes',
                 includes: ['integration-tests/casper/tests/shared.js'],
-                xunit: 'integration-tests/target/casper/',
+                xunit: 'integration-tests/target/casper/<%= casperjsLogFile %>',
                 loglevel: 'debug',
                 direct: true
             },
@@ -462,11 +463,8 @@ module.exports = function (grunt) {
                     'integration-tests/casper/tests/applications/*.spec.js'
                 ]
             },
-            front: {
-                src: ['integration-tests/casper/tests/front/*.js']
-            },
             facia: {
-                src: ['integration-tests/casper/tests/facia/*.js']
+                src: ['integration-tests/casper/tests/facia/*.spec.js']
             },
             corenavigation: {
                 src: ['integration-tests/casper/tests/core-navigation/*.js']
@@ -584,6 +582,7 @@ module.exports = function (grunt) {
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
         app = app || 'allexceptadmin';
+        grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
     grunt.registerTask('test', ['compile', 'jshint:common', 'jasmine', 'test:integration']);
