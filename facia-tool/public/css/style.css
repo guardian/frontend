@@ -365,7 +365,6 @@ button {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     min-height: 53px;
-    padding: 0 15px 0 0;
 }
 
 .clipboard__title {

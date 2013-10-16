@@ -56,9 +56,10 @@ define([
                         targetItem = ko.dataFor(event.target),
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
-                        offset = 0,
                         article,
-                        insertAt;
+                        groups,
+                        insertAt,
+                        isAfter = false;
 
                     event.preventDefault();
 
@@ -71,9 +72,22 @@ define([
                         item.state.underDrag(false);
                     });
 
+                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other articles in this group,
                     if (targetItem.constructor !== Article) {
-                        targetItem = _.last(targetList.articles ? targetList.articles() : undefined);
-                        offset  = 0 + !!targetItem;
+                        targetItem = _.last(targetList.articles());
+                        if (targetItem) {
+                            isAfter = true;
+                        // or if there arent't any other articles, after those in the first preceding group that contains articles.
+                        } else if (targetList.collection) {
+                            var groups = targetList.collection.currentGroups(); 
+                            for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
+                                targetItem = _.last(groups[i].articles());
+                                if (targetItem) {
+                                    isAfter = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
@@ -85,15 +99,11 @@ define([
 
                     item = common.util.urlAbsPath(item);
 
-                    if (item === position) { // adding an item next to itself
-                        return;
-                    }
-
                     if (targetList.collection) {
                         targetList.collection.state.loadIsPending(true);
                     }
 
-                    insertAt = targetList.articles().indexOf(targetItem) + offset;
+                    insertAt = targetList.articles().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
  
                     article = new Article({id: item});
@@ -124,7 +134,7 @@ define([
                             {
                                 item:     item,
                                 position: position,
-                                after:    offset > 0 ? true : undefined,
+                                after:    isAfter,
                                 live:     targetList.collection.state.liveMode(),
                                 draft:   !targetList.collection.state.liveMode(),
                                 itemMeta: {
@@ -142,7 +152,7 @@ define([
                         }
 
                         fromList.collection.state.loadIsPending(true);
-                        
+
                         fromList.articles.remove(function(article) {
                             return article.meta.id() === item;
                         })
