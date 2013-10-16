@@ -17,7 +17,7 @@
     }
 
     @include mq(tablet) {
-        min-height: auto;
+        min-height: 0;
         padding: $baseline*3 0;
         border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 
@@ -434,8 +434,8 @@ video {
 
 @include mq(leftCol) {
     .article-wrapper {
-        padding-left: $gutter;
-        padding-right: $gutter;
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
     .article__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;

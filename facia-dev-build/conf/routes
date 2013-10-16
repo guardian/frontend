@@ -106,6 +106,8 @@ GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails                    controllers.FaciaController.renderTrails(path)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json               controllers.FaciaController.renderTrailsJson(path)
 
+GET        /responsive-viewer                                                                               controllers.FaciaController.renderResponsiveViewer()
+
 # Applications
 GET        /sections                                                                                        controllers.SectionsController.renderSections()
 GET        /sections.json                                                                                   controllers.SectionsController.renderSectionsJson()
@@ -122,6 +124,9 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                    controllers.IndexController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                         controllers.IndexController.render(path)
 GET        /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>        controllers.IndexController.renderCombiner(leftSide, rightSide)
+
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                          controllers.InteractiveController.renderInteractiveJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                               controllers.InteractiveController.renderInteractive(path)
 
 # Articles
 GET        /*path.json                                                                                      controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])

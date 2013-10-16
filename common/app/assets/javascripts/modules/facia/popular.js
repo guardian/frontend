@@ -35,9 +35,7 @@ define([
         imageTmpl = function(trail) {
             return updateTmpl(
                 '<div class="item__image-container">' +
-                    '<a href="@trail.url" class="item__link">' +
-                        '<img class="item__image" alt="" data-src="@trail.mainPicture.item"  data-src-main="@trail.mainPicture.itemMain" data-src-mobile="@trail.mainPicture.itemMobile"  data-src-main-mobile="@trail.mainPicture.itemMainMobile" />' +
-                    '</a>' +
+                    '<img class="item__image" alt="" data-src="@trail.mainPicture.item"  data-src-main="@trail.mainPicture.itemMain" data-src-mobile="@trail.mainPicture.itemMobile"  data-src-main-mobile="@trail.mainPicture.itemMainMobile" />' +
                 '</div>',
                 trail
             );
@@ -46,7 +44,7 @@ define([
     var popular =  {
 
         render:  function (config) {
-            var hasSection = config.page && config.page.section !== 'global';
+            var hasSection = config.page && config.page.section && config.page.section !== 'global';
             return ajax({
                 url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
                 type: 'json',
@@ -67,13 +65,9 @@ define([
 
                         // only show images for the first 3 items
                         if (index < 3 && trail.mainPicture) {
-                            var $imageContainer = bonzo(bonzo.create(
-                                imageTmpl(trail)
-                            ));
-                            $item.addClass('item--with-image');
-                            common.$g('.item__link', $item).prepend($imageContainer);
+                            common.$g('.item__link', $item).prepend(imageTmpl(trail));
                             if (index < 3) {
-                                new ImageUpgrade($imageContainer[0], index === 0)
+                                new ImageUpgrade($item[0], index === 0)
                                     .upgrade();
                             }
                         }

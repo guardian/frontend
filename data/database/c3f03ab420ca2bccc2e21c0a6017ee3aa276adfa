@@ -1,0 +1,1010 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"commentisfree/2013/oct/15/mums-carers-treated-like-criminals-hidden-cameras",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-15T14:35:43Z",
+      "webTitle":"Would you want your mum's care workers to be treated like criminals? | Christina Patterson",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/15/mums-carers-treated-like-criminals-hidden-cameras",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/15/mums-carers-treated-like-criminals-hidden-cameras",
+      "fields":{
+        "newspaperPageNumber":"34",
+        "trailText":"<strong>Christina Patterson:</strong> If we want care workers to do their jobs well we have to give them proper training, not install hidden cameras in their workplace",
+        "headline":"Would you want your mum's care workers to be treated like criminals?",
+        "body":"<p>\"Old age,\" as <a href=\"http://www.goodreads.com/author/quotes/56410.Bette_Davis\" title=\"\">Bette Davis said</a>, \"is not for sissies.\" In this country, it certainly isn't. It's bad enough to have to deal with the aches and pains, the failing sight, and hearing, and the often failing mind. It's bad enough to have to deal with the worry about how you're going to keep yourself fed, clothed and warm. But the normal worries of old age seem like a luxury next to the worries many now face: that the people meant to be looking after them will be cruel.</p><p>We know, because we've seen it on TV, that people who are employed to look after people who are weak can treat them in a way they wouldn't treat a dog. We've read the reports, and heard the shocking figures. We've heard, for instance, that reports of \"elder abuse\" to local councils have gone up nearly 30% in a year. That's not \"elder neglect\", which would be quite bad enough, but real, horrible, deliberate abuse.</p><p>So you can see why Andrea Sutcliffe, the new chief inspector of social care, <a href=\"http://www.theguardian.com/social-care-network/2013/oct/15/cqc-andrea-sutcliffe-adult-social-care\" title=\"\">might think the answer was to put up hidden cameras</a>. She said in an interview this morning that \"we absolutely need to do something about those services where care is unacceptable\". Well, yes. \"Poor care\", to use the jargon the health service loves and which makes being looked after sound like something that happens on a conveyor belt, is always \"unacceptable\". Of course the <a href=\"http://www.cqc.org.uk\" title=\"\">Care Quality Commission</a>, which hasn't always done a brilliant job at spotting and acting on \"poor care\", ought to start doing it now. But with <em>hidden cameras</em>? Like, you know, a prison?</p><p>A man from something called <a href=\"http://www.bigbrotherwatch.org.uk\" title=\"\">Big Brother Watch</a> was worried that the \"covert surveillance\" would be \"an attack on the privacy and dignity\" of the residents of the homes. And it would. Bad enough to have your bottom wiped by a stranger, but to have your bottom being wiped by a stranger recorded, and watched by a bored official longing for his fag break, is an awful lot worse.</p><p>But nobody seemed to give a thought to the \"privacy and dignity\" of the people looking after them. Come and work in a care home! Be paid the minimum wage! And be treated like a criminal.</p><p>If we want people to do their jobs well, we really can't treat them like this. If we want people to be kind and caring and treat other people with respect, we need to treat them with respect too. And&nbsp;if we want people to do their jobs well we have to show them how to do their jobs well, and give them a proper training, and a better wage.</p><p>At a recent conference at the University of Surrey on the ethics of social care, I heard about a project in Belgium. People working in care homes were sent to a \"care ethics lab\" to be looked after for a day and a night. Some were in wheelchairs. All waited, as you do have to wait if you're 80 and can't walk, to be put in a hoist and washed, or clothed, or fed. And all found that it had a massive effect on the way they did their work.</p><p>\"I felt hideous,\" said one British manager of a care home who tried the programme. \"I didn't feel clean enough. Meals were the only thing to look forward to, but I ended up overfed.\" It&nbsp;was, she said, the best training she'd had in 12 years. \"I think,\" she said, \"it&nbsp;needs to be mandatory.\"</p><p>I think so too. If you have a taste of what it's like to be looked after, you don't need to be told to ask, as Sutcliffe now tells her staff they should, \"is it good enough for my mum?\" You'd know if it was good enough for your mum. You'd know if it was good enough for you.</p><p>If we're lucky, we all get old. If we're lucky, we get looked after by someone who has a little bit of understanding about what it's like to be old. There's so much we could do to make things better for old people in this country, but let's ditch the cameras and start with this.</p><!-- Guardian Watermark: internal-code/content/420030693|2013-10-16T12:07:39Z|0d121fa427dc0df8083b3d2306df2c3ccfd9d9ce -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T23:07:03Z",
+        "hasStoryPackage":"true",
+        "standfirst":"If we want care workers to do their jobs well we have to give them proper training, not install hidden cameras in their workplace",
+        "shortUrl":"http://gu.com/p/3jhm2",
+        "wordcount":"696",
+        "commentable":"true",
+        "internalContentCode":"420030693",
+        "allowUgc":"false",
+        "internalOctopusCode":"8197569",
+        "isPremoderated":"false",
+        "byline":"Christina Patterson",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-16",
+        "internalPageCode":"1981289",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T14:35:43Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/care-workers",
+        "type":"keyword",
+        "webTitle":"Care workers",
+        "webUrl":"http://www.theguardian.com/society/care-workers",
+        "apiUrl":"http://content.guardianapis.com/society/care-workers",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/social-care",
+        "type":"keyword",
+        "webTitle":"Social care",
+        "webUrl":"http://www.theguardian.com/society/social-care",
+        "apiUrl":"http://content.guardianapis.com/society/social-care",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/christina-patterson",
+        "type":"contributor",
+        "webTitle":"Christina Patterson",
+        "webUrl":"http://www.theguardian.com/profile/christina-patterson",
+        "apiUrl":"http://content.guardianapis.com/profile/christina-patterson",
+        "bio":"<p>Christina Patterson is a writer, broadcaster and columnist who tweets at @queenchristina_ She writes about politics, society, culture, travel, books and the arts. She has been shortlisted for this year's Orwell prize for political journalism for her campaigning work to improve standards in nursing. She has also made a film about nursing for The One Show and documentaries about it for Radio 4</p><p>Twitter: <a href=\"https://twitter.com/@queenchristina_\">@queenchristina_</a></p>",
+        "r2ContributorId":"56197",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/26/1366989337858/christina-patterson.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420032582",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846013000/Andrea-Sutcliffe-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Andrea Sutcliffe",
+            "height":"276",
+            "credit":"Graham Turner/Guardian",
+            "caption":"‘If you have a taste of what it's like to be looked after, you don't need to be told to ask, as [CQC head] Andrea Sutcliffe now tells her staff they should, \"is it good enough for my mum?\".' Photograph: Graham Turner for the Guardian",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"society/2013/oct/15/social-care-elderly-questions-answered-sell-homes",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-10-15T16:10:49Z",
+      "webTitle":"Social care for the elderly – key questions answered",
+      "webUrl":"http://www.theguardian.com/society/2013/oct/15/social-care-elderly-questions-answered-sell-homes",
+      "apiUrl":"http://content.guardianapis.com/society/2013/oct/15/social-care-elderly-questions-answered-sell-homes",
+      "fields":{
+        "trailText":"The government has been <a href=\"http://www.theguardian.com/society/2013/oct/15/government-cut-balls-off-elderly-social-care-scheme\" title=\"\">accused of backtracking on a promise </a>that elderly people will not have to sell their homes to pay for long-term care but why has it become such a hot political issue?",
+        "headline":"Social care for the elderly – key questions answered",
+        "body":"<h2>What's the row all about?</h2><p>At the heart of the matter is the debate over who should pay for someone who moves into a care home because they can no longer look after themselves. Successive governments have been trying to establish how much the state and the individual should pay, particularly if the person receiving care owns a house they could sell or substantial savings. About 40,000 people a year are forced to sell their homes to pay care home bills. The question has become a hot political issue, with strong feelings on both sides of the argument. This only affects those in England. <a href=\"http://www.theguardian.com/society/2008/apr/29/longtermcare.socialcare\" title=\"\">Scotland has a different system of free personal care for elderly people.</a></p><p></p><h2>What was proposed in the care bill?</h2><p>The Oxford economist Andrew Dilnot's <a href=\"http://www.theguardian.com/money/2011/jul/04/elderly-care-proposals-dinot-report\" title=\"\">commission into the funding of long-term care originally recommended</a> that a cap of between £23,000 and £50,000 (with a suggested figure of £35,000) should be placed on the costs of long-term care. This would be the most an individual should pay for their care.</p><p>His report has loosely formed the basis for the bill going through parliament.</p><p>The government decided it could not afford his proposal and <a href=\"http://www.theguardian.com/society/2013/feb/10/inheritance-tax-freeze-social-care\" title=\"\">instead set the cap at £75,000 </a>on the grounds that a lower figure would be too costly. The bill's aim is to give people a clear figure to enable them to plan for their old age. The cap only covers care costs. If you are in residential care you will be expected to contribute towards your \"hotel\" costs, such as food and accommodation, as you would if you were living in your own home.</p><p>Dilnot originally also suggested a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Councils would pay the costs and recoup them once the house was sold, usually after the person in care had died.</p><p>This was to stop people having to make distressed sales of homes at a time of great uncertainty as they were moving into a care home.</p><p></p><h2>So what's changed?</h2><p><a href=\"http://www.theguardian.com/society/2013/oct/15/government-cut-balls-off-elderly-social-care-scheme\" title=\"\">Lord Lipsey says the government has moved the goalposts</a> by quietly inserting a new clause that would mean the deferred payments scheme would not be available if the person held any assets of £23,250 or above. He says that because many older people have savings above this level, they will in effect have to either spend their savings down to below £23,250, or be forced to sell their homes, just as before.</p><p>He and others have since said this could kill the bill in its current form as few Tory MPs in particular will vote for such a scheme.</p><p></p><h2>What's the government saying? </h2><p>A spokeswoman for the Department of Health said its aim is to legislate to ensure that every council in the country puts in place a scheme to allow people to defer payment of care home bills. \"The fine details, as you would expect, are being consulted on now, but we are clear that this will deliver on the promise that people will not be forced to sell their home in their lifetime to pay for care.\"</p><!-- Guardian Watermark: internal-code/content/420043127|2013-10-16T12:07:39Z|28f26d1f023029663bf245b674cfe74196baaaf8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T16:10:49Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852393151/Carer-supporting-an-elder-003.jpg",
+        "standfirst":"The government has been <a href=\"http://www.theguardian.com/society/2013/oct/15/government-cut-balls-off-elderly-social-care-scheme\" title=\"\">accused of backtracking on a promise </a>that elderly people will not have to sell their homes to pay for long-term care but why has it become such a hot political issue?",
+        "shortUrl":"http://gu.com/p/3jhqb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852393151/Carer-supporting-an-elder-003.jpg",
+        "wordcount":"512",
+        "commentable":"true",
+        "internalContentCode":"420043127",
+        "allowUgc":"false",
+        "internalOctopusCode":"8198058",
+        "isPremoderated":"false",
+        "byline":"Miles Brignall",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981406",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T16:10:49Z"
+      },
+      "tags":[{
+        "id":"society/social-care",
+        "type":"keyword",
+        "webTitle":"Social care",
+        "webUrl":"http://www.theguardian.com/society/social-care",
+        "apiUrl":"http://content.guardianapis.com/society/social-care",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/q-and-as",
+        "type":"tone",
+        "webTitle":"Q&amp;As",
+        "webUrl":"http://www.theguardian.com/tone/q-and-as",
+        "apiUrl":"http://content.guardianapis.com/tone/q-and-as",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/milesbrignall",
+        "type":"contributor",
+        "webTitle":"Miles Brignall",
+        "webUrl":"http://www.theguardian.com/profile/milesbrignall",
+        "apiUrl":"http://content.guardianapis.com/profile/milesbrignall",
+        "bio":"<p>Miles Brignall covers consumer issues for the Guardian in the <a href=\"http://www.guardian.co.uk/money\">money</a> section, published each Saturday.</p>",
+        "rcsId":"GNL342816",
+        "r2ContributorId":"16152",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/miles_brignall_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420044941",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852278171/Elderly-woman-in--a-care--001.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"54",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852281004/Elderly-woman-in--a-care--002.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"130",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852282334/Elderly-woman-in--a-care--003.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"84",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852283669/Elderly-woman-in--a-care--004.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"132",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852287461/Elderly-woman-in--a-care--005.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"168",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852288722/Elderly-woman-in--a-care--006.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"180",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852289923/Elderly-woman-in--a-care--007.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"228",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852291226/Elderly-woman-in--a-care--008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Owen Franken",
+            "altText":"Elderly woman in  a care home",
+            "height":"276",
+            "credit":"Owen Franken/Corbis",
+            "caption":"Elderly Woman in Assisted Care Home ca. May 1999 Photograph: Owen Franken/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852399905/Carer-supporting-an-elder-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Andrew Bret Wallis",
+            "altText":"Carer supporting an elderly woman",
+            "height":"276",
+            "credit":"Andrew Bret Wallis/Getty Images",
+            "caption":"About 40,000 people a year are forced to sell their homes to pay care home bills. Photograph: Andrew Bret Wallis/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420044942",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852393151/Carer-supporting-an-elder-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Andrew Bret Wallis",
+            "altText":"Carer supporting an elderly woman",
+            "height":"84",
+            "credit":"Andrew Bret Wallis/Getty Images",
+            "caption":"Carer supporting an elderly woman Photograph: Andrew Bret Wallis/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"commentisfree/2013/oct/15/mums-carers-treated-like-criminals-hidden-cameras",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-15T14:35:43Z",
+      "webTitle":"Would you want your mum's care workers to be treated like criminals? | Christina Patterson",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/15/mums-carers-treated-like-criminals-hidden-cameras",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/15/mums-carers-treated-like-criminals-hidden-cameras",
+      "fields":{
+        "newspaperPageNumber":"34",
+        "trailText":"<strong>Christina Patterson:</strong> If we want care workers to do their jobs well we have to give them proper training, not install hidden cameras in their workplace",
+        "headline":"Would you want your mum's care workers to be treated like criminals?",
+        "body":"<p>\"Old age,\" as <a href=\"http://www.goodreads.com/author/quotes/56410.Bette_Davis\" title=\"\">Bette Davis said</a>, \"is not for sissies.\" In this country, it certainly isn't. It's bad enough to have to deal with the aches and pains, the failing sight, and hearing, and the often failing mind. It's bad enough to have to deal with the worry about how you're going to keep yourself fed, clothed and warm. But the normal worries of old age seem like a luxury next to the worries many now face: that the people meant to be looking after them will be cruel.</p><p>We know, because we've seen it on TV, that people who are employed to look after people who are weak can treat them in a way they wouldn't treat a dog. We've read the reports, and heard the shocking figures. We've heard, for instance, that reports of \"elder abuse\" to local councils have gone up nearly 30% in a year. That's not \"elder neglect\", which would be quite bad enough, but real, horrible, deliberate abuse.</p><p>So you can see why Andrea Sutcliffe, the new chief inspector of social care, <a href=\"http://www.theguardian.com/social-care-network/2013/oct/15/cqc-andrea-sutcliffe-adult-social-care\" title=\"\">might think the answer was to put up hidden cameras</a>. She said in an interview this morning that \"we absolutely need to do something about those services where care is unacceptable\". Well, yes. \"Poor care\", to use the jargon the health service loves and which makes being looked after sound like something that happens on a conveyor belt, is always \"unacceptable\". Of course the <a href=\"http://www.cqc.org.uk\" title=\"\">Care Quality Commission</a>, which hasn't always done a brilliant job at spotting and acting on \"poor care\", ought to start doing it now. But with <em>hidden cameras</em>? Like, you know, a prison?</p><p>A man from something called <a href=\"http://www.bigbrotherwatch.org.uk\" title=\"\">Big Brother Watch</a> was worried that the \"covert surveillance\" would be \"an attack on the privacy and dignity\" of the residents of the homes. And it would. Bad enough to have your bottom wiped by a stranger, but to have your bottom being wiped by a stranger recorded, and watched by a bored official longing for his fag break, is an awful lot worse.</p><p>But nobody seemed to give a thought to the \"privacy and dignity\" of the people looking after them. Come and work in a care home! Be paid the minimum wage! And be treated like a criminal.</p><p>If we want people to do their jobs well, we really can't treat them like this. If we want people to be kind and caring and treat other people with respect, we need to treat them with respect too. And&nbsp;if we want people to do their jobs well we have to show them how to do their jobs well, and give them a proper training, and a better wage.</p><p>At a recent conference at the University of Surrey on the ethics of social care, I heard about a project in Belgium. People working in care homes were sent to a \"care ethics lab\" to be looked after for a day and a night. Some were in wheelchairs. All waited, as you do have to wait if you're 80 and can't walk, to be put in a hoist and washed, or clothed, or fed. And all found that it had a massive effect on the way they did their work.</p><p>\"I felt hideous,\" said one British manager of a care home who tried the programme. \"I didn't feel clean enough. Meals were the only thing to look forward to, but I ended up overfed.\" It&nbsp;was, she said, the best training she'd had in 12 years. \"I think,\" she said, \"it&nbsp;needs to be mandatory.\"</p><p>I think so too. If you have a taste of what it's like to be looked after, you don't need to be told to ask, as Sutcliffe now tells her staff they should, \"is it good enough for my mum?\" You'd know if it was good enough for your mum. You'd know if it was good enough for you.</p><p>If we're lucky, we all get old. If we're lucky, we get looked after by someone who has a little bit of understanding about what it's like to be old. There's so much we could do to make things better for old people in this country, but let's ditch the cameras and start with this.</p><!-- Guardian Watermark: internal-code/content/420030693|2013-10-16T12:07:39Z|0d121fa427dc0df8083b3d2306df2c3ccfd9d9ce -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T23:07:03Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"If we want care workers to do their jobs well we have to give them proper training, not install hidden cameras in their workplace",
+        "shortUrl":"http://gu.com/p/3jhm2",
+        "wordcount":"696",
+        "commentable":"true",
+        "internalContentCode":"420030693",
+        "allowUgc":"false",
+        "internalOctopusCode":"8197569",
+        "isPremoderated":"false",
+        "byline":"Christina Patterson",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-16",
+        "internalPageCode":"1981289",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T14:35:43Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/care-workers",
+        "type":"keyword",
+        "webTitle":"Care workers",
+        "webUrl":"http://www.theguardian.com/society/care-workers",
+        "apiUrl":"http://content.guardianapis.com/society/care-workers",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/social-care",
+        "type":"keyword",
+        "webTitle":"Social care",
+        "webUrl":"http://www.theguardian.com/society/social-care",
+        "apiUrl":"http://content.guardianapis.com/society/social-care",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/christina-patterson",
+        "type":"contributor",
+        "webTitle":"Christina Patterson",
+        "webUrl":"http://www.theguardian.com/profile/christina-patterson",
+        "apiUrl":"http://content.guardianapis.com/profile/christina-patterson",
+        "bio":"<p>Christina Patterson is a writer, broadcaster and columnist who tweets at @queenchristina_ She writes about politics, society, culture, travel, books and the arts. She has been shortlisted for this year's Orwell prize for political journalism for her campaigning work to improve standards in nursing. She has also made a film about nursing for The One Show and documentaries about it for Radio 4</p><p>Twitter: <a href=\"https://twitter.com/@queenchristina_\">@queenchristina_</a></p>",
+        "r2ContributorId":"56197",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/26/1366989337858/christina-patterson.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420032582",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846013000/Andrea-Sutcliffe-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Andrea Sutcliffe",
+            "height":"276",
+            "credit":"Graham Turner/Guardian",
+            "caption":"‘If you have a taste of what it's like to be looked after, you don't need to be told to ask, as [CQC head] Andrea Sutcliffe now tells her staff they should, \"is it good enough for my mum?\".' Photograph: Graham Turner for the Guardian",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"social-care-network/2013/oct/15/cqc-andrea-sutcliffe-adult-social-care",
+      "sectionId":"social-care-network",
+      "sectionName":"Social Care Network",
+      "webPublicationDate":"2013-10-15T07:00:02Z",
+      "webTitle":"CQC considers  using hidden cameras to monitor services",
+      "webUrl":"http://www.theguardian.com/social-care-network/2013/oct/15/cqc-andrea-sutcliffe-adult-social-care",
+      "apiUrl":"http://content.guardianapis.com/social-care-network/2013/oct/15/cqc-andrea-sutcliffe-adult-social-care",
+      "fields":{
+        "trailText":"<p>Chief inspector of adult social care plans to make services more user-focused and give inspection system a 'fresh start'</p>",
+        "headline":"CQC considers  using hidden cameras to monitor services",
+        "body":"<p>The Care Quality Commission's chief inspector of adult social care has said the regulatory body will discuss using \"mystery shoppers\" and hidden cameras to monitor care services in future.</p><p>Andrea Sutcliffe, who was appointed to the role in July, pointed out that the media have already used such methods to draw attention to substandard care in documentaries such as the <a href=\"http://www.theguardian.com/politics/2011/jun/01/panorama-care-home-abuse-investigation-government-review?guni=Article:in%20body%20link\" title=\"\">BBC Panorama expose</a> on Winterbourne View care home in Bristol in 2011.</p><p>However, Sutcliffe, who was previously chief executive of the Social Care Institute for Excellence, said the CQC had to \"consider the privacy and dignity of people receiving care\" and that the decision to do so would not be taken lightly.</p><p>Sutcliffe's paper, which outlines her priorities for transforming the inspection and monitoring of care services, is focused on working more closely with care service users. <a href=\"http://www.theguardian.com/social-care-network/2013/jul/19/chief-inspector-adult-social-care\" title=\"\">Writing for the Social Care Network</a> on her appointment to the CQC in July, shesaid her top priority would be \"working with and on the side of people who use services, their families and carers\".</p><p>Other changes include <a href=\"http://www.theguardian.com/society/2013/oct/14/care-home-inspection-reforms\" title=\"\">recruiting a team of \"experts by experience</a>\" – users of care services, their relatives and other \"advocates\" who would assist in inspecting care providers.  Under these propsals, a standard inspection team would consist of an inspector from the expert inspection team, a user expert and, where necessary, a specialist adviser relating to a particular area of concern. Sutcliffe said about 300 experts by experience had already been recruited, but that the CQC would need to \"at least double\" this amount if the idea was to be rolled out across the inspection system.</p><p>In what she described as a \"fresh start\" for care service inspections, a new rating system has also been introduced. Social care providers will now be rated as outstanding, good, requires improvement or inadequate. Inspections will be based on five key requirements: assessing whether care services are safe, caring, effective, well-led and responsive to people's needs. Sutcliffe also said that services rated outstanding or good might be subject to random inspections ahead of the time when they were expecting them, to reduce the risk of complacency.</p><p>Stricter monitoring of care providers is another feature of Sutcliffe's plans. From April 2015, and subject to the care bill becoming law, the CQC will monitor the finances of 50 to 60 larger care providers who would be difficult to replace if they were to go out of business. There will also be more rigorous analysis of applications to offer care services, which Sutcliffe's report says will \"make sure providers have the right values and motivations for providing care\".</p><p>The CQC will also aim to forge closer partnerships with other organisations, in particular local <a href=\"http://www.healthwatch.co.uk/\" title=\"\">HealthWatch</a> bodies, with the aim of collecting more detailed data on care providers. Providers will also be encouraged to share their data with the CQC.</p><p>A full public consultation will be held on Sutcliffe's proposals in spring 2014.</p><p><strong>Why not join our </strong><a href=\"http://www.theguardian.com/society/social-care\" title=\"\"><strong>social care </strong></a><strong>community? Becoming a member of the Guardian </strong><a href=\"http://www.theguardian.com/social-care-network\" title=\"\"><strong>Social Care Network</strong></a><strong> means you get sent weekly email updates on </strong><a href=\"http://www.theguardian.com/social-care-network/policy\" title=\"\"><strong>policy</strong></a><strong> and best practice in the sector, as well as exclusive offers. </strong><a href=\"https://register.theguardian.com/social-care/\" title=\"\"><strong>Sign up for free here</strong></a><strong>. </strong></p><!-- Guardian Watermark: internal-code/content/419914721|2013-10-16T12:07:39Z|66cce3535a234a1b61369b9a91081890b4ed210c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T07:29:59Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381755102736/Andrea-Sutcliffe-003.jpg",
+        "standfirst":"Chief inspector of adult social care plans to make services more user-focused and give inspection system a 'fresh start'",
+        "shortUrl":"http://gu.com/p/3jgmz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381755102736/Andrea-Sutcliffe-003.jpg",
+        "wordcount":"517",
+        "commentable":"true",
+        "internalContentCode":"419914721",
+        "allowUgc":"false",
+        "internalOctopusCode":"8192684",
+        "isPremoderated":"false",
+        "byline":"Helen Crane",
+        "publication":"theguardian.com",
+        "internalPageCode":"1980582",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-22T07:00:00Z"
+      },
+      "tags":[{
+        "id":"social-care-network/social-care-network",
+        "type":"keyword",
+        "webTitle":"Social Care Network",
+        "webUrl":"http://www.theguardian.com/social-care-network/social-care-network",
+        "apiUrl":"http://content.guardianapis.com/social-care-network/social-care-network",
+        "sectionId":"social-care-network",
+        "sectionName":"Social Care Network",
+        "references":[]
+      },{
+        "id":"social-care-network/adult",
+        "type":"keyword",
+        "webTitle":"Adult",
+        "webUrl":"http://www.theguardian.com/social-care-network/adult",
+        "apiUrl":"http://content.guardianapis.com/social-care-network/adult",
+        "sectionId":"social-care-network",
+        "sectionName":"Social Care Network",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"social-care-network/policy",
+        "type":"keyword",
+        "webTitle":"Policy",
+        "webUrl":"http://www.theguardian.com/social-care-network/policy",
+        "apiUrl":"http://content.guardianapis.com/social-care-network/policy",
+        "sectionId":"social-care-network",
+        "sectionName":"Social Care Network",
+        "references":[]
+      },{
+        "id":"society/social-care",
+        "type":"keyword",
+        "webTitle":"Social care",
+        "webUrl":"http://www.theguardian.com/society/social-care",
+        "apiUrl":"http://content.guardianapis.com/society/social-care",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/care-quality-commission",
+        "type":"keyword",
+        "webTitle":"Care Quality Commission (CQC)",
+        "webUrl":"http://www.theguardian.com/society/care-quality-commission",
+        "apiUrl":"http://content.guardianapis.com/society/care-quality-commission",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/longtermcare",
+        "type":"keyword",
+        "webTitle":"Long-term care",
+        "webUrl":"http://www.theguardian.com/society/longtermcare",
+        "apiUrl":"http://content.guardianapis.com/society/longtermcare",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/helen-crane",
+        "type":"contributor",
+        "webTitle":"Helen Crane",
+        "webUrl":"http://www.theguardian.com/profile/helen-crane",
+        "apiUrl":"http://content.guardianapis.com/profile/helen-crane",
+        "bio":"<p>Helen Crane is a content co-ordinator for the Guardian's <a href=\"http://www.guardian.co.uk/public-leaders-network\">Public Leaders Network</a></p>",
+        "r2ContributorId":"49551",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Education/Pix/pictures/2012/2/27/1330338275877/Helen-Crane-student-blogg-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419982225",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381755114749/Andrea-Sutcliffe-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Andrea Sutcliffe",
+            "height":"276",
+            "credit":"Graham Turner/Guardian",
+            "caption":"Andrea Sutcliffe says her top priority is working more closely with users of adult social care services.  Photograph: Graham Turner for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419982226",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381755102736/Andrea-Sutcliffe-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Andrea Sutcliffe",
+            "height":"84",
+            "credit":"Graham Turner/Guardian",
+            "caption":"Andrea Sutcliffe says her top priority is working more closely with users of adult social care services.  Photograph: Graham Turner for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"society/2013/oct/15/government-cut-balls-off-elderly-social-care-scheme",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-10-15T10:38:18Z",
+      "webTitle":"Government has 'cut balls off' elderly social care scheme",
+      "webUrl":"http://www.theguardian.com/society/2013/oct/15/government-cut-balls-off-elderly-social-care-scheme",
+      "apiUrl":"http://content.guardianapis.com/society/2013/oct/15/government-cut-balls-off-elderly-social-care-scheme",
+      "fields":{
+        "trailText":"Peer accuses government of welching on universal deal that people would not have to sell homes to pay for long-term care",
+        "headline":"Government has 'cut balls off' elderly social care scheme",
+        "body":"<p>A scheme to lessen the impact of social care costs for older people has had its &quot;balls cut off &quot; after the government moved to bar people with assets of more than &pound;23,250, on top of the value of their main home, a former member of the royal commission on long-term care has claimed.</p><p>Lord Lipsey, a Labour peer who sat on the commission chaired in 1999 by Professor Sir Stewart Sutherland, said ministers had &quot;welched&quot; on a universal deal that people would not have to sell their homes to pay for long-term care.</p><p>But Norman Lamb, the social care minister, denied that the government had changed tack on the scheme, which only applies in England.</p><p>Lipsey spoke out on Monday night in a House of Lords debate on the care bill, which is implementing elements of a second commission on long-term care chaired by the Oxford economist Andrew Dilnot.</p><p>The government has amended the key recommendation in the Dilnot report that a cap of between &pound;23,000 and &pound;50,000 – with a suggested figure of &pound;35,000 – should be placed on the costs of long-term care. The government set the cap at &pound;72,000 on the grounds that a lower figure would be too costly.</p><p>Dilnot also recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Councils would pay the costs and recoup them once the house was sold, usually after the person in care had died.</p><p>But Lipsey said that a government consultation indicated that this scheme would not be available to anyone who had assets, on top of their home, of more than &pound;23,250. He told peers: &quot;The original scheme put forward by Dilnot has had its balls cut off by the government in the consultation document&nbsp;… If you have more than that, you have to spend down until you have &pound;23,250 left in the bank or wherever it is, and then you can consider a deferred payment scheme.</p><p>&quot;However, most people who have reasonably valuable houses, who are the people most likely to want to adopt this measure, will have far more than &pound;23,250 worth of other assets. Most of them will not feel the least bit happy if they have to spend down until they have only &pound;23,250 left in the bank before they can get any help from the deferred payment scheme.</p><p>&quot;That hardly pays for a daily delivery of the Racing Post for the rest of their lives, their nightly gin and tonic, or more important things, such as the literature they want to read or all the things that make their life fuller. For those people, a deferred payment scheme is simply not available.&quot;</p><p>The peer accused the government of smuggling in the change and predicted that the Daily Mail, which has campaigned on the issue, would take up the cudgels. The Mail placed the story on its front page on Tuesday.</p><p>Lipsey said: &quot;This is essentially a &pound;23,250 threshold that the government have smuggled in, telling nobody until they had to produce this document and hoping, no doubt, that by 25 October nobody would have noticed. I shall tell you who will notice: the Daily Mail will notice. The Daily Mail and other newspapers, which campaigned so that people would not have their houses seized – I applaud them and have applauded them before for doing so – are now going to learn that the government have welched on the deal. The tsunami that will hit the government in consequence will hurt not only this proposal but the government as a whole.&quot;</p><p>Lamb told BBC Radio 4's Today programme: &quot;We have been clear all the way along that there is a scandal that has existed for a very long time of people who have worked hard through their lives, budgeting carefully, putting their savings into their home and then they are unlucky enough to get dementia or some similar condition and the only way they can pay for care is to sell their home,&quot; he told BBC Radio 4's Today programme.</p><p>&quot;We have been very clear from the start that no one will be forced to sell their home during their lifetime to pay for care. We are introducing a universal offer that means you can defer payment rather than having to sell your home. Nothing has changed on that.&quot;</p><p>But Lamb admitted that people with assets of more than &pound;23,250, over and above the value of their home, would not be eligible for the scheme if the recommendation in the consultation scheme was implemented.</p><p>&quot;The issue is whether if someone, as well as their home, has substantial other assets – money in the bank, shares or whatever. Should they be expected to use those assets to pay for care or should we just say that we will always defer the costs of selling the home?</p><p>The view in the consultation for discussion is that if you have a vast amount of money in the bank you are quite wealthy. It is desirable that we could protect that money but the scheme has to be affordable.&quot;</p><!-- Guardian Watermark: internal-code/content/420003865|2013-10-16T12:07:39Z|d2280b5edf0e2aceea7740687f962fc01bb72a8d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T13:23:21Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833462592/An-older-woman-is-looked--004.jpg",
+        "standfirst":"Peer accuses government of welching on universal deal that people would not have to sell homes to pay for long-term care",
+        "shortUrl":"http://gu.com/p/3jhfk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833462592/An-older-woman-is-looked--004.jpg",
+        "wordcount":"841",
+        "commentable":"true",
+        "internalContentCode":"420003865",
+        "allowUgc":"false",
+        "internalOctopusCode":"8196804",
+        "isPremoderated":"false",
+        "byline":"Nicholas Watt, chief political correspondent",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981118",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T10:38:18Z"
+      },
+      "tags":[{
+        "id":"society/social-care",
+        "type":"keyword",
+        "webTitle":"Social care",
+        "webUrl":"http://www.theguardian.com/society/social-care",
+        "apiUrl":"http://content.guardianapis.com/society/social-care",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/liberal-conservative-coalition",
+        "type":"keyword",
+        "webTitle":"Liberal-Conservative coalition",
+        "webUrl":"http://www.theguardian.com/politics/liberal-conservative-coalition",
+        "apiUrl":"http://content.guardianapis.com/politics/liberal-conservative-coalition",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/liberaldemocrats",
+        "type":"keyword",
+        "webTitle":"Liberal Democrats",
+        "webUrl":"http://www.theguardian.com/politics/liberaldemocrats",
+        "apiUrl":"http://content.guardianapis.com/politics/liberaldemocrats",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/nicholaswatt",
+        "type":"contributor",
+        "webTitle":"Nicholas Watt",
+        "webUrl":"http://www.theguardian.com/profile/nicholaswatt",
+        "apiUrl":"http://content.guardianapis.com/profile/nicholaswatt",
+        "bio":"<p>Nicholas Watt is the Guardian's chief <a href=\"http://www.guardian.co.uk/politics\">political</a> correspondent</p>",
+        "rcsId":"GNL004725",
+        "r2ContributorId":"16174",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/nick_watt.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420014000",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833458617/An-older-woman-is-looked--001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833460130/An-older-woman-is-looked--002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833461384/An-older-woman-is-looked--003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833462592/An-older-woman-is-looked--004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833463806/An-older-woman-is-looked--005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833465110/An-older-woman-is-looked--006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833466337/An-older-woman-is-looked--007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833467545/An-older-woman-is-looked--008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833468794/An-older-woman-is-looked--009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833470076/An-older-woman-is-looked--010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833468794/An-older-woman-is-looked--009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420014001",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381833462592/An-older-woman-is-looked--004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"An older woman is looked after in a care home",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The Dilnot report recommended a universal deferred payment scheme to reduce the number of older people forced to sell their homes to pay for care. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    }]
+  }
+}

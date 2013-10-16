@@ -1,6 +1,6 @@
 package conf
 
-import assets.Assets
+import common.Assets.Assets
 import common.GuardianConfiguration
 import com.gu.management.play.RequestMetrics
 import contentapi.{ ElasticSearchContentApiClient, SolrContentApiClient }

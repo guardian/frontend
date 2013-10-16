@@ -3,7 +3,6 @@
   "version": "0.1.0 ",
   "dependencies": {
     "jquery": "1.8",
-    "jquery-ui": "1.10",
     "curl": "0.7",
     "eventEmitter": "4.1",
     "knockout.js": "2.1",

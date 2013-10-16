@@ -1,4 +1,4 @@
-@(env: String, charts: Seq[tools.Chart])
+@(env: String, latencyCharts: Seq[tools.Chart], requestOkCharts: Seq[tools.Chart])
 
 @admin_main("Dashboard", env, isAuthed = true) {
 
@@ -8,17 +8,25 @@
         google.setOnLoadCallback(drawCharts);
 
         function drawCharts() {
-            @charts.map{ chart =>
+            @latencyCharts.map{ chart =>
                 new google.visualization.LineChart(document.getElementById('@chart.id'))
                     .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
                     title: '@chart.name',
+                    colors: ['#FF8000'],
+                    legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
+                });
+            }
+            @requestOkCharts.map{ chart =>
+                new google.visualization.LineChart(document.getElementById('@chart.id'))
+                        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                    title: '@chart.name',
+                    colors: ['#0489B1'],
                     legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
                 });
             }
         }
     </script>
 
-
-    @charts.map{ chart => <div id="@chart.id" style="max-width: 900px"></div> }
-
+    @latencyCharts.map{ chart => <div id="@chart.id" style="max-width: 900px"></div> }
+    @requestOkCharts.map{ chart => <div id="@chart.id" style="max-width: 900px"></div> }
 }
