@@ -12,9 +12,9 @@ var collection = '.collection--sport',
  * Network front feature tests
  *
  **/
-casper.start('http://www.theguardian.com/uk?view=mobile');
+casper.start(host + 'uk?view=mobile');
 
-casper.thenOpen('http://www.theguardian.com/uk?view=mobile', {
+casper.thenOpen(host + 'uk?view=mobile', {
     method: 'get',
     headers: {
         'X-Gu-Facia':'true'
@@ -115,10 +115,8 @@ casper.test.begin('First item in a collection displays an image', function(test)
 **/
 casper.test.begin('Timestamps are relative', function(test) {
     casper.then(function() {
-        console.log(this.fetchText('.timestamp__text'));
-        console.log(this.getElementAttribute('.timestamp__text', 'title'));
         test.assertNotEquals(
-            this.fetchText('.timestamp__text'),
+            this.getElementInfo('.timestamp__text').text,
             this.getElementAttribute('.timestamp__text', 'title'),
             'timestamp relativised'
         );
