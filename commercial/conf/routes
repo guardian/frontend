@@ -8,9 +8,4 @@ GET    /assets/*path                 dev.DevAssetsController.at(path)
 
 
 # Travel offers
-# -------------
-
-GET    /commercial/travel/offers     controllers.TravelOffers.listOffers
-
-# To trigger travel offers data refresh on dev machine
-GET    /commercial/travel/devload    controllers.TravelOffers.refresh
+GET    /commercial/travel/offers     controllers.commercial.TravelOffers.listOffers

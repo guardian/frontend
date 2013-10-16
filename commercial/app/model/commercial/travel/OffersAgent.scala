@@ -1,7 +1,6 @@
-package model.travel.service
+package model.commercial.travel
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import model.travel.{Keyword, Offer}
 import scala.concurrent.Future
 import conf.ContentApi
 

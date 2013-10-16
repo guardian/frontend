@@ -5,8 +5,9 @@ import org.scalatest.FlatSpec
 import scala.concurrent.{Await, Future}
 import common.ExecutionContexts
 import scala.concurrent.duration._
-import model.travel.Offer
+import model.commercial.travel.Offer
 import org.joda.time.DateTime
+import model.commercial.travel.OffersApi
 
 class OffersApiTest extends FlatSpec with ShouldMatchers with ExecutionContexts {
 

@@ -132,7 +132,9 @@ object Frontend extends Build with Prototypes {
     router,
     diagnostics,
     identity,
-    admin)
+    admin,
+    commercial
+  )
 
   val faciaDev = application("facia-dev-build").dependsOn(
     facia,

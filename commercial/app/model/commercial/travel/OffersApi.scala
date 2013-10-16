@@ -1,11 +1,10 @@
-package model.travel.service
+package model.commercial.travel
 
-import play.api.libs.ws.WS
 import scala.concurrent.Future
+import play.api.libs.ws.WS
 import common.ExecutionContexts
-import scala.xml.{Node, XML}
 import org.joda.time.format.DateTimeFormat
-import model.travel.Offer
+import scala.xml.{XML, Node}
 
 object OffersApi extends OffersApi {
 

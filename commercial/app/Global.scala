@@ -1,8 +1,7 @@
 import common.{CommercialMetrics, Jobs}
-import model.travel.service.OffersAgent
+import model.commercial.travel.OffersAgent
 import play.api.{Application => PlayApp, Play, GlobalSettings}
 import play.api.Play.current
-
 
 trait TravelOffersLifecycle extends GlobalSettings {
 
