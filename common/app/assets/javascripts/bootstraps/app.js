@@ -20,6 +20,7 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
+    "bootstraps/section",
     "bootstraps/imagecontent",
     "modules/id",
     "modules/adverts/userAdTargeting"
@@ -44,6 +45,7 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
+    Section,
     ImageContent,
     Id,
     UserAdTargeting
@@ -150,6 +152,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Tag") {
                     Tag.init(config, context);
+                }
+
+                if (config.page.contentType === "Section") {
+                    Section.init(config, context);
                 }
 
                 if (config.page.section === "identity") {

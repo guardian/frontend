@@ -1,20 +1,18 @@
 define([
     'common',
     'bonzo',
-    'modules/cricket',
     'modules/facia/popular',
     'modules/facia/image-upgrade'
 ], function (
     common,
     bonzo,
-    cricket,
     popular,
     ImageUpgrade
 ) {
     var modules = {
 
         upgradeImages: function () {
-            common.mediator.on('page:tag:ready', function(config, context) {
+            common.mediator.on('page:section:ready', function(config, context) {
                 common.$g('.collection', context).each(function(collection) {
                     var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
                     common.$g('.item', collection).each(function(item, index) {
@@ -25,27 +23,21 @@ define([
             });
         },
 
-        showCricket: function() {
-            common.mediator.on('page:tag:ready', function(config, context) {
-                cricket.cricketTrail(config, context);
-            });
-        },
-
         showPopular: function () {
-            common.mediator.on('page:tag:ready', function(config, context) {
+            common.mediator.on('page:section:ready', function(config, context) {
                 popular.render(config);
             });
         }
+
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
             modules.upgradeImages();
-            modules.showCricket(context);
             modules.showPopular();
         }
-        common.mediator.emit("page:tag:ready", config, context);
+        common.mediator.emit("page:section:ready", config, context);
     };
 
     return {

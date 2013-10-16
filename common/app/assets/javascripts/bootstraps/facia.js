@@ -24,15 +24,15 @@ define([
 
     var modules = {
 
-        showCricket: function(){
+        upgradeImages: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                cricket.cricketTrail(config, context);
-            });
-        },
-
-        showPopular: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                popular.render(config);
+                common.$g('.collection', context).each(function(collection) {
+                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
+                    common.$g('.item', collection).each(function(item, index) {
+                        new ImageUpgrade(item, isContainer && (index === 0))
+                            .upgrade();
+                    });
+                });
             });
         },
 
@@ -41,6 +41,15 @@ define([
                 common.$g('.js-items--show-more', context).each(function(items) {
                     new ItemsShowMore(items)
                         .addShowMore();
+                });
+            });
+        },
+
+        showCollectionDisplayToggle: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                common.$g('.js-collection--display-toggle', context).each(function(collection) {
+                    new CollectionDisplayToggle(collection, config)
+                        .addToggle();
                 });
             });
         },
@@ -84,24 +93,15 @@ define([
             });
         },
 
-        showCollectionDisplayToggle: function () {
+        showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.js-collection--display-toggle', context).each(function(collection) {
-                    new CollectionDisplayToggle(collection, config)
-                        .addToggle();
-                });
+                popular.render(config);
             });
         },
 
-        upgradeImages: function () {
+        showCricket: function(){
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.collection', context).each(function(collection) {
-                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, isContainer && (index === 0))
-                            .upgrade();
-                    });
-                });
+                cricket.cricketTrail(config, context);
             });
         }
 
@@ -110,11 +110,11 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.showPopular();
-            modules.showItemsShowMore();
-            modules.showFootballFixtures();
-            modules.showCollectionDisplayToggle();
             modules.upgradeImages();
+            modules.showItemsShowMore();
+            modules.showCollectionDisplayToggle();
+            modules.showFootballFixtures();
+            modules.showPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
     };
