@@ -22,7 +22,7 @@ function CommentBox(context, mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
 }
-Component.create(CommentBox);
+Component.define(CommentBox);
 
 /** @type {Object.<string.*>} */
 CommentBox.CONFIG = {

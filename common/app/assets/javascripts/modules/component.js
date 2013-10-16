@@ -133,7 +133,7 @@ Component.prototype.setOptions = function(options) {
 /**
  * @param {Function} child
  */
-Component.create = function(child) {
+Component.define = function(child) {
     function Tmp() {}
     Tmp.prototype = Component.prototype;
     child.prototype = new Tmp();

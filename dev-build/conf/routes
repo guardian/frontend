@@ -10,6 +10,8 @@ GET         /assets/*path                                                       
 GET        /discussion/comment-box.json                                                              controllers.DiscussionApp.commentBox()
 GET        /discussion/comment-counts                                                                controllers.DiscussionApp.commentCount(shortUrls: String)
 GET        /discussion/comment-counts.json                                                           controllers.DiscussionApp.commentCountJson(shortUrls: String)
+GET        /discussion/first-comment/*shortUrl.json                                                  controllers.DiscussionApp.firstCommentJson(shortUrl)
+GET        /discussion/first-comment/*shortUrl                                                       controllers.DiscussionApp.firstComment(shortUrl)
 GET        /discussion/*shortUrl.json                                                                controllers.DiscussionApp.commentPageJson(shortUrl)
 GET        /discussion/*shortUrl                                                                     controllers.DiscussionApp.commentPage(shortUrl)
 

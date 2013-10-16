@@ -28,4 +28,25 @@ trait CommentPageController extends DiscussionController {
       }
   }
 
+  def firstCommentJson(shortUrl: String) = firstComment(shortUrl)
+  
+  def firstComment(shortUrl: String) = Action.async {
+    implicit request =>
+      val commentPage = discussionApi.commentsFor(shortUrl, "1", "1")
+
+      commentPage map {
+        commentPage =>
+          Cached(60) {
+            if (request.isJson)
+              JsonComponent(
+                "html" -> views.html.fragments.commentsBody(commentPage).toString,
+                "hasMore" -> commentPage.hasMore,
+                "currentPage" -> commentPage.currentPage
+              )
+            else
+              Ok(views.html.comments(commentPage))
+          }
+      }
+  }
+
 }
