@@ -293,7 +293,7 @@ define([
         },
 
         cleanupCookies: function() {
-            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid", 'GU_ABFACIA', 'GU_FACIA']);
         },
 
         // opt-in to the responsive alpha
@@ -301,21 +301,6 @@ define([
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
                 Cookies.add("GU_VIEW", "mobile", 365);
-                Cookies.add("GU_ABFACIA", 'true', 5);
-            }
-        },
-
-        // toggle in/out of facia
-        faciaToggle: function () {
-            var faciaToggle = /#facia-opt-(.*)/.exec(window.location.hash);
-            if (faciaToggle) {
-                var cookieName = 'GU_ABFACIA';
-                var expiryDays = 5;
-                if (faciaToggle[1] === 'in') {
-                    Cookies.add(cookieName, 'true', expiryDays);
-                } else {
-                    Cookies.add(cookieName, 'false', expiryDays);
-                }
             }
         },
 
@@ -411,7 +396,6 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
-            modules.faciaToggle();
             modules.displayReleaseMessage(config);
         }
         common.mediator.emit("page:common:ready", config, context);
