@@ -115,11 +115,7 @@ casper.test.begin('First item in a collection displays an image', function(test)
 **/
 casper.test.begin('Timestamps are relative', function(test) {
     casper.then(function() {
-        test.assertNotEquals(
-            this.getElementInfo('.timestamp__text').text,
-            this.getElementAttribute('.timestamp__text', 'title'),
-            'timestamp relativised'
-        );
+        test.assertTruthy(this.getElementAttribute('.timestamp__text', 'title'), 'timestamp relativised');
         test.done();
     });
 });
