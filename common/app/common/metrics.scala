@@ -300,6 +300,20 @@ object FaciaToolMetrics {
 }
 
 
+object CommercialMetrics {
+
+  object TravelOffersLoadTimingMetric extends TimingMetric(
+    "commcercial",
+    "commercial-travel-offers-load",
+    "Commercial Travel Offers load timing",
+    "Time spent running travel offers data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric)
+}
+
+
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
 
