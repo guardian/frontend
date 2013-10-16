@@ -9,7 +9,7 @@
 
 var casper = require('casper').create();
 
-casper.start(host + "football?view=mobile");
+casper.start(host + "commentisfree/2013/oct/15/mums-carers-treated-like-criminals-hidden-cameras?view=mobile");
 
 casper.test.begin("Load Most Read", function(test){
 
