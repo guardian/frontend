@@ -96,7 +96,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
               throw e
             }
           }
-
+        case (httpResponseCode: Int) if httpResponseCode >= 500 =>
+          Future.failed(throw new Exception("S3 returned a 5xx"))
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
           // NOTE: better way of handling fallback
