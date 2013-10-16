@@ -71,10 +71,6 @@
     @include fs-data(2);
     @include box-sizing(border-box);
 
-    .dateline {
-        margin-bottom: 0;
-    }
-
     .relative-timestamp {
         float: left;
         color: $c-neutral2;
