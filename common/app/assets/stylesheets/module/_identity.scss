@@ -43,7 +43,7 @@
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
     margin: $baseline*4 0;
-    padding-top: $gutter - 1;
+    padding-top: $baseline*4 - 1;
 
     .identity-section__head {
         @extend %type-5;
@@ -55,7 +55,7 @@
 }
 
 .nav--registration {
-    margin-top: $baseline*9;
+    margin-top: $baseline*8;
     text-align: center;
 
     @include mq($to:tablet) {
