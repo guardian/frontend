@@ -16,6 +16,15 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
         idApiRoot = conf.page.idApiUrl;
     };
 
+
+    /**
+     * Clears the caches and state, primarily for testing.
+     */
+    Id.reset = function() {
+        Id.getUserFromApi.reset();
+        userFromCookieCache = "empty";
+    };
+
     /**
      * The array returned from the cookie is in the format
      * [ id, email, displayname, userGroupBitmask ]
@@ -47,25 +56,33 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
         return Cookies.get(Id.cookieName);
     };
 
+    Id.isUserLoggedIn = function() {
+        return Id.getUserFromCookie() !== null;
+    };
+
     /**
      * Gets the currently logged in user data from the identity api
      * @param {function} callback
      */
     Id.getUserFromApi = asyncCallMerger.mergeCalls(
         function(mergingCallback) {
-            return ajax({
-                url: idApiRoot + "/user/me",
-                type: 'jsonp',
-                crossOrigin: true
-            }).then(
-                function(response) {
-                    if(response.status === 'ok') {
-                        mergingCallback(response.user);
-                    } else {
-                        mergingCallback(null);
+            if(Id.isUserLoggedIn()) {
+                ajax({
+                    url: idApiRoot + "/user/me",
+                    type: 'jsonp',
+                    crossOrigin: true
+                }).then(
+                    function(response) {
+                        if(response.status === 'ok') {
+                            mergingCallback(response.user);
+                        } else {
+                            mergingCallback(null);
+                        }
                     }
-                }
-            );
+                );
+            } else {
+                mergingCallback(null);
+            }
         }
     );
 

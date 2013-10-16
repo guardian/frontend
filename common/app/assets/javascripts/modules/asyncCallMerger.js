@@ -10,9 +10,9 @@ define([], function () {
      * @return {?Date} the current date
      */
     function mergeCalls(targetFunction) {
-        var callbacks = [];
-        var status = "init";
-        var callbackArguments = null;
+        var callbacks;
+        var status;
+        var callbackArguments;
 
         function targetCallbackHandler() {
             callbackArguments = arguments;
@@ -34,6 +34,16 @@ define([], function () {
                 callback.apply(null, callbackArguments);
             }
         }
+
+        function reset() {
+            callbacks = [];
+            status = "init";
+            callbackArguments = null;
+        }
+
+        reset();
+
+        callMergingFunction.reset = reset;
 
         return callMergingFunction;
     }
