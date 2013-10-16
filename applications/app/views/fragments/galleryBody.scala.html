@@ -82,7 +82,7 @@
 
                 @fragments.standfirst(gallery)
 
-                @if(gallery.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                @if(ArticleKeywordsSwitch.isSwitchedOn){
                     <div class="article__keywords" data-link-name="gallery keywords">
                         @fragments.keywordList(gallery.keywords)
                     </div>

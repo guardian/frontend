@@ -2,7 +2,7 @@
 
 <ul class="inline-list" itemprop="keywords">
     <li class="inline-list__item">Tags:</li>
-    @keywords.take(visibleKeywords).zipWithRowInfo.map{ case(keyword, row) =>
+    @keywords.filterNot(_.isSectionTag).take(visibleKeywords).zipWithRowInfo.map{ case(keyword, row) =>
         <li class="inline-list__item"><a href="@LinkTo(keyword.url)" data-link-name="keyword: @keyword.id">@keyword.name</a>@if(!row.isLast){, }</li>
     }
 </ul>
