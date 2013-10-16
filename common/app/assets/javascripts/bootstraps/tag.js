@@ -1,27 +1,19 @@
 define([
     'common',
     'bonzo',
-    'modules/cricket',
     'modules/facia/popular',
-    'modules/facia/image-upgrade'
+    'modules/cricket'
 ], function (
     common,
     bonzo,
-    cricket,
     popular,
-    ImageUpgrade
+    cricket
 ) {
     var modules = {
 
-        upgradeImages: function () {
+        showPopular: function () {
             common.mediator.on('page:tag:ready', function(config, context) {
-                common.$g('.collection', context).each(function(collection) {
-                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, isContainer && (index === 0))
-                            .upgrade();
-                    });
-                });
+                popular.render(config);
             });
         },
 
@@ -29,23 +21,16 @@ define([
             common.mediator.on('page:tag:ready', function(config, context) {
                 cricket.cricketTrail(config, context);
             });
-        },
-
-        showPopular: function () {
-            common.mediator.on('page:tag:ready', function(config, context) {
-                popular.render(config);
-            });
         }
+
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.upgradeImages();
-            modules.showCricket(context);
             modules.showPopular();
         }
-        common.mediator.emit("page:tag:ready", config, context);
+        common.mediator.emit('page:tag:ready', config, context);
     };
 
     return {

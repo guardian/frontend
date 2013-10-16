@@ -35,7 +35,8 @@ define([
     "modules/discussion/commentCount",
     "modules/lightbox-gallery",
     "modules/swipe/ears",
-    "modules/swipe/bar"
+    "modules/swipe/bar",
+    "modules/facia/image-upgrade"
 ], function (
     common,
     ajax,
@@ -73,7 +74,8 @@ define([
     CommentCount,
     LightboxGallery,
     ears,
-    SwipeBar
+    SwipeBar,
+    ImageUpgrade
 ) {
 
     var modules = {
@@ -82,6 +84,16 @@ define([
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
+
+                // upgrade facia images
+                // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
+                common.$g('.collection', context).each(function(collection) {
+                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
+                    common.$g('.item', collection).each(function(item, index) {
+                        new ImageUpgrade(item, isContainer && (index === 0))
+                            .upgrade();
+                    });
+                });
             });
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);

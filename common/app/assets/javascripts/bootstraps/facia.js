@@ -8,7 +8,6 @@ define([
     'modules/facia/items-show-more',
     'modules/facia/collection-display-toggle',
     'modules/footballfixtures',
-    'modules/facia/image-upgrade',
     'modules/cricket'
 ], function (
     common,
@@ -18,23 +17,10 @@ define([
     ItemsShowMore,
     CollectionDisplayToggle,
     FootballFixtures,
-    ImageUpgrade,
     cricket
     ) {
 
     var modules = {
-
-        upgradeImages: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.collection', context).each(function(collection) {
-                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, isContainer && (index === 0))
-                            .upgrade();
-                    });
-                });
-            });
-        },
 
         showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
@@ -110,7 +96,6 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.upgradeImages();
             modules.showItemsShowMore();
             modules.showCollectionDisplayToggle();
             modules.showFootballFixtures();
