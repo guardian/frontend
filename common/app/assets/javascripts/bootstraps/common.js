@@ -241,16 +241,6 @@ define([
                             viewData.experiments_json = JSON.stringify(testData);
                         }
 
-                        // nb, only needed while running both facia and old fronts
-                        // add extra data if 'facia'
-                        if (config.page.isFront === true) {
-                            viewData.platformVariant = ((config.page.isFacia === true) ? 'Facia' : 'Fronts') + '-application';
-                        }
-                        // also check if facia styled section or tag page
-                        else if (['Section', 'Tag'].indexOf(config.page.contentType) !== -1) {
-                            viewData.platformVariant = ((context.querySelector('.facia-container')) ? 'Facia' : 'Fronts') + '-application';
-                        }
-
                         return viewData;
                     });
 
