@@ -45,6 +45,18 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         trails.length should be > 10
       }
     }
+
+    scenario("Series combiner in the same section") {
+
+      Given("I visit a combiner page with a series tag in the same seciton")
+
+      HtmlUnit("/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches") { browser =>
+        import browser._
+        val trails = $(".trailblock .trail")
+        Then("I should see content tagged with both tags")
+        trails.length should be > 5
+      }
+    }
   }
 }
 

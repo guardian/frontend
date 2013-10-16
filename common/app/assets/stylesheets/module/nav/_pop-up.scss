@@ -37,7 +37,10 @@
     }
 
     // Popup is not sticking to the edge of screen
-    @include mq(1150px) {
+    @include mq(1157px, 1299px) {
+        border-right: 1px solid $c-neutral5;
+    }
+    @include mq(1316px) {
         border-right: 1px solid $c-neutral5;
     }
 

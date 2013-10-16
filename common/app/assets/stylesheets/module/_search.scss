@@ -17,7 +17,11 @@
             background: $c-neutral5;
         }
     }
-    @include mq(1152px) { // When the layout starts to be centered
+    @include mq(1157px, 1299px) { // When the layout starts to be centered
+        right: -1px;
+        &:after { left: auto; right: 0; }
+    }
+    @include mq(1316px) { // When the layout starts to be centered
         right: -1px;
         &:after { left: auto; right: 0; }
     }

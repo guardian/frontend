@@ -7,6 +7,7 @@ import scala.concurrent.duration._
 import scala.concurrent.Await
 import services.OphanApi
 import scala.util.Try
+import akka.util.Timeout
 
 
 object MostPopularAgent extends Logging with ExecutionContexts {
@@ -19,17 +20,17 @@ object MostPopularAgent extends Logging with ExecutionContexts {
 
   def refresh() {
     log.info("Refreshing most popular.")
-    Edition.all foreach { edition =>
-      ContentApi.item("/", edition)
-        .showMostViewed(true)
-        .response.foreach{ response =>
-          val mostViewed = response.mostViewed map { Content(_) } take 10
-          agent.send{ old =>
-            old + (edition.id -> mostViewed)
-          }
-      }
-    }
+    Edition.all foreach refresh
   }
+
+  def refresh(edition: Edition) = ContentApi.item("/", edition)
+    .showMostViewed(true)
+    .response.map{ response =>
+      val mostViewed = response.mostViewed map { Content(_) } take 10
+      agent.alter{ old =>
+        old + (edition.id -> mostViewed)
+      }(Timeout(5.seconds))
+    }
 }
 
 

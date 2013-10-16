@@ -31,13 +31,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   }
 
   def renderRadiator() = Authenticated { implicit request =>
-      val graphs = (CloudWatch.latency filter { _.name match {
-          case "Router" => true
-          case "Article" => true
-          case "Front" => true
-          case "Applications" => true
-          case _ => false
-        }  }) ++ CloudWatch.fastlyStatistics
+      val graphs = CloudWatch.latencyShortStack ++ CloudWatch.fastlyStatistics
       val multilineGraphs = CloudWatch.fastlyHitMissStatistics
       Ok(views.html.radiator(graphs, multilineGraphs, Configuration.environment.stage))
   }
