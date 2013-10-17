@@ -1,0 +1,910 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/16/burmese-army-recruits-female-soliders-rebels",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-16T14:59:25Z",
+      "webTitle":"Burmese army recruits female soldiers as it struggles to tackle rebel groups",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/16/burmese-army-recruits-female-soliders-rebels",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/16/burmese-army-recruits-female-soliders-rebels",
+      "fields":{
+        "newspaperPageNumber":"22",
+        "trailText":"Poor human rights record of Burmese 'Tatmadaw' armed forces gives rise to concerns that women recruits will be abused",
+        "headline":"Burmese army recruits female soldiers as it struggles to tackle rebel groups",
+        "body":"<p>If you're a single female between the ages of 25 and 30, 1.6 metres (5ft 3in) or taller and weighing less than 59kg (130lbs), then the Tatmadaw – Burma's military – may be looking for you.</p><p>Once limited to working only as nurses in the military, Burmese women are now being actively recruited by the country's ministry of defence, according to an advert in the state-run <a href=\"http://www.myanmar.cm/newspapers/myanmar-ahlin.html\" title=\"\">Myanmar Ahlin newspaper</a>, which stresses that successful candidates will be spared from serving on frontlines and instead be offered posts as second lieutenants.</p><p>A reviled entity now synonymous with human rights abuses and military coups, the Burmese army was once well respected for leading the country to independence from British colonial rule. Nobel laureate Aung San Suu Kyi's father, Aung San, was himself a general and is revered as the heroic \"true father\" of Burma.</p><p>Today the Burmese army is believed to be one of the largest in the region and manages a budget of $2.4bn, or 12% of total government spending – roughly four times what the country spends on health care, according to official figures.</p><p>Reformist president Thein Sein has made it an apparent priority to sign ceasefires with the country's many rebel ethnic groups, but has struggled to make any headway in the Kachin ethnic area, where a 17-year ceasefire broke down in 2011 and where <a href=\"http://www.theguardian.com/world/2013/jan/25/kachin-rebels-face-onslaught-burma\" title=\"\">fierce fighting, including the military's use of fighter jets, took place earlier this year</a>.</p><p>This is the first time that women have been offered such posts with the Tatmadaw, but a military draft adopted in 2011 – when Burma officially moved to quasi-civilian leadership after nearly 50 years of military rule – allows for women between 18 and 27 to be drafted in times of national emergency.</p><p>Women have sometimes been press-ganged to work as porters, says Phil Robertson of Human Rights Watch, who warns that, given the army's abysmal rights record, the new recruits could find themselves sexually abused or harassed.</p><p>\"Because there has been a culture of this army physically and sexually abusing women in the field as part of operations, where both rank and file soldiers have been involved in rape and other forms of sexual abuse against women – such as seizing women to porter goods and then raping them at night – then I would wonder … whether senior officers would view these women professionally or try to take advantage of them,\" Robertson told the Guardian.</p><p>\"I think a woman would have to be quite brave to be among the first batch of recruits.\"</p><!-- Guardian Watermark: internal-code/content/420156784|2013-10-17T12:53:04Z|c38cdb36df025ec032c91e1b6e0daea19577ffa0 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T23:06:13Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+        "standfirst":"Poor human rights record of Burmese 'Tatmadaw' armed forces gives rise to concerns that women recruits will be abused",
+        "shortUrl":"http://gu.com/p/3jtyy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+        "wordcount":"416",
+        "commentable":"false",
+        "internalContentCode":"420156784",
+        "allowUgc":"false",
+        "internalOctopusCode":"8203003",
+        "isPremoderated":"false",
+        "byline":"Kate Hodal in Bangkok",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-10-17",
+        "internalPageCode":"1982010",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T14:59:25Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/human-rights",
+        "type":"keyword",
+        "webTitle":"Human rights",
+        "webUrl":"http://www.theguardian.com/law/human-rights",
+        "apiUrl":"http://content.guardianapis.com/law/human-rights",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420159517",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935365661/Burma-military-recruits-f-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"54",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935367571/Burma-military-recruits-f-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"340",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935369144/Burma-military-recruits-f-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"130",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"84",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935372240/Burma-military-recruits-f-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"132",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935373943/Burma-military-recruits-f-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"168",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935376249/Burma-military-recruits-f-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"180",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935377915/Burma-military-recruits-f-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"228",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935379578/Burma-military-recruits-f-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"276",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935381185/Burma-military-recruits-f-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"372",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935379578/Burma-military-recruits-f-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"276",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420159518",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"84",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/2013/oct/16/burmese-army-recruits-female-soliders-rebels",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-16T14:59:25Z",
+      "webTitle":"Burmese army recruits female soldiers as it struggles to tackle rebel groups",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/16/burmese-army-recruits-female-soliders-rebels",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/16/burmese-army-recruits-female-soliders-rebels",
+      "fields":{
+        "newspaperPageNumber":"22",
+        "trailText":"Poor human rights record of Burmese 'Tatmadaw' armed forces gives rise to concerns that women recruits will be abused",
+        "headline":"Burmese army recruits female soldiers as it struggles to tackle rebel groups",
+        "body":"<p>If you're a single female between the ages of 25 and 30, 1.6 metres (5ft 3in) or taller and weighing less than 59kg (130lbs), then the Tatmadaw – Burma's military – may be looking for you.</p><p>Once limited to working only as nurses in the military, Burmese women are now being actively recruited by the country's ministry of defence, according to an advert in the state-run <a href=\"http://www.myanmar.cm/newspapers/myanmar-ahlin.html\" title=\"\">Myanmar Ahlin newspaper</a>, which stresses that successful candidates will be spared from serving on frontlines and instead be offered posts as second lieutenants.</p><p>A reviled entity now synonymous with human rights abuses and military coups, the Burmese army was once well respected for leading the country to independence from British colonial rule. Nobel laureate Aung San Suu Kyi's father, Aung San, was himself a general and is revered as the heroic \"true father\" of Burma.</p><p>Today the Burmese army is believed to be one of the largest in the region and manages a budget of $2.4bn, or 12% of total government spending – roughly four times what the country spends on health care, according to official figures.</p><p>Reformist president Thein Sein has made it an apparent priority to sign ceasefires with the country's many rebel ethnic groups, but has struggled to make any headway in the Kachin ethnic area, where a 17-year ceasefire broke down in 2011 and where <a href=\"http://www.theguardian.com/world/2013/jan/25/kachin-rebels-face-onslaught-burma\" title=\"\">fierce fighting, including the military's use of fighter jets, took place earlier this year</a>.</p><p>This is the first time that women have been offered such posts with the Tatmadaw, but a military draft adopted in 2011 – when Burma officially moved to quasi-civilian leadership after nearly 50 years of military rule – allows for women between 18 and 27 to be drafted in times of national emergency.</p><p>Women have sometimes been press-ganged to work as porters, says Phil Robertson of Human Rights Watch, who warns that, given the army's abysmal rights record, the new recruits could find themselves sexually abused or harassed.</p><p>\"Because there has been a culture of this army physically and sexually abusing women in the field as part of operations, where both rank and file soldiers have been involved in rape and other forms of sexual abuse against women – such as seizing women to porter goods and then raping them at night – then I would wonder … whether senior officers would view these women professionally or try to take advantage of them,\" Robertson told the Guardian.</p><p>\"I think a woman would have to be quite brave to be among the first batch of recruits.\"</p><!-- Guardian Watermark: internal-code/content/420156784|2013-10-17T12:53:04Z|c38cdb36df025ec032c91e1b6e0daea19577ffa0 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T23:06:13Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+        "standfirst":"Poor human rights record of Burmese 'Tatmadaw' armed forces gives rise to concerns that women recruits will be abused",
+        "shortUrl":"http://gu.com/p/3jtyy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+        "wordcount":"416",
+        "commentable":"false",
+        "internalContentCode":"420156784",
+        "allowUgc":"false",
+        "internalOctopusCode":"8203003",
+        "isPremoderated":"false",
+        "byline":"Kate Hodal in Bangkok",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-10-17",
+        "internalPageCode":"1982010",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T14:59:25Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/human-rights",
+        "type":"keyword",
+        "webTitle":"Human rights",
+        "webUrl":"http://www.theguardian.com/law/human-rights",
+        "apiUrl":"http://content.guardianapis.com/law/human-rights",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420159517",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935365661/Burma-military-recruits-f-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"54",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935367571/Burma-military-recruits-f-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"340",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935369144/Burma-military-recruits-f-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"130",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"84",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935372240/Burma-military-recruits-f-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"132",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935373943/Burma-military-recruits-f-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"168",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935376249/Burma-military-recruits-f-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"180",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935377915/Burma-military-recruits-f-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"228",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935379578/Burma-military-recruits-f-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"276",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935381185/Burma-military-recruits-f-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"372",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935379578/Burma-military-recruits-f-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"276",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420159518",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381935370684/Burma-military-recruits-f-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Nyein Chan Naing",
+            "altText":"Burma military recruits female soldiers",
+            "height":"84",
+            "credit":"Nyein Chan Naing/EPA",
+            "caption":"Burmese rebels from the All Burma Students Democratic Front North, near Laiza, Kachin state, Burma in 2012. The Burma army is recruiting female soliders to help tackle ethnic rebels Photograph: Nyein Chan Naing/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/15/yangon-hotel-bombed-blasts-burma",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-15T04:18:00Z",
+      "webTitle":"Rangoon hotel bombed amid wave of blasts in Burma",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/15/yangon-hotel-bombed-blasts-burma",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/15/yangon-hotel-bombed-blasts-burma",
+      "fields":{
+        "trailText":"<p>American guest wounded by timebomb at Traders Hotel,  authorities say, while other devices go off in city and elsewhere</p>",
+        "headline":"Rangoon hotel bombed amid wave of blasts in Burma",
+        "body":"<p>A homemade timebomb went off in a prestigious Rangoon hotel on Monday, ripping apart a room and injuring an American guest, Burmese authorities have said. It was part of a wave of unexplained blasts in recent days. </p><p>The police officer Myint Htwe said three suspects had been detained in relation to the blast, which occurred just before midnight at the Traders hotel.</p><p>The hotel bombing was followed by two small explosions before dawn on Tuesday in the Mandalay region, police said, adding that there were no reports of injuries.</p><p>The blast at the 22-storey Traders hotel, located in the heart of the country's commercial capital, blew out a window in the guest's ninth floor room, shooting shards of thick glass more than 30 metres into the street. There was no other visible damage to the exterior of the building. The device apparently went off in the guest's bathroom.</p><p>A 43-year-old American woman was slightly injured and taken to hospital, police and hotel staff said. Her husband and their two children, aged five and seven, were unhurt.</p><p>\"Our consular officers in Rangoon have visited the US citizen and are providing appropriate consular assistance,\" said Sarah Hutchison, the US embassy spokeswoman.</p><p>Unidentified assailants have planted several homemade bombs in and around Rangoon in recent days, reportedly killing two people and injuring three others.</p><p>The first bomb reportedly went off on Friday at a guesthouse in Taungoo, a town 125 miles (200km) from Rangoon, according to independent media outlet the Democratic Voice of Burma. It said two people were killed but those casualties could not immediately be confirmed.</p><p>On Sunday two other homemade bombs went off in Rangoon. One, attached to the bottom of a truck parked outside a market on Rangoon's eastern side, wounded three civilians, according to a statement by Burmese police.</p><p>Another homemade bomb exploded at a bus stop in the west of the city but no casualties were reported in that blast, police said.</p><p>The explosions on Tuesday took place at 3am and 5am in Sagain in Mandalay region. No further details were available. No one has claimed responsibility for any of the incidents.</p><p>Traders' general manager, Phillip Couvaras, said in a statement that the hotel, part of the Shangri-La group, was working with authorities to investigate what happened.</p><p>Small explosions occurred frequently when Burma was under 50 years of military rule. They were mostly blamed on anti-government student activists or armed ethnic insurgent groups. But such incidents have become rare in recent years.</p><!-- Guardian Watermark: internal-code/content/419971297|2013-10-17T12:53:04Z|14ed72ff7bd3c0a91c07b66053c604b29d83e455 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T08:26:02Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381810475383/Shattered-glass-after-a-b-005.jpg",
+        "standfirst":"American guest wounded by timebomb at Traders Hotel,  authorities say, while other devices go off in city and elsewhere",
+        "shortUrl":"http://gu.com/p/3jh9m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381810475383/Shattered-glass-after-a-b-005.jpg",
+        "wordcount":"404",
+        "commentable":"false",
+        "internalContentCode":"419971297",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Yangon",
+        "publication":"theguardian.com",
+        "internalPageCode":"1980958",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T04:18:00Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419986482",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381810484077/Shattered-glass-after-a-b-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Soe Than Win",
+            "altText":"Shattered glass after a bomb went off at the Trader's Hotel in Yangon, Burma",
+            "height":"228",
+            "credit":"Soe Than Win/AFP/Getty",
+            "caption":"Shattered glass after a bomb went off at the Trader's Hotel in Yangon, Burma. Photograph: Soe Than Win/AFP/Getty",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381810486602/Shattered-glass-after-a-b-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Soe Than Win",
+            "altText":"Shattered glass after a bomb went off at the Trader's Hotel in Yangon, Burma",
+            "height":"276",
+            "credit":"Soe Than Win/AFP/Getty",
+            "caption":"Shattered glass after a bomb went off at the Trader's Hotel in Yangon, Burma. Photograph: Soe Than Win/AFP/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419986483",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381810475383/Shattered-glass-after-a-b-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Soe Than Win",
+            "altText":"Shattered glass after a bomb went off at the Trader's Hotel in Yangon, Burma",
+            "height":"84",
+            "credit":"Soe Than Win/AFP/Getty",
+            "caption":"Shattered glass after a bomb went off at the Trader's Hotel in Yangon, Burma. Photograph: Soe Than Win/AFP/Getty",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/16/burma-hotel-bombing-second-device-rangoon",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-16T08:10:47Z",
+      "webTitle":"Burma hotel bombing: arrested man 'involved in planting second device'",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/16/burma-hotel-bombing-second-device-rangoon",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/16/burma-hotel-bombing-second-device-rangoon",
+      "fields":{
+        "trailText":"Man accused of planting bomb in Rangoon's Traders Hotel also suspected of playing role in foiled plot to blow up restaurant<br />",
+        "headline":"Burma hotel bombing: arrested man 'involved in planting second device'",
+        "body":"<p>A man arrested over a hotel bombing in Burma in which an American woman was injured had been under surveillance for alleged involvement in the planting of a second device found at a restaurant the next afternoon, police said.</p><p>Authorities moved in on Saw Myint Lwin, 26, after matching his photograph with images captured on the Traders Hotel CCTV, according to a statement issued by Mon state police on Tuesday.</p><p>The 26-year-old rode his motorcycle through a barricade set up to apprehend him in Belin township, it said, but police caught up with him following a chase. It was not immediately clear if he had been charged.</p><p>The explosion at Traders Hotel, one of Burma's ritziest, occurred in the heart of Rangoon. It was the most high-profile in a series of bombings that the government alleges is an attempt to tarnish the state's image as it emerges from decades of oppressive military rule.</p><p>Officials said the attacks, which reportedly left two dead and several others wounded, appear to be organised, with a restaurant, two bus stops, Buddhist temples and a market all targeted. No one has claimed responsibility.</p><p>The homemade bomb, which went off just before midnight on Monday, was hidden in the bathroom in an American family's room on the ninth floor. There was no indication they had been targeted.</p><p>On Tuesday afternoon, authorities safely detonated a bomb found at Western Park restaurant in Rangoon.</p><p>Saw Myint Lwin was suspected of playing a role in that foiled plot, the Mon state police statement said, without elaborating.</p><p>The government speculated the recent bombings were being organised by individuals or groups who want to smear the country's image as it prepares to take leadership of the Association of Southeast Asian Nations regional grouping in 2014. Others have speculated the campaign was part of a backlash launched by Islamists in retailiation for anti-Muslim violence in the Buddhist state.</p><p></p><p>A US state department spokeswoman, Jen Psaki, said on Tuesday in Washington that she could not comment on any motive behind the bombings. She said the embassy released a security message to alert US citizens who reside in or are traveling to the country to the recent bombings.</p><p>\"While there is no indication at this time that any of these IEDs were specifically directed toward US citizens, the embassy asks that all US citizens exercise an appropriate level of caution,\" she said.</p><!-- Guardian Watermark: internal-code/content/420103947|2013-10-17T12:53:04Z|16d9a0090c3bfd58670fd76ba8c6fb8e6913040a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T09:37:23Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911004835/Policeman-stands-guard-in-004.jpg",
+        "standfirst":"Man accused of planting bomb in Rangoon's Traders Hotel also suspected of playing role in foiled plot to blow up restaurant<br />",
+        "shortUrl":"http://gu.com/p/3jt9e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911004835/Policeman-stands-guard-in-004.jpg",
+        "wordcount":"388",
+        "commentable":"false",
+        "internalContentCode":"420103947",
+        "allowUgc":"false",
+        "internalOctopusCode":"8200824",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Rangoon",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981679",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T08:10:47Z"
+      },
+      "tags":[{
+        "id":"world/burma",
+        "type":"keyword",
+        "webTitle":"Burma",
+        "webUrl":"http://www.theguardian.com/world/burma",
+        "apiUrl":"http://content.guardianapis.com/world/burma",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420104323",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911000266/Policeman-stands-guard-in-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"54",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911002311/Policeman-stands-guard-in-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"340",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911003599/Policeman-stands-guard-in-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"130",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911004835/Policeman-stands-guard-in-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"84",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911006337/Policeman-stands-guard-in-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"132",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911007652/Policeman-stands-guard-in-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"168",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911008917/Policeman-stands-guard-in-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"180",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911010261/Policeman-stands-guard-in-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"228",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911011600/Policeman-stands-guard-in-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"276",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911012875/Policeman-stands-guard-in-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"372",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911011600/Policeman-stands-guard-in-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"276",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420104324",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381911004835/Policeman-stands-guard-in-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Khin Maung Win",
+            "altText":"Policeman stands guard in Rangoon",
+            "height":"84",
+            "credit":"Khin Maung Win/AP",
+            "caption":"A policeman stands guard at a restricted area after a bomb squad found a suspicious looking packet in central Rangoon. Photograph: Khin Maung Win/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/16/cory-booker-mayor-senate-washington",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-16T21:56:13Z",
+      "webTitle":"Cory Booker: the media-savvy mayor marching on Washington",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/16/cory-booker-mayor-senate-washington",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/16/cory-booker-mayor-senate-washington",
+      "fields":{
+        "trailText":"Newark's mayor has used charisma and social media to pursue a Senate seat, but may have to change tack in Washington",
+        "headline":"Cory Booker: the media-savvy mayor marching on Washington",
+        "body":"<p>In the seven years that he has been mayor of Newark, New Jersey, Cory Booker, 44, has broken the mould of small-city politics and developed a new style of direct politicking through social media. In the process, he has acquired a nationwide following and reputation and gathered more than 1.4 million Twitter followers &ndash; five times as many people as live in Newark.</p> <p>With such a track record, it is not surprising that Booker won the special election replace <a href=\"http://www.theguardian.com/world/2013/jun/03/frank-lautenberg-new-jersey-senator-dies\">the late Frank Lautenberg in the Senate,</a> becoming the first black senator from New Jersey after winning by 56% to 43%.</p> <p>The deccisive result s partly a reflection of how Booker has used his charismatic personality and media savvy to build extensive name-recognition in his state and throughout the country, and then to convert that renown to his electoral advantage. Over the course of the short special election campaign, which began shortly after Lautenberg&rsquo;s death in June,&nbsp;he raised more than $11m, and thus far he has outspent Lonegan by a whopping ratio of eight to one. And tellingly, more than half of his funds came from out-of-state donors.&nbsp;</p> <p>The special election ends at an odd time &ndash; a Wednesday in October &ndash; because, it is widely assumed, the state&rsquo;s governor, Republican Chris Christie, didn&rsquo;t want Booker&rsquo;s name on the ballot to bring Democratic voters out for the general election in November, when Christie is up for re-election.&nbsp;</p> <p>Booker recruited his celebrity friends to fundraise and stump for him, headlined by Oprah Winfrey and Facebook&rsquo;s Mark Zuckerberg, with solid backup from Hollywood figures such as Ben Affleck, Matt Damon and Steven Spielberg, billionaires Ron Burkle and Michael Bloomberg, and a slew of New York tycoons and hedge fund managers.</p> <p>In addition to the huge head-start he has had in cash and media reach, Booker also gained an advantage when he drew Lonegan as his opponent. Lonegan is a little known right-wing Republican who disapproves of gay marriage and abortion, backs the government shutdown and has strong Tea Party leanings &ndash; not a natural draw in the socially progressive state of New Jersey. Still, despite all these favourable conditions, Booker&rsquo;s march to Washington has not been as smooth as it was supposed to be.</p> <p>&ldquo;The reason that the race has been <a href=\"http://www.monmouth.edu/assets/0/32212254770/32212254991/32212254992/32212254994/32212254995/30064771087/1992fc4b-5224-4d5b-a1e9-e0c5691158b5.pdf\">much closer than most people expected</a> it to be is that attacks on Cory Booker over his character and record as mayor have taken hold,&rdquo; said Patrick Murray, head of the polling institute at Monmouth university.</p> <p>&ldquo;Holes were found in his personal story, and questions raised about whether his national ambitions were more important to him than public service.&rdquo;</p> <p>Lonegan pressed relentlessly at these perceived weaknesses, calling him a &ldquo;show pony&rdquo; and firing off the soundbite: &ldquo;We need a leader, not a tweeter&rdquo;. He also ran with speculation that Booker might have exaggerated some of the details of his relationship with Newark residents, including an anecdote the mayor has related on several occasions about a man dying in his arms, and accounts of how he personally helped homeless people in the streets.</p> <p>But the most substantive issue was an attack launched by the Republicans on Booker's record as mayor of Newark. Booker came to the office partly on a campaign pledge to reduce crime, and for a while he succeeded. But in recent months the rate has been creeping up again.</p> <p><a href=\"http://www.nj.com/politics/index.ssf/2013/10/cory_bookers_legacy_in_newark_under_spotlight_as_he_looks_to_senate.html\">Statistics gathered by the New Jersey Star-Ledger</a>&nbsp;show that there were 83 homicides in 2003 under the previous mayor, compared with 95 homicides last year. The number of violent crimes has also edged up from 2,848 to 3,220 over the same time period, though the city&rsquo;s population has remained relatively steady.</p> <p>Booker now has a year to put some of these doubts behind him before he has to face New Jersey voters in November 2014, when Lautenberg&rsquo;s term runs out and he will have to run again, in order to secure a full six years of his own. That might mean having to pull back on habits that have defined him so far: his tendency to seek the spotlight; his outreach to every individual voter with a gripe or a burning house; even his use of social media.</p> <p>&ldquo;I think he&rsquo;s going to have to learn to be a little more circumspect with social media in the Senate,&rdquo; Murray said. &ldquo;That&rsquo;s not so much because of the missteps he made in this election &ndash; it&rsquo;s more that if he continues to try and grab the limelight he&rsquo;s going to find there are 99 other senators who think they are in the line in front of him.&rdquo;</p><!-- Guardian Watermark: internal-code/content/420191236|2013-10-17T12:53:00Z|ed5ecb6f51ea38beea38062ee9603c6d1b9c9f34 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-17T02:52:10Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524287/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-140x84.jpeg",
+        "standfirst":"Newark's mayor has used charisma and social media to pursue a Senate seat, but may have to change tack in Washington",
+        "shortUrl":"http://gu.com/p/3jj5v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524287/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"420191236",
+        "allowUgc":"false",
+        "internalComposerCode":"525f019be4b0760efba2ae68",
+        "isPremoderated":"false",
+        "byline":"Ed Pilkington",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982286",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T21:00:09Z"
+      },
+      "tags":[{
+        "id":"world/cory-booker",
+        "type":"keyword",
+        "webTitle":"Cory Booker",
+        "webUrl":"http://www.theguardian.com/world/cory-booker",
+        "apiUrl":"http://content.guardianapis.com/world/cory-booker",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-senate",
+        "type":"keyword",
+        "webTitle":"US Senate",
+        "webUrl":"http://www.theguardian.com/world/us-senate",
+        "apiUrl":"http://content.guardianapis.com/world/us-senate",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/new-jersey",
+        "type":"keyword",
+        "webTitle":"New Jersey",
+        "webUrl":"http://www.theguardian.com/world/new-jersey",
+        "apiUrl":"http://content.guardianapis.com/world/new-jersey",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/congress",
+        "type":"keyword",
+        "webTitle":"US Congress",
+        "webUrl":"http://www.theguardian.com/world/congress",
+        "apiUrl":"http://content.guardianapis.com/world/congress",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/democrats",
+        "type":"keyword",
+        "webTitle":"Democrats",
+        "webUrl":"http://www.theguardian.com/world/democrats",
+        "apiUrl":"http://content.guardianapis.com/world/democrats",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/edpilkington",
+        "type":"contributor",
+        "webTitle":"Ed Pilkington",
+        "webUrl":"http://www.theguardian.com/profile/edpilkington",
+        "apiUrl":"http://content.guardianapis.com/profile/edpilkington",
+        "bio":"<p>Ed Pilkington is the chief reporter for Guardian US. He is a former national and foreign editor of the paper, and author of Beyond the Mother Country</p>",
+        "rcsId":"GNL038863",
+        "r2ContributorId":"15609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/27/1332862968426/edpilkington_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959522807/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959522807/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-540x324.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"324",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959522976/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959522976/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-300x180.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"180",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959523113/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959523113/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-460x276.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"276",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959523310/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959523310/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-1020x612.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"612",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959523804/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959523804/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-620x372.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"372",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524023/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524023/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-220x132.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"132",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524143/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524143/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-380x228.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"228",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524287/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524287/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-140x84.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"84",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524507/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381959524507/cd2bc41e-4b28-4985-87ff-3eca6c5ff1d4-1024x768.jpeg",
+            "source":"AP",
+            "photographer":"Julio Cortez",
+            "altText":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate.",
+            "height":"768",
+            "credit":"Julio Cortez/AP",
+            "caption":"Newark Mayor Cory Booker walks out of a polling booth for the vacant New Jersey seat in the US Senate. Photograph: Julio Cortez/AP",
+            "mediaId":"gu-fc-d72c080e-d156-4201-aac7-05f062fd9efc",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
