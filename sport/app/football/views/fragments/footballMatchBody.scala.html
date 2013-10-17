@@ -9,7 +9,7 @@
     <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
         <div class="article-v2__inner">
             <header class="article__head">
-                <p class="dateline type-11">
+                <p class="dateline">
                     @status(page.theMatch)
                     <time data-timestamp="@page.theMatch.date.getMillis">
                         @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z")
@@ -30,14 +30,14 @@
             <div class="article-v2__main-column">
                 <div class="js-article__container article__container u-cf">
 
-                @if(page.theMatch.isLive) {
-                    <div class="live-toolbar">
-                        <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+                    @if(page.theMatch.isLive) {
+                        <div class="live-toolbar">
+                            <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+                        </div>
+                    }
+                    <div class="match-stats">
+                        @matchStats(page)
                     </div>
-                }
-                <div class="match-stats">
-                    @matchStats(page)
-                </div>
                 </div>
             </div>
             <div class="article-v2__secondary-column" aria-hidden="true">
