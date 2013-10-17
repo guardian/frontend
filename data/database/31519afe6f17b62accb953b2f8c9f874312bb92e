@@ -1,0 +1,108 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/14/christina-aguilera-rwanda-feed",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-14T11:44:43Z",
+      "webTitle":"Christina Aguilera feeds 'war-torn' Rwanda",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/14/christina-aguilera-rwanda-feed",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/14/christina-aguilera-rwanda-feed",
+      "fields":{
+        "trailText":"<p>Africa. Helping westerners who're a wee bit down-in-the-dumps feel better about themselves since 1884, says <strong>Natacha Nsabimana</strong></p>",
+        "headline":"Christina Aguilera feeds 'war-torn' Rwanda",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jgc5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2011/2/7/1297071036078/Christina-Aguilera-003.jpg",
+        "wordcount":"398",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/rwanda",
+        "type":"keyword",
+        "webTitle":"Rwanda",
+        "webUrl":"http://www.theguardian.com/world/rwanda",
+        "apiUrl":"http://content.guardianapis.com/world/rwanda",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"music/christinaaguilera",
+        "type":"keyword",
+        "webTitle":"Christina Aguilera",
+        "webUrl":"http://www.theguardian.com/music/christinaaguilera",
+        "apiUrl":"http://content.guardianapis.com/music/christinaaguilera",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/series/guardian-africa-network",
+        "type":"series",
+        "webTitle":"Guardian Africa network",
+        "webUrl":"http://www.theguardian.com/world/series/guardian-africa-network",
+        "apiUrl":"http://content.guardianapis.com/world/series/guardian-africa-network",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419955436",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2011/2/7/1297071036078/Christina-Aguilera-003.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Jeff Kravitz",
+            "altText":"Christina Aguilera",
+            "height":"84",
+            "credit":"Jeff Kravitz/FilmMagic",
+            "caption":"Christina Aguilera performs during the Super Bowl XLV pre-game Show at Dallas Cowboys Stadium in Arlington, Texas. Photograph: Jeff Kravitz/FilmMagic",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

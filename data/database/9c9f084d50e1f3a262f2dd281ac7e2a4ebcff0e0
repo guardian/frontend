@@ -1,0 +1,300 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"sport/2013/sep/30/godolphin-stable-drug-seizure",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-29T23:33:39Z",
+      "webTitle":"Godolphin stable orders inquiry into drug seizure",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/30/godolphin-stable-drug-seizure",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/30/godolphin-stable-drug-seizure",
+      "fields":{
+        "trailText":"Thousands of pounds worth of anaesthetics, anti-inflammatories, sedatives and bute seized and destroyed at Stansted on 3 May",
+        "headline":"Godolphin stable orders inquiry into drug seizure",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j69v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497582798/Sheikh-Mohammed-bin-Rashi-005.jpg",
+        "wordcount":"354",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "type":"keyword",
+        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
+        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/godolphin",
+        "type":"keyword",
+        "webTitle":"Godolphin",
+        "webUrl":"http://www.theguardian.com/sport/godolphin",
+        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418592151",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497578497/Sheikh-Mohammed-bin-Rashi-002.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"54",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497579960/Sheikh-Mohammed-bin-Rashi-003.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"340",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497581281/Sheikh-Mohammed-bin-Rashi-004.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"130",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497582798/Sheikh-Mohammed-bin-Rashi-005.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"84",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497583978/Sheikh-Mohammed-bin-Rashi-006.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"132",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497585075/Sheikh-Mohammed-bin-Rashi-007.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"168",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497587013/Sheikh-Mohammed-bin-Rashi-008.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"180",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497588535/Sheikh-Mohammed-bin-Rashi-009.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"228",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497589857/Sheikh-Mohammed-bin-Rashi-010.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"276",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497591043/Sheikh-Mohammed-bin-Rashi-011.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"372",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497589857/Sheikh-Mohammed-bin-Rashi-010.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"276",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418592152",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497582798/Sheikh-Mohammed-bin-Rashi-005.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"84",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

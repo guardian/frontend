@@ -14,7 +14,7 @@
       "fields":{
         "trailText":"<p>Unsealed documents show Ladar Levison, now subject of government gag order, refused requests to 'defeat its own system'</p>",
         "headline":"Lavabit founder refused FBI order to hand over email encryption keys",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3j9e4",
         "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/8/9/1376054734786/Lavabit-the-encrypted-ema-005.jpg",
         "wordcount":"863",
@@ -156,6 +156,1162 @@
       }],
       "references":[]
     },
-    "storyPackage":[]
+    "storyPackage":[{
+      "id":"technology/2013/aug/08/lavabit-email-shut-down-edward-snowden",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-08-09T06:58:00Z",
+      "webTitle":"Lavabit email service abruptly shut down citing government interference",
+      "webUrl":"http://www.theguardian.com/technology/2013/aug/08/lavabit-email-shut-down-edward-snowden",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/aug/08/lavabit-email-shut-down-edward-snowden",
+      "fields":{
+        "trailText":"<p>Founder of service reportedly used by Edward Snowden said he would not be complicit in 'crimes against the American people'</p>",
+        "headline":"Lavabit email service abruptly shut down citing government interference",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3hqy2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/4/1/1333289334339/Email-on-computer-003.jpg",
+        "wordcount":"747",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/email",
+        "type":"keyword",
+        "webTitle":"Email",
+        "webUrl":"http://www.theguardian.com/technology/email",
+        "apiUrl":"http://content.guardianapis.com/technology/email",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/spencerackerman",
+        "type":"contributor",
+        "webTitle":"Spencer Ackerman",
+        "webUrl":"http://www.theguardian.com/profile/spencerackerman",
+        "apiUrl":"http://content.guardianapis.com/profile/spencerackerman",
+        "bio":"<p>Spencer Ackerman is national security editor for Guardian US. A former senior writer for Wired, he won the 2012 National Magazine Award for Digital Reporting</p>",
+        "r2ContributorId":"22229",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/7/1370612137660/SpencerAckerman.png",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.theguardian.com/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-414693117",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/4/1/1333289341691/Email-on-computer-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"OJO Images",
+            "altText":"Email on computer",
+            "height":"276",
+            "credit":"OJO Images/Rex Features",
+            "caption":"'The first amendment is supposed to guarantee me the freedom to speak out in situations like this,' Levison wrote. Photograph: OJO Images/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-414693118",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/4/1/1333289334339/Email-on-computer-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"OJO Images",
+            "altText":"Email on computer",
+            "height":"84",
+            "credit":"OJO Images/Rex Features",
+            "caption":"The law would allow police and security services to monitor emails and social media messaging services. Photograph: OJO Images/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/aug/09/lavabit-email-edward-snowden-shuts-down",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-08-09T18:46:14Z",
+      "webTitle":"Lavabit privacy row: second email service closes 'to prevent spying'",
+      "webUrl":"http://www.theguardian.com/technology/2013/aug/09/lavabit-email-edward-snowden-shuts-down",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/aug/09/lavabit-email-edward-snowden-shuts-down",
+      "fields":{
+        "trailText":"<p>Withdrawal comes after apparent pressure on Lavabit to allow US government access to encrypted messages on its servers</p>",
+        "headline":"Lavabit privacy row: second email service closes 'to prevent spying'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tvef",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072979725/Lavabit-Encrypted-Email-S-003.jpg",
+        "wordcount":"595",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/email",
+        "type":"keyword",
+        "webTitle":"Email",
+        "webUrl":"http://www.theguardian.com/technology/email",
+        "apiUrl":"http://content.guardianapis.com/technology/email",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.theguardian.com/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/spencerackerman",
+        "type":"contributor",
+        "webTitle":"Spencer Ackerman",
+        "webUrl":"http://www.theguardian.com/profile/spencerackerman",
+        "apiUrl":"http://content.guardianapis.com/profile/spencerackerman",
+        "bio":"<p>Spencer Ackerman is national security editor for Guardian US. A former senior writer for Wired, he won the 2012 National Magazine Award for Digital Reporting</p>",
+        "r2ContributorId":"22229",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/7/1370612137660/SpencerAckerman.png",
+        "references":[]
+      },{
+        "id":"profile/charlesarthur",
+        "type":"contributor",
+        "webTitle":"Charles Arthur",
+        "webUrl":"http://www.theguardian.com/profile/charlesarthur",
+        "apiUrl":"http://content.guardianapis.com/profile/charlesarthur",
+        "bio":"<p>Charles Arthur is the Guardian's<br /><a href=\"http://www.guardian.co.uk/technology\">technology</a> editor. Previously, he covered science, technology and health at the Independent for nine years</p>",
+        "r2ContributorId":"19137",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2007/10/17/charles_arthur_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/alec-luhn",
+        "type":"contributor",
+        "webTitle":"Alec Luhn",
+        "webUrl":"http://www.theguardian.com/profile/alec-luhn",
+        "apiUrl":"http://content.guardianapis.com/profile/alec-luhn",
+        "r2ContributorId":"57960",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-414724088",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072977022/Lavabit-Encrypted-Email-S-001.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"54",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072978469/Lavabit-Encrypted-Email-S-002.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"130",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072979725/Lavabit-Encrypted-Email-S-003.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"84",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072981018/Lavabit-Encrypted-Email-S-004.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"132",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072982272/Lavabit-Encrypted-Email-S-005.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"168",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072983672/Lavabit-Encrypted-Email-S-006.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"180",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072984928/Lavabit-Encrypted-Email-S-007.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"228",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072986197/Lavabit-Encrypted-Email-S-008.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"276",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072986197/Lavabit-Encrypted-Email-S-008.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"276",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-414724089",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072979725/Lavabit-Encrypted-Email-S-003.jpg",
+          "typeData":{
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"Lavabit Encrypted Email Service",
+            "height":"84",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was apparently under pressure to grant US government access to its encrypted servers. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/aug/22/lavabit-founder-us-surveillance-snowden",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-08-22T14:04:00Z",
+      "webTitle":"Lavabit founder: 'My own tax dollars are being used to spy on me'",
+      "webUrl":"http://www.theguardian.com/world/2013/aug/22/lavabit-founder-us-surveillance-snowden",
+      "apiUrl":"http://content.guardianapis.com/world/2013/aug/22/lavabit-founder-us-surveillance-snowden",
+      "fields":{
+        "trailText":"<p>Since shuttering his email service, which was used by NSA whistleblower Edward Snowden, Ladar Levison has been stuck in a Kafkaesque legal battle – and that's about all he can say</p>",
+        "headline":"Lavabit founder: 'My own tax dollars are being used to spy on me'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3t86h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/22/1377178028766/Ladar-Levison-founder-of--003.jpg",
+        "wordcount":"1926",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/email",
+        "type":"keyword",
+        "webTitle":"Email",
+        "webUrl":"http://www.theguardian.com/technology/email",
+        "apiUrl":"http://content.guardianapis.com/technology/email",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.theguardian.com/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/dominic-rushe",
+        "type":"contributor",
+        "webTitle":"Dominic Rushe",
+        "webUrl":"http://www.theguardian.com/profile/dominic-rushe",
+        "apiUrl":"http://content.guardianapis.com/profile/dominic-rushe",
+        "bio":"<p>Dominic Rushe is the US business correspondent for the Guardian</p>",
+        "r2ContributorId":"41799",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/1/1362156653419/doiminixrushe_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419492478",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/22/1377178039803/Ladar-Levison-founder-of--008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Ladar Levison, founder of Lavabit",
+            "height":"276",
+            "credit":"guardian.co.uk",
+            "caption":"Ladar Levison cannot comment on specifics of what made him so uncomfortable that he closed his business. Photograph: Dominic Rushe for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419492479",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/22/1377178028766/Ladar-Levison-founder-of--003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"Ladar Levison, founder of Lavabit",
+            "height":"84",
+            "credit":"guardian.co.uk",
+            "caption":"Ladar Levison, founder of Lavabit. Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/03/lavabit-ladar-levison-fbi-encryption-keys-snowden",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-03T17:01:00Z",
+      "webTitle":"Lavabit founder refused FBI order to hand over email encryption keys",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/03/lavabit-ladar-levison-fbi-encryption-keys-snowden",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/03/lavabit-ladar-levison-fbi-encryption-keys-snowden",
+      "fields":{
+        "trailText":"<p>Unsealed documents show Ladar Levison, now subject of government gag order, refused requests to 'defeat its own system'</p>",
+        "headline":"Lavabit founder refused FBI order to hand over email encryption keys",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j9e4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/8/9/1376054734786/Lavabit-the-encrypted-ema-005.jpg",
+        "wordcount":"863",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/email",
+        "type":"keyword",
+        "webTitle":"Email",
+        "webUrl":"http://www.theguardian.com/technology/email",
+        "apiUrl":"http://content.guardianapis.com/technology/email",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/dominic-rushe",
+        "type":"contributor",
+        "webTitle":"Dominic Rushe",
+        "webUrl":"http://www.theguardian.com/profile/dominic-rushe",
+        "apiUrl":"http://content.guardianapis.com/profile/dominic-rushe",
+        "bio":"<p>Dominic Rushe is the US business correspondent for the Guardian</p>",
+        "r2ContributorId":"41799",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/1/1362156653419/doiminixrushe_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/fbi",
+        "type":"keyword",
+        "webTitle":"FBI",
+        "webUrl":"http://www.theguardian.com/world/fbi",
+        "apiUrl":"http://content.guardianapis.com/world/fbi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/data-computer-security",
+        "type":"keyword",
+        "webTitle":"Data and computer security",
+        "webUrl":"http://www.theguardian.com/technology/data-computer-security",
+        "apiUrl":"http://content.guardianapis.com/technology/data-computer-security",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"law/fisa-court",
+        "type":"keyword",
+        "webTitle":"Fisa court",
+        "webUrl":"http://www.theguardian.com/law/fisa-court",
+        "apiUrl":"http://content.guardianapis.com/law/fisa-court",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418994063",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/8/9/1376054740178/Lavabit-the-encrypted-ema-010.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Demotix/Alex Milan Tracy",
+            "altText":"Lavabit, the encrypted email service",
+            "height":"276",
+            "credit":"Demotix/Alex Milan Tracy/Corbis",
+            "caption":"Court ordered Levison to be fined $5,000 a day beginning 6 August until he handed over electronic copies of the keys. Photo: Demotix/Alex Milan Tracy/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418994064",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/8/9/1376054734786/Lavabit-the-encrypted-ema-005.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Demotix/Alex Milan Tracy",
+            "altText":"Lavabit, the encrypted email service",
+            "height":"84",
+            "credit":"Demotix/Alex Milan Tracy/Corbis",
+            "caption":"The (unencrypted) writing's on the wall ... Lavabit, the email service, has abruptly shut down. Photograph: Demotix/Alex Milan Tracy/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/09/lavabit-metadata-log-3500-offer",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-09T18:13:48Z",
+      "webTitle":"Lavabit founder offered to log users' metadata if FBI paid him $3,500",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/09/lavabit-metadata-log-3500-offer",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/09/lavabit-metadata-log-3500-offer",
+      "fields":{
+        "trailText":"Ladar Levison, the secure email service's founder, made the offer in an effort to safeguard passwords and prevent the FBI from mining incoming data. By <strong>Alex Hern</strong>",
+        "headline":"Lavabit founder offered to log users' metadata if FBI paid him $3,500",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jdma",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338483279/8a9d3198-af6d-41f7-89e6-e437b5881161-140x84.jpeg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/email",
+        "type":"keyword",
+        "webTitle":"Email",
+        "webUrl":"http://www.theguardian.com/technology/email",
+        "apiUrl":"http://content.guardianapis.com/technology/email",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/data-computer-security",
+        "type":"keyword",
+        "webTitle":"Data and computer security",
+        "webUrl":"http://www.theguardian.com/technology/data-computer-security",
+        "apiUrl":"http://content.guardianapis.com/technology/data-computer-security",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/fbi",
+        "type":"keyword",
+        "webTitle":"FBI",
+        "webUrl":"http://www.theguardian.com/world/fbi",
+        "apiUrl":"http://content.guardianapis.com/world/fbi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"profile/alex-hern",
+        "type":"contributor",
+        "webTitle":"Alex Hern",
+        "webUrl":"http://www.theguardian.com/profile/alex-hern",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-hern",
+        "bio":"<p>Alex Hern is a technology reporter for the Guardian</p>",
+        "r2ContributorId":"56277",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/2/1367489682939/Alex-Hern.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338478183/8a9d3198-af6d-41f7-89e6-e437b5881161-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338478183/8a9d3198-af6d-41f7-89e6-e437b5881161-300x180.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"180",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338479577/8a9d3198-af6d-41f7-89e6-e437b5881161-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338479577/8a9d3198-af6d-41f7-89e6-e437b5881161-620x372.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"372",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338480189/8a9d3198-af6d-41f7-89e6-e437b5881161-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338480189/8a9d3198-af6d-41f7-89e6-e437b5881161-2060x1236.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"1236",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338480870/8a9d3198-af6d-41f7-89e6-e437b5881161-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338480870/8a9d3198-af6d-41f7-89e6-e437b5881161-460x276.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"276",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338481046/8a9d3198-af6d-41f7-89e6-e437b5881161-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338481046/8a9d3198-af6d-41f7-89e6-e437b5881161-380x228.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"228",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338481609/8a9d3198-af6d-41f7-89e6-e437b5881161-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338481609/8a9d3198-af6d-41f7-89e6-e437b5881161-2048x1536.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"1536",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338482494/8a9d3198-af6d-41f7-89e6-e437b5881161-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338482494/8a9d3198-af6d-41f7-89e6-e437b5881161-1020x612.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"612",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338482727/8a9d3198-af6d-41f7-89e6-e437b5881161-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338482727/8a9d3198-af6d-41f7-89e6-e437b5881161-220x132.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"132",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338482961/8a9d3198-af6d-41f7-89e6-e437b5881161-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338482961/8a9d3198-af6d-41f7-89e6-e437b5881161-1024x768.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"768",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338483279/8a9d3198-af6d-41f7-89e6-e437b5881161-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338483279/8a9d3198-af6d-41f7-89e6-e437b5881161-140x84.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"84",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338483442/8a9d3198-af6d-41f7-89e6-e437b5881161-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338483442/8a9d3198-af6d-41f7-89e6-e437b5881161-540x324.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"324",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-80e63b9c-5c04-49b3-a2f4-e2b3ef2ca786",
+            "width":"540"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/11/fbi-demands-lavabit-violated-fourth-amendment-levison",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-11T02:23:55Z",
+      "webTitle":"Demands on Lavabit violated Fourth Amendment, lawyers say",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/11/fbi-demands-lavabit-violated-fourth-amendment-levison",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/11/fbi-demands-lavabit-violated-fourth-amendment-levison",
+      "fields":{
+        "trailText":"Edward Snowden's email provider argues government order to hand over encryption keys jeopardised clients' personal details",
+        "headline":"Demands on Lavabit violated Fourth Amendment, lawyers say",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jf2d",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376072979725/Lavabit-Encrypted-Email-S-003.jpg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/data-computer-security",
+        "type":"keyword",
+        "webTitle":"Data and computer security",
+        "webUrl":"http://www.theguardian.com/technology/data-computer-security",
+        "apiUrl":"http://content.guardianapis.com/technology/data-computer-security",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/email",
+        "type":"keyword",
+        "webTitle":"Email",
+        "webUrl":"http://www.theguardian.com/technology/email",
+        "apiUrl":"http://content.guardianapis.com/technology/email",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/dominic-rushe",
+        "type":"contributor",
+        "webTitle":"Dominic Rushe",
+        "webUrl":"http://www.theguardian.com/profile/dominic-rushe",
+        "apiUrl":"http://content.guardianapis.com/profile/dominic-rushe",
+        "bio":"<p>Dominic Rushe is the US business correspondent for the Guardian</p>",
+        "r2ContributorId":"41799",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/1/1362156653419/doiminixrushe_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-9d44fbb2-df24-4654-b078-2019d7845702",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338480870/8a9d3198-af6d-41f7-89e6-e437b5881161-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381338480870/8a9d3198-af6d-41f7-89e6-e437b5881161-460x276.jpeg",
+            "source":"NurPhoto/Corbis",
+            "photographer":"Alex Milan Tracy",
+            "altText":"The encrypted email service used by NSA whistleblower Edward Snowden known as Lavabit has abruptly shut down under mysterious circumstances.",
+            "height":"276",
+            "credit":"Alex Milan Tracy/NurPhoto/Corbis",
+            "caption":"Lavabit was Edward Snowden's email provider. Photograph: Alex Milan Tracy/NurPhoto/Corbis",
+            "mediaId":"gu-fc-9d44fbb2-df24-4654-b078-2019d7845702",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    }]
   }
 }

@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":203,
+    "total":208,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
@@ -19,6 +19,938 @@
       "references":[]
     },
     "results":[{
+      "id":"sport/2013/oct/16/parramatta-eels-appoint-brad-arthur-coach",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-16T01:46:51Z",
+      "webTitle":"Parramatta Eels appoint Brad Arthur as head coach",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/16/parramatta-eels-appoint-brad-arthur-coach",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/16/parramatta-eels-appoint-brad-arthur-coach",
+      "fields":{
+        "trailText":"<p>The Eels have appointed Manly Sea Eagles assistant coach Brad Arthur as the replacement for Ricky Stuart</p>",
+        "headline":"Parramatta Eels appoint Brad Arthur as head coach",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jt7c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381887350841/Brad-Arthur-003.jpg",
+        "wordcount":"171",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/parramatta-eels",
+        "type":"keyword",
+        "webTitle":"Parramatta Eels",
+        "webUrl":"http://www.theguardian.com/sport/parramatta-eels",
+        "apiUrl":"http://content.guardianapis.com/sport/parramatta-eels",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/tomlutz",
+        "type":"contributor",
+        "webTitle":"Tom Lutz",
+        "webUrl":"http://www.theguardian.com/profile/tomlutz",
+        "apiUrl":"http://content.guardianapis.com/profile/tomlutz",
+        "bio":"<p>Tom Lutz is a journalist for Guardian sport</p>",
+        "rcsId":"GNL012925",
+        "r2ContributorId":"16533",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/tom_lutz_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420085556",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381887366538/Brad-Arthur-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Brad Arthur",
+            "height":"276",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Brad Arthur during his last spell at Parramatta.  Photograph: Colin Whelan/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420085557",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381887350841/Brad-Arthur-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Brad Arthur",
+            "height":"84",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Brad Arthur during his last spell at Parramatta.  Photograph: Colin Whelan/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/13/sonny-bill-williams-all-blacks-2015",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-13T03:05:12Z",
+      "webTitle":"Sonny Bill Williams hopes to return to rugby union in 2015",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/13/sonny-bill-williams-all-blacks-2015",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/13/sonny-bill-williams-all-blacks-2015",
+      "fields":{
+        "trailText":"<p>Sonny Bill Williams has confirmed he is hoping to return to the All Blacks after another season in league with the Sydney Roosters</p>",
+        "headline":"Sonny Bill Williams hopes to return to rugby union in 2015",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jg56",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+        "wordcount":"376",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sonny-bill-williams",
+        "type":"keyword",
+        "webTitle":"Sonny Bill Williams",
+        "webUrl":"http://www.theguardian.com/sport/sonny-bill-williams",
+        "apiUrl":"http://content.guardianapis.com/sport/sonny-bill-williams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-union-team",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby union team",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-union-team",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-union-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-rugby",
+        "type":"keyword",
+        "webTitle":"Super Rugby",
+        "webUrl":"http://www.theguardian.com/sport/super-rugby",
+        "apiUrl":"http://content.guardianapis.com/sport/super-rugby",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-world-cup-2015",
+        "type":"keyword",
+        "webTitle":"Rugby World Cup 2015",
+        "webUrl":"http://www.theguardian.com/sport/rugby-world-cup-2015",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-world-cup-2015",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-union",
+        "type":"keyword",
+        "webTitle":"Rugby union",
+        "webUrl":"http://www.theguardian.com/sport/rugby-union",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-union",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419814858",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340668413/Sonny-Bill-Williams-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"276",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419814859",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"84",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/11/sonny-bill-williams-stays-with-rugby-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-11T04:42:00Z",
+      "webTitle":"Sonny Bill Williams rejects All Blacks and stays in rugby league",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/11/sonny-bill-williams-stays-with-rugby-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/11/sonny-bill-williams-stays-with-rugby-league",
+      "fields":{
+        "trailText":"<p>Sonny Bill Williams says he'll stay with the NRL champions, Sydney Roosters, after knocking back a return to rugby union in New Zealand</p>",
+        "headline":"Sonny Bill Williams rejects All Blacks and stays in rugby league",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jf3g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/11/1381466478579/Sonny-Bill-Williams-005.jpg",
+        "wordcount":"389",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sonny-bill-williams",
+        "type":"keyword",
+        "webTitle":"Sonny Bill Williams",
+        "webUrl":"http://www.theguardian.com/sport/sonny-bill-williams",
+        "apiUrl":"http://content.guardianapis.com/sport/sonny-bill-williams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-union-team",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby union team",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-union-team",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-union-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419665051",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/11/1381466492787/Sonny-Bill-Williams-010.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sonny Bill Williams",
+            "height":"276",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sonny Bill Williams had been weighing up a return to the All Blacks and the Chiefs.  Photograph: Renee McKay/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419665052",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/11/1381466478579/Sonny-Bill-Williams-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sonny Bill Williams",
+            "height":"84",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sonny Bill Williams Photograph: Renee McKay/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/10/wigan-world-club-challenge-sydney-roosters-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-10T16:12:40Z",
+      "webTitle":"Wigan would welcome World Club Challenge in Sydney against Roosters",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/10/wigan-world-club-challenge-sydney-roosters-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/10/wigan-world-club-challenge-sydney-roosters-nrl",
+      "fields":{
+        "trailText":"Wigan have welcomed suggestions from Australia they will be offered the chance to become the first British team to play a World Club Challenge fixture in Sydney for almost 40 years",
+        "headline":"Wigan would welcome World Club Challenge in Sydney against Roosters",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jeyg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421029706/Wigan--006.jpg",
+        "wordcount":"474",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419622647",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421021010/Wigan--001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"54",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421023502/Wigan--002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"340",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421024760/Wigan--003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"130",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421026256/Wigan--004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"720",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421028017/Wigan--005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"1536",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421029706/Wigan--006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421030920/Wigan--007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"132",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421032252/Wigan--008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"168",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421033498/Wigan--009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"180",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421034903/Wigan--010.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"228",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421036262/Wigan--011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421037666/Wigan--012.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"372",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421039186/Wigan--013.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"1116",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421041055/Wigan--014.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"1536",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421036262/Wigan--011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419622648",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421029706/Wigan--006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/oct/08/nrl-end-of-season-awards",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-08T21:34:45Z",
+      "webTitle":"It's the Connollys! The Guardian's NRL end-of-season awards",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/08/nrl-end-of-season-awards",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/08/nrl-end-of-season-awards",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>The Roosters are team of the year but who gets the nod for best try and, more importantly, most expensive wee?</p>",
+        "headline":"It's the Connollys! The Guardian's NRL end-of-season awards",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jc4d",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/7/1381100452604/Sydney-Roosters-002.jpg",
+        "wordcount":"1643",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the new book <a href=\"http://www.hardiegrant.com.au/Books/books/book?isbn=9781742705101\">Rugby League's Greatest Hits</a></p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419423346",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/8/1381219802953/NRL-awards-003.jpg",
+          "typeData":{
+            "source":"AAP/Getty Images",
+            "altText":"NRL awards",
+            "height":"276",
+            "credit":"AAP/Getty Images",
+            "caption":"From top: Sydney Roosters, Andrew Fifita, Nine's grand final coverage and Daly Cherry-Evans. Photograph: AAP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419423347",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/7/1381100452604/Sydney-Roosters-002.jpg",
+          "typeData":{
+            "source":"Gety Images",
+            "photographer":"Mark Metcalfe",
+            "altText":"Sydney Roosters",
+            "height":"84",
+            "credit":"Mark Metcalfe/Gety Images",
+            "caption":"Sydney Roosters celebrate Photograph: Mark Metcalfe/Gety Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"sport/video/2013/oct/07/sydney-roosters-win-grand-final-video",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -257,7 +1189,7 @@
       "fields":{
         "trailText":"<p><strong>Paul Connolly: </strong>The Roosters' new boys were invaluable; Manly were unlucky; Daniel Tupou could make it in the AFL</p>",
         "headline":"NRL grand final: five things we learned",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3jb6a",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/7/1381100452604/Sydney-Roosters-002.jpg",
         "wordcount":"1079",
@@ -348,7 +1280,7 @@
         "webTitle":"Paul Connolly",
         "webUrl":"http://www.theguardian.com/profile/paul-connolly",
         "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
-        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the new book <a href=\"http://www.hardiegrant.com.au/Books/books/book?isbn=9781742705101\">Rugby League's Greatest Hits</a></p>",
         "r2ContributorId":"56450",
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
         "references":[]
@@ -1059,1087 +1991,6 @@
             "height":"84",
             "credit":"Renee McKay/Getty Images",
             "caption":"Brett Stewart runs in a try: NRL Round 17, Manly Warringah Sea Eagles v Parramatta Eels, Brookvale Oval, Monday 8th July 2013. Photo: Copyright © Renee McKay/Action Photographics Photograph: Renee McKay/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/oct/05/rugby-league-world-cup-family-values",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-10-05T14:00:01Z",
-      "webTitle":"Rugby League World Cup will be full of wholesome family values",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/05/rugby-league-world-cup-family-values",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/05/rugby-league-world-cup-family-values",
-      "fields":{
-        "trailText":"With three Burgess boys, two Hendersons, two Grixs and two Evans the brotherhood will put on a show in the Rugby League World Cup",
-        "headline":"Rugby League World Cup will be full of wholesome family values",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3jajx",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/4/1380912744111/Sam-Burgess-001.jpg",
-        "wordcount":"893",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/rugby-league-world-cup-2013",
-        "type":"keyword",
-        "webTitle":"Rugby League World Cup 2013",
-        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
-        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/superleague",
-        "type":"keyword",
-        "webTitle":"Super League",
-        "webUrl":"http://www.theguardian.com/sport/superleague",
-        "apiUrl":"http://content.guardianapis.com/sport/superleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleagueworldcup2008",
-        "type":"keyword",
-        "webTitle":"Rugby league World Cup 2008",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleagueworldcup2008",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleagueworldcup2008",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/andywilson",
-        "type":"contributor",
-        "webTitle":"Andy Wilson",
-        "webUrl":"http://www.theguardian.com/profile/andywilson",
-        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
-        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
-        "rcsId":"GNL249938",
-        "r2ContributorId":"15381",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"theobserver/sport/news",
-        "type":"newspaper-book-section",
-        "webTitle":"News & features",
-        "webUrl":"http://www.theguardian.com/theobserver/sport/news",
-        "apiUrl":"http://content.guardianapis.com/theobserver/sport/news",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theobserver/sport",
-        "type":"newspaper-book",
-        "webTitle":"Observer Sport",
-        "webUrl":"http://www.theguardian.com/theobserver/sport",
-        "apiUrl":"http://content.guardianapis.com/theobserver/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theobserver",
-        "type":"publication",
-        "webTitle":"The Observer",
-        "webUrl":"http://www.theguardian.com/theobserver/all",
-        "apiUrl":"http://content.guardianapis.com/theobserver/all",
-        "sectionId":"theobserver",
-        "sectionName":"From the Observer",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-419113189",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/4/1380912751233/Sam-Burgess-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matthew Lewis",
-            "altText":"Sam Burgess",
-            "height":"276",
-            "credit":"Matthew Lewis/Getty Images",
-            "caption":"Sam Burgess, who made his Bradford debut in 2006, will be at the heart of England's challenge for the Rugby League World Cup.  Photograph: Matthew Lewis/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-419113190",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/4/1380912744111/Sam-Burgess-001.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matthew Lewis",
-            "altText":"Sam Burgess",
-            "height":"84",
-            "credit":"Matthew Lewis/Getty Images",
-            "caption":"Sam Burgess, who made his Bradford debut in 2006, will be at the heart of England's challenge for the Rugby League World Cup.  Photograph: Matthew Lewis/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/oct/04/wigan-sam-tomkins-grand-final-warrington",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-10-04T15:21:26Z",
-      "webTitle":"Wigan's Sam Tomkins targets grand farewell in final against Warrington",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/04/wigan-sam-tomkins-grand-final-warrington",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/04/wigan-sam-tomkins-grand-final-warrington",
-      "fields":{
-        "trailText":"Sam Tomkins tells Andy Wilson that it has not sunk in that the Super League Grand Final is his last game for Wigan before he leaves for New Zealand",
-        "headline":"Wigan's Sam Tomkins targets Grand Final farewell against Warrington",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3jaah",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896310930/Sam-Tomkins-and-Adrian-Mo-006.jpg",
-        "wordcount":"924",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/wiganwarriors",
-        "type":"keyword",
-        "webTitle":"Wigan Warriors",
-        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
-        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/warrington",
-        "type":"keyword",
-        "webTitle":"Warrington",
-        "webUrl":"http://www.theguardian.com/sport/warrington",
-        "apiUrl":"http://content.guardianapis.com/sport/warrington",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/super-league-xviii",
-        "type":"keyword",
-        "webTitle":"Super League XVIII",
-        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
-        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/superleague",
-        "type":"keyword",
-        "webTitle":"Super League",
-        "webUrl":"http://www.theguardian.com/sport/superleague",
-        "apiUrl":"http://content.guardianapis.com/sport/superleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/interview",
-        "type":"tone",
-        "webTitle":"Interviews",
-        "webUrl":"http://www.theguardian.com/tone/interview",
-        "apiUrl":"http://content.guardianapis.com/tone/interview",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"profile/andywilson",
-        "type":"contributor",
-        "webTitle":"Andy Wilson",
-        "webUrl":"http://www.theguardian.com/profile/andywilson",
-        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
-        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
-        "rcsId":"GNL249938",
-        "r2ContributorId":"15381",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/sport/news",
-        "type":"newspaper-book-section",
-        "webTitle":"News & features",
-        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/sport",
-        "type":"newspaper-book",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-419081657",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896302068/Sam-Tomkins-and-Adrian-Mo-001.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"54",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896304000/Sam-Tomkins-and-Adrian-Mo-002.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"340",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896305400/Sam-Tomkins-and-Adrian-Mo-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"130",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896306852/Sam-Tomkins-and-Adrian-Mo-004.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"720",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"1280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896308919/Sam-Tomkins-and-Adrian-Mo-005.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"1536",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"2048"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896310930/Sam-Tomkins-and-Adrian-Mo-006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"84",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896312282/Sam-Tomkins-and-Adrian-Mo-007.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"132",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896313631/Sam-Tomkins-and-Adrian-Mo-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"168",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896315005/Sam-Tomkins-and-Adrian-Mo-009.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"180",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896317099/Sam-Tomkins-and-Adrian-Mo-010.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"228",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896318562/Sam-Tomkins-and-Adrian-Mo-011.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"276",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896320101/Sam-Tomkins-and-Adrian-Mo-012.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"372",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896321722/Sam-Tomkins-and-Adrian-Mo-013.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"1116",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"1860"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896323822/Sam-Tomkins-and-Adrian-Mo-014.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"1536",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"2560"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896318562/Sam-Tomkins-and-Adrian-Mo-011.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"276",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-419081658",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/4/1380896310930/Sam-Tomkins-and-Adrian-Mo-006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Sam-Tomkins-and-Adrian-Morley-with-Super-League-Trophy",
-            "height":"84",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Adrian Morley and Sam Tomkins each hope to get their hands on the Super League Trophy on Saturday at Old Trafford. Photograph: Ed Sykes/Action Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"news/2013/oct/04/sydney-to-swell-long-weekend",
-      "sectionId":"news",
-      "sectionName":"News",
-      "webPublicationDate":"2013-10-04T07:08:31Z",
-      "webTitle":"Sydney set for blockbuster weekend as population swells by 1.4 million",
-      "webUrl":"http://www.theguardian.com/news/2013/oct/04/sydney-to-swell-long-weekend",
-      "apiUrl":"http://content.guardianapis.com/news/2013/oct/04/sydney-to-swell-long-weekend",
-      "fields":{
-        "trailText":"<p>NRL fans, One Direction fanatics and sailors predicted to pour $50m into the city's economy</p>",
-        "headline":"Sydney set for blockbuster weekend as population swells by 1.4 million",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j9pa",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380867280947/Fleet-Review-crowds-Opera-005.jpg",
-        "wordcount":"327",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"news/international-fleet-review",
-        "type":"keyword",
-        "webTitle":"International Fleet Review",
-        "webUrl":"http://www.theguardian.com/news/international-fleet-review",
-        "apiUrl":"http://content.guardianapis.com/news/international-fleet-review",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"world/australia",
-        "type":"keyword",
-        "webTitle":"Australia",
-        "webUrl":"http://www.theguardian.com/world/australia",
-        "apiUrl":"http://content.guardianapis.com/world/australia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/bridie-jabour",
-        "type":"contributor",
-        "webTitle":"Bridie Jabour",
-        "webUrl":"http://www.theguardian.com/profile/bridie-jabour",
-        "apiUrl":"http://content.guardianapis.com/profile/bridie-jabour",
-        "bio":"<p>Bridie Jabour is a reporter for Guardian Australia. She tweets <a href=\"https://twitter.com/bkjabour\">@bkjabour</a></p>",
-        "r2ContributorId":"56485",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/27/1369625233941/Bridie-Jabour.jpg",
-        "references":[]
-      },{
-        "id":"world/sydney",
-        "type":"keyword",
-        "webTitle":"Sydney",
-        "webUrl":"http://www.theguardian.com/world/sydney",
-        "apiUrl":"http://content.guardianapis.com/world/sydney",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/new-south-wales",
-        "type":"keyword",
-        "webTitle":"New South Wales",
-        "webUrl":"http://www.theguardian.com/world/new-south-wales",
-        "apiUrl":"http://content.guardianapis.com/world/new-south-wales",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"music/one-direction",
-        "type":"keyword",
-        "webTitle":"One Direction",
-        "webUrl":"http://www.theguardian.com/music/one-direction",
-        "apiUrl":"http://content.guardianapis.com/music/one-direction",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"music/music",
-        "type":"keyword",
-        "webTitle":"Music",
-        "webUrl":"http://www.theguardian.com/music/music",
-        "apiUrl":"http://content.guardianapis.com/music/music",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-419031632",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380867293594/Fleet-Review-crowds-Opera-010.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "photographer":"DAN HIMBRECHTS",
-            "altText":"Fleet Review crowds Opera House",
-            "height":"276",
-            "credit":"DAN HIMBRECHTS/AAPIMAGE",
-            "caption":"Crowds line the Sydney Opera House forecourt as warships sail into the harbour for the International Fleet Review. Photo: Dan Himbrechts/AAP ",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-419031633",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380867280947/Fleet-Review-crowds-Opera-005.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "photographer":"DAN HIMBRECHTS",
-            "altText":"Fleet Review crowds Opera House",
-            "height":"84",
-            "credit":"DAN HIMBRECHTS/AAPIMAGE",
-            "caption":"Crowds line the forecourt of the Sydney Opera House as warships sail into Sydney Harbour as part of the International Fleet Review in Sydney, Friday, Oct. 4, 2013. The International Fleet Review celebrates the centenary of the first entry of the Royal Australian Navy fleet into Sydney Harbour on 4 October 1913. (AAP Image/Dan Himbrechts) NO ARCHIVING Photograph: DAN HIMBRECHTS/AAPIMAGE",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"news/gallery/2013/oct/04/international-fleet-1d-nrl-sydney",
-      "sectionId":"news",
-      "sectionName":"News",
-      "webPublicationDate":"2013-10-04T03:21:25Z",
-      "webTitle":"NRL, 1D, boats and princes: a spotter's guide to Sydney's weekend visitors",
-      "webUrl":"http://www.theguardian.com/news/gallery/2013/oct/04/international-fleet-1d-nrl-sydney",
-      "apiUrl":"http://content.guardianapis.com/news/gallery/2013/oct/04/international-fleet-1d-nrl-sydney",
-      "fields":{
-        "trailText":"<p>An unlikely mix of people descend on Sydney as the city gears up for a weekend that includes the NRL grand final, the International Fleet Review, One Direction gigs and more</p>",
-        "headline":"NRL, One Direction, boats and princes: a spotter's guide to Sydney's weekend visitors",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j9np",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845187858/Royalists-008.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"news/international-fleet-review",
-        "type":"keyword",
-        "webTitle":"International Fleet Review",
-        "webUrl":"http://www.theguardian.com/news/international-fleet-review",
-        "apiUrl":"http://content.guardianapis.com/news/international-fleet-review",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"world/sydney",
-        "type":"keyword",
-        "webTitle":"Sydney",
-        "webUrl":"http://www.theguardian.com/world/sydney",
-        "apiUrl":"http://content.guardianapis.com/world/sydney",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/australia",
-        "type":"keyword",
-        "webTitle":"Australia",
-        "webUrl":"http://www.theguardian.com/world/australia",
-        "apiUrl":"http://content.guardianapis.com/world/australia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"music/one-direction",
-        "type":"keyword",
-        "webTitle":"One Direction",
-        "webUrl":"http://www.theguardian.com/music/one-direction",
-        "apiUrl":"http://content.guardianapis.com/music/one-direction",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"travel/sydneyoperahouse",
-        "type":"keyword",
-        "webTitle":"Sydney Opera House, Sydney, Australia",
-        "webUrl":"http://www.theguardian.com/travel/sydneyoperahouse",
-        "apiUrl":"http://content.guardianapis.com/travel/sydneyoperahouse",
-        "sectionId":"travel",
-        "sectionName":"Travel",
-        "references":[]
-      },{
-        "id":"uk/prince-harry",
-        "type":"keyword",
-        "webTitle":"Prince Harry",
-        "webUrl":"http://www.theguardian.com/uk/prince-harry",
-        "apiUrl":"http://content.guardianapis.com/uk/prince-harry",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"technology/games",
-        "type":"keyword",
-        "webTitle":"Games",
-        "webUrl":"http://www.theguardian.com/technology/games",
-        "apiUrl":"http://content.guardianapis.com/technology/games",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"type/gallery",
-        "type":"type",
-        "webTitle":"Gallery",
-        "webUrl":"http://www.theguardian.com/inpictures",
-        "apiUrl":"http://content.guardianapis.com/inpictures",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-419024655",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845187858/Royalists-008.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "altText":"Trail Navy Ilustration: Royalists",
-            "height":"84",
-            "credit":"Guardian",
-            "caption":"Royalists",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-419019221",
-        "relation":"gallery",
-        "type":"image",
-        "galleryIndex":1,
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845174610/NRL-fans-005.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "photographer":"Oslo Davis",
-            "altText":"Navy Ilustration: NRL fans",
-            "height":"460",
-            "credit":"Oslo Davis/Guardian",
-            "caption":"<strong>NRL fans</strong><br></br>\r\n<strong>How to spot:</strong> The rugby league kit is usually a giveaway. If this is combined with sleeve tattoos, generous helpings of hair product, a blonde girlfriend and 634kg of excess muscle then congratulations, you’ve bagged yourself an actual player! <br></br>\r\n<strong>Natural habitat:</strong> Depends on the species: stadium (enthusiasts), the sofa (the lazy) or the pub (boozers/fighters). <br></br>\r\n<strong>Most likely to sing:</strong> Anything by Ricky Martin. Seriously. He’s providing the entertainment at the final. <br></br>\r\n<strong>Most likely to say:</strong> ROOOOOOSTERRRRSS!/SEA EAAAAGLLLLESSSS!<br></br>\r\n<strong>Most likely to drink:</strong> Beer. Some more beer. Possibly a bit more beer.",
-            "width":"690"
-          }
-        }]
-      },{
-        "id":"gu-image-419020651",
-        "relation":"gallery",
-        "type":"image",
-        "galleryIndex":2,
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380846691516/New-Teenage-Girls-009.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "altText":"Navy Ilustration: New Teenage Girls",
-            "height":"460",
-            "credit":"Oslo Davis/Guardian",
-            "caption":"<strong>One Direction fans</strong> <br></br>\r\n<strong>How to spot:</strong> Onesies. 1D-branded everything. <a href=\"http://www.buzzfeed.com/johnnyr6/6-things-every-one-direction-fan-needs-to-know-abo-arl4\">Erm, Joy Division t-shirts?</a><br></br>\r\n<strong>Natural habitat:</strong> Hotels, airports, <a href=\"http://www.theguardian.com/music/australia-culture-blog/2013/sep/25/one-direction-fangirl-mother\">large hysterical huddles in the vicinity of the band.</a> <br></br>\r\n<strong>Most likely to sing:</strong> What Makes You Beautiful. Over and over again. <br></br>\r\n<strong>Most likely to say:</strong> *High pitched scream* <br></br>\r\n<strong>Most likely to drink:</strong> Hard liquor to numb the pain (parents). Carrot juice (fans).",
-            "width":"690"
-          }
-        }]
-      },{
-        "id":"gu-image-419019206",
-        "relation":"gallery",
-        "type":"image",
-        "galleryIndex":3,
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845156018/Sailors-002.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "altText":"Navy Ilustration: Sailors",
-            "height":"460",
-            "credit":"Oslo Davis/Guardian",
-            "caption":"<strong>Sailors</strong><br></br>\r\n<strong>How to spot:</strong> The professionals: sailorsuits, braid, medals, <a href=\"http://www.navy.gov.au/about/organisation/uniforms\">swords</a>. The salty sea dogs: terracotta tans.<br></br>\r\n<strong>Natural habitat:</strong> The sea, funnily enough. <br></br>\r\n<strong>Most likely to sing:</strong> <a href=\"http://www.navy.gov.au/about/our-people/navy-band/ceremonial-music\">Advance Australia Fair</a>. Bugle calls. <a href=\"http://www.youtube.com/watch?v=lM5x3TJpP24\">Perhaps a shanty</a>. <br></br><strong>Most likely to say:</strong> Aye aye, Captain.<br></br>\r\n<strong>Most likely to drink:</strong> A bottle of rum?",
-            "width":"690"
-          }
-        }]
-      },{
-        "id":"gu-image-419019202",
-        "relation":"gallery",
-        "type":"image",
-        "galleryIndex":4,
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845149329/Gamers-001.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "photographer":"Oslo Davis",
-            "altText":"Navy Ilustration: Gamers",
-            "height":"460",
-            "credit":"Oslo Davis/Guardian",
-            "caption":"<strong>Gamers</strong><br></br>\r\n<strong>How to spot:</strong> Over-developed thumbs. Deathly pallor. <br></br>\r\n<strong>Natural habitat:</strong> Indoors, basking in the glow of multiple monitors. <br></br>\r\n<strong>Most likely to sing:</strong> Still Alive, from Portal. <br></br>\r\n<strong>Most likely to say:</strong> GG <a href=\"http://www.urbandictionary.com/define.php?term=noobsauce\">noobsauce.</a> <br></br>\r\n<strong>Most likely to drink:</strong> Caffeinated beverages, and lots of them. <br></br>",
-            "width":"690"
-          }
-        }]
-      },{
-        "id":"gu-image-419019223",
-        "relation":"gallery",
-        "type":"image",
-        "galleryIndex":5,
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845168460/Boat-Spotters-004.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "photographer":"Oslo Davis",
-            "altText":"Navy Ilustration: Boat Spotters",
-            "height":"460",
-            "credit":"Oslo Davis/Guardian",
-            "caption":"<strong>Boat spotters</strong><br></br>\r\n<strong>How to spot:</strong> They'll be doing the spotting, thank you very much.<br></br>\r\n<strong>Natural habitat:</strong> Front and centre on the foreshore, binoculars in hand.<br></br>\r\n<strong>Most likely to sing:</strong> \"I like big boats and I cannot lie … \" <br></br>\r\n<strong>Most likely to say:</strong> Check out the Mk 41 VLS on that frigate! <br></br>\r\n<strong>Most likely to drink:</strong> Tea, from their own vacuum flasks.",
-            "width":"690"
-          }
-        }]
-      },{
-        "id":"gu-image-419019316",
-        "relation":"gallery",
-        "type":"image",
-        "galleryIndex":6,
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845186206/Royalists-007.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "photographer":"Oslo Davis",
-            "altText":"Navy Ilustration: Royalists",
-            "height":"460",
-            "credit":"Oslo Davis/Guardian",
-            "caption":"<strong>Royalists</strong><br></br>\r\n<strong>How to spot:</strong> Crown, sceptre, fancy robe, weak chin but excellent tee...... Oh, a royalist. Fake crown, fake sceptre, fake fancy robe, weak chin, middling teeth. <br></br>\r\n<strong>Natural habitat:</strong> Preferably England but Australia will have to do. <br></br>\r\n<strong>Most likely to sing:</strong> God Save the Queen <br></br>\r\n<strong>Most likely to say:</strong> See above. <br></br>\r\n<strong>Most likely to drink:</strong> Whatever Harry’s having. <br></br>",
-            "width":"690"
-          }
-        }]
-      },{
-        "id":"gu-image-419019219",
-        "relation":"gallery",
-        "type":"image",
-        "galleryIndex":7,
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380845180571/Graphic-Novel-fans-006.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "photographer":"Oslo Davis",
-            "altText":"Navy Ilustration: Graphic Novel fans",
-            "height":"460",
-            "credit":"Oslo Davis/Guardian",
-            "caption":"<strong>Graphic novel and animation fans</strong><br></br>\r\n<strong>How to spot:</strong> Decidedly cooler than most of the crowd gathered in the harbour. Decidedly less interested in boats.<br></br>\r\n<strong>Natural habitat:</strong> Cinemas, bookshops, art shops. Inside.<br></br>\r\n<strong>Most likely to sing:</strong> There’s only <a href=\"http://io9.com/5159888/10-alan-moore-comics-you-must-read-besides-watchmen\">one Alan Moore</a>, one Alan Moore ...<br></br>\r\n<strong>Most likely to say:</strong> See you <a href=\"http://www.sydneyoperahouse.com/whatson/graphic13_wordless.aspx\">at Art Spiegleman</a> later.",
-            "width":"690"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/blog/2013/oct/04/nrl-final-manly-sea-eagles-sydney-roosters",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-10-04T00:05:00Z",
-      "webTitle":"NRL grand final: Sea Eagles and Roosters value quality over popularity",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/04/nrl-final-manly-sea-eagles-sydney-roosters",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/04/nrl-final-manly-sea-eagles-sydney-roosters",
-      "fields":{
-        "trailText":"<p><strong>Paul Connolly: </strong>Both teams in this year's final have been accused of throwing money around but they are likely to create an epic encounter</p>",
-        "headline":"NRL grand final: Sea Eagles and Roosters value quality over popularity",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j9nz",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/4/1380844398466/Manly-v-Sydney-001.jpg",
-        "wordcount":"1147",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sydney-roosters",
-        "type":"keyword",
-        "webTitle":"Sydney Roosters",
-        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
-        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/manly-sea-eagles",
-        "type":"keyword",
-        "webTitle":"Manly Sea Eagles",
-        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
-        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/paul-connolly",
-        "type":"contributor",
-        "webTitle":"Paul Connolly",
-        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
-        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
-        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
-        "r2ContributorId":"56450",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-419021635",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/4/1380844404919/Manly-v-Sydney-003.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Paul Miller",
-            "altText":"Manly v Sydney",
-            "height":"276",
-            "credit":"Paul Miller/AAP Image",
-            "caption":"Manly Sea Eagles captain Jamie Lyon (left) and Sydney Roosters captain Anthony Minichiello pose with the Provan-Summons Trophy at the NRL Grand Final lunch.  Photograph: Paul Miller/AAP Image",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-419021636",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/4/1380844398466/Manly-v-Sydney-001.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Paul Miller",
-            "altText":"Manly v Sydney",
-            "height":"84",
-            "credit":"Paul Miller/AAP Image",
-            "caption":"Manly Sea Eagles captain Jamie Lyon (left) and Sydney Roosters captain Anthony Minichiello pose with the Provan-Summons Trophy at the NRL Grand Final lunch.  Photograph: Paul Miller/AAP Image",
             "width":"140"
           }
         }]

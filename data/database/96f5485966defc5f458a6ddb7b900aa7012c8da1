@@ -243,2643 +243,6 @@
       "references":[]
     },
     "storyPackage":[{
-      "id":"world/2013/sep/27/syria-deadline-destroy-chemical-weapons-november",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-09-27T14:24:00Z",
-      "webTitle":"Syria given November deadline to destroy all chemical weapons facilities",
-      "webUrl":"http://www.theguardian.com/world/2013/sep/27/syria-deadline-destroy-chemical-weapons-november",
-      "apiUrl":"http://content.guardianapis.com/world/2013/sep/27/syria-deadline-destroy-chemical-weapons-november",
-      "fields":{
-        "trailText":"<p>Inspections to begin next week after UN votes unanimously to impose inspections on Syria under accelerated timetable</p>",
-        "headline":"Syria given November deadline to destroy all chemical weapons facilities",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j5ag",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380290845279/Syria-UN-general-assembly-003.jpg",
-        "wordcount":"674",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/unitednations",
-        "type":"keyword",
-        "webTitle":"United Nations",
-        "webUrl":"http://www.theguardian.com/world/unitednations",
-        "apiUrl":"http://content.guardianapis.com/world/unitednations",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usforeignpolicy",
-        "type":"keyword",
-        "webTitle":"US foreign policy",
-        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
-        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/bashar-al-assad",
-        "type":"keyword",
-        "webTitle":"Bashar al-Assad",
-        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
-        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/julianborger",
-        "type":"contributor",
-        "webTitle":"Julian Borger",
-        "webUrl":"http://www.theguardian.com/profile/julianborger",
-        "apiUrl":"http://content.guardianapis.com/profile/julianborger",
-        "bio":"<p>Julian Borger is the Guardian's diplomatic editor. He was previously a correspondent in the US, the Middle East, eastern Europe and the Balkans</p>",
-        "rcsId":"GNL001547",
-        "r2ContributorId":"15924",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/julian_borger_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/international",
-        "type":"newspaper-book-section",
-        "webTitle":"International",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418513676",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380290856371/Syria-UN-general-assembly-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Andrew Burton",
-            "altText":"Syria UN general assembly",
-            "height":"276",
-            "credit":"Andrew Burton/Getty Images",
-            "caption":"Ahmed Asi Al-Jerba, president of the Syrian Opposition Coalition, and French foreign minister Laurent Fabius attend a Friends of the Syrian People meeting. Photograph: Andrew Burton/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418513677",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380290845279/Syria-UN-general-assembly-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Andrew Burton",
-            "altText":"Syria UN general assembly",
-            "height":"84",
-            "credit":"Andrew Burton/Getty Images",
-            "caption":"Ahmed Asi Al-Jerba, President of Syrian Opposition Coalition ; French Foreign Minister Laurent Fabius attend a Friends of the Syrian People meeting on the sidelines of the UN general assembly. Photograph: Andrew Burton/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/29/syria-brink-of-solution",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-29T18:15:00Z",
-      "webTitle":"Syria: the strategy has backfired  | Alastair Crooke",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/29/syria-brink-of-solution",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/29/syria-brink-of-solution",
-      "fields":{
-        "trailText":"<p><strong>Alastair Crooke:</strong> The Gulf states' plans to undermine Iran and Syria are in tatters. But a new relationship may now emerge</p>",
-        "headline":"Syria: the strategy has backfired",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j657",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467877318/A-Free-Syrian-Army-fighte-003.jpg",
-        "wordcount":"679",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/commentanddebate",
-        "type":"newspaper-book-section",
-        "webTitle":"Comment & debate",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/iran",
-        "type":"keyword",
-        "webTitle":"Iran",
-        "webUrl":"http://www.theguardian.com/world/iran",
-        "apiUrl":"http://content.guardianapis.com/world/iran",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"world/arab-and-middle-east-protests",
-        "type":"keyword",
-        "webTitle":"Arab and Middle East unrest",
-        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
-        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/saudiarabia",
-        "type":"keyword",
-        "webTitle":"Saudi Arabia",
-        "webUrl":"http://www.theguardian.com/world/saudiarabia",
-        "apiUrl":"http://content.guardianapis.com/world/saudiarabia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/alastaircrooke",
-        "type":"contributor",
-        "webTitle":"Alastair Crooke",
-        "webUrl":"http://www.theguardian.com/profile/alastaircrooke",
-        "apiUrl":"http://content.guardianapis.com/profile/alastaircrooke",
-        "bio":"<p>Alastair Crooke is the founder and director of the Conflicts Forum, which works for engagement between political Islam and the West, and a regular contributor to Bitter Lemons International</p>",
-        "r2ContributorId":"23675",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380479245366/alastair_crooke.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"publication/guardianweekly",
-        "type":"publication",
-        "webTitle":"Guardian Weekly",
-        "webUrl":"http://www.theguardian.com/weekly",
-        "apiUrl":"http://content.guardianapis.com/weekly",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418625916",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467874636/A-Free-Syrian-Army-fighte-001.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"54",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467876248/A-Free-Syrian-Army-fighte-002.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"130",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467877318/A-Free-Syrian-Army-fighte-003.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"84",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467878329/A-Free-Syrian-Army-fighte-004.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"132",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467879478/A-Free-Syrian-Army-fighte-005.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"168",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467880507/A-Free-Syrian-Army-fighte-006.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"180",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467881553/A-Free-Syrian-Army-fighte-007.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"228",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467882598/A-Free-Syrian-Army-fighte-008.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"276",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467882598/A-Free-Syrian-Army-fighte-008.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"276",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/Reuters",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418625917",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467877318/A-Free-Syrian-Army-fighte-003.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"84",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/29/syria-brink-of-solution",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-29T18:15:00Z",
-      "webTitle":"Syria: the strategy has backfired  | Alastair Crooke",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/29/syria-brink-of-solution",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/29/syria-brink-of-solution",
-      "fields":{
-        "trailText":"<p><strong>Alastair Crooke:</strong> The Gulf states' plans to undermine Iran and Syria are in tatters. But a new relationship may now emerge</p>",
-        "headline":"Syria: the strategy has backfired",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j657",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467877318/A-Free-Syrian-Army-fighte-003.jpg",
-        "wordcount":"679",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/commentanddebate",
-        "type":"newspaper-book-section",
-        "webTitle":"Comment & debate",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/iran",
-        "type":"keyword",
-        "webTitle":"Iran",
-        "webUrl":"http://www.theguardian.com/world/iran",
-        "apiUrl":"http://content.guardianapis.com/world/iran",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"world/arab-and-middle-east-protests",
-        "type":"keyword",
-        "webTitle":"Arab and Middle East unrest",
-        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
-        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/saudiarabia",
-        "type":"keyword",
-        "webTitle":"Saudi Arabia",
-        "webUrl":"http://www.theguardian.com/world/saudiarabia",
-        "apiUrl":"http://content.guardianapis.com/world/saudiarabia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/alastaircrooke",
-        "type":"contributor",
-        "webTitle":"Alastair Crooke",
-        "webUrl":"http://www.theguardian.com/profile/alastaircrooke",
-        "apiUrl":"http://content.guardianapis.com/profile/alastaircrooke",
-        "bio":"<p>Alastair Crooke is the founder and director of the Conflicts Forum, which works for engagement between political Islam and the West, and a regular contributor to Bitter Lemons International</p>",
-        "r2ContributorId":"23675",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380479245366/alastair_crooke.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"publication/guardianweekly",
-        "type":"publication",
-        "webTitle":"Guardian Weekly",
-        "webUrl":"http://www.theguardian.com/weekly",
-        "apiUrl":"http://content.guardianapis.com/weekly",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418625916",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467874636/A-Free-Syrian-Army-fighte-001.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"54",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467876248/A-Free-Syrian-Army-fighte-002.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"130",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467877318/A-Free-Syrian-Army-fighte-003.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"84",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467878329/A-Free-Syrian-Army-fighte-004.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"132",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467879478/A-Free-Syrian-Army-fighte-005.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"168",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467880507/A-Free-Syrian-Army-fighte-006.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"180",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467881553/A-Free-Syrian-Army-fighte-007.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"228",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467882598/A-Free-Syrian-Army-fighte-008.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"276",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467882598/A-Free-Syrian-Army-fighte-008.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"276",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/Reuters",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418625917",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380467877318/A-Free-Syrian-Army-fighte-003.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"Hamid Khatib",
-            "altText":"A Free Syrian Army fighter fires his weapon",
-            "height":"84",
-            "credit":"Hamid Khatib/REUTERS",
-            "caption":"'The Gulf strategy in Syria is in tatters: its aspirations are not succeeding in the field, and – paradoxically – it seems that the imminent prospect of US military intervention in Syria created a schism within the Syrian opposition.' Photograph: Hamid Khatib/REUTERS",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"world/2013/sep/29/un-inspectors-syria-dismantle-chemical-weapons-cache",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-09-29T20:07:14Z",
-      "webTitle":"UN inspectors prepare to dismantle Syria's chemical weapons cache",
-      "webUrl":"http://www.theguardian.com/world/2013/sep/29/un-inspectors-syria-dismantle-chemical-weapons-cache",
-      "apiUrl":"http://content.guardianapis.com/world/2013/sep/29/un-inspectors-syria-dismantle-chemical-weapons-cache",
-      "fields":{
-        "trailText":"<p>At times team will have to wear protective suits and armour in 35C heat during most hazardous disarmament mission ever</p>",
-        "headline":"UN inspectors prepare to dismantle Syria's chemical weapons cache",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j685",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380484848512/UN-inspectors-in-Syria-003.jpg",
-        "wordcount":"1006",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/unitednations",
-        "type":"keyword",
-        "webTitle":"United Nations",
-        "webUrl":"http://www.theguardian.com/world/unitednations",
-        "apiUrl":"http://content.guardianapis.com/world/unitednations",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/chemical-weapons",
-        "type":"keyword",
-        "webTitle":"Chemical weapons",
-        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
-        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/julianborger",
-        "type":"contributor",
-        "webTitle":"Julian Borger",
-        "webUrl":"http://www.theguardian.com/profile/julianborger",
-        "apiUrl":"http://content.guardianapis.com/profile/julianborger",
-        "bio":"<p>Julian Borger is the Guardian's diplomatic editor. He was previously a correspondent in the US, the Middle East, eastern Europe and the Balkans</p>",
-        "rcsId":"GNL001547",
-        "r2ContributorId":"15924",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/julian_borger_140x140.jpg",
-        "references":[]
-      },{
-        "id":"world/arab-and-middle-east-protests",
-        "type":"keyword",
-        "webTitle":"Arab and Middle East unrest",
-        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
-        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/topstories",
-        "type":"newspaper-book-section",
-        "webTitle":"Top stories",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418635417",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380484848512/UN-inspectors-in-Syria-003.jpg",
-          "typeData":{
-            "source":"Shaam News Network",
-            "altText":"UN inspectors in Syria",
-            "height":"84",
-            "credit":"Shaam News Network",
-            "caption":"Inspectors will be attempting to destroy about 1,000 tonnes of nerve agents such as sarin and sulphur mustard.\r Photograph: Shaam News Network",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-video-418622447",
-        "relation":"body",
-        "type":"video",
-        "assets":[{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/30/130930Assad-16x9.mp4",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/30/130930Assad_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/30/130930Assad_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/9/30/130930Assad/130930Assad.m3u8",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"world/video/2013/sep/30/syria-un-chemical-weapons-assad-video",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-09-30T11:46:35Z",
-      "webTitle":"Syria will comply with UN chemical weapons resolution, says Assad - video",
-      "webUrl":"http://www.theguardian.com/world/video/2013/sep/30/syria-un-chemical-weapons-assad-video",
-      "apiUrl":"http://content.guardianapis.com/world/video/2013/sep/30/syria-un-chemical-weapons-assad-video",
-      "fields":{
-        "trailText":"<p>Syria's President Bashar al-Assad has confirmed his country will comply with the UN chemical weapons resolution</p>",
-        "headline":"Syria will comply with UN chemical weapons resolution, says Assad - video",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j6dh",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536217904/President-Bashar-al-Assad-009.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/bashar-al-assad",
-        "type":"keyword",
-        "webTitle":"Bashar al-Assad",
-        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
-        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"world/chemical-weapons",
-        "type":"keyword",
-        "webTitle":"Chemical weapons",
-        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
-        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/unitednations",
-        "type":"keyword",
-        "webTitle":"United Nations",
-        "webUrl":"http://www.theguardian.com/world/unitednations",
-        "apiUrl":"http://content.guardianapis.com/world/unitednations",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"type/video",
-        "type":"type",
-        "webTitle":"Video",
-        "webUrl":"http://www.theguardian.com/video",
-        "apiUrl":"http://content.guardianapis.com/video",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-video-418622447",
-        "relation":"main",
-        "type":"video",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536207415/President-Bashar-al-Assad-001.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"90",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"120"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536209260/President-Bashar-al-Assad-002.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"225",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536210691/President-Bashar-al-Assad-003.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"360",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536212164/President-Bashar-al-Assad-004.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"360",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"640"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536213605/President-Bashar-al-Assad-005.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"230",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536215020/President-Bashar-al-Assad-007.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"130",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536216442/President-Bashar-al-Assad-008.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"340",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536217904/President-Bashar-al-Assad-009.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"84",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536219635/President-Bashar-al-Assad-010.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"132",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536221082/President-Bashar-al-Assad-011.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"168",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536222525/President-Bashar-al-Assad-012.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"180",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536223942/President-Bashar-al-Assad-013.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"228",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536225390/President-Bashar-al-Assad-014.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"276",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536227025/President-Bashar-al-Assad-015.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"372",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"620"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/30/130930Assad-16x9.mp4",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/30/130930Assad_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/30/130930Assad_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/9/30/130930Assad/130930Assad.m3u8",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/30/130930Assad_8135311.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/30/130930Assad_8135311.jpg",
-            "width":"480",
-            "durationSeconds":"50"
-          }
-        }]
-      },{
-        "id":"gu-image-418634826",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380536217904/President-Bashar-al-Assad-009.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"President Bashar al-Assad",
-            "height":"84",
-            "credit":"Sana/EPA",
-            "caption":"Syria's president Bashar al-Assad being interviewed by an Italian TV in Damascus Photograph: Sana/EPA",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/30/iraq-syria-cross-infection",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-30T19:00:53Z",
-      "webTitle":"Iraq and Syria: cross infection | Editorial",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/iraq-syria-cross-infection",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/iraq-syria-cross-infection",
-      "fields":{
-        "trailText":"<p><strong>Editorial:</strong> Could the model of Sunni tribal leaders in Iraq helping drive out al-Qaida be used as a template for northern Syria?</p>",
-        "headline":"Iraq and Syria: cross infection",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7x3",
-        "wordcount":"485",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/iraq",
-        "type":"keyword",
-        "webTitle":"Iraq",
-        "webUrl":"http://www.theguardian.com/world/iraq",
-        "apiUrl":"http://content.guardianapis.com/world/iraq",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/saudiarabia",
-        "type":"keyword",
-        "webTitle":"Saudi Arabia",
-        "webUrl":"http://www.theguardian.com/world/saudiarabia",
-        "apiUrl":"http://content.guardianapis.com/world/saudiarabia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/iran",
-        "type":"keyword",
-        "webTitle":"Iran",
-        "webUrl":"http://www.theguardian.com/world/iran",
-        "apiUrl":"http://content.guardianapis.com/world/iran",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"tone/editorials",
-        "type":"tone",
-        "webTitle":"Editorials",
-        "webUrl":"http://www.theguardian.com/tone/editorials",
-        "apiUrl":"http://content.guardianapis.com/tone/editorials",
-        "references":[]
-      },{
-        "id":"profile/editorial",
-        "type":"contributor",
-        "webTitle":"Editorial",
-        "webUrl":"http://www.theguardian.com/profile/editorial",
-        "apiUrl":"http://content.guardianapis.com/profile/editorial",
-        "bio":"<p>Editorials from the Guardian. All Guardian and Observer editorials can be found <a href=\"http://www.guardian.co.uk/tone/editorials\">here</a></p>",
-        "r2ContributorId":"56303",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367609515569/guardianlogo_140x140.jpg",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/editorialsandreply",
-        "type":"newspaper-book-section",
-        "webTitle":"Editorials & reply",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"world/barack-obama",
-        "type":"keyword",
-        "webTitle":"Barack Obama",
-        "webUrl":"http://www.theguardian.com/world/barack-obama",
-        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[],
-      "references":[]
-    },{
-      "id":"world/2013/sep/30/syria-western-terrorism-sarin-attack-un",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-09-30T15:25:30Z",
-      "webTitle":"Syrian deputy PM blames 'western-backed terrorist groups' for sarin attack",
-      "webUrl":"http://www.theguardian.com/world/2013/sep/30/syria-western-terrorism-sarin-attack-un",
-      "apiUrl":"http://content.guardianapis.com/world/2013/sep/30/syria-western-terrorism-sarin-attack-un",
-      "fields":{
-        "trailText":"<p>Walid al-Moualem delivers defiant speech at UN pointing finger at US and other western powers for chemical weapons attack</p>",
-        "headline":"Syrian deputy PM blames 'western-backed terrorist groups' for sarin attack",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j6m9",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380554239923/New-York-Walid-al-Moualem-003.jpg",
-        "wordcount":"390",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/unitednations",
-        "type":"keyword",
-        "webTitle":"United Nations",
-        "webUrl":"http://www.theguardian.com/world/unitednations",
-        "apiUrl":"http://content.guardianapis.com/world/unitednations",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/chemical-weapons",
-        "type":"keyword",
-        "webTitle":"Chemical weapons",
-        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
-        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/arab-and-middle-east-protests",
-        "type":"keyword",
-        "webTitle":"Arab and Middle East unrest",
-        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
-        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/obama-administration",
-        "type":"keyword",
-        "webTitle":"Obama administration",
-        "webUrl":"http://www.theguardian.com/world/obama-administration",
-        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/al-qaida",
-        "type":"keyword",
-        "webTitle":"Al-Qaida",
-        "webUrl":"http://www.theguardian.com/world/al-qaida",
-        "apiUrl":"http://content.guardianapis.com/world/al-qaida",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/edpilkington",
-        "type":"contributor",
-        "webTitle":"Ed Pilkington",
-        "webUrl":"http://www.theguardian.com/profile/edpilkington",
-        "apiUrl":"http://content.guardianapis.com/profile/edpilkington",
-        "bio":"<p>Ed Pilkington is the chief reporter for Guardian US. He is a former national and foreign editor of the paper, and author of Beyond the Mother Country</p>",
-        "rcsId":"GNL038863",
-        "r2ContributorId":"15609",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/27/1332862968426/edpilkington_140x140.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418658645",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380554248894/New-York-Walid-al-Moualem-008.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Seth Wenig",
-            "altText":"New York, Walid al-Moualem",
-            "height":"276",
-            "credit":"Seth Wenig/AP",
-            "caption":"Syrian deputy prime minister Walid al-Moualem speaks during the general assembly at United Nations headquarters. Photograph: Seth Wenig/AP",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418658646",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380554239923/New-York-Walid-al-Moualem-003.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Seth Wenig",
-            "altText":"New York, Walid al-Moualem",
-            "height":"84",
-            "credit":"Seth Wenig/AP",
-            "caption":"Syrian deputy prime minister Walid al-Moualem speaks during the general assembly at United Nations headquarters. Photograph: Seth Wenig/AP",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"world/2013/sep/30/syrian-jihadists-wreak-havoc-violence-iraq",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-09-30T14:18:13Z",
-      "webTitle":"Syrian jihadists wreak havoc as violence spreads into Iraq",
-      "webUrl":"http://www.theguardian.com/world/2013/sep/30/syrian-jihadists-wreak-havoc-violence-iraq",
-      "apiUrl":"http://content.guardianapis.com/world/2013/sep/30/syrian-jihadists-wreak-havoc-violence-iraq",
-      "fields":{
-        "trailText":"Groups fighting to establish Islamic state in Syria are increasingly dragging the wider region into chaos",
-        "headline":"Syrian jihadists wreak havoc as violence spreads into Iraq",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j6k4",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550655738/Militia-fighters-in-Alepp-005.jpg",
-        "wordcount":"1364",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/iraq",
-        "type":"keyword",
-        "webTitle":"Iraq",
-        "webUrl":"http://www.theguardian.com/world/iraq",
-        "apiUrl":"http://content.guardianapis.com/world/iraq",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/al-qaida",
-        "type":"keyword",
-        "webTitle":"Al-Qaida",
-        "webUrl":"http://www.theguardian.com/world/al-qaida",
-        "apiUrl":"http://content.guardianapis.com/world/al-qaida",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/martin-chulov",
-        "type":"contributor",
-        "webTitle":"Martin Chulov",
-        "webUrl":"http://www.theguardian.com/profile/martin-chulov",
-        "apiUrl":"http://content.guardianapis.com/profile/martin-chulov",
-        "bio":"<p>Martin Chulov covers the Middle East for the Guardian. He has reported from the region since 2005</p>",
-        "r2ContributorId":"29038",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/26/1290791972910/martin-chulov.jpg",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"tone/analysis",
-        "type":"tone",
-        "webTitle":"Analysis",
-        "webUrl":"http://www.theguardian.com/tone/analysis",
-        "apiUrl":"http://content.guardianapis.com/tone/analysis",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/international",
-        "type":"newspaper-book-section",
-        "webTitle":"International",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418652857",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550652831/Militia-fighters-in-Alepp-002.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"54",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550653786/Militia-fighters-in-Alepp-003.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"340",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550654781/Militia-fighters-in-Alepp-004.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"130",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550655738/Militia-fighters-in-Alepp-005.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"84",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550656683/Militia-fighters-in-Alepp-006.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"132",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550657667/Militia-fighters-in-Alepp-007.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"168",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550658669/Militia-fighters-in-Alepp-008.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"180",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550659724/Militia-fighters-in-Alepp-009.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"228",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550660877/Militia-fighters-in-Alepp-010.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"276",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550661903/Militia-fighters-in-Alepp-011.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"372",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550660877/Militia-fighters-in-Alepp-010.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"276",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418652858",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380550655738/Militia-fighters-in-Alepp-005.jpg",
-          "typeData":{
-            "source":"REX/ZUMA",
-            "altText":"Militia fighters in Aleppo Syria",
-            "height":"84",
-            "credit":"REX/ZUMA",
-            "caption":"Masked fighters from the Islamic State of Iraq and Sham, the most powerful al-Qaida-aligned group in Syria. Photograph: REX/ZUMA",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"world/2013/oct/01/bashar-al-assad-france",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-10-01T12:06:23Z",
-      "webTitle":"France investigates Bashar al-Assad's uncle's £134m Paris properties",
-      "webUrl":"http://www.theguardian.com/world/2013/oct/01/bashar-al-assad-france",
-      "apiUrl":"http://content.guardianapis.com/world/2013/oct/01/bashar-al-assad-france",
-      "fields":{
-        "trailText":"Anti-corruption groups allege Rifaat al-Assad acquired millions of pounds by abusing his power and embezzling public funds",
-        "headline":"France investigates Bashar al-Assad's uncle's £134m Paris properties",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7aj",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628311055/Rifaat-al-Assad-005.jpg",
-        "wordcount":"523",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/france",
-        "type":"keyword",
-        "webTitle":"France",
-        "webUrl":"http://www.theguardian.com/world/france",
-        "apiUrl":"http://content.guardianapis.com/world/france",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/bashar-al-assad",
-        "type":"keyword",
-        "webTitle":"Bashar al-Assad",
-        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
-        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/europe-news",
-        "type":"keyword",
-        "webTitle":"Europe",
-        "webUrl":"http://www.theguardian.com/world/europe-news",
-        "apiUrl":"http://content.guardianapis.com/world/europe-news",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/angeliquechrisafis",
-        "type":"contributor",
-        "webTitle":"Angelique Chrisafis",
-        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
-        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
-        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
-        "rcsId":"GNL004603",
-        "r2ContributorId":"15382",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418738992",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628308154/Rifaat-al-Assad-002.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"54",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628309118/Rifaat-al-Assad-003.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"340",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628310111/Rifaat-al-Assad-004.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"130",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628311055/Rifaat-al-Assad-005.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"84",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628312044/Rifaat-al-Assad-006.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"132",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628313047/Rifaat-al-Assad-007.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"168",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628314078/Rifaat-al-Assad-008.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"180",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628315041/Rifaat-al-Assad-009.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"228",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628316053/Rifaat-al-Assad-010.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"276",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628317167/Rifaat-al-Assad-011.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"372",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628316053/Rifaat-al-Assad-010.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"276",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418738993",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380628311055/Rifaat-al-Assad-005.jpg",
-          "typeData":{
-            "source":"AP",
-            "altText":"Rifaat al-Assad",
-            "height":"84",
-            "credit":"AP",
-            "caption":"Rifaat al-Assad,  the younger brother of the former Syrian president Hafez al-Assad, went into exile in 1984. Photograph: AP",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"world/2013/oct/01/syria-chemical-weapons-inspectors-arrive",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-10-01T17:23:41Z",
-      "webTitle":"Syria's chemical weapons: inspectors arrive to begin dismantling",
-      "webUrl":"http://www.theguardian.com/world/2013/oct/01/syria-chemical-weapons-inspectors-arrive",
-      "apiUrl":"http://content.guardianapis.com/world/2013/oct/01/syria-chemical-weapons-inspectors-arrive",
-      "fields":{
-        "trailText":"• Dutch experts have nine months to complete UN-endorsed mission<br />• Phase one to destroy regime's manufacturing ability by 1 November",
-        "headline":"Syria's chemical weapons: inspectors arrive to begin dismantling",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7y8",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648173365/OPCW-inspectors-arrive-in-005.jpg",
-        "wordcount":"401",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/chemical-weapons",
-        "type":"keyword",
-        "webTitle":"Chemical weapons",
-        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
-        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/unitednations",
-        "type":"keyword",
-        "webTitle":"United Nations",
-        "webUrl":"http://www.theguardian.com/world/unitednations",
-        "apiUrl":"http://content.guardianapis.com/world/unitednations",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/arms-trade",
-        "type":"keyword",
-        "webTitle":"Arms trade",
-        "webUrl":"http://www.theguardian.com/world/arms-trade",
-        "apiUrl":"http://content.guardianapis.com/world/arms-trade",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418772619",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648169571/OPCW-inspectors-arrive-in-002.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"54",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648170831/OPCW-inspectors-arrive-in-003.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"340",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648172097/OPCW-inspectors-arrive-in-004.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"130",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648173365/OPCW-inspectors-arrive-in-005.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"84",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648174598/OPCW-inspectors-arrive-in-006.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"132",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648175840/OPCW-inspectors-arrive-in-007.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"168",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648177108/OPCW-inspectors-arrive-in-008.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"180",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648178462/OPCW-inspectors-arrive-in-009.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"228",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648179723/OPCW-inspectors-arrive-in-010.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"276",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648181033/OPCW-inspectors-arrive-in-011.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"372",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648179723/OPCW-inspectors-arrive-in-010.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"276",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418772620",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380648173365/OPCW-inspectors-arrive-in-005.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Youssef Badawi",
-            "altText":"OPCW inspectors arrive in Damascus",
-            "height":"84",
-            "credit":"Youssef Badawi/EPA",
-            "caption":"A convoy of UN vehicles carries chemical weapons experts from the Four Seasons hotel in Damascus. Photograph: Youssef Badawi/EPA",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/oct/02/syria-unite-fight-al-qaida",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-10-02T19:45:00Z",
-      "webTitle":"Syria must unite to fight al-Qaida | Ghayth Armanazi",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/02/syria-unite-fight-al-qaida",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/02/syria-unite-fight-al-qaida",
-      "fields":{
-        "trailText":"<strong>Ghayth Armanazi: </strong>Current enemies may one day be allies in the real battle for the country's soul – against the jihadists",
-        "headline":"Syria must unite to fight al-Qaida",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j8m6",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739883684/SYRIA-CONFLICT-NUSRA-003.jpg",
-        "wordcount":"753",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/bashar-al-assad",
-        "type":"keyword",
-        "webTitle":"Bashar al-Assad",
-        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
-        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/al-qaida",
-        "type":"keyword",
-        "webTitle":"Al-Qaida",
-        "webUrl":"http://www.theguardian.com/world/al-qaida",
-        "apiUrl":"http://content.guardianapis.com/world/al-qaida",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/ghayth-armanazi",
-        "type":"contributor",
-        "webTitle":"Ghayth Armanazi",
-        "webUrl":"http://www.theguardian.com/profile/ghayth-armanazi",
-        "apiUrl":"http://content.guardianapis.com/profile/ghayth-armanazi",
-        "bio":"<p>Ghayth Armanazi is Syrian-born and a former head of the Arab League Mission in London</p>",
-        "r2ContributorId":"58933",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380726967203/Ghayth-Armanazi.JPG",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/commentanddebate",
-        "type":"newspaper-book-section",
-        "webTitle":"Comment & debate",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418889219",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739881390/SYRIA-CONFLICT-NUSRA-001.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"54",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739882654/SYRIA-CONFLICT-NUSRA-002.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"130",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739883684/SYRIA-CONFLICT-NUSRA-003.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"84",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739884830/SYRIA-CONFLICT-NUSRA-004.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"132",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739886273/SYRIA-CONFLICT-NUSRA-005.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"168",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739887310/SYRIA-CONFLICT-NUSRA-006.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"180",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739888368/SYRIA-CONFLICT-NUSRA-007.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"228",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739889439/SYRIA-CONFLICT-NUSRA-008.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"276",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739889439/SYRIA-CONFLICT-NUSRA-008.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"276",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418889220",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380739883684/SYRIA-CONFLICT-NUSRA-003.jpg",
-          "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Afp",
-            "altText":"SYRIA-CONFLICT-NUSRA",
-            "height":"84",
-            "credit":"Afp/AFP/Getty Images",
-            "caption":"Fighters of the jihadist group al-Nusra Front and other al-Qaida groups are growing in strength in Syria. Photgraph: Guillaume Briquet/AFP/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
       "id":"world/2013/oct/02/syria-massacre-reports-alawites-assad",
       "sectionId":"world",
       "sectionName":"World news",
@@ -3383,36 +746,37 @@
       }],
       "references":[]
     },{
-      "id":"world/video/2013/oct/04/bashar-al-assad-turkey-heavy-syria-involvement-video",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-10-04T15:40:45Z",
-      "webTitle":"Bashar al-Assad: 'Turkey will pay a heavy price' for Syrian involvement - video",
-      "webUrl":"http://www.theguardian.com/world/video/2013/oct/04/bashar-al-assad-turkey-heavy-syria-involvement-video",
-      "apiUrl":"http://content.guardianapis.com/world/video/2013/oct/04/bashar-al-assad-turkey-heavy-syria-involvement-video",
+      "id":"commentisfree/2013/oct/06/middle-east-turmoil-nostalgia-ottomans",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-06T12:30:00Z",
+      "webTitle":"Middle East turmoil is fuelling Ottoman nostalgia. But it's a dead end | David Shariatmadari",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/06/middle-east-turmoil-nostalgia-ottomans",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/06/middle-east-turmoil-nostalgia-ottomans",
       "fields":{
-        "trailText":"<p>The Syrian president, Bashar al-Assad, says Turkey has the blood of Syrians on its hands after supplying arms to anti-government rebels</p>",
-        "headline":"Bashar al-Assad: 'Turkey will pay a heavy price' for Syrian involvement - video",
+        "trailText":"<strong>David Shariatmadari:</strong> For the empire's successor states, romanticising political union is a mistake – they need to guarantee the rights of minorities",
+        "headline":"Middle East turmoil is fuelling Ottoman nostalgia. But it's a dead end",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3jady",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900329837/Bashar-al-Assad-interview-009.jpg",
+        "shortUrl":"http://gu.com/p/3jbvh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059891978/Recep-Tayyip-Erdogan-003.jpg",
+        "wordcount":"655",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"world/bashar-al-assad",
-        "type":"keyword",
-        "webTitle":"Bashar al-Assad",
-        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
-        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
         "references":[]
       },{
-        "id":"world/syria",
+        "id":"world/middleeast",
         "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
         "sectionId":"world",
         "sectionName":"World news",
         "references":[]
@@ -3426,24 +790,6 @@
         "sectionName":"World news",
         "references":[]
       },{
-        "id":"world/recep-tayyip-erdogan",
-        "type":"keyword",
-        "webTitle":"Recep Tayyip Erdogan",
-        "webUrl":"http://www.theguardian.com/world/recep-tayyip-erdogan",
-        "apiUrl":"http://content.guardianapis.com/world/recep-tayyip-erdogan",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
         "id":"world/world",
         "type":"keyword",
         "webTitle":"World news",
@@ -3453,330 +799,226 @@
         "sectionName":"World news",
         "references":[]
       },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
         "references":[]
       },{
-        "id":"type/video",
+        "id":"profile/davidshariatmadari",
+        "type":"contributor",
+        "webTitle":"David Shariatmadari",
+        "webUrl":"http://www.theguardian.com/profile/davidshariatmadari",
+        "apiUrl":"http://content.guardianapis.com/profile/davidshariatmadari",
+        "bio":"<p>David Shariatmadari is a deputy editor on the Guardian comment desk. His Twitter name is <a href=\"http://twitter.com/D_Shariatmadari\">D_Shariatmadari</a></p>",
+        "rcsId":"GNL043074",
+        "r2ContributorId":"22351",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/11/1326295414297/David_Shariatmadari.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/commentanddebate",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & debate",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
         "type":"type",
-        "webTitle":"Video",
-        "webUrl":"http://www.theguardian.com/video",
-        "apiUrl":"http://content.guardianapis.com/video",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
         "references":[]
       }],
       "elements":[{
-        "id":"gu-video-419095572",
+        "id":"gu-image-419177899",
         "relation":"main",
-        "type":"video",
+        "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900313578/Bashar-al-Assad-interview-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059886474/Recep-Tayyip-Erdogan-001.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
-            "height":"230",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900316011/Bashar-al-Assad-interview-002.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
-            "height":"90",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
-            "width":"120"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900317975/Bashar-al-Assad-interview-003.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
-            "height":"225",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900319931/Bashar-al-Assad-interview-004.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
-            "height":"360",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900323963/Bashar-al-Assad-interview-006.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"54",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900325892/Bashar-al-Assad-interview-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059890609/Recep-Tayyip-Erdogan-002.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
-            "height":"340",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900327875/Bashar-al-Assad-interview-008.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"130",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900329837/Bashar-al-Assad-interview-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059891978/Recep-Tayyip-Erdogan-003.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"84",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900331910/Bashar-al-Assad-interview-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059893392/Recep-Tayyip-Erdogan-004.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"132",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900333810/Bashar-al-Assad-interview-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059894765/Recep-Tayyip-Erdogan-005.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"168",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900335706/Bashar-al-Assad-interview-012.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059896102/Recep-Tayyip-Erdogan-006.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"180",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900337647/Bashar-al-Assad-interview-013.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059897450/Recep-Tayyip-Erdogan-007.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"228",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900339546/Bashar-al-Assad-interview-014.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059899391/Recep-Tayyip-Erdogan-008.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"276",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900341585/Bashar-al-Assad-interview-015.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059901709/Recep-Tayyip-Erdogan-009.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
-            "height":"372",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
-            "width":"620"
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
+            "height":"2738",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\n Photograph: AP",
+            "width":"4194"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900343560/Bashar-al-Assad-interview-016.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059899391/Recep-Tayyip-Erdogan-008.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
-            "height":"360",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
-            "width":"640"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/4/131004AssadInterview-16x9.mp4",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131004AssadInterview_8156251.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131004AssadInterview_8156251.jpg",
-            "width":"480",
-            "durationSeconds":"30"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/4/131004AssadInterview_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131004AssadInterview_8156251.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131004AssadInterview_8156251.jpg",
-            "width":"480",
-            "durationSeconds":"30"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/4/131004AssadInterview_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131004AssadInterview_8156251.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131004AssadInterview_8156251.jpg",
-            "width":"480",
-            "durationSeconds":"30"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/10/4/131004AssadInterview/131004AssadInterview.m3u8",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131004AssadInterview_8156251.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131004AssadInterview_8156251.jpg",
-            "width":"480",
-            "durationSeconds":"30"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/webm",
-          "file":"http://cdn.theguardian.tv/webM/640/2013/10/04/131004AssadInterview_vpx.webm",
-          "typeData":{
-            "source":"Reuters",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131004AssadInterview_8156251.jpg",
-            "height":"360",
-            "durationMinutes":"1",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131004AssadInterview_8156251.jpg",
-            "width":"480",
-            "durationSeconds":"30"
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
+            "height":"276",
+            "credit":"AP",
+            "caption":"‘Until recently, the Turkish prime minister, Recep Tayyip Erdoğan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.’\r\n Photograph: AP",
+            "width":"460"
           }
         }]
       },{
-        "id":"gu-image-419096886",
+        "id":"gu-image-419177900",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380900329837/Bashar-al-Assad-interview-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/6/1381059891978/Recep-Tayyip-Erdogan-003.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Sana",
-            "altText":"Bashar al-Assad interview",
+            "source":"AP",
+            "altText":"Recep Tayyip Erdogan",
             "height":"84",
-            "credit":"Sana/EPA",
-            "caption":"Bashar al-Assad interview Photograph: Sana/EPA",
+            "credit":"AP",
+            "caption":"'Until recently, the Turkish prime minister, Recep Tayyip Erdogan, was massively popular in Arab countries and his government was said to be pursuing a neo-Ottoman foreign policy, shifting its attention away from the west and towards Muslim partners.'\n Photograph: AP",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"world/2013/oct/03/syria-chemical-weapons-inspectors-assad-regime",
+      "id":"world/2013/oct/06/syria-chemical-weapons-destroyed",
       "sectionId":"world",
       "sectionName":"World news",
-      "webPublicationDate":"2013-10-03T18:38:23Z",
-      "webTitle":"Syria: chemical weapons inspectors begin securing Assad regime's arsenal",
-      "webUrl":"http://www.theguardian.com/world/2013/oct/03/syria-chemical-weapons-inspectors-assad-regime",
-      "apiUrl":"http://content.guardianapis.com/world/2013/oct/03/syria-chemical-weapons-inspectors-assad-regime",
+      "webPublicationDate":"2013-10-06T12:15:32Z",
+      "webTitle":"Syria chemical weapons disarmament begins",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/06/syria-chemical-weapons-destroyed",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/06/syria-chemical-weapons-destroyed",
       "fields":{
-        "trailText":"OPCW announcement suggests process of destroying Syrian chemical weapons stockpiles and capabilities is on schedule",
-        "headline":"Syria: chemical weapons inspectors begin securing Assad regime's arsenal",
+        "trailText":"Inspectors begin work to destroy Syria's chemical weapons arsenal, with nine-month deadline to complete mission",
+        "headline":"Syria chemical weapons disarmament begins",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j9ky",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825058799/Chemical-weapons-inspecto-005.jpg",
-        "wordcount":"410",
+        "shortUrl":"http://gu.com/p/3jbvz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061654654/UN-vehicles-in-Damascus-003.jpg",
+        "wordcount":"460",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3789,11 +1031,11 @@
         "sectionName":"World news",
         "references":[]
       },{
-        "id":"world/chemical-weapons",
+        "id":"world/middleeast",
         "type":"keyword",
-        "webTitle":"Chemical weapons",
-        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
-        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
         "sectionId":"world",
         "sectionName":"World news",
         "references":[]
@@ -3803,15 +1045,6 @@
         "webTitle":"World news",
         "webUrl":"http://www.theguardian.com/world/world",
         "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/middleeast",
-        "type":"keyword",
-        "webTitle":"Middle East and North Africa",
-        "webUrl":"http://www.theguardian.com/world/middleeast",
-        "apiUrl":"http://content.guardianapis.com/world/middleeast",
         "sectionId":"world",
         "sectionName":"World news",
         "references":[]
@@ -3825,6 +1058,15 @@
         "sectionName":"World news",
         "references":[]
       },{
+        "id":"world/chemical-weapons",
+        "type":"keyword",
+        "webTitle":"Chemical weapons",
+        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
         "id":"tone/news",
         "type":"tone",
         "webTitle":"News",
@@ -3832,24 +1074,13 @@
         "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
-        "id":"profile/julianborger",
+        "id":"profile/kevin-rawlinson",
         "type":"contributor",
-        "webTitle":"Julian Borger",
-        "webUrl":"http://www.theguardian.com/profile/julianborger",
-        "apiUrl":"http://content.guardianapis.com/profile/julianborger",
-        "bio":"<p>Julian Borger is the Guardian's diplomatic editor. He was previously a correspondent in the US, the Middle East, eastern Europe and the Balkans</p>",
-        "rcsId":"GNL001547",
-        "r2ContributorId":"15924",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/julian_borger_140x140.jpg",
-        "references":[]
-      },{
-        "id":"world/bashar-al-assad",
-        "type":"keyword",
-        "webTitle":"Bashar al-Assad",
-        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
-        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Kevin Rawlinson",
+        "webUrl":"http://www.theguardian.com/profile/kevin-rawlinson",
+        "apiUrl":"http://content.guardianapis.com/profile/kevin-rawlinson",
+        "bio":"<p>Kevin Rawlinson is a freelance reporter who writes for the Guardian and other publications. He can also be found on <a href=\"https://twitter.com/KevinJRawlinson\">Twitter</a> and <a href=\"https://www.facebook.com/KevinJRawlinson\">Facebook</a></p>",
+        "r2ContributorId":"58554",
         "references":[]
       },{
         "id":"type/article",
@@ -3878,172 +1109,584 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-419000258",
+        "id":"gu-image-419178184",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825055660/Chemical-weapons-inspecto-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061651782/UN-vehicles-in-Damascus-001.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"54",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825056680/Chemical-weapons-inspecto-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061653481/UN-vehicles-in-Damascus-002.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
-            "height":"340",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825057796/Chemical-weapons-inspecto-004.jpg",
-          "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"130",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825058799/Chemical-weapons-inspecto-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061654654/UN-vehicles-in-Damascus-003.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"84",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825059982/Chemical-weapons-inspecto-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061655807/UN-vehicles-in-Damascus-004.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"132",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825060973/Chemical-weapons-inspecto-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061656966/UN-vehicles-in-Damascus-005.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"168",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825062167/Chemical-weapons-inspecto-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061658250/UN-vehicles-in-Damascus-006.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"180",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825063198/Chemical-weapons-inspecto-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061659533/UN-vehicles-in-Damascus-007.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"228",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825065501/Chemical-weapons-inspecto-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061660722/UN-vehicles-in-Damascus-008.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"276",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825066564/Chemical-weapons-inspecto-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061660722/UN-vehicles-in-Damascus-008.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
-            "height":"372",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825065501/Chemical-weapons-inspecto-010.jpg",
-          "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"276",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-419000259",
+        "id":"gu-image-419178185",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380825058799/Chemical-weapons-inspecto-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381061654654/UN-vehicles-in-Damascus-003.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Khaled Al-Hariri",
-            "altText":"Chemical weapons inspectors",
+            "source":"Rex Features",
+            "photographer":"Bassem Tellawi",
+            "altText":"UN vehicles in Damascus",
             "height":"84",
-            "credit":"Khaled Al-Hariri/Reuters",
-            "caption":"UN vehicles transport experts from the Organisation for the Prohibition of Chemical Weapons back to their  hotel in Damascus, Syria, on Thursday. Photograph: Khaled Al-Hariri/Reuters",
+            "credit":"Bassem Tellawi/Rex Features",
+            "caption":"A convoy of UN vehicles in Damascus. Photograph: Bassem Tellawi/Rex Features",
             "width":"140"
           }
         }]
       }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/08/syria-chemical-weapons-un-operation",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-08T03:50:31Z",
+      "webTitle":"Syria chemical weapons: UN chief warns of fraught operation",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/08/syria-chemical-weapons-un-operation",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/08/syria-chemical-weapons-un-operation",
+      "fields":{
+        "trailText":"<p>Ban Ki-moon says team of up to 100 will be entering warzones to do job that would be difficult even in peacetime</p>",
+        "headline":"Syria chemical weapons: UN chief warns of fraught operation",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jc32",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/8/1381204139578/Ban-Ki-moon-003.jpg",
+        "wordcount":"656",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/unitednations",
+        "type":"keyword",
+        "webTitle":"United Nations",
+        "webUrl":"http://www.theguardian.com/world/unitednations",
+        "apiUrl":"http://content.guardianapis.com/world/unitednations",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/chemical-weapons",
+        "type":"keyword",
+        "webTitle":"Chemical weapons",
+        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/ban-ki-moon",
+        "type":"keyword",
+        "webTitle":"Ban Ki-moon",
+        "webUrl":"http://www.theguardian.com/world/ban-ki-moon",
+        "apiUrl":"http://content.guardianapis.com/world/ban-ki-moon",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419318008",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/8/1381204148026/Ban-Ki-moon-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Niu Xiaolei",
+            "altText":"Ban Ki-moon",
+            "height":"228",
+            "credit":"Niu Xiaolei/Rex Features",
+            "caption":"Ban Ki-moon has told the UN security council that Syria's chemical weapons will be 'dangerous to handle, transport and destroy'. Photograph: Niu Xiaolei/Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/8/1381204150704/Ban-Ki-moon-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Niu Xiaolei",
+            "altText":"Ban Ki-moon",
+            "height":"276",
+            "credit":"Niu Xiaolei/Rex Features",
+            "caption":"Ban Ki-moon has told the UN security council that Syria's chemical weapons will be 'dangerous to handle, transport and destroy'. Photograph: Niu Xiaolei/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419318009",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/8/1381204139578/Ban-Ki-moon-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Niu Xiaolei",
+            "altText":"Ban Ki-moon",
+            "height":"84",
+            "credit":"Niu Xiaolei/Rex Features",
+            "caption":"Ban Ki-moon has told the UN security council that Syria's chemical weapons will be 'dangerous to handle, transport and destroy'. Photograph: Niu Xiaolei/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/08/syria-martyrs-wall-unknown-truth-civil-war",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-08T13:19:28Z",
+      "webTitle":"Syria's Martyrs' Wall reveals 'unknown truth' of bloody civil war",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/08/syria-martyrs-wall-unknown-truth-civil-war",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/08/syria-martyrs-wall-unknown-truth-civil-war",
+      "fields":{
+        "trailText":"Hundreds of pro-Assad fighters' faces adorn a wall in Tartous that shows just how many pro-government fighters are dying",
+        "headline":"Syria's Martyrs' Wall reveals 'unknown truth' of bloody civil war",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jccz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237031204/Martyrs-Wall-in-Tartous-a-003.jpg",
+        "wordcount":"791",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/arab-and-middle-east-protests",
+        "type":"keyword",
+        "webTitle":"Arab and Middle East unrest",
+        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
+        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/jonathansteele",
+        "type":"contributor",
+        "webTitle":"Jonathan Steele",
+        "webUrl":"http://www.theguardian.com/profile/jonathansteele",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathansteele",
+        "bio":"<p>Jonathan Steele is a Guardian columnist, roving foreign correspondent and author. Since 9/11 he has reported from Afghanistan and Iraq as well as on the Israeli/Palestinian conflict. His new book is Ghosts of Afghanistan</p>",
+        "rcsId":"GNL004679",
+        "r2ContributorId":"15908",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_steele_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/bashar-al-assad",
+        "type":"keyword",
+        "webTitle":"Bashar al-Assad",
+        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
+        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419370067",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237027840/Martyrs-Wall-in-Tartous-a-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"54",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237029962/Martyrs-Wall-in-Tartous-a-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"130",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237031204/Martyrs-Wall-in-Tartous-a-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237032451/Martyrs-Wall-in-Tartous-a-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"132",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237033806/Martyrs-Wall-in-Tartous-a-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"168",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237035062/Martyrs-Wall-in-Tartous-a-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"180",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237036344/Martyrs-Wall-in-Tartous-a-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"228",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237037618/Martyrs-Wall-in-Tartous-a-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"276",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237037618/Martyrs-Wall-in-Tartous-a-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"276",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419370068",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381237031204/Martyrs-Wall-in-Tartous-a-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Martyrs Wall in Tartous and Aisha Shahada",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Aisha Shahada with a poster of her dead son, Ahmed Mustafa Karim, on the Martyrs' Wall in Tartous, Syria Photograph: Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/11/syrian-rebels-accused-killing-civilians-latakia",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-11T04:57:06Z",
+      "webTitle":"Syrian rebels accused of killing hundreds of civilians",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/11/syrian-rebels-accused-killing-civilians-latakia",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/11/syrian-rebels-accused-killing-civilians-latakia",
+      "fields":{
+        "trailText":"Human Rights Watch says militant groups slaughtered villagers and took others hostage in attacks on Latakia in August",
+        "headline":"Syrian rebels accused of killing hundreds of civilians",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jf3f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381467176799/Scott-Carpenter.-001.jpg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/war-crimes",
+        "type":"keyword",
+        "webTitle":"War crimes",
+        "webUrl":"http://www.theguardian.com/law/war-crimes",
+        "apiUrl":"http://content.guardianapis.com/law/war-crimes",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bashar-al-assad",
+        "type":"keyword",
+        "webTitle":"Bashar al-Assad",
+        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
+        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/al-qaida",
+        "type":"keyword",
+        "webTitle":"Al-Qaida",
+        "webUrl":"http://www.theguardian.com/world/al-qaida",
+        "apiUrl":"http://content.guardianapis.com/world/al-qaida",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jonathansteele",
+        "type":"contributor",
+        "webTitle":"Jonathan Steele",
+        "webUrl":"http://www.theguardian.com/profile/jonathansteele",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathansteele",
+        "bio":"<p>Jonathan Steele is a Guardian columnist, roving foreign correspondent and author. Since 9/11 he has reported from Afghanistan and Iraq as well as on the Israeli/Palestinian conflict. His new book is Ghosts of Afghanistan</p>",
+        "rcsId":"GNL004679",
+        "r2ContributorId":"15908",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_steele_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[],
       "references":[]
     }]
   }
