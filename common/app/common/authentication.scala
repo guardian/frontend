@@ -84,6 +84,8 @@ class AuthAction(loginUrl: String) extends ExecutionContexts {
 }
 
 trait LoginController extends ExecutionContexts { self: Controller =>
+  import Play.current
+
   val openIdAttributes = Seq(
     ("email", "http://axschema.org/contact/email"),
     ("firstname", "http://axschema.org/namePerson/first"),
@@ -99,8 +101,9 @@ trait LoginController extends ExecutionContexts { self: Controller =>
   def login: Action[AnyContent]
 
   def loginPost = Action.async { implicit request =>
+    val secure: Boolean = !Play.isDev
     OpenID
-      .redirectURL(googleOpenIdUrl, openIdCallback(secure=true), openIdAttributes)
+      .redirectURL(googleOpenIdUrl, openIdCallback(secure=secure), openIdAttributes)
       .map(_ + extraOpenIDParameters.mkString("&", "&", ""))
       .map(Redirect(_))
       .recover {
