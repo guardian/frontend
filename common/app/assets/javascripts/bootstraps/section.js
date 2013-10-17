@@ -1,10 +1,8 @@
 define([
     'common',
-    'bonzo',
     'modules/facia/popular'
 ], function (
     common,
-    bonzo,
     popular
 ) {
     var modules = {

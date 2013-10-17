@@ -1,11 +1,9 @@
 define([
     'common',
-    'bonzo',
     'modules/facia/popular',
     'modules/cricket'
 ], function (
     common,
-    bonzo,
     popular,
     cricket
 ) {
