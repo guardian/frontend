@@ -44,6 +44,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
                 }]
             })]);
             popular.render({});
+            expect(common.$g('.collection-popular').length).toEqual(1);
         });
 
     });
