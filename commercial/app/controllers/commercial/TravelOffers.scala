@@ -14,7 +14,13 @@ object TravelOffers extends Controller with ExecutionContexts {
 
   def listOffers = Action {
     implicit request =>
-      Ok(OffersAgent.allOffers mkString "\n") withHeaders ("Cache-Control" -> "max-age=0")
+      val allOffers = OffersAgent.allOffers
+      val offers = request.queryString.get("k").map {
+        keywords => allOffers.filter {
+          offer => (keywords.map(_.toLowerCase).toSet & offer.keywords.map(_.name.toLowerCase).toSet).size > 0
+        }
+      }.getOrElse(allOffers)
+      Ok(views.html.fragments.travelOffer(offers(0), offers(1))) withHeaders ("Cache-Control" -> "max-age=60")
   }
 
 }
