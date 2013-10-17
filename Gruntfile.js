@@ -313,7 +313,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/*.js',[
+                         'common/test/assets/javascripts/spec/*.spec.js',[
                         '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
                         '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
                         '!common/test/assets/javascripts/spec/Fonts.spec.js',

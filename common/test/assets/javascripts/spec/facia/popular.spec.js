@@ -9,8 +9,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
                         headline: 'A Headline',
                         trailText: 'Some trailtext',
                         published: {
-                            datetime: 'foo',
-                            unix: 'foo'
+                            unix: '1'
                         },
                         mainPicture: {
                             item: 'item.jpg',
@@ -23,8 +22,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
                         headline: 'Another Headline',
                         trailText: 'Some other trailtext',
                         published: {
-                            datetime: 'bar',
-                            unix: 'bar'
+                            unix: '1'
                         },
                         mainPicture: {
                             item: 'item-2.jpg',
@@ -64,7 +62,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
 
             waitsFor(function() {
                 return common.$g('.collection--popular').length;
-            }, 'Popular collection not rendered', 100);
+            }, 'popular collection to be rendered', 100);
         });
 
         it('should call correct most-read endpoint', function() {
@@ -78,7 +76,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
 
             waitsFor(function() {
                 return common.$g('.collection--popular').length;
-            }, 'Popular collection not rendered', 100);
+            }, 'popular collection to be rendered', 100);
         });
 
         it('first three items should have an image', function() {
@@ -87,7 +85,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
 
             waitsFor(function() {
                 return common.$g('.collection--popular').length;
-            }, 'Popular collection not rendered', 100);
+            }, 'popular collection to be rendered', 100);
 
             runs(function() {
                 common.$g('.item:nth-child(-n+3)').each(function(item) {
@@ -96,20 +94,20 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             });
         });
 
-//        it('dates should be relativised', function() {
-//            server.respondWith([200, {}, response]);
-//            popular.render({});
-//
-//            waitsFor(function() {
-//                return common.$g('.collection--popular').length;
-//            }, 'Popular collection not rendered', 100);
-//
-//            runs(function() {
-//                common.$g('.timestamp__text').each(function(item) {
-//                    expect(bonzo(item).hasClass('item--image-upgraded')).toBeTruthy();
-//                });
-//            });
-//        });
+       it('dates should be relativised', function() {
+           server.respondWith([200, {}, response]);
+           popular.render({});
+
+           waitsFor(function() {
+               return common.$g('.collection--popular').length;
+           }, 'popular collection to be rendered', 100);
+
+           runs(function() {
+               common.$g('.timestamp__text').each(function(item) {
+                   expect(bonzo(item).text()).toEqual('1 Jan 1970');
+               });
+           });
+       });
     });
 
 });
