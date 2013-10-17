@@ -41,6 +41,7 @@ module.exports = function (grunt) {
                     noCache: (isDev) ? false : true,
                     debugInfo: (isDev) ? true : false,
                     style: (isDev) ? 'nested' : 'compressed',
+                    sourcemap: true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
