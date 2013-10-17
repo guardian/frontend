@@ -12,6 +12,7 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.JsNumber
 import discussion.model.{Profile, Comment, CommentCount}
 import play.api.mvc.Headers
+import conf.Configuration
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
@@ -80,7 +81,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*):Future[JsValue] = {
     val start = currentTimeMillis()
-    GET(url, headers:_*) map {
+    val allHeaders =  DiscussionHeaders.appendGuClientHeader(headers)
+    GET(url, allHeaders:_*) map {
       response =>
         DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
 
@@ -97,10 +99,12 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 }
 
 object DiscussionHeaders {
-  val guClient = "GU-Client"
   val guIdToken = "GU-IdentityToken"
   val cookie = "Cookie"
   val all = Set(guIdToken, cookie)
+  val guClientHeader: (String, String) = ("GU-Client", Configuration.discussion.apiClientHeader)
 
   def filterHeaders(headers: Headers): Map[String, String] = headers.toSimpleMap filterKeys { all.contains }
+
+  def appendGuClientHeader(headers: Seq[(String, String)]): Seq[(String, String)] =  headers :+ guClientHeader
 }
