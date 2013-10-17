@@ -1,0 +1,2522 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-12T16:44:00Z",
+      "webTitle":"Malala delivers defiant riposte to Taliban militants as UN hails 'our hero'",
+      "webUrl":"http://www.theguardian.com/world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>'They thought that the bullet would silence us. But they failed,' says Malala, 16, at UN to push campaign for girls' education</p>",
+        "headline":"Malala delivers defiant riposte to Taliban militants as UN hails 'our hero'",
+        "body":"<p>When the Taliban sent a gunman to shoot Malala Yousafzai last October as she rode home on a bus after school, they made clear their intention: to silence the teenager and kill off her campaign for girls' education.</p><p>Nine months and countless surgical interventions later, she stood up at the United Nations on her 16th birthday on Friday to deliver a defiant riposte. \"They thought that the bullet would silence us. But they failed,\" she said.</p><p>As 16th birthdays go, it was among the more unusual. Instead of blowing out candles on a cake, Malala sat in one of the United Nation's main council chambers in the central seat usually reserved for world leaders.</p><p>She listened quietly as Ban Ki-moon, the UN secretary-general, described her as \"our hero, our champion\"; and as the former British prime minister and now UN education envoy, Gordon Brown, uttered what he called \"the words the Taliban never wanted her to hear: happy 16th birthday, Malala\".</p><p>The event, dubbed Malala Day, was the culmination of an extraordinary four years for the girl from Mingora, in the troubled Swat valley of Pakistan. She was thrust into the public glare after she wrote a pseudonymous but later celebrated blog for the BBC Urdu service describing her experiences struggling to get an education under the rising power of Taliban militants.</p><p>By 11 she was showing exceptional determination, calling personally on the US special representative to Pakistan, Richard Holbrooke, to use his influence to combat the Taliban's drive against education for girls. By 14, she was on the radar of Archbishop Desmond Tutu, who put her forward for the international children's peace prize, and by 15 she became the youngest Nobel peace prize nominee in history.</p><p>But such dizzying global attention came at a price. Death threats followed her growing recognition, and on 9 October 2012, following a meeting of Pakistani Taliban leaders, the gunman was dispatched to remove what they called the \"symbol of infidels and obscenity\".</p><p>Multiple operations in Pakistan and the UK followed the attack on the bus, including the fitting of a titanium plate on her left forehead, and a cochlear implant to restore her hearing. She now lives with her family in Birmingham and does what the Taliban tried to stop her doing: goes to school every day. \"I am not against anyone,\" she said in the UN chamber, having taken this day out from the classroom. \"Neither am I here to speak in terms of personal revenge against the Taliban or any other terrorist group.\"</p><p>Malala responded to the violence of the Taliban with her own countervailing force: words against bullets. \"I do not even hate the Talib who shot me. Even if there is a gun in my hand and he stands in front of me, I would not shoot him.\"</p><p>She spoke confidently, with only an injured eye and a slightly drooping left side of her face to hint at such fresh traumas. There was one other unstated allusion to the horror of her past: she wore a white shawl belonging to a woman who was also targeted by extremists but who, unlike Malala, did not survive to tell the tale: Benazir Bhutto.</p><p>\"The extremists are afraid of books and pens,\" the teenager continued. \"The power of education frightens them. They are afraid of women. The power of the voice of women frightens them.\"</p><p><a href=\"http://www.guardian.co.uk/world/2013/jun/15/pakistan-quetta-hospital-bomb-siege\">She cited last month's attack on a hospital</a> in Quetta, capital of Baluchistan, and killings of female teachers in Khyber Pakhtunkhwa. \"That is why they are blasting schools every day – because they were and they are afraid of change, afraid of the equality that we will bring to our society.\"</p><p>And she gave her own opposing interpretation of Islam to the Taliban's. \"They think that God is a tiny, little conservative being who would send girls to the hell just because of going to school. The terrorists are misusing the name of Islam and Pashtun society for their own personal benefits. Islam is a religion of peace, humanity and brotherhood. Islam says that it is not only each child's right to get education, rather it is their duty and responsibility.\"</p><p>Such ability to articulate what normally remains unarticulated – to give voice to young people normally silenced – has generated its own response. The <a href=\"https://secure.aworldatschool.org/page/s/stand-with-malala\">\"stand with Malala\" petition</a>, calling for education for the 57m children around the world who do not go to school, has attracted more than 4m signatures – more than a million having been added in the past few days.</p><p>At the start of her speech, Malala said: \"I don't know where to begin my speech. I don't know what people would be expecting me to say.\"</p><p>She need not have worried.</p><!-- Guardian Watermark: internal-code/content/412733343|2013-10-14T15:55:37Z|0d92dda42ad5d0b58a5aee041e9e8274dbfa1dc3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-16T13:01:40Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646668215/Malala-at-the-UN-005.jpg",
+        "standfirst":"'They thought that the bullet would silence us. But they failed,' says Malala, 16, at UN to push campaign for girls' education",
+        "shortUrl":"http://gu.com/p/3h9mq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646668215/Malala-at-the-UN-005.jpg",
+        "wordcount":"774",
+        "commentable":"true",
+        "internalContentCode":"412733343",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ed Pilkington in New York",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-07-13",
+        "internalPageCode":"1936115",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-15T16:44:00Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/unitednations",
+        "type":"keyword",
+        "webTitle":"United Nations",
+        "webUrl":"http://www.theguardian.com/world/unitednations",
+        "apiUrl":"http://content.guardianapis.com/world/unitednations",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/edpilkington",
+        "type":"contributor",
+        "webTitle":"Ed Pilkington",
+        "webUrl":"http://www.theguardian.com/profile/edpilkington",
+        "apiUrl":"http://content.guardianapis.com/profile/edpilkington",
+        "bio":"<p>Ed Pilkington is the chief reporter for Guardian US. He is a former national and foreign editor of the paper, and author of Beyond the Mother Country</p>",
+        "rcsId":"GNL038863",
+        "r2ContributorId":"15609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/27/1332862968426/edpilkington_140x140.jpg",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"global-development/universal-primary-education",
+        "type":"keyword",
+        "webTitle":"Universal primary education",
+        "webUrl":"http://www.theguardian.com/global-development/universal-primary-education",
+        "apiUrl":"http://content.guardianapis.com/global-development/universal-primary-education",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412863344",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646677471/Malala-at-the-UN-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mary Altaffer",
+            "altText":"Malala at the UN",
+            "height":"276",
+            "credit":"Mary Altaffer/AP",
+            "caption":"Malala Yousafzai spoke at the UN in New York on her 16th birthday, a day now dubbed Malala Day. Photograph: Mary Altaffer/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412863345",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646668215/Malala-at-the-UN-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mary Altaffer",
+            "altText":"Malala at the UN",
+            "height":"84",
+            "credit":"Mary Altaffer/AP",
+            "caption":"Malala at the UN. Photograph: Mary Altaffer/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"world/2013/apr/05/malala-yousafzai-girls-schooling-fund",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-05T06:33:00Z",
+      "webTitle":"Malala Yousafzai foundation makes first grant",
+      "webUrl":"http://www.theguardian.com/world/2013/apr/05/malala-yousafzai-girls-schooling-fund",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/05/malala-yousafzai-girls-schooling-fund",
+      "fields":{
+        "trailText":"<p>Funding given to Pakistan group for putting 40 girls through school, while actor Angelina Jolie pledges $200,000</p>",
+        "headline":"Malala Yousafzai foundation makes first grant",
+        "body":"<p>Malala Yousafzai, the Pakistani schoolgirl brought to England after being shot in the head by the Taliban, has announced the first donation from her new education charity with the support of Hollywood actor Angelina Jolie. </p><p>Malala, who now attends Edgbaston high school for girls in Birmingham, said it was the happiest moment of her life in a video played at the Women in the World summit in New York.<br /> <br />The 15-year-old set up the Malala Fund after the Taliban tried to assassinate her in October 2012 for asserting her right to go to school in her home country. </p><p>She spent hours undergoing major surgery at the Queen Elizabeth Hospital in Birmingham where surgeons tried to repair the damage caused by a bullet that grazed her brain. </p><p>The grant of US$45,000 (£29,500) will be given to an unnamed organisation in the Swat Valley in Pakistan to support the education of 40 girls aged five to 12 who would otherwise be forced into domestic labour. </p><p>The organisation, which was not named for security reasons, will offer a safe place for the girls to study as well as financial support for their families. </p><p>In a video played to an audience of thousands Malala said: \"Announcing the first grant of the Malala Fund is the happiest moment in my life. </p><p>\"I invite all of you to support the Malala Fund and let us turn the education of 40 girls into 40 million girls.\" </p><p>Jolie, a UN special envoy, introduced the video and pledged to give $200,000 to the fund. She praised the girl's courage. </p><p>\"Here's what they accomplished,\" Jolie said of Malala's attackers. \"They shot her point-blank range in the head – and made her stronger. The brutal attempt to silence her voice made it stronger.\" </p><p>The Malala Fund supports the education and empowerment of girls in Pakistan and around the world and provides grants to civil society organisations and individuals focused on education. </p><p>The fund is run by a board of trustees, including Malala and her family, with the support of the Vital Voices Global Partnership, founded by Hilary Clinton.</p><!-- Guardian Watermark: internal-code/content/406707032|2013-10-14T15:55:37Z|abc133aed2e968a73ccae54bf9f7f4dd9c3fa35d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-05T06:35:09Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/5/1365143544077/Malala-Yousafzais-foundat-005.jpg",
+        "standfirst":"Funding given to Pakistan group for putting 40 girls through school, while actor Angelina Jolie pledges $200,000",
+        "shortUrl":"http://gu.com/p/3fvc9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/5/1365143544077/Malala-Yousafzais-foundat-005.jpg",
+        "wordcount":"347",
+        "commentable":"false",
+        "internalContentCode":"406707032",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "internalPageCode":"1889901",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-08T06:33:29Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"film/angelinajolie",
+        "type":"keyword",
+        "webTitle":"Angelina Jolie",
+        "webUrl":"http://www.theguardian.com/film/angelinajolie",
+        "apiUrl":"http://content.guardianapis.com/film/angelinajolie",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-406707069",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/5/1365143551865/Malala-Yousafzais-foundat-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Malala Yousafzai's foundation has made its first grant ",
+            "height":"228",
+            "credit":"AP",
+            "caption":"Malala Yousafzai's foundation has made its first grant to a girls' education organisation in the Swat valley of Pakistan. Photograph: AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/5/1365143554271/Malala-Yousafzais-foundat-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Malala Yousafzai's foundation has made its first grant ",
+            "height":"276",
+            "credit":"AP",
+            "caption":"Malala Yousafzai's foundation has made its first grant to a girls' education organisation in the Swat valley of Pakistan. Photograph: AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-406707070",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/5/1365143544077/Malala-Yousafzais-foundat-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Malala Yousafzai's foundation has made its first grant ",
+            "height":"84",
+            "credit":"AP",
+            "caption":"Malala Yousafzai's foundation has made its first grant to a girls' education organisation in the Swat valley of Pakistan. Photograph: AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-12T16:44:00Z",
+      "webTitle":"Malala delivers defiant riposte to Taliban militants as UN hails 'our hero'",
+      "webUrl":"http://www.theguardian.com/world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>'They thought that the bullet would silence us. But they failed,' says Malala, 16, at UN to push campaign for girls' education</p>",
+        "headline":"Malala delivers defiant riposte to Taliban militants as UN hails 'our hero'",
+        "body":"<p>When the Taliban sent a gunman to shoot Malala Yousafzai last October as she rode home on a bus after school, they made clear their intention: to silence the teenager and kill off her campaign for girls' education.</p><p>Nine months and countless surgical interventions later, she stood up at the United Nations on her 16th birthday on Friday to deliver a defiant riposte. \"They thought that the bullet would silence us. But they failed,\" she said.</p><p>As 16th birthdays go, it was among the more unusual. Instead of blowing out candles on a cake, Malala sat in one of the United Nation's main council chambers in the central seat usually reserved for world leaders.</p><p>She listened quietly as Ban Ki-moon, the UN secretary-general, described her as \"our hero, our champion\"; and as the former British prime minister and now UN education envoy, Gordon Brown, uttered what he called \"the words the Taliban never wanted her to hear: happy 16th birthday, Malala\".</p><p>The event, dubbed Malala Day, was the culmination of an extraordinary four years for the girl from Mingora, in the troubled Swat valley of Pakistan. She was thrust into the public glare after she wrote a pseudonymous but later celebrated blog for the BBC Urdu service describing her experiences struggling to get an education under the rising power of Taliban militants.</p><p>By 11 she was showing exceptional determination, calling personally on the US special representative to Pakistan, Richard Holbrooke, to use his influence to combat the Taliban's drive against education for girls. By 14, she was on the radar of Archbishop Desmond Tutu, who put her forward for the international children's peace prize, and by 15 she became the youngest Nobel peace prize nominee in history.</p><p>But such dizzying global attention came at a price. Death threats followed her growing recognition, and on 9 October 2012, following a meeting of Pakistani Taliban leaders, the gunman was dispatched to remove what they called the \"symbol of infidels and obscenity\".</p><p>Multiple operations in Pakistan and the UK followed the attack on the bus, including the fitting of a titanium plate on her left forehead, and a cochlear implant to restore her hearing. She now lives with her family in Birmingham and does what the Taliban tried to stop her doing: goes to school every day. \"I am not against anyone,\" she said in the UN chamber, having taken this day out from the classroom. \"Neither am I here to speak in terms of personal revenge against the Taliban or any other terrorist group.\"</p><p>Malala responded to the violence of the Taliban with her own countervailing force: words against bullets. \"I do not even hate the Talib who shot me. Even if there is a gun in my hand and he stands in front of me, I would not shoot him.\"</p><p>She spoke confidently, with only an injured eye and a slightly drooping left side of her face to hint at such fresh traumas. There was one other unstated allusion to the horror of her past: she wore a white shawl belonging to a woman who was also targeted by extremists but who, unlike Malala, did not survive to tell the tale: Benazir Bhutto.</p><p>\"The extremists are afraid of books and pens,\" the teenager continued. \"The power of education frightens them. They are afraid of women. The power of the voice of women frightens them.\"</p><p><a href=\"http://www.guardian.co.uk/world/2013/jun/15/pakistan-quetta-hospital-bomb-siege\">She cited last month's attack on a hospital</a> in Quetta, capital of Baluchistan, and killings of female teachers in Khyber Pakhtunkhwa. \"That is why they are blasting schools every day – because they were and they are afraid of change, afraid of the equality that we will bring to our society.\"</p><p>And she gave her own opposing interpretation of Islam to the Taliban's. \"They think that God is a tiny, little conservative being who would send girls to the hell just because of going to school. The terrorists are misusing the name of Islam and Pashtun society for their own personal benefits. Islam is a religion of peace, humanity and brotherhood. Islam says that it is not only each child's right to get education, rather it is their duty and responsibility.\"</p><p>Such ability to articulate what normally remains unarticulated – to give voice to young people normally silenced – has generated its own response. The <a href=\"https://secure.aworldatschool.org/page/s/stand-with-malala\">\"stand with Malala\" petition</a>, calling for education for the 57m children around the world who do not go to school, has attracted more than 4m signatures – more than a million having been added in the past few days.</p><p>At the start of her speech, Malala said: \"I don't know where to begin my speech. I don't know what people would be expecting me to say.\"</p><p>She need not have worried.</p><!-- Guardian Watermark: internal-code/content/412733343|2013-10-14T15:55:37Z|0d92dda42ad5d0b58a5aee041e9e8274dbfa1dc3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-16T13:01:40Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646668215/Malala-at-the-UN-005.jpg",
+        "standfirst":"'They thought that the bullet would silence us. But they failed,' says Malala, 16, at UN to push campaign for girls' education",
+        "shortUrl":"http://gu.com/p/3h9mq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646668215/Malala-at-the-UN-005.jpg",
+        "wordcount":"774",
+        "commentable":"true",
+        "internalContentCode":"412733343",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ed Pilkington in New York",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-07-13",
+        "internalPageCode":"1936115",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-15T16:44:00Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/unitednations",
+        "type":"keyword",
+        "webTitle":"United Nations",
+        "webUrl":"http://www.theguardian.com/world/unitednations",
+        "apiUrl":"http://content.guardianapis.com/world/unitednations",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/edpilkington",
+        "type":"contributor",
+        "webTitle":"Ed Pilkington",
+        "webUrl":"http://www.theguardian.com/profile/edpilkington",
+        "apiUrl":"http://content.guardianapis.com/profile/edpilkington",
+        "bio":"<p>Ed Pilkington is the chief reporter for Guardian US. He is a former national and foreign editor of the paper, and author of Beyond the Mother Country</p>",
+        "rcsId":"GNL038863",
+        "r2ContributorId":"15609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/27/1332862968426/edpilkington_140x140.jpg",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"global-development/universal-primary-education",
+        "type":"keyword",
+        "webTitle":"Universal primary education",
+        "webUrl":"http://www.theguardian.com/global-development/universal-primary-education",
+        "apiUrl":"http://content.guardianapis.com/global-development/universal-primary-education",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412863344",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646677471/Malala-at-the-UN-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mary Altaffer",
+            "altText":"Malala at the UN",
+            "height":"276",
+            "credit":"Mary Altaffer/AP",
+            "caption":"Malala Yousafzai spoke at the UN in New York on her 16th birthday, a day now dubbed Malala Day. Photograph: Mary Altaffer/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412863345",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/7/12/1373646668215/Malala-at-the-UN-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mary Altaffer",
+            "altText":"Malala at the UN",
+            "height":"84",
+            "credit":"Mary Altaffer/AP",
+            "caption":"Malala at the UN. Photograph: Mary Altaffer/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/jul/12/malala-yousafzai-inspires-pakistani-schoolgirls1",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-12T17:57:16Z",
+      "webTitle":"Malala Yousafzai's diary inspires other Pashtun girls yearning for education",
+      "webUrl":"http://www.theguardian.com/world/2013/jul/12/malala-yousafzai-inspires-pakistani-schoolgirls1",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/12/malala-yousafzai-inspires-pakistani-schoolgirls1",
+      "fields":{
+        "trailText":"<p>The words of a young girl whose determination to go to school made her a target for the Taliban has made others eager to learn</p>",
+        "headline":"Malala Yousafzai's diary inspires other Pashtun girls yearning for education",
+        "body":"<p>For many in Pakistan, <a href=\"http://www.guardian.co.uk/world/malala-yousafzai\" title=\"\">Malala Yousafzai</a>, the schoolgirl who was shot in the head by the Taliban, is a symbol of resilience and courage in her fight for the right of young girls to receive an education. For hardline right-wing groups and conspiracy theorists, she is a controversial figure accused of being a \"CIA agent\" and having staged the attack on herself.</p><p>But for young Pashtun girls in Karachi, Malala's struggle to get an education in the Swat region amid an insurgency is an inspiration. This part of Malala's life – documented in a diary published by the BBC – has encouraged many of them to start writing and sharing their own dreams of staying in school.</p><p>After the Pakistani Taliban attempted to assassinate Malala last October, a young teacher with the Teach for Pakistan programme started reading Malala's diary to her 13-year-old pupils at a government-run secondary school in Karachi.</p><p>\"They had heard other things about her,\" recalls Afrah Qureshi, who teaches English to 200 students at the school, in a poor, conservative Pashtun district. \"Some said that they had heard she had committed blasphemy, that she had said something about religion. And then I asked them if they had read <a href=\"http://news.bbc.co.uk/1/hi/world/south_asia/7834402.stm\" title=\"\">Malala's diary</a>.\"</p><p>Qureshi began reading a page of Malala's diary to her young pupils every day in her class, and encouraged them to begin writing their own. As they read her diary, their perceptions changed almost entirely. \"They loved reading her thoughts,\" said Qureshi. \"I wanted them to make an informed opinion.\"</p><p>One 14-year-old girl, Sara*, writes in an elegant, cursive hand and at length about her own aspirations and scenes from everyday life. \"I think Malala is a brave and an intelligent girl,\" reads the first entry in her own diary, titled A Tribute to Malala.</p><p>\"The Taliban should not stop her to go to school because every person has their own life. A killer should not attack on her because it is not right … We all should respect our talented people, as we respect Malala.\"</p><p>Sara told the Guardian that she had enjoyed reading Malala's diary and her story in her own words, and she loved writing her own diary. \"It improves my English,\" she said.</p><p>One year on, she says she can't wait to return to school after the summer holiday is over. \"I didn't like studying so much before, but now I really want to. My younger brothers, my sister and I … we are all reading our books.\"</p><p>Sara's diary is a reflection of the perils in the city she lives in – Karachi – where an average of eight people are killed in assassinations and clashes between rival factions every day. \"About 8pm there were two bomb blasts in Karachi and I'm so sad,\" she wrote in November. \"Why [do] killers kill the people? Do they feel good after killing the people?\"</p><p>Afrah Qureshi said Sara's father was incredulous at first, when she had a conversation with him in English. \"You must have rote-learned this,\" he told his daughter, according to Qureshi. Now, he's proud of his daughter's English skills.</p><p>Aliya, a 13-year-old pupil, exuberantly wished Qureshi \"Happy Malala Day, teacher!\"</p><h2>'I love going to school'</h2><p>Aliya said she had been moved by reading Malala's diary. \"I felt very bad that she wasn't allowed to study. It was only her parents who did a great service to her and helped her do so,\" she said.</p><p>\"I love going to school,\" Aliya said. \"My teacher is there, my friends are there. I get up early for school, and I'm even attending summer camp where I've taken every single class. I love studying.\"</p><p>She rattled off a list of things she wants to do when she's older, including going to one of the country's most prestigious private universities. \"I want to take science subjects in class 9 and class 10, and then study computer science at LUMS [Lahore University of Management Sciences], and then I'm going to work for Teach for Pakistan!,\" she said, referring to the nationwide movement of graduates who volunteer to teach in under-resourced schools.</p><p>For many of these girls, there is little hope that they will ever get more than a secondary school certificate. Many are taken out of school when they are 14 to get married. In this community, there is no concept of women working, though that is changing in other Pashtun districts in Karachi. At a parent-teacher conference, Qureshi recalled a girl's father telling her that he was \"very worried\" about his daughter's future. \"I see that she's so intelligent and I want to help her, but how?\" he said.</p><p>Despite the challenges, Teach for Pakistan says these young girls are incredibly eager to learn, and spend their breaks in the classroom so they have an opportunity to closely engage with their teachers. The organisation's teaching fellows work with the communities and the parents – who they consider the biggest stakeholders – to ensure that they are all on board and involved with the girls' education. In Aliya and Sara's school, enrolment has nearly doubled this year as a result. More women are applying to work at Teach for Pakistan, which means that they can place more teachers in girls' schools.</p><p>Another entry by Sara recalls a conversation she had with her sister about what she wanted to do later in life. \"Sometimes I think: what will I become? I like many professions like singer, actor, writer, teacher, poet whatever, but my most favourite is army ...  If I cannot become something special,  I want to become a good person.\"</p><p><em>*The names of pupils have been changed to protect their identity. </em></p><!-- Guardian Watermark: internal-code/content/412738346|2013-10-14T15:55:37Z|e417baa53357d164da221a08c9d6f7d41b3e0328 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-15T10:12:55Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651602963/Pakistani-girls-at-school-005.jpg",
+        "standfirst":"The words of a young girl whose determination to go to school made her a target for the Taliban has made others eager to learn",
+        "shortUrl":"http://gu.com/p/3h9p7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651602963/Pakistani-girls-at-school-005.jpg",
+        "wordcount":"926",
+        "commentable":"true",
+        "internalContentCode":"412738346",
+        "allowUgc":"false",
+        "internalOctopusCode":"7833024",
+        "isPremoderated":"false",
+        "byline":"Saba Imtiaz in Karachi",
+        "publication":"theguardian.com",
+        "internalPageCode":"1936177",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-15T17:57:00Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/taliban",
+        "type":"keyword",
+        "webTitle":"Taliban",
+        "webUrl":"http://www.theguardian.com/world/taliban",
+        "apiUrl":"http://content.guardianapis.com/world/taliban",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"global-development/universal-primary-education",
+        "type":"keyword",
+        "webTitle":"Universal primary education",
+        "webUrl":"http://www.theguardian.com/global-development/universal-primary-education",
+        "apiUrl":"http://content.guardianapis.com/global-development/universal-primary-education",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412845737",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651599737/Pakistani-girls-at-school-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"130",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651600802/Pakistani-girls-at-school-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"54",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651601860/Pakistani-girls-at-school-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"340",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651602963/Pakistani-girls-at-school-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"84",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651604032/Pakistani-girls-at-school-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"132",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651605098/Pakistani-girls-at-school-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"168",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651606240/Pakistani-girls-at-school-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"180",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651607338/Pakistani-girls-at-school-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"228",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651609255/Pakistani-girls-at-school-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"276",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651610582/Pakistani-girls-at-school-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"372",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651609255/Pakistani-girls-at-school-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"276",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study. Photo: A Majeed/AFP/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412845738",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/12/1373651602963/Pakistani-girls-at-school-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"A Majeed",
+            "altText":"Pakistani girls at school in Mingora, Swat valley. Malala Yousafzai has inspired other girls",
+            "height":"84",
+            "credit":"A Majeed/AFP/Getty Images",
+            "caption":"Pakistani girls at school in Mingora, Swat valley. The Taliban's shooting of Malala Yousafzai has paradoxically inspired other girls to study.  Photograph: A Majeed/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/jul/17/taliban-letter-malala-yousafzai",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-17T19:33:53Z",
+      "webTitle":"Taliban's letter to Malala Yousafzai: this is why we tried to kill you",
+      "webUrl":"http://www.theguardian.com/world/2013/jul/17/taliban-letter-malala-yousafzai",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/17/taliban-letter-malala-yousafzai",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>Adnan Rasheed tells schoolgirl she was targeted because Taliban believed she was running smear campaign</p>",
+        "headline":"Taliban's letter to Malala Yousafzai: this is why we tried to kill you",
+        "body":"<p>A senior member of the Pakistani Taliban has written an open letter to Malala Yousafzai – the teenager shot in the head as she rode home on a school bus – expressing regret that he didn't warn her before the attack, but claiming that she was targeted for maligning the insurgents.</p><p>Adnan Rasheed, who was convicted for his role in a 2003 assassination attempt on the country's then-president Pervez Musharraf, did not apologise for the attack, which left Malala gravely wounded, but said he found it shocking.</p><p>\"I wished it would never happened [sic] and I had advised you before,\" he wrote.</p><p>Malala was 15 when she and two classmates were targeted by a masked gunman who picked them out on a school bus as they went home from school in Pakistan's northwest Swat valley last October.</p><p>She was seriously injured in the attack, and was flown to Britain to receive specialist treatment from doctors in Birmingham, where she and her family now live.</p><p>Last week, she celebrated her 16th birthday by <a href=\"http://www.guardian.co.uk/world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech\" title=\"\">delivering a defiant speech at the United Nations in New York</a>, in which she called on world leaders to provide free schooling for all children.</p><p>In the letter, Rasheed claimed that Malala was not targeted for her efforts to promote education, but because the Taliban believed she was running a \"smearing campaign\" against it.</p><p>\"You have said in your speech yesterday that pen is mightier than sword,\" Rasheed wrote, referring to Malala's UN speech, \"so they attacked you for your sword not for your books or school.\"</p><p>The rambling four-page letter, in patchy English, citing Bertrand Russell, Henry Kissinger and historian Thomas Macaulay, was released to media organisations in Pakistan.</p><p>In it, Rasheed – a former member of Pakistan's air force, who was among 300 prisoners to escape jail in April last year – advises Malala to return to Pakistan, join a female Islamic seminary and advocate the cause of Islam.</p><p>He admitted that the Taliban are \"blowing up\" schools, but justified the attacks on the grounds that the Pakistani army and the paramilitary Frontier Corps use schools as hideouts.</p><p>Hundreds of schools have been targeted in Pakistan's north-west: activists say some had been used by the military, but many attacks were motivated by the Taliban's opposition to girls' education.</p><p>The Taliban commander also justified recent attacks in Pakistan on health workers vaccinating children against polio by claiming the west was trying to sterilise Muslims.</p><p>The letter is clearly intended to influence opinion in Pakistan: although in much of the world Malala has been hailed as a symbol of courage, at home she has been the subject of intense criticism and vilification. Online commentators have described her as a \"drama queen\" and even accused her of spying for the CIA.</p><p>Rasheed contrasted international support for Malala with the lack of coverage given to those killed in US drone attacks – a source of intense grievance in Pakistan.</p><p>\"If you were shot [by] Americans in a drone attack, would [the] world have ever heard updates on your medical status? … Would you were called to UN? Would a Malala day be announced?\"</p><p>Gordon Brown, now a UN special envoy on global education, said: \"Nobody will believe a word the Taliban say about the right of girls like Malala to go to school until they stop burning down schools and stop massacring pupils.\"</p><!-- Guardian Watermark: internal-code/content/413061059|2013-10-14T15:55:37Z|385583f4800e77d04615d5b47c4da959f846bad6 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-23T13:01:18Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088744841/Malala-Yousafzai-at-the-U-003.jpg",
+        "standfirst":"Adnan Rasheed tells schoolgirl she was targeted because Taliban believed she was running smear campaign",
+        "shortUrl":"http://gu.com/p/3hcmq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088744841/Malala-Yousafzai-at-the-U-003.jpg",
+        "wordcount":"547",
+        "commentable":"true",
+        "internalContentCode":"413061059",
+        "allowUgc":"false",
+        "internalOctopusCode":"7850624",
+        "isPremoderated":"false",
+        "byline":"Saba Imtiaz in Karachi",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-07-18",
+        "internalPageCode":"1938302",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-20T19:33:00Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/taliban",
+        "type":"keyword",
+        "webTitle":"Taliban",
+        "webUrl":"http://www.theguardian.com/world/taliban",
+        "apiUrl":"http://content.guardianapis.com/world/taliban",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pervez-musharraf",
+        "type":"keyword",
+        "webTitle":"Pervez Musharraf",
+        "webUrl":"http://www.theguardian.com/world/pervez-musharraf",
+        "apiUrl":"http://content.guardianapis.com/world/pervez-musharraf",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-413364544",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088741993/Malala-Yousafzai-at-the-U-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"54",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088743586/Malala-Yousafzai-at-the-U-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"130",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088744841/Malala-Yousafzai-at-the-U-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"84",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088746097/Malala-Yousafzai-at-the-U-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"132",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088747483/Malala-Yousafzai-at-the-U-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"168",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088748735/Malala-Yousafzai-at-the-U-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"180",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088749984/Malala-Yousafzai-at-the-U-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"228",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088751383/Malala-Yousafzai-at-the-U-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"276",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088751383/Malala-Yousafzai-at-the-U-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"276",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from a Taliban commander, claiming she was targeted for maligning it. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-413364545",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374088744841/Malala-Yousafzai-at-the-U-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rick Bajornas/UN Photo",
+            "altText":"Malala Yousafzai at the United Nations",
+            "height":"84",
+            "credit":"Rick Bajornas/UN Photo/PA",
+            "caption":"Malala Yousafzai has received a rambling letter from her would-be assassin, claiming she was targeted for maligning the Taliban. Photograph: Rick Bajornas/UN Photo/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/video/2013/sep/03/malala-yousafzai-opens-library-birmingham-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-03T13:19:00Z",
+      "webTitle":"Malala Yousafzai opens £188m library in Birmingham - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/sep/03/malala-yousafzai-opens-library-birmingham-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/sep/03/malala-yousafzai-opens-library-birmingham-video",
+      "fields":{
+        "trailText":"<p>Malala Yousafzai, the teenager shot in the head by the Taliban after campaigning for girls' education opens a new £188m library in Birmingham</p>",
+        "headline":"Malala Yousafzai opens £188m library in Birmingham - video",
+        "body":"<video data-media-id=\"gu-video-416430451\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211548056/Malala-Yousafzai-002.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/9/3/130903Malala-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/9/3/130903Malala_vpx.webm\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/9/3/130903Malala/130903Malala.m3u8\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/9/3/130903Malala-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/9/3/130903Malala_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/9/3/130903Malala_3gpSml16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/416430451|2013-10-14T15:55:37Z|59a58609e374945e418f1babb6d672d621deb36d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-03T15:53:00Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211559865/Malala-Yousafzai-010.jpg",
+        "standfirst":"Malala Yousafzai, the teenager shot in the head by the Taliban after campaigning for girls' education opens a new £188m library in Birmingham. Addressing the crowd she said: 'Pens and books are the weapons that defeat terrorism.' The 16-year-old schoolgirl was flown from Pakistan to Birmingham for emergency treatment last October. Surgeons who treated Malala said she came within inches of death when a bullet grazed her brain",
+        "shortUrl":"http://gu.com/p/3tf3e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211559865/Malala-Yousafzai-010.jpg",
+        "commentable":"false",
+        "internalContentCode":"416430451",
+        "allowUgc":"false",
+        "internalOctopusCode":"8026936",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1959647",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-06T13:19:21Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/birmingham",
+        "type":"keyword",
+        "webTitle":"Birmingham",
+        "webUrl":"http://www.theguardian.com/uk/birmingham",
+        "apiUrl":"http://content.guardianapis.com/uk/birmingham",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-416430451",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211546133/Malala-Yousafzai-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"230",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211548056/Malala-Yousafzai-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"360",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211549534/Malala-Yousafzai-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"90",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211551017/Malala-Yousafzai-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"225",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211552779/Malala-Yousafzai-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"360",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211555556/Malala-Yousafzai-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"54",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211557070/Malala-Yousafzai-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"340",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211558533/Malala-Yousafzai-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"130",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211559865/Malala-Yousafzai-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"84",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211561679/Malala-Yousafzai-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"132",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211563448/Malala-Yousafzai-012.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"168",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211564850/Malala-Yousafzai-013.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"180",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211566282/Malala-Yousafzai-014.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"228",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211567651/Malala-Yousafzai-015.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"276",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211569055/Malala-Yousafzai-016.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"372",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/3/130903Malala_vpx.webm",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/3/130903Malala_8026936.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/3/130903Malala_8026936.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/3/130903Malala_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/3/130903Malala_8026936.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/3/130903Malala_8026936.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/3/130903Malala-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/3/130903Malala_8026936.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/3/130903Malala_8026936.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/3/130903Malala_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/3/130903Malala_8026936.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/3/130903Malala_8026936.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/3/130903Malala-720.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/3/130903Malala_8026936.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/3/130903Malala_8026936.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/3/130903Malala/130903Malala.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/3/130903Malala_8026936.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/3/130903Malala_8026936.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        }]
+      },{
+        "id":"gu-image-416435835",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/3/1378211559865/Malala-Yousafzai-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Malala Yousafzai",
+            "height":"84",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"Malala Yousafzai waves during the official opening of Birmingham's library Photograph: Facundo Arrizabalaga/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/oct/07/malala-yousafzai-life-britain-pakistan-taliban",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-07T09:09:37Z",
+      "webTitle":"Malala Yousafzai on life in Britain: 'We have never seen women so free'",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/07/malala-yousafzai-life-britain-pakistan-taliban",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/07/malala-yousafzai-life-britain-pakistan-taliban",
+      "fields":{
+        "trailText":"<p>Pakistani schoolgirl shot by Taliban says fear of terrorism will not stop her helping her country</p>",
+        "headline":"Malala Yousafzai on life in Britain: 'We have never seen women so free'",
+        "body":"<p>The Pakistani schoolgirl who was shot by the Taliban has described her experience of settling in to her new life in Birmingham.</p><p>Malala Yousafzai, now 16, angered the Taliban with her pleas for girls to be educated. She was shot by a gunman who boarded her school bus in the Swat valley in north-west Pakistan a year ago. The bullet went into her left eye socket but missed her brain.</p><p>Speaking on the BBC Radio 4 Today programme on Monday about her new life in Britain, Malala said: \"I was feeling a little bit embarrassed and worried … the school was quite different compared to school in Pakistan.\"</p><p>She said she was particularly surprised at the level of freedom afforded to women.</p><p>\"It was difficult to adjust to this new culture and this new society, especially for my mother, because we have never seen that women would be that much free, that they would go to any market, they will be going alone with no men and with no brothers and fathers, because, in our country, if you want to go outside, you must go with a man – if even your five-year-old brother goes with you it's fine, but you must have someone else, a girl cannot go outside all alone.\"</p><p>Malala said she still very much saw herself as a Pashtun girl, despite her new life.</p><p>Asked if she was becoming western, she replied: \"No, I'm not becoming western. I'm still following my own culture – Pashtun culture.\"</p><p>She pointed out that her dress sense has not changed and that she still covered her head with a shawl.</p><p>Although she has been warned against returning to Pakistan for her own personal safety, Malala said she could not allow the thought or fear of a future terrorist threat to frighten her away from her mission to help Pakistan.</p><p><a href=\"http://www.theguardian.com/world/2013/jul/17/taliban-letter-malala-yousafzai\" title=\"\">On the letter sent to her by a senior Taliban commander wishing her well but explaining why she was targeted</a>, she said she \"felt nothing\".</p><p>However, she expressed relief at the Taliban finally admitting responsibility for shooting her, ending speculation among her doubters that she had been targeted.</p><p>She said: \"It's nice to hear from them because they accepted: 'Yes, we have shot Malala.'\"</p><p>On the apparent ideological divide between the west and east, Malala said: \"I don't know why people have divided the whole world into two groups: west and east.</p><p>\"I don't know what's the difference between west and east. The only thing they [the terrorists] see in the west is women wearing short dresses and skirts; that does not mean they have different ideology.\"</p><p>Malala told the BBC Panorama programme Malala: Shot for Going to School, to be shown on BBC1 on Monday night: \"I want to tell the students of UK to think that it is very precious, it's very prestigious, to go to school.</p><p>\"Reading a book, having a pen in our hands, studying, sitting in a classroom is something very special for us because once we were deprived from it and because what we have seen in Swat.\"</p><p>She was born into a society that did not value girls, she said. \"When I was born, some of our relatives came to our house and told my mother, don't worry, next time you will have a son,\" she told Panorama.</p><p>\"For my brothers it was easy to think about the future, they can be anything they want. But for me it was hard and for that reason, I wanted to become educated and I wanted to empower myself with knowledge.\"</p><p>In January 2008 the Taliban, who controlled the region, declared that girls would no longer be allowed to go to school. Acid attacks, abuse and even killing were used as punishment and Malala admits: \"I was afraid of my future.\"</p><p>With her father Ziauddin's backing, Malala kept an online diary and did interviews with journalists to encourage girls to seek education – but it also made her a target.</p><p>She does not remember being shot on 9 October 2012, but her horrified friends recall that the Taliban asked for Malala by name before shooting straight at her head. Everything, from schoolbooks to clothes, was soaked in blood and Malala was left near death.</p><p>She travelled to Britain for treatment but her injuries were so bad that her father asked relatives to start arranging her funeral.</p><p>Despite being an anti-Taliban activist, he never believed they would target a child. \"They flogged adult girls but they never killed children. We really didn't expect because we thought that they might have some values, terrorists might have some code of conduct,\" he told Panorama.</p><p>Malala slowly pulled through after being transferred to an army cardiology hospital with better intensive care.</p><p>Malala now lives in Birmingham with her family and started at Edgbaston high school for girls in March 2013. She is determined to keep in touch with her Pashtun culture, believing that it teaches patience, peace and religious tolerance.</p><p>Her courage has made her a much-admired global figure, and she was asked to <a href=\"http://www.theguardian.com/world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech\" title=\"\">make a speech to the UN on her 16th birthday</a>.</p><p>She has been invited to a reception for youth, education and the Commonwealth, being hosted by the Queen and the Duke of Edinburgh, at Buckingham Palace on 18 October.</p><p>It has also made her a hot tip for the Nobel peace prize.</p><p>Malala told Panorama: \"If I win Nobel peace prize, it would be a great opportunity for me, but if I don't get it, it's not important because my goal is not to get Nobel peace prize, my goal is to get peace and my goal is to see education of every child.\"</p><!-- Guardian Watermark: internal-code/content/419233243|2013-10-14T15:55:37Z|4813c271407950624ecd8b8ed9e25fc8ed4433cd -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T11:33:42Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136907190/Malala-Yousafzai--004.jpg",
+        "standfirst":"Pakistani schoolgirl shot by Taliban says fear of terrorism will not stop her helping her country",
+        "shortUrl":"http://gu.com/p/3jb9v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136907190/Malala-Yousafzai--004.jpg",
+        "wordcount":"919",
+        "commentable":"true",
+        "internalContentCode":"419233243",
+        "allowUgc":"false",
+        "internalOctopusCode":"8162540",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976562",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T09:09:00Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/taliban",
+        "type":"keyword",
+        "webTitle":"Taliban",
+        "webUrl":"http://www.theguardian.com/world/taliban",
+        "apiUrl":"http://content.guardianapis.com/world/taliban",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419251155",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136902757/Malala-Yousafzai--001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"54",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136904672/Malala-Yousafzai--002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"340",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136905968/Malala-Yousafzai--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"130",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136907190/Malala-Yousafzai--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"84",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136908405/Malala-Yousafzai--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"132",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136909918/Malala-Yousafzai--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"168",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136911144/Malala-Yousafzai--007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"180",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136912357/Malala-Yousafzai--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"228",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136913584/Malala-Yousafzai--009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"276",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136914827/Malala-Yousafzai--010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"372",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136913584/Malala-Yousafzai--009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"276",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. Photograph: BBC/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419251156",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381136907190/Malala-Yousafzai--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"84",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai as she appears on the BBC Panorama programme Malala: Shot for Going to School. She said: 'Sitting in a classroom is something very special for us because once we were deprived from it.' Photograph: BBC/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/oct/07/school-malala-yousafzai-panorama",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-07T10:11:00Z",
+      "webTitle":"Malala Yousafzai urges British girls not to take education for granted",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/07/school-malala-yousafzai-panorama",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/07/school-malala-yousafzai-panorama",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"<p>In Panorama interview, teenager who was shot by Taliban appeals to fellow pupils to regard her as 'a normal girl'</p>",
+        "headline":"Malala Yousafzai urges British girls not to take education for granted",
+        "body":"<p><a href=\"http://www.theguardian.com/world/malala-yousafzai\" title=\"\">Malala Yousafzai</a>, the 16-year-old shot by the Taliban for promoting female education and who later became an international advocate for children's rights, has warned British girls not to take their schooling for granted.</p><p>The teenager appealed on a  <a href=\"http://www.bbc.co.uk/programmes/b006t14n\" title=\"\">BBC Panorama programme</a>, to be broadcast on Monday, for pupils to regard her as \"as their friend and as a normal girl\".</p><p>Malala, now a pupil at Edgbaston School for Girls, urged British students to regard education as precious. \"Reading a book, having a pen in our hands, studying, sitting in a classroom is very special for us because once we were deprived [of] it and because [of] what we have seen in Swat.</p><p>\"Here they consider me a good girl, the girl who stood up for children's rights and the girl who was shot by the Taliban. They never look at me as Malala, as their friend, and as a normal girl. In Pakistan, I was just Malala, simply Malala.\"</p><p>She said she was missing her school and friends in the Swat valley but she insisted she was keeping true to her Pashtun culture amid plaudits for her stand after the gun attack on her last October.</p><p>Malala has been nominated for the <a href=\"http://www.nobelprize.org/nobel_prizes/peace/\" title=\"\">Nobel peace prize</a> (the winner is announced Friday) and has been honoured at the <a href=\"http://www.un.org/en/\" title=\"\">UN</a>,<a href=\"http://www.harvard.edu\" title=\"\"> at Harvard University</a>, and in her \"second home\", Birmingham. She has also been invited to a reception hosted by the Queen at Buckingham Palace on 18 October.</p><p>Malala, whose father, Ziauddin, was an anti-Taliban activist, told how she had been targeted after challenging a Taliban edict that girls should not go to school; she broadcast her views on a BBC online diary and appeared on Pakistani TV. Taliban punishments in her home town of Mingora included \"throwing acid on women's faces or abusing them or killing them\", she said.</p><p>She added: \"I was afraid for my future. And at that time there  was fear all around us, in every street and in every square of Mingora. At that time I said if we want to fight against the fear let us have the power to speak up.</p><p>\"When I heard about the threats from the Taliban, I used to think that a Talib would come and he would shoot you, Malala, on the street.\"</p><p>Malala was shot in the head on a bus going home from school. \"We were having exams that week and the paper on 9 October went very well. It was Pakistan studies, but the paper one day before was physics. I love physics, but it was hard.\"</p><p>She had been told by her mother to take the bus rather than walk as it was safer. \"I was just talking to Moniba [a friend] and having a gossip … everything seemed as normal part of life.\" She did not remember what happened next.</p><p>Friends said two boys boarded the bus as it slowed for a corner.</p><p>Shazia, one of the friends, said: \"One of them came round the back and said 'who is Malala Yousafzai?'\"</p><p>Moniba, another friend, said: \"She was very scared at the time and didn't say anything.\" Kainat, a friend, added: \"Then he fired straight at her. I saw a lot of blood on Malala's head. When I saw that blood, I fell unconscious.\"</p><p>\"My clothes, my shoes, my socks, my pouch, my books, all that was just full of blood,\" said Moniba. \"Malala's blood.\"</p><p>Malala, who was near death, was taken to hospital. \"I have pictures still in my mind. In one picture, suddenly I see my father on my left side and when I look at him, I just tell him something and then I just close my eyes and everything goes dark. I thought I'm dead.\"</p><p>She was airlifted to a military hospital in Peshawar where she had life-saving surgery, then British doctors visiting Pakistan advised taking her Birmingham for further care. Her family followed and over the next four months Malala had several operations.</p><p>Her contact with the west has been criticised in Pakistan. But she said: \"No, I'm not becoming western, I am still following my Pashtun culture and I'm wearing a shalvar kamiz, a dupatta on my head. And I believe Islam is a true religion and it teaches us how to be patient and how to tolerate other religions and it teaches us about peace. Islam means peace.</p><p>\"I don't know why people have divided the whole world into two groups, west and east. Education is neither eastern nor western. Education is education and it's the right of every human being.\"</p><!-- Guardian Watermark: internal-code/content/419192247|2013-10-14T15:55:37Z|2063861e6d5b3930881ab880e40513afab496576 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T10:13:32Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082007625/Malala-Yousafzai--003.jpg",
+        "standfirst":"In Panorama interview, teenager who was shot by Taliban appeals to fellow pupils to regard her as 'a normal girl'",
+        "shortUrl":"http://gu.com/p/3jb4c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082007625/Malala-Yousafzai--003.jpg",
+        "wordcount":"743",
+        "commentable":"false",
+        "internalContentCode":"419192247",
+        "allowUgc":"false",
+        "internalOctopusCode":"8161075",
+        "isPremoderated":"false",
+        "byline":"James Meikle",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-07",
+        "internalPageCode":"1976439",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-09T23:05:02Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"uk/birmingham",
+        "type":"keyword",
+        "webTitle":"Birmingham",
+        "webUrl":"http://www.theguardian.com/uk/birmingham",
+        "apiUrl":"http://content.guardianapis.com/uk/birmingham",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/jamesmeikle",
+        "type":"contributor",
+        "webTitle":"James Meikle",
+        "webUrl":"http://www.theguardian.com/profile/jamesmeikle",
+        "apiUrl":"http://content.guardianapis.com/profile/jamesmeikle",
+        "bio":"<p>James Meikle is a special correspondent for the Guardian</p>",
+        "rcsId":"GNL001970",
+        "r2ContributorId":"15777",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/james_meikle_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419239305",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082004876/Malala-Yousafzai--001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"54",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082006380/Malala-Yousafzai--002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"130",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082007625/Malala-Yousafzai--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"84",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082011211/Malala-Yousafzai--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"132",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082012460/Malala-Yousafzai--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"168",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082013730/Malala-Yousafzai--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"180",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082014978/Malala-Yousafzai--007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"228",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082016275/Malala-Yousafzai--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"276",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082016275/Malala-Yousafzai--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"276",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419239306",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381082007625/Malala-Yousafzai--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"BBC",
+            "altText":"Malala Yousafzai ",
+            "height":"84",
+            "credit":"BBC/PA",
+            "caption":"Malala Yousafzai during the Panorama interview to be broadcast on Monday night. Photograph: BBC/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/oct/07/malala-yousafzai-hard-to-kill-taliban",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-07T18:00:00Z",
+      "webTitle":"Malala Yousafzai: 'It's hard to kill. Maybe that's why his hand was shaking'",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/07/malala-yousafzai-hard-to-kill-taliban",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/07/malala-yousafzai-hard-to-kill-taliban",
+      "fields":{
+        "newspaperPageNumber":"6",
+        "trailText":"<p>The Pakistani schoolgirl became a global inspiration after surviving an assassination attempt by the Taliban. In an exclusive interview, she tells <strong>Kamila Shamsie</strong> about the man who tried to kill her, life in Britain and why she won't give up campaigning</p>",
+        "headline":"Malala Yousafzai: 'It's hard to kill. Maybe that's why his hand was shaking'",
+        "body":"<p>Malala Yousafzai says she's lost herself. \"In Swat [district], I studied in the same school for 10 years and there I was just considered to be Malala. Here I'm famous, here people think of me as <a href=\"http://www.theguardian.com/world/2012/oct/09/taliban-pakistan-shoot-girl-malala-yousafzai\" title=\"\">the girl who was shot by the Taliban</a>. The real Malala is gone somewhere, and I can't find her.\"</p><p>We are sitting in a boardroom on the seventh floor of the <a href=\"http://www.theguardian.com/world/2013/sep/03/malala-yousafzai-opens-birmingham-library\" title=\"\">new Birmingham library</a>, the glass walls allowing us a view of a city draped in mist, a sharp contrast to the \"paradise\" of Swat, with its tall mountains and clear rivers which Malala recalls wistfully. It should be desperately sad but <a href=\"http://www.theguardian.com/world/2013/jul/12/malala-idol-un-speech-pupils\" title=\"\">the world's most famous 16-year-old</a> makes it difficult for you to feel sorry for her. In part, it is because she is so&nbsp;poised, in a way that suggests an enviable self-assurance rather than an overconstructed persona. But more than that, it is to do with how much of&nbsp;her conversation is punctuated by&nbsp;laughter.</p><p>The laughter takes many forms: self-deprecating when I ask her why she thinks the Taliban feel threatened by her; delighted when she talks of Skyping her best friend, Muniba, to get the latest gossip from her old school; wry when she recalls a Taliban commander's advice that she return to Pakistan and enter a madrassa; giggly when she talks about her favourite cricketers (\"<a href=\"http://en.wikipedia.org/wiki/Shahid_Afridi\" title=\"\">Shahid Afridi</a>, of course, and I also like Shane Watson\"). And it's at its most full-throated when she is teasing her father, who is present for part of our interview. It happens during a conversation about her mother: \"She&nbsp;loves my father,\" Malala says. Then, lowering her voice, she adds: \"They had a love marriage.\" Her father, involved in making tea for Malala and me, looks up. \"Hmmm? Are you sure?\" he says, mock-stern. \"Learn from your parents!\" Malala says to me, and bursts into laughter.</p><p>Learning from her parents is something Malala knows a great deal about. Her mother was never formally educated and an awareness of the constraints this placed on her life have made her a great supporter of Malala and her father in their campaign against the Taliban's attempts to stop female education. One of the more moving details in <a href=\"http://www.orionbooks.co.uk/Articles/News/I%20Am%20Malala%20from%20Malala%20Yousafzai%20to%20Be%20Published%20by%20Orion.page\" title=\"\">I Am Malala</a>, the memoir Malala has written with the journalist Christina Lamb, is&nbsp;that her mother was due to start learning to read and write on the day Malala was shot – 9 October 2012. When I suggest that Malala's campaign for female education may have played a role in encouraging her mother, she says: \"That might be.\" But she is much happier giving credit to her mother's determined character, and the example provided by her father, Ziauddin, who long ago set up a school where girls could study as well as boys, in a part of&nbsp;the world where the gender gap in education is vast.</p><figure data-media-id='gu-image-419334217'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161378559/Malala-in-hospital-010.jpg' alt='Malala in hospital' width='460' height='276' class='gu-image'/><figcaption>The 15-year-old pictured at Queen Elizabeth hospital in Birmingham, to which she had been rushed for an operation. Photograph: University Hospitals Birmingham/PA</figcaption></figure><p>It is hard to refrain from asking Ziauddin Yousafzai the \"do you wish you hadn't …?\" question about his daughter, whose passion for reform clearly owes a lot to the desire to emulate her education-activist father. But it's a cruel question, and unfair, too, given my own inability to work out what constitutes responsible parenting in a world where girls are told that the safest way to live is to stay away from school, and preferably disappear entirely.</p><p>It is perhaps because of criticism levelled at her father that Malala mentions more than once in her book that no one believed the Taliban would target a schoolgirl, even if that schoolgirl had been <a href=\"http://www.theguardian.com/world/video/2012/oct/14/malala-yousafzai-speech-education-video\" title=\"\">speaking and writing</a> against the Taliban's ban on female education since the age of 12. If any member of the family was believed to be in danger, it was Ziauddin Yousafzai, as much a part of the campaign as his daughter. And it was the daughter who urged the father to keep on when he suggested they both \"go into hibernation\" after receiving particularly worrisome threats. The most interesting detail to emerge about Ziauddin from his daughter's book is his own early flirtation with militancy. He was only 12 years old when Sufi Mohammad, who would later be a leading figure among the extremists in Swat, came to his village to recruit young boys to join the jihad against the Soviets in Afghanistan. Although Ziauddin was too young to fight then, within a few years he was preparing to become a jihadi, and praying for martyrdom. He later came to recognise what he experienced as brainwashing – and was saved from it&nbsp;by his questioning mind and the influence of his future brother-in-law, a&nbsp;secular nationalist.</p><p>The information about her father's semi-brainwashing forms an interesting backdrop to Malala's comments when I&nbsp;ask if she ever wonders about the man who tried to kill her on her way back from school that day in October last year, and why his hands were shaking as he held the gun – a detail she has picked up from the girls in the school bus with her at the time; she herself has no memory of the shooting. There is no trace of rancour in her voice when she says: \"He was young, in his 20s … he was quite young, we may call him a boy. And it's hard to have a gun and kill people. Maybe that's why his hand was shaking. Maybe he didn't know if he could do it. But people are brainwashed. That's why they do things like suicide attacks and killing people. I can't imagine it – that boy who shot me, I can't imagine hurting him even with a needle. I believe in peace. I believe in mercy.\"</p><p>Well, I believe in these things, too, but if someone put a bullet in my head I suspect I would be more than a little irate. Doesn't she feel at all angry? \"I only get angry at my brothers, and at my father,\" she says. Particularly her brother Khushal, who is two years younger than her. \"I can't be good to him, it's impossible. We can't ever be friends,\" she says, sounding like the teenager she is.</p><figure data-media-id='gu-image-419334218'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161234140/Indian-schoolgirls-010.jpg' alt='Indian schoolgirls' width='460' height='276' class='gu-image'/><figcaption>Schoolgirls in New Delhi wear Malala masks as part of a campaign to win greater resources for education in India. Photograph: Altaf Qadri/AP</figcaption></figure><p>Perhaps meditating on the value of peace and mercy is an entirely sane way of coping with bullets and invective. But, all the same, it must hurt to find yourself reviled – and not only by the Taliban. In her book she writes of how <a href=\"http://www.theguardian.com/world/2013/jul/12/malala-yousafzai-un-taliban-militants-speech\" title=\"\">her speech at the UN</a> received plaudits around the world, but in Pakistan people accused her of seeking fame and the luxury of a life abroad. When I&nbsp;ask her about this, it is one of the only times in the conversation that she turns&nbsp;to Urdu to express herself: \"<em>Dukh to insaan ko hota hai jab daikhta hai kay uss ka bhai uss kay khilaf hai.</em>\" (\"Naturally it's hurtful when you see your brothers turn against you.\") Her voice is pained, but she quickly switches to English and the more philosophical tone emerges again. \"Pakistanis can't trust,\" she says. \"They've seen in history that people, particularly politicians, are corrupt. And they're misguided by people in the name of Islam. They're told: 'Malala is not a Muslim, she's not in purdah, she's working for America.' They say maybe she's with the CIA or ISI [Pakistan's intelligence service]. It's fine; they say it about every politician too, and I want to become a politician.\"</p><p>That line is a joke, insofar as she sees the humour in it; but it is nonetheless a statement of intent. She really does believe she will go back to Pakistan – \"<em>inshallah</em>, soon\" – and replies like a seasoned politician when I ask which political party she'll join. \"I haven't chosen any party yet because people choose parties when they get older. When it's time I'll look and if I can't find one to join, I'll make another party.\"</p><p>She is, at first, similarly noncommittal about what she thinks of conversations around the burqa in the UK. \"I don't have a specific idea about that,\" she says. But quickly, it's clear she does. \"I believe it's a woman's right to decide what she wants to wear and if a woman can go to the beach and wear nothing, then why can't she also wear everything?\" Having said that, she doesn't think a woman should cover her face in court or in other places \"where it's necessary to show your identity. I don't cover my face because I want to show my identity.\"</p><figure data-media-id='gu-image-419334219'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161141316/Malala-laughing-010.jpg' alt='Malala laughing' width='460' height='276' class='gu-image'/><figcaption>Malala Yousafzai: her laughter takes many forms, from self-deprecating about why the Taliban feel threatened by her to giggly when talking about cricketers. Photograph: Christopher Thomond for the Guardian</figcaption></figure><p>This desire to be visible meant she wasn't at all happy, aged 12, when the BBC insisted that she use a pen name to write <a href=\"http://lubpak.com/archives/771\" title=\"\">her diary of a schoolgirl living under the Taliban</a>. \"I still think, why didn't I write as Malala? But the BBC was doing it for my security. They didn't want me to be killed for\" – and here she laughs – \"writing a diary for <a href=\"http://www.bbc.co.uk/urdu/\" title=\"\">BBC Urdu</a>. So, if you look at it in another way, they were really kind because they were thinking about my life.\" She&nbsp;clearly believes the decision was as&nbsp;misguided as it was well-intentioned. You can't campaign invisibly.</p><p>I try to draw her on the question of how she finds life in the UK, and what an average day is like. There is clearly something of culture shock – quite other than the fact that the girls in school don't see \"the real Malala\". She says the environment here is different to everything she knew before – the way the girls interact, their manner of gossip and play, are all unfamiliar. And everyone takes education for granted; school isn't the \"Aladdin's lamp … the doorway to a magical world\" as it was for the girls in Swat. For the moment, it seems her main concern is how many A grades she will get in her GCSEs next year, but \"the hard thing is now my life is very busy and I have so many responsibilities and duties that I need to fulfil.\"</p><p>Unlikely as a 16-year-old with a burning passion for reform and education might be, there is no doubt she is entirely genuine. In fact, the points at which I found myself raising an eyebrow at her book had nothing to do with extraordinary maturity or resolve but, rather, references to Justin Bieber and Twilight which seem forced in by someone trying to point out that in some ways she is \"a normal teenager\". When I bring up pop culture, it's the only time she appears to be on the back foot. She struggles to tell me names of Pakistani singers she likes, and finally comes up with \"the woman who sang Ek Bar Muskara Do\" (Smile Just Once) – the name she is looking for is Munni Begum, a classical singer who did a <a href=\"http://www.youtube.com/watch?v=FZfoZxHkU7w\" title=\"\">well-known cover</a> of that 1972 song, years before Malala was born. When I tell her the question isn't important she says that she does like some English-language songs, but \"most of them I can't understand. They say words and words and words, and I don't know what they're telling me. I like songs with a meaning.\"</p><p>It isn't that she doesn't have any interests beyond her education campaign; it's just that \"a normal teenager\" in Swat isn't defined by Justin Bieber and Twilight. If you really want to get her animated, talk about the one subject that can make almost any Pakistani turn into a bit of a teenager: cricket. She follows it closely on TV (which isn't unusual for girls in Pakistan), and also plays (which is). When she sees that I am interested in talking to her about the game everything in her poised manner changes. Within seconds she's calling out \"Howzat!\" and \"Siiiiiix!\" and showing me the deficiencies of her bowling action (she's a wrist spinner, though she prefers to bat). When I mention the <a href=\"http://bhamladies.play-cricket.com/home/home.asp\" title=\"\">Birmingham women's cricket club</a> she says: \"Yeah, I would like to join them.\"</p><figure data-media-id='gu-image-419334220'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161499448/Malala-Amnesty-award-010.jpg' alt='Malala Amnesty award' width='460' height='276' class='gu-image'/><figcaption>Speaking in Dublin in September after receiving the Amnesty International ambassador of conscience award. Photograph: Aidan Crawley/EPA</figcaption></figure><p>She is so entirely sparkling and alive, with no sign of the Taliban or education or responsibilities intruding on her memories of playing cricket on the rooftop of her house with the mountains as backdrop, that I wish I could take her to Lord's instead of plying her with questions. Does it get lonely, knowing there is no one else in the world who has had the same experience as her? I&nbsp;don't just mean being shot by the Taliban, which is a tragically common experience, but the attention that followed. It's the only time she doesn't understand what I am asking her. I explain and she says: \"When someone tells me about Malala, the girl who was shot by the Taliban – that's my definition for her – I don't think she's me. Now I don't even feel as if I was shot. Even my life in Swat feels like a part of history or a movie I watched. Things change. God has given us a brain and a heart which tell us how to live.\"</p><p>The interview ends soon after and the photographer is in the middle of taking pictures when the door opens and her father, who had left halfway through the interview, walks in with a group made up mostly of men. At their head is <a href=\"http://en.wikipedia.org/wiki/Chaudhry_Abdul_Majeed\" title=\"\">Chaudhry Abdul Majeed</a>, the prime minister of Azad Jammu and Kashmir. Photographs are taken, everyone sits down, and the prime minister starts talking – about what I already can't remember. He is still talking when I leave the room, and still talking when I&nbsp;turn around for my last glimpse of Malala: she is sitting silently, stoically, being talked at. The girl who shouted \"Howzat!\" has disappeared and in her place is Malala, the girl who was shot by the Taliban.</p><p><em>I Am Malala: The Girl Who Stood Up For Education and Was Shot By The Taliban by Malala Yousafzai and Christina Lamb, is published by Wiedenfeld &amp; Nicolson at £18.99.</em></p><!-- Guardian Watermark: internal-code/content/419276743|2013-10-14T15:55:37Z|9a90bbc403d4ff8aed27d269c93d615db6a6f579 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-08T08:08:06Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160684210/Malala-Yousafzai-005.jpg",
+        "standfirst":"The Pakistani schoolgirl became a global inspiration after surviving an assassination attempt by the Taliban. In an exclusive interview, she talks about the man who tried to kill her, life in Britain and why she won't give up campaigning",
+        "shortUrl":"http://gu.com/p/3jbym",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160684210/Malala-Yousafzai-005.jpg",
+        "wordcount":"2286",
+        "commentable":"true",
+        "internalContentCode":"419276743",
+        "allowUgc":"false",
+        "internalOctopusCode":"8154482",
+        "isPremoderated":"false",
+        "byline":"Kamila Shamsie",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-08",
+        "internalPageCode":"1976908",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T18:00:00Z"
+      },
+      "tags":[{
+        "id":"world/malala-yousafzai",
+        "type":"keyword",
+        "webTitle":"Malala Yousafzai",
+        "webUrl":"http://www.theguardian.com/world/malala-yousafzai",
+        "apiUrl":"http://content.guardianapis.com/world/malala-yousafzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/taliban",
+        "type":"keyword",
+        "webTitle":"Taliban",
+        "webUrl":"http://www.theguardian.com/world/taliban",
+        "apiUrl":"http://content.guardianapis.com/world/taliban",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"profile/kamilashamsie",
+        "type":"contributor",
+        "webTitle":"Kamila Shamsie",
+        "webUrl":"http://www.theguardian.com/profile/kamilashamsie",
+        "apiUrl":"http://content.guardianapis.com/profile/kamilashamsie",
+        "bio":"<p>Kamila Shamsie is the author of five novels, including Burnt Shadows which was shortlisted for the Orange Prize for Fiction, and has been translated into over 20 languages. She has also written a work of non-fiction, Offence: The Muslim Case.   A trustee of Free Word and English Pen, she grew up in Karachi and now lives in London</p>",
+        "r2ContributorId":"22950",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/19/1313769345076/Kamila_Shamsie.jpg",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419334215",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160679417/Malala-Yousafzai-002.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"54",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160681016/Malala-Yousafzai-003.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"340",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160682660/Malala-Yousafzai-004.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"130",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160684210/Malala-Yousafzai-005.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"84",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160685726/Malala-Yousafzai-006.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"132",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160687338/Malala-Yousafzai-007.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"168",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160688895/Malala-Yousafzai-008.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"180",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160690590/Malala-Yousafzai-009.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"228",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160692194/Malala-Yousafzai-010.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"276",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160693868/Malala-Yousafzai-011.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"372",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160692194/Malala-Yousafzai-010.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"276",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419334216",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381160684210/Malala-Yousafzai-005.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala Yousafzai",
+            "height":"84",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: 'The real Malala is gone somewhere, and I can't find her.' Photograph: Christopher Thomond for the Guardian",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419334217",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161378559/Malala-in-hospital-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"University Hospitals Birmingham",
+            "altText":"Malala in hospital",
+            "height":"276",
+            "credit":"University Hospitals Birmingham/PA",
+            "caption":"The 15-year-old pictured at Queen Elizabeth hospital in Birmingham, to which she had been rushed for an operation. Photograph: University Hospitals Birmingham/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419334218",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161234140/Indian-schoolgirls-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Altaf Qadri",
+            "altText":"Indian schoolgirls",
+            "height":"276",
+            "credit":"Altaf Qadri/AP",
+            "caption":"Schoolgirls in New Delhi wear Malala masks as part of a campaign to win greater resources for education in India. Photograph: Altaf Qadri/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419334219",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161141316/Malala-laughing-010.jpg",
+          "typeData":{
+            "source":"Christopher Thomond for the Guardian",
+            "altText":"Malala laughing",
+            "height":"276",
+            "credit":"Christopher Thomond for the Guardian",
+            "caption":"Malala Yousafzai: her laughter takes many forms, from self-deprecating about why the Taliban feel threatened by her to giggly when talking about cricketers. Photograph: Christopher Thomond for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419334220",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/7/1381161499448/Malala-Amnesty-award-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Aidan Crawley",
+            "altText":"Malala Amnesty award",
+            "height":"276",
+            "credit":"Aidan Crawley/EPA",
+            "caption":"Speaking in Dublin in September after receiving the Amnesty International ambassador of conscience award. Photograph: Aidan Crawley/EPA",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    }]
+  }
+}

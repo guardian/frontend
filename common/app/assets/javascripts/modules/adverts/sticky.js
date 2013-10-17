@@ -30,6 +30,8 @@ define([
         var scrollTop = bonzo(document.body).scrollTop(),
             self = this;
 
+
+
         if(scrollTop > this.top) {
             common.requestAnimationFrame(function(){
                 self.setPosition.call(self, scrollTop);

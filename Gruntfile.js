@@ -31,7 +31,8 @@ module.exports = function (grunt) {
                     'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'static/target/compiled/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
                     'static/target/compiled/stylesheets/old-ie.head.identity.min.css': 'common/app/assets/stylesheets/old-ie.head.identity.scss',
-                    'static/target/compiled/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss'
+                    'static/target/compiled/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
+                    'static/target/compiled/stylesheets/webfonts.min.css': 'common/app/assets/stylesheets/webfonts.scss'
                 },
 
                 options: {
@@ -442,7 +443,14 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/discussion/*.spec.js']
             },
             article: {
-                src: ['integration-tests/casper/tests/article/*.spec.js']
+                src: [
+
+                ]
+            },
+            applications: {
+                src: [
+                    'integration-tests/casper/tests/applications/*.spec.js'
+                ]
             },
             front: {
                 src: ['integration-tests/casper/tests/front/*.js']

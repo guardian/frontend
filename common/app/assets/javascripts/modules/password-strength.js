@@ -28,8 +28,8 @@ define(["common", "bonzo", "bean"], function (common, bonzo, bean) {
             dom = {
                 element: el
             },
-            template = '<div class="password-strength-indicator ' + config.classes.indicator + ' score-null">' +
-                           '<div class="form-field__note form-field__note--below form-field__note--right password-strength ' + config.classes.label + ' h">' + config.text.label + '</div>' +
+            template = '<div class="password-strength-indicator ' + config.classes.indicator + ' score-null is-off">' +
+                           '<div class="form-field__note form-field__note--below form-field__note--right password-strength ' + config.classes.label + '">' + config.text.label + '</div>' +
                        '</div>',
             zxcvbn;
 
@@ -55,7 +55,7 @@ define(["common", "bonzo", "bean"], function (common, bonzo, bean) {
         this.checkCount = function(e) {
             if (dom.element.value.length >= config.minLength) {
                 active = true;
-                bonzo(dom.label).removeClass('h');
+                bonzo(dom.indicator).removeClass('is-off');
                 bean.off(dom.element, 'keyup.count');
             }
         };

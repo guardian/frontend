@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ ExecutionContexts, Logging }
+import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import net.liftweb.json.{ Serialization, NoTypeHints }
 import net.liftweb.json.Serialization.{ read, write }
 import play.api.mvc._
@@ -52,10 +52,13 @@ class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with imp
 
   override def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = super.async { request =>
 
-    if (withinAllowedTime(request) || Play.isTest)
+    if (withinAllowedTime(request) || Play.isTest) {
       f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
-    else
-      Future { authFailResult(request) }
+    }
+    else {
+       FaciaToolMetrics.ExpiredRequestCount.increment()
+       Future { authFailResult(request) }
+    }
   }
 
   def withinAllowedTime(request: Request[AnyContent]): Boolean =

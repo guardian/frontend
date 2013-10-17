@@ -15,7 +15,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
 
       HtmlUnit("/technology/askjack") { browser =>
         import browser._
-        val trails = $(".trailblock .trail, .lead-content")
+        val trails = $(".items .item")
         trails.length should be(20)
       }
 

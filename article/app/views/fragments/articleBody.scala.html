@@ -29,8 +29,7 @@
                     @if(!article.hasVideoAtTop) {
                         @if(article.hasMainVideo) {
                             @article.mainVideo.map{ mainVideo =>
-                                <video data-media-id="@mainVideo.id" class="gu-video" controls="controls"
-                                       poster="@mainVideo.largestVideo.flatMap(_.stillImageUrl).getOrElse("")">
+                                <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
                                     @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
                                         <source src="@url"></source>
                                     }
@@ -59,7 +58,7 @@
                         </div>
                     </div>
 
-                    @if(article.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                    @if(ArticleKeywordsSwitch.isSwitchedOn){
                         <div class="article__keywords" data-link-name="article keywords">
                             @fragments.keywordList(article.keywords)
                         </div>
@@ -84,9 +83,6 @@
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--bottom">
                                     <div class="js-mpu-lower" data-id="x07"></div>
-                                    @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
-                                        @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "hidden")
-                                    }
                                 </div>
                             </div>
                         </div>
