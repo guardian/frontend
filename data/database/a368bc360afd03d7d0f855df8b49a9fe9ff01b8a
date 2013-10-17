@@ -12,7 +12,7 @@
       "webUrl":"http://www.theguardian.com/world/2013/oct/03/thai-monarchy-lese-majesty-laws",
       "apiUrl":"http://content.guardianapis.com/world/2013/oct/03/thai-monarchy-lese-majesty-laws",
       "fields":{
-        "trailText":"Royal pardon for man jailed for lese-majesty offence comes days after appeals court overturns acquittals in two other cases",
+        "trailText":"<p>Royal pardon for man jailed for lese-majesty offence comes days after appeals court overturns acquittals in two other cases</p>",
         "headline":"Thai monarchy laws need reviewing, say critics pointing to recent cases",
         "hasStoryPackage":"false",
         "shortUrl":"http://gu.com/p/3j9cp",
@@ -79,6 +79,15 @@
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
       },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
         "id":"theguardian/mainsection/international",
         "type":"newspaper-book-section",
         "webTitle":"International",
@@ -96,9 +105,16 @@
         "sectionId":"news",
         "sectionName":"News",
         "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418982954",
+        "id":"gu-image-419334504",
         "relation":"main",
         "type":"image",
         "assets":[{
@@ -246,7 +262,7 @@
           }
         }]
       },{
-        "id":"gu-image-418982955",
+        "id":"gu-image-419334505",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{

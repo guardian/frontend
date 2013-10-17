@@ -267,16 +267,6 @@ module.exports = function (grunt) {
             compile: {
                 files: [{
                     expand: true,
-                    cwd: 'common/app/assets/images/',
-                    src: ['**/*.png'],
-                    dest: 'static/target/compiled/images/'
-                },{
-                    expand: true,
-                    cwd: 'static/target/generated/images/',
-                    src: ['**/*.{png,gif,jpg}'],
-                    dest: 'static/target/compiled/images/'
-                },{
-                    expand: true,
                     cwd: 'common/app/assets/images',
                     src: ['**/*.ico'],
                     dest: 'static/target/compiled/images'
@@ -574,6 +564,7 @@ module.exports = function (grunt) {
         'shell:webfontjson',
         'webfontjson',
         'shell:icons',
+        'imagemin:compile',
         'copy:compile',
         'hash'
     ]);

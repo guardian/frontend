@@ -154,6 +154,13 @@
         "sectionId":"theguardian",
         "sectionName":"From the Guardian",
         "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
       }],
       "elements":[],
       "references":[]

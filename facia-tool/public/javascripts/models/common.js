@@ -15,8 +15,8 @@ define([
             ],
             previewUrls: {
                 dev:  'http://localhost:9000',
-                prod: 'http://www.theguardian.com',
-                code: 'http://m.code.dev-theguardian.com'
+                code: 'http://m.code.dev-theguardian.com',
+                prod: 'http://www.theguardian.com'
             },
             filterTypes: {
                 section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },

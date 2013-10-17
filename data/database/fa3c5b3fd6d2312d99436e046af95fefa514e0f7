@@ -1,0 +1,1198 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/12/homs-syria-residents",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-12T00:04:00Z",
+      "webTitle":"Homs: a tale of two cities",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/12/homs-syria-residents",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/12/homs-syria-residents",
+      "fields":{
+        "trailText":"<p>Once seen as the capital of Syria's revolution, Homs is now caught in a vicious stalemate between regime and rebel forces. James Harkin visits a divided city, where kidnappings are rife and chemical disarmament  a low priority</p>",
+        "headline":"Homs: a tale of two cities",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jcgm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244006157/Homs-mosque-004.jpg",
+        "wordcount":"2689",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/arab-and-middle-east-protests",
+        "type":"keyword",
+        "webTitle":"Arab and Middle East unrest",
+        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
+        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/jamesharkin",
+        "type":"contributor",
+        "webTitle":"James Harkin",
+        "webUrl":"http://www.theguardian.com/profile/jamesharkin",
+        "apiUrl":"http://content.guardianapis.com/profile/jamesharkin",
+        "bio":"<p>James Harkin writes for the Guardian and the Financial Times. He is the author of a book based on his columns for the Guardian, <a href=\"http://www.amazon.co.uk/Big-Ideas-Essential-Latest-Thinking/dp/1843547104/ref=sr_1_1?ie=UTF8&amp;s=books&amp;q\">Big Ideas: The Essential Guide To The Latest Thinking</a>, <a href=\"http://www.amazon.co.uk/Cyburbia-Dangerous-Idea-Thats-Changing/dp/1408701146/ref=sr_1_5?ie=UTF8&amp;s=books&amp;qid=1227711421&amp;sr=8-5\">Cyburbia: The dangerous idea that's changing how we live and who we are</a>, and War Against All: The Struggle for Northern Syria, available on Kindle.</p>",
+        "rcsId":"GNL002799",
+        "r2ContributorId":"22553",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/12/5/1228480953379/_MG_0257.jpg",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/weekend/features2",
+        "type":"newspaper-book-section",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend/features2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend/features2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/weekend",
+        "type":"newspaper-book",
+        "webTitle":"Weekend",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419774563",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244012622/Homs-mosque-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":" ",
+            "altText":"Homs mosque",
+            "height":"276",
+            "credit":" /AFP/Getty Images",
+            "caption":"Khalid ibn al-Walid mosque in Homs, which was ­partially ­destroyed by government forces. Photograph: AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419774564",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244006157/Homs-mosque-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":" ",
+            "altText":"Homs mosque",
+            "height":"84",
+            "credit":" /AFP/Getty Images",
+            "caption":"Khalid ibn al-Walid mosque in Homs, which was ­partially ­destroyed by government forces. Photograph:  /AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419774565",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244335724/Abu-Ali--010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"James Harkin",
+            "altText":"Abu Ali ",
+            "height":"276",
+            "credit":"James Harkin/Guardian",
+            "caption":"Abu Ali at his home in an opposition area of Homs called Shammas; ­behind him is a bullet hole. Photograph: James Harkin for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419774566",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244587513/Homs-market-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"James Harkin",
+            "altText":"Homs market",
+            "height":"276",
+            "credit":"James Harkin/Guardian",
+            "caption":"A street market in Karm al-Shami, central Homs, last month. Photograph: James Harkin for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419774567",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244883869/Homs-site-of-three-deaths-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"James Harkin",
+            "altText":"Homs site of three deaths",
+            "height":"276",
+            "credit":"James Harkin/Guardian",
+            "caption":"The row of shops where French journalist Gilles Jacquier was killed; it is close to the site where Abu Ali’s nephew and his fiancee were killed by rebel rockets in May this year. Photograph: James Harkin for the Guardian",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/2013/oct/11/syrian-rebels-accused-killing-civilians-latakia",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-11T04:57:06Z",
+      "webTitle":"Syrian rebels accused of killing hundreds of civilians",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/11/syrian-rebels-accused-killing-civilians-latakia",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/11/syrian-rebels-accused-killing-civilians-latakia",
+      "fields":{
+        "trailText":"Human Rights Watch says militant groups slaughtered villagers and took others hostage in attacks on Latakia in August",
+        "headline":"Syrian rebels accused of killing hundreds of civilians",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jf3f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381467176799/Scott-Carpenter.-001.jpg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/war-crimes",
+        "type":"keyword",
+        "webTitle":"War crimes",
+        "webUrl":"http://www.theguardian.com/law/war-crimes",
+        "apiUrl":"http://content.guardianapis.com/law/war-crimes",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bashar-al-assad",
+        "type":"keyword",
+        "webTitle":"Bashar al-Assad",
+        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
+        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/al-qaida",
+        "type":"keyword",
+        "webTitle":"Al-Qaida",
+        "webUrl":"http://www.theguardian.com/world/al-qaida",
+        "apiUrl":"http://content.guardianapis.com/world/al-qaida",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jonathansteele",
+        "type":"contributor",
+        "webTitle":"Jonathan Steele",
+        "webUrl":"http://www.theguardian.com/profile/jonathansteele",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathansteele",
+        "bio":"<p>Jonathan Steele is a Guardian columnist, roving foreign correspondent and author. Since 9/11 he has reported from Afghanistan and Iraq as well as on the Israeli/Palestinian conflict. His new book is Ghosts of Afghanistan</p>",
+        "rcsId":"GNL004679",
+        "r2ContributorId":"15908",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_steele_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"world/2013/oct/11/syrian-rebels-accused-of-crimes-against-humanity",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-11T08:37:16Z",
+      "webTitle":"Syrian rebels accused of crimes against humanity",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/11/syrian-rebels-accused-of-crimes-against-humanity",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/11/syrian-rebels-accused-of-crimes-against-humanity",
+      "fields":{
+        "trailText":"&bull; Human Rights Watch documents execution of Alawites by rebels<br />&bull; Chemical weapons inspectors call for temporary ceasefires<br />&bull; Egypt condemns US decision to cut military aid",
+        "headline":"Syrian rebels accused of crimes against humanity",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jf46",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381480283892/042f2ea6-23cd-4fad-bc12-a2a601b72f89-140x84.jpeg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middle-east-live",
+        "type":"blog",
+        "webTitle":"Middle East Live",
+        "webUrl":"http://www.theguardian.com/world/middle-east-live",
+        "apiUrl":"http://content.guardianapis.com/world/middle-east-live",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bashar-al-assad",
+        "type":"keyword",
+        "webTitle":"Bashar al-Assad",
+        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
+        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/war-crimes",
+        "type":"keyword",
+        "webTitle":"War crimes",
+        "webUrl":"http://www.theguardian.com/law/war-crimes",
+        "apiUrl":"http://content.guardianapis.com/law/war-crimes",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/chemical-weapons",
+        "type":"keyword",
+        "webTitle":"Chemical weapons",
+        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/arab-and-middle-east-protests",
+        "type":"keyword",
+        "webTitle":"Arab and Middle East unrest",
+        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
+        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/egypt",
+        "type":"keyword",
+        "webTitle":"Egypt",
+        "webUrl":"http://www.theguardian.com/world/egypt",
+        "apiUrl":"http://content.guardianapis.com/world/egypt",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/libya",
+        "type":"keyword",
+        "webTitle":"Libya",
+        "webUrl":"http://www.theguardian.com/world/libya",
+        "apiUrl":"http://content.guardianapis.com/world/libya",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.theguardian.com/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/matthewweaver",
+        "type":"contributor",
+        "webTitle":"Matthew Weaver",
+        "webUrl":"http://www.theguardian.com/profile/matthewweaver",
+        "apiUrl":"http://content.guardianapis.com/profile/matthewweaver",
+        "bio":"<p>Matthew Weaver is a reporter on <br /><a href=\"http://www.guardian.co.uk\">guardian.co.uk</a>. He received the digital editorial individual award at the <a href=\"http://www.ukaop.org.uk/news/2010aopawardwinners2131.html\">AOP awards 2010</a>. Before joining the Guardian website in 2001 he was news editor of the architecture magazine Building Design. You can follow him on Twitter <a href=\"http://twitter.com/matthew_weaver\">@matthew_weaver</a></p>",
+        "rcsId":"GNL003482",
+        "r2ContributorId":"16107",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/matthew_weaver_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/guardian-readers",
+        "type":"contributor",
+        "webTitle":"Guardian readers",
+        "webUrl":"http://www.theguardian.com/profile/guardian-readers",
+        "apiUrl":"http://content.guardianapis.com/profile/guardian-readers",
+        "bio":"<p>The Guardian readers contributor tag is applied to any content that is solely or partly created by you, our readers. It includes projects, galleries and stories involving data, photography, perspectives and more. Thank you for your ongoing inspiration and participation</p>",
+        "r2ContributorId":"35710",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"world/2013/oct/12/homs-syria-residents",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-12T00:04:00Z",
+      "webTitle":"Homs: a tale of two cities",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/12/homs-syria-residents",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/12/homs-syria-residents",
+      "fields":{
+        "trailText":"<p>Once seen as the capital of Syria's revolution, Homs is now caught in a vicious stalemate between regime and rebel forces. James Harkin visits a divided city, where kidnappings are rife and chemical disarmament  a low priority</p>",
+        "headline":"Homs: a tale of two cities",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jcgm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244006157/Homs-mosque-004.jpg",
+        "wordcount":"2689",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/arab-and-middle-east-protests",
+        "type":"keyword",
+        "webTitle":"Arab and Middle East unrest",
+        "webUrl":"http://www.theguardian.com/world/arab-and-middle-east-protests",
+        "apiUrl":"http://content.guardianapis.com/world/arab-and-middle-east-protests",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/jamesharkin",
+        "type":"contributor",
+        "webTitle":"James Harkin",
+        "webUrl":"http://www.theguardian.com/profile/jamesharkin",
+        "apiUrl":"http://content.guardianapis.com/profile/jamesharkin",
+        "bio":"<p>James Harkin writes for the Guardian and the Financial Times. He is the author of a book based on his columns for the Guardian, <a href=\"http://www.amazon.co.uk/Big-Ideas-Essential-Latest-Thinking/dp/1843547104/ref=sr_1_1?ie=UTF8&amp;s=books&amp;q\">Big Ideas: The Essential Guide To The Latest Thinking</a>, <a href=\"http://www.amazon.co.uk/Cyburbia-Dangerous-Idea-Thats-Changing/dp/1408701146/ref=sr_1_5?ie=UTF8&amp;s=books&amp;qid=1227711421&amp;sr=8-5\">Cyburbia: The dangerous idea that's changing how we live and who we are</a>, and War Against All: The Struggle for Northern Syria, available on Kindle.</p>",
+        "rcsId":"GNL002799",
+        "r2ContributorId":"22553",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/12/5/1228480953379/_MG_0257.jpg",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/weekend/features2",
+        "type":"newspaper-book-section",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend/features2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend/features2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/weekend",
+        "type":"newspaper-book",
+        "webTitle":"Weekend",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419774563",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244012622/Homs-mosque-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":" ",
+            "altText":"Homs mosque",
+            "height":"276",
+            "credit":" /AFP/Getty Images",
+            "caption":"Khalid ibn al-Walid mosque in Homs, which was ­partially ­destroyed by government forces. Photograph: AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419774564",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244006157/Homs-mosque-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":" ",
+            "altText":"Homs mosque",
+            "height":"84",
+            "credit":" /AFP/Getty Images",
+            "caption":"Khalid ibn al-Walid mosque in Homs, which was ­partially ­destroyed by government forces. Photograph:  /AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419774565",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244335724/Abu-Ali--010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"James Harkin",
+            "altText":"Abu Ali ",
+            "height":"276",
+            "credit":"James Harkin/Guardian",
+            "caption":"Abu Ali at his home in an opposition area of Homs called Shammas; ­behind him is a bullet hole. Photograph: James Harkin for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419774566",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244587513/Homs-market-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"James Harkin",
+            "altText":"Homs market",
+            "height":"276",
+            "credit":"James Harkin/Guardian",
+            "caption":"A street market in Karm al-Shami, central Homs, last month. Photograph: James Harkin for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419774567",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381244883869/Homs-site-of-three-deaths-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"James Harkin",
+            "altText":"Homs site of three deaths",
+            "height":"276",
+            "credit":"James Harkin/Guardian",
+            "caption":"The row of shops where French journalist Gilles Jacquier was killed; it is close to the site where Abu Ali’s nephew and his fiancee were killed by rebel rockets in May this year. Photograph: James Harkin for the Guardian",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/oct/14/red-cross-kidnapped-syria-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-14T11:20:03Z",
+      "webTitle":"Red Cross calls for release of staff kidnapped in Syria - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/oct/14/red-cross-kidnapped-syria-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/oct/14/red-cross-kidnapped-syria-video",
+      "fields":{
+        "trailText":"<p>Magne Barth, the head of the International Committee of the Red Cross in Syria, calls for the release of seven abducted Red Cross workers</p>",
+        "headline":"Red Cross calls for release of staff kidnapped in Syria - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jgjc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748160472/Red-Cross-ICRC-aid-worker-006.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/international-committee-of-the-red-cross-icrc",
+        "type":"keyword",
+        "webTitle":"International Committee of the Red Cross (ICRC)",
+        "webUrl":"http://www.theguardian.com/world/international-committee-of-the-red-cross-icrc",
+        "apiUrl":"http://content.guardianapis.com/world/international-committee-of-the-red-cross-icrc",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"global-development/aid",
+        "type":"keyword",
+        "webTitle":"Aid",
+        "webUrl":"http://www.theguardian.com/global-development/aid",
+        "apiUrl":"http://content.guardianapis.com/global-development/aid",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-419900311",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748154350/Red-Cross-ICRC-aid-worker-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"230",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748156926/Red-Cross-ICRC-aid-worker-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"54",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748158180/Red-Cross-ICRC-aid-worker-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"340",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748159336/Red-Cross-ICRC-aid-worker-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"130",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748160472/Red-Cross-ICRC-aid-worker-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748162102/Red-Cross-ICRC-aid-worker-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"132",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748165714/Red-Cross-ICRC-aid-worker-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"168",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748167029/Red-Cross-ICRC-aid-worker-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"180",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748168428/Red-Cross-ICRC-aid-worker-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"228",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748169595/Red-Cross-ICRC-aid-worker-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"276",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748170808/Red-Cross-ICRC-aid-worker-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"372",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748172902/Red-Cross-ICRC-aid-worker-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"90",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748174158/Red-Cross-ICRC-aid-worker-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"225",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748175333/Red-Cross-ICRC-aid-worker-015.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748176566/Red-Cross-ICRC-aid-worker-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014RedCross-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014RedCross_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014RedCross_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/14/131014RedCross/131014RedCross.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        }]
+      },{
+        "id":"gu-image-419902304",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/14/1381748160472/Red-Cross-ICRC-aid-worker-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Red Cross (ICRC) aid workers in Syria",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"Red Cross (ICRC) aid workers in Syria Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/13/seven-red-cross-workers-kidnapped-syria",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-13T17:39:52Z",
+      "webTitle":"Seven Red Cross workers kidnapped by gunmen in northern Syria",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/13/seven-red-cross-workers-kidnapped-syria",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/13/seven-red-cross-workers-kidnapped-syria",
+      "fields":{
+        "trailText":"<p>Abduction of six International Committee of the Red Cross workers and one volunteer  took place in Idlib province</p>",
+        "headline":"Seven Red Cross workers kidnapped by gunmen in northern Syria",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jga7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381685309904/International-Committee-o-006.jpg",
+        "wordcount":"226",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/international-committee-of-the-red-cross-icrc",
+        "type":"keyword",
+        "webTitle":"International Committee of the Red Cross (ICRC)",
+        "webUrl":"http://www.theguardian.com/world/international-committee-of-the-red-cross-icrc",
+        "apiUrl":"http://content.guardianapis.com/world/international-committee-of-the-red-cross-icrc",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bashar-al-assad",
+        "type":"keyword",
+        "webTitle":"Bashar al-Assad",
+        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
+        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419903442",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381685309904/International-Committee-o-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Shah Marai",
+            "altText":"International Committee of the Red Cross vehicle",
+            "height":"84",
+            "credit":"Shah Marai/AFP/Getty Images",
+            "caption":"Gunman kidnapped a team from the International Committee of the Red Cross after stopping their convoy in northern Syria. Photograph: Shah Marai/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-419900311",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014RedCross-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014RedCross_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014RedCross_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/14/131014RedCross/131014RedCross.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014RedCross_8192533.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014RedCross_8192533.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
