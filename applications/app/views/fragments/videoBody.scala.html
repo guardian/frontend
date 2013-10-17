@@ -24,7 +24,16 @@
                             @video.encodings.map{ encoding =>
                                 <source src="@encoding.url" />
                             }
-                            Your browser does not support the video tag.
+
+                            @video.encodings.find(_.format == "video/mp4").map{ encoding =>
+                                <!-- DewTube - By Rodolphe Rimelé - Licence: CC -->
+                                <object type="application/x-shockwave-flash" data="@Static("flash/dewtube.swf")" width="620" height="350">
+                                    <param name="allowFullScreen" value="true" />
+                                    <param name="movie" value="@Static("flash/dewtube.swf")" />
+                                    <param name="flashvars" value="movie=@encoding.url&amp;width=620&amp;height=350" />
+                                </object>
+                            }
+                            Sorry, your browser is unable to play this video.
                         </video>
                     </div>
 
