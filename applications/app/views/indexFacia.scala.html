@@ -1,6 +1,8 @@
 @(index: services.IndexPage)(implicit request: RequestHeader)
 
-@main(index.page, Switches.all){ }{
+@main(index.page, Switches.all){
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/facia.min.css")" />
+}{
     <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
 
         @fragments.collections.container(index.page, Config("uk/" + index.page.id + "/regular-stories", None, Some(index.page.webTitle)), Collection(index.trails, None), Container(containerType = "news", tone = VisualTone(index.trails.head)), containerIndex = 0)

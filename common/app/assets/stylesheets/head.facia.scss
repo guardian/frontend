@@ -32,6 +32,7 @@
    ========================================================================== */
 
 @import "layout/_grid-system";
+    @include grid-system;
 @import "layout/_layout";
 
 
