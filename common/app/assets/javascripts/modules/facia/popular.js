@@ -2,10 +2,10 @@ define([
     'common',
     'ajax',
     'bonzo',
-    'modules/facia/relativise-timestamp',
+    'modules/relativedates',
     'modules/facia/items-show-more',
     'modules/facia/image-upgrade'
-], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore, ImageUpgrade) {
+], function (common, ajax, bonzo, relativeDates, ItemsShowMore, ImageUpgrade) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -59,9 +59,6 @@ define([
                         var $item = bonzo(bonzo.create(
                             itemTmpl(trail)
                         ));
-                        // relativise timestamp
-                        new RelativiseTimestamp(common.$g('.item__timestamp', $item))
-                            .relativise();
 
                         // only show images for the first 3 items
                         if (index < 3 && trail.mainPicture) {
@@ -82,6 +79,8 @@ define([
                     // add show more button
                     new ItemsShowMore($items[0])
                         .addShowMore();
+                    // relativise timestamps
+                    relativeDates.init($items[0]);
                 },
                 function(req) {
                     common.mediator.emit(

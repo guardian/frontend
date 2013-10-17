@@ -2,7 +2,39 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
 
     describe('Popular', function() {
 
-        var server;
+        var server,
+            response = JSON.stringify({
+                fullTrails: [
+                    {
+                        headline: 'A Headline',
+                        trailText: 'Some trailtext',
+                        published: {
+                            datetime: 'foo',
+                            unix: 'foo'
+                        },
+                        mainPicture: {
+                            item: 'item.jpg',
+                            itemMain: 'item-main.jpg',
+                            itemMobile: 'item-mobile.jpg',
+                            itemMainMobile: 'item-main-mobile.jpg'
+                        }
+                    },
+                    {
+                        headline: 'Another Headline',
+                        trailText: 'Some other trailtext',
+                        published: {
+                            datetime: 'bar',
+                            unix: 'bar'
+                        },
+                        mainPicture: {
+                            item: 'item-2.jpg',
+                            itemMain: 'item-main-2.jpg',
+                            itemMobile: 'item-mobile-2.jpg',
+                            itemMainMobile: 'item-main-mobile-2.jpg'
+                        }
+                    }
+                ]
+            });
 
         ajax.init({
             page: {
@@ -27,26 +59,57 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
         });
 
         it('should render component', function() {
-            server.respondWith([200, {}, JSON.stringify({
-                fullTrails: [{
-                    headline: 'A Headline',
-                    trailText: 'Some trailtext',
-                    published: {
-                        datetime: 'foo',
-                        unix: 'foo'
-                    },
-                    mainPicture: {
-                        item: 'item.jpg',
-                        itemMain: 'item-main.jpg',
-                        itemMobile: 'item-mobile.jpg',
-                        itemMainMobile: 'item-main-mobile.jpg'
-                    }
-                }]
-            })]);
+            server.respondWith([200, {}, response]);
             popular.render({});
-            expect(common.$g('.collection-popular').length).toEqual(1);
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'Popular collection not rendered', 100);
         });
 
+        it('should call correct most-read endpoint', function() {
+            var section = 'sport';
+            server.respondWith('/most-read/' + section + '.json?_edition=UK', [200, {}, response]);
+            popular.render({
+                page: {
+                    section: section
+                }
+            });
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'Popular collection not rendered', 100);
+        });
+
+        it('first three items should have an image', function() {
+            server.respondWith([200, {}, response]);
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'Popular collection not rendered', 100);
+
+            runs(function() {
+                common.$g('.item:nth-child(-n+3)').each(function(item) {
+                    expect(bonzo(item).hasClass('item--image-upgraded')).toBeTruthy();
+                });
+            });
+        });
+
+//        it('dates should be relativised', function() {
+//            server.respondWith([200, {}, response]);
+//            popular.render({});
+//
+//            waitsFor(function() {
+//                return common.$g('.collection--popular').length;
+//            }, 'Popular collection not rendered', 100);
+//
+//            runs(function() {
+//                common.$g('.timestamp__text').each(function(item) {
+//                    expect(bonzo(item).hasClass('item--image-upgraded')).toBeTruthy();
+//                });
+//            });
+//        });
     });
 
 });

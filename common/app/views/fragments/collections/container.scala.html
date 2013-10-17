@@ -4,7 +4,7 @@
     <section class="collection collection--@style.className @if(style.containerType != "news"){js-collection--display-toggle} collection--@style.containerType tone-@style.tone"
              data-link-name="block | @config.id"
              data-id="@config.id",
-             data-type="@config.containerType">
+             data-type="@style.containerType">
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
             @if(title.nonEmpty) {
