@@ -22,14 +22,6 @@ GET        /most-read/expandable/*path                                          
 GET        /most-read/*path.json                                                                            controllers.MostPopularController.renderJson(path)
 GET        /most-read/*path                                                                                 controllers.MostPopularController.render(path)
 
-GET        /most-read-facebook                                                                              controllers.MostPopularFromFacebookController.render(path = "")
-GET        /most-read-facebook.json                                                                         controllers.MostPopularFromFacebookController.render(path = "")
-GET        /most-read-facebook/*path.json                                                                   controllers.MostPopularFromFacebookController.render(path)
-GET        /most-read-facebook/*path                                                                        controllers.MostPopularFromFacebookController.renderJson(path)
-GET        /most-read-facebook/card.json                                                                    controllers.MostPopularFromFacebookController.renderCard()
-GET        /most-read/expandable-facebook/*path.json                                                        controllers.MostPopularFromFacebookController.renderExpandableJson(path)
-GET        /most-read/expandable-facebook/*path                                                             controllers.MostPopularFromFacebookController.renderExpandable(path)
-
 GET        /top-stories                                                                                     controllers.TopStoriesController.renderTopStories()
 GET        /top-stories.json                                                                                controllers.TopStoriesController.renderTopStoriesJson()
 GET        /top-stories/trails                                                                              controllers.TopStoriesController.renderTrails()

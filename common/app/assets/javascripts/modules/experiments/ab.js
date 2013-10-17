@@ -5,7 +5,6 @@ define([
     //Current tests
     'modules/experiments/tests/aa',
     'modules/experiments/tests/live-blog-show-more',
-    'modules/experiments/tests/most-popular-from-facebook',
     'modules/experiments/tests/ultimate-paragraph-spacing'
 ], function (
     common,
@@ -13,14 +12,12 @@ define([
 
     Aa,
     LiveBlogShowMore,
-    MostPopularFromFacebook,
     UltimateParagraphSpacing
     ) {
 
     var TESTS = [
             new Aa(),
             new LiveBlogShowMore(),
-            new MostPopularFromFacebook(),
             new UltimateParagraphSpacing()
         ],
         participationsKey = 'gu.ab.participations';

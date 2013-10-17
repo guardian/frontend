@@ -188,10 +188,6 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
-  val ABMostPopularFromFacebook = Switch("A/B Tests", "ab-most-popular-from-facebook",
-    "If this is switched on an AB test runs to trial presenting visitors from Facebook with Most Popular from Facebook",
-    safeState = Off)
-
   val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
     "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
     safeState = Off)
@@ -264,7 +260,6 @@ object Switches extends Collections {
     AdSlotImpressionStatsSwitch,
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
-    ABMostPopularFromFacebook,
     ABUltimateParagraphSpacing,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
