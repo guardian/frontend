@@ -7,7 +7,7 @@ import org.scalatest.FlatSpec
 
 class SimpleAdvertTest extends FlatSpec with ShouldMatchers {
   
-  val advertUrl = "/commercial/jobs"
+  val advertUrl = "jobs"
 
   "Simple Advert Controller" should "200 when an advert is requested" in Fake {
     val result = controllers.commercial.SimpleAdvert.render(advertUrl)(TestRequest())
