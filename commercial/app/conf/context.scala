@@ -1,16 +1,16 @@
 package conf
 
 import common.Metrics
-import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
-import com.gu.management.play.{ Management => GuManagement }
+import com.gu.management.{PropertiesPage, StatusPage, ManifestPage}
+import com.gu.management.play.{Management => GuManagement}
 import com.gu.management.logback.LogbackLevelPage
-import play.api.{ Application => PlayApp }
+import play.api.{Application => PlayApp}
 
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-commercial"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.coreNavigation
+  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.commercial
 
   lazy val pages = List(
     new ManifestPage,
@@ -18,7 +18,7 @@ object Management extends GuManagement {
       "/commercial/travel/offers"
     ),
     StatusPage(applicationName, metrics),
-    new PropertiesPage(Configuration.toString),
+    new PropertiesPage(Configuration.toString()),
     new LogbackLevelPage(applicationName)
   )
 }

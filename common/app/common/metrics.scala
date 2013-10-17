@@ -328,4 +328,5 @@ object Metrics {
   lazy val coreNavigation = CoreNavivationMetrics.all
   lazy val front = FrontMetrics.all
   lazy val football = FootballMetrics.all
+  lazy val commercial = CommercialMetrics.all
 }

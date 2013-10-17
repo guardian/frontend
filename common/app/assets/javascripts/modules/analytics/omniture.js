@@ -156,10 +156,6 @@ define([
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
 
-            // NB: only needs to be in while we're serving both old fronts and new facia
-            var propValue = ((config.page.isFacia) ? 'Facia' : 'Fronts') + '-application';
-            s.prop69 = s.eVar55 = propValue;
-
             s.prop65    = config.page.headline || '';
 
             s.prop67    = "nextgen-served";
