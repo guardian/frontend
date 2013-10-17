@@ -68,19 +68,16 @@
 }
 .card__meta {
     min-height: gs-height(1);
-    @include fs-data(2);
-    @include box-sizing(border-box);
 
-    .relative-timestamp {
+    .dateline {
         float: left;
-        color: $c-neutral2;
         position: relative;
-        padding: 0 $gs-gutter/2 0 16px;
+        padding: 0 $gs-gutter/2 0 18px;
         min-width: gs-span(1) - 16;
 
         i {
             position: absolute;
-            top: 0;
+            top: -1px;
             left: 0;
         }
     }
