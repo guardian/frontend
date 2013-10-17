@@ -34,7 +34,6 @@
             overflow: hidden;
         }
         // stylings for begining and end of rows
-        .item:first-child,
         .item:nth-child(4n+4) {
             @include row-start;
         }

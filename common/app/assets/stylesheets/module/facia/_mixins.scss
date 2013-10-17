@@ -132,6 +132,7 @@
     width: gs-span(12);
     min-height: gs-height(8);
     float: left;
+    border-left: none;
     &.item--image-upgraded {
         width: gs-span(4);
         padding-left: gs-span(8) + $gs-gutter;
