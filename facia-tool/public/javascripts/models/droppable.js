@@ -63,9 +63,7 @@ define([
 
                     event.preventDefault();
 
-                    if (!targetList.articles || !targetList.underDrag) {
-                        return;
-                    }
+                    if (!targetList.articles || !targetList.underDrag) { return; }
 
                     targetList.underDrag(false);
                     _.each(targetList.articles(), function(item) {
@@ -99,6 +97,11 @@ define([
 
                     item = common.util.urlAbsPath(item);
 
+                    if (!item) { 
+                        alertBadContent();
+                        return;
+                    }
+
                     if (targetList.collection) {
                         targetList.collection.state.loadIsPending(true);
                     }
@@ -115,7 +118,7 @@ define([
                             targetList.collection.state.loadIsPending(false);
                         }
                         targetList.articles.remove(article);
-                        window.alert('Sorry, that content wasn\'t recognised');
+                        alertBadContent();
                     })
                     .done(function() {
                         ophanApi.decorateItems([article]);
@@ -171,6 +174,10 @@ define([
             }
         };
     };
+
+    function alertBadContent() {
+        window.alert('Sorry, that content wasn\'t recognised')
+    }
 
     function saveChanges(method, collection, data) {
         authedAjax({
