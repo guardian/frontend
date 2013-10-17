@@ -67,7 +67,7 @@ define([
 
             function hasImageSibling(el) {
                 var prevSibling = el.previousElementSibling;
-                if (prevSibling.length) {
+                if (prevSibling) {
                     return (/img-extended/).test(prevSibling.className);
                 }
                 return false;
