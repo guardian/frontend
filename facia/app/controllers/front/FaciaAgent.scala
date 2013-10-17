@@ -75,7 +75,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
     } yield Collection(collectionList ++ contentApiList, displayName)
   }
 
-  def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean) = {
+  def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
     val curatedList: Future[List[Content]] = parseResponse(response, edition, id)
     //Potential to fail the chain if we are warmed up
     if (isWarmedUp)
