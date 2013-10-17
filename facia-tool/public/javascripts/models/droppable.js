@@ -177,7 +177,9 @@ define([
             url: common.config.apiBase + '/collection/' + collection.id,
             type: method,
             data: JSON.stringify(data)
-        }).then(function() {
+        }).fail(function(xhr) {
+            window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
+        }).always(function() {
             collection.load();
         });
     };
