@@ -27,7 +27,7 @@
                 @extend .i-comment-#{$tone};
                 @if $svg-support {
                     .svg & {
-                        @extend .i-comment-#{$tone} !optional;
+                        @extend .svg-i-comment-#{$tone} !optional;
                     }
                 }
             }

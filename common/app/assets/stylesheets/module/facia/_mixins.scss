@@ -11,12 +11,12 @@
     }
 }
 @mixin row-start {
-    padding-left: 0;
-    border-left-style: none;
+    padding-left: 0 !important;
+    border-left-style: none !important;
     clear: left;
 }
 @mixin row-end {
-    padding-right: 0;
+    padding-right: 0 !important;
 }
 @mixin row($row-size, $first-row-size: $row-size) {
     // styling for first row
@@ -31,18 +31,17 @@
         @include row-end;
     }
 }
-@mixin card($with-image: false, $not-first-row: false) {
+@mixin card($with-image: false) {
+    min-height: gs-height(4) + $gs-baseline;
     @if $with-image {
-        min-height: gs-height(8);
-        .item__image-container,
-        &.item--no-image .item__standfirst {
-            display: block;
-        }
-    } @else {
-        min-height: gs-height(4) + $gs-baseline;
+        @include card-mobile;
     }
-    @if $not-first-row {
-        margin-top: 0;
+}
+@mixin card-image() {
+    min-height: gs-height(8);
+    .item__image-container,
+    &.item--no-image .item__standfirst {
+        display: block;
     }
 }
 @mixin card-mobile($with-image: false) {
@@ -50,10 +49,13 @@
         @include fs-headline(3, $size-only: true);
     }
     @if $with-image {
-        .item__image-container,
-        &.item--no-image .item__standfirst {
-            display: block;
-        }
+        @include card-mobile-image;
+    }
+}
+@mixin card-mobile-image() {
+    .item__image-container,
+    &.item--no-image .item__standfirst {
+        display: block;
     }
 }
 @mixin card-headline {
@@ -91,17 +93,20 @@
     .item__byline {
         @include fs-header(1, $size-only: true);
     }
-    @if $with-image {
-        &.item--image-upgraded {
-            min-height: gs-height(4);
-        }
-        .item__image-container {
-            display: block;
-        }
-    }
     .item__live-indicator {
         @include fs-data(1, true);
         top: -3px;
+    }
+    @if $with-image {
+        @include card-half-width-image;
+    }
+}
+@mixin card-half-width-image() {
+    &.item--image-upgraded {
+        min-height: gs-height(4);
+    }
+    .item__image-container {
+        display: block;
     }
 }
 @mixin card-double-width {
