@@ -12,7 +12,7 @@
       "webUrl":"http://www.theguardian.com/uk-news/the-northerner/2013/oct/04/foodie-nights-out-in-the-north",
       "apiUrl":"http://content.guardianapis.com/uk-news/the-northerner/2013/oct/04/foodie-nights-out-in-the-north",
       "fields":{
-        "trailText":"Food blogger and professional greedy guts <strong>Fay Nyberg</strong> on the Northern hotspots where fabulous food comes with a side order of entertainment",
+        "trailText":"<p>Food blogger and professional greedy guts <strong>Fay Nyberg</strong> on the Northern hotspots where fabulous food comes with a side order of entertainment</p>",
         "headline":"Foodie nights out: the street eats changing the North's kebab culture",
         "hasStoryPackage":"false",
         "shortUrl":"http://gu.com/p/3ja2v",
@@ -171,7 +171,7 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-419057740",
+        "id":"gu-image-419355110",
         "relation":"main",
         "type":"image",
         "assets":[{
@@ -284,7 +284,24 @@
           }
         }]
       },{
-        "id":"gu-image-419057741",
+        "id":"gu-image-419355111",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380883482466/Urban-Night-Feast-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Urban Night Feast",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Newcastle's Urban Night Feast: celebrating street food and the late-night feast.",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419355112",
         "relation":"body",
         "type":"image",
         "assets":[{
@@ -301,7 +318,7 @@
           }
         }]
       },{
-        "id":"gu-image-419057742",
+        "id":"gu-image-419355113",
         "relation":"body",
         "type":"image",
         "assets":[{
@@ -318,7 +335,7 @@
           }
         }]
       },{
-        "id":"gu-image-419057743",
+        "id":"gu-image-419355114",
         "relation":"body",
         "type":"image",
         "assets":[{
@@ -333,23 +350,6 @@
             "credit":"S Noble/PR",
             "caption":"The Boiler Shop Steamer. Photograph: S Noble",
             "width":"220"
-          }
-        }]
-      },{
-        "id":"gu-image-419057744",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380883482466/Urban-Night-Feast-003.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Urban Night Feast",
-            "height":"84",
-            "credit":"PR",
-            "caption":"Newcastle's Urban Night Feast: celebrating street food and the late-night feast.",
-            "width":"140"
           }
         }]
       }],
