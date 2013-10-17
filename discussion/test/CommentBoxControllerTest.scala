@@ -4,7 +4,7 @@ import concurrent.Future
 
 import discussion.model.{PrivateProfileFields, Profile}
 import discussion.DiscussionApi
-import discussion.AuthHeaders._
+import discussion.DiscussionHeaders._
 import controllers.CommentBoxController
 
 import org.scalatest.FlatSpec

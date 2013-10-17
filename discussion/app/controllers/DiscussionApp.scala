@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.Play._
-import discussion.DiscussionApi
+import discussion.{DiscussionHeaders, DiscussionApi}
 import play.api.{Plugin, Application}
 import conf.Configuration
 import scala.concurrent.Future
@@ -21,8 +21,11 @@ object DiscussionApp extends DiscussionDispatcher {
 
 class DiscussionApiPlugin(app: Application) extends DiscussionApi with Plugin{
   protected val apiRoot =   Configuration.discussion.apiRoot
+  private val guClientHeader: (String, String) = (DiscussionHeaders.guClient, Configuration.discussion.apiClientHeader)
 
   protected def GET(url: String, headers: (String, String)*): Future[Response] =
-    WS.url(url).withHeaders(headers:_*).withRequestTimeout(2000).get()
-
+      WS.url(url)
+        .withHeaders(headers: _*)
+        .withHeaders(guClientHeader)
+        .withRequestTimeout(2000).get()  //TODO put in properties file
 }

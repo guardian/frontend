@@ -70,7 +70,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
       s"Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/profile/me"
 
-    val authHeader = AuthHeaders.filterHeaders(headers).toSeq
+    val authHeader = DiscussionHeaders.filterHeaders(headers).toSeq
 
     getJsonOrError(apiUrl, onError, authHeader: _*) map {
       json =>
@@ -96,7 +96,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
   }
 }
 
-object AuthHeaders {
+object DiscussionHeaders {
+  val guClient = "GU-Client"
   val guIdToken = "GU-IdentityToken"
   val cookie = "Cookie"
   val all = Set(guIdToken, cookie)
