@@ -37,34 +37,26 @@ define([
         },
 
         showFrontFixtures: function(context) {
-            var prependTo,
-                table,
-                attachMethod;
-            if (context.querySelector('.facia-container')) {
-                // wrap the return sports stats component in an 'item'
-                prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
-                    attachMethod = 'append';
-                common.mediator.on('modules:footballfixtures:render', function() {
-                    var container = common.$g('.collection--news', context)
-                        .first()[0];
-                    // toggle class
-                    common.$g('.items', container)
-                        .removeClass('items--without-sport-stats')
-                        .addClass('items--with-sport-stats');
-                    // add it after the first item
-                    common.$g('.item:first-child', container)
-                        .after(prependTo);
-                });
-            } else {
-                prependTo = context.querySelector('.trailblock ul > li'),
-                    attachMethod = 'after';
-            }
+            // wrap the return sports stats component in an 'item'
+            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
+                table;
+            common.mediator.on('modules:footballfixtures:render', function() {
+                var container = common.$g('.collection--news', context)
+                    .first()[0];
+                // toggle class
+                common.$g('.items', container)
+                    .removeClass('items--without-sport-stats')
+                    .addClass('items--with-sport-stats');
+                // add it after the first item
+                common.$g('.item:first-child', container)
+                    .after(prependTo);
+            });
 
             if(!bonzo(prependTo).hasClass('footballfixtures-loaded')) {
                 bonzo(prependTo).addClass('footballfixtures-loaded');
                 table = new FootballFixtures({
                     prependTo: prependTo,
-                    attachMethod: attachMethod,
+                    attachMethod: 'append',
                     contextual: false,
                     expandable: true,
                     numVisible: 10
@@ -83,31 +75,23 @@ define([
                 if(title) { title.className = "js-hidden"; }
             });
 
-            var prependTo,
-                attachMethod;
-            if (context.querySelector('.facia-container')) {
-                // wrap the return sports stats component in an 'item'
-                prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
-                    attachMethod = 'append';
-                common.mediator.on('modules:footballfixtures:render', function() {
-                    var container = common.$g('.collection--news', context)
-                        .first()[0];
-                    // toggle class
-                    common.$g('.items', container)
-                        .removeClass('items--without-sport-stats')
-                        .addClass('items--with-sport-stats');
-                    // add it after the first item
-                    common.$g('.item:first-child', container)
-                        .after(prependTo);
-                });
-            } else {
-                prependTo = context.querySelector('.t2'),
-                    attachMethod = 'after';
-            }
+            // wrap the return sports stats component in an 'item'
+            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+            common.mediator.on('modules:footballfixtures:render', function() {
+                var container = common.$g('.collection--news', context)
+                    .first()[0];
+                // toggle class
+                common.$g('.items', container)
+                    .removeClass('items--without-sport-stats')
+                    .addClass('items--with-sport-stats');
+                // add it after the first item
+                common.$g('.item:first-child', container)
+                    .after(prependTo);
+            });
 
             var todaysFixtures = new FootballFixtures({
                 prependTo: prependTo,
-                attachMethod: attachMethod,
+                attachMethod: 'append',
                 competitions: [competition],
                 contextual: true,
                 expandable: false
@@ -120,40 +104,29 @@ define([
         },
 
         showTeamData: function(team, context) {
-            var prependTo, tablePrependTo,
-                attachMethod, tableAttachMethod;
-
-            if (context.querySelector('.facia-container')) {
-                // wrap the return sports stats component in an 'item'
-                prependTo = tablePrependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
-                    attachMethod = tableAttachMethod = 'append';
-                common.mediator.on('modules:footballfixtures:render', function() {
-                    var container = common.$g('.collection--news', context)
-                        .first()[0];
-                    // toggle class
-                    common.$g('.items', container)
-                        .removeClass('items--without-sport-stats')
-                        .addClass('items--with-sport-stats');
-                    // add it after the first item
-                    common.$g('.item:first-child', container)
-                        .after(prependTo);
-                });
-            } else {
-                prependTo = context.querySelector('.t2'),
-                    tablePrependTo = context.querySelector('.t3'),
-                    attachMethod = 'after',
-                    tableAttachMethod = 'before';
-            }
+            // wrap the return sports stats component in an 'item'
+            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+            common.mediator.on('modules:footballfixtures:render', function() {
+                var container = common.$g('.collection--news', context)
+                    .first()[0];
+                // toggle class
+                common.$g('.items', container)
+                    .removeClass('items--without-sport-stats')
+                    .addClass('items--with-sport-stats');
+                // add it after the first item
+                common.$g('.item:first-child', container)
+                    .after(prependTo);
+            });
             var fixtures = new FootballFixtures({
                 prependTo: prependTo,
-                attachMethod: attachMethod,
+                attachMethod: 'append',
                 path: '/football/api/teamfixtures/' + team + '.json',
                 expandable: false
             }).init();
 
             var table = new FootballTable({
-                prependTo: tablePrependTo,
-                attachMethod: tableAttachMethod,
+                prependTo: prependTo,
+                attachMethod: 'append',
                 path: '/football/api/teamtable/' + team + '.json'
             }).init();
         },
