@@ -1,6 +1,8 @@
 .collection--container {
-    @include mq(tablet) {
+    @include mq($to: desktop) {
         @include first-row(1);
+    }
+    @include mq(tablet) {
         .items {
             overflow: hidden;
         }

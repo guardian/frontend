@@ -2,11 +2,11 @@
     @include mq($to: tablet) {
         @include first-row(1);
         .item:first-child {
-            @include card($with-image: true);
+            @include card-mobile($with-image: true);
         }
         .item:nth-child(2),
         .item:nth-child(3) {
-            @include card;
+            @include card-mobile;
         }
         .item:nth-child(n + 4) {
             @include card-headline;
@@ -35,7 +35,7 @@
         .items {
             overflow: hidden;
         }
-        // stylings for beggining and end of rows
+        // stylings for begining and end of rows
         .item:first-child,
         .item:nth-child(4n+4) {
             @include row-start;
@@ -47,7 +47,6 @@
         }
         .item:first-child {
             @include card-triple-width;
-            float: left;
         }
         .item:nth-child(n+2) {
             @include card;
