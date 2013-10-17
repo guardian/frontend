@@ -23,9 +23,9 @@ module.exports = function (grunt) {
                     // head css must go where Play can find it from resources at runtime,
                     // Everything else goes into frontend-static bundling.
                     'common/conf/assets/head.min.css': 'common/app/assets/stylesheets/head.scss',
+                    'common/conf/assets/head.facia.min.css': 'common/app/assets/stylesheets/head.facia.scss',
                     'common/conf/assets/head.identity.min.css': 'common/app/assets/stylesheets/head.identity.scss',
                     'static/target/compiled/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
-                    'static/target/compiled/stylesheets/facia.min.css': 'common/app/assets/stylesheets/facia.scss',
                     'static/target/compiled/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
                     'static/target/compiled/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
@@ -41,6 +41,7 @@ module.exports = function (grunt) {
                     noCache: (isDev) ? false : true,
                     debugInfo: (isDev) ? true : false,
                     style: (isDev) ? 'nested' : 'compressed',
+                    sourcemap: (isDev) ? true : false,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
@@ -505,6 +506,7 @@ module.exports = function (grunt) {
             compile: [
                 'static/target',
                 'common/conf/assets/head.min.css',
+                'common/conf/assets/head.facia.min.css',
                 'common/conf/assets/head.identity.min.css',
                 'common/conf/assets/assets.map'
             ],

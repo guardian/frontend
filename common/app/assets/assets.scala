@@ -5,6 +5,7 @@ import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
 import conf.Configuration
+import collection.mutable.{ Map => MutableMap }
 
 case class Asset(path: String) {
   val asModulePath = path.replace(".js", "")
@@ -38,17 +39,30 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   def apply(path: String): Asset = lookup(path)
 
   object css {
-    // Reload head css on every access in DEV
-    def head = if (Play.current.mode == Mode.Dev) css() else memoizedCss
 
-    private def css(): String = {
-      val url = Configuration.environment.projectName match {
-        case "identity" => Play.classloader(Play.current).getResource("assets/head.identity.min.css")
-        case _ => Play.classloader(Play.current).getResource("assets/head.min.css")
+    def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
+
+    // A mutable map of 'project url' keys to 'css content' values
+    private val memoizedCss: MutableMap[java.net.URL, String] = MutableMap()
+
+    private def css(project: String): String = {
+
+      val suffix = project match {
+        case "facia" => "facia.min.css"
+        case "identity" => "identity.min.css"
+        case default => "min.css"
       }
-      IOUtils.toString(url)
+      val url = Play.classloader(Play.current).getResource(s"assets/head.$suffix")
+
+      // Reload head css on every access in DEV
+      if (Play.current.mode == Mode.Dev) {
+        memoizedCss.remove(url)
+      }
+
+      memoizedCss.getOrElseUpdate(url, {
+        IOUtils.toString(url)
+      })
     }
-    private lazy val memoizedCss: String = css()
 
     def oldIePath: String = Configuration.environment.projectName match {
       case "identity" => "stylesheets/old-ie.head.identity.min.css"
