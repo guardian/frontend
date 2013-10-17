@@ -44,6 +44,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     private def css(): String = {
       val url = Configuration.environment.projectName match {
         case "identity" => Play.classloader(Play.current).getResource("assets/head.identity.min.css")
+        case "facia" => Play.classloader(Play.current).getResource("assets/head.facia.min.css")
         case _ => Play.classloader(Play.current).getResource("assets/head.min.css")
       }
       IOUtils.toString(url)

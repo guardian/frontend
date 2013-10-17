@@ -1,7 +1,5 @@
 @(front: FrontPage, page: FaciaPage)(implicit request: RequestHeader)
 
-@main(front, Switches.all){
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/facia.min.css")" />
-}{
+@main(front, Switches.all){ }{
     @fragments.frontBody(front, page)
 }
