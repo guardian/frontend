@@ -1,7 +1,6 @@
 import common.{CommercialMetrics, Jobs}
 import model.commercial.travel.OffersAgent
-import play.api.{Application => PlayApp, Play, GlobalSettings}
-import play.api.Play.current
+import play.api.{Application => PlayApp, GlobalSettings}
 
 trait TravelOffersLifecycle extends GlobalSettings {
 
@@ -10,12 +9,10 @@ trait TravelOffersLifecycle extends GlobalSettings {
 
     Jobs.deschedule("TravelOffersRefreshJob")
 
+    OffersAgent.refresh()
+
     // fire every 15 mins
     Jobs.schedule("TravelOffersRefreshJob", "0 2/15 * * * ?", CommercialMetrics.TravelOffersLoadTimingMetric) {
-      OffersAgent.refresh()
-    }
-
-    if (Play.isTest) {
       OffersAgent.refresh()
     }
   }
