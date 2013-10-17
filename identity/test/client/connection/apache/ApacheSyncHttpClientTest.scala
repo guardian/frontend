@@ -2,7 +2,7 @@ package client.connection.apache
 
 import org.scalatest.path
 import org.scalatest.mock.MockitoSugar
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.apache.commons.httpclient.{NameValuePair, HttpException, HttpMethod, HttpClient}
 import org.mockito.Mockito._
 import java.io.IOException
@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext
 import client.connection.util.ExecutionContexts
 
 
-class ApacheSyncHttpClientTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class ApacheSyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
   val mockHttpClient = mock[HttpClient]
 

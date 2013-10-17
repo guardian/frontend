@@ -1,6 +1,6 @@
 package model.travel.service
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import scala.concurrent.{Await, Future}
 import common.ExecutionContexts
@@ -9,7 +9,7 @@ import model.commercial.travel.Offer
 import org.joda.time.DateTime
 import model.commercial.travel.OffersApi
 
-class OffersApiTest extends FlatSpec with ShouldMatchers with ExecutionContexts {
+class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
   val api = new OffersApi {
     val getOffersRequestBody = Future {

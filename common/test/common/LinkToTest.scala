@@ -1,11 +1,11 @@
 package common
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.Play
 import common.editions.Uk
 
-class LinkToTest extends FlatSpec with ShouldMatchers {
+class LinkToTest extends FlatSpec with Matchers {
 
   Play.unsafeApplication
 

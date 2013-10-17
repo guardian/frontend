@@ -1,11 +1,11 @@
 package test
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.libs.json.Json
 import discussion.model.Profile
 
-class ProfileTest extends FlatSpec with ShouldMatchers{
+class ProfileTest extends FlatSpec with Matchers{
 
   "Profile" should "parse JSON Profile with no optional fields" in{
     val jsonStr = """{"userProfile": {

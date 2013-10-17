@@ -1,11 +1,11 @@
 package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import collection.JavaConversions._
 import conf.{Switches, Configuration}
 
-class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Tag Pages trail size") {
 

@@ -3,9 +3,9 @@ package utils
 import org.scalatest.FunSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class RemoteAddressTest extends FunSuite with ShouldMatchers {
+class RemoteAddressTest extends FunSuite with Matchers {
   object TestRemoteAddress extends RemoteAddress
 
   val xFor = "X-Forwarded-For"
