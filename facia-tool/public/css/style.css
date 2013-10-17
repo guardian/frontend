@@ -115,19 +115,11 @@ input[type=text] {
 }
 
 .list-header__saving  { color: #d61d00; font-weight: bold; }
-.list-header__id      { display: none;}
 
 .list-header__role {
     font-style: italic;
     text-transform: lowercase;
     color: #666666;
-}
-
-.collection:hover .list-header__id {
-    display: block;
-    float: right;
-    color: #999999;
-    font-size: 12px;
 }
 
 .list-header__timings {
@@ -327,7 +319,7 @@ a.list-header__status__control:visited {
     display: none;
     position: absolute;
     top: 4px;
-    right: 13px;
+    right: 3px;
     background: #CCCCCC;
     width: 14px;
     height: 20px;
