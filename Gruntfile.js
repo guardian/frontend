@@ -276,6 +276,11 @@ module.exports = function (grunt) {
                     cwd: 'common/app/public/',
                     src: ['**/*'],
                     dest: 'static/target/compiled/'
+                },{
+                    expand: true,
+                    cwd: 'common/app/assets/flash',
+                    src: ['**/*.swf'],
+                    dest: 'static/target/compiled/flash'
                 }]
             }
         },

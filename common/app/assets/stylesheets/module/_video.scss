@@ -1,4 +1,5 @@
-video {
+video,
+object {
     max-width: 100%;
     height: auto;
     @include user-select;
@@ -8,7 +9,7 @@ video {
     margin-left: $gutter * -1;
     margin-right: $gutter * -1;
     margin-bottom: $gs-column-height;
-    background: #000;
+    background: #000000;
     text-align: center; // prevents poster from loading to left then centering
 }
 
