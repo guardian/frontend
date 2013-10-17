@@ -8,11 +8,11 @@ define([
 
     describe('Collection Display Toggle', function() {
 
-        var collectionDisplayToggle,
-            collection,
+        var collection,
             $collection,
             collectionId = 'uk/culture/regular-stories',
             storageId = 'collection-states',
+            // helper assertion method
             assertState = function($collection, state) {
                 var $button = common.$g('button', $collection[0]);
                 expect($collection.attr('data-toggle-state')).toBe(state === 'open' ? 'displayed' : 'hidden');
@@ -28,7 +28,6 @@ define([
                 '</section>'
             )[0];
             $collection = bonzo(collection);
-            collectionDisplayToggle = new CollectionDisplayToggle(collection);
         });
 
         afterEach(function(){
@@ -36,28 +35,36 @@ define([
         });
 
         it('should be able to initialise', function() {
+            var collectionDisplayToggle = new CollectionDisplayToggle(collection);
             expect(collectionDisplayToggle).toBeDefined();
         });
 
+        it('should delete old storage key', function() {
+            var oldStorageKey = 'gu.prefs.front-trailblocks';
+            window.localStorage.setItem(oldStorageKey, 'foo');
+            new CollectionDisplayToggle(collection);
+            expect(window.localStorage.getItem(oldStorageKey)).toBeNull();
+        });
+
         it('should add button to the beginning of the collection', function() {
-            collectionDisplayToggle.addToggle();
+            new CollectionDisplayToggle(collection).addToggle();
             expect(collection.childNodes[0].nodeName.toLowerCase()).toBe('button');
         });
 
         it('initial state should be open', function() {
-            collectionDisplayToggle.addToggle();
+            new CollectionDisplayToggle(collection).addToggle();
             assertState($collection, 'open');
         });
 
         it('should be able to close collection', function() {
-            collectionDisplayToggle.addToggle();
+            new CollectionDisplayToggle(collection).addToggle();
             // click button
             bean.fire(common.$g('button', collection)[0], 'click');
             assertState($collection, 'closed');
         });
 
         it('should store state as user preference', function() {
-            collectionDisplayToggle.addToggle();
+            new CollectionDisplayToggle(collection).addToggle();
             var button = common.$g('button', collection)[0];
             // click button
             bean.fire(button, 'click');
@@ -73,7 +80,7 @@ define([
             var prefs = {};
             prefs[collectionId] = 'closed';
             userPrefs.set(storageId, prefs);
-            collectionDisplayToggle.addToggle();
+            new CollectionDisplayToggle(collection).addToggle();
             assertState($collection, 'closed');
         });
 

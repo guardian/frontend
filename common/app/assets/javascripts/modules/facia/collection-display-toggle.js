@@ -38,6 +38,9 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
                 }
             };
 
+        // delete old key
+        userPrefs.remove('front-trailblocks');
+
         this.addToggle =  function () {
             // append toggle button
             _$collection
