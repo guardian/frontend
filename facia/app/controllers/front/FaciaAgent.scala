@@ -59,11 +59,15 @@ trait ParseConfig extends ExecutionContexts with Logging {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
-  def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
-    // get the running order from the apiwith
+  def requestCollection(id: String): Future[Response] = {
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
-    val response: Future[Response] = WS.url(collectionUrl).withRequestTimeout(2000).get()
+    WS.url(collectionUrl).withRequestTimeout(2000).get()
+  }
+
+  def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
+    // get the running order from the apiwith
+    val response = requestCollection(id)
     for {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
