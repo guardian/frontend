@@ -1,7 +1,7 @@
-@()(implicit request: RequestHeader)
+@(projectName: Option[String])(implicit request: RequestHeader)
 <!--[if (gt IE 8) | (IEMobile)]><!-->
 <style type="text/css">
-    @Html(Static.css.head)
+    @Html(Static.css.head(projectName))
 </style>
 <!--<![endif]-->
 <!--[if (lt IE 9) & (!IEMobile)]>
