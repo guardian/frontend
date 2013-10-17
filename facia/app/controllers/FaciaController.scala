@@ -48,8 +48,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Money",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -62,8 +61,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Comment is free",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -76,8 +74,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Business",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -90,8 +87,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -104,8 +100,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Film",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -118,8 +113,7 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     }
   )

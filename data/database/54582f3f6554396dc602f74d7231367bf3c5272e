@@ -14,7 +14,7 @@
       "fields":{
         "trailText":"Deputies vote for move to protect small booksellers and defend France's culture against market forces and big internet firms",
         "headline":"French MPs pass bill to curb Amazon's discounting on books",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3j9eq",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815244800/Amazon-005.jpg",
         "wordcount":"526",
@@ -350,6 +350,1679 @@
       }],
       "references":[]
     },
-    "storyPackage":[]
+    "storyPackage":[{
+      "id":"world/2013/sep/25/france-minister-warned-roma-comments",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-25T17:00:49Z",
+      "webTitle":"European Union warns French minister over Roma comments",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/25/france-minister-warned-roma-comments",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/25/france-minister-warned-roma-comments",
+      "fields":{
+        "trailText":"Socialist interior minister said France was 'not here to welcome' minority community and that most should be deported",
+        "headline":"European Union warns French minister over Roma comments",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j3n7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128331416/Roma-child-in-French-camp-005.jpg",
+        "wordcount":"405",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/roma-gypsies-and-travellers",
+        "type":"keyword",
+        "webTitle":"Roma, Gypsies and Travellers",
+        "webUrl":"http://www.theguardian.com/world/roma-gypsies-and-travellers",
+        "apiUrl":"http://content.guardianapis.com/world/roma-gypsies-and-travellers",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bulgaria",
+        "type":"keyword",
+        "webTitle":"Bulgaria",
+        "webUrl":"http://www.theguardian.com/world/bulgaria",
+        "apiUrl":"http://content.guardianapis.com/world/bulgaria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/romania",
+        "type":"keyword",
+        "webTitle":"Romania",
+        "webUrl":"http://www.theguardian.com/world/romania",
+        "apiUrl":"http://content.guardianapis.com/world/romania",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/population",
+        "type":"keyword",
+        "webTitle":"Population",
+        "webUrl":"http://www.theguardian.com/world/population",
+        "apiUrl":"http://content.guardianapis.com/world/population",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/eu",
+        "type":"keyword",
+        "webTitle":"European Union",
+        "webUrl":"http://www.theguardian.com/world/eu",
+        "apiUrl":"http://content.guardianapis.com/world/eu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/european-commission",
+        "type":"keyword",
+        "webTitle":"European commission",
+        "webUrl":"http://www.theguardian.com/world/european-commission",
+        "apiUrl":"http://content.guardianapis.com/world/european-commission",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418265798",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128326529/Roma-child-in-French-camp-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"54",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128328856/Roma-child-in-French-camp-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"340",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128329969/Roma-child-in-French-camp-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"130",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128331416/Roma-child-in-French-camp-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"84",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128333649/Roma-child-in-French-camp-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"132",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128334725/Roma-child-in-French-camp-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"168",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128336075/Roma-child-in-French-camp-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"180",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128337396/Roma-child-in-French-camp-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"228",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128338712/Roma-child-in-French-camp-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"276",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128340919/Roma-child-in-French-camp-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"372",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128338712/Roma-child-in-French-camp-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"276",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418265799",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380128331416/Roma-child-in-French-camp-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jacques Brinon",
+            "altText":"Roma child in French camp",
+            "height":"84",
+            "credit":"Jacques Brinon/AP",
+            "caption":"Critics say the French government's policy of dismantling illegal Roma camps is discriminatory against the roughly 20,000 Roma in France. Photograph: Jacques Brinon/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/29/marseille-calls-for-batman",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-28T23:05:57Z",
+      "webTitle":"Crime-weary Marseille calls for Batman's help",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/29/marseille-calls-for-batman",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/29/marseille-calls-for-batman",
+      "fields":{
+        "trailText":"Tongue-in-cheek plea by campaigners tired of politicians offering exaggerated solutions to the French city's problems",
+        "headline":"Crime-weary Marseille calls for Batman's help",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j5pq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375095722/An-armed-French-policeman-005.jpg",
+        "wordcount":"878",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/drugs",
+        "type":"keyword",
+        "webTitle":"Drugs",
+        "webUrl":"http://www.theguardian.com/society/drugs",
+        "apiUrl":"http://content.guardianapis.com/society/drugs",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/kim-willsher",
+        "type":"contributor",
+        "webTitle":"Kim Willsher",
+        "webUrl":"http://www.theguardian.com/profile/kim-willsher",
+        "apiUrl":"http://content.guardianapis.com/profile/kim-willsher",
+        "bio":"<p>Kim Willsher is an award-winning foreign correspondent based in Paris</p>",
+        "r2ContributorId":"38215",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/30/1317399986248/kim.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theobserver/news/worldnews",
+        "type":"newspaper-book-section",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/theobserver/news/worldnews",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news/worldnews",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/news",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theobserver/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418530995",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375090937/An-armed-French-policeman-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"54",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375092504/An-armed-French-policeman-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"340",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"479"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375094254/An-armed-French-policeman-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"130",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375095722/An-armed-French-policeman-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"84",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375098680/An-armed-French-policeman-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"132",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375101205/An-armed-French-policeman-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"168",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375102472/An-armed-French-policeman-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"180",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375103805/An-armed-French-policeman-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"228",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375105162/An-armed-French-policeman-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"276",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375106482/An-armed-French-policeman-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"372",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375105162/An-armed-French-policeman-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"276",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418530996",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/28/1380375095722/An-armed-French-policeman-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Boris Horvat",
+            "altText":"An armed French policeman on duty in Marseille.",
+            "height":"84",
+            "credit":"Boris Horvat/AFP/Getty Images",
+            "caption":"An armed French policeman on duty in Marseille. Photograph: Boris Horvat/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/03/french-mps-bill-amazon-discount-books",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-03T15:54:39Z",
+      "webTitle":"French MPs pass bill to curb Amazon's discounting on books",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/03/french-mps-bill-amazon-discount-books",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/03/french-mps-bill-amazon-discount-books",
+      "fields":{
+        "trailText":"Deputies vote for move to protect small booksellers and defend France's culture against market forces and big internet firms",
+        "headline":"French MPs pass bill to curb Amazon's discounting on books",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j9eq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815244800/Amazon-005.jpg",
+        "wordcount":"526",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/amazon",
+        "type":"keyword",
+        "webTitle":"Amazon.com",
+        "webUrl":"http://www.theguardian.com/technology/amazon",
+        "apiUrl":"http://content.guardianapis.com/technology/amazon",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"books/booksellers",
+        "type":"keyword",
+        "webTitle":"Booksellers",
+        "webUrl":"http://www.theguardian.com/books/booksellers",
+        "apiUrl":"http://content.guardianapis.com/books/booksellers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/efinance",
+        "type":"keyword",
+        "webTitle":"E-commerce",
+        "webUrl":"http://www.theguardian.com/technology/efinance",
+        "apiUrl":"http://content.guardianapis.com/technology/efinance",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.theguardian.com/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418987040",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815241413/Amazon-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"54",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815242399/Amazon-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"340",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815243504/Amazon-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"130",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815244800/Amazon-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"84",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815246350/Amazon-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"132",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815247348/Amazon-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"168",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815248395/Amazon-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"180",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815249419/Amazon-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"228",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815250419/Amazon-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"276",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815251506/Amazon-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"372",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815250419/Amazon-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"276",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with France's 5% discount limit on books if the bill becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418987041",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/3/1380815244800/Amazon-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Lionel Bonaventure",
+            "altText":"Amazon",
+            "height":"84",
+            "credit":"Lionel Bonaventure/AFP/Getty Images",
+            "caption":"Amazon will not be able to combine free delivery with the maximum 5% discount limit on books in France if the bill passes the senate and becomes law. Photograph: Lionel Bonaventure/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/07/nicolas-sarkozy-corruption-charges-dropped-liliane-bettencourt-donation",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-07T15:45:53Z",
+      "webTitle":"Nicolas Sarkozy corruption charges dropped",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/07/nicolas-sarkozy-corruption-charges-dropped-liliane-bettencourt-donation",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/07/nicolas-sarkozy-corruption-charges-dropped-liliane-bettencourt-donation",
+      "fields":{
+        "trailText":"French court clears way for former president to run again in 2017, dropping charges relating to Liliane Bettencourt donation",
+        "headline":"Nicolas Sarkozy corruption charges dropped",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jbm4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160670905/Nicolas-Sarkozy-004.jpg",
+        "wordcount":"654",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/nicolas-sarkozy",
+        "type":"keyword",
+        "webTitle":"Nicolas Sarkozy",
+        "webUrl":"http://www.theguardian.com/world/nicolas-sarkozy",
+        "apiUrl":"http://content.guardianapis.com/world/nicolas-sarkozy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/kim-willsher",
+        "type":"contributor",
+        "webTitle":"Kim Willsher",
+        "webUrl":"http://www.theguardian.com/profile/kim-willsher",
+        "apiUrl":"http://content.guardianapis.com/profile/kim-willsher",
+        "bio":"<p>Kim Willsher is an award-winning foreign correspondent based in Paris</p>",
+        "r2ContributorId":"38215",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/30/1317399986248/kim.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419278025",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160666636/Nicolas-Sarkozy-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"54",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160668469/Nicolas-Sarkozy-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"340",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160669678/Nicolas-Sarkozy-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"130",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160670905/Nicolas-Sarkozy-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"84",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160672105/Nicolas-Sarkozy-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"132",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160673390/Nicolas-Sarkozy-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"168",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160674651/Nicolas-Sarkozy-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"180",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160675934/Nicolas-Sarkozy-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"228",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160677273/Nicolas-Sarkozy-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"276",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160678576/Nicolas-Sarkozy-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"372",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160677273/Nicolas-Sarkozy-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"276",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419278026",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381160670905/Nicolas-Sarkozy-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Thomas Samson",
+            "altText":"Nicolas Sarkozy",
+            "height":"84",
+            "credit":"Thomas Samson/AFP/Getty Images",
+            "caption":"Sarkozy, who was under investigation for allegedly accepting cash from the L’Oréal heiress, was told he had no case to answer. Photograph: Thomas Samson/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/15/french-voters-national-front-protest",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-15T18:21:11Z",
+      "webTitle":"French voters turned to the National Front as a protest | Nabila Ramdani",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/15/french-voters-national-front-protest",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/15/french-voters-national-front-protest",
+      "fields":{
+        "trailText":"<p><strong>Nabila Ramdani: </strong>The polling figures from the party's local election victory do not support its leader Marine Le Pen's hopes for national success</p>",
+        "headline":"French voters turned to the National Front as a protest",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jt35",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381859622556/France-Front-National-001.jpg",
+        "wordcount":"593",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/marine-le-pen",
+        "type":"keyword",
+        "webTitle":"Marine Le Pen",
+        "webUrl":"http://www.theguardian.com/world/marine-le-pen",
+        "apiUrl":"http://content.guardianapis.com/world/marine-le-pen",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/jean-marie-le-pen",
+        "type":"keyword",
+        "webTitle":"Jean-Marie Le Pen",
+        "webUrl":"http://www.theguardian.com/world/jean-marie-le-pen",
+        "apiUrl":"http://content.guardianapis.com/world/jean-marie-le-pen",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/nabila-ramdani",
+        "type":"contributor",
+        "webTitle":"Nabila Ramdani",
+        "webUrl":"http://www.theguardian.com/profile/nabila-ramdani",
+        "apiUrl":"http://content.guardianapis.com/profile/nabila-ramdani",
+        "bio":"<p>Nabila Ramdani is a Paris-born freelance journalist and academic of Algerian descent. She specialises in Anglo-French issues, Islamic affairs, and the Arab World. She was named a Young Global Leader 2012 by the World Economic Forum and was a winner of the inaugural European Muslim Woman of Influence Award in 2010. She has been named by DNA (Decide Now Act) as 1 of 101 most innovative individuals in the world for social good.<br /> Her website can be found at <a href:\"http://nabilaramdani.com/\"> http://nabilaramdani.com </a> and you can follow her on twitter <a href=\"http://twitter.com/#!/nabilaramdani\">@NabilaRamdani</a></p>",
+        "r2ContributorId":"35457",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/1/10/1294676693061/nabila_ramdani.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420058956",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381859633866/France-Front-National-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Bertrand Langlois",
+            "altText":"France Front National",
+            "height":"276",
+            "credit":"Bertrand Langlois/AFP/Getty Images",
+            "caption":"Marine Le Pen, president of the Front National, and her father, Jean-Marie le Pen (fourth from left), at the party's summer congress in September.  Photograph: Bertrand Langlois/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420058957",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381859622556/France-Front-National-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Bertrand Langlois",
+            "altText":"France Front National",
+            "height":"84",
+            "credit":"Bertrand Langlois/AFP/Getty Images",
+            "caption":"Marine le Pen, president of the Front National, and her father, Jean-Marie le Pen (fourth from left), at the party's summer congress in September.  Photograph: Bertrand Langlois/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/07/national-front-local-elections-win-france",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-07T17:12:55Z",
+      "webTitle":"National Front's first-round win in French local election threatens left",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/07/national-front-local-elections-win-france",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/07/national-front-local-elections-win-france",
+      "fields":{
+        "trailText":"Socialist Party says resounding win is a 'very serious warning' and urges voters to block far-right candidate in second round",
+        "headline":"National Front's first-round win in French local election threatens left",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jbz2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165874074/National-Front-party-Mari-003.jpg",
+        "wordcount":"220",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/francois-hollande",
+        "type":"keyword",
+        "webTitle":"François Hollande",
+        "webUrl":"http://www.theguardian.com/world/francois-hollande",
+        "apiUrl":"http://content.guardianapis.com/world/francois-hollande",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/far-right",
+        "type":"keyword",
+        "webTitle":"The far right",
+        "webUrl":"http://www.theguardian.com/world/far-right",
+        "apiUrl":"http://content.guardianapis.com/world/far-right",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419287371",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165870359/National-Front-party-Mari-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"54",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165872663/National-Front-party-Mari-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"130",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165874074/National-Front-party-Mari-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"84",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165875352/National-Front-party-Mari-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"132",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165876660/National-Front-party-Mari-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"168",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165877958/National-Front-party-Mari-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"180",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165879279/National-Front-party-Mari-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"228",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165880675/National-Front-party-Mari-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"276",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165880675/National-Front-party-Mari-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"276",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419287372",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165874074/National-Front-party-Mari-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"84",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/10/french-polls-surge-support-national-front",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-10T11:19:44Z",
+      "webTitle":"French polls show surge in support for far-right National Front",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/10/french-polls-surge-support-national-front",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/10/french-polls-surge-support-national-front",
+      "fields":{
+        "trailText":"Quarter of French voters polled said they would vote for party at 2014 European elections, with 19% for Socialists",
+        "headline":"French polls show surge in support for far-right National Front",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3je9a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165874074/National-Front-party-Mari-003.jpg",
+        "wordcount":"462",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/eu",
+        "type":"keyword",
+        "webTitle":"European Union",
+        "webUrl":"http://www.theguardian.com/world/eu",
+        "apiUrl":"http://content.guardianapis.com/world/eu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/kim-willsher",
+        "type":"contributor",
+        "webTitle":"Kim Willsher",
+        "webUrl":"http://www.theguardian.com/profile/kim-willsher",
+        "apiUrl":"http://content.guardianapis.com/profile/kim-willsher",
+        "bio":"<p>Kim Willsher is an award-winning foreign correspondent based in Paris</p>",
+        "r2ContributorId":"38215",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/30/1317399986248/kim.jpg",
+        "references":[]
+      },{
+        "id":"world/marine-le-pen",
+        "type":"keyword",
+        "webTitle":"Marine Le Pen",
+        "webUrl":"http://www.theguardian.com/world/marine-le-pen",
+        "apiUrl":"http://content.guardianapis.com/world/marine-le-pen",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419583902",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165880675/National-Front-party-Mari-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"276",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen in north-east France on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419583903",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/10/7/1381165874074/National-Front-party-Mari-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Francois Nascimbeni",
+            "altText":"National Front party Marine Le Pen ",
+            "height":"84",
+            "credit":"Francois Nascimbeni/AFP/Getty Images",
+            "caption":"National Front party leader Marine Le Pen at a rally in the north-east on Sunday. Photograph: Francois Nascimbeni/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
   }
 }
