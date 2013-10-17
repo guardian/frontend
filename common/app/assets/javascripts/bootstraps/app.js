@@ -21,7 +21,9 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
-    "bootstraps/imagecontent"
+    "bootstraps/imagecontent",
+    "modules/id",
+    "modules/adverts/userAdTargeting"
 ], function (
     qwery,
     common,
@@ -44,7 +46,9 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
-    ImageContent
+    ImageContent,
+    Id,
+    UserAdTargeting
 ) {
 
     var modules = {
@@ -85,6 +89,14 @@ define('bootstraps/app', [
 
         showDebug: function () {
             new Debug().show();
+        },
+
+        initId : function (config) {
+            Id.init(config);
+        },
+
+        initUserAdTargeting : function () {
+            UserAdTargeting.requestUserSegmentsFromId();
         }
     };
 
@@ -100,6 +112,8 @@ define('bootstraps/app', [
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
+            modules.initId(config);
+            modules.initUserAdTargeting();
 
             var pageRoute = function(config, context, contextHtml) {
 
