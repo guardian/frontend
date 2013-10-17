@@ -1,0 +1,415 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/14/london-estate-agents-discriminate-black-people-bbc-investigation",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-13T23:31:00Z",
+      "webTitle":"Estate agents discriminate against black people, finds BBC investigation",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/14/london-estate-agents-discriminate-black-people-bbc-investigation",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/14/london-estate-agents-discriminate-black-people-bbc-investigation",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"<p>Posing as a landlord, reporter uncovers London agents willing to meet request flat should not be let to African-Caribbean renters</p>",
+        "headline":"Estate agents discriminate against black people, finds BBC investigation",
+        "body":"<p>Estate agents in London are routinely discriminating against black people looking for a home in the private rental market, an undercover investigation has found.</p><p>The BBC's Inside Out programme uncovered 10 estate agents in north-west London who were willing to meets landlords' specification that properties should not be let to African-Caribbean people.</p><p>Posing as a landlord who did not want to let out his flat to black people, an undercover reporter asked agents if they would be willing to discriminate against potential tenants. All 10 said although they could not openly bar black people they could prevent them taking up the flat by pretending it had been let, or by falsely promising to call them back.</p><p>One agent, from A to Z in Willesden, Brent, was filmed by a hidden camera stating that although he could not be seen to be discriminating against black people, it would not be a problem.</p><p>\"We can't do that, we can not be shown [to be] discriminating against a community. But obviously we've got our ways around that, you don't have to tell us that – because we, you know, like yourself, 99% of my landlords don't want Afro-Caribbeans, or any troublesome people,\" he appears to say in the footage.</p><p>Another, from the estate agents National also in Brent, was secretly filmed saying: \"Afro-Caribbeans, yeah you did mention that on the phone, that's not a problem, there's nothing wrong with saying that.\"</p><p>Asked how they would carry out the vetting, as it was illegal, the agent from A&nbsp;to Z said: \"We don't say to them 'no' there and then but we say, 'OK we're going to have to come back to you' and then we don't call them back.\"</p><p>The agent from National said: \"When somebody comes in, they won't basically advise them of this property being available … [or], we say somebody's taken it, we have to make up an excuse to be honest with you.\"</p><p>Undercover researchers with the exact same credentials – one white, one black – then posed as potential tenants interested in the flat and were told very different stories. Jo, who is white, was immediately giving a viewing, while Deane, who is black, was told that the flat had been let.</p><p>Speaking after the experience he said: \"I felt why should he [the agent] discriminate [against] me for not having a place because of the colour of my skin and then I left there angry.\"</p><p>Asked by the BBC after the sting why they had discriminated against black tenants, the three agents filmed in the programme refused to comment on camera. The agent from A to Z said he was aware the practice was against the law but it was what the landlord had requested, adding that the agent let to many African-Caribbean tenants.</p><p>After seeing evidence of race vetting, rapper Tinchy Stryder, who has campaigned against racial discrimination, said he was shocked at the casual nature of the racism. \"I'm thinking, they weren't saying it as if they were trying to hide it – just like this is the way it is.\"</p><p>Don Foster MP, until recently a housing minister, said he was horrified by the revelations. \"Racism, discrimination, has no place in London, we've got firm legislation against it … I think the difficulty is in some cases, there'll be a situation, where somebody is refused a viewing, as you showed, but wouldn't know themselves that they had been the victim of a racist incident.\"</p><p>Inside Out London producer Guy Lynn said the investigation was prompted after hearing that racial discrimination was a huge and growing problem. \"I spoke to lawyers, letting agents, landlords, they all said that this was something that was incredibly easy and very common for letting agents to do this and particularly at the moment, in a landlord's market.</p><p>\"Many of them seemed to think it was OK because they were hiding behind the 'I got asked to do it' argument. We focused on a section of west London, but numerous other reports and stories came through to me that this is a problem that is taking place across the UK.\"</p><p>Equality lawyer Arpita Dutt said the consequences for society of such racism were serious. \"This type of behaviour takes us back 40-50 years, if you have every agent in an area thinking that this is normal and accepted practice then this is going to have a direct impact on the community,\" she said. \"That is fundamentally unfair. And that feels like we've gone back in time.\"</p><p>In the past three years there have been only two investigations into racism allegations by the property ombudsman as a result of complaints, neither of which were upheld. There have been no investigations by the equality and human rights commission.</p><p>The film will be shown on Inside Out London on Monday 14 October 2013  on BBC 1 at 7.30pm.</p><!-- Guardian Watermark: internal-code/content/419835118|2013-10-17T10:28:06Z|cba0cd2e2a144582d484058f4a2437c78286ad3a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-14T08:03:13Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675821398/Estate-agents-discriminat-006.jpg",
+        "standfirst":"Posing as a landlord, reporter uncovers London agents willing to meet request flat should not be let to African-Caribbean renters",
+        "shortUrl":"http://gu.com/p/3jg8g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675821398/Estate-agents-discriminat-006.jpg",
+        "wordcount":"797",
+        "commentable":"false",
+        "internalContentCode":"419835118",
+        "allowUgc":"false",
+        "internalOctopusCode":"8179931",
+        "isPremoderated":"false",
+        "byline":"Alexandra Topping",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-14",
+        "internalPageCode":"1980196",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-16T23:02:00Z"
+      },
+      "tags":[{
+        "id":"money/renting",
+        "type":"keyword",
+        "webTitle":"Renting property",
+        "webUrl":"http://www.theguardian.com/money/renting",
+        "apiUrl":"http://content.guardianapis.com/money/renting",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"world/race",
+        "type":"keyword",
+        "webTitle":"Race issues",
+        "webUrl":"http://www.theguardian.com/world/race",
+        "apiUrl":"http://content.guardianapis.com/world/race",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/bbc",
+        "type":"keyword",
+        "webTitle":"BBC",
+        "webUrl":"http://www.theguardian.com/media/bbc",
+        "apiUrl":"http://content.guardianapis.com/media/bbc",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alexandratopping",
+        "type":"contributor",
+        "webTitle":"Alexandra Topping",
+        "webUrl":"http://www.theguardian.com/profile/alexandratopping",
+        "apiUrl":"http://content.guardianapis.com/profile/alexandratopping",
+        "bio":"<p>Alexandra Topping is a news reporter for the Guardian</p>",
+        "r2ContributorId":"19530",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/10/06/alexandra_topping_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419880599",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675811691/Estate-agents-discriminat-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"54",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675814010/Estate-agents-discriminat-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"340",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675815739/Estate-agents-discriminat-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"130",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675817362/Estate-agents-discriminat-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"720",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675819295/Estate-agents-discriminat-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"1536",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675821398/Estate-agents-discriminat-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"84",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675822985/Estate-agents-discriminat-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"132",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675824515/Estate-agents-discriminat-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"168",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675826114/Estate-agents-discriminat-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"180",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675827795/Estate-agents-discriminat-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"228",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675829450/Estate-agents-discriminat-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"276",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675831019/Estate-agents-discriminat-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"372",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675832741/Estate-agents-discriminat-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"1116",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675835055/Estate-agents-discriminat-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"1536",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675829450/Estate-agents-discriminat-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"276",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents say they cannot openly bar black people but can stop them taking up a flat by pretending it has already been let or falsely promising to call back, according to the BBC programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419880600",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/13/1381675821398/Estate-agents-discriminat-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Estate agents discriminate against black people - BBC finds",
+            "height":"84",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Estate agents said although they could not openly bar black people they could prevent them taking up the flat by pretending it had already be let, or by falsely promising to call back, according to the Inside Out programme. Photograph: Dan Kitwood/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

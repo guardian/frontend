@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":128655,
+    "total":129239,
     "startIndex":1,
     "pageSize":7,
     "currentPage":1,
-    "pages":18380,
+    "pages":18463,
     "orderBy":"newest",
     "edition":{
       "id":"football",
@@ -29,41 +29,22 @@
       }]
     },
     "results":[{
-      "id":"football/2013/oct/02/world-cup-2014-brazil-curitiba-stadium",
+      "id":"football/video/2013/oct/17/la-hoya-ugliest-shirt-in-football-video",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-10-02T14:03:40Z",
-      "webTitle":"World Cup 2014: Work suspended on Curitiba stadium due to 'safety risk'",
-      "webUrl":"http://www.theguardian.com/football/2013/oct/02/world-cup-2014-brazil-curitiba-stadium",
-      "apiUrl":"http://content.guardianapis.com/football/2013/oct/02/world-cup-2014-brazil-curitiba-stadium",
+      "webPublicationDate":"2013-10-17T09:27:04Z",
+      "webTitle":"Spanish team La Hoya and one of the ugliest shirts in football – video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/oct/17/la-hoya-ugliest-shirt-in-football-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/oct/17/la-hoya-ugliest-shirt-in-football-video",
       "fields":{
-        "trailText":"Work has been suspended on the 2014 World Cup stadium at Curitiba on the orders of a labour tribunal due to 'multiple safety risks'",
-        "headline":"World Cup 2014: Work suspended on Curitiba stadium due to 'safety risk'",
+        "trailText":"<p>Spanish football team La Hoya provide one of the ugliest shirts in the world of football</p>",
+        "headline":"Spanish team La Hoya and one of the ugliest shirts in football – video",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j8b9",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380722382407/Labourers-work-on-the-Are-006.jpg",
-        "wordcount":"232",
+        "shortUrl":"http://gu.com/p/3jj85",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997716140/Spanish-team-La-Hoya-clai-005.jpg",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/world-cup-2014",
-        "type":"keyword",
-        "webTitle":"World Cup 2014",
-        "webUrl":"http://www.theguardian.com/football/world-cup-2014",
-        "apiUrl":"http://content.guardianapis.com/football/world-cup-2014",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/world-cup-football",
-        "type":"keyword",
-        "webTitle":"World Cup",
-        "webUrl":"http://www.theguardian.com/football/world-cup-football",
-        "apiUrl":"http://content.guardianapis.com/football/world-cup-football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
         "id":"football/football",
         "type":"keyword",
         "webTitle":"Football",
@@ -71,31 +52,6 @@
         "apiUrl":"http://content.guardianapis.com/football/football",
         "sectionId":"football",
         "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"world/brazil",
-        "type":"keyword",
-        "webTitle":"Brazil",
-        "webUrl":"http://www.theguardian.com/world/brazil",
-        "apiUrl":"http://content.guardianapis.com/world/brazil",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
         "id":"sport/sport",
@@ -107,566 +63,304 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"type/article",
+        "id":"type/video",
         "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418862050",
+        "id":"gu-video-420229951",
         "relation":"main",
-        "type":"image",
+        "type":"video",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380722389068/Labourers-work-on-the-Are-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997712611/Spanish-team-La-Hoya-clai-002.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"  STRINGER Brazil / Reuters",
-            "altText":"Labourers work on the Arena da Baixada stadium which will host 2014 World Cup matches in Curitiba",
-            "height":"276",
-            "credit":"  STRINGER Brazil / Reuters/Reuters",
-            "caption":"Labourers at work on the Arena da Baixada stadium in Curitiba, which will host four 2014 World Cup matches. Photograph: Reuters",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418862051",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380722382407/Labourers-work-on-the-Are-006.jpg",
-          "typeData":{
-            "source":"Reuters",
-            "photographer":"  STRINGER Brazil / Reuters",
-            "altText":"Labourers work on the Arena da Baixada stadium which will host 2014 World Cup matches in Curitiba",
-            "height":"84",
-            "credit":"  STRINGER Brazil / Reuters/Reuters",
-            "caption":"Labourers at work on the Arena da Baixada stadium back in March 2013 and which will host 2014 World Cup matches in Curitiba. Photograph:   STRINGER Brazil / Reuters/Reuters",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"football/2013/oct/02/dc-united-win-us-open-cup-lewis-neal",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-10-02T13:13:00Z",
-      "webTitle":"DC United surprise winners of 100th US Open Cup",
-      "webUrl":"http://www.theguardian.com/football/2013/oct/02/dc-united-win-us-open-cup-lewis-neal",
-      "apiUrl":"http://content.guardianapis.com/football/2013/oct/02/dc-united-win-us-open-cup-lewis-neal",
-      "fields":{
-        "trailText":"<p><strong>US Open Cup:</strong> DC United upset Real Salt Lake 1-0 to claim trophy and a place in Concacaf Champions League</p>",
-        "headline":"DC United surprise winners of 100th US Open Cup",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j7qv",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380685026728/97182f2c-525a-4efa-8bf1-526ca1954889-140x84.jpeg",
-        "wordcount":"1072",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/us-open-cup",
-        "type":"keyword",
-        "webTitle":"US Open Cup",
-        "webUrl":"http://www.theguardian.com/football/us-open-cup",
-        "apiUrl":"http://content.guardianapis.com/football/us-open-cup",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/mls",
-        "type":"keyword",
-        "webTitle":"MLS",
-        "webUrl":"http://www.theguardian.com/football/mls",
-        "apiUrl":"http://content.guardianapis.com/football/mls",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/dcunited",
-        "type":"keyword",
-        "webTitle":"DC United",
-        "webUrl":"http://www.theguardian.com/football/dcunited",
-        "apiUrl":"http://content.guardianapis.com/football/dcunited",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/realsaltlake",
-        "type":"keyword",
-        "webTitle":"Real Salt Lake",
-        "webUrl":"http://www.theguardian.com/football/realsaltlake",
-        "apiUrl":"http://content.guardianapis.com/football/realsaltlake",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.theguardian.com/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/us-sport",
-        "type":"keyword",
-        "webTitle":"US sports",
-        "webUrl":"http://www.theguardian.com/sport/us-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/graham-parker",
-        "type":"contributor",
-        "webTitle":"Graham Parker",
-        "webUrl":"http://www.theguardian.com/profile/graham-parker",
-        "apiUrl":"http://content.guardianapis.com/profile/graham-parker",
-        "bio":"<p>Graham Parker is a writer based in Brooklyn, New York. He is also a widely exhibited artist and author of the book <em>Fair Use (notes from spam)</em>.<br />On Twitter he is @KidWeil</p>",
-        "r2ContributorId":"48198",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/1/9/1326131325698/Graham-Parker-profile-pic-003.jpg",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418855559",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380685028087/97182f2c-525a-4efa-8bf1-526ca1954889-460x276.jpeg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Leah Hogsten",
-            "altText":"D.C. United's Lewis Neal celebrates his goal against Real Salt Lake",
-            "height":"276",
-            "credit":"Leah Hogsten/AP",
-            "caption":"DC United's Lewis Neal celebrates his matchwinner against Real Salt Lake in the US Open Cup final, in Sandy, Utah. Photograph: Leah Hogsten/AP/The Salt Lake Tribune",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418855560",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380685026728/97182f2c-525a-4efa-8bf1-526ca1954889-140x84.jpeg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Leah Hogsten",
-            "altText":"D.C. United's Lewis Neal celebrates his goal against Real Salt Lake",
-            "height":"84",
-            "credit":"Leah Hogsten/AP",
-            "caption":"D.C. United's Lewis Neal celebrates his goal against Real Salt Lake during the U.S. Open Cup final, Tuesday, Oct. 1, 2013, in Sandy, Utah. Photograph: Leah Hogsten/AP/The Salt Lake Tribune",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"football/blog/2013/oct/02/celtic-fraser-forster-england-celtic",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-10-02T12:48:23Z",
-      "webTitle":"Fraser Forster's Champions League display warrants England recognition | Ewan Murray",
-      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/celtic-fraser-forster-england-celtic",
-      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/celtic-fraser-forster-england-celtic",
-      "fields":{
-        "trailText":"<strong>Ewan Murray: </strong>Celtic's outstanding young goalkeeper has surely done enough to convince the England manager Roy Hodgson of his talent",
-        "headline":"Fraser Forster's Champions League display warrants England recognition",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j88t",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717706089/Fraser-Forster-006.jpg",
-        "wordcount":"691",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/celtic",
-        "type":"keyword",
-        "webTitle":"Celtic",
-        "webUrl":"http://www.theguardian.com/football/celtic",
-        "apiUrl":"http://content.guardianapis.com/football/celtic",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/94"
-        }]
-      },{
-        "id":"football/england",
-        "type":"keyword",
-        "webTitle":"England",
-        "webUrl":"http://www.theguardian.com/football/england",
-        "apiUrl":"http://content.guardianapis.com/football/england",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/497"
-        }]
-      },{
-        "id":"football/championsleague",
-        "type":"keyword",
-        "webTitle":"Champions League",
-        "webUrl":"http://www.theguardian.com/football/championsleague",
-        "apiUrl":"http://content.guardianapis.com/football/championsleague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/500"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.theguardian.com/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/ewanmurray",
-        "type":"contributor",
-        "webTitle":"Ewan Murray",
-        "webUrl":"http://www.theguardian.com/profile/ewanmurray",
-        "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
-        "r2ContributorId":"22562",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/8/18/1376837835334/Ewan-Murray-byline-003.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418853127",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717695937/Fraser-Forster-001.jpg",
-          "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"54",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717697939/Fraser-Forster-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997713788/Spanish-team-La-Hoya-clai-003.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"340",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"480"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717699661/Fraser-Forster-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997714974/Spanish-team-La-Hoya-clai-004.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"130",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717701401/Fraser-Forster-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997716140/Spanish-team-La-Hoya-clai-005.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
-            "height":"720",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "width":"1280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717703579/Fraser-Forster-005.jpg",
-          "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
-            "height":"1536",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "width":"2048"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717706089/Fraser-Forster-006.jpg",
-          "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"84",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717707761/Fraser-Forster-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997717356/Spanish-team-La-Hoya-clai-006.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"132",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717709396/Fraser-Forster-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997718532/Spanish-team-La-Hoya-clai-007.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"168",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717711074/Fraser-Forster-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997719675/Spanish-team-La-Hoya-clai-008.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"180",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717712731/Fraser-Forster-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997720836/Spanish-team-La-Hoya-clai-009.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"228",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717714432/Fraser-Forster-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997721989/Spanish-team-La-Hoya-clai-010.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"276",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717716171/Fraser-Forster-012.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997723157/Spanish-team-La-Hoya-clai-011.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"372",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"620"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717718032/Fraser-Forster-013.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997724376/Spanish-team-La-Hoya-clai-012.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
-            "height":"1116",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "width":"1860"
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
+            "height":"90",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
+            "width":"120"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717720434/Fraser-Forster-014.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997725645/Spanish-team-La-Hoya-clai-013.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
-            "height":"1536",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "width":"2560"
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
+            "height":"225",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
+            "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717714432/Fraser-Forster-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997726815/Spanish-team-La-Hoya-clai-014.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
-            "height":"276",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "width":"460"
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
+            "height":"360",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997728026/Spanish-team-La-Hoya-clai-015.jpg",
+          "typeData":{
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
+            "height":"360",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997729224/Spanish-team-La-Hoya-clai-016.jpg",
+          "typeData":{
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
+            "height":"230",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/17/131016Spain-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131016Spain_8203706.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131016Spain_8203706.jpg",
+            "width":"480",
+            "durationSeconds":"56"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/17/131016Spain_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131016Spain_8203706.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131016Spain_8203706.jpg",
+            "width":"480",
+            "durationSeconds":"56"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/17/131016Spain/131016Spain.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131016Spain_8203706.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131016Spain_8203706.jpg",
+            "width":"480",
+            "durationSeconds":"56"
           }
         }]
       },{
-        "id":"gu-image-418853129",
+        "id":"gu-image-420235970",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380717706089/Fraser-Forster-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/17/1381997716140/Spanish-team-La-Hoya-clai-005.jpg",
           "typeData":{
-            "source":"Sportsphoto Ltd/Allstar",
-            "photographer":"Michael Mayhew",
-            "altText":"Fraser Forster",
+            "source":"SNTV",
+            "photographer":"SNTV",
+            "altText":"Spanish team La Hoya claim ugliest shirt in football - video ",
             "height":"84",
-            "credit":"Michael Mayhew/Sportsphoto Ltd/Allstar",
-            "caption":"Fraser Forster is said by the Celtic manager to be one of the best goalkeepers in the Champions League. Photograph: Michael Mayhew/Sportsphoto Ltd/Allstar",
+            "credit":"SNTV/SNTV",
+            "caption":"Spanish football team La Hoya are declared as having the ugliest shirts in the world of football\r Photograph: SNTV",
             "width":"140"
           }
         }]
       }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/94"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/500"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/497"
-      }]
+      "references":[]
     },{
-      "id":"football/blog/2013/oct/02/mesut-ozil-arsenal-new-dennis-bergkamp",
+      "id":"football/who-scored-blog/2013/oct/17/statistical-review-european-leagues-season-so-far",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-10-02T12:12:00Z",
-      "webTitle":"Could Mesut Özil be Arsenal's new Dennis Bergkamp? – open thread",
-      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/mesut-ozil-arsenal-new-dennis-bergkamp",
-      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/mesut-ozil-arsenal-new-dennis-bergkamp",
+      "webPublicationDate":"2013-10-17T09:27:03Z",
+      "webTitle":"Premier League, La Liga, Bundesliga, Serie A and Ligue 1: early season review",
+      "webUrl":"http://www.theguardian.com/football/who-scored-blog/2013/oct/17/statistical-review-european-leagues-season-so-far",
+      "apiUrl":"http://content.guardianapis.com/football/who-scored-blog/2013/oct/17/statistical-review-european-leagues-season-so-far",
       "fields":{
-        "trailText":"<p>Bergkamp broke Arsenal's transfer record and revitalised the club when he signed from Inter in 1995. Could Özil do the same?</p>",
-        "headline":"Could Mesut Özil be Arsenal's new Dennis Bergkamp? – open thread",
+        "trailText":"<p><strong>WhoScored:</strong> A statistical look at the big European leagues, featuring praise for Olivier Giroud, Gervinho, Diego Costa and Kossi Agassa</p>",
+        "headline":"Premier League, La Liga, Bundesliga, Serie A and Ligue 1: early season review",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j82m",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/11/5/1225920082604/Dennis-Bergkamp-003.jpg",
-        "wordcount":"500",
+        "shortUrl":"http://gu.com/p/3jtnn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938097692/Barcelonas-Leo-Messi-cele-002.jpg",
+        "wordcount":"707",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/mesut-ozil",
-        "type":"keyword",
-        "webTitle":"Mesut Ozil",
-        "webUrl":"http://www.theguardian.com/football/mesut-ozil",
-        "apiUrl":"http://content.guardianapis.com/football/mesut-ozil",
+        "id":"football/who-scored-blog",
+        "type":"blog",
+        "webTitle":"WhoScored?",
+        "webUrl":"http://www.theguardian.com/football/who-scored-blog",
+        "apiUrl":"http://content.guardianapis.com/football/who-scored-blog",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[]
-      },{
-        "id":"football/arsenal",
-        "type":"keyword",
-        "webTitle":"Arsenal",
-        "webUrl":"http://www.theguardian.com/football/arsenal",
-        "apiUrl":"http://content.guardianapis.com/football/arsenal",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/1006"
-        }]
       },{
         "id":"football/football",
         "type":"keyword",
@@ -686,22 +380,23 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
+        "id":"profile/martin-laurence",
+        "type":"contributor",
+        "webTitle":"Martin Laurence",
+        "webUrl":"http://www.theguardian.com/profile/martin-laurence",
+        "apiUrl":"http://content.guardianapis.com/profile/martin-laurence",
+        "bio":"<p>Martin Laurence is editor-in-chief at <a href=\"http://www.whoscored.com\">WhoScored.com</a>, specialising in the in-depth analysis of detailed football data</p>",
+        "r2ContributorId":"58779",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379688737837/MartinLaurence.jpg",
         "references":[]
       },{
-        "id":"profile/paul-campbell",
-        "type":"contributor",
-        "webTitle":"Paul Campbell",
-        "webUrl":"http://www.theguardian.com/profile/paul-campbell",
-        "apiUrl":"http://content.guardianapis.com/profile/paul-campbell",
-        "bio":"<p>Paul Campbell is a community co-ordinator for sport on guardian.co.uk</p>",
-        "r2ContributorId":"52301",
+        "id":"sport/series/guardian-sport-network",
+        "type":"series",
+        "webTitle":"Guardian Sport Network",
+        "webUrl":"http://www.theguardian.com/sport/series/guardian-sport-network",
+        "apiUrl":"http://content.guardianapis.com/sport/series/guardian-sport-network",
+        "sectionId":"sport",
+        "sectionName":"Sport",
         "references":[]
       },{
         "id":"football/premierleague",
@@ -716,17 +411,95 @@
           "id":"pa-football-competition/100"
         }]
       },{
-        "id":"football/championsleague",
+        "id":"football/bundesligafootball",
         "type":"keyword",
-        "webTitle":"Champions League",
-        "webUrl":"http://www.theguardian.com/football/championsleague",
-        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "webTitle":"Bundesliga",
+        "webUrl":"http://www.theguardian.com/football/bundesligafootball",
+        "apiUrl":"http://content.guardianapis.com/football/bundesligafootball",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-competition",
-          "id":"pa-football-competition/500"
+          "id":"pa-football-competition/625"
         }]
+      },{
+        "id":"football/europeanfootball",
+        "type":"keyword",
+        "webTitle":"European club football",
+        "webUrl":"http://www.theguardian.com/football/europeanfootball",
+        "apiUrl":"http://content.guardianapis.com/football/europeanfootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/laligafootball",
+        "type":"keyword",
+        "webTitle":"La Liga",
+        "webUrl":"http://www.theguardian.com/football/laligafootball",
+        "apiUrl":"http://content.guardianapis.com/football/laligafootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/650"
+        }]
+      },{
+        "id":"football/ligue1football",
+        "type":"keyword",
+        "webTitle":"Ligue 1",
+        "webUrl":"http://www.theguardian.com/football/ligue1football",
+        "apiUrl":"http://content.guardianapis.com/football/ligue1football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/620"
+        }]
+      },{
+        "id":"football/serieafootball",
+        "type":"keyword",
+        "webTitle":"Serie A",
+        "webUrl":"http://www.theguardian.com/football/serieafootball",
+        "apiUrl":"http://content.guardianapis.com/football/serieafootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/635"
+        }]
+      },{
+        "id":"football/barcelona",
+        "type":"keyword",
+        "webTitle":"Barcelona",
+        "webUrl":"http://www.theguardian.com/football/barcelona",
+        "apiUrl":"http://content.guardianapis.com/football/barcelona",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26300"
+        }]
+      },{
+        "id":"football/bayernmunich",
+        "type":"keyword",
+        "webTitle":"Bayern Munich",
+        "webUrl":"http://www.theguardian.com/football/bayernmunich",
+        "apiUrl":"http://content.guardianapis.com/football/bayernmunich",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26247"
+        }]
+      },{
+        "id":"football/monaco",
+        "type":"keyword",
+        "webTitle":"Monaco",
+        "webUrl":"http://www.theguardian.com/football/monaco",
+        "apiUrl":"http://content.guardianapis.com/football/monaco",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
       },{
         "id":"tone/blog",
         "type":"tone",
@@ -743,84 +516,172 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418852405",
+        "id":"gu-image-420170205",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358962237631/Dennis-Bergkamp-reflects--015.jpg",
+          "file":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938098944/Barcelonas-Leo-Messi-cele-003.jpg",
           "typeData":{
-            "source":"FA",
-            "photographer":"FA",
-            "altText":"Dennis Bergkamp reflects on his time at Arsenal and English football",
+            "source":"REUTERS",
+            "photographer":"Francisco Bonilla",
+            "altText":"Barcelona's Leo Messi celebrates after scoring against Almeria during their soccer match in Almeria",
             "height":"276",
-            "credit":"FA/FA",
-            "caption":"Dennis Bergkamp becomes Arsenal's record signing in 1995. Photograph: FA",
+            "credit":"Francisco Bonilla/REUTERS",
+            "caption":"Lionel Messi, unsurprisingly the best player in Europe so far this season. Photograph: Francisco Bonilla/Reuters",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418852406",
+        "id":"gu-image-420170206",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/11/5/1225920082604/Dennis-Bergkamp-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938097692/Barcelonas-Leo-Messi-cele-002.jpg",
           "typeData":{
-            "source":"Reuters",
-            "photographer":"Eddie Keogh",
-            "altText":"Dennis Bergkamp",
+            "source":"REUTERS",
+            "photographer":"Francisco Bonilla",
+            "altText":"Barcelona's Leo Messi celebrates after scoring against Almeria during their soccer match in Almeria",
             "height":"84",
-            "credit":"Eddie Keogh/Reuters",
-            "caption":"Dennis Bergkamp. Photograph: Eddie Keogh/Reuters",
+            "credit":"Francisco Bonilla/REUTERS",
+            "caption":"Lionel Messi, the best player in Europe so far this season. Photograph: Francisco Bonilla/REUTERS",
             "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420170207",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938289016/WhoScored-Premier-League-001.jpg",
+          "typeData":{
+            "source":"WhoScored",
+            "altText":"WhoScored Premier League",
+            "height":"340",
+            "credit":"WhoScored",
+            "caption":"Photograph: WhoScored",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420170208",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938350433/WhoScored-Serie-A-001.jpg",
+          "typeData":{
+            "source":"WhoScored",
+            "altText":"WhoScored Serie A",
+            "height":"340",
+            "credit":"WhoScored",
+            "caption":"Photograph: WhoScored",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420170209",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938419907/WhoScored-La-Liga-001.jpg",
+          "typeData":{
+            "source":"WhoScored",
+            "altText":"WhoScored La Liga",
+            "height":"340",
+            "credit":"WhoScored",
+            "caption":"Photograph: WhoScored",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420170210",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938494794/WhoScored-Bundesliga-001.jpg",
+          "typeData":{
+            "source":"WhoScored",
+            "altText":"WhoScored Bundesliga",
+            "height":"340",
+            "credit":"WhoScored",
+            "caption":"Photograph: WhoScored",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420170211",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/football/Clubs/Club_Home/2013/10/16/1381938556045/WhoScored-Ligue-1-001.jpg",
+          "typeData":{
+            "source":"WhoScored",
+            "altText":"WhoScored Ligue 1",
+            "height":"340",
+            "credit":"WhoScored",
+            "caption":"Photograph: WhoScored",
+            "width":"460"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/1006"
+        "id":"pa-football-team/26300"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/500"
+        "id":"pa-football-competition/620"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/635"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26247"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/625"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/650"
       }]
     },{
-      "id":"football/blog/2013/oct/02/david-moyes-manchester-united-alex-ferguson",
+      "id":"football/blog/2013/oct/17/wayne-rooney-england-manchester-united",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-10-02T11:44:29Z",
-      "webTitle":"David Moyes is on a hiding to nothing as Manchester United manager | Paul Wilson",
-      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/david-moyes-manchester-united-alex-ferguson",
-      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/david-moyes-manchester-united-alex-ferguson",
+      "webPublicationDate":"2013-10-17T09:00:01Z",
+      "webTitle":"Manchester United can take hope from Wayne Rooney's England heroics | Paul Wilson",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/17/wayne-rooney-england-manchester-united",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/17/wayne-rooney-england-manchester-united",
       "fields":{
-        "trailText":"<strong>Paul Wilson: </strong>Succeeding Sir Alex Ferguson at Old Trafford has become the job from hell as United falter and David Moyes ties himself in knots",
-        "headline":"David Moyes is on a hiding to nothing as Manchester United manager",
+        "trailText":"<strong>Paul Wilson:</strong> The striker has looked back to his best for his country – now he must do the same for the club he tried to leave in the summer",
+        "headline":"Manchester United can take hope from Wayne Rooney's England heroics",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j869",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713997010/David-Moyes-006.jpg",
-        "wordcount":"1144",
+        "shortUrl":"http://gu.com/p/3jjxt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381943376904/Wayne-Rooney-scored-Engla-006.jpg",
+        "wordcount":"997",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/david-moyes",
+        "id":"football/wayne-rooney",
         "type":"keyword",
-        "webTitle":"David Moyes",
-        "webUrl":"http://www.theguardian.com/football/david-moyes",
-        "apiUrl":"http://content.guardianapis.com/football/david-moyes",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/sir-alex-ferguson",
-        "type":"keyword",
-        "webTitle":"Sir Alex Ferguson",
-        "webUrl":"http://www.theguardian.com/football/sir-alex-ferguson",
-        "apiUrl":"http://content.guardianapis.com/football/sir-alex-ferguson",
+        "webTitle":"Wayne Rooney",
+        "webUrl":"http://www.theguardian.com/football/wayne-rooney",
+        "apiUrl":"http://content.guardianapis.com/football/wayne-rooney",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[]
@@ -837,28 +698,28 @@
           "id":"pa-football-team/12"
         }]
       },{
-        "id":"football/everton",
+        "id":"football/england",
         "type":"keyword",
-        "webTitle":"Everton",
-        "webUrl":"http://www.theguardian.com/football/everton",
-        "apiUrl":"http://content.guardianapis.com/football/everton",
+        "webTitle":"England",
+        "webUrl":"http://www.theguardian.com/football/england",
+        "apiUrl":"http://content.guardianapis.com/football/england",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/8"
+          "id":"pa-football-team/497"
         }]
       },{
-        "id":"football/preston",
+        "id":"football/world-cup-2014-qualifiers",
         "type":"keyword",
-        "webTitle":"Preston North End",
-        "webUrl":"http://www.theguardian.com/football/preston",
-        "apiUrl":"http://content.guardianapis.com/football/preston",
+        "webTitle":"World Cup 2014 qualifiers",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2014-qualifiers",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2014-qualifiers",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/61"
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/701"
         }]
       },{
         "id":"football/football",
@@ -888,13 +749,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"books/david-peace",
-        "type":"keyword",
-        "webTitle":"David Peace",
-        "webUrl":"http://www.theguardian.com/books/david-peace",
-        "apiUrl":"http://content.guardianapis.com/books/david-peace",
-        "sectionId":"books",
-        "sectionName":"Books",
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
         "references":[]
       },{
         "id":"profile/paulwilson",
@@ -908,13 +767,6 @@
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/paul_wilson_140x140.jpg",
         "references":[]
       },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -923,411 +775,88 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418846366",
+        "id":"gu-image-420180253",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713987555/David-Moyes-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381943383242/Wayne-Rooney-scored-Engla-011.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"54",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713989606/David-Moyes-002.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"340",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713991215/David-Moyes-003.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"130",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713992902/David-Moyes-004.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"720",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"1280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713994872/David-Moyes-005.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"1536",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"2048"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713997010/David-Moyes-006.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"84",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713998594/David-Moyes-007.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"132",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714000157/David-Moyes-008.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"168",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714001753/David-Moyes-009.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"180",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714003327/David-Moyes-010.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"228",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714004923/David-Moyes-011.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
+            "source":"Reuters",
+            "photographer":"Eddie Keogh",
+            "altText":"Wayne Rooney scored England's first goal in their crucial 2-0 victory over Poland on Tuesday",
             "height":"276",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714006591/David-Moyes-012.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"372",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714008463/David-Moyes-013.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"1116",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"1860"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714010779/David-Moyes-014.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"1536",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
-            "width":"2560"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380714004923/David-Moyes-011.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
-            "height":"276",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "credit":"Eddie Keogh/Reuters",
+            "caption":"Wayne Rooney scored England's first goal in their crucial 2-0 World Cup victory over Poland at Wembley. Photograph: Eddie Keogh/Reuters",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418846367",
+        "id":"gu-image-420180254",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713997010/David-Moyes-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381943376904/Wayne-Rooney-scored-Engla-006.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Peter Powell",
-            "altText":"David Moyes",
+            "source":"Reuters",
+            "photographer":"Eddie Keogh",
+            "altText":"Wayne Rooney scored England's first goal in their crucial 2-0 victory over Poland on Tuesday",
             "height":"84",
-            "credit":"Peter Powell/EPA",
-            "caption":"David Moyes, right, is being told not to let the cameras catch him with his head in his hands. Photograph: Peter Powell/EPA",
+            "credit":"Eddie Keogh/Reuters",
+            "caption":"Wayne Rooney scored England's first goal in their crucial 2-0 victory over Poland on Tuesday.  Photograph: Eddie Keogh/Reuters",
             "width":"140"
           }
         }]
       }],
       "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/8"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/61"
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/701"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/12"
-      }]
-    },{
-      "id":"football/blog/2013/oct/02/mesut-ozil-arsenal-five-things",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-10-02T10:52:35Z",
-      "webTitle":"Five reasons why Mesut Özil is such a special talent",
-      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/02/mesut-ozil-arsenal-five-things",
-      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/02/mesut-ozil-arsenal-five-things",
-      "fields":{
-        "trailText":"<strong>Michael Cox:</strong> Arsenal's £42.5m record signing Mesut Özil has got the lot – spatial awareness, a superb first touch, and he is a great team player",
-        "headline":"Five reasons why Mesut Özil is such a special talent",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j84m",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380710659041/mesut-ozil-006.jpg",
-        "wordcount":"571",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/mesut-ozil",
-        "type":"keyword",
-        "webTitle":"Mesut Ozil",
-        "webUrl":"http://www.theguardian.com/football/mesut-ozil",
-        "apiUrl":"http://content.guardianapis.com/football/mesut-ozil",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/arsenal",
-        "type":"keyword",
-        "webTitle":"Arsenal",
-        "webUrl":"http://www.theguardian.com/football/arsenal",
-        "apiUrl":"http://content.guardianapis.com/football/arsenal",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/1006"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.theguardian.com/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/championsleague",
-        "type":"keyword",
-        "webTitle":"Champions League",
-        "webUrl":"http://www.theguardian.com/football/championsleague",
-        "apiUrl":"http://content.guardianapis.com/football/championsleague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/500"
-        }]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"football/realmadrid",
-        "type":"keyword",
-        "webTitle":"Real Madrid",
-        "webUrl":"http://www.theguardian.com/football/realmadrid",
-        "apiUrl":"http://content.guardianapis.com/football/realmadrid",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26303"
-        }]
-      },{
-        "id":"football/thierry-henry",
-        "type":"keyword",
-        "webTitle":"Thierry Henry",
-        "webUrl":"http://www.theguardian.com/football/thierry-henry",
-        "apiUrl":"http://content.guardianapis.com/football/thierry-henry",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/michael-cox",
-        "type":"contributor",
-        "webTitle":"Michael Cox",
-        "webUrl":"http://www.theguardian.com/profile/michael-cox",
-        "apiUrl":"http://content.guardianapis.com/profile/michael-cox",
-        "bio":"<p>Michael Cox is editor of <a href=\"http://www.zonalmarking.net/\">Zonal Marking</a></p>",
-        "r2ContributorId":"39673",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418852220",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380710665652/mesut-ozil-011.jpg",
-          "typeData":{
-            "source":"Imago / Barcroft Media",
-            "photographer":"Imago / Barcroft Media",
-            "altText":"mesut ozil",
-            "height":"276",
-            "credit":"Imago / Barcroft Media/Imago / Barcroft Media",
-            "caption":"Mesut Özil celebrates his first Arsenal goal, in the Champions League win over Napoli. Photograph: Imago/Barcroft Media",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418852221",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/2/1380710659041/mesut-ozil-006.jpg",
-          "typeData":{
-            "source":"Imago / Barcroft Media",
-            "photographer":"Imago / Barcroft Media",
-            "altText":"mesut ozil",
-            "height":"84",
-            "credit":"Imago / Barcroft Media/Imago / Barcroft Media",
-            "caption":"esut Özil celebrates his first Arsenal goal in the Champions League win over Napoli. Photograph: Imago / Barcroft Media",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/1006"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/500"
       },{
         "type":"pa-football-team",
-        "id":"pa-football-team/26303"
+        "id":"pa-football-team/497"
       }]
     },{
-      "id":"football/video/2013/oct/02/greenpeace-protest-basel-fc-schalke-video",
+      "id":"football/2013/oct/17/football-transfer-rumours-tottenham-ezequiel-lavezzi",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-10-02T10:49:00Z",
-      "webTitle":"Greenpeace protest disrupts Basel v FC Schalke 04 Champions League match - video",
-      "webUrl":"http://www.theguardian.com/football/video/2013/oct/02/greenpeace-protest-basel-fc-schalke-video",
-      "apiUrl":"http://content.guardianapis.com/football/video/2013/oct/02/greenpeace-protest-basel-fc-schalke-video",
+      "webPublicationDate":"2013-10-17T08:58:10Z",
+      "webTitle":"Football transfer rumours: Ezequiel Lavezzi to Tottenham?",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/17/football-transfer-rumours-tottenham-ezequiel-lavezzi",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/17/football-transfer-rumours-tottenham-ezequiel-lavezzi",
       "fields":{
-        "trailText":"<p>Greenpeace activists interrupt Tuesday night's Champions League clash between Basel and FC Schalke 04, unfurling a banner</p>",
-        "headline":"Greenpeace protest disrupts Basel v FC Schalke 04 Champions League match - video",
+        "trailText":"Eliaquim Mangala to Chelsea? | Nani to Galatasaray? | Sven-Goran Eriksson to Bramall Lane?",
+        "headline":"Football transfer rumours: Ezequiel Lavezzi to Tottenham?",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j83j",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709257297/Greenpeace-protest-disrup-009.jpg",
+        "shortUrl":"http://gu.com/p/3jj8g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999727407/Ezequiel-Lavezzi--003.jpg",
+        "wordcount":"573",
         "liveBloggingNow":"false"
       },
       "tags":[{
+        "id":"football/series/rumourmill",
+        "type":"series",
+        "webTitle":"Rumour Mill",
+        "webUrl":"http://www.theguardian.com/football/series/rumourmill",
+        "apiUrl":"http://content.guardianapis.com/football/series/rumourmill",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/transfer-window",
+        "type":"keyword",
+        "webTitle":"Transfer window",
+        "webUrl":"http://www.theguardian.com/football/transfer-window",
+        "apiUrl":"http://content.guardianapis.com/football/transfer-window",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
         "id":"football/football",
         "type":"keyword",
         "webTitle":"Football",
@@ -1337,25 +866,26 @@
         "sectionName":"Football",
         "references":[]
       },{
-        "id":"football/championsleague",
+        "id":"football/tottenham-hotspur",
         "type":"keyword",
-        "webTitle":"Champions League",
-        "webUrl":"http://www.theguardian.com/football/championsleague",
-        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "webTitle":"Tottenham Hotspur",
+        "webUrl":"http://www.theguardian.com/football/tottenham-hotspur",
+        "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/500"
+          "type":"pa-football-team",
+          "id":"pa-football-team/19"
         }]
       },{
-        "id":"environment/greenpeace",
-        "type":"keyword",
-        "webTitle":"Greenpeace",
-        "webUrl":"http://www.theguardian.com/environment/greenpeace",
-        "apiUrl":"http://content.guardianapis.com/environment/greenpeace",
-        "sectionId":"environment",
-        "sectionName":"Environment",
+        "id":"profile/danielharris",
+        "type":"contributor",
+        "webTitle":"Daniel Harris",
+        "webUrl":"http://www.theguardian.com/profile/danielharris",
+        "apiUrl":"http://content.guardianapis.com/profile/danielharris",
+        "bio":"<p>Daniel Harris is a freelance writer and journalist. His first book is <a href=\"http://www.danielharriswriter.co.uk/\">On The Road: A journey through a  season</a> and he has just finished his first novel</p>",
+        "r2ContributorId":"28429",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/4/5/1302019018185/Daniel_Harries.jpg",
         "references":[]
       },{
         "id":"sport/sport",
@@ -1367,319 +897,936 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/series/amazing-world-of-sport",
-        "type":"series",
-        "webTitle":"The amazing world of sport",
-        "webUrl":"http://www.theguardian.com/sport/series/amazing-world-of-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/series/amazing-world-of-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
         "references":[]
       },{
-        "id":"type/video",
+        "id":"football/chelsea",
+        "type":"keyword",
+        "webTitle":"Chelsea",
+        "webUrl":"http://www.theguardian.com/football/chelsea",
+        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/4"
+        }]
+      },{
+        "id":"type/article",
         "type":"type",
-        "webTitle":"Video",
-        "webUrl":"http://www.theguardian.com/video",
-        "apiUrl":"http://content.guardianapis.com/video",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
       }],
       "elements":[{
-        "id":"gu-video-418835387",
+        "id":"gu-image-420236007",
         "relation":"main",
-        "type":"video",
+        "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709246644/Greenpeace-protest-disrup-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999723232/Ezequiel-Lavezzi--001.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
-            "height":"90",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
-            "width":"120"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709248154/Greenpeace-protest-disrup-002.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
-            "height":"225",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709249414/Greenpeace-protest-disrup-003.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
-            "height":"360",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709250745/Greenpeace-protest-disrup-004.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
-            "height":"360",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
-            "width":"640"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709253426/Greenpeace-protest-disrup-006.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"54",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709254711/Greenpeace-protest-disrup-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999726040/Ezequiel-Lavezzi--002.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
-            "height":"340",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709256017/Greenpeace-protest-disrup-008.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"130",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709257297/Greenpeace-protest-disrup-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999727407/Ezequiel-Lavezzi--003.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"84",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709258799/Greenpeace-protest-disrup-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999729068/Ezequiel-Lavezzi--004.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"132",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709260039/Greenpeace-protest-disrup-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999730481/Ezequiel-Lavezzi--005.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"168",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709261340/Greenpeace-protest-disrup-012.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999732047/Ezequiel-Lavezzi--006.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"180",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709262611/Greenpeace-protest-disrup-013.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999733413/Ezequiel-Lavezzi--007.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"228",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709263904/Greenpeace-protest-disrup-014.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999734874/Ezequiel-Lavezzi--008.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"276",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709265282/Greenpeace-protest-disrup-015.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999734874/Ezequiel-Lavezzi--008.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
-            "height":"372",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709266663/Greenpeace-protest-disrup-016.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
-            "height":"230",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
-            "width":"300"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131002GreenpeaceProtest-16x9.mp4",
-          "typeData":{
-            "source":"YouTube",
-            "embeddable":"true",
-            "blockAds":"true",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131002GreenpeaceProtest_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"YouTube",
-            "embeddable":"true",
-            "blockAds":"true",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131002GreenpeaceProtest_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"YouTube",
-            "embeddable":"true",
-            "blockAds":"true",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/10/2/131002GreenpeaceProtest/131002GreenpeaceProtest.m3u8",
-          "typeData":{
-            "source":"YouTube",
-            "embeddable":"true",
-            "blockAds":"true",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/webm",
-          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131002GreenpeaceProtest_vpx.webm",
-          "typeData":{
-            "source":"YouTube",
-            "embeddable":"true",
-            "blockAds":"true",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/2/131002GreenpeaceProtest_8144095.jpg",
-            "width":"480",
-            "durationSeconds":"42"
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
+            "height":"276",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Elysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
+            "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418839760",
+        "id":"gu-image-420236008",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380709257297/Greenpeace-protest-disrup-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/17/1381999727407/Ezequiel-Lavezzi--003.jpg",
           "typeData":{
             "source":"AP",
-            "photographer":"Laurent Gillieron",
-            "altText":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match - video",
+            "photographer":"Sergei Chuzavkov",
+            "altText":"Ezequiel Lavezzi ",
             "height":"84",
-            "credit":"Laurent Gillieron/AP",
-            "caption":"Greenpeace protest disrupts Basel vs FC Schalke 04 Champions League match.  Photograph: Laurent Gillieron/AP",
+            "credit":"Sergei Chuzavkov/AP",
+            "caption":"Can Ezequiel Lavezzi be persuaded to make the jump from the Champs-Élysées to Seven Sisters Road? Photograph: Sergei Chuzavkov/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/19"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/4"
+      }]
+    },{
+      "id":"football/2013/oct/17/england-seeds-world-cup-2014-fifa-rankings",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-17T08:46:44Z",
+      "webTitle":"England not among top seeds for 2014 World Cup after rankings revealed",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/17/england-seeds-world-cup-2014-fifa-rankings",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/17/england-seeds-world-cup-2014-fifa-rankings",
+      "fields":{
+        "trailText":"England have missed out on a place among the top eight seeds for the World Cup, ensuring Roy Hodgson's side face a tougher route to the knock-out stages",
+        "headline":"England not among top seeds for 2014 World Cup after rankings revealed",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jtqk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941019594/Roy-Hodgson-006.jpg",
+        "wordcount":"414",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/england",
+        "type":"keyword",
+        "webTitle":"England",
+        "webUrl":"http://www.theguardian.com/football/england",
+        "apiUrl":"http://content.guardianapis.com/football/england",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/497"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/world-cup-football",
+        "type":"keyword",
+        "webTitle":"World Cup",
+        "webUrl":"http://www.theguardian.com/football/world-cup-football",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/world-cup-2014",
+        "type":"keyword",
+        "webTitle":"World Cup 2014",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2014",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2014",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/world-cup-2014-qualifiers",
+        "type":"keyword",
+        "webTitle":"World Cup 2014 qualifiers",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2014-qualifiers",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2014-qualifiers",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/701"
+        }]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420173600",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941008699/Roy-Hodgson-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"54",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941010840/Roy-Hodgson-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"340",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941012511/Roy-Hodgson-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"130",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941013964/Roy-Hodgson-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"720",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941017391/Roy-Hodgson-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"1536",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941019594/Roy-Hodgson-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"84",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941020884/Roy-Hodgson-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"132",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941022158/Roy-Hodgson-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"168",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941023853/Roy-Hodgson-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"180",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941025190/Roy-Hodgson-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"228",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941026589/Roy-Hodgson-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"276",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941027914/Roy-Hodgson-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"372",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941029417/Roy-Hodgson-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"1116",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941031441/Roy-Hodgson-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"1536",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941026589/Roy-Hodgson-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"276",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420173601",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/16/1381941019594/Roy-Hodgson-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Handout",
+            "altText":"Roy Hodgson",
+            "height":"84",
+            "credit":"Handout/Reuters",
+            "caption":"Roy Hodgson's England team have missed out on a place among the top seeds for the 2014 World Cup in Brazil. Photograph: Handout/Reuters",
             "width":"140"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/500"
+        "id":"pa-football-competition/701"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/497"
+      }]
+    },{
+      "id":"football/2013/oct/17/roy-hodgson-apologises-space-monkey-joke",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-17T08:37:19Z",
+      "webTitle":"Roy Hodgson apologises after 'space monkey' joke to England players",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/17/roy-hodgson-apologises-space-monkey-joke",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/17/roy-hodgson-apologises-space-monkey-joke",
+      "fields":{
+        "trailText":"Andros Townsend has defended Roy Hodgson after the England manager was forced into making an apology over a joke he made about a space monkey and the Tottenham Hotspur winger",
+        "headline":"Roy Hodgson apologises after 'space monkey' joke to England players",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jj89",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998932496/Roy-Hodgson-006.jpg",
+        "wordcount":"482",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/roy-hodgson",
+        "type":"keyword",
+        "webTitle":"Roy Hodgson",
+        "webUrl":"http://www.theguardian.com/football/roy-hodgson",
+        "apiUrl":"http://content.guardianapis.com/football/roy-hodgson",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/england",
+        "type":"keyword",
+        "webTitle":"England",
+        "webUrl":"http://www.theguardian.com/football/england",
+        "apiUrl":"http://content.guardianapis.com/football/england",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/497"
+        }]
+      },{
+        "id":"football/world-cup-2014-qualifiers",
+        "type":"keyword",
+        "webTitle":"World Cup 2014 qualifiers",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2014-qualifiers",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2014-qualifiers",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/701"
+        }]
+      },{
+        "id":"world/race",
+        "type":"keyword",
+        "webTitle":"Race issues",
+        "webUrl":"http://www.theguardian.com/world/race",
+        "apiUrl":"http://content.guardianapis.com/world/race",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420241838",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998922891/Roy-Hodgson-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"54",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998924907/Roy-Hodgson-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"340",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998926561/Roy-Hodgson-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"130",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998928187/Roy-Hodgson-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"720",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998930343/Roy-Hodgson-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"1536",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998932496/Roy-Hodgson-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"84",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998934073/Roy-Hodgson-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"132",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998935771/Roy-Hodgson-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"168",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998937427/Roy-Hodgson-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"180",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998939020/Roy-Hodgson-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"228",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998940685/Roy-Hodgson-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"276",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998942295/Roy-Hodgson-012.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"372",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998944173/Roy-Hodgson-013.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"1116",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998947229/Roy-Hodgson-014.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"1536",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998940685/Roy-Hodgson-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"276",
+            "credit":"Andy Rain/EPA",
+            "caption":"Roy Hodgson has apologised for any offence caused by a 'space monkey' joke he told England's players at half-time against Poland. Photograph: Andy Rain/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420241840",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/17/1381998932496/Roy-Hodgson-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Roy Hodgson",
+            "height":"84",
+            "credit":"Andy Rain/EPA",
+            "caption":"The England manager Roy Hodgson has apologised for any offensed caused for a 'space monkey' joke he told to his players during a half-time speech. Photograph: Andy Rain/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/701"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/497"
+      }]
+    },{
+      "id":"football/2013/oct/17/ange-postecoglou-socceroos-coach-melbourne-victory",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-17T02:02:00Z",
+      "webTitle":"Ange Postecoglou dismisses dual Socceroos-Victory role",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/17/ange-postecoglou-socceroos-coach-melbourne-victory",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/17/ange-postecoglou-socceroos-coach-melbourne-victory",
+      "fields":{
+        "trailText":"<p>Ange Postecoglou says he would be unable to double up as the Socceroos and Melbourne Victory coach</p>",
+        "headline":"Ange Postecoglou dismisses dual Socceroos-Victory role",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jj6d",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381716853245/Ange-Postecoglou-003.jpg",
+        "wordcount":"273",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/football/australia",
+        "apiUrl":"http://content.guardianapis.com/football/australia",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/7317"
+        }]
+      },{
+        "id":"football/melbourne-victory",
+        "type":"keyword",
+        "webTitle":"Melbourne Victory",
+        "webUrl":"http://www.theguardian.com/football/melbourne-victory",
+        "apiUrl":"http://content.guardianapis.com/football/melbourne-victory",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420210475",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381716867349/Ange-Postecoglou-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Julian Smith",
+            "altText":"Ange Postecoglou",
+            "height":"276",
+            "credit":"Julian Smith/AAP Image",
+            "caption":"Ange Postecoglou is considered by many to be Australia's best coach.  Photograph: Julian Smith/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420210476",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381716853245/Ange-Postecoglou-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Julian Smith",
+            "altText":"Ange Postecoglou",
+            "height":"84",
+            "credit":"Julian Smith/AAP Image",
+            "caption":"Ange Postecoglou is considered by many to be Australia's best coach.  Photograph: Julian Smith/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/7317"
       }]
     }],
     "storyPackage":[]
