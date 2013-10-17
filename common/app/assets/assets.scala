@@ -40,8 +40,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
   object css {
 
-    def head = css(Configuration.environment.projectName)
-    def head(projectOverride: String) = css(projectOverride)
+    def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
 
     // A mutable map of 'project url' keys to 'css content' values
     private val memoizedCss: MutableMap[java.net.URL, String] = MutableMap()
