@@ -1,8 +1,9 @@
 define([
     'common',
+    'modules/detect',
     'bean',
     'bonzo'
-], function(common, bean, bonzo) {
+], function(common, detect,  bean, bonzo) {
 
     var Sticky = function (options) {
         this.options = common.extend(this.DEFAULTS, options);
@@ -22,6 +23,8 @@ define([
 
     Sticky.prototype.bindListeners = function () {
         var self = this;
+
+        var e = detect.hasTouchScreen() ? 'touchmove' : 'scroll';
         bean.on(window, 'scroll', function(){
             common.requestAnimationFrame(function(){
                 self.checkPosition.call(self);
@@ -32,7 +35,7 @@ define([
     Sticky.prototype.checkPosition = function () {
         var scrollTop = bonzo(document.body).scrollTop();
 
-        if(scrollTop > this.top) {
+        if(scrollTop > this.top && scrollTop < this.bottom) {
             bonzo(this.el).addClass(this.options.affixCls);
         } else {
             bonzo(this.el).removeClass(this.options.affixCls);

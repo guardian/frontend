@@ -22,8 +22,10 @@
             <div id="preload-1" class="preload">
                 <div class="parts">
                     <div class="parts__head">
-                        <div class="js-sticky-upper" data-id="Top"></div>
-                       @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
+                        <div class="js-sticky-upper" data-id="Top2"></div>
+                        <div class="top-banner-ad-container">
+                            @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
+                        </div>
                     </div>
                     <div class="parts__body">
                         @body
@@ -41,7 +43,7 @@
 
     @fragments.footer(metaData)
 
-    <div class="js-sticky-lower" data-id="Top"></div>
+    <div class="js-sticky-lower" data-id="Top2"></div>
 
     @fragments.loadCss()
 

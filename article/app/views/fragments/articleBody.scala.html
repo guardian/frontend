@@ -70,19 +70,21 @@
                 </div>
                 <div class="article-v2__secondary-column" aria-hidden="true">
                     <div class="article-v2__secondary-column__inner">
-                        <div class="u-table js-mpu-container">
+                        <div class="js-sticky-upper" data-id="mpu-ad-slot"></div>
+                        <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
-                                    <h2 class="article__meta-heading tone-colour">Share this article</h2>
-                                    @fragments.social(article, "next to content")
-                                    <div class="js-mpu-upper" data-id="x07"></div>
-                                    @fragments.adSlot(id="mpu-banner-ad", baseSlot="", medianSlot="", extendedSlot="x07")
+                                    <div class="mpu-container js-mpu-ad-slot">
+                                        <h2 class="article__meta-heading tone-colour">Share this article</h2>
+                                        @fragments.social(article, "next to content")
+                                        @fragments.adSlot(id="mpu-banner-ad", baseSlot="", medianSlot="Middle1", extendedSlot="Middle1")
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--bottom">
-                                    <div class="js-mpu-lower" data-id="x07"></div>
+                                    <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
                                 </div>
                             </div>
                         </div>

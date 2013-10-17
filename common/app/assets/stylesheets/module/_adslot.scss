@@ -28,6 +28,13 @@
     background-color: #fff;
 }
 
+.top-banner-ad-container {
+    height: 74px;
+    @include mq(desktopAd) {
+        height: auto;
+    }
+}
+
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
 
@@ -35,10 +42,12 @@
         background-color: #ffffff;
     }
 
-    &.is-affixed {
-      position: fixed;
-      top: 0;
-      background: $c-neutral7;
+    @include mq($to: tablet) {
+        &.is-affixed {
+            z-index: 1001;
+            position: fixed;
+            top: 0;
+        }
     }
 }
 
@@ -59,6 +68,13 @@
         padding-right: $gs-gutter;
     }
 }
+.mpu-container {
+    position: static;
+    &.is-affixed {
+        position: fixed;
+        top: $baseline*4;
+    }
+}
 
 .ad-slot--middle-banner-ad {
     background-color: #fff;
@@ -75,13 +91,4 @@
     width: 300px;
     height: 250px;
     overflow: hidden;
-}
-
-.ad-slot--bottom-sticky-banner-ad {
-    position: fixed;
-    bottom: 0px;
-
-    @include mq(tablet){
-        display: none;
-    }
 }
