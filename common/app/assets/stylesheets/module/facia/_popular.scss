@@ -1,33 +1,31 @@
 .collection--popular {
     @include mq($to: tablet) {
         @include first-row(1);
+        .item:nth-child(-n+3) {
+            @include card-mobile;
+        }
         .item:first-child {
-            @include card($with-image: true);
+            @include card-mobile-image;
         }
-        .item:nth-child(2),
-        .item:nth-child(3) {
-            @include card;
-        }
-        .item:nth-child(n + 4) {
+        .item:nth-child(n+4) {
             @include card-headline;
+        }
+    }
+    @include mq(tablet, wide) {
+        .item {
+            @include card;
         }
     }
     @include mq(tablet, desktop) {
         @include row(2);
         .item:nth-child(-n+2) {
-            @include card($with-image: true);
-        }
-        .item:nth-child(n+3) {
-            @include card;
+            @include card-image;
         }
     }
     @include mq(desktop, wide) {
         @include row(3);
         .item:nth-child(-n+3) {
-            @include card($with-image: true);
-        }
-        .item:nth-child(n+4) {
-            @include card;
+            @include card-image;
         }
     }
     @include mq(wide) {
@@ -35,8 +33,7 @@
         .items {
             overflow: hidden;
         }
-        // stylings for beggining and end of rows
-        .item:first-child,
+        // stylings for begining and end of rows
         .item:nth-child(4n+4) {
             @include row-start;
         }
@@ -47,7 +44,6 @@
         }
         .item:first-child {
             @include card-triple-width;
-            float: left;
         }
         .item:nth-child(n+2) {
             @include card;
