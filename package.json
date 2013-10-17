@@ -20,6 +20,7 @@
     "grunt-s3": "~0.2.0-alpha.2",
     "moment": "~2.1.0",
     "grunt-mkdir": "~0.1.1",
+    "grunt-contrib-imagemin": "git://github.com/guardian/grunt-contrib-imagemin#master",
     "grunt-hash": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
