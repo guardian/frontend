@@ -146,7 +146,7 @@
                 </div>
                 <div class="list-header__timings">
                     <!-- ko if: state.timeAgo -->
-                        edited <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                        <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
                         by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                     <!-- /ko -->
                     <!-- ko ifnot: state.timeAgo -->
@@ -156,11 +156,11 @@
             </div>
 
             <div data-bind="css: {'pending': state.loadIsPending}">
-                <div class="live-zones" data-bind="
+                <div class="live-groups" data-bind="
                     visible: state.liveMode,
                     template: {name: 'template_zones', foreach: live}"></div>
 
-                <div class="draft-zones" data-bind="
+                <div class="draft-groups" data-bind="
                     visible: !state.liveMode(),
                     template: {name: 'template_zones', foreach: draft}"></div>
             </div>
@@ -169,7 +169,7 @@
 
     <script type="text/html" id="template_zones">
         <!-- ko if: !_.isUndefined(name) -->
-        <div class="zone-name" data-bind="text: name"></div>
+        <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="
             makeDropabble: true,

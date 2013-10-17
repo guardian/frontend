@@ -75,7 +75,7 @@ input[type=text] {
 }
 
 .droppable {
-    padding: 0 0 25px 0;
+    padding: 0 0 15px 0;
     -webkit-transition: background-color 50ms;
        -moz-transition: background-color 50ms;
             transition: background-color 50ms;
@@ -243,7 +243,7 @@ a.list-header__status__control:visited {
             transition: background-color 100ms;
 }
 
-.draft-zones .trail {
+.draft-groups .trail {
     background-color: #EEEEEE;
 }
 
@@ -437,11 +437,14 @@ button {
     right: 33px;
 }
 
-.zone-name {
-    padding: 0 0 0 4px;
-    font-size: 14px;
-    font-style: italic;
-    color: #666666;
+.group-name {
+    margin: 4px 0 0px 85px;
+    font-size: 10px;
+    line-height: 15px;
+    color: #999999;
+    width: 74px;
+    text-transform: uppercase;
+    border-top: 1px dotted #ccc;
 }
 
 .frames {
