@@ -1,0 +1,1065 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"commentisfree/2013/oct/14/nsa-shows-law-master-spying-technology",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-14T14:21:36Z",
+      "webTitle":"NSA affair shows the law should be the master of technology | Ken Macdonald",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/14/nsa-shows-law-master-spying-technology",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/14/nsa-shows-law-master-spying-technology",
+      "fields":{
+        "newspaperPageNumber":"32",
+        "trailText":"<strong>Ken Macdonald:</strong> It is legitimate for a democracy to permit state agencies to intrude into private lives; so long as our laws ensure they serve the public interest",
+        "headline":"NSA affair shows the law should be the master of technology",
+        "body":"<p>Where should one draw the boundaries between secrecy, openness and security? Probably not by privatising the right to publish, when it comes to the work of the security agencies. It may do for libertarians like <a href=\"http://www.theguardian.com/world/2013/mar/22/rand-paul-republican-rising-star\" title=\"\">Rand Paul</a> to argue the state cannot be trusted with anything, so that government should be vanishingly small, and that it certainly shouldn't be permitted deep conspiratorial secrets. But it's an odd position for left-of-centre believers in the state to wish away any credible apparatus of secret intelligence. To express the blindingly obvious, it is an entirely legitimate manifestation of state power in a democratic society to have agencies that, according to strict legal limitations, are permitted to surveil and to intrude in the cause of public safety.</p><p>This is why WikiLeaks is a false prophet. And why <a href=\"http://www.theguardian.com/media/2010/dec/14/julian-assange-philosophy-evolving-wikileaks\" title=\"\">Julian Assange's philosophy</a> – such as it exists – is a childish stamp of the feet, and deeply totalitarian. After all, elements of secrecy and discretion are an intrinsic aspect of any human life that retains its dignity. It's discomforting to consider where fundamentalists for openness might be inclined to draw the line between the public and the private, and how much human identity they'd parade in the open. Is transparency always and in all circumstances good, even when it comes to governments?</p><p>The technology of communications has changed more rapidly in the past 15 years than George Orwell imagined in his darkest writing. That television screen staring out from a bleak apartment wall at <a href=\"http://en.wikipedia.org/wiki/Winston_Smith\" title=\"\">Winston Smith</a>, once so threatening and strange, suddenly seems almost comically archaic and hardly scary at all. Contrary to the central conceit of 1984, most technological change has been a headlong, manic streak not into servitude, but into a surprising upland of human knowledge and engagement.</p><p>Of course it has also meant that the spooks, who once sat in cubicles steaming open the glued-down flaps of a few dozen suspect envelopes, now have more fertile plains to furrow and the marvellous means to do it. Now they can steam open everything.</p><p></p><p>The point is that this blinding transformation has careered into a world where legislation is so anti-modern that it struggles to distinguish between miniature bugs screwed into telephone earpieces and remote tapping from old-world, long gone <a href=\"http://en.wikipedia.org/wiki/General_Post_Office\" title=\"\">GPO</a> exchanges. And this as we learn that GCHQ, in all its technological majesty, can scoop up every last word that passes through those sleek cables beneath the Atlantic, everything we say and every last key that our fingers stroke. So it seems obvious that when it comes to surveillance and techniques of domestic spying, the law should be the master of technology. Anything else risks an increasing subservience of democracy to the unaccountability of security power. This means, at the very least, that as technologies develop, parliament should consider afresh the rules that govern their use by state agencies.</p><p>What is the law that defines GCHQ's power over the internet; and how many warrants, and signed by whom, does it take to permit our spies access to everything? No one seems to know.</p><p>Not the least of the inadequacies exposed by fallout from the Snowden revelations has been the sickly character of parliamentary oversight of the security agencies, even after recent reforms. An intelligence and security committee that goes into brief private session, only to emerge blinking into the daylight with protestations of apparent fealty to the security services, is a poor substitute for grown-up scrutiny. Co-option is not a uniquely British problem, but it surely is underlined when, amazingly, the <a href=\"http://www.theguardian.com/commentisfree/2013/sep/20/rubbish-sir-simon-intellignence-snowden\" title=\"\">ISC is chaired by Sir Malcolm Rifkind</a> – once responsible for MI6 as foreign secretary.</p><p>He seems badly compromised, and the ISC should never again be led by someone whom the public might perceive as having an axe to grind or an interest to defend.</p><p>But worst of all has been the argument, heavily deployed in recent days, including by Sir Malcolm himself, that any more daylight than we currently enjoy simply <a href=\"http://www.theguardian.com/commentisfree/2013/oct/10/mi5-andrew-parker-different-world-shaker-aamer\" title=\"\">assists the nation's enemies</a>. Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric that naively raises a perfectly legitimate question: how should we ensure that those privileged to be granted special powers to intrude into everything that is private serve a real public interest, rather than the dangerously false god of securitisation for its own sake?</p><p>There is still great trust placed in the security agencies by the mass of British people. No doubt this results from a confidence that our spooks are in the business of targeting and going after our enemies, that we are on the same side and that they work for us. But nothing could be more damaging to this public support than a notion that, in pursuing a broadening vocation, the spies somehow find themselves squinting through lenses not just at the villains, but at the rest of us too.</p><!-- Guardian Watermark: internal-code/content/419921762|2013-10-16T18:19:28Z|433bbc8f0704a1b6403e2487217986a378ef2797 -->",
+        "showInRelatedContent":"false",
+        "lastModified":"2013-10-14T23:05:07Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+        "standfirst":"It is legitimate for a democracy to permit state agencies to intrude into private lives - so long as our laws ensure they serve the public interest",
+        "shortUrl":"http://gu.com/p/3jgzk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+        "wordcount":"803",
+        "commentable":"true",
+        "internalContentCode":"419921762",
+        "allowUgc":"false",
+        "internalOctopusCode":"8191769",
+        "isPremoderated":"false",
+        "byline":"Ken Macdonald",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-15",
+        "internalPageCode":"1980632",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-17T14:21:36Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/espionage",
+        "type":"keyword",
+        "webTitle":"Espionage",
+        "webUrl":"http://www.theguardian.com/world/espionage",
+        "apiUrl":"http://content.guardianapis.com/world/espionage",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/mi5",
+        "type":"keyword",
+        "webTitle":"MI5",
+        "webUrl":"http://www.theguardian.com/uk/mi5",
+        "apiUrl":"http://content.guardianapis.com/uk/mi5",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/the-nsa-files",
+        "type":"keyword",
+        "webTitle":"The NSA files",
+        "webUrl":"http://www.theguardian.com/world/the-nsa-files",
+        "apiUrl":"http://content.guardianapis.com/world/the-nsa-files",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/ken-macdonald-qc",
+        "type":"contributor",
+        "webTitle":"Ken Macdonald",
+        "webUrl":"http://www.theguardian.com/profile/ken-macdonald-qc",
+        "apiUrl":"http://content.guardianapis.com/profile/ken-macdonald-qc",
+        "bio":"<p>Ken Macdonald QC is a former UK director of public prosecutions</p>",
+        "r2ContributorId":"31127",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/3/20/1237543747220/kenmac1.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/commentanddebate",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & debate",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419922936",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760252327/Andrew-Parker-001.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"54",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760254266/Andrew-Parker-002.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"130",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"84",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760256889/Andrew-Parker-004.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"132",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760258139/Andrew-Parker-005.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"168",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760259438/Andrew-Parker-006.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"180",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760260727/Andrew-Parker-007.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"228",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760262018/Andrew-Parker-008.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"276",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760262018/Andrew-Parker-008.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"276",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419922937",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"84",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/oct/08/nsa-bulk-metadata-surveillance-intelligence",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-08T16:02:25Z",
+      "webTitle":"Fact: the NSA gets negligible intel from Americans' metadata. So end collection | Yochai Benkler",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/08/nsa-bulk-metadata-surveillance-intelligence",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/08/nsa-bulk-metadata-surveillance-intelligence",
+      "fields":{
+        "trailText":"<p><strong>Yochai Benkler:</strong> Defenders of the NSA's metadata collection program argue its necessity. But the evidence it makes us safer is vanishingly small</p>",
+        "headline":"Fact: the NSA gets negligible intel from Americans' metadata. So end collection",
+        "body":"<p>Congress may be on the verge of prohibiting the NSA from continuing its bulk telephony metadata collection program. Two weeks ago, the Senate national security dissenters: <a href=\"http://www.washingtonpost.com/blogs/the-switch/wp/2013/10/03/the-fact-that-the-nsa-collected-cell-site-data-is-a-big-deal-but-so-is-the-fact-they-admitted-it/\">Wyden</a>, Udall, Paul, and Blumenthal proposed prohibition. Last week, the move received a major boost from a bipartisan proposal by core establishment figures: <a href=\"http://www.webpronews.com/sen-leahy-introduces-usa-freedom-act-to-reign-in-nsa-2013-10\">Senator Patrick Leahy</a>, and Representatives Jim Sensenbrenner and John Conyers. </p><p>It's a prohibition whose time has come. Dragnet surveillance, or bulk collection, goes to the heart of what is wrong with the turn the NSA has taken since 2001. It implements a perpetual \"state of emergency\" mentality that inverts the basic model outlined by the fourth amendment: that there are vast domains of private action about which the state should remain ignorant unless it provides clear prior justification. And all public evidence suggests that, from its inception in 2001 to this day, bulk collection has never made more than a marginal contribution to securing Americans from terrorism, despite its costs.</p><p>In a 2 October hearing of the Senate judiciary committee, Senator Leahy <a href=\"http://dissenter.firedoglake.com/2013/10/02/senate-hearing-us-intelligence-leaders-confronted-for-misleading-public-on-effectiveness-of-nsa-programs/\">challenged the NSA chief</a>, General Keith Alexander:</p><blockquote class=\"quoted\"><p>Would you agree that the 54 cases that keep getting cited by the administration were not all plots, and that of the 54 only 13 had some nexus to the US? Would you agree with that, yes or no?</p></blockquote><p>Alexander responded:</p><blockquote class=\"quoted\"><p>Yes.</p></blockquote><p>Leahy then demanded that Alexander confirm what his deputy, Christopher Inglis, had said in the prior week's testimony: that there is only one example where collection of bulk data is what stopped a terrorist activity. Alexander responded that Inglis might have said two, not one.</p><p>In fact, what Inglis had said the week before was that there was one case \"that comes close to a but-for example and that's the case of <a href=\"http://www.slate.com/articles/technology/future_tense/2013/09/basaaly_moalin_s_defense_team_takes_on_mass_nsa_telephone_surveillance.html\">Basaaly Moalin</a>\". So, who is Moalin, on whose fate the NSA places the entire burden of justifying its metadata collection program? Did his capture foil a second 9/11?</p><p>A cabby from San Diego, Moalin had immigrated as a teenager from Somalia. In February, he was convicted of providing material assistance to a terrorist organization: he had transferred $8,500 to al-Shabaab in Somalia. </p><p>After the Westgate Mall attack in Nairobi, few would argue that al-Shabaab is not a terrorist organization. But al-Shabaab is involved in a local war, and is not invested in attacking the US homeland. The indictment against Moalin explicitly stated that al-Shabaab's enemies were the present Somali government and \"its Ethiopian and African Union supporters\". Perhaps, it makes sense for prosecutors to pursue Somali Americans for doing essentially what <a href=\"http://www.pbs.org/wgbh/pages/frontline/shows/ira/reports/america.html\">some Irish Americans did to help the IRA</a>; perhaps not. But this single successful prosecution, under a vague criminal statute, which stopped a few thousand dollars from reaching one side in a local conflict in the Horn of Africa, is <em>the sole success story</em> for the NSA bulk domestic surveillance program.</p><p>At the hearing, perhaps trying to bolster Alexander's feeble defense of the program's effectiveness, Director of National Intelligence James Clapper <a href=\"http://www.latimes.com/nation/la-na-nsa-surveillance-20131003,0,2535208.story\">complained</a> that \"plots foiled\" should not be the metric. He said:</p><blockquote class=\"quoted\"><p>There's another metric I would use; let's call it the \"peace of mind metric\". In the case of the Boston Marathon bomber, we were able to use these tools to determine whether there was, or was not, a subsequent plot in NYC.</p></blockquote><p>Clapper actually used the clearest example that his program offers Americans little real security – its failure to pick up the Tsarnaev brothers before they attacked – as a way of persuading us that we should use an amorphous and unmeasurable \"peace of mind\" metric; peace of mind we should gain from knowing that the same system that failed to detect the Boston bombers also detected no bombers in New York. One is left picturing <a href=\"http://en.wikiquote.org/wiki/The_Return_of_the_Pink_Panther\">Inspector Clouseau</a>:</p><blockquote class=\"quoted\"><p>I did not know the bank was being robbed because I was engaged in my sworn duty as a police officer.</p></blockquote><p>The admissions Leahy forced out of the NSA heads and DNI Clapper that they have been systematically overstating the effectiveness of bulk collection are consistent with the only other official assessments of bulk collection. The sole publicly available <a href=\"https://www.eff.org/sites/default/files/filenode/dupe_of_039_redacted.ex_-_ocr.pdf\">FISC opinion (pdf)</a> that assesses the impact of bulk collection from 2006 to 2009 was unimpressed that:</p><blockquote class=\"quoted\"><p>[T]he government's submission cites three examples in which the FBI opened three new preliminary investigations of persons in the US based on tips from the BR metadata program.</p></blockquote><p>Judge Walton wrote that this achievement \"does not seem particularly significant\". </p><p>Perhaps most damning are the results of the consensus report authored by the <a href=\"https://www.fas.org/irp/eprint/psp.pdf\">five inspectors general</a> of the Departments of Defense and Justice and the CIA, NSA, and Office of DNI, mandated by Congress as part of the Fisa Amendments Act of 2008. That report provides the most detailed official assessment of the effectiveness of bulk collection, from inception as the President's Surveillance Program (PSP) in the fall of 2001 until 2007. </p><p>It is revealing about both the NSA and its bulk collection program. The NSA's inspector general only reported the agency's top brass beliefs; his report merely quoted then NSA Director Michael Hayden in his view that there were \"no communications more important to NSA efforts to defend the nation\". Other inspectors general were more skeptical. The Department of Justice \"concluded that although PSP-derived information had value in some counterterrorism investigations, it generally played a limited role in the FBI's overall counterterrorism efforts\". The CIA reported:</p><blockquote class=\"quoted\"><p>[W]orking-level CIA analysts and targeting officers who were read into the PSP had too many competing priorities, and too many other information sources and analytic tools available to them, to fully utilize PSP reporting. Officials also stated that much of the PSP reporting was vague or without context, which led analysts and targeting officers to rely more heavily on other information sources and analytic tools, which were more easily accessed and timely than the PSP. </p></blockquote><p>The inspector general of the DNI reported that \"<a href=\"http://www.nctc.gov/\">National Counterterrorism Center</a> analysts characterized the PSP information as being a useful tool, but noted that the information was only one of several valuable sources of information available to them\", and \"not of greater value than other sources of intelligence\".</p><p>It is hardly surprising that supporters of bulk collection fervently believe it is critical to national security. No psychologically well-balanced person could permit herself to support a program that compromises the privacy of tens of millions of Americans, costs billions of dollars, and imposes direct and articulable harm to cyber security by undermining the security of commercial products and public standards without holding such a belief truly and honestly.</p><p>But the honest faith of insiders that their bureaucratic mission is true and critical is no substitute for credible evidence. A dozen years of experience has produced many public overstatements and much hype from insiders, but nothing to support the proposition that the program works at all, much less that its marginal contribution is significant enough to justify its enormous costs in money, freedom, and destabilization of internet security. No rational cost-benefit analysis could justify such a leap of faith.</p><p>If the NSA cannot show real, measurable evidence of its effectiveness, evidence that doesn't collapse as soon as it is examined and isn't a vague appeal to amorphous, measurement-free \"peace of mind\", its bulk collection program has to go.</p><!-- Guardian Watermark: internal-code/content/419302353|2013-10-16T18:19:28Z|a9d11c6c90b9bb00adfbfa1f16c19f85e83832d3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-08T16:06:00Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380221340057/dbdd6fc4-0c5e-45a9-b3b0-544f00a1d479-140x84.jpeg",
+        "standfirst":"Defenders of the NSA's bulk data collection program argue its necessity. But the evidence it makes us safer is vanishingly small",
+        "shortUrl":"http://gu.com/p/3jcvp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380221340057/dbdd6fc4-0c5e-45a9-b3b0-544f00a1d479-140x84.jpeg",
+        "wordcount":"1189",
+        "commentable":"true",
+        "internalContentCode":"419302353",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Yochai Benkler",
+        "publication":"theguardian.com",
+        "internalPageCode":"1977073",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-11T16:02:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/yochai-benkler",
+        "type":"contributor",
+        "webTitle":"Yochai Benkler",
+        "webUrl":"http://www.theguardian.com/profile/yochai-benkler",
+        "apiUrl":"http://content.guardianapis.com/profile/yochai-benkler",
+        "bio":"<p>Yochai Benkler is a law professor and director of the <a href=\"http://cyber.law.harvard.edu/\">Berkman Center for Internet &amp; Society</a> at Harvard University.</p>",
+        "r2ContributorId":"57745",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/19/1374242126102/Yochai_Benkler_140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/data-protection",
+        "type":"keyword",
+        "webTitle":"Data protection",
+        "webUrl":"http://www.theguardian.com/technology/data-protection",
+        "apiUrl":"http://content.guardianapis.com/technology/data-protection",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"law/us-constitution-and-civil-liberties",
+        "type":"keyword",
+        "webTitle":"US constitution and civil liberties",
+        "webUrl":"http://www.theguardian.com/law/us-constitution-and-civil-liberties",
+        "apiUrl":"http://content.guardianapis.com/law/us-constitution-and-civil-liberties",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/congress",
+        "type":"keyword",
+        "webTitle":"US Congress",
+        "webUrl":"http://www.theguardian.com/world/congress",
+        "apiUrl":"http://content.guardianapis.com/world/congress",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/civil-liberties-international",
+        "type":"keyword",
+        "webTitle":"Civil liberties - international",
+        "webUrl":"http://www.theguardian.com/law/civil-liberties-international",
+        "apiUrl":"http://content.guardianapis.com/law/civil-liberties-international",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/fisa-court",
+        "type":"keyword",
+        "webTitle":"Fisa court",
+        "webUrl":"http://www.theguardian.com/law/fisa-court",
+        "apiUrl":"http://content.guardianapis.com/law/fisa-court",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419398893",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380221338632/dbdd6fc4-0c5e-45a9-b3b0-544f00a1d479-460x276.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"JASON REED",
+            "altText":"U.S. National Security Agency Director General Keith Alexander (L), Director of National Intelligence James Clapper and Deputy Attorney General James Cole (R) are sworn in to testify at a Senate Intelligence Committee hearing the Foreign Intelligence Surveillance Act legislation on Capitol Hill in Washington, September 26, 2013.",
+            "height":"276",
+            "credit":"JASON REED/REUTERS",
+            "caption":"NSA chief Keith Alexander, DNI James Clapper and Deputy Attorney General James Cole testify before the Senate intelligence committee. Photograph: Jason Reed/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419398894",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380221340057/dbdd6fc4-0c5e-45a9-b3b0-544f00a1d479-140x84.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"JASON REED",
+            "altText":"U.S. National Security Agency Director General Keith Alexander (L), Director of National Intelligence James Clapper and Deputy Attorney General James Cole (R) are sworn in to testify at a Senate Intelligence Committee hearing the Foreign Intelligence Surveillance Act legislation on Capitol Hill in Washington, September 26, 2013.",
+            "height":"84",
+            "credit":"JASON REED/REUTERS",
+            "caption":"U.S. National Security Agency Director General Keith Alexander (L), Director of National Intelligence James Clapper and Deputy Attorney General James Cole (R) are sworn in to testify at a Senate Intelligence Committee hearing the Foreign Intelligence Surveillance Act legislation on Capitol Hill in Washington, September 26, 2013. Photograph: JASON REED/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/14/nsa-shows-law-master-spying-technology",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-14T14:21:36Z",
+      "webTitle":"NSA affair shows the law should be the master of technology | Ken Macdonald",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/14/nsa-shows-law-master-spying-technology",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/14/nsa-shows-law-master-spying-technology",
+      "fields":{
+        "newspaperPageNumber":"32",
+        "trailText":"<strong>Ken Macdonald:</strong> It is legitimate for a democracy to permit state agencies to intrude into private lives; so long as our laws ensure they serve the public interest",
+        "headline":"NSA affair shows the law should be the master of technology",
+        "body":"<p>Where should one draw the boundaries between secrecy, openness and security? Probably not by privatising the right to publish, when it comes to the work of the security agencies. It may do for libertarians like <a href=\"http://www.theguardian.com/world/2013/mar/22/rand-paul-republican-rising-star\" title=\"\">Rand Paul</a> to argue the state cannot be trusted with anything, so that government should be vanishingly small, and that it certainly shouldn't be permitted deep conspiratorial secrets. But it's an odd position for left-of-centre believers in the state to wish away any credible apparatus of secret intelligence. To express the blindingly obvious, it is an entirely legitimate manifestation of state power in a democratic society to have agencies that, according to strict legal limitations, are permitted to surveil and to intrude in the cause of public safety.</p><p>This is why WikiLeaks is a false prophet. And why <a href=\"http://www.theguardian.com/media/2010/dec/14/julian-assange-philosophy-evolving-wikileaks\" title=\"\">Julian Assange's philosophy</a> – such as it exists – is a childish stamp of the feet, and deeply totalitarian. After all, elements of secrecy and discretion are an intrinsic aspect of any human life that retains its dignity. It's discomforting to consider where fundamentalists for openness might be inclined to draw the line between the public and the private, and how much human identity they'd parade in the open. Is transparency always and in all circumstances good, even when it comes to governments?</p><p>The technology of communications has changed more rapidly in the past 15 years than George Orwell imagined in his darkest writing. That television screen staring out from a bleak apartment wall at <a href=\"http://en.wikipedia.org/wiki/Winston_Smith\" title=\"\">Winston Smith</a>, once so threatening and strange, suddenly seems almost comically archaic and hardly scary at all. Contrary to the central conceit of 1984, most technological change has been a headlong, manic streak not into servitude, but into a surprising upland of human knowledge and engagement.</p><p>Of course it has also meant that the spooks, who once sat in cubicles steaming open the glued-down flaps of a few dozen suspect envelopes, now have more fertile plains to furrow and the marvellous means to do it. Now they can steam open everything.</p><p></p><p>The point is that this blinding transformation has careered into a world where legislation is so anti-modern that it struggles to distinguish between miniature bugs screwed into telephone earpieces and remote tapping from old-world, long gone <a href=\"http://en.wikipedia.org/wiki/General_Post_Office\" title=\"\">GPO</a> exchanges. And this as we learn that GCHQ, in all its technological majesty, can scoop up every last word that passes through those sleek cables beneath the Atlantic, everything we say and every last key that our fingers stroke. So it seems obvious that when it comes to surveillance and techniques of domestic spying, the law should be the master of technology. Anything else risks an increasing subservience of democracy to the unaccountability of security power. This means, at the very least, that as technologies develop, parliament should consider afresh the rules that govern their use by state agencies.</p><p>What is the law that defines GCHQ's power over the internet; and how many warrants, and signed by whom, does it take to permit our spies access to everything? No one seems to know.</p><p>Not the least of the inadequacies exposed by fallout from the Snowden revelations has been the sickly character of parliamentary oversight of the security agencies, even after recent reforms. An intelligence and security committee that goes into brief private session, only to emerge blinking into the daylight with protestations of apparent fealty to the security services, is a poor substitute for grown-up scrutiny. Co-option is not a uniquely British problem, but it surely is underlined when, amazingly, the <a href=\"http://www.theguardian.com/commentisfree/2013/sep/20/rubbish-sir-simon-intellignence-snowden\" title=\"\">ISC is chaired by Sir Malcolm Rifkind</a> – once responsible for MI6 as foreign secretary.</p><p>He seems badly compromised, and the ISC should never again be led by someone whom the public might perceive as having an axe to grind or an interest to defend.</p><p>But worst of all has been the argument, heavily deployed in recent days, including by Sir Malcolm himself, that any more daylight than we currently enjoy simply <a href=\"http://www.theguardian.com/commentisfree/2013/oct/10/mi5-andrew-parker-different-world-shaker-aamer\" title=\"\">assists the nation's enemies</a>. Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric that naively raises a perfectly legitimate question: how should we ensure that those privileged to be granted special powers to intrude into everything that is private serve a real public interest, rather than the dangerously false god of securitisation for its own sake?</p><p>There is still great trust placed in the security agencies by the mass of British people. No doubt this results from a confidence that our spooks are in the business of targeting and going after our enemies, that we are on the same side and that they work for us. But nothing could be more damaging to this public support than a notion that, in pursuing a broadening vocation, the spies somehow find themselves squinting through lenses not just at the villains, but at the rest of us too.</p><!-- Guardian Watermark: internal-code/content/419921762|2013-10-16T18:19:28Z|433bbc8f0704a1b6403e2487217986a378ef2797 -->",
+        "showInRelatedContent":"false",
+        "lastModified":"2013-10-14T23:05:07Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+        "standfirst":"It is legitimate for a democracy to permit state agencies to intrude into private lives - so long as our laws ensure they serve the public interest",
+        "shortUrl":"http://gu.com/p/3jgzk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+        "wordcount":"803",
+        "commentable":"true",
+        "internalContentCode":"419921762",
+        "allowUgc":"false",
+        "internalOctopusCode":"8191769",
+        "isPremoderated":"false",
+        "byline":"Ken Macdonald",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-15",
+        "internalPageCode":"1980632",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-17T14:21:36Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/espionage",
+        "type":"keyword",
+        "webTitle":"Espionage",
+        "webUrl":"http://www.theguardian.com/world/espionage",
+        "apiUrl":"http://content.guardianapis.com/world/espionage",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/mi5",
+        "type":"keyword",
+        "webTitle":"MI5",
+        "webUrl":"http://www.theguardian.com/uk/mi5",
+        "apiUrl":"http://content.guardianapis.com/uk/mi5",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/the-nsa-files",
+        "type":"keyword",
+        "webTitle":"The NSA files",
+        "webUrl":"http://www.theguardian.com/world/the-nsa-files",
+        "apiUrl":"http://content.guardianapis.com/world/the-nsa-files",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/ken-macdonald-qc",
+        "type":"contributor",
+        "webTitle":"Ken Macdonald",
+        "webUrl":"http://www.theguardian.com/profile/ken-macdonald-qc",
+        "apiUrl":"http://content.guardianapis.com/profile/ken-macdonald-qc",
+        "bio":"<p>Ken Macdonald QC is a former UK director of public prosecutions</p>",
+        "r2ContributorId":"31127",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/3/20/1237543747220/kenmac1.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/commentanddebate",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & debate",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419922936",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760252327/Andrew-Parker-001.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"54",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760254266/Andrew-Parker-002.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"130",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"84",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760256889/Andrew-Parker-004.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"132",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760258139/Andrew-Parker-005.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"168",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760259438/Andrew-Parker-006.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"180",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760260727/Andrew-Parker-007.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"228",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760262018/Andrew-Parker-008.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"276",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760262018/Andrew-Parker-008.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"276",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419922937",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381760255614/Andrew-Parker-003.jpg",
+          "typeData":{
+            "source":"REX/Gavin Rodgers",
+            "photographer":"REX/Gavin Rodgers",
+            "altText":"Andrew Parker",
+            "height":"84",
+            "credit":"REX/Gavin Rodgers/REX/Gavin Rodgers",
+            "caption":"'Andrew Parker, the new director general of MI5, should be slower to employ this foolish, self-serving rhetoric.'  Photograph: REX/Gavin Rodgers",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/16/nsa-fbi-endrun-weak-oversight",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-16T14:30:00Z",
+      "webTitle":"How the NSA and FBI foil weak oversight | Yochai Benkler",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/16/nsa-fbi-endrun-weak-oversight",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/16/nsa-fbi-endrun-weak-oversight",
+      "fields":{
+        "trailText":"<p><strong>Yochai Benkler:</strong> Unless Congress imposes new limits on state surveillance, it's inevitable agencies will go on abusing our liberties and privacy</p>",
+        "headline":"How the NSA and FBI foil weak oversight",
+        "body":"<p>Over 20 congressional bills aim to address the crisis of confidence in NSA surveillance. With Patriot Act author and Republican Congressman Jim Sensenbrenner working with Vermont Democratic Senator Patrick Leahy on a bipartisan proposal to put the NSA's metadata program &quot;<a href=\"http://www.theguardian.com/world/2013/oct/10/nsa-surveillance-patriot-act-author-bill\">out of business</a>&quot;, we face two fundamentally different paths on the future of government surveillance. </p><p>One, pursued by the intelligence establishment, wants to normalize and perpetuate its dragnet surveillance program with as minimal cosmetic adjustments as necessary to mollify a concerned public. The other challenges the very concept that dragnet surveillance can be a stable part of a privacy-respecting system of limited government.</p><p>Pervasive surveillance proponents make two core arguments.</p><p>First, bulk collection saves Americans from foreign terrorists. The problem with this argument is that all publicly available evidence presented to Congress, the judiciary, or independent executive branch review suggests that the <a href=\"http://www.theguardian.com/commentisfree/2013/oct/08/nsa-bulk-metadata-surveillance-intelligence\">effect of bulk collection has been marginal</a>. Perhaps, this paucity of evidence is what led <a href=\"http://www.nytimes.com/2013/10/13/us/nsa-director-gives-firm-and-broad-defense-of-surveillance-efforts.html?pagewanted=2&amp;_r=1\">General Alexander</a> and <a href=\"http://www.newrepublic.com/article/115002/invasive-nsa-will-protect-us-cyber-attacks\">other supporters</a> to add cyber security as a backup exigency to justify the program.</p><p>The second argument that defenders of mass surveillance offer is that detailed, complex and faithfully-executed rules for how the information that is collected will be used are adequate replacements for what the <a href=\"http://www.uscourts.gov/educational-resources/get-involved/constitution-activities/fourth-amendment.aspx\">fourth amendment</a> once quaintly called &quot;probable cause&quot; and a warrant &quot;particularly describing the place to be searched, and the persons or things to be seized&quot;. The problem with this second argument is that it combines two fundamentally incompatible elements.</p><p>Mass surveillance represents a commitment to near-universal all-seeing gaze, so as to assess and respond to threats that can arise anywhere, at any time. Privacy as a check on government power represents a constitutional judgment that a limited government must have <em>limited power to inspect</em> our daily lives, and that an omniscient government is too powerful for mere rules to restrain. The experience of the past decade confirms this incompatibility. Throughout its lifetime, NSA dragnet surveillance has repeatedly and persistently violated any rules in place meant to constrain it.</p><p>After 11 September 2001, and until 2004, the President's Surveillance Programs (PSP) simply operated outside the law. The 2009 <a href=\"http://www.justice.gov/oig/special/s0907.pdf\">inspectors general report (pdf)</a> on these programs explained that, initially, the White House obtained a veneer of legality by soliciting an opinion from the Office of Legal Counsel. It then deployed security clearance strategically to insulate the OLC lawyer who had blessed the illegal program from the scrutiny of OLC's normal internal review processes. After 2004, professionally conscientious lawyers at the Department of Justice forced the White House to modify some of the programs and shift others to collection based on <a href=\"https://www.eff.org/issues/national-security-letters\">National Security Letters</a> (NSL).</p><p>The victory of legality proved shortlived and imperfect. A <a href=\"https://www.aclu.org/national-security/aclu-roadmap-justice-department-inspector-general-s-review-fbi-s-use-national-secu\">2007 inspector general report</a> on NSLs disclosed that, from 2003 to 2005, the FBI created an alternative basis for dragnet surveillance by issuing over 140,000 NSLs that were under-reported to congressional oversight. Most damningly, the FBI abused &quot;exigent letters&quot; as the reported noted:</p><blockquote class=\"quoted\"><p>[By making] factual misstatements in its official letters to the telephone companies either as to the existence of an emergency justifying shortcuts around lawful procedures or with respect to the steps the FBI supposedly had taken to secure lawful process.</p></blockquote><p>These violations were so serious they became the <a href=\"http://www.justice.gov/oig/special/s1001r.pdf\">subject of a separate</a> damning report. <a href=\"http://www.justice.gov/oig/special/s0803b/final.pdf\">Later reports (pdf)</a> established that the violations continued unabated through 2006, and that redress measures from 2007 were only partially and imperfectly applied. By the time the last NSL report came out, the Fisa Amendments Act of 2008 had recreated the powers of the original PSP and more, subject to detailed constraints and judicial review. But foreign intelligence surveillance court (FISC) opinions since then suggest that the new rules have also failed.</p><p>A 2009 FISC opinion, evaluating the process from 2006 to 2009, dedicated a whole section to &quot;misrepresentations to the court&quot;, and stated that the government has &quot;repeatedly submitted inaccurate descriptions&quot; of the process the FISC was reviewing. The court ordered a series of procedural fixes; the NSA solemnly undertook to follow these, and the court permitted it to continue dragnet surveillance subject to the new rules.</p><p>Two years later, a <a href=\"https://www.aclu.org/files/assets/fisc_opinion_10.3.2011.pdf\">3 October 2011 opinion (pdf)</a> noted: </p><blockquote class=\"quoted\"><p>The court is troubled that the government's revelations regarding NSA's acquisition of internet transactions mark the third instance in less than three years in which the government has disclosed a substantial misrepresentation regarding the scope of a major collection program.</p></blockquote><p>In a by-now-familiar pattern, the NSA was contrite and implemented new procedures, which the court then blessed.</p><p>As the Edward Snowden revelations have been accumulating, we see that the pattern has continued unabated. This very week, we learned that <a href=\"http://www.washingtonpost.com/world/national-security/nsa-collects-millions-of-e-mail-address-books-globally/2013/10/14/8e58b5be-34f9-11e3-80c6-7e6dd8d22d8f_story_1.html\">the NSA is collecting millions of email address books</a> around the world, producing even richer and more invasive portraits than telephony metadata likely offer. </p><p>The NSA continues to evade oversight. This time, it relies on the kind of jurisdictional arbitrage familiar to so many lawless sites the world over: because its technical collection points are physically outside the US, it does not require authorization from either Congress or the Fisa court, even though the dragnet inevitably captures large amounts of data from Americans. The official response, predictably says &quot;we have checks and balances built into our tools&quot;. But really, after a dozen years of repeated violations even when the Fisa court or Congress were in the loop, why would we expect these self-monitored procedures to work?</p><p>It would be a mistake to imagine that these failures represent faithless or incompetent civil servants. To the contrary, we should assume that these failures come because NSA and FBI counterterrorism agents are faithful and competent civil servants, but are faced with incompatible demands.</p><p>Technology has enabled government to have investigative and situational awareness on a scale and scope that were science fiction when the Stasi shut its doors. The &quot;state of emergency&quot; mindset necessary to justify the program in the first place drives those charged with assuring the safety of Americans to always use this technology to its full potential; it also gives them an independent source of legitimacy for their actions – the fierce urgency of necessity.</p><p>Their mission clashes with the fundamental premise of privacy as a civil right: that state power is best contained by making the overwhelming majority of what goes on in society invisible to the state. As Justice Alito put it in the supreme court's decision to strike down GPS tracking:</p><blockquote class=\"quoted\"><p>[Historically] the greatest protections of privacy were neither constitutional nor statutory, but practical.</p></blockquote><p>Once the state knows about behavior, it is hard to rely on rules alone to bear the full burden of preventing overreach by those who wield its awesome power. Often, the arguments will be genuine and plausible. How could you possibly justify limiting pervasive surveillance to foreign terrorism and cyber attacks, but <em>not</em> use it to track down a missing child or shut down a ring of pedophiles? </p><p>The new power that comes with near omniscience, however, extracts a heavy cost. The <a href=\"https://www.aclu.org/ten-most-disturbing-things-you-should-know-about-fbi-911\">ACLU's report on FBI abuses</a>, such as hounding whistleblowers or domestic advocacy groups, documents that the opportunities for abuse are as many as there are officials, subjects, and felt necessities. Rules alone cannot hold back the millions of potential abuses of an omniscient state. </p><p>Whether it be the banality of analysts stalking ex-lovers, the inhumanity of careerist prosecutors hounding hacktivists under vague computer laws or using impossibly broad laws like the &quot;<a href=\"http://en.wikipedia.org/wiki/Holder_v._Humanitarian_Law_Project\">material support</a>&quot; statue to pressure innocents to become informers, the crooked timber of humanity – armed with the power of the state and restrained only by the seven fresh bowstrings of superficial legality – will bring failure for constitutional freedoms, predictably, inevitably, tragically.</p><p>Congressional critics of bulk collection need to stand firm. Their current plans aim to do away with bulk collection of telephony metadata, and fix some of the loopholes associated with internet bulk collection. Their fight is critical for anyone concerned about pervasive surveillance becoming the new norm, and deserves our solidarity. But we need more. </p><p>As long as government is allowed to collect all internet data, the perceived exigency will drive honest civil servants to reach more broadly and deeply into our networked lives. Bringing an end to mass government surveillance needs to be a central pillar of returning to the principles we have put in jeopardy in the early 21st century.</p><!-- Guardian Watermark: internal-code/content/420043267|2013-10-16T18:19:28Z|b73b226705a3db1440011b8f0cf72b86f8bf68aa -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T14:57:04Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381139830091/dcaf5ca2-c5dc-4f72-b015-e13191d4d161-140x84.jpeg",
+        "standfirst":"Unless Congress imposes new limits on state surveillance, it's inevitable agencies will go on abusing our liberties and privacy",
+        "shortUrl":"http://gu.com/p/3jhqe",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381139830091/dcaf5ca2-c5dc-4f72-b015-e13191d4d161-140x84.jpeg",
+        "wordcount":"1368",
+        "commentable":"true",
+        "internalContentCode":"420043267",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Yochai Benkler",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981409",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T14:30:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/yochai-benkler",
+        "type":"contributor",
+        "webTitle":"Yochai Benkler",
+        "webUrl":"http://www.theguardian.com/profile/yochai-benkler",
+        "apiUrl":"http://content.guardianapis.com/profile/yochai-benkler",
+        "bio":"<p>Yochai Benkler is a law professor and director of the <a href=\"http://cyber.law.harvard.edu/\">Berkman Center for Internet &amp; Society</a> at Harvard University.</p>",
+        "r2ContributorId":"57745",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/19/1374242126102/Yochai_Benkler_140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/fbi",
+        "type":"keyword",
+        "webTitle":"FBI",
+        "webUrl":"http://www.theguardian.com/world/fbi",
+        "apiUrl":"http://content.guardianapis.com/world/fbi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/us-supreme-court",
+        "type":"keyword",
+        "webTitle":"US supreme court",
+        "webUrl":"http://www.theguardian.com/law/us-supreme-court",
+        "apiUrl":"http://content.guardianapis.com/law/us-supreme-court",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/congress",
+        "type":"keyword",
+        "webTitle":"US Congress",
+        "webUrl":"http://www.theguardian.com/world/congress",
+        "apiUrl":"http://content.guardianapis.com/world/congress",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/data-protection",
+        "type":"keyword",
+        "webTitle":"Data protection",
+        "webUrl":"http://www.theguardian.com/technology/data-protection",
+        "apiUrl":"http://content.guardianapis.com/technology/data-protection",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/us-constitution-and-civil-liberties",
+        "type":"keyword",
+        "webTitle":"US constitution and civil liberties",
+        "webUrl":"http://www.theguardian.com/law/us-constitution-and-civil-liberties",
+        "apiUrl":"http://content.guardianapis.com/law/us-constitution-and-civil-liberties",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/civil-liberties-international",
+        "type":"keyword",
+        "webTitle":"Civil liberties - international",
+        "webUrl":"http://www.theguardian.com/law/civil-liberties-international",
+        "apiUrl":"http://content.guardianapis.com/law/civil-liberties-international",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/fisa-court",
+        "type":"keyword",
+        "webTitle":"Fisa court",
+        "webUrl":"http://www.theguardian.com/law/fisa-court",
+        "apiUrl":"http://content.guardianapis.com/law/fisa-court",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.theguardian.com/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420159694",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381139829224/dcaf5ca2-c5dc-4f72-b015-e13191d4d161-460x276.jpeg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"PAUL J. RICHARDS",
+            "altText":"A computer workstation showing the National Security Agency (NSA) logo inside the Threat Operations Center in the Washington suburb of Fort Meade, Maryland.",
+            "height":"276",
+            "credit":"PAUL J. RICHARDS/AFP/Getty Images",
+            "caption":"A computer workstation at the NSA in Fort Meade. Photograph: Paul J Richards/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420159695",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381139830091/dcaf5ca2-c5dc-4f72-b015-e13191d4d161-140x84.jpeg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"PAUL J. RICHARDS",
+            "altText":"A computer workstation showing the National Security Agency (NSA) logo inside the Threat Operations Center in the Washington suburb of Fort Meade, Maryland.",
+            "height":"84",
+            "credit":"PAUL J. RICHARDS/AFP/Getty Images",
+            "caption":"A computer workstation showing the National Security Agency (NSA) logo inside the Threat Operations Center in the Washington suburb of Fort Meade, Maryland. Photograph: Paul J Richards/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

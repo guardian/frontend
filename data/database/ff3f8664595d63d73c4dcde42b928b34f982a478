@@ -1,0 +1,163 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"technology/blog/2013/sep/23/technology-links-newsbucket",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-23T06:30:00Z",
+      "webTitle":"Boot up: Surface 2 detailed, Apple's Cook in full, typer v internet, and more",
+      "webUrl":"http://www.theguardian.com/technology/blog/2013/sep/23/technology-links-newsbucket",
+      "apiUrl":"http://content.guardianapis.com/technology/blog/2013/sep/23/technology-links-newsbucket",
+      "fields":{
+        "trailText":"<p><strong>Charles Arthur</strong>: Plus police put stolen (but recovered) bikes on Flickr, Windows apps popularity, will Office reach the iPad?, and more</p>",
+        "headline":"Boot up: Surface 2 detailed, Apple's Cook in full, typer v internet, and more",
+        "body":"<p>A burst of 9 links for you to chew over, as picked by the Technology team</p><h2><a href=\"http://www.computerworld.com/s/article/9242569/Microsoft_inches_toward_Office_on_iPad_Android_tablets?taxonomyId=77&amp;pageNumber=2\">Microsoft inches toward Office on iPad, Android tablets &gt;&gt; Computerworld</a></h2><blockquote><p>If Windows 8.1 and a slew of new Windows hardware from Microsoft itself -- more touch-enabled notebooks and a broader array of tablets that includes refreshed Surface devices -- sell better than they have, Microsoft may hesitate to offer Office on iOS and Android, figuring it should keep Office exclusive to Windows a bit longer.</p><p>But if sales don't match the projections Microsoft has settled on internally, it would pull the trigger on Office for the iPad, [Patrick] Moorhead [of Moor Insights &amp; Strategy] said. \"Does having Office on Windows 8.1 incent buyers to buy a Windows machine over an iPad or Android tablet?\" asked Moorhead rhetorically. \"If not, I would expect them to rapidly move to put a more robust Office on iPads and Android tablets, because they wouldn't be losing anything at that point.\"</p></blockquote><p><hr /></p><h2><a href=\"http://winsupersite.com/windows-8/fall-2013-windows-tablet-preview\">Fall 2013 Windows Tablet Preview &gt;&gt; SuperSite for Windows</a></h2><p>Paul Thurrott: </p><blockquote><p>Microsoft and its hardware partners will unleash a new generation of Windows tablets for the 2013 holiday season, in a variety of price points, sizes, and form factors. The new choices I see this year are far more interesting than the 2012 entries, I think, and benefit from updates to the underlying hardware and software platforms.</p><p>What we see here are several mini- and full-sized tablets running on the Intel Atom \"Bay Trail\" platform, plus Microsoft and Nokia devices running on ARM. What's most interesting about Microsoft's Surface lineup for 2013, perhaps, is that they have three devices. And two of them are running Windows RT 8.1 on ARM.</p></blockquote><p>Surface 2 will be unveiled on Monday.</p><p><hr /></p><h2><a href=\"http://www.winbeta.org/news/117336-total-apps-windows-store-and-besttop-windows-8-apps-sept-22nd\">117,336 total apps in the Windows Store and the best/top Windows 8 apps as of Sept 22nd &gt;&gt; WinBeta</a></h2><blockquote><p>As of September 22nd, there are 117,336 in the Windows Store, an increase of 862 apps in just one week. Compared to last week, the top-five free apps has seen some minor shuffling around. Skype retains the lead as the top free app, while we see a new app called \"Mortar Melon Classic\" make its appearance in the list. Microsoft's own Network Speed Test rounds out the top five. The top five free apps in the United States based on popularity are:</p><p>• Skype<br />• Mortar Melon Classic<br />• Netflix<br />• Google Search<br />• Network Speed Test</p></blockquote><p>Spot the interloper.</p><p><hr /></p><h2><a href=\"http://www.flickr.com/photos/metropolitanpolice/sets/72157633782655415/\">London Metropolitan Police: recovered bicycles: is one yours? &gt;&gt; a set on Flickr</a></h2><p>London's Metropolitan Police: </p><blockquote><p>Have you had your bicycle stolen?</p><p>The Metropolitan Police Service would like to reunite owners with their bicycles and these photos are a selection of the most identifiable cycles that we have recovered.</p><p>If you believe one of these bicycles could be yours please contact the officer detailed in the photo. </p></blockquote><p>Some of them are just frames. Even so, great idea. (Only 17 so far..) Are other cities trying the same thing?</p><p><hr /></p><h2><a href=\"http://www.theawl.com/2013/09/i-was-a-hated-hipster-meme-and-then-it-got-worse\">The internet hates me &gt;&gt; The Awl</a></h2><p>Chris Hermelin: </p><blockquote><p>My solution [to being unemployed in New York] was to grab my typewriter that I bought at a yard sale for 10 dollars and bring it to a park. I'd write stories for people, on the spot—I wouldn't set a price. People could pay me whatever they wanted. I knew that I had the gift of writing creatively, very quickly, and my anachronistic typewriter (and explanatory sign) would be enough to catch the eye of passersby. Someone might want something specific; they might just want a story straight from my imagination. I was prepared for either situation.</p></blockquote><p>He wasn't prepared for Reddit's denizens to decide, based on a single photo, that they hated him. A salutary tale.</p><p><hr /></p><h2><a href=\"http://www.forbes.com/sites/terokuittinen/2013/09/20/is-the-bizarre-timing-of-blackberrys-death-tied-to-nokias-panic-sale-to-microsoft/\">Is the bizarre timing of BlackBerry's death tied to Nokia's panic sale to Microsoft? &gt;&gt; Forbes</a></h2><p>Tero Kuittinen: </p><blockquote><p>The industry has experienced something like this before. In the 2000-2001 period, second-tier brands from Siemens to Philips to Panasonic started underperforming industry leaders dreadfully, which led to these companies pulling out of global mass market competition.</p><p>It turned out that the second-tier brand weakness was a herald of a global slowdown in phone sales, which ended up mortally wounding Ericsson's phone unit and causing big problems for even Nokia and Motorola in the short term. The sudden summer deterioration of BlackBerry, HTC and Nokia in 2013 may thus not be a boon for their bigger rivals and Google's Asian vendor armada. This could be a sign of an industry slowdown that will create a hairy Christmas for all players.</p></blockquote><p><hr /></p><h2><a href=\"http://blog.lenovo.com/events-initiatives/lenovo-philippines-lends-typhoon-victims-a-helping-hand\">Lenovo Philippines lends typhoon victims a helping hand &gt;&gt; Lenovo Blogs</a></h2><blockquote><p>Lenovo Philippines, in cooperation with its smartphone distributor partner, OpenComms, partnered together on September 2 in Quezon City, Philippines to help area residents affected by heavy flooding.</p><p>The Tulyahan River recently overflowed during the continuous rain brought about by Typhoon Maring-habagat, caused heavy flooding in the area forcing some 164 residents to evacuate their homes for safety reasons. Lenovo Philippines Country General Manager, Vicky Agorrilla, and Marketing Communications Manager, Anna Abola, were on hand to distribute relief goods to the affected families in the barangay.</p></blockquote><p><hr /></p><h2><a href=\"http://www.businessweek.com/printer/articles/154256-tim-cook-the-complete-interview\">Apple CEO Tim Cook's complete interview with Bloomberg Businessweek &gt;&gt; Businessweek</a></h2><blockquote><p>Q: Has Android's rise in market share surprised you in the time that it's happened?</p><p>I don't think of Android as one thing. Most people do. I mean, from a consumer point of view, if you look at what Amazon does with Android, forget the name Android for a minute. If you're coming down from a different planet and you were going to name it, you wouldn't name it the same thing as what another company does. If you compared that to what Samsung does, I'm not sure you would name that the same thing either.</p><p>I think that the importance of that is overplayed. The truth is that there are more people using iOS 6 than there is any version of Android. And in days from now, iOS 7 will be the most popular mobile operating system. And so what does it really mean at the end of the day to show these share numbers and combine all of these disparate things as if they're one thing? I'm not so sure it has a great meaning to it at the end of the day.</p><p>So your question, does it surprise me? I don't look at it in the same way as you might. I think the way a consumer looks at this is different. Does a consumer that's buying a Kindle think about it being an Android? Probably not. And so I think that's a bit different than where Microsoft and Windows was.</p></blockquote><p>Plenty more, including whether \"market share\" and share price matters.</p><p><hr /></p><h2><a href=\"http://gizmodo.com/iphone-a7-chip-benchmarks-forget-the-specs-it-blows-e-1350717023\">iPhone A7 chip benchmarks: forget the specs, it blows everything away &gt;&gt; Gizmodo</a></h2><blockquote><p>Intuitively, we know that the quality of a smartphone is just as reliant on its industrial design and the quality of the software it runs. But it goes deeper than that: the traditional \"specs\" distract us from what a gadget's guts actually do, and from a technological point of view, they distract us from the advancements that are actually making a product better.</p></blockquote><p>Exactly. But if you want to understand the difference between marketing hype and useful improvements (is it having four cores? Higher GHz? More bits?) then this Gizmodo article provides an excellent explainer. The iPhone benchmarks will no doubt be surpassed in raw numbers in six months; but how about \"performance per watt\", which tells you the battery life you get too? None of the spec-watchers ever seems to measure that. But that's what people notice in real life.</p><p><hr /></p><p>You can follow <a href=\"http://pinboard.in/u:guardiantech\">Guardian Technology's linkbucket on Pinboard</a></p><p>To suggest a link, either add it below or tag it with @gdntech on the free <a href=\"http://www.delicious.com/\">Delicious</a> service.</p><!-- Guardian Watermark: internal-code/content/417981270|2013-10-16T18:19:28Z|56ae1f11338494202fb574f166dc45dc14dff4b0 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-23T06:30:02Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/15/1363335411843/Microsoft-Surface-003.jpg",
+        "standfirst":"Plus police put stolen (but recovered) bikes on Flickr, Windows apps popularity, will Office reach the iPad?, and more",
+        "shortUrl":"http://gu.com/p/3jxb8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/15/1363335411843/Microsoft-Surface-003.jpg",
+        "wordcount":"1262",
+        "commentable":"true",
+        "internalContentCode":"417981270",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Charles Arthur",
+        "publication":"theguardian.com",
+        "internalPageCode":"1969334",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-24T06:30:00Z"
+      },
+      "tags":[{
+        "id":"technology/blog",
+        "type":"blog",
+        "webTitle":"Technology blog",
+        "webUrl":"http://www.theguardian.com/technology/blog",
+        "apiUrl":"http://content.guardianapis.com/technology/blog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/series/newsbucket",
+        "type":"series",
+        "webTitle":"Newsbucket",
+        "webUrl":"http://www.theguardian.com/media/series/newsbucket",
+        "apiUrl":"http://content.guardianapis.com/media/series/newsbucket",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/charlesarthur",
+        "type":"contributor",
+        "webTitle":"Charles Arthur",
+        "webUrl":"http://www.theguardian.com/profile/charlesarthur",
+        "apiUrl":"http://content.guardianapis.com/profile/charlesarthur",
+        "bio":"<p>Charles Arthur is the Guardian's<br /><a href=\"http://www.guardian.co.uk/technology\">technology</a> editor. Previously, he covered science, technology and health at the Independent for nine years</p>",
+        "r2ContributorId":"19137",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2007/10/17/charles_arthur_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"technology/microsoft",
+        "type":"keyword",
+        "webTitle":"Microsoft",
+        "webUrl":"http://www.theguardian.com/technology/microsoft",
+        "apiUrl":"http://content.guardianapis.com/technology/microsoft",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.theguardian.com/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417981344",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/15/1363335417799/Microsoft-Surface-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Microsoft Surface",
+            "height":"276",
+            "credit":"AP",
+            "caption":"Microsoft's Surface RT sold a couple of million; how will the Surface 2 lineup fare? Photograph: AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417981345",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/15/1363335411843/Microsoft-Surface-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Microsoft Surface",
+            "height":"84",
+            "credit":"AP",
+            "caption":"Microsoft has only sold around 1m Surface RT tablets, according to reports, with suppliers saying orders have been halved. Photograph: AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
