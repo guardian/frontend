@@ -88,9 +88,8 @@ define([
                 // upgrade facia images
                 // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
                 common.$g('.collection', context).each(function(collection) {
-                    var isContainer = (bonzo(collection).attr('data-collection-type') === 'container');
                     common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, isContainer && (index === 0))
+                        new ImageUpgrade(item, collection.getAttribute('data-collection-type') === 'container' && index === 0)
                             .upgrade();
                     });
                 });
