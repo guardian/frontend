@@ -1,25 +1,34 @@
 define([
-    "common",
-    "modules/cricket"
+    'common',
+    'modules/facia/popular',
+    'modules/cricket'
 ], function (
     common,
-    Cricket
+    popular,
+    cricket
 ) {
     var modules = {
 
+        showPopular: function () {
+            common.mediator.on('page:tag:ready', function(config, context) {
+                popular.render(config);
+            });
+        },
+
         showCricket: function() {
             common.mediator.on('page:tag:ready', function(config, context) {
-                Cricket.cricketTrail(config, context);
+                cricket.cricketTrail(config, context);
             });
         }
+
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.showCricket(context);
+            modules.showPopular();
         }
-        common.mediator.emit("page:tag:ready", config, context);
+        common.mediator.emit('page:tag:ready', config, context);
     };
 
     return {

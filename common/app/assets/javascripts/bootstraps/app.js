@@ -10,7 +10,6 @@ define('bootstraps/app', [
     'modules/debug',
     "modules/router",
     "bootstraps/common",
-    "bootstraps/front",
     "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
@@ -21,6 +20,7 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
+    "bootstraps/section",
     "bootstraps/imagecontent",
     "modules/id",
     "modules/adverts/userAdTargeting"
@@ -35,7 +35,6 @@ define('bootstraps/app', [
     Debug,
     Router,
     bootstrapCommon,
-    Front,
     Facia,
     Football,
     Article,
@@ -46,6 +45,7 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
+    Section,
     ImageContent,
     Id,
     UserAdTargeting
@@ -122,11 +122,9 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context, contextHtml);
 
-                // Fronts
-                if (qwery('.facia-container').length) {
+                // Front
+                if (config.page.isFront) {
                     Facia.init(config, context);
-                } else if (config.page.isFront){
-                    Front.init(config, context);
                 }
 
                 //Football
@@ -154,6 +152,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Tag") {
                     Tag.init(config, context);
+                }
+
+                if (config.page.contentType === "Section") {
+                    Section.init(config, context);
                 }
 
                 if (config.page.section === "identity") {
