@@ -75,7 +75,7 @@ input[type=text] {
 }
 
 .droppable {
-    padding: 0 0 15px 0;
+    padding: 0 0 10px 0;
     -webkit-transition: background-color 50ms;
        -moz-transition: background-color 50ms;
             transition: background-color 50ms;
@@ -240,6 +240,7 @@ a.list-header__status__control:visited {
     border-bottom: 0;
 }
 
+.draft-groups,
 .draft-groups .trail {
     background-color: #EEEEEE;
 }
@@ -438,9 +439,9 @@ button {
 }
 
 .group-name {
-    margin: 4px 0 0px 4px;
+    padding: 4px 0 0px 4px;
     font-size: 10px;
-    line-height: 15px;
+    line-height: 12px;
     color: #999999;
     text-transform: uppercase;
 }
