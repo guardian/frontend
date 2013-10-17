@@ -2,82 +2,72 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="tool-title">Fronts Editor </div>
-    <div data-bind="visible: false">loading...</div>
+    <div class="tool-title">Fronts Editor <span data-bind="visible: false">loading...</span></div>
 
-    <div id="list-picker" data-bind="visible: true" style="display: none">
-        <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select> &middot;
-        <button data-bind="visible: !showViewer(), click: actions.toggleViewer">View</button>
-
-        <!-- ko if: showViewer -->
-        <button data-bind="click: actions.toggleViewer">Edit</button> &middot;
-        <button data-bind="click: viewer.shuffleDown">&laquo;</button>
-        <button data-bind="click: viewer.shuffleUp"  >&raquo;</button>
-        <!-- /ko -->
+    <div class="list-picker" data-bind="visible: true" style="display: none">
+        <span>Editing front:</span>
+        <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
+        <a class="preview-link" data-bind="
+            attr: {href: previewUrl},
+            visible: config">Preview</a>
     </div>
 
-    <div data-bind="visible: showViewer, if: showViewer" style="display: none">
-        <div class="frames" data-bind="template: {name: 'template_breakpoint', foreach: viewer.breakpoints}"></div>
-    </div>
+    <div class="finder">
+        <div class="title clipboard__title">Clipboard</div>
+        <div class="clipboard__wrapper" data-bind="with: clipboard">
+            <div class="clipboard__overlay" data-bind="visible: articles().length === 0">
+                Drag articles and drop them here. <br />Works from Guardian, Ophan, and Google.</div>
+            <div class="clipboard droppable" data-bind="
+                makeDropabble: true,
+                css: {underDrag: underDrag},
+                template: {name: 'template_article', foreach: articles}"></div>
+        </div>
 
-    <div data-bind="visible: !showViewer(), if: !showViewer()" style="display: none">
-        <div class="finder">
+        <div data-bind="with: latestArticles">
+            <div class="title">Latest Articles</div>
 
-            <i class="icon-trash clipboard__flush" data-bind="click: actions.flushClipboard"></i>
-            <div class="title clipboard__title">Clipboard</div>
-            <div class="clipboard__wrapper" data-bind="with: clipboard">
-                <div class="clipboard__overlay" data-bind="visible: articles().length === 0">
-                    Drag articles and drop them here. <br />Works from Guardian, Ophan, and Google.</div>
-                <div class="clipboard" class="droppable" data-bind="
-                    makeDropabble: true,
-                    css: {underDrag: underDrag},
-                    template: {name: 'template_article', foreach: articles}"></div>
-            </div>
-
-            <div data-bind="with: latestArticles">
-                <div class="title">Latest Articles</div>
-
-                <div class="search-form">
-                    <input class="search-term" type="text" placeholder="Search for word" data-bind='
+            <div class="search-form">
+                <div class="search-term">
+                    <input type="text" placeholder="Search for..." data-bind='
                         event: {keyup: search, afterpaste: search},
                         value: term,
                         valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                </div>
 
-                    <select class="search-filters" data-bind="
+                <div class="autocompleter">
+                    <select data-bind="
                         event: { change: clearFilter },
                         options: filterTypes,
                         optionsText: 'display',
                         value: filterType"></select>
 
-                    <div class="search-filter autocompleter">
-                        <input type="text" placeholder="filter" data-bind='
-                            attr: {placeholder: filterType().placeholder},
-                            event: {keyup: autoComplete, afterpaste: autoComplete},
-                            value: filter,
-                            valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                    <input type="text" placeholder="filter" data-bind='
+                        attr: {placeholder: filterType().placeholder},
+                        event: {keyup: autoComplete, afterpaste: autoComplete},
+                        value: filter,
+                        valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
-                        <div class="suggestions" data-bind="foreach: suggestions">
-                            <!-- ko if: $data._alert -->
-                            <div class="suggestion" data-bind="text: _alert"></div>
-                            <!-- /ko -->
-                            <!-- ko if: $data.id -->
-                            <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
-                            <!-- /ko -->
-                        </div>
+                    <div class="suggestions" data-bind="foreach: suggestions">
+                        <!-- ko if: $data._alert -->
+                        <div class="suggestion" data-bind="text: _alert"></div>
+                        <!-- /ko -->
+                        <!-- ko if: $data.id -->
+                        <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
+                        <!-- /ko -->
                     </div>
-
-                    <button class="search-submit"><i class="icon-refresh" data-bind="click: refresh"></i></button>
                 </div>
 
-                <div data-bind="template: {name: 'template_search_controls'}"></div>
-
-                <div id="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
-
-                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length > 0"></div>
+                <button class="search-submit"><i class="icon-refresh" data-bind="click: refresh"></i></button>
             </div>
-        </div>
 
-        <div id="collections" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
+            <div data-bind="template: {name: 'template_search_controls'}"></div>
+
+            <div class="latest-articles scrollable" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
+        </div>
+    </div>
+
+    <div class="collections">
+        <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 
     <!-- templates -->
@@ -216,7 +206,7 @@
             <img data-bind="attr: {src: fields.thumbnail}" draggable="false" />
 
             <div class="trail__remove" data-bind="click: $parent.dropItem">
-                <i class="icon-remove icon-white"></i>
+                <i class="icon-trash icon-white"></i>
             </div>
 
             <a class="trail_stats u-cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">

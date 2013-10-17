@@ -103,7 +103,8 @@ define([
             s.prop1     = config.page.headline || '';
 
             if(id.getUserFromCookie()) {
-                s.prop2   = "GUID:" + id.getUserFromCookie().id;
+                s.prop2 = "GUID:" + id.getUserFromCookie().id;
+                s.eVar2 = "GUID:" + id.getUserFromCookie().id;
             }
 
             s.prop3     = config.page.publication || '';

@@ -14,12 +14,13 @@ define([
                 { width:  1024, height: 768,  name: "Tablet landscape" }
             ],
             previewUrls: {
-                prod: 'http://www.theguardian.com',
-                code: 'http://m.code.dev-theguardian.com'
+                dev:  'http://localhost:9000',
+                code: 'http://m.code.dev-theguardian.com',
+                prod: 'http://www.theguardian.com'
             },
             filterTypes: {
-                section: { display: 'in section:', param: "section", path: "sections", placeholder: "section, e.g. news" },
-                tag:     { display: 'with tag:',     param: "tag",     path: "tags",     placeholder: "tag, e.g. sport/triathlon" }
+                section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },
+                tag:     { display: 'with tag:',   param: "tag",     path: "tags",     placeholder: "e.g. sport/triathlon" }
             },
             searchPageSize:        50,
             sectionSearches: {

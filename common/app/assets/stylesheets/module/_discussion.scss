@@ -339,7 +339,6 @@
 }
 
 .d-comment-box__body {
-    @include fs-data(4);
     @include box-sizing(border-box);
     
     border: 1px solid $c-neutral3;

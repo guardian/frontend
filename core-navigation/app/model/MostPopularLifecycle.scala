@@ -7,6 +7,9 @@ import feed.{MostPopularExpandableAgent, MostPopularAgent}
 import play.api.mvc.WithFilters
 import play.api.{ Application => PlayApp, Play, GlobalSettings }
 import play.api.Play.current
+import common.editions.Uk
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
 
 trait MostPopularLifecycle extends GlobalSettings {
@@ -22,8 +25,7 @@ trait MostPopularLifecycle extends GlobalSettings {
     }
 
     if (Play.isTest) {
-      MostPopularAgent.refresh()
-      MostPopularAgent.await()
+      Await.result(MostPopularAgent.refresh(Uk), 5.seconds)
     }
   }
 
