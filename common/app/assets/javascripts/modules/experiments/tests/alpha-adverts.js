@@ -55,9 +55,12 @@ define([
                 test: function() {
                     var viewport = detect.getLayoutMode();
                     if(viewport === 'mobile'){
+                        document.querySelector('.js-sticky-upper[data-id="Top"]').setAttribute('data-id', 'Top2');
+                        document.querySelector('.js-sticky-lower[data-id="Top"]').setAttribute('data-id', 'Top2');
                         document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name');
                         var s = new Sticky({
-                            cls: 'ad-slot--top-banner-ad'
+                            elCls: 'ad-slot--top-banner-ad',
+                            id: 'Top2'
                         });
                     }
                     inview(document);

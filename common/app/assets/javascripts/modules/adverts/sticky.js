@@ -6,7 +6,7 @@ define([
 
     var Sticky = function (options) {
         this.options = common.extend(this.DEFAULTS, options);
-        this.el = this.options.context.getElementsByClassName(this.options.cls)[0];
+        this.el = this.options.context.getElementsByClassName(this.options.elCls)[0];
         this.$el = bonzo(this.el);
         this.top =  bonzo(this.options.context.querySelector(".js-sticky-upper[data-id=" + this.options.id + "]")).offset().top;
         this.bottom = bonzo(this.options.context.querySelector(".js-sticky-lower[data-id=" + this.options.id + "]")).offset().top - 250;
@@ -15,35 +15,29 @@ define([
 
     Sticky.prototype.DEFAULTS = {
         context: document,
-        cls: 'ad-slot--mpu-banner-ad',
+        elCls: 'ad-slot--mpu-banner-ad',
+        affixCls: 'is-affixed',
         id: 'Middle1'
     };
 
     Sticky.prototype.bindListeners = function () {
         var self = this;
         bean.on(window, 'scroll', function(){
-            self.checkPosition.call(self);
+            common.requestAnimationFrame(function(){
+                self.checkPosition.call(self);
+            });
         });
     };
 
     Sticky.prototype.checkPosition = function () {
-        var scrollTop = bonzo(document.body).scrollTop(),
-            self = this;
-
-
+        var scrollTop = bonzo(document.body).scrollTop();
 
         if(scrollTop > this.top) {
-            common.requestAnimationFrame(function(){
-                self.setPosition.call(self, scrollTop);
-            });
+            bonzo(this.el).addClass(this.options.affixCls);
+        } else {
+            bonzo(this.el).removeClass(this.options.affixCls);
         }
-    };
 
-    Sticky.prototype.setPosition = function (scrollTop) {
-        var offset  = scrollTop - this.top;
-        if(scrollTop < this.bottom) {
-            bonzo(this.el).css("transform", "translate(0, " + offset +"px)");
-        }
     };
 
     return Sticky;
