@@ -3,7 +3,7 @@ define([
     'modules/detect',
     'modules/experiments/ab',
     'modules/storage',
-    'components/gu-id/id',
+    'modules/id',
     'modules/errors'
 ], function(
     common,
@@ -101,6 +101,12 @@ define([
             s.pageName  = config.page.analyticsName;
 
             s.prop1     = config.page.headline || '';
+
+            if(id.getUserFromCookie()) {
+                s.prop2 = "GUID:" + id.getUserFromCookie().id;
+                s.eVar2 = "GUID:" + id.getUserFromCookie().id;
+            }
+
             s.prop3     = config.page.publication || '';
 
 
@@ -123,7 +129,7 @@ define([
             s.prop19     = platform;
             s.eVar19     = platform;
 
-            s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
+            s.prop31    = id.getUserFromCookie() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
 
@@ -149,10 +155,6 @@ define([
             }
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
-
-            // NB: only needs to be in while we're serving both old fronts and new facia
-            var propValue = ((config.page.isFacia) ? 'Facia' : 'Fronts') + '-application';
-            s.prop69 = s.eVar55 = propValue;
 
             s.prop65    = config.page.headline || '';
 

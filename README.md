@@ -52,7 +52,7 @@ For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number
 
 Configuration
 -------------
-You'll need a config file called _/etc/gu/install_vars_ with the following content :-
+You'll need a config file called `/etc/gu/install_vars` with the following content :-
 
 ```
 STAGE=DEV
@@ -60,7 +60,7 @@ INT_SERVICE_DOMAIN=gudev.gnl
 EXT_SERVICE_DOMAIN=
 ```
 
-And one called _~/.gu/frontend.properties_, ( alternatively _/gu/etc/frontend.properties_ ) with the following content :-
+And one called `~/.gu/frontend.properties`, ( alternatively `/gu/etc/frontend.properties` ) with the following content :-
 
 ```
 content.api.key=XXXX

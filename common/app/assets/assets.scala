@@ -1,4 +1,4 @@
-package assets
+package common.Assets
 
 import common.Logging
 import org.apache.commons.io.IOUtils

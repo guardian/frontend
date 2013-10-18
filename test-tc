@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+
+################################################################################
+#
+# Run the root tests
+#
+################################################################################
+
+./grunt-tc clean compile jshint:common jasmine
+./sbt-tc compile test
+
+echo "Done testing."

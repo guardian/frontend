@@ -1,3 +1,4 @@
+/*global guardian:true */
 define('bootstraps/app', [
     "qwery",
     "common",
@@ -9,7 +10,6 @@ define('bootstraps/app', [
     'modules/debug',
     "modules/router",
     "bootstraps/common",
-    "bootstraps/front",
     "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
@@ -20,7 +20,10 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
-    "bootstraps/imagecontent"
+    "bootstraps/section",
+    "bootstraps/imagecontent",
+    "modules/id",
+    "modules/adverts/userAdTargeting"
 ], function (
     qwery,
     common,
@@ -32,7 +35,6 @@ define('bootstraps/app', [
     Debug,
     Router,
     bootstrapCommon,
-    Front,
     Facia,
     Football,
     Article,
@@ -43,7 +45,10 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
-    ImageContent
+    Section,
+    ImageContent,
+    Id,
+    UserAdTargeting
 ) {
 
     var modules = {
@@ -74,7 +79,7 @@ define('bootstraps/app', [
         },
 
         loadFonts: function(config, ua) {
-            if(config.switches.webFonts) {
+            if (config.switches.webFonts && !guardian.platformsGettingHintedFonts.test(ua)) {
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 var f = new Fonts(fontStyleNodes, fileFormat);
@@ -84,6 +89,14 @@ define('bootstraps/app', [
 
         showDebug: function () {
             new Debug().show();
+        },
+
+        initId : function (config) {
+            Id.init(config);
+        },
+
+        initUserAdTargeting : function () {
+            UserAdTargeting.requestUserSegmentsFromId();
         }
     };
 
@@ -99,6 +112,8 @@ define('bootstraps/app', [
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
+            modules.initId(config);
+            modules.initUserAdTargeting();
 
             var pageRoute = function(config, context, contextHtml) {
 
@@ -107,11 +122,9 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context, contextHtml);
 
-                // Fronts
-                if (qwery('.facia-container').length) {
+                // Front
+                if (config.page.isFront) {
                     Facia.init(config, context);
-                } else if (config.page.isFront){
-                    Front.init(config, context);
                 }
 
                 //Football
@@ -139,6 +152,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Tag") {
                     Tag.init(config, context);
+                }
+
+                if (config.page.contentType === "Section") {
+                    Section.init(config, context);
                 }
 
                 if (config.page.section === "identity") {

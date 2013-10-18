@@ -4,8 +4,8 @@
 To run all tests
 ``grunt test:integration``
 
-To override default host (`http://localhost:9000/`)
-``grunt test:integration --host=http://m.gucode.co.uk/``
+To override default host (`http://localhost:9000/`) set an your bash env variable ```ENVIRONMENT``` to mirror the stage you want to test:
+``ENVIRONMENT=prod grunt test:integration``
 
 To run individual specs
 ``grunt casperjs:discussion``

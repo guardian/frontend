@@ -1,0 +1,688 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"commentisfree/2013/oct/14/keep-religion-out-politics",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-14T16:43:16Z",
+      "webTitle":"Oh Lord, can't we keep religion out of politics? | Teresa Wiltz",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/14/keep-religion-out-politics",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/14/keep-religion-out-politics",
+      "fields":{
+        "trailText":"<p><strong>Teresa Wiltz:</strong> America's founders insisted on church-state separation. Yet now we have senators and justices prattling about the devil. Save us</p>",
+        "headline":"Oh Lord, can't we keep religion out of politics?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jh3g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/2/1325504775161/Michele-Bachmann-003.jpg",
+        "wordcount":"731",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"commentisfree/belief",
+        "type":"blog",
+        "webTitle":"Cif belief",
+        "webUrl":"http://www.theguardian.com/commentisfree/belief",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/belief",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/michele-bachmann",
+        "type":"keyword",
+        "webTitle":"Michele Bachmann",
+        "webUrl":"http://www.theguardian.com/world/michele-bachmann",
+        "apiUrl":"http://content.guardianapis.com/world/michele-bachmann",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/rand-paul",
+        "type":"keyword",
+        "webTitle":"Rand Paul",
+        "webUrl":"http://www.theguardian.com/world/rand-paul",
+        "apiUrl":"http://content.guardianapis.com/world/rand-paul",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.theguardian.com/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/evangelical-christianity",
+        "type":"keyword",
+        "webTitle":"Evangelical Christianity",
+        "webUrl":"http://www.theguardian.com/world/evangelical-christianity",
+        "apiUrl":"http://content.guardianapis.com/world/evangelical-christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/us-constitution-and-civil-liberties",
+        "type":"keyword",
+        "webTitle":"US constitution and civil liberties",
+        "webUrl":"http://www.theguardian.com/law/us-constitution-and-civil-liberties",
+        "apiUrl":"http://content.guardianapis.com/law/us-constitution-and-civil-liberties",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/republicans",
+        "type":"keyword",
+        "webTitle":"Republicans",
+        "webUrl":"http://www.theguardian.com/world/republicans",
+        "apiUrl":"http://content.guardianapis.com/world/republicans",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/teresa-wiltz",
+        "type":"contributor",
+        "webTitle":"Teresa Wiltz",
+        "webUrl":"http://www.theguardian.com/profile/teresa-wiltz",
+        "apiUrl":"http://content.guardianapis.com/profile/teresa-wiltz",
+        "bio":"<p>Teresa Wiltz is an American journalist and senior editor for <a href=\"http://www.theroot.com/\">the Root</a>, a daily online magazine that provides thought-provoking commentary on today's news from a variety of black perspectives</p>",
+        "r2ContributorId":"47001",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/26/1319629757090/Teresa_Wiltz2011-1.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.theguardian.com/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/us-supreme-court",
+        "type":"keyword",
+        "webTitle":"US supreme court",
+        "webUrl":"http://www.theguardian.com/law/us-supreme-court",
+        "apiUrl":"http://content.guardianapis.com/law/us-supreme-court",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419941473",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/2/1325504779059/Michele-Bachmann-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charlie Riedel",
+            "altText":"Michele Bachmann",
+            "height":"276",
+            "credit":"Charlie Riedel/AP",
+            "caption":"Michele Bachmann sees <a href=\"http://www.washingtonpost.com/blogs/on-faith/wp/2013/10/08/michele-bachmann-obama-administration-support-of-syrian-rebels-proves-were-in-the-end-times/\">US support for some Syrian rebel groups as proof that 'end times' are near</a>. Photograph: Charlie Riedel/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419941474",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/2/1325504775161/Michele-Bachmann-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charlie Riedel",
+            "altText":"Michele Bachmann",
+            "height":"84",
+            "credit":"Charlie Riedel/AP",
+            "caption":"Michele Bachmann's claim that the HPV vaccine causes mental retardation featured in the Sense About Science report. Photograph: Charlie Riedel/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/sep/20/pope-francis-stance-gays-women-progressive",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-20T14:27:00Z",
+      "webTitle":"Pope Francis: music to my progressive Catholic ears | Kate Childs Graham",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/20/pope-francis-stance-gays-women-progressive",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/20/pope-francis-stance-gays-women-progressive",
+      "fields":{
+        "trailText":"<p><strong> Kate Childs Graham:</strong> As I read the pope's lengthy interview in America, a national Catholic weekly, all I could think was, 'this guy gets it'</p>",
+        "headline":"Pope Francis: music to my progressive Catholic ears",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jvg9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610374137/Pope-Francis-005.jpg",
+        "wordcount":"605",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/pope-francis",
+        "type":"keyword",
+        "webTitle":"Pope Francis",
+        "webUrl":"http://www.theguardian.com/world/pope-francis",
+        "apiUrl":"http://content.guardianapis.com/world/pope-francis",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.theguardian.com/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/gay-rights",
+        "type":"keyword",
+        "webTitle":"Gay rights",
+        "webUrl":"http://www.theguardian.com/world/gay-rights",
+        "apiUrl":"http://content.guardianapis.com/world/gay-rights",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/kate-childs-graham",
+        "type":"contributor",
+        "webTitle":"Kate Childs Graham",
+        "webUrl":"http://www.theguardian.com/profile/kate-childs-graham",
+        "apiUrl":"http://content.guardianapis.com/profile/kate-childs-graham",
+        "bio":"<p>Kate Childs Graham is a columnist for the National Catholic Reporter and co-president of Call To Action, the leading organization in challenging Catholics to act for justice and build inclusive communities. Follow her on Twitter <a href=\"https://twitter.com/kchildsgraham\">@kchildsgraham</a></p>",
+        "r2ContributorId":"58790",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379687978985/Kate-Childs-Graham.jpg",
+        "references":[]
+      },{
+        "id":"commentisfree/belief",
+        "type":"blog",
+        "webTitle":"Cif belief",
+        "webUrl":"http://www.theguardian.com/commentisfree/belief",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/belief",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417884465",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/12/1378997034755/Pope-Francis-I-general-au-008.jpg",
+          "typeData":{
+            "source":"REX/ZUMA",
+            "photographer":"REX/ZUMA",
+            "altText":"Pope Francis I general audience in St Peter's Square, The Vatican, Rome, Italy - 11 Sep 2013",
+            "height":"276",
+            "credit":"REX/ZUMA/REX/ZUMA",
+            "caption":"Pope Francis earlier this month. Photograph: REX/ZUMA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417884466",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610374137/Pope-Francis-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"AGF",
+            "altText":"Pope Francis",
+            "height":"84",
+            "credit":"AGF/Rex Features",
+            "caption":"Pope Francis. Photograph: AGF/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2009/jun/26/religion-politics-britain-public",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2009-06-26T11:00:00Z",
+      "webTitle":"What can religion offer politics? | Antony Lerman",
+      "webUrl":"http://www.theguardian.com/commentisfree/2009/jun/26/religion-politics-britain-public",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2009/jun/26/religion-politics-britain-public",
+      "fields":{
+        "trailText":"<strong>Antony Lerman:</strong> Can religion provide answers to our social and political problems, or should we exclude it from the public sphere?",
+        "headline":"What can religion offer politics?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/28zca",
+        "wordcount":"1191",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/belief",
+        "type":"blog",
+        "webTitle":"Cif belief",
+        "webUrl":"http://www.theguardian.com/commentisfree/belief",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/belief",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/antony-lerman",
+        "type":"contributor",
+        "webTitle":"Antony Lerman",
+        "webUrl":"http://www.theguardian.com/profile/antony-lerman",
+        "apiUrl":"http://content.guardianapis.com/profile/antony-lerman",
+        "bio":"<p>Antony Lerman is the former director of the Institute for Jewish Policy Research</p>",
+        "r2ContributorId":"30491",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/21/1345554382267/Antony-Lerman.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/14/keep-religion-out-politics",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-14T16:43:16Z",
+      "webTitle":"Oh Lord, can't we keep religion out of politics? | Teresa Wiltz",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/14/keep-religion-out-politics",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/14/keep-religion-out-politics",
+      "fields":{
+        "trailText":"<p><strong>Teresa Wiltz:</strong> America's founders insisted on church-state separation. Yet now we have senators and justices prattling about the devil. Save us</p>",
+        "headline":"Oh Lord, can't we keep religion out of politics?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jh3g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/2/1325504775161/Michele-Bachmann-003.jpg",
+        "wordcount":"731",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"commentisfree/belief",
+        "type":"blog",
+        "webTitle":"Cif belief",
+        "webUrl":"http://www.theguardian.com/commentisfree/belief",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/belief",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/michele-bachmann",
+        "type":"keyword",
+        "webTitle":"Michele Bachmann",
+        "webUrl":"http://www.theguardian.com/world/michele-bachmann",
+        "apiUrl":"http://content.guardianapis.com/world/michele-bachmann",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/rand-paul",
+        "type":"keyword",
+        "webTitle":"Rand Paul",
+        "webUrl":"http://www.theguardian.com/world/rand-paul",
+        "apiUrl":"http://content.guardianapis.com/world/rand-paul",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.theguardian.com/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/evangelical-christianity",
+        "type":"keyword",
+        "webTitle":"Evangelical Christianity",
+        "webUrl":"http://www.theguardian.com/world/evangelical-christianity",
+        "apiUrl":"http://content.guardianapis.com/world/evangelical-christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/us-constitution-and-civil-liberties",
+        "type":"keyword",
+        "webTitle":"US constitution and civil liberties",
+        "webUrl":"http://www.theguardian.com/law/us-constitution-and-civil-liberties",
+        "apiUrl":"http://content.guardianapis.com/law/us-constitution-and-civil-liberties",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/republicans",
+        "type":"keyword",
+        "webTitle":"Republicans",
+        "webUrl":"http://www.theguardian.com/world/republicans",
+        "apiUrl":"http://content.guardianapis.com/world/republicans",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/teresa-wiltz",
+        "type":"contributor",
+        "webTitle":"Teresa Wiltz",
+        "webUrl":"http://www.theguardian.com/profile/teresa-wiltz",
+        "apiUrl":"http://content.guardianapis.com/profile/teresa-wiltz",
+        "bio":"<p>Teresa Wiltz is an American journalist and senior editor for <a href=\"http://www.theroot.com/\">the Root</a>, a daily online magazine that provides thought-provoking commentary on today's news from a variety of black perspectives</p>",
+        "r2ContributorId":"47001",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/26/1319629757090/Teresa_Wiltz2011-1.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.theguardian.com/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/us-supreme-court",
+        "type":"keyword",
+        "webTitle":"US supreme court",
+        "webUrl":"http://www.theguardian.com/law/us-supreme-court",
+        "apiUrl":"http://content.guardianapis.com/law/us-supreme-court",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419941473",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/2/1325504779059/Michele-Bachmann-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charlie Riedel",
+            "altText":"Michele Bachmann",
+            "height":"276",
+            "credit":"Charlie Riedel/AP",
+            "caption":"Michele Bachmann sees <a href=\"http://www.washingtonpost.com/blogs/on-faith/wp/2013/10/08/michele-bachmann-obama-administration-support-of-syrian-rebels-proves-were-in-the-end-times/\">US support for some Syrian rebel groups as proof that 'end times' are near</a>. Photograph: Charlie Riedel/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419941474",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/2/1325504775161/Michele-Bachmann-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Charlie Riedel",
+            "altText":"Michele Bachmann",
+            "height":"84",
+            "credit":"Charlie Riedel/AP",
+            "caption":"Michele Bachmann's claim that the HPV vaccine causes mental retardation featured in the Sense About Science report. Photograph: Charlie Riedel/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

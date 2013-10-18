@@ -9,16 +9,10 @@ define([
 
     var AlphaAdverts = function () {
 
-        var nParagraphs = '10',
+        var self = this,
+            nParagraphs = '10',
             alphaOasUrl = 'www.theguardian-alpha.com',
             inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>';
-
-        // Label up ad slots
-        var labelSlots = function() {
-            bonzo(qwery('.ad-slot'), document).each(function() {
-                this.setAttribute('data-inview-name', this.getAttribute('data-link-name'));
-            });
-        };
 
         this.id = 'AlphaAdverts';
         this.expiry = '2013-11-30';
@@ -53,12 +47,18 @@ define([
             {
                 id: 'Adhesive', //Article B
                 test: function() {
-                    var viewport = detect.getLayoutMode();
+                    var viewport = detect.getLayoutMode(),
+                        s;
                     if(viewport === 'mobile'){
-                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name', 'Top sticky banner');
-                        var s = new Sticky({
-                            cls: 'ad-slot--top-banner-ad',
-                            id: 'Top'
+                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name');
+                        s = new Sticky({
+                            elCls: 'ad-slot--top-banner-ad',
+                            id: 'Top2'
+                        });
+                    } else {
+                        s = new Sticky({
+                            elCls: 'js-mpu-ad-slot',
+                            id: 'mpu-ad-slot'
                         });
                     }
                     inview(document);
@@ -68,14 +68,17 @@ define([
             {
                 id: 'Both',  //Article C
                 test: function() {
-
+                    self.variants.forEach(function(variant){
+                        if(variant.id === 'Inline' || variant.id === 'Adhesive') {
+                            variant.test.call(self);
+                        }
+                    });
                     return true;
                 }
             },
             {
                 id: 'control', //Article D
                 test: function() {
-                    guardian.config.switches.adverts = true;
                     return true;
                 }
             }

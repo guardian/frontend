@@ -42,7 +42,13 @@ define([
         }).join(',');
     }
 
-    function generateUrl(config, slots) {
+    function getUserSegments(userSegments) {
+        return userSegments.map(function(segment) {
+            return '&gdncrm=' + encodeURIComponent(segment);
+        }).join('');
+    }
+
+    function generateUrl(config, slots, userSegments) {
         var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config) + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
 
         //var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
@@ -65,6 +71,10 @@ define([
         var segments = audienceScience.getSegments();
         if (segments) {
             query += getSegments(segments);
+        }
+
+        if (userSegments) {
+            query += getUserSegments(userSegments);
         }
 
         var url = oasUrl;
@@ -93,7 +103,7 @@ define([
             return;
         }
 
-        var oasUrl = options.url || generateUrl(options.config.page, options.slots);
+        var oasUrl = options.url || generateUrl(options.config.page, options.slots, options.userSegments);
 
         // using this, as request isn't actually jsonp, and borks with latest reqwest (0.8.1)
         var script = document.createElement('script');
