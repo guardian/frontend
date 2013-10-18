@@ -1,7 +1,6 @@
 package controllers.front
 
 import model.{Collection, Config}
-import common.editions.Uk
 import common.Edition
 
 trait FaciaDefaults {
@@ -19,7 +18,7 @@ trait FaciaDefaults {
     displayName     = None
   )
 
-  def getEdition(id: String): Edition = Edition.all.find(edition => id.toLowerCase.startsWith(edition.id.toLowerCase)).getOrElse(Uk)
+  def getEdition(id: String): Edition = Edition.all.find(edition => id.toLowerCase.startsWith(edition.id.toLowerCase)).getOrElse(Edition.defaultEdition)
 
   def generateContentApiQuery(id: String): String =
     "%s?tag=type/gallery|type/article|type/video|type/sudoku&show-editors-picks=true&edition=UK&show-fields=headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl&show-elements=all"
