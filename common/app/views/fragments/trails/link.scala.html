@@ -1,8 +1,8 @@
 @(trail: Trail, rowNum: Int)(implicit request: RequestHeader)
 
-<span class="count">@rowNum</span> 
-<p class="type-7">
+<span class="headline-list__count">@rowNum</span>
+<div class="headline-list__body">
     <a href="@LinkTo{@trail.url}" data-link-name="Top stories:link text:item @rowNum">
         @RemoveOuterParaHtml(trail.linkText)
     </a>
-</p>
+</div>

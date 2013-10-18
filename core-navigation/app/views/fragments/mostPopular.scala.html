@@ -26,10 +26,12 @@
 
                 <ul class="unstyled">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                        <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
+                        <li class="headline-list__item">
+                            <span class="headline-list__count">@info.rowNum</span>
+                            <div class="headline-list__body">@fragments.linkText(trail, info)</div>
+                        </li>
                     }
                 </ul>
-
             </div>
         }
 

@@ -3,8 +3,7 @@
 @if(collection.items.nonEmpty) {
     <section class="collection collection--@style.className tone-@config.section.split("/").headOption"
              data-link-name="block | @config.id"
-             data-collection-type="@style.className"
-             data-section="@config.section">
+             data-section="@config.id">
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
             @if(title.nonEmpty) {
