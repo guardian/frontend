@@ -1,10 +1,10 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import scala.collection.JavaConversions._
 
-class MatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class MatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("MatchPage") {
 

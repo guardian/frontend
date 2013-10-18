@@ -1,9 +1,9 @@
 package client.filters
 
 import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class OrderByTest extends FunSuite with ShouldMatchers {
+class OrderByTest extends FunSuite with Matchers {
   test("should apply order by") {
     OrderBy("field").parameters should contain(("orderBy", "field"))
   }

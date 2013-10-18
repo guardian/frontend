@@ -1,10 +1,10 @@
 package test
 
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
-class ChangeViewControllerTest extends FlatSpec with ShouldMatchers {
+class ChangeViewControllerTest extends FlatSpec with Matchers {
   
   val callbackName = "aFunction"
 

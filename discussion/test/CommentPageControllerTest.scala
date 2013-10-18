@@ -1,12 +1,12 @@
 package test
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
 import controllers.{DiscussionApp, DiscussionController}
 
-class CommentPageControllerTest extends FlatSpec with ShouldMatchers {
+class CommentPageControllerTest extends FlatSpec with Matchers {
 
   val callbackName = "foo"
 

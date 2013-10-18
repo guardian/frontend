@@ -2,14 +2,14 @@ package common
 
 import conf.Switches.AutoRefreshSwitch
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.templates.Html
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.libs.json.Json._
 import scala.concurrent.Future
 
-class JsonComponentTest extends FlatSpec with ShouldMatchers with ExecutionContexts {
+class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
   "JsonComponent" should "not allow script injection" in {
     val request = FakeRequest("GET", "http://foo.bar.com?callback=some<script>")

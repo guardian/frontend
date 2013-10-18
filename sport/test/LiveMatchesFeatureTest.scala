@@ -1,9 +1,9 @@
 package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Live Matches") {
 
