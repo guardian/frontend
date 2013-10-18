@@ -49,7 +49,7 @@ define([
                 test: function() {
                     var viewport = detect.getLayoutMode(),
                         s;
-                    if(viewport === 'mobile'){
+                    if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait'){
                         document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name');
                         s = new Sticky({
                             elCls: 'ad-slot--top-banner-ad',

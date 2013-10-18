@@ -36,9 +36,9 @@ define([
         var scrollTop = bonzo(document.body).scrollTop();
 
         if(scrollTop > this.top && scrollTop < this.bottom) {
-            bonzo(this.el).addClass(this.options.affixCls);
+            this.el.classList.add(this.options.affixCls);
         } else {
-            bonzo(this.el).removeClass(this.options.affixCls);
+            this.el.classList.remove(this.options.affixCls);
         }
 
     };
