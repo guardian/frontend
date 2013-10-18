@@ -1,9 +1,9 @@
-package test
+package controllers.commercial
 
-import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
+import test.{Fake, TestRequest}
 
 class SimpleAdvertTest extends FlatSpec with ShouldMatchers {
   
