@@ -8,6 +8,6 @@ To override default host (`http://localhost:9000/`) set an your bash env variabl
 ``ENVIRONMENT=prod grunt test:integration``
 
 To run individual specs
-``grunt casperjs:discussion``
+``grunt test:integration:discussion``
 
 If you add a new test file, add a corresponding grunt task for it under `casperjs` in `Gruntfile.js`
