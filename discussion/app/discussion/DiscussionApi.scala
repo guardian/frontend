@@ -12,12 +12,12 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.JsNumber
 import discussion.model.{Profile, Comment, CommentCount}
 import play.api.mvc.Headers
-import conf.Configuration
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
   protected def GET(url: String, headers: (String, String)*): Future[Response]
   protected val apiRoot: String
+  protected val clientHeaderValue: String
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
     def onError(response: Response) =
@@ -71,7 +71,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
       s"Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/profile/me"
 
-    val authHeader = DiscussionHeaders.filterHeaders(headers).toSeq
+    val authHeader = AuthHeaders.filterHeaders(headers).toSeq
 
     getJsonOrError(apiUrl, onError, authHeader: _*) map {
       json =>
@@ -81,7 +81,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*):Future[JsValue] = {
     val start = currentTimeMillis()
-    val allHeaders =  DiscussionHeaders.appendGuClientHeader(headers)
+    val allHeaders = headers :+ guClientHeader
     GET(url, allHeaders:_*) map {
       response =>
         DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
@@ -96,15 +96,14 @@ trait DiscussionApi extends ExecutionContexts with Logging {
         }
     }
   }
+
+  private def guClientHeader = ("GU-Client", clientHeaderValue)
 }
 
-object DiscussionHeaders {
+object AuthHeaders {
   val guIdToken = "GU-IdentityToken"
   val cookie = "Cookie"
   val all = Set(guIdToken, cookie)
-  val guClientHeader: (String, String) = ("GU-Client", Configuration.discussion.apiClientHeader)
 
   def filterHeaders(headers: Headers): Map[String, String] = headers.toSimpleMap filterKeys { all.contains }
-
-  def appendGuClientHeader(headers: Seq[(String, String)]): Seq[(String, String)] =  headers :+ guClientHeader
 }

@@ -4,7 +4,7 @@ import concurrent.Future
 
 import discussion.model.{PrivateProfileFields, Profile}
 import discussion.DiscussionApi
-import discussion.DiscussionHeaders._
+import discussion.AuthHeaders._
 import controllers.CommentBoxController
 
 import org.scalatest.FlatSpec
@@ -113,6 +113,7 @@ class CommentBoxControllerTest extends FlatSpec with ShouldMatchers {
   object FakeApi extends DiscussionApi {
     protected def GET(url: String, headers: (String, String)*): Future[Response] = null
     protected val apiRoot: String = ""
+    protected val clientHeaderValue: String = ""
 
     override def myProfile(headers: Headers): Future[Profile] = Future {
       val header = headers get cookie orElse {headers get guIdToken} getOrElse {throw new RuntimeException }
