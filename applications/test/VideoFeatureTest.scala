@@ -14,7 +14,7 @@ class VideoFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Given("I am on a video page")
       HtmlUnit("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         import browser._
-        Then("the html5 video should be available")
+        Then("the HTML5 video should be available")
         $(".player video") should have size (1)
 
         And("the proposed sources should be plenty")
