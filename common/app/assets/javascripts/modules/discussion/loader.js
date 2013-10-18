@@ -1,11 +1,15 @@
 define([
     'ajax',
     'modules/component',
-    'moduels/discussion/api',
+    'modules/discussion/api',
+    'modules/discussion/comments',
+    'modules/discussion/comment-box',
     'modules/id'
 ], function(
     ajax,
     Component,
+    Comments,
+    CommentBox,
     DiscussionApi,
     Id
 ) {
@@ -13,8 +17,9 @@ define([
 /**
  * @constructor
  */
-var Loader = function(context) {
+var Loader = function(context, mediator) {
     this.context = context;
+    this.mediator = mediator;
 };
 Component.define(Loader);
 
@@ -23,27 +28,40 @@ Loader.prototype.context = null;
 
 /** @type {Object.<string.*>} */
 Loader.CONFIG = {
+    componentClass: 'discussion',
     classes: {
-        component: 'js-show-discussion'
+        comments: 'discussion__comments',
+        show: 'discussion__show'
     }
 };
 
+/** @type {Discussion} */
+Loader.prototype.discussion = null;
+
 /** @override */
 Loader.prototype.ready = function() {
+    // console.log('ready')
     var id = this.getDiscussionId();
     ajax({
         url: '/discussion'+ id + '.json',
         data: { size: 'small' },
-    }).then(this.renderFirstComment.bind(this));
+    }).then(this.renderDiscussion.bind(this));
 };
 
 /**
  * @param {Object} resp
  */
-Loader.prototype.renderFirstComment = function(resp) {
-    this.context.querySelector('.article__discussion').innerHTML = resp.html;
-    this.renderReadFullDiscussion();
-    this.renderCommentBar();
+Loader.prototype.renderDiscussion = function(resp) {
+    var commentsElem = this.getElement('comments');
+
+    // comments
+    commentsElem.innerHTML = resp.html;
+    this.comments = new Comments(this.context);
+    this.comments.attachTo(commentsElem);
+
+    // comment box
+    this.commentBox = new CommentBox(this.context, this.mediator);
+    this.commentBox.render();
 };
 
 /**
@@ -56,7 +74,7 @@ Loader.prototype.renderCommentBar = function() {
         user = Id.getUserFromCookie();
 
     if (discussionClosed) {
-        this.renderDiscussionClosed();
+        this.renderDiscussionClosedMessage();
     } else if (!user) {
         this.renderSignin();
     } else {
@@ -67,7 +85,7 @@ Loader.prototype.renderCommentBar = function() {
 /**
  *
  */
-Loader.prototype.renderDiscussionClosed = function() {
+Loader.prototype.renderDiscussionClosedMessage = function() {
     // console.log('Closed');
 
 };
@@ -79,9 +97,22 @@ Loader.prototype.renderSignin = function() {
 
 /****/
 Loader.prototype.renderCommentBox = function() {
+    var success = function(resp) {
+        var user = resp.userProfile;
+        // If this isn't in there, they're not the right person
+        // More a sanity check than anything
+        if (!user.privateFields) {
+            this.renderSignin();
+        } else if (!user.privateFields.canPostComment) {
+            this.renderUserBanned();
+        } else {
+            var commentBox = new CommentBox(this.context, this.mediator);
+        }
+    };
+
     DiscussionApi
         .getUser()
-        .then();
+        .then(success.bind(this));
 };
 
 /**

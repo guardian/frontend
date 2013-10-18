@@ -24,8 +24,10 @@ var Component = function() {};
  * @type {Object.<string.*>}
  */
 Component.CONFIG = {
-    // These are CSS classes for DOM elements in this component
-    classes: { component: 'component' },
+    templateName: 'component',
+    componentClass: 'component',
+    containerClass: 'component-container',
+    classes: {},
     elements: {}
 };
 
@@ -48,12 +50,12 @@ Component.prototype.options = null;
 Component.prototype.defaultOptions = {};
 
 /**
- * Uses the CONFIG.classes.component
+ * Uses the CONFIG.componentClass
  * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
  * @param {Element|string=} elem (optional)
  */
 Component.prototype.attachTo = function(elem) {
-    var selector = this.getClass('component');
+    var selector = '.'+ this.conf().componentClass;
     this.elems = {};
 
     elem = (elem && elem.nodeType === 1) ? [elem] : qwery(selector, this.context);
@@ -61,6 +63,18 @@ Component.prototype.attachTo = function(elem) {
     if (elem.length === 0) { throw new ComponentError('No element of type "'+ selector +'" to attach to.'); }
     this.elem = elem[0];
     this.ready();
+};
+
+/**
+ * Uses the CONFIG.templateName
+ * @param {Element=} parent (optional)
+ */
+Component.prototype.render = function(parent) {
+    var conf = this.conf();
+    var template = document.getElementById('tmpl-'+ conf.templateName).innerHTML,
+        container = parent || this.getElem(conf.containerClass) || document;
+
+    // console.log(template, container);
 };
 
 /**

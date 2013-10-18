@@ -24,8 +24,10 @@ Component.define(CommentBox);
 
 /** @type {Object.<string.*>} */
 CommentBox.CONFIG = {
+    templateName: 'comment-box',
+    componentClass: 'js-comment-box',
+    containerClass: 'discussion__comment-box',
     classes: {
-        component: 'js-comment-box',
         show: 'js-show-comment-box',
         body: 'd-comment-box__body',
         bodyExpanded: 'd-comment-box__body--expanded',
