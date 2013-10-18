@@ -11,7 +11,6 @@ define('bootstraps/app', [
     "modules/router",
     'modules/discussion/api',
     "bootstraps/common",
-    "bootstraps/front",
     "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
@@ -22,7 +21,10 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
-    "bootstraps/imagecontent"
+    "bootstraps/section",
+    "bootstraps/imagecontent",
+    "modules/id",
+    "modules/adverts/userAdTargeting"
 ], function (
     qwery,
     common,
@@ -35,7 +37,6 @@ define('bootstraps/app', [
     Router,
     DiscussionApi,
     bootstrapCommon,
-    Front,
     Facia,
     Football,
     Article,
@@ -46,7 +47,10 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
-    ImageContent
+    Section,
+    ImageContent,
+    Id,
+    UserAdTargeting
 ) {
 
     var modules = {
@@ -91,6 +95,14 @@ define('bootstraps/app', [
 
         showDebug: function () {
             new Debug().show();
+        },
+
+        initId : function (config) {
+            Id.init(config);
+        },
+
+        initUserAdTargeting : function () {
+            UserAdTargeting.requestUserSegmentsFromId();
         }
     };
 
@@ -107,6 +119,8 @@ define('bootstraps/app', [
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
+            modules.initId(config);
+            modules.initUserAdTargeting();
 
             var pageRoute = function(config, context, contextHtml) {
 
@@ -115,11 +129,9 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context, contextHtml);
 
-                // Fronts
-                if (qwery('.facia-container').length) {
+                // Front
+                if (config.page.isFront) {
                     Facia.init(config, context);
-                } else if (config.page.isFront){
-                    Front.init(config, context);
                 }
 
                 //Football
@@ -147,6 +159,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Tag") {
                     Tag.init(config, context);
+                }
+
+                if (config.page.contentType === "Section") {
+                    Section.init(config, context);
                 }
 
                 if (config.page.section === "identity") {

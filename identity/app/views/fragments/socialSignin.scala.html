@@ -1,15 +1,15 @@
-@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+@(cta: String, page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
 
 <ul class="social-signin">
-    <li class="social-signin__item social-signin__item--fb">
-        <a class="social-signin__action" href="@idUrlBuilder.buildWebappUrl("/facebook/signin", idRequest)" data-link-name="Register/Sign in with Facebook">
-            <span>Sign in with Facebook</span>
+    <li class="social-signin__item">
+        <a class="social-signin__action social-signin__action--fb" href="@idUrlBuilder.buildWebappUrl("/facebook/signin", idRequest)" data-link-name="Register/Sign in with Facebook">
+            <span>@cta with Facebook</span>
             <i class="i-fb i social-signin__icon social-signin__icon--fb"></i>
         </a>
     </li>
-    <li class="social-signin__item social-signin__item--gplus">
-        <a class="social-signin__action" href="@idUrlBuilder.buildWebappUrl("/google/signin", idRequest)" data-link-name="Register/Sign in with Google">
-            <span>Sign in with Google</span>
+    <li class="social-signin__item">
+        <a class="social-signin__action social-signin__action--gplus" href="@idUrlBuilder.buildWebappUrl("/google/signin", idRequest)" data-link-name="Register/Sign in with Google">
+            <span>@cta with Google</span>
             <i class="i-gplus i social-signin__icon social-signin__icon--gplus"></i>
         </a>
     </li>

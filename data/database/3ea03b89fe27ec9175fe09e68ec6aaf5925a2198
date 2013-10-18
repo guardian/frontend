@@ -1,0 +1,78 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"news/quiz/2013/oct/17/daily-quiz-17-october-2013",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-10-17T06:30:00Z",
+      "webTitle":"The daily quiz, 17 October 2013",
+      "webUrl":"http://www.theguardian.com/news/quiz/2013/oct/17/daily-quiz-17-october-2013",
+      "apiUrl":"http://content.guardianapis.com/news/quiz/2013/oct/17/daily-quiz-17-october-2013",
+      "fields":{
+        "trailText":"<p>Film screenplays, Indian cities, Babylonian goddesses and online auctions all appear in today's set of questions</p>",
+        "headline":"The daily quiz, 17 October 2013",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jgxf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377864949691/398d6a8c-b580-45d1-87e7-cb73b0cea130-140x84.jpeg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/the-daily-quiz",
+        "type":"series",
+        "webTitle":"The daily quiz",
+        "webUrl":"http://www.theguardian.com/news/series/the-daily-quiz",
+        "apiUrl":"http://content.guardianapis.com/news/series/the-daily-quiz",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"profile/the-daily-quiz",
+        "type":"contributor",
+        "webTitle":"The daily quiz",
+        "webUrl":"http://www.theguardian.com/profile/the-daily-quiz",
+        "apiUrl":"http://content.guardianapis.com/profile/the-daily-quiz",
+        "bio":"<p>A daily general knowledge quiz from theguardian.com. Email: daily.quiz@theguardian.com</p>",
+        "r2ContributorId":"57817",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"type/quiz",
+        "type":"type",
+        "webTitle":"Quiz",
+        "webUrl":"http://www.theguardian.com/quizzes",
+        "apiUrl":"http://content.guardianapis.com/quizzes",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419782281",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377864949691/398d6a8c-b580-45d1-87e7-cb73b0cea130-140x84.jpeg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"A lovely day in Scarborough for cricket fans as they watch the LV County Championship from deckchairs at North Marine Road, England.",
+            "height":"84",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"A lovely day in Scarborough for cricket fans as they watch the LV County Championship from deckchairs at North Marine Road, England. Photograph: Gareth Copley/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

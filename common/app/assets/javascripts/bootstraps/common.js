@@ -35,7 +35,8 @@ define([
     "modules/discussion/commentCount",
     "modules/lightbox-gallery",
     "modules/swipe/ears",
-    "modules/swipe/bar"
+    "modules/swipe/bar",
+    "modules/facia/image-upgrade"
 ], function (
     common,
     ajax,
@@ -73,7 +74,8 @@ define([
     CommentCount,
     LightboxGallery,
     ears,
-    SwipeBar
+    SwipeBar,
+    ImageUpgrade
 ) {
 
     var modules = {
@@ -82,6 +84,15 @@ define([
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
+
+                // upgrade facia images
+                // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
+                common.$g('.collection', context).each(function(collection) {
+                    common.$g('.item', collection).each(function(item, index) {
+                        new ImageUpgrade(item, collection.getAttribute('data-collection-type') === 'container' && index === 0)
+                            .upgrade();
+                    });
+                });
             });
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
@@ -241,16 +252,6 @@ define([
                             viewData.experiments_json = JSON.stringify(testData);
                         }
 
-                        // nb, only needed while running both facia and old fronts
-                        // add extra data if 'facia'
-                        if (config.page.isFront === true) {
-                            viewData.platformVariant = ((config.page.isFacia === true) ? 'Facia' : 'Fronts') + '-application';
-                        }
-                        // also check if facia styled section or tag page
-                        else if (['Section', 'Tag'].indexOf(config.page.contentType) !== -1) {
-                            viewData.platformVariant = ((context.querySelector('.facia-container')) ? 'Facia' : 'Fronts') + '-application';
-                        }
-
                         return viewData;
                     });
 
@@ -293,7 +294,7 @@ define([
         },
 
         cleanupCookies: function() {
-            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid", 'GU_ABFACIA', 'GU_FACIA']);
         },
 
         // opt-in to the responsive alpha
@@ -301,21 +302,6 @@ define([
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
                 Cookies.add("GU_VIEW", "mobile", 365);
-                Cookies.add("GU_ABFACIA", 'true', 5);
-            }
-        },
-
-        // toggle in/out of facia
-        faciaToggle: function () {
-            var faciaToggle = /#facia-opt-(.*)/.exec(window.location.hash);
-            if (faciaToggle) {
-                var cookieName = 'GU_ABFACIA';
-                var expiryDays = 5;
-                if (faciaToggle[1] === 'in') {
-                    Cookies.add(cookieName, 'true', expiryDays);
-                } else {
-                    Cookies.add(cookieName, 'false', expiryDays);
-                }
             }
         },
 
@@ -411,7 +397,6 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
-            modules.faciaToggle();
             modules.displayReleaseMessage(config);
         }
         common.mediator.emit("page:common:ready", config, context);

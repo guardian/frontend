@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":13753,
+    "total":13811,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
-    "pages":1376,
+    "pages":1382,
     "orderBy":"newest",
     "tag":{
       "id":"sport/horse-racing",
@@ -19,46 +19,28 @@
       "references":[]
     },
     "results":[{
-      "id":"sport/2013/oct/02/lord-stevens-inquiry-sheikh-mohammed-equine",
+      "id":"sport/2013/oct/16/ascot-rain-soft-surface-champions-day",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-10-02T13:53:10Z",
-      "webTitle":"Lord Stevens to head inquiry into Sheikh Mohammed's equine operations",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/02/lord-stevens-inquiry-sheikh-mohammed-equine",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/02/lord-stevens-inquiry-sheikh-mohammed-equine",
+      "webPublicationDate":"2013-10-16T18:05:50Z",
+      "webTitle":"Ascot goes soft as Soft Falling Rain's trainer mulls Champions Day run",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/16/ascot-rain-soft-surface-champions-day",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/16/ascot-rain-soft-surface-champions-day",
       "fields":{
-        "trailText":"Lord Stevens has been asked by Sheikh Mohammed bin Rashid al-Maktoum to lead an investigation into his entire equine operations and will assemble a 'team of experts' to examine separate seizures of unlicensed veterinary products",
-        "headline":"Lord Stevens to head inquiry into Sheikh Mohammed's equine operations",
+        "trailText":"Sky Lantern seemed an unlikely runner and Soft Falling Rain may drop out after Ascot turned soft before Champions Day",
+        "headline":"Ascot goes soft as Soft Falling Rain's trainer mulls Champions Day run",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j8af",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/31/1370015862566/Sheikh-Mohammed-003.jpg",
-        "wordcount":"418",
+        "shortUrl":"http://gu.com/p/3jj2n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381946043194/Soft-Falling-Rain-006.jpg",
+        "wordcount":"641",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "id":"sport/ascot",
         "type":"keyword",
-        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
-        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/godolphin",
-        "type":"keyword",
-        "webTitle":"Godolphin",
-        "webUrl":"http://www.theguardian.com/sport/godolphin",
-        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/british-horseracing-authority",
-        "type":"keyword",
-        "webTitle":"British Horseracing Authority",
-        "webUrl":"http://www.theguardian.com/sport/british-horseracing-authority",
-        "apiUrl":"http://content.guardianapis.com/sport/british-horseracing-authority",
+        "webTitle":"Ascot",
+        "webUrl":"http://www.theguardian.com/sport/ascot",
+        "apiUrl":"http://content.guardianapis.com/sport/ascot",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -81,21 +63,39 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"profile/james-riach",
-        "type":"contributor",
-        "webTitle":"James Riach",
-        "webUrl":"http://www.theguardian.com/profile/james-riach",
-        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
-        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
-        "r2ContributorId":"49942",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
-        "references":[]
-      },{
         "id":"tone/news",
         "type":"tone",
         "webTitle":"News",
         "webUrl":"http://www.theguardian.com/tone/news",
         "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/chriscook",
+        "type":"contributor",
+        "webTitle":"Chris Cook",
+        "webUrl":"http://www.theguardian.com/profile/chriscook",
+        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
+        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
+        "r2ContributorId":"22559",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
         "references":[]
       },{
         "id":"type/article",
@@ -104,123 +104,79 @@
         "webUrl":"http://www.theguardian.com/articles",
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418859269",
+        "id":"gu-image-420182388",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/31/1370015870985/Sheikh-Mohammed-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381946053311/Soft-Falling-Rain-011.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Sheikh Mohammed",
+            "source":"PA",
+            "photographer":"Steve Parsons",
+            "altText":"Soft Falling Rain",
             "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Sheikh Mohammed has asked Lord Stevens to head an investigation into his entire equine operations. Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Steve Parsons/PA",
+            "caption":"Soft Falling Rain was an impressive winner at Newmarket last month but the going was fast that day. Photograph: Steve Parsons/PA",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418859270",
+        "id":"gu-image-420182389",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/31/1370015862566/Sheikh-Mohammed-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381946043194/Soft-Falling-Rain-006.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Sheikh Mohammed",
+            "source":"PA",
+            "photographer":"Steve Parsons",
+            "altText":"Soft Falling Rain",
             "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Godolphin founder Sheikh Mohammed will be desperate to see Dawn Approach put his stable's drugs scandal behind in the Derby.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Steve Parsons/PA",
+            "caption":"Soft Fallin Rain was an impressive winner at Newmarket last month but the going was fast that day. Photograph: Steve Parsons/PA",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"media/2013/oct/02/john-mccririck-channel-4-irritating-tribunal",
-      "sectionId":"media",
-      "sectionName":"Media",
-      "webPublicationDate":"2013-10-02T12:53:47Z",
-      "webTitle":"John McCririck was unappealing and irritating to viewers, tribunal told",
-      "webUrl":"http://www.theguardian.com/media/2013/oct/02/john-mccririck-channel-4-irritating-tribunal",
-      "apiUrl":"http://content.guardianapis.com/media/2013/oct/02/john-mccririck-channel-4-irritating-tribunal",
+      "id":"sport/2013/oct/16/horse-racing-tips-17-october-2013",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-16T16:38:28Z",
+      "webTitle":"Horse racing tips: Thursday 17 October",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/16/horse-racing-tips-17-october-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/16/horse-racing-tips-17-october-2013",
       "fields":{
-        "trailText":"Channel 4 executive rejects racing tipster's claim that he was dropped from channel's racing schedule because of his age",
-        "headline":"John McCririck was unappealing and irritating to viewers, tribunal told",
+        "trailText":"Sugar Hiccup fancied for a fourth consecutive win, plus tips for all four race-meetings",
+        "headline":"Horse racing tips: Thursday 17 October",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j88n",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718233708/John-McCririck-005.jpg",
-        "wordcount":"417",
+        "shortUrl":"http://gu.com/p/3jjv8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381941033882/Tom-Scudamore-006.jpg",
+        "wordcount":"79",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"media/john-mccririck",
+        "id":"sport/horse-racing-tips",
         "type":"keyword",
-        "webTitle":"John McCririck",
-        "webUrl":"http://www.theguardian.com/media/john-mccririck",
-        "apiUrl":"http://content.guardianapis.com/media/john-mccririck",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/media",
-        "type":"keyword",
-        "webTitle":"Media",
-        "webUrl":"http://www.theguardian.com/media/media",
-        "apiUrl":"http://content.guardianapis.com/media/media",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"profile/haroonsiddique",
-        "type":"contributor",
-        "webTitle":"Haroon Siddique",
-        "webUrl":"http://www.theguardian.com/profile/haroonsiddique",
-        "apiUrl":"http://content.guardianapis.com/profile/haroonsiddique",
-        "bio":"<p>Haroon Siddique is a news reporter on the Guardian website. He previously worked for North London institution the Ham&amp;High, and before pursuing his passion for journalism he was a commodity trader in the City</p>",
-        "r2ContributorId":"19136",
-        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/haroon_siddique.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"media/channel4",
-        "type":"keyword",
-        "webTitle":"Channel 4",
-        "webUrl":"http://www.theguardian.com/media/channel4",
-        "apiUrl":"http://content.guardianapis.com/media/channel4",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/television",
-        "type":"keyword",
-        "webTitle":"Television industry",
-        "webUrl":"http://www.theguardian.com/media/television",
-        "apiUrl":"http://content.guardianapis.com/media/television",
-        "sectionId":"media",
-        "sectionName":"Media",
+        "webTitle":"Horse racing tips",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
+        "sectionId":"sport",
+        "sectionName":"Sport",
         "references":[]
       },{
         "id":"sport/horse-racing",
@@ -241,6 +197,23 @@
         "sectionName":"Sport",
         "references":[]
       },{
+        "id":"profile/chriscook",
+        "type":"contributor",
+        "webTitle":"Chris Cook",
+        "webUrl":"http://www.theguardian.com/profile/chriscook",
+        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
+        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
+        "r2ContributorId":"22559",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -249,188 +222,58 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418853845",
+        "id":"gu-image-420174232",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718229733/John-McCririck-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381941043700/Tom-Scudamore-011.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"54",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718231160/John-McCririck-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"340",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718232456/John-McCririck-004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"130",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718233708/John-McCririck-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"84",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718235051/John-McCririck-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"132",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718236316/John-McCririck-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"168",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718237576/John-McCririck-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"180",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718238829/John-McCririck-009.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"228",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718240140/John-McCririck-010.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
+            "source":"Guardian",
+            "photographer":"Tom Jenkins",
+            "altText":"Tom Scudamore",
             "height":"276",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718241427/John-McCririck-011.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"372",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718240140/John-McCririck-010.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
-            "height":"276",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
+            "credit":"Tom Jenkins/Guardian",
+            "caption":"Tom Scudamore gets the ride aboard Sugar Hiccup in the absence of Tony McCoy and the pair can win. Photograph: Tom Jenkins for the Guardian",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418853846",
+        "id":"gu-image-420174233",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380718233708/John-McCririck-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381941033882/Tom-Scudamore-006.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Dan Kitwood",
-            "altText":"John McCririck",
+            "source":"Guardian",
+            "photographer":"Tom Jenkins",
+            "altText":"Tom Scudamore",
             "height":"84",
-            "credit":"Dan Kitwood/Getty Images",
-            "caption":"Racing pundit John McCririck and his wife, Jenny, pictured on the third day of his employment tribunal in London. Photograph: Dan Kitwood/Getty Images",
+            "credit":"Tom Jenkins/Guardian",
+            "caption":"Tom Scudamore gets the ride aboard Sugar Hiccup in the absence of Tony McCoy and the pair can win. Photograph: Tom Jenkins for the Guardian",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/blog/2013/oct/02/live-horse-racing-october-2-2013",
+      "id":"sport/blog/2013/oct/16/horse-racing-live-16-october-2013",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-10-02T10:43:53Z",
-      "webTitle":"Talking Horses: Salisbury tips in our daily horse racing blog",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/02/live-horse-racing-october-2-2013",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/02/live-horse-racing-october-2-2013",
+      "webPublicationDate":"2013-10-16T11:29:49Z",
+      "webTitle":"Talking Horses: A perfect storm for Lingfield punters, plus best bets",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/16/horse-racing-live-16-october-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/16/horse-racing-live-16-october-2013",
       "fields":{
-        "trailText":"<strong>Tony Paley: </strong>Join the discussion on our blog and enter our tipping competition for the chance to win new Felix Francis book",
-        "headline":"Talking Horses: Salisbury tips in our daily horse racing blog",
+        "trailText":"<p><strong>Chris Cook: </strong>Cafe Society is the sort of Lingfield favourite who could take years off your life, even if he wins. Try Space Ship instead</p>",
+        "headline":"Talking Horses: A perfect storm for Lingfield punters, plus best bets",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j843",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/6/7/1307443111870/Salisbury-003.jpg",
-        "wordcount":"290",
+        "shortUrl":"http://gu.com/p/3jtfy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381922938678/Lingfield-006.jpg",
+        "wordcount":"773",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -470,22 +313,14 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"profile/tonypaley",
+        "id":"profile/chriscook",
         "type":"contributor",
-        "webTitle":"Tony Paley",
-        "webUrl":"http://www.theguardian.com/profile/tonypaley",
-        "apiUrl":"http://content.guardianapis.com/profile/tonypaley",
-        "bio":"<p>Tony Paley is racing editor for the Guardian and Observer and contributes to <a href=\"http://www.guardian.co.uk/film\">guardian.co.uk/film</a></p>",
-        "rcsId":"GNL420646",
-        "r2ContributorId":"16543",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/tony_paley_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "webTitle":"Chris Cook",
+        "webUrl":"http://www.theguardian.com/profile/chriscook",
+        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
+        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
+        "r2ContributorId":"22559",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
         "references":[]
       },{
         "id":"sport/blog",
@@ -497,6 +332,13 @@
         "sectionName":"Sport",
         "references":[]
       },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -505,61 +347,70 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418839330",
+        "id":"gu-image-420134226",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/6/7/1307443119976/Salisbury-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381922946139/Lingfield-011.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Salisbury",
+            "source":"Getty Images",
+            "photographer":"Julian Herbert",
+            "altText":"Lingfield",
             "height":"276",
-            "credit":"David Davies/PA",
-            "caption":"They race on Wednesday at Salsibury, above, where Figure Of Speech rates the bet bet of the day in the 4.30 race.  Photograph: David Davies/PA",
+            "credit":"Julian Herbert/Getty Images",
+            "caption":"Bunched finishes are the norm at Lingfield, where every race ends in heartbreak for someone. Photograph: Julian Herbert/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418839331",
+        "id":"gu-image-420134227",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/6/7/1307443111870/Salisbury-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381922938678/Lingfield-006.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Salisbury",
+            "source":"Getty Images",
+            "photographer":"Julian Herbert",
+            "altText":"Lingfield",
             "height":"84",
-            "credit":"David Davies/PA",
-            "caption":"They race at Salsibury today where Emma Jean looks to have a good prospects in the six-furlong maiden race.  Photograph: David Davies/PA",
+            "credit":"Julian Herbert/Getty Images",
+            "caption":"Bunched finishes are the norm at Lingfield, where every race ends in heartbreak for someone. Photograph: Julian Herbert/Getty Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/oct/01/princess-haya-stansted-drugs-seizure",
+      "id":"sport/2013/oct/15/cirrus-des-aigles-perfect-champions-day",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-10-01T19:37:56Z",
-      "webTitle":"Princess Haya: the woman investigating the Stansted drugs seizure",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/princess-haya-stansted-drugs-seizure",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/princess-haya-stansted-drugs-seizure",
+      "webPublicationDate":"2013-10-15T18:46:57Z",
+      "webTitle":"Cirrus Des Aigles in 'perfect' nick for Champions Day, says trainer",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/15/cirrus-des-aigles-perfect-champions-day",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/15/cirrus-des-aigles-perfect-champions-day",
       "fields":{
-        "trailText":"Sheikh Mohammed's wife will head internal inquiry into the Border Force airport swoop",
-        "headline":"Princess Haya: the woman investigating the Stansted drugs seizure",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7m9",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650417414/Sheikh-Mohammed-ordered-a-006.jpg",
-        "wordcount":"820",
+        "trailText":"Corine Barande-Barbe has booked Christophe Soumillon to ride Cirrus Des Aigles and foresees the pair winning the Champion Stakes at Ascot on Saturday",
+        "headline":"Cirrus Des Aigles in 'perfect' nick for Champions Day, says trainer",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jt3p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381861195500/Cirrus-Des-Aigles-and-Chr-006.jpg",
+        "wordcount":"611",
         "liveBloggingNow":"false"
       },
       "tags":[{
+        "id":"sport/ascot",
+        "type":"keyword",
+        "webTitle":"Ascot",
+        "webUrl":"http://www.theguardian.com/sport/ascot",
+        "apiUrl":"http://content.guardianapis.com/sport/ascot",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
         "id":"sport/horse-racing",
         "type":"keyword",
         "webTitle":"Horse racing",
@@ -569,29 +420,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "type":"keyword",
-        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
-        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
         "id":"sport/sport",
         "type":"keyword",
         "webTitle":"Sport",
         "webUrl":"http://www.theguardian.com/sport/sport",
         "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/drugs-in-sport",
-        "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -606,11 +439,11 @@
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
         "references":[]
       },{
-        "id":"tone/features",
+        "id":"tone/news",
         "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
         "id":"theguardian/mainsection/sport",
@@ -648,66 +481,334 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418779708",
+        "id":"gu-image-420058855",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650425329/Sheikh-Mohammed-ordered-a-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381861204798/Cirrus-Des-Aigles-and-Chr-011.jpg",
           "typeData":{
             "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
+            "photographer":"Alan Crowhurst",
+            "altText":"Cirrus Des Aigles and Christophe Soumillon",
             "height":"276",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Getty Images",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Cirrus Des Aigles, centre, won the first Champion Stakes to be run at Ascot in 2011 with Christophe Soumillon aboard. Photograph: Alan Crowhurst/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418779709",
+        "id":"gu-image-420058856",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650417414/Sheikh-Mohammed-ordered-a-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381861195500/Cirrus-Des-Aigles-and-Chr-006.jpg",
           "typeData":{
             "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
+            "photographer":"Alan Crowhurst",
+            "altText":"Cirrus Des Aigles and Christophe Soumillon",
             "height":"84",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Cirrus Des Aigles, centre, won the first Champion Stakes to be run at Ascot in 2011 with Christophe Soumillon aboard. Photograph: Alan Crowhurst/Getty Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/oct/01/british-horseracing-authority-drug-seizure",
+      "id":"sport/2013/oct/15/horse-racing-tips-16-october-2013",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-10-01T18:24:17Z",
-      "webTitle":"British Horseracing Authority hits back over drug seizure stance",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/british-horseracing-authority-drug-seizure",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/british-horseracing-authority-drug-seizure",
+      "webPublicationDate":"2013-10-15T16:24:38Z",
+      "webTitle":"Horse racing tips: Wednesday 16 October",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/15/horse-racing-tips-16-october-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/15/horse-racing-tips-16-october-2013",
       "fields":{
-        "trailText":"Horse racing's ruling body has denied being too quick to rule out a link between the sport and two seizures of illegal equine drugs",
-        "headline":"British Horseracing Authority hits back over drug seizure stance",
+        "trailText":"Ryan Moore has a fine chance of a Kempton winner on Mystical Sapphire, plus tips for all four race-meetings",
+        "headline":"Horse racing tips: Wednesday 16 October",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7mv",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650417414/Sheikh-Mohammed-ordered-a-006.jpg",
-        "wordcount":"479",
+        "shortUrl":"http://gu.com/p/3jtvm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381854258521/Ryan-Moore-006.jpg",
+        "wordcount":"84",
         "liveBloggingNow":"false"
       },
       "tags":[{
+        "id":"sport/horse-racing-tips",
+        "type":"keyword",
+        "webTitle":"Horse racing tips",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ryan-moore",
+        "type":"keyword",
+        "webTitle":"Ryan Moore",
+        "webUrl":"http://www.theguardian.com/sport/ryan-moore",
+        "apiUrl":"http://content.guardianapis.com/sport/ryan-moore",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
         "id":"sport/horse-racing",
         "type":"keyword",
         "webTitle":"Horse racing",
         "webUrl":"http://www.theguardian.com/sport/horse-racing",
         "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/chriscook",
+        "type":"contributor",
+        "webTitle":"Chris Cook",
+        "webUrl":"http://www.theguardian.com/profile/chriscook",
+        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
+        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
+        "r2ContributorId":"22559",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420048089",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381854266278/Ryan-Moore-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Ryan Moore",
+            "height":"276",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Ryan Moore's chance of wresting the champion jockey's title back from Richard Hughes looks very slim indeed but he may score at Kempton tonight. Photograph: Julian Herbert/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420048090",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381854258521/Ryan-Moore-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Ryan Moore",
+            "height":"84",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Ryan Moore's chance of wresting the champion jockey's title back from Richard Hughes looks very slim indeed but he may score at Kempton tonight. Photograph: Julian Herbert/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/oct/15/horse-racing-live-15-october-2013",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-15T12:32:54Z",
+      "webTitle":"Talking Horses: News of Hydrogen's debut and best bets for today",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/15/horse-racing-live-15-october-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/15/horse-racing-live-15-october-2013",
+      "fields":{
+        "trailText":"<p><strong>Chris Cook: </strong>The £2.5m colt Hydrogen is expected to make a belated racecourse debut a week on Saturday, plus best bets for today</p>",
+        "headline":"Talking Horses: News of Hydrogen's debut and best bets for today",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jhjd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381840223206/Yearling-horse-is-sold-at-006.jpg",
+        "wordcount":"952",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/talking-horses",
+        "type":"series",
+        "webTitle":"Talking Horses",
+        "webUrl":"http://www.theguardian.com/sport/series/talking-horses",
+        "apiUrl":"http://content.guardianapis.com/sport/series/talking-horses",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing-tips",
+        "type":"keyword",
+        "webTitle":"Horse racing tips",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/chriscook",
+        "type":"contributor",
+        "webTitle":"Chris Cook",
+        "webUrl":"http://www.theguardian.com/profile/chriscook",
+        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
+        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
+        "r2ContributorId":"22559",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420022843",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381840233335/Yearling-horse-is-sold-at-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Yearling horse is sold at Tattersalls",
+            "height":"276",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"But will he ever see the racecourse? Expensive yearling colts do not always make the sort of high-profile track debuts you might expect. Photograph: Alan Crowhurst/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420022844",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381840223206/Yearling-horse-is-sold-at-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Yearling horse is sold at Tattersalls",
+            "height":"84",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"But will he ever see the racecourse? Expensive yearling colts do not always make the sort of high-profile track debuts you might expect. Photograph: Alan Crowhurst/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/15/plastic-grand-national-parody-timeform",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-15T10:47:23Z",
+      "webTitle":"'Plastic' Grand National at risk of becoming a parody, says Timeform",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/15/plastic-grand-national-parody-timeform",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/15/plastic-grand-national-parody-timeform",
+      "fields":{
+        "trailText":"The latest edition of Timeform's Chasers &amp; Hurdlers annual warns against further changes to the Grand National course",
+        "headline":"'Plastic' Grand National at risk of becoming a parody, says Timeform",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jhfy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381832926662/Grand-National-004.jpg",
+        "wordcount":"1071",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/grandnational",
+        "type":"keyword",
+        "webTitle":"Grand National",
+        "webUrl":"http://www.theguardian.com/sport/grandnational",
+        "apiUrl":"http://content.guardianapis.com/sport/grandnational",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/aintree",
+        "type":"keyword",
+        "webTitle":"Aintree",
+        "webUrl":"http://www.theguardian.com/sport/aintree",
+        "apiUrl":"http://content.guardianapis.com/sport/aintree",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sprinter-sacre",
+        "type":"keyword",
+        "webTitle":"Sprinter Sacre",
+        "webUrl":"http://www.theguardian.com/sport/sprinter-sacre",
+        "apiUrl":"http://content.guardianapis.com/sport/sprinter-sacre",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nicky-henderson",
+        "type":"keyword",
+        "webTitle":"Nicky Henderson",
+        "webUrl":"http://www.theguardian.com/sport/nicky-henderson",
+        "apiUrl":"http://content.guardianapis.com/sport/nicky-henderson",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -721,29 +822,137 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "id":"sport/horse-racing",
         "type":"keyword",
-        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
-        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/godolphin",
+        "id":"sport/sport",
         "type":"keyword",
-        "webTitle":"Godolphin",
-        "webUrl":"http://www.theguardian.com/sport/godolphin",
-        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/drugs-in-sport",
+        "id":"profile/tonypaley",
+        "type":"contributor",
+        "webTitle":"Tony Paley",
+        "webUrl":"http://www.theguardian.com/profile/tonypaley",
+        "apiUrl":"http://content.guardianapis.com/profile/tonypaley",
+        "bio":"<p>Tony Paley is racing editor for the Guardian and Observer and contributes to <a href=\"http://www.guardian.co.uk/film\">guardian.co.uk/film</a></p>",
+        "rcsId":"GNL420646",
+        "r2ContributorId":"16543",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/tony_paley_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420004315",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381832935641/Grand-National-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Tom Jenkins",
+            "altText":"Grand National",
+            "height":"276",
+            "credit":"Tom Jenkins/Guardian",
+            "caption":"Birch flies everywhere as runners tackle a newly softened fence in the 2013 Grand National. Photograph: Tom Jenkins for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420004316",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/15/1381832926662/Grand-National-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Tom Jenkins",
+            "altText":"Grand National",
+            "height":"84",
+            "credit":"Tom Jenkins/Guardian",
+            "caption":"Birch flies everywhere as runners tackle a newly softened fence in the 2013 Grand National. Photograph: Tom Jenkins for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/14/aidan-obrien-perfect-camelot-derby-retired",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-14T19:19:00Z",
+      "webTitle":"Aidan O'Brien extols 'perfect' Camelot as lame Derby winner is retired",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/14/aidan-obrien-perfect-camelot-derby-retired",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/14/aidan-obrien-perfect-camelot-derby-retired",
+      "fields":{
+        "trailText":"Camelot was praised as 'the perfect racehorse' by Aidan O'Brien after sudden lameness forced his retirement",
+        "headline":"Aidan O'Brien praises 'perfect' Camelot as lame Derby winner is retired",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jh59",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381772847665/Camelot-005.jpg",
+        "wordcount":"569",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/camelot",
         "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "webTitle":"Camelot",
+        "webUrl":"http://www.theguardian.com/sport/camelot",
+        "apiUrl":"http://content.guardianapis.com/sport/camelot",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/aidan-o-brien",
+        "type":"keyword",
+        "webTitle":"Aidan O'Brien",
+        "webUrl":"http://www.theguardian.com/sport/aidan-o-brien",
+        "apiUrl":"http://content.guardianapis.com/sport/aidan-o-brien",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/epsom-derby-stakes",
+        "type":"keyword",
+        "webTitle":"The Derby",
+        "webUrl":"http://www.theguardian.com/sport/epsom-derby-stakes",
+        "apiUrl":"http://content.guardianapis.com/sport/epsom-derby-stakes",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -809,248 +1018,66 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418775785",
+        "id":"gu-image-419946266",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650407215/Sheikh-Mohammed-ordered-a-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381772856528/Camelot-010.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"54",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650409535/Sheikh-Mohammed-ordered-a-002.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"340",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650411225/Sheikh-Mohammed-ordered-a-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"130",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650412821/Sheikh-Mohammed-ordered-a-004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"720",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"1280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650414920/Sheikh-Mohammed-ordered-a-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"1536",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"2048"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650417414/Sheikh-Mohammed-ordered-a-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"84",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650418993/Sheikh-Mohammed-ordered-a-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"132",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650420588/Sheikh-Mohammed-ordered-a-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"168",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650422128/Sheikh-Mohammed-ordered-a-009.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"180",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650423760/Sheikh-Mohammed-ordered-a-010.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"228",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650425329/Sheikh-Mohammed-ordered-a-011.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
+            "source":"PA Wire",
+            "photographer":"John Giles",
+            "altText":"Camelot",
             "height":"276",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650426912/Sheikh-Mohammed-ordered-a-012.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"372",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650428660/Sheikh-Mohammed-ordered-a-013.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"1116",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"1860"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650430973/Sheikh-Mohammed-ordered-a-014.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"1536",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
-            "width":"2560"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650425329/Sheikh-Mohammed-ordered-a-011.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
-            "height":"276",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty",
+            "credit":"John Giles/PA Wire",
+            "caption":"Camelot and Joseph O'Brien return after the horse's shock defeat in the St Leger. Photograph: John Giles/PA Wire",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418775786",
+        "id":"gu-image-419946267",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/1/1380650417414/Sheikh-Mohammed-ordered-a-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381772847665/Camelot-005.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Max Mumby/Indigo",
-            "altText":"Sheikh Mohammed ordered an investigation of his equine operations, to be run by Princess Haya",
+            "source":"PA Wire",
+            "photographer":"John Giles",
+            "altText":"Camelot",
             "height":"84",
-            "credit":"Max Mumby/Indigo/Getty Images",
-            "caption":"Sheikh Mohammed has ordered an internal investigation of his equine operations, to be run by his junior wife, Princess Haya.  Photograph: Max Mumby/Indigo/Getty Images",
+            "credit":"John Giles/PA Wire",
+            "caption":"Camelot and Joseph O'Brien return after the horse's shock defeat in the St Leger. Photograph: John Giles/PA Wire",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/oct/01/soft-ground-prix-de-larc-de-triomphe",
+      "id":"sport/2013/oct/14/horse-racing-tips-15-october-2013",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-10-01T18:12:17Z",
-      "webTitle":"Soft ground the likely scenario for Sunday's Prix de l'Arc de Triomphe",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/soft-ground-prix-de-larc-de-triomphe",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/soft-ground-prix-de-larc-de-triomphe",
+      "webPublicationDate":"2013-10-14T16:39:50Z",
+      "webTitle":"Horse racing tips: Tuesday 15 October",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/14/horse-racing-tips-15-october-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/14/horse-racing-tips-15-october-2013",
       "fields":{
-        "trailText":"Weather forecasters were predicting more rain in Paris before the Prix de l'Arc de Triomphe",
-        "headline":"Soft ground the likely scenario for Sunday's Prix de l'Arc de Triomphe",
+        "trailText":"Trixie Malone is napped to score again for Karl Burke in the last at Newcastle, plus tips for all four race-meetings",
+        "headline":"Horse racing tips: Tuesday 15 October",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7ym",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/10/2/1317563483955/Prix-de-lArc-de-Triomphe-003.jpg",
-        "wordcount":"665",
+        "shortUrl":"http://gu.com/p/3jhvk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381763801879/Charles-Hills-006.jpg",
+        "wordcount":"85",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"sport/prix-de-larc-de-triomphe",
+        "id":"sport/horse-racing-tips",
         "type":"keyword",
-        "webTitle":"Prix de l'Arc de Triomphe",
-        "webUrl":"http://www.theguardian.com/sport/prix-de-larc-de-triomphe",
-        "apiUrl":"http://content.guardianapis.com/sport/prix-de-larc-de-triomphe",
+        "webTitle":"Horse racing tips",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1073,40 +1100,21 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"profile/tonypaley",
-        "type":"contributor",
-        "webTitle":"Tony Paley",
-        "webUrl":"http://www.theguardian.com/profile/tonypaley",
-        "apiUrl":"http://content.guardianapis.com/profile/tonypaley",
-        "bio":"<p>Tony Paley is racing editor for the Guardian and Observer and contributes to <a href=\"http://www.guardian.co.uk/film\">guardian.co.uk/film</a></p>",
-        "rcsId":"GNL420646",
-        "r2ContributorId":"16543",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/tony_paley_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
+        "id":"tone/features",
         "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
         "references":[]
       },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
+        "id":"profile/chriscook",
+        "type":"contributor",
+        "webTitle":"Chris Cook",
+        "webUrl":"http://www.theguardian.com/profile/chriscook",
+        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
+        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
+        "r2ContributorId":"22559",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
         "references":[]
       },{
         "id":"type/article",
@@ -1115,69 +1123,188 @@
         "webUrl":"http://www.theguardian.com/articles",
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418773898",
+        "id":"gu-image-419931548",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/10/2/1317563487647/Prix-de-lArc-de-Triomphe-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381763808437/Charles-Hills-011.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Prix de l'Arc de Triomphe",
+            "source":"Rex",
+            "photographer":"Hugh Routledge",
+            "altText":"Charles Hills",
             "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Racegoers are likely to find the going on the soft side for the Prix de l'Arc de Triomphe at Longchamp in Paris on Sunday. Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Hugh Routledge/Rex",
+            "caption":"Charlie Hills may get a late-season winner with Red Art at Leicester. Photograph: Hugh Routledge/Rex",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418773899",
+        "id":"gu-image-419931549",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/10/2/1317563483955/Prix-de-lArc-de-Triomphe-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381763801879/Charles-Hills-006.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Prix de l'Arc de Triomphe",
+            "source":"Rex",
+            "photographer":"Hugh Routledge",
+            "altText":"Charles Hills",
             "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"The scene is set for this afternoon's Prix de l'Arc de Triomphe at Longchamp in Paris as racegoers enjoy a picnic before the race action. Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Hugh Routledge/Rex",
+            "caption":"Charlie Hills may get a late-season winner with Red Art at Leicester. Photograph: Hugh Routledge/Rex",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/oct/01/john-mccririck-channel-4-tribunal",
+      "id":"sport/blog/2013/oct/14/horse-racing-live-14-october-2013",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-14T11:02:08Z",
+      "webTitle":"Talking Horses: Win a copy of Timeform's Chasers and Hurdlers book",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/14/horse-racing-live-14-october-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/14/horse-racing-live-14-october-2013",
+      "fields":{
+        "trailText":"<p><strong>Greg Wood: </strong>Your chance to win a copy of Timeform's Chasers &amp; Hurdlers annual (retail: £75) in our weekly tipping competition, plus best bets for today</p>",
+        "headline":"Talking Horses: Win a copy of Timeform's Chasers and Hurdlers book",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jgjf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381748417771/Musselburgh-races-003.jpg",
+        "wordcount":"504",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/talking-horses",
+        "type":"series",
+        "webTitle":"Talking Horses",
+        "webUrl":"http://www.theguardian.com/sport/series/talking-horses",
+        "apiUrl":"http://content.guardianapis.com/sport/series/talking-horses",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing-tips",
+        "type":"keyword",
+        "webTitle":"Horse racing tips",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/gregwood",
+        "type":"contributor",
+        "webTitle":"Greg Wood",
+        "webUrl":"http://www.theguardian.com/profile/gregwood",
+        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
+        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
+        "rcsId":"GNL004789",
+        "r2ContributorId":"15683",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419901102",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381748425196/Musselburgh-races-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Alan Simpson",
+            "altText":"Musselburgh races",
+            "height":"276",
+            "credit":"Alan Simpson/PA",
+            "caption":"Sunshine on Musselburgh, this afternoon's stage for what may be the last Flat racing on good to firm before May. Photograph: Alan Simpson/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419901103",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/14/1381748417771/Musselburgh-races-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Alan Simpson",
+            "altText":"Musselburgh races",
+            "height":"84",
+            "credit":"Alan Simpson/PA",
+            "caption":"Sunshine on Musselburgh, this afternoon's stage for what may be the last Flat racing on good to firm before May. Photograph: Alan Simpson/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"media/2013/oct/03/channel4-television",
       "sectionId":"media",
       "sectionName":"Media",
-      "webPublicationDate":"2013-10-01T17:54:15Z",
-      "webTitle":"John McCririck tells tribunal his sexist TV persona was 'pantomime act'",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/john-mccririck-channel-4-tribunal",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/john-mccririck-channel-4-tribunal",
+      "webPublicationDate":"2013-10-03T16:55:16Z",
+      "webTitle":"McCririck's antics 'pretty disgusting', television company boss tells tribunal",
+      "webUrl":"http://www.theguardian.com/media/2013/oct/03/channel4-television",
+      "apiUrl":"http://content.guardianapis.com/media/2013/oct/03/channel4-television",
       "fields":{
-        "trailText":"Racing tipster says he has risked his home to pay for age discrimination case against Channel 4 and production company",
-        "headline":"John McCririck tells tribunal his sexist TV persona was 'pantomime act'",
+        "trailText":"Horse-racing pundit was dropped from Channel 4 to make way for sexier young female presenters, prosecution claims",
+        "headline":"McCririck's antics 'pretty disgusting', television company boss tells tribunal",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7m2",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649982761/John-McCririck-005.jpg",
-        "wordcount":"705",
+        "shortUrl":"http://gu.com/p/3j9gq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818403802/John-McCririck-005.jpg",
+        "wordcount":"458",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1188,15 +1315,6 @@
         "apiUrl":"http://content.guardianapis.com/media/john-mccririck",
         "sectionId":"media",
         "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
         "references":[]
       },{
         "id":"media/television",
@@ -1226,11 +1344,55 @@
         "sectionName":"Media",
         "references":[]
       },{
+        "id":"sport/sport-betting",
+        "type":"keyword",
+        "webTitle":"Sport betting",
+        "webUrl":"http://www.theguardian.com/sport/sport-betting",
+        "apiUrl":"http://content.guardianapis.com/sport/sport-betting",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
         "id":"sport/sport",
         "type":"keyword",
         "webTitle":"Sport",
         "webUrl":"http://www.theguardian.com/sport/sport",
         "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/haroonsiddique",
+        "type":"contributor",
+        "webTitle":"Haroon Siddique",
+        "webUrl":"http://www.theguardian.com/profile/haroonsiddique",
+        "apiUrl":"http://content.guardianapis.com/profile/haroonsiddique",
+        "bio":"<p>Haroon Siddique is a news reporter on the Guardian website. He previously worked for North London institution the Ham&amp;High, and before pursuing his passion for journalism he was a commodity trader in the City</p>",
+        "r2ContributorId":"19136",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/haroon_siddique.jpg",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1251,60 +1413,6 @@
         "apiUrl":"http://content.guardianapis.com/society/society",
         "sectionId":"society",
         "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"law/law",
-        "type":"keyword",
-        "webTitle":"Law",
-        "webUrl":"http://www.theguardian.com/law/law",
-        "apiUrl":"http://content.guardianapis.com/law/law",
-        "sectionId":"law",
-        "sectionName":"Law",
-        "references":[]
-      },{
-        "id":"culture/television",
-        "type":"keyword",
-        "webTitle":"Television",
-        "webUrl":"http://www.theguardian.com/culture/television",
-        "apiUrl":"http://content.guardianapis.com/culture/television",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"tv-and-radio/tv-and-radio",
-        "type":"keyword",
-        "webTitle":"Television & radio",
-        "webUrl":"http://www.theguardian.com/tv-and-radio/tv-and-radio",
-        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
         "references":[]
       },{
         "id":"theguardian/mainsection/uknews",
@@ -1342,668 +1450,174 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418774910",
+        "id":"gu-image-418992019",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649979764/John-McCririck-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818400692/John-McCririck-002.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"54",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649980811/John-McCririck-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818401753/John-McCririck-003.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"340",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"480"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649981790/John-McCririck-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818402801/John-McCririck-004.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"130",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649982761/John-McCririck-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818403802/John-McCririck-005.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"84",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649983765/John-McCririck-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818404805/John-McCririck-006.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"132",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649984734/John-McCririck-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818405799/John-McCririck-007.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"168",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649985718/John-McCririck-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818406808/John-McCririck-008.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"180",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649986692/John-McCririck-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818407904/John-McCririck-009.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"228",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649987892/John-McCririck-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818408976/John-McCririck-010.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"276",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649988931/John-McCririck-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818410045/John-McCririck-011.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
+            "source":"Getty Images",
+            "photographer":"Gareth Cattermole",
             "altText":"John McCririck",
             "height":"372",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"620"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649987892/John-McCririck-010.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
-            "altText":"John McCririck",
-            "height":"276",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418774911",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380649982761/John-McCririck-005.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Mark Thomas",
-            "altText":"John McCririck",
-            "height":"84",
-            "credit":"Mark Thomas/Rex Features",
-            "caption":"John McCririck arrives at the tribunal in central London with his wife Jenny. Photograph: Mark Thomas/Rex Features",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/oct/01/horse-racing-tips-wednesday-2-october",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-10-01T16:00:00Z",
-      "webTitle":"Horse racing tips: Wednesday 2 October",
-      "webUrl":"http://www.theguardian.com/sport/2013/oct/01/horse-racing-tips-wednesday-2-october",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/01/horse-racing-tips-wednesday-2-october",
-      "fields":{
-        "trailText":"<strong>Wednesday tips:</strong> Figure Of Speech at Salisbury is the best bet of the day",
-        "headline":"Horse racing tips: Wednesday 2 October",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7et",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/6/7/1307443111870/Salisbury-003.jpg",
-        "wordcount":"83",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/horse-racing-tips",
-        "type":"keyword",
-        "webTitle":"Horse racing tips",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/tonypaley",
-        "type":"contributor",
-        "webTitle":"Tony Paley",
-        "webUrl":"http://www.theguardian.com/profile/tonypaley",
-        "apiUrl":"http://content.guardianapis.com/profile/tonypaley",
-        "bio":"<p>Tony Paley is racing editor for the Guardian and Observer and contributes to <a href=\"http://www.guardian.co.uk/film\">guardian.co.uk/film</a></p>",
-        "rcsId":"GNL420646",
-        "r2ContributorId":"16543",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/tony_paley_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418753845",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/6/7/1307443119976/Salisbury-007.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Salisbury",
-            "height":"276",
-            "credit":"David Davies/PA",
-            "caption":"They race on Wednesday at Salsibury, above, where Figure Of Speech rates the best bet of the day. Photograph: David Davies/PA",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418753846",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/6/7/1307443111870/Salisbury-003.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Salisbury",
-            "height":"84",
-            "credit":"David Davies/PA",
-            "caption":"They race at Salsibury today where Emma Jean looks to have a good prospects in the six-furlong maiden race.  Photograph: David Davies/PA",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/blog/2013/oct/01/live-horse-racing-1-october-2013",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-10-01T11:16:57Z",
-      "webTitle":"Talking Horses: Kempton tips in our daily horse racing blog",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/01/live-horse-racing-1-october-2013",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/01/live-horse-racing-1-october-2013",
-      "fields":{
-        "trailText":"<strong>Tony Paley and Chris Cook:</strong> Join the discussion on our blog and enter our tipping competition for the chance to win new Felix Francis book",
-        "headline":"Talking Horses: Kempton tips in our daily horse racing blog",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j797",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2011/1/12/1294837007429/Kempton-Races-003.jpg",
-        "wordcount":"338",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/series/talking-horses",
-        "type":"series",
-        "webTitle":"Talking Horses",
-        "webUrl":"http://www.theguardian.com/sport/series/talking-horses",
-        "apiUrl":"http://content.guardianapis.com/sport/series/talking-horses",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing-tips",
-        "type":"keyword",
-        "webTitle":"Horse racing tips",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/tonypaley",
-        "type":"contributor",
-        "webTitle":"Tony Paley",
-        "webUrl":"http://www.theguardian.com/profile/tonypaley",
-        "apiUrl":"http://content.guardianapis.com/profile/tonypaley",
-        "bio":"<p>Tony Paley is racing editor for the Guardian and Observer and contributes to <a href=\"http://www.guardian.co.uk/film\">guardian.co.uk/film</a></p>",
-        "rcsId":"GNL420646",
-        "r2ContributorId":"16543",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/tony_paley_140x140.jpg",
-        "references":[]
-      },{
-        "id":"profile/chriscook",
-        "type":"contributor",
-        "webTitle":"Chris Cook",
-        "webUrl":"http://www.theguardian.com/profile/chriscook",
-        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
-        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
-        "r2ContributorId":"22559",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418734129",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2011/1/12/1294837011305/Kempton-Races-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818408976/John-McCririck-010.jpg",
           "typeData":{
             "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Kempton Races",
+            "photographer":"Gareth Cattermole",
+            "altText":"John McCririck",
             "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"They race under the floodlights at Kempton Park on Tuesday. Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418734130",
+        "id":"gu-image-418992020",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2011/1/12/1294837007429/Kempton-Races-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380818403802/John-McCririck-005.jpg",
           "typeData":{
             "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Kempton Races",
+            "photographer":"Gareth Cattermole",
+            "altText":"John McCririck",
             "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"The best bets today are under floodlights at the twilight meeting at Kempton Park. Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Gareth Cattermole/Getty Images",
+            "caption":"The racing pundit John McCririck is seeking £3m in damages and wants his job back. Photograph: Gareth Cattermole/Getty Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/30/sheikh-mohammed-dubai",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-30T21:48:18Z",
-      "webTitle":"Dubai case raises new questions for Sheikh Mohammed",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/30/sheikh-mohammed-dubai",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/30/sheikh-mohammed-dubai",
-      "fields":{
-        "trailText":"An endurance horse trainer banned for doping continues to train thoroughbreds for Godolphin's owner",
-        "headline":"Dubai case raises new questions for Sheikh Mohammed",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j723",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577578446/Sheikh-Mohammed-003.jpg",
-        "wordcount":"744",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "type":"keyword",
-        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
-        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/drugs-in-sport",
-        "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418683242",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577574070/Sheikh-Mohammed-001.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"54",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577577205/Sheikh-Mohammed-002.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"130",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577578446/Sheikh-Mohammed-003.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"84",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577579690/Sheikh-Mohammed-004.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"132",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577580825/Sheikh-Mohammed-005.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"168",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577581959/Sheikh-Mohammed-006.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"180",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577583175/Sheikh-Mohammed-007.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"228",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577584295/Sheikh-Mohammed-008.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"276",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577584295/Sheikh-Mohammed-008.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"276",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph: Caren Firouz/ Reuters",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418683243",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380577578446/Sheikh-Mohammed-003.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"  Caren Firouz / Reuters",
-            "altText":"Sheikh Mohammed",
-            "height":"84",
-            "credit":"  Caren Firouz / Reuters/REUTERS",
-            "caption":"Sheikh Mohammed has launched an inquiry into his endurance horse operation after the seizure of veterinary goods. Photograph:   Caren Firouz / Reuters/REUTERS",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    }],
-    "storyPackage":[],
-    "leadContent":[{
       "id":"sport/2013/jun/11/sir-henry-cecil",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -4380,288 +3994,6 @@
             "height":"84",
             "credit":"Tom Jenkins",
             "caption":"A rider tumbles at Aintree last year – two horses died as a result of falls in 2011's Grand National. Photograph: Tom Jenkins",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2012/mar/15/kauto-star-cheltenham-gold-cup-horse-racing",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2012-03-15T19:04:19Z",
-      "webTitle":"Kauto Star: why everyone wants to see this horse win at Cheltenham",
-      "webUrl":"http://www.theguardian.com/sport/2012/mar/15/kauto-star-cheltenham-gold-cup-horse-racing",
-      "apiUrl":"http://content.guardianapis.com/sport/2012/mar/15/kauto-star-cheltenham-gold-cup-horse-racing",
-      "fields":{
-        "trailText":"<p>Racing fans and bookies hail 12-year-old 'best horse' since Arkle and back him to win the Gold Cup</p>",
-        "headline":"Kauto Star: why everyone wants to see this horse win at Cheltenham",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3689p",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838022258/Kauto-Star-003.jpg",
-        "wordcount":"1816",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/kauto-star",
-        "type":"keyword",
-        "webTitle":"Kauto Star",
-        "webUrl":"http://www.theguardian.com/sport/kauto-star",
-        "apiUrl":"http://content.guardianapis.com/sport/kauto-star",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport-betting",
-        "type":"keyword",
-        "webTitle":"Sport betting",
-        "webUrl":"http://www.theguardian.com/sport/sport-betting",
-        "apiUrl":"http://content.guardianapis.com/sport/sport-betting",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"profile/stephenmoss",
-        "type":"contributor",
-        "webTitle":"Stephen Moss",
-        "webUrl":"http://www.theguardian.com/profile/stephenmoss",
-        "apiUrl":"http://content.guardianapis.com/profile/stephenmoss",
-        "bio":"<p>Stephen Moss is a feature writer at the Guardian. He is also editor of The Wisden Anthology 1978-2006: Cricket's Age of Revolution</p>",
-        "rcsId":"GNL014862",
-        "r2ContributorId":"16478",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/13/1326467516197/Stephen_Moss.jpg",
-        "references":[]
-      },{
-        "id":"sport/horse-racing-tips",
-        "type":"keyword",
-        "webTitle":"Horse racing tips",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/profiles",
-        "type":"tone",
-        "webTitle":"Profiles",
-        "webUrl":"http://www.theguardian.com/tone/profiles",
-        "apiUrl":"http://content.guardianapis.com/tone/profiles",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/uknews",
-        "type":"newspaper-book-section",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"theguardian/series/profile",
-        "type":"series",
-        "webTitle":"The Guardian profile",
-        "webUrl":"http://www.theguardian.com/theguardian/series/profile",
-        "apiUrl":"http://content.guardianapis.com/theguardian/series/profile",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-387408353",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838019498/Kauto-Star-001.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"54",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838020888/Kauto-Star-002.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"130",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838022258/Kauto-Star-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"84",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838023619/Kauto-Star-004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"132",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838025117/Kauto-Star-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"180",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838026545/Kauto-Star-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"228",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838028061/Kauto-Star-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"276",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838029453/Kauto-Star-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"340",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838028061/Kauto-Star-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"276",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-387408354",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/15/1331838022258/Kauto-Star-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Matt Cardy",
-            "altText":"Kauto Star",
-            "height":"84",
-            "credit":"Matt Cardy/Getty Images",
-            "caption":"Kauto Star will line up at Cheltanham to win his third Gold Cup.   Photograph: Matt Cardy/Getty Images",
             "width":"140"
           }
         }]

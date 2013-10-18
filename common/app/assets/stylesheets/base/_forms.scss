@@ -68,7 +68,7 @@
 
 .form-field__note--right {
     float: right;
-    margin-left: $gutter;
+    margin-left: $gs-gutter;
 }
 
 .label {
@@ -113,7 +113,7 @@
     cursor: pointer;
     font-size: 14px;
     font-size: 1.4rem;
-    margin: 0 $gutter 0 0;
+    margin: 0 $gs-gutter 0 0;
     min-width: gs-span(2);
     padding: 11px 0;
 
@@ -137,26 +137,17 @@
     font-size: 13px;
     font-size: 1.3rem;
     margin-bottom: $baseline;
-    padding-left: $gutter;
-
-    @include mq($to:tablet) {
-        padding-left: 20px;
-    }
+    padding-left: $gs-gutter;
 }
 
 .check-label--helper {
-    position: relative;
-    top: $baseline*2;
+    vertical-align: middle;
 }
 
 [type=checkbox] {
     float: left;
     height: 13px;
-    margin-left: -$gutter;
-    margin-top: 4px;
+    margin-left: -$gs-gutter;
+    margin-top: 3px;
     width: 13px;
-
-    @include mq($to:tablet) {
-        margin-left: -20px;
-    }
 }

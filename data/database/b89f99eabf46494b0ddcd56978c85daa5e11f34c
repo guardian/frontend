@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":21798,
+    "total":21880,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
-    "pages":2180,
+    "pages":2188,
     "orderBy":"newest",
     "edition":{
       "id":"stage",
@@ -29,38 +29,83 @@
       }]
     },
     "results":[{
-      "id":"stage/theatreblog/2013/oct/02/paper-works-show-stage-page",
+      "id":"stage/2013/oct/16/birmingham-royal-ballet-review",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-10-02T14:43:48Z",
-      "webTitle":"Paper Stages takes the show from stage to page",
-      "webUrl":"http://www.theguardian.com/stage/theatreblog/2013/oct/02/paper-works-show-stage-page",
-      "apiUrl":"http://content.guardianapis.com/stage/theatreblog/2013/oct/02/paper-works-show-stage-page",
+      "webPublicationDate":"2013-10-16T16:17:09Z",
+      "webTitle":"Birmingham Royal Ballet: Mixed Bill – review",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/16/birmingham-royal-ballet-review",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/16/birmingham-royal-ballet-review",
       "fields":{
-        "trailText":"<p><strong>Maddy Costa</strong>: Does a performance space have to be built of bricks and mortar, or could it be made from pen and ink? Paper Stages reinvents the form – and function – of a play</p>",
-        "headline":"Paper Stages takes the show from stage to page",
+        "trailText":"<p>David Bintley's one-act ballets, especially E=mc², sparkled in BRB's performance. He should choreograph more of them, finds <strong>Judith Mackrell</strong></p>",
+        "headline":"Birmingham Royal Ballet: Mixed Bill – review",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j4ff",
-        "wordcount":"700",
+        "shortUrl":"http://gu.com/p/3jtnz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937493803/Birmingham-Royal-Ballet-i-005.jpg",
+        "wordcount":"299",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"stage/theatreblog",
-        "type":"blog",
-        "webTitle":"Theatre blog with Lyn Gardner",
-        "webUrl":"http://www.theguardian.com/stage/theatreblog",
-        "apiUrl":"http://content.guardianapis.com/stage/theatreblog",
+        "id":"stage/birmingham-royal-ballet",
+        "type":"keyword",
+        "webTitle":"Birmingham Royal Ballet",
+        "webUrl":"http://www.theguardian.com/stage/birmingham-royal-ballet",
+        "apiUrl":"http://content.guardianapis.com/stage/birmingham-royal-ballet",
         "sectionId":"stage",
         "sectionName":"Stage",
         "references":[]
       },{
-        "id":"stage/theatre",
+        "id":"profile/david-bintley",
+        "type":"contributor",
+        "webTitle":"David Bintley",
+        "webUrl":"http://www.theguardian.com/profile/david-bintley",
+        "apiUrl":"http://content.guardianapis.com/profile/david-bintley",
+        "bio":"<p>David Bintley is the artistic director of Birmingham Royal Ballet</p>",
+        "r2ContributorId":"31197",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2009/3/25/1237982697627/David-Bintley-001.jpg",
+        "references":[]
+      },{
+        "id":"stage/dance",
         "type":"keyword",
-        "webTitle":"Theatre",
-        "webUrl":"http://www.theguardian.com/stage/theatre",
-        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "webTitle":"Dance",
+        "webUrl":"http://www.theguardian.com/stage/dance",
+        "apiUrl":"http://content.guardianapis.com/stage/dance",
         "sectionId":"stage",
         "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/reviews",
+        "type":"newspaper-book-section",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/reviews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/reviews",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
         "references":[]
       },{
         "id":"stage/stage",
@@ -72,20 +117,24 @@
         "sectionName":"Stage",
         "references":[]
       },{
-        "id":"profile/maddycosta",
-        "type":"contributor",
-        "webTitle":"Maddy Costa",
-        "webUrl":"http://www.theguardian.com/profile/maddycosta",
-        "apiUrl":"http://content.guardianapis.com/profile/maddycosta",
-        "rcsId":"GNL504027",
-        "r2ContributorId":"16027",
+        "id":"stage/ballet",
+        "type":"keyword",
+        "webTitle":"Ballet",
+        "webUrl":"http://www.theguardian.com/stage/ballet",
+        "apiUrl":"http://content.guardianapis.com/stage/ballet",
+        "sectionId":"stage",
+        "sectionName":"Stage",
         "references":[]
       },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "id":"profile/judithmackrell",
+        "type":"contributor",
+        "webTitle":"Judith Mackrell",
+        "webUrl":"http://www.theguardian.com/profile/judithmackrell",
+        "apiUrl":"http://content.guardianapis.com/profile/judithmackrell",
+        "bio":"<p>Judith Mackrell is the Guardian's dance critic</p>",
+        "rcsId":"GNL086454",
+        "r2ContributorId":"15915",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/judith_mackrell_140x140.jpg",
         "references":[]
       },{
         "id":"type/article",
@@ -94,41 +143,199 @@
         "webUrl":"http://www.theguardian.com/articles",
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418866593",
-        "relation":"body",
+        "id":"gu-image-420167384",
+        "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/2/1380722770936/hoxne-suffolk-in-autumn-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937489048/Birmingham-Royal-Ballet-i-002.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":"Graham Turner",
-            "altText":"hoxne suffolk in autumn",
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"54",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937490690/Birmingham-Royal-Ballet-i-003.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"340",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937492275/Birmingham-Royal-Ballet-i-004.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"130",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937493803/Birmingham-Royal-Ballet-i-005.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"84",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937495341/Birmingham-Royal-Ballet-i-006.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"132",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937496985/Birmingham-Royal-Ballet-i-007.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"168",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937498549/Birmingham-Royal-Ballet-i-008.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"180",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937500129/Birmingham-Royal-Ballet-i-009.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"228",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937502493/Birmingham-Royal-Ballet-i-010.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
             "height":"276",
-            "credit":"Graham Turner/Guardian",
-            "caption":"Promenade performance ... Borrow a dog and make a piece of DIY theatre. Photograph: Graham Turner for the Guardian",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
             "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937504087/Birmingham-Royal-Ballet-i-011.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"372",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937502493/Birmingham-Royal-Ballet-i-010.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"276",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420167385",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381937493803/Birmingham-Royal-Ballet-i-005.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Roy Smiljanic",
+            "altText":"Birmingham Royal Ballet in E=mc2",
+            "height":"84",
+            "credit":"Roy Smiljanic/pr",
+            "caption":"Limpid and celestially lit … Birmingham Royal Ballet in E=mc2. Photograph: Roy Smiljanic",
+            "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"stage/theatreblog/2013/oct/02/national-theatre-hytner-successor-changes",
+      "id":"stage/theatreblog/2013/oct/16/theatre-name-rights-sell-off",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-10-02T13:01:44Z",
-      "webTitle":"National Theatre's Nicholas Hytner: a hard act to follow",
-      "webUrl":"http://www.theguardian.com/stage/theatreblog/2013/oct/02/national-theatre-hytner-successor-changes",
-      "apiUrl":"http://content.guardianapis.com/stage/theatreblog/2013/oct/02/national-theatre-hytner-successor-changes",
+      "webPublicationDate":"2013-10-16T15:26:41Z",
+      "webTitle":"What's in a name? Will the theatre smell as sweet?",
+      "webUrl":"http://www.theguardian.com/stage/theatreblog/2013/oct/16/theatre-name-rights-sell-off",
+      "apiUrl":"http://content.guardianapis.com/stage/theatreblog/2013/oct/16/theatre-name-rights-sell-off",
       "fields":{
-        "trailText":"<p><strong>Lyn Gardner:</strong> Hytner's successor needs to make bold, brave changes to keep the NT relevant through the 21st century</p>",
-        "headline":"National Theatre's Nicholas Hytner: a hard act to follow",
+        "trailText":"<p><strong>Lyn Gardner:</strong> ATG intends to sell off the naming rights to some iconic theatres. Does it matter, and if you had the money who would you name a theatre after?</p>",
+        "headline":"What's in a name? Will the theatre smell as sweet?",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j7dj",
-        "wordcount":"637",
+        "shortUrl":"http://gu.com/p/3jte2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936963883/lyceum-theatre-exterior-l-005.jpg",
+        "wordcount":"397",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -177,6 +384,33 @@
         "apiUrl":"http://content.guardianapis.com/tone/blog",
         "references":[]
       },{
+        "id":"stage/westend",
+        "type":"keyword",
+        "webTitle":"West End",
+        "webUrl":"http://www.theguardian.com/stage/westend",
+        "apiUrl":"http://content.guardianapis.com/stage/westend",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/travelleisure",
+        "type":"keyword",
+        "webTitle":"Travel & leisure",
+        "webUrl":"http://www.theguardian.com/business/travelleisure",
+        "apiUrl":"http://content.guardianapis.com/business/travelleisure",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -185,56 +419,209 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418854556",
-        "relation":"body",
+        "id":"gu-image-420164006",
+        "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380713262582/Model-of-the-National-The-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936971251/lyceum-theatre-exterior-l-011.jpg",
           "typeData":{
-            "source":"Hulton-Deutsch Collection/CORBIS",
-            "altText":"Model of the National Theatre",
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"372",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936970015/lyceum-theatre-exterior-l-010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
             "height":"276",
-            "credit":"Hulton-Deutsch Collection/CORBIS",
-            "caption":"Model characters … Laurence Olivier and National Theatre architect Denys Lasdun in 1967. Photograph: Hulton-Deutsch Collection/Corbis",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
             "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936968787/lyceum-theatre-exterior-l-009.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"228",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936967445/lyceum-theatre-exterior-l-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"180",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936966226/lyceum-theatre-exterior-l-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"168",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936965043/lyceum-theatre-exterior-l-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"132",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936963883/lyceum-theatre-exterior-l-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"84",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936962634/lyceum-theatre-exterior-l-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"130",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936961433/lyceum-theatre-exterior-l-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"340",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936960231/lyceum-theatre-exterior-l-002.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"54",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936958353/lyceum-theatre-exterior-l-001.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"54",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936970015/lyceum-theatre-exterior-l-010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"276",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420164007",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381936963883/lyceum-theatre-exterior-l-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Jeff Blackler",
+            "altText":"lyceum theatre exterior london west end",
+            "height":"84",
+            "credit":"Jeff Blackler/Rex Features",
+            "caption":"The Lyceum theatre, in London's West End: what name will it carry in future? Photograph: Jeff Blackler/Rex Features",
+            "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"stage/2013/oct/02/cirque-eloize-id-review",
+      "id":"stage/2013/oct/16/my-generation-review",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-10-02T12:43:59Z",
-      "webTitle":"Cirque Éloize: ID – review",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/02/cirque-eloize-id-review",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/02/cirque-eloize-id-review",
+      "webPublicationDate":"2013-10-16T14:59:52Z",
+      "webTitle":"My Generation – review",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/16/my-generation-review",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/16/my-generation-review",
       "fields":{
-        "trailText":"<p>From breakdancing to trampowalling, the Canadian circus's latest spectacle fizzes with skill and self-belief, writes <strong>Lyn Gardner</strong></p>",
-        "headline":"Cirque Éloize: ID – review",
+        "trailText":"Alice Nutter's heartfelt play moves from squats to raves to government cuts, exploring a family's history in the counter-culture, finds <strong>Lyn Gardner</strong>",
+        "headline":"My Generation – review",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j883",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/2/1380716677195/ID-by-Cirque-Eloize-at-Pe-005.jpg",
-        "wordcount":"282",
+        "shortUrl":"http://gu.com/p/3jty4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933098869/My-Generation-by-Alice-Nu-003.jpg",
+        "wordcount":"302",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"stage/circus",
+        "id":"stage/theatre",
         "type":"keyword",
-        "webTitle":"Circus",
-        "webUrl":"http://www.theguardian.com/stage/circus",
-        "apiUrl":"http://content.guardianapis.com/stage/circus",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"stage/dance",
-        "type":"keyword",
-        "webTitle":"Dance",
-        "webUrl":"http://www.theguardian.com/stage/dance",
-        "apiUrl":"http://content.guardianapis.com/stage/dance",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
         "sectionId":"stage",
         "sectionName":"Stage",
         "references":[]
@@ -248,6 +635,15 @@
         "sectionName":"Stage",
         "references":[]
       },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
         "id":"culture/culture",
         "type":"keyword",
         "webTitle":"Culture",
@@ -255,6 +651,15 @@
         "apiUrl":"http://content.guardianapis.com/culture/culture",
         "sectionId":"culture",
         "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"uk/leeds",
+        "type":"keyword",
+        "webTitle":"Leeds",
+        "webUrl":"http://www.theguardian.com/uk/leeds",
+        "apiUrl":"http://content.guardianapis.com/uk/leeds",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
         "references":[]
       },{
         "id":"profile/lyngardner",
@@ -293,6 +698,15 @@
         "sectionName":"News",
         "references":[]
       },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -310,58 +724,175 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418851327",
+        "id":"gu-image-420156526",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/2/1380716683883/ID-by-Cirque-Eloize-at-Pe-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933094266/My-Generation-by-Alice-Nu-001.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":"Tristram Kenton",
-            "altText":"ID by Cirque Eloize at Peacock theatre, London",
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"340",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933097340/My-Generation-by-Alice-Nu-002.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"130",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933098869/My-Generation-by-Alice-Nu-003.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"84",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933100474/My-Generation-by-Alice-Nu-004.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"132",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933102016/My-Generation-by-Alice-Nu-005.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"168",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933103591/My-Generation-by-Alice-Nu-006.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"180",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933105165/My-Generation-by-Alice-Nu-007.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"228",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933106930/My-Generation-by-Alice-Nu-008.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
             "height":"276",
-            "credit":"Tristram Kenton/Guardian",
-            "caption":"High energy … Cirque Éloize perform ID at London's Peacock theatre. Photograph: Tristram Kenton for the Guardian",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933108522/My-Generation-by-Alice-Nu-009.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"372",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933106930/My-Generation-by-Alice-Nu-008.jpg",
+          "typeData":{
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
+            "height":"276",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418851328",
+        "id":"gu-image-420156527",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/2/1380716677195/ID-by-Cirque-Eloize-at-Pe-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381933098869/My-Generation-by-Alice-Nu-003.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":"Tristram Kenton",
-            "altText":"ID by Cirque Eloize at Peacock theatre, London",
+            "source":"Keith Pattison",
+            "photographer":"Keith Pattison",
+            "altText":"My Generation by Alice Nutter",
             "height":"84",
-            "credit":"Tristram Kenton/Guardian",
-            "caption":"ID by Cirque Eloize at Peacock theatre, London. Photograph: Tristram Kenton for the Guardian",
+            "credit":"Keith Pattison/Keith Pattison",
+            "caption":"'A show with heart' … My Generation by Alice Nutter. Photograph: Keith Pattison",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"stage/2013/oct/02/all-my-sons-review",
+      "id":"stage/2013/oct/16/long-days-journey-into-night-review",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-10-02T12:43:49Z",
-      "webTitle":"All My Sons – review",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/02/all-my-sons-review",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/02/all-my-sons-review",
+      "webPublicationDate":"2013-10-16T14:19:08Z",
+      "webTitle":"Long Day's Journey into Night – review",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/16/long-days-journey-into-night-review",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/16/long-days-journey-into-night-review",
       "fields":{
-        "trailText":"<p>Arthur Miller's play becomes an account of the African American experience in this flawless production by Michael Buffong, writes <strong>Alfred Hickling</strong></p>",
-        "headline":"All My Sons – review",
+        "trailText":"<p>Moving performances and a brisk production pace bring Eugene O'Neill's study of sickness and addiction to life, writes <strong>Alfred Hickling</strong></p>",
+        "headline":"Long Day's Journey into Night – review",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j84j",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/2/1380710941228/All-My-Sons-at-the-Royal--004.jpg",
-        "wordcount":"375",
+        "shortUrl":"http://gu.com/p/3jtkz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/16/1381933056095/Long-Days-Journey-into-Ni-002.jpg",
+        "wordcount":"325",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -374,15 +905,6 @@
         "sectionName":"Stage",
         "references":[]
       },{
-        "id":"culture/miller",
-        "type":"keyword",
-        "webTitle":"Arthur Miller",
-        "webUrl":"http://www.theguardian.com/culture/miller",
-        "apiUrl":"http://content.guardianapis.com/culture/miller",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
         "id":"stage/stage",
         "type":"keyword",
         "webTitle":"Stage",
@@ -390,6 +912,24 @@
         "apiUrl":"http://content.guardianapis.com/stage/stage",
         "sectionId":"stage",
         "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"books/eugene-o-neill",
+        "type":"keyword",
+        "webTitle":"Eugene O'Neill",
+        "webUrl":"http://www.theguardian.com/books/eugene-o-neill",
+        "apiUrl":"http://content.guardianapis.com/books/eugene-o-neill",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
         "references":[]
       },{
         "id":"culture/culture",
@@ -452,66 +992,66 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418840999",
+        "id":"gu-image-420155575",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/2/1380710946758/All-My-Sons-at-the-Royal--009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/16/1381933062461/Long-Days-Journey-into-Ni-007.jpg",
           "typeData":{
             "source":"PR",
-            "photographer":"Jonathan Keenan",
-            "altText":"All My Sons at the Royal Exchange, Manchester",
+            "photographer":"Ian Tilton",
+            "altText":"Long Day's Journey into Night by Eugene O'Neill, at Octagon, Bolton",
             "height":"276",
-            "credit":"Jonathan Keenan/PR",
-            "caption":"Well-judged … Don Warrington and Doña Croll in All My Sons at the Royal Exchange, Manchester. Photograph: Jonathan Keenan",
+            "credit":"Ian Tilton/PR",
+            "caption":"Combustible … Brian Protheroe and Margot Leicester in Long Day's Journey into Night at Octagon, Bolton. Photograph: Ian Tilton",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418841000",
+        "id":"gu-image-420155576",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/2/1380710941228/All-My-Sons-at-the-Royal--004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/16/1381933056095/Long-Days-Journey-into-Ni-002.jpg",
           "typeData":{
             "source":"PR",
-            "photographer":"Jonathan Keenan",
-            "altText":"All My Sons at the Royal Exchange, Manchester",
+            "photographer":"Ian Tilton",
+            "altText":"Long Day's Journey into Night by Eugene O'Neill, at Octagon, Bolton",
             "height":"84",
-            "credit":"Jonathan Keenan/PR",
-            "caption":"Don Warrington and Dona Croll in All My Sons by Arthur Miller at the Royal Exchange, Manchester. Photograph: Jonathan Keenan",
+            "credit":"Ian Tilton/PR",
+            "caption":"Brian Protheroe and Margot Leicester in Long Day's Journey into Night by Eugene O'Neill, at Octagon, Bolton. Photograph: Ian Tilton",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"stage/2013/oct/02/billy-connolly-prostate-cancer-all-clear",
+      "id":"stage/2013/oct/16/stephen-sondheim-company-musical-gay-version",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-10-02T11:21:35Z",
-      "webTitle":"Billy Connolly given all-clear after treatment for prostate cancer",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/02/billy-connolly-prostate-cancer-all-clear",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/02/billy-connolly-prostate-cancer-all-clear",
+      "webPublicationDate":"2013-10-16T11:50:50Z",
+      "webTitle":"Stephen Sondheim working on a 'gay' version of Company",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/16/stephen-sondheim-company-musical-gay-version",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/16/stephen-sondheim-company-musical-gay-version",
       "fields":{
-        "trailText":"Comedian breaks news on Sky Sports and says that his recently diagnosed Parkinson's disease will not affect his work",
-        "headline":"Billy Connolly given all-clear after treatment for prostate cancer",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j828",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707319317/billy-connolly-005.jpg",
-        "wordcount":"206",
+        "trailText":"<p>Composer says he has been reworking some of the musical for a modern audience with Alan Cumming and Daniel Evans</p>",
+        "headline":"Stephen Sondheim working on a 'gay' version of Company",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jtdq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920653580/Daniel-Evans-as-Bobby-sur-004.jpg",
+        "wordcount":"286",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"stage/comedy",
+        "id":"stage/sondheim",
         "type":"keyword",
-        "webTitle":"Comedy",
-        "webUrl":"http://www.theguardian.com/stage/comedy",
-        "apiUrl":"http://content.guardianapis.com/stage/comedy",
+        "webTitle":"Stephen Sondheim",
+        "webUrl":"http://www.theguardian.com/stage/sondheim",
+        "apiUrl":"http://content.guardianapis.com/stage/sondheim",
         "sectionId":"stage",
         "sectionName":"Stage",
         "references":[]
@@ -525,58 +1065,49 @@
         "sectionName":"Stage",
         "references":[]
       },{
-        "id":"culture/billyconnolly",
+        "id":"stage/broadway",
         "type":"keyword",
-        "webTitle":"Billy Connolly",
-        "webUrl":"http://www.theguardian.com/culture/billyconnolly",
-        "apiUrl":"http://content.guardianapis.com/culture/billyconnolly",
+        "webTitle":"Broadway",
+        "webUrl":"http://www.theguardian.com/stage/broadway",
+        "apiUrl":"http://content.guardianapis.com/stage/broadway",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/theatre",
+        "type":"keyword",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
         "sectionId":"culture",
         "sectionName":"Culture",
         "references":[]
       },{
-        "id":"culture/comedy",
+        "id":"world/new-york",
         "type":"keyword",
-        "webTitle":"Comedy",
-        "webUrl":"http://www.theguardian.com/culture/comedy",
-        "apiUrl":"http://content.guardianapis.com/culture/comedy",
-        "sectionId":"culture",
-        "sectionName":"Culture",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
         "references":[]
       },{
-        "id":"society/prostate-cancer",
+        "id":"world/usa",
         "type":"keyword",
-        "webTitle":"Prostate cancer",
-        "webUrl":"http://www.theguardian.com/society/prostate-cancer",
-        "apiUrl":"http://content.guardianapis.com/society/prostate-cancer",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"society/parkinsons-disease",
-        "type":"keyword",
-        "webTitle":"Parkinson's disease",
-        "webUrl":"http://www.theguardian.com/society/parkinsons-disease",
-        "apiUrl":"http://content.guardianapis.com/society/parkinsons-disease",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"society/society",
-        "type":"keyword",
-        "webTitle":"Society",
-        "webUrl":"http://www.theguardian.com/society/society",
-        "apiUrl":"http://content.guardianapis.com/society/society",
-        "sectionId":"society",
-        "sectionName":"Society",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
         "references":[]
       },{
         "id":"profile/matt-trueman",
@@ -594,6 +1125,15 @@
         "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
+        "id":"culture/alan-cumming",
+        "type":"keyword",
+        "webTitle":"Alan Cumming",
+        "webUrl":"http://www.theguardian.com/culture/alan-cumming",
+        "apiUrl":"http://content.guardianapis.com/culture/alan-cumming",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -602,188 +1142,441 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418835687",
+        "id":"gu-image-420137175",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707315728/billy-connolly-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920638240/Daniel-Evans-as-Bobby-sur-001.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"54",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707316876/billy-connolly-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920642673/Daniel-Evans-as-Bobby-sur-002.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
+            "height":"130",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920648146/Daniel-Evans-as-Bobby-sur-003.jpg",
+          "typeData":{
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"340",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"480"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707318123/billy-connolly-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920653580/Daniel-Evans-as-Bobby-sur-004.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
-            "height":"130",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707319317/billy-connolly-005.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"84",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707320455/billy-connolly-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920656703/Daniel-Evans-as-Bobby-sur-005.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"132",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707321598/billy-connolly-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920658959/Daniel-Evans-as-Bobby-sur-006.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"168",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707322825/billy-connolly-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920661620/Daniel-Evans-as-Bobby-sur-007.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"180",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707324021/billy-connolly-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920665649/Daniel-Evans-as-Bobby-sur-008.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"228",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707325212/billy-connolly-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920667511/Daniel-Evans-as-Bobby-sur-009.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"276",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707326367/billy-connolly-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920669195/Daniel-Evans-as-Bobby-sur-010.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"372",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"620"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707325212/billy-connolly-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920667511/Daniel-Evans-as-Bobby-sur-009.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"276",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Big grin … Billy Connolly has announced he is no longer suffering from prostate cancer. Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418835688",
+        "id":"gu-image-420137176",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/10/2/1380707319317/billy-connolly-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381920653580/Daniel-Evans-as-Bobby-sur-004.jpg",
           "typeData":{
-            "source":"Rex Features",
-            "photographer":"Jim Smeal",
-            "altText":"billy connolly",
+            "source":"Ellie Kurttz",
+            "altText":"Daniel Evans as Bobby surrounded by the cast of Company. Photo by Ellie Kurttz.jpg\rSheffield Crucibl",
             "height":"84",
-            "credit":"Jim Smeal/Rex Features",
-            "caption":"Billy Connolly, 'the granddaddy of standup in this country', at the Baftas in 2003 Photograph: Jim Smeal/Rex Features",
+            "credit":"Ellie Kurttz",
+            "caption":"Daniel Evans as the commitment-phobic Bobby, surrounded by the cast of Company at Sheffield Crucible in 2012. Photograph: Ellie Kurttz",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"stage/2013/oct/02/handbagged-review-queen-margaret-thatcher",
+      "id":"stage/2013/oct/16/fair-review-first-night-ballet",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-10-01T23:55:25Z",
-      "webTitle":"Handbagged – review",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/02/handbagged-review-queen-margaret-thatcher",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/02/handbagged-review-queen-margaret-thatcher",
+      "webPublicationDate":"2013-10-16T09:56:06Z",
+      "webTitle":"Is it fair to review first night ballets?",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/16/fair-review-first-night-ballet",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/16/fair-review-first-night-ballet",
       "fields":{
-        "trailText":"<p>This is a very funny portrait of a relationship between monarch and prime minister that clearly wasn't made in heaven, writes <strong>Michael Billington</strong></p>",
-        "headline":"Handbagged – review",
+        "trailText":"<strong>Judith Mackrell:</strong> The dancers may be still getting used to the choreography, let alone stage effects, yet dance is routinely judged on first performances",
+        "headline":"Is it fair to review first night ballets?",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j7p9",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671184641/Handbagged-003.jpg",
-        "wordcount":"565",
+        "shortUrl":"http://gu.com/p/3jta2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916496507/Raven-Girl-by-Wayne-McGre-005.jpg",
+        "wordcount":"702",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"stage/dance",
+        "type":"keyword",
+        "webTitle":"Dance",
+        "webUrl":"http://www.theguardian.com/stage/dance",
+        "apiUrl":"http://content.guardianapis.com/stage/dance",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/ballet",
+        "type":"keyword",
+        "webTitle":"Ballet",
+        "webUrl":"http://www.theguardian.com/stage/ballet",
+        "apiUrl":"http://content.guardianapis.com/stage/ballet",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/royal-ballet",
+        "type":"keyword",
+        "webTitle":"Royal Ballet",
+        "webUrl":"http://www.theguardian.com/stage/royal-ballet",
+        "apiUrl":"http://content.guardianapis.com/stage/royal-ballet",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/wayne-mcgregor",
+        "type":"keyword",
+        "webTitle":"Wayne McGregor",
+        "webUrl":"http://www.theguardian.com/stage/wayne-mcgregor",
+        "apiUrl":"http://content.guardianapis.com/stage/wayne-mcgregor",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/theatre",
+        "type":"keyword",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"profile/judithmackrell",
+        "type":"contributor",
+        "webTitle":"Judith Mackrell",
+        "webUrl":"http://www.theguardian.com/profile/judithmackrell",
+        "apiUrl":"http://content.guardianapis.com/profile/judithmackrell",
+        "bio":"<p>Judith Mackrell is the Guardian's dance critic</p>",
+        "rcsId":"GNL086454",
+        "r2ContributorId":"15915",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/judith_mackrell_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420117741",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916491246/Raven-Girl-by-Wayne-McGre-002.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"54",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916492963/Raven-Girl-by-Wayne-McGre-003.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"340",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916494750/Raven-Girl-by-Wayne-McGre-004.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"130",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916496507/Raven-Girl-by-Wayne-McGre-005.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"84",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916498202/Raven-Girl-by-Wayne-McGre-006.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"132",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916500130/Raven-Girl-by-Wayne-McGre-007.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"168",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916502093/Raven-Girl-by-Wayne-McGre-008.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"180",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916504008/Raven-Girl-by-Wayne-McGre-009.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"228",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916505791/Raven-Girl-by-Wayne-McGre-010.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"276",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916507560/Raven-Girl-by-Wayne-McGre-011.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"372",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916505791/Raven-Girl-by-Wayne-McGre-010.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"276",
+            "credit":"Johan Persson/pr",
+            "caption":"In the dark … Sarah Lamb and Eric Underwood in Raven Girl, which was bedevilled by lighting issues. Photograph: Johan Persson",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420117742",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381916496507/Raven-Girl-by-Wayne-McGre-005.jpg",
+          "typeData":{
+            "source":"pr",
+            "photographer":"Johan Persson",
+            "altText":"Raven Girl by Wayne McGregor",
+            "height":"84",
+            "credit":"Johan Persson/pr",
+            "caption":"Ready for the critics … Sarah Lamb and Eric Underwood in Raven Girl choreographed by Wayne McGregor. Photograph: Johan Persson",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"stage/2013/oct/15/lady-of-little-sense-review",
+      "sectionId":"stage",
+      "sectionName":"Stage",
+      "webPublicationDate":"2013-10-15T22:00:00Z",
+      "webTitle":"A Lady of Little Sense – review",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/15/lady-of-little-sense-review",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/15/lady-of-little-sense-review",
+      "fields":{
+        "trailText":"<p>Lope de Vega's romantic comedy has something in common with the Taming of the Shrew, and gets a lively performance here, but it leaves a somewhat acrid aftertaste, writes <strong>Michael Billington</strong></p>",
+        "headline":"A Lady of Little Sense – review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jhhx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835246395/A-LADY-OF-LITTLE-SENSE-Us-005.jpg",
+        "wordcount":"448",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -805,22 +1598,11 @@
         "sectionName":"Stage",
         "references":[]
       },{
-        "id":"politics/margaretthatcher",
-        "type":"keyword",
-        "webTitle":"Margaret Thatcher",
-        "webUrl":"http://www.theguardian.com/politics/margaretthatcher",
-        "apiUrl":"http://content.guardianapis.com/politics/margaretthatcher",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"uk/queen",
-        "type":"keyword",
-        "webTitle":"The Queen",
-        "webUrl":"http://www.theguardian.com/uk/queen",
-        "apiUrl":"http://content.guardianapis.com/uk/queen",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
         "references":[]
       },{
         "id":"culture/culture",
@@ -832,11 +1614,29 @@
         "sectionName":"Culture",
         "references":[]
       },{
-        "id":"tone/reviews",
+        "id":"tone/livereview",
         "type":"tone",
+        "webTitle":"Live music reviews",
+        "webUrl":"http://www.theguardian.com/tone/livereview",
+        "apiUrl":"http://content.guardianapis.com/tone/livereview",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/reviews",
+        "type":"newspaper-book-section",
         "webTitle":"Reviews",
-        "webUrl":"http://www.theguardian.com/tone/reviews",
-        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/reviews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/reviews",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
         "references":[]
       },{
         "id":"profile/michaelbillington",
@@ -848,6 +1648,591 @@
         "rcsId":"GNL004715",
         "r2ContributorId":"16121",
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/michael_billlington_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420049896",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835241620/A-LADY-OF-LITTLE-SENSE-Us-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"54",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835243245/A-LADY-OF-LITTLE-SENSE-Us-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"340",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835244830/A-LADY-OF-LITTLE-SENSE-Us-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"130",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835246395/A-LADY-OF-LITTLE-SENSE-Us-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"84",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835248021/A-LADY-OF-LITTLE-SENSE-Us-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"132",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835249853/A-LADY-OF-LITTLE-SENSE-Us-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"168",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835251496/A-LADY-OF-LITTLE-SENSE-Us-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"180",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835253166/A-LADY-OF-LITTLE-SENSE-Us-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"228",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835254874/A-LADY-OF-LITTLE-SENSE-Us-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"276",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835258969/A-LADY-OF-LITTLE-SENSE-Us-011.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"372",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835254874/A-LADY-OF-LITTLE-SENSE-Us-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"276",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420049897",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381835246395/A-LADY-OF-LITTLE-SENSE-Us-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Jane Hobson",
+            "altText":"A LADY OF LITTLE SENSE, Ustinov Studio, Theatre Royal Bath, UK.",
+            "height":"84",
+            "credit":"Jane Hobson/PR",
+            "caption":"A play about the transformative power of love … A Lady of Little Sense at the Ustinov Studio in Bath.  Photograph: Jane Hobson",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"stage/2013/oct/15/amanda-holden-grope-claim-ricky-gervais-david-brent",
+      "sectionId":"stage",
+      "sectionName":"Stage",
+      "webPublicationDate":"2013-10-15T16:34:09Z",
+      "webTitle":"Amanda Holden reveals sexual assault by 'famous comedian'",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/15/amanda-holden-grope-claim-ricky-gervais-david-brent",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/15/amanda-holden-grope-claim-ricky-gervais-david-brent",
+      "fields":{
+        "trailText":"<strong>Brian Logan:</strong> The Britain's Got Talent judge says she was attacked by an unnamed comic, 21st-century comics grapple with homosexuality, and David Brent realises his rock-god dreams",
+        "headline":"Amanda Holden reveals sexual assault by 'famous comedian'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jhzf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/15/1381854460234/Amanda-Holden-attends-the-004.jpg",
+        "wordcount":"1411",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"stage/series/laughing-stock-the-week-in-comedy",
+        "type":"series",
+        "webTitle":"Laughing stock: the week in comedy",
+        "webUrl":"http://www.theguardian.com/stage/series/laughing-stock-the-week-in-comedy",
+        "apiUrl":"http://content.guardianapis.com/stage/series/laughing-stock-the-week-in-comedy",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"tv-and-radio/amanda-holden",
+        "type":"keyword",
+        "webTitle":"Amanda Holden",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/amanda-holden",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/amanda-holden",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"tv-and-radio/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/comedy",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/comedy",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/ricky-gervais",
+        "type":"keyword",
+        "webTitle":"Ricky Gervais",
+        "webUrl":"http://www.theguardian.com/culture/ricky-gervais",
+        "apiUrl":"http://content.guardianapis.com/culture/ricky-gervais",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"stage/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/stage/comedy",
+        "apiUrl":"http://content.guardianapis.com/stage/comedy",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"film/danny-boyle",
+        "type":"keyword",
+        "webTitle":"Danny Boyle",
+        "webUrl":"http://www.theguardian.com/film/danny-boyle",
+        "apiUrl":"http://content.guardianapis.com/film/danny-boyle",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/jo-brand",
+        "type":"keyword",
+        "webTitle":"Jo Brand",
+        "webUrl":"http://www.theguardian.com/culture/jo-brand",
+        "apiUrl":"http://content.guardianapis.com/culture/jo-brand",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/culture/comedy",
+        "apiUrl":"http://content.guardianapis.com/culture/comedy",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tv-and-radio/jennifer-saunders",
+        "type":"keyword",
+        "webTitle":"Jennifer Saunders",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/jennifer-saunders",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/jennifer-saunders",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"profile/brianlogan",
+        "type":"contributor",
+        "webTitle":"Brian Logan",
+        "webUrl":"http://www.theguardian.com/profile/brianlogan",
+        "apiUrl":"http://content.guardianapis.com/profile/brianlogan",
+        "bio":"<p>is comedy critic and arts writer for the Guardian. He is a former deputy theatre editor of Time Out London and former editor of the Guardian's Film Unlimited website. He is also a founder member and performer with Cartoon de Salvo theatre company.</p>",
+        "rcsId":"GNL234021",
+        "r2ContributorId":"15444",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/7/23/1279881753462/Brian-Logan.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420048225",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850394160/Amanda-Holden-pictured-in-001.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"130",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850396522/Amanda-Holden-pictured-in-002.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"84",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850397754/Amanda-Holden-pictured-in-003.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"132",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850399121/Amanda-Holden-pictured-in-004.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"168",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850400399/Amanda-Holden-pictured-in-005.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"180",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850401762/Amanda-Holden-pictured-in-006.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"228",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850403083/Amanda-Holden-pictured-in-007.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"276",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/15/1381850404366/Amanda-Holden-pictured-in-008.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Eagle Lee",
+            "altText":"Amanda Holden pictured in October 2013",
+            "height":"372",
+            "credit":"Eagle Lee/Barcroft Media",
+            "caption":"Telling all … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Eagle Lee/Barcroft Media",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/15/1381854471398/Amanda-Holden-attends-the-009.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Mike Marsland",
+            "altText":"Amanda Holden attends the press launch for the new series of Britain's Got Talent at ICA in London",
+            "height":"276",
+            "credit":"Mike Marsland/WireImage",
+            "caption":"No laughing matter … Amanda Holden says in her autobiography she was 'cornered by a famous comedian, who tried to kiss me'. Photograph: Mike Marsland/WireImage",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420048226",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/15/1381854460234/Amanda-Holden-attends-the-004.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Mike Marsland",
+            "altText":"Amanda Holden attends the press launch for the new series of Britain's Got Talent at ICA in London",
+            "height":"84",
+            "credit":"Mike Marsland/WireImage",
+            "caption":"Amanda Holden attends the press launch for the new series of Britain's Got Talent at ICA in London. Photograph: Mike Marsland/WireImage",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"stage/2013/oct/15/rufus-norris-popular-choice-national-theatre-hytner",
+      "sectionId":"stage",
+      "sectionName":"Stage",
+      "webPublicationDate":"2013-10-15T15:22:43Z",
+      "webTitle":"Rufus Norris is popular choice as National Theatre boss",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/15/rufus-norris-popular-choice-national-theatre-hytner",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/15/rufus-norris-popular-choice-national-theatre-hytner",
+      "fields":{
+        "trailText":"Actors and staff greet news of appointment with standing ovation as departing head Sir Nicholas Hytner hails 'brilliant decision'",
+        "headline":"Rufus Norris is popular choice as National Theatre boss",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jhzp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849998917/Rufus-Norris-006.jpg",
+        "wordcount":"777",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"stage/rufus-norris",
+        "type":"keyword",
+        "webTitle":"Rufus Norris",
+        "webUrl":"http://www.theguardian.com/stage/rufus-norris",
+        "apiUrl":"http://content.guardianapis.com/stage/rufus-norris",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/national-theatre",
+        "type":"keyword",
+        "webTitle":"National Theatre",
+        "webUrl":"http://www.theguardian.com/stage/national-theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/national-theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"media/nicholashytner",
+        "type":"keyword",
+        "webTitle":"Nicholas Hytner",
+        "webUrl":"http://www.theguardian.com/media/nicholashytner",
+        "apiUrl":"http://content.guardianapis.com/media/nicholashytner",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"stage/theatre",
+        "type":"keyword",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/charlottehiggins",
+        "type":"contributor",
+        "webTitle":"Charlotte Higgins",
+        "webUrl":"http://www.theguardian.com/profile/charlottehiggins",
+        "apiUrl":"http://content.guardianapis.com/profile/charlottehiggins",
+        "bio":"<p>Charlotte Higgins is the chief arts writer of the Guardian. She contributes to the Guardian's news, features, op-ed, literary and arts sections, and writes the <a href=\"http://www.guardian.co.uk/culture/charlottehigginsblog\">Charlotte Higgins on Culture blog</a></p>",
+        "rcsId":"GNL465906",
+        "r2ContributorId":"15476",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/29/1285761872647/charlotte_higgins_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
         "id":"theguardian/mainsection/uknews",
@@ -885,174 +2270,243 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418831602",
+        "id":"gu-image-420040855",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671181012/Handbagged-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849989235/Rufus-Norris-001.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"54",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671183308/Handbagged-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849991156/Rufus-Norris-002.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"130",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671184641/Handbagged-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849992752/Rufus-Norris-003.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
+            "height":"340",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849994432/Rufus-Norris-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
+            "height":"720",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849996539/Rufus-Norris-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
+            "height":"1536",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849998917/Rufus-Norris-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"84",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671185923/Handbagged-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850000463/Rufus-Norris-007.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"132",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671187177/Handbagged-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850002025/Rufus-Norris-008.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"168",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671188505/Handbagged-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850003644/Rufus-Norris-009.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"180",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671189904/Handbagged-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850005217/Rufus-Norris-010.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"228",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671191176/Handbagged-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850006814/Rufus-Norris-011.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"276",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671191176/Handbagged-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850008402/Rufus-Norris-012.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
+            "height":"372",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850010262/Rufus-Norris-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
+            "height":"1116",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850012786/Rufus-Norris-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
+            "height":"1536",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850006814/Rufus-Norris-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"276",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Tight-lipped collision ... Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph: Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418831603",
+        "id":"gu-image-420040856",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/2/1380671184641/Handbagged-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849998917/Rufus-Norris-006.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"Handbagged",
+            "source":"PA",
+            "photographer":"Nick Ansell",
+            "altText":"Rufus Norris",
             "height":"84",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Marion Bailey (older Queen) and Stella Gonet (older Margaret Thatcher) in Handbagged. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Nick Ansell/PA",
+            "caption":"Rufus Norris, the new National Theatre artistic director, has been described as an 'instinctive collaborator'. Photograph: Nick Ansell/PA",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"stage/2013/oct/01/the-lovesong-of-alfred-j-hitchcock-review",
+      "id":"stage/2013/oct/15/snail-and-the-whale-review",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-10-01T22:01:00Z",
-      "webTitle":"The Lovesong of Alfred J Hitchcock – review",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/01/the-lovesong-of-alfred-j-hitchcock-review",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/01/the-lovesong-of-alfred-j-hitchcock-review",
+      "webPublicationDate":"2013-10-15T15:17:18Z",
+      "webTitle":"The Snail and the Whale – review",
+      "webUrl":"http://www.theguardian.com/stage/2013/oct/15/snail-and-the-whale-review",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/15/snail-and-the-whale-review",
       "fields":{
-        "trailText":"<p>Rudkin's darkly riveting play brilliantly demonstrates the way Hitchcock's art is the key to his life, writes <strong>Michael Billington</strong></p>",
-        "headline":"The Lovesong of Alfred J Hitchcock – review",
+        "trailText":"<p>Tall Stories' adaptation of the much-loved children's book is a small but ingenious pleasure, writes <strong>Lyn Gardner</strong></p>",
+        "headline":"The Snail and the Whale – review",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j7jz",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644853972/The-Lovesong-of-Alfred-J--005.jpg",
-        "wordcount":"439",
+        "shortUrl":"http://gu.com/p/3jhnh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847924737/The-Snail-and-the-Whale-a-005.jpg",
+        "wordcount":"309",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"stage/theatre",
-        "type":"keyword",
-        "webTitle":"Theatre",
-        "webUrl":"http://www.theguardian.com/stage/theatre",
-        "apiUrl":"http://content.guardianapis.com/stage/theatre",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
         "id":"stage/stage",
         "type":"keyword",
         "webTitle":"Stage",
@@ -1062,33 +2516,13 @@
         "sectionName":"Stage",
         "references":[]
       },{
-        "id":"profile/michaelbillington",
-        "type":"contributor",
-        "webTitle":"Michael Billington",
-        "webUrl":"http://www.theguardian.com/profile/michaelbillington",
-        "apiUrl":"http://content.guardianapis.com/profile/michaelbillington",
-        "bio":"<p>Michael Billington is the Guardian's <a href=\"http://www.guardian.co.uk/stage/theatre\">theatre</a> critic</p>",
-        "rcsId":"GNL004715",
-        "r2ContributorId":"16121",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/michael_billlington_140x140.jpg",
-        "references":[]
-      },{
-        "id":"film/alfredhitchcock",
+        "id":"stage/theatre",
         "type":"keyword",
-        "webTitle":"Alfred Hitchcock",
-        "webUrl":"http://www.theguardian.com/film/alfredhitchcock",
-        "apiUrl":"http://content.guardianapis.com/film/alfredhitchcock",
-        "sectionId":"film",
-        "sectionName":"Film",
-        "references":[]
-      },{
-        "id":"film/film",
-        "type":"keyword",
-        "webTitle":"Film",
-        "webUrl":"http://www.theguardian.com/film/film",
-        "apiUrl":"http://content.guardianapis.com/film/film",
-        "sectionId":"film",
-        "sectionName":"Film",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
         "references":[]
       },{
         "id":"culture/culture",
@@ -1098,6 +2532,24 @@
         "apiUrl":"http://content.guardianapis.com/culture/culture",
         "sectionId":"culture",
         "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/booksforchildrenandteenagers",
+        "type":"keyword",
+        "webTitle":"Children and teenagers",
+        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
+        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
         "references":[]
       },{
         "id":"tone/reviews",
@@ -1123,226 +2575,6 @@
         "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
         "sectionId":"news",
         "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418767237",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644847207/The-Lovesong-of-Alfred-J--002.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"54",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644851303/The-Lovesong-of-Alfred-J--003.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"340",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644852689/The-Lovesong-of-Alfred-J--004.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"130",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644853972/The-Lovesong-of-Alfred-J--005.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"84",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644855253/The-Lovesong-of-Alfred-J--006.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"132",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644856589/The-Lovesong-of-Alfred-J--007.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"168",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644857926/The-Lovesong-of-Alfred-J--008.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"180",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644859254/The-Lovesong-of-Alfred-J--009.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"228",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644860543/The-Lovesong-of-Alfred-J--010.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"276",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644861824/The-Lovesong-of-Alfred-J--011.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"372",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644860543/The-Lovesong-of-Alfred-J--010.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"276",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418767238",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380644853972/The-Lovesong-of-Alfred-J--005.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Pamela Raith",
-            "altText":"The Lovesong of Alfred J Hitchcock.",
-            "height":"84",
-            "credit":"Pamela Raith/PR",
-            "caption":"Directed with great flair … The Lovesong of Alfred J Hitchcock. Photograph: Pamela Raith",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"stage/2013/oct/01/the-world-of-extreme-happiness-review",
-      "sectionId":"stage",
-      "sectionName":"Stage",
-      "webPublicationDate":"2013-10-01T16:24:00Z",
-      "webTitle":"The World of Extreme Happiness – review",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/01/the-world-of-extreme-happiness-review",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/01/the-world-of-extreme-happiness-review",
-      "fields":{
-        "trailText":"<p>Frances Ya-Chu Cowhig's play puts the flesh and blood on the stories of China's workers who flock to the cities, writes <strong>Lyn Gardner</strong></p>",
-        "headline":"The World of Extreme Happiness – review",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j7ty",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642735245/The-World-of-Extreme-Happ-005.jpg",
-        "wordcount":"318",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"stage/theatre",
-        "type":"keyword",
-        "webTitle":"Theatre",
-        "webUrl":"http://www.theguardian.com/stage/theatre",
-        "apiUrl":"http://content.guardianapis.com/stage/theatre",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"stage/stage",
-        "type":"keyword",
-        "webTitle":"Stage",
-        "webUrl":"http://www.theguardian.com/stage/stage",
-        "apiUrl":"http://content.guardianapis.com/stage/stage",
-        "sectionId":"stage",
-        "sectionName":"Stage",
         "references":[]
       },{
         "id":"profile/lyngardner",
@@ -1356,40 +2588,6 @@
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/photobylines/2012/9/7/1347039131363/Lyn-Gardner.jpg",
         "references":[]
       },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"tone/reviews",
-        "type":"tone",
-        "webTitle":"Reviews",
-        "webUrl":"http://www.theguardian.com/tone/reviews",
-        "apiUrl":"http://content.guardianapis.com/tone/reviews",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/reviews",
-        "type":"newspaper-book-section",
-        "webTitle":"Reviews",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/reviews",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/reviews",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -1407,784 +2605,168 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-418767042",
+        "id":"gu-image-420038859",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642730943/The-World-of-Extreme-Happ-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847919856/The-Snail-and-the-Whale-a-002.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"54",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642732712/The-World-of-Extreme-Happ-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847921517/The-Snail-and-the-Whale-a-003.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"340",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"480"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642734011/The-World-of-Extreme-Happ-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847923121/The-Snail-and-the-Whale-a-004.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"130",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642735245/The-World-of-Extreme-Happ-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847924737/The-Snail-and-the-Whale-a-005.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"84",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642736480/The-World-of-Extreme-Happ-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847926374/The-Snail-and-the-Whale-a-006.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"132",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642737717/The-World-of-Extreme-Happ-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847928054/The-Snail-and-the-Whale-a-007.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"168",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642738970/The-World-of-Extreme-Happ-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847929631/The-Snail-and-the-Whale-a-008.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"180",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642740238/The-World-of-Extreme-Happ-009.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847931226/The-Snail-and-the-Whale-a-009.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"228",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642741607/The-World-of-Extreme-Happ-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847932922/The-Snail-and-the-Whale-a-010.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"276",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642742889/The-World-of-Extreme-Happ-011.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847934544/The-Snail-and-the-Whale-a-011.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"372",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"620"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642741607/The-World-of-Extreme-Happ-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847932922/The-Snail-and-the-Whale-a-010.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"276",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-418767043",
+        "id":"gu-image-420038860",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642735245/The-World-of-Extreme-Happ-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847924737/The-Snail-and-the-Whale-a-005.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":" Tristram Kenton",
-            "altText":"The World of Extreme Happiness",
+            "source":"PR",
+            "photographer":"Tall Stories",
+            "altText":"The Snail and the Whale at the Rose theatre, Kingston",
             "height":"84",
-            "credit":" Tristram Kenton/Guardian",
-            "caption":"Window on to a hidden world … Vera Chok and Katie Leung in The World of Extreme Happiness. Photograph:  Tristram Kenton for the Guardian",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"stage/2013/oct/01/lee-mack-comedy-sexism-hello-ladies",
-      "sectionId":"stage",
-      "sectionName":"Stage",
-      "webPublicationDate":"2013-10-01T16:20:05Z",
-      "webTitle":"Lee Mack is panned for saying women aren't cut out for comedy",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/01/lee-mack-comedy-sexism-hello-ladies",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/01/lee-mack-comedy-sexism-hello-ladies",
-      "fields":{
-        "trailText":"<p><strong>Brian Logan: </strong>The Daily Express blasts Lee Mack for his views on female comedians, a bunch of comedians take part in skirmishes, and Hello Ladies gets lacklustre reviews</p>",
-        "headline":"Lee Mack is panned for saying women aren't cut out for comedy",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3j7ta",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642053423/Lee-Mack-005.jpg",
-        "wordcount":"1529",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"stage/series/laughing-stock-the-week-in-comedy",
-        "type":"series",
-        "webTitle":"Laughing stock: the week in comedy",
-        "webUrl":"http://www.theguardian.com/stage/series/laughing-stock-the-week-in-comedy",
-        "apiUrl":"http://content.guardianapis.com/stage/series/laughing-stock-the-week-in-comedy",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"culture/comedy",
-        "type":"keyword",
-        "webTitle":"Comedy",
-        "webUrl":"http://www.theguardian.com/culture/comedy",
-        "apiUrl":"http://content.guardianapis.com/culture/comedy",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"tv-and-radio/comedy",
-        "type":"keyword",
-        "webTitle":"Comedy",
-        "webUrl":"http://www.theguardian.com/tv-and-radio/comedy",
-        "apiUrl":"http://content.guardianapis.com/tv-and-radio/comedy",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"tv-and-radio/radio-comedy",
-        "type":"keyword",
-        "webTitle":"Radio comedy",
-        "webUrl":"http://www.theguardian.com/tv-and-radio/radio-comedy",
-        "apiUrl":"http://content.guardianapis.com/tv-and-radio/radio-comedy",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"stage/comedy",
-        "type":"keyword",
-        "webTitle":"Comedy",
-        "webUrl":"http://www.theguardian.com/stage/comedy",
-        "apiUrl":"http://content.guardianapis.com/stage/comedy",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"culture/television",
-        "type":"keyword",
-        "webTitle":"Television",
-        "webUrl":"http://www.theguardian.com/culture/television",
-        "apiUrl":"http://content.guardianapis.com/culture/television",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"tv-and-radio/tv-and-radio",
-        "type":"keyword",
-        "webTitle":"Television & radio",
-        "webUrl":"http://www.theguardian.com/tv-and-radio/tv-and-radio",
-        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"stage/stage",
-        "type":"keyword",
-        "webTitle":"Stage",
-        "webUrl":"http://www.theguardian.com/stage/stage",
-        "apiUrl":"http://content.guardianapis.com/stage/stage",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"tv-and-radio/jennifer-saunders",
-        "type":"keyword",
-        "webTitle":"Jennifer Saunders",
-        "webUrl":"http://www.theguardian.com/tv-and-radio/jennifer-saunders",
-        "apiUrl":"http://content.guardianapis.com/tv-and-radio/jennifer-saunders",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"culture/alan-carr",
-        "type":"keyword",
-        "webTitle":"Alan Carr",
-        "webUrl":"http://www.theguardian.com/culture/alan-carr",
-        "apiUrl":"http://content.guardianapis.com/culture/alan-carr",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"media/david-mitchell",
-        "type":"keyword",
-        "webTitle":"David Mitchell",
-        "webUrl":"http://www.theguardian.com/media/david-mitchell",
-        "apiUrl":"http://content.guardianapis.com/media/david-mitchell",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"culture/eddie-izzard",
-        "type":"keyword",
-        "webTitle":"Eddie Izzard",
-        "webUrl":"http://www.theguardian.com/culture/eddie-izzard",
-        "apiUrl":"http://content.guardianapis.com/culture/eddie-izzard",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"profile/brianlogan",
-        "type":"contributor",
-        "webTitle":"Brian Logan",
-        "webUrl":"http://www.theguardian.com/profile/brianlogan",
-        "apiUrl":"http://content.guardianapis.com/profile/brianlogan",
-        "bio":"<p>is comedy critic and arts writer for the Guardian. He is a former deputy theatre editor of Time Out London and former editor of the Guardian's Film Unlimited website. He is also a founder member and performer with Cartoon de Salvo theatre company.</p>",
-        "rcsId":"GNL234021",
-        "r2ContributorId":"15444",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/7/23/1279881753462/Brian-Logan.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"tv-and-radio/desert-island-discs",
-        "type":"keyword",
-        "webTitle":"Desert Island Discs",
-        "webUrl":"http://www.theguardian.com/tv-and-radio/desert-island-discs",
-        "apiUrl":"http://content.guardianapis.com/tv-and-radio/desert-island-discs",
-        "sectionId":"tv-and-radio",
-        "sectionName":"Television &amp; radio",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418766573",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642048712/Lee-Mack-002.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"54",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642050274/Lee-Mack-003.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"340",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"479"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642051888/Lee-Mack-004.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"130",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"139"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642053423/Lee-Mack-005.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"84",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642055018/Lee-Mack-006.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"132",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642056610/Lee-Mack-007.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"168",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642058180/Lee-Mack-008.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"180",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642059788/Lee-Mack-009.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"228",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642061415/Lee-Mack-010.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"276",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642063003/Lee-Mack-011.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"372",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642061415/Lee-Mack-010.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"276",
-            "credit":"Martin Godwin/PR",
-            "caption":"In hot water ... Lee Mack. Photograph: Martin Godwin",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418766574",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380642053423/Lee-Mack-005.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Martin Godwin",
-            "altText":"Lee Mack",
-            "height":"84",
-            "credit":"Martin Godwin/PR",
-            "caption":"Lee Mack. Photograph: Martin Godwin",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-418766575",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/1/1380643755797/Hello-Ladies-010.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Hello Ladies",
-            "height":"276",
-            "credit":"PR",
-            "caption":"'A diverting curiosity': Stephen Merchant in Hello Ladies.",
-            "width":"460"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"stage/2013/oct/01/national-theatre-director-hytner-light-warning-eyre",
-      "sectionId":"stage",
-      "sectionName":"Stage",
-      "webPublicationDate":"2013-10-01T11:43:06Z",
-      "webTitle":"National Theatre's next boss must avoid being Hytner-lite, warns Richard Eyre",
-      "webUrl":"http://www.theguardian.com/stage/2013/oct/01/national-theatre-director-hytner-light-warning-eyre",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/oct/01/national-theatre-director-hytner-light-warning-eyre",
-      "fields":{
-        "trailText":"New artistic director needs to redefine mission of company and venue, following departing Nicholas Hytner's decade of triumphs. By <strong>Matt Trueman</strong>",
-        "headline":"National Theatre's next boss must avoid being Hytner-lite, warns Richard Eyre",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3j78k",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627282006/richard-eyre-004.jpg",
-        "wordcount":"364",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"stage/national-theatre",
-        "type":"keyword",
-        "webTitle":"National Theatre",
-        "webUrl":"http://www.theguardian.com/stage/national-theatre",
-        "apiUrl":"http://content.guardianapis.com/stage/national-theatre",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"stage/theatre",
-        "type":"keyword",
-        "webTitle":"Theatre",
-        "webUrl":"http://www.theguardian.com/stage/theatre",
-        "apiUrl":"http://content.guardianapis.com/stage/theatre",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"stage/stage",
-        "type":"keyword",
-        "webTitle":"Stage",
-        "webUrl":"http://www.theguardian.com/stage/stage",
-        "apiUrl":"http://content.guardianapis.com/stage/stage",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"media/nicholashytner",
-        "type":"keyword",
-        "webTitle":"Nicholas Hytner",
-        "webUrl":"http://www.theguardian.com/media/nicholashytner",
-        "apiUrl":"http://content.guardianapis.com/media/nicholashytner",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"uk/london",
-        "type":"keyword",
-        "webTitle":"London",
-        "webUrl":"http://www.theguardian.com/uk/london",
-        "apiUrl":"http://content.guardianapis.com/uk/london",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"media/media",
-        "type":"keyword",
-        "webTitle":"Media",
-        "webUrl":"http://www.theguardian.com/media/media",
-        "apiUrl":"http://content.guardianapis.com/media/media",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"profile/matt-trueman",
-        "type":"contributor",
-        "webTitle":"Matt Trueman",
-        "webUrl":"http://www.theguardian.com/profile/matt-trueman",
-        "apiUrl":"http://content.guardianapis.com/profile/matt-trueman",
-        "r2ContributorId":"32274",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-418736586",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627273963/richard-eyre-001.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"54",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627279098/richard-eyre-002.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"130",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627280812/richard-eyre-003.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"340",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"479"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627282006/richard-eyre-004.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"84",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627283155/richard-eyre-005.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"132",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627284509/richard-eyre-006.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"168",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627285791/richard-eyre-007.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"180",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627287089/richard-eyre-008.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"228",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627288292/richard-eyre-009.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"276",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627289552/richard-eyre-010.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"372",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627288292/richard-eyre-009.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"276",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-418736587",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380627282006/richard-eyre-004.jpg",
-          "typeData":{
-            "source":"Rex Features",
-            "photographer":"Geraint Lewis",
-            "altText":"richard eyre",
-            "height":"84",
-            "credit":"Geraint Lewis/Rex Features",
-            "caption":"Director Richard Eyre: being artistic director of the National is 'the best job in the world'. Photograph: Geraint Lewis/Rex Features",
+            "credit":"Tall Stories/PR",
+            "caption":"A show about the imaginative possibilities of storytelling … Rhiannon Wallace in The Snail and the Whale at the Rose theatre, Kingston. Photograph: Tall Stories",
             "width":"140"
           }
         }]
