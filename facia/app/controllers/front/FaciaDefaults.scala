@@ -2,12 +2,15 @@ package controllers.front
 
 import model.{Collection, Config}
 import common.editions.Uk
+import common.Edition
 
 trait FaciaDefaults {
 
   val emptyCollection = Collection(items=Nil, displayName=None)
   val defaultIds: List[String] = List(
-    "uk", "us", "au", "uk/money"
+    "uk", "uk/commentisfree", "uk/sport", "uk/culture", "uk/business", "uk/money",
+    "us", "us/commentisfree", "us/sport", "us/culture", "us/business", "us/money",
+    "au", "au/commentisfree", "au/sport", "au/culture", "au/business", "au/money"
   )
 
   def createConfig(id: String): Config = Config(
