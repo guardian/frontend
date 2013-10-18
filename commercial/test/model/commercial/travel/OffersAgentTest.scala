@@ -1,9 +1,9 @@
 package model.commercial.travel
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
-class OffersAgentTest extends FlatSpec with ShouldMatchers {
+class OffersAgentTest extends FlatSpec with Matchers {
 
   "offers" should "give offers associated with given keywords" in {
     val keywords = List("france")
