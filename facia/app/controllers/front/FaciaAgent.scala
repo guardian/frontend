@@ -167,7 +167,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 }
 
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
-  private val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](Option(List(FaciaDefaults.configTuple(id))))
+  val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](Option(List(FaciaDefaults.configTuple(id))))
 
   def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
     val futureConfig = getConfig(id) fallbackTo {
