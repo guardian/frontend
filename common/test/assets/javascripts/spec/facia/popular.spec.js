@@ -65,6 +65,19 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
         });
 
+        it('should have a "data-type" attribute of value "popular"', function() {
+            server.respondWith([200, {}, response]);
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'popular collection to be rendered', 100);
+
+            runs(function() {
+                expect(common.$g('.collection--popular').attr('data-type')).toEqual('popular');
+            });
+        });
+
         it('should call correct most-read endpoint', function() {
             var section = 'sport';
             server.respondWith('/most-read/' + section + '.json?_edition=UK', [200, {}, response]);
