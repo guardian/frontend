@@ -14,7 +14,7 @@ Visitors referred from Facebook will be more likely to click through to links th
 
 ## Outcome
 
-Variant B wins. If anything, showing Facebook-specific most popular articles is less popular.
+No overall winner. There is no significant statistical difference between any of these variants.
 
 Results here:
 https://docs.google.com/a/guardian.co.uk/spreadsheet/ccc?key=0ApW5rEdUdSnadEpzQS1uNG5lTk1ja1NrdEw0OFd5eWc&usp=sharing
