@@ -178,7 +178,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,
-      "discussionApiHeader" -> discussion.apiClientHeader
+      "discussionApiClientHeader" -> discussion.apiClientHeader
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
