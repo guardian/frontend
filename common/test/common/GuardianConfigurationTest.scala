@@ -1,9 +1,9 @@
 package common
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class GuardianConfigurationTest extends FlatSpec with ShouldMatchers {
+class GuardianConfigurationTest extends FlatSpec with Matchers {
 
   "Guardian Configuration" should "expose guardian.page properties" in {
     val config = new GuardianConfiguration("test", webappConfDirectory = "test-env")

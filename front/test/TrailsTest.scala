@@ -1,7 +1,7 @@
 package model
 
 import org.scalatest.{GivenWhenThen, FeatureSpec}
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import common.editions.Uk
 import test.Fake
 import controllers.front.TrailblockAgent
@@ -10,7 +10,7 @@ import contentapi.QueryDefaults
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.SpanSugar
 
-class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with QueryDefaults with Eventually with SpanSugar{
+class TrailsTest extends FeatureSpec with GivenWhenThen with Matchers with QueryDefaults with Eventually with SpanSugar{
 
   implicit val edition = Uk
 
