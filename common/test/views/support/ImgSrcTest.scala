@@ -1,13 +1,13 @@
 package views.support
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.matchers.Matchers
 import model.{ImageContainer, ImageAsset}
 import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches.ImageServerSwitch
 
 
-class ImgSrcTest extends FlatSpec with ShouldMatchers  {
+class ImgSrcTest extends FlatSpec with Matchers  {
 
   val asset: Asset = Asset(
     "image",
