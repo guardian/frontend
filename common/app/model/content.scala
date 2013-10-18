@@ -26,7 +26,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
-  lazy val openGraphImage: String = mainPicture.flatMap(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
+  lazy val openGraphImage: String = mainPicture.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
   lazy val bodyImages = imageMap("body")
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
@@ -126,7 +126,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   override lazy val images: List[ImageElement] = imageMap("main")
   override lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
   override lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
-  override lazy val mainPicture: Option[ImageAsset] = largestMainPicture.orElse(thumbnail.flatMap(_.largestImage))
+
   override lazy val mainVideo: Option[VideoElement] = videoMap("main").headOption
 
   private def elements(elementType: String): Map[String,List[Element]] = {
@@ -238,6 +238,8 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
+
+  override def trailPicture: Option[ImageContainer] = mainPicture.orElse(images.headOption).orElse(thumbnail)
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:type" -> "article",

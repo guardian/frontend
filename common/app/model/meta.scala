@@ -60,35 +60,46 @@ object Page {
 }
 
 trait Elements {
+  /*
+    Now I know you might THINK that you want to change this. The people around you might have convinced you
+    that there is some magic formula. There might even be a 'Business Stakeholder' involved...
 
-  // Find any crop which matches this width.
-  def imageOfWidth(width: Int): Option[ImageAsset] = crops.filter(_.width == width).headOption.orElse(mainPicture)
+    But know this... I WILL find you, I WILL hunt you down, and you WILL be sorry.
 
-  // Find a main picture crop which matches this width.
-  def mainPicture(width: Int): Option[ImageAsset] = {
-    mainImageElement.flatMap(_.imageCrops.filter(_.width == width).headOption).orElse(mainPicture)
-  }
+    If you need to express a hack, express it somewhere where you are not pretending it is the Main Picture
 
-  // Find a main picture crop which matches this aspect ratio.
-  def mainPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageAsset] = {
-    mainImageElement.flatMap(_.imageCrops.filter( image =>
-      image.aspectRatioWidth == aspectWidth && image.aspectRatioHeight == aspectHeight).headOption)
+    You probably want the TRAIL PICTURE
+  */
+  private lazy val mainPictureElement: Option[ImageContainer] = imageElements.find(_.isMain)
+
+
+    // Find a main picture crop which matches this aspect ratio.
+  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPicture.flatMap{ main =>
+    val correctCrop = main.imageCrops.find(image => image.aspectRatioWidth == aspectWidth && image.aspectRatioHeight == aspectHeight)
+    correctCrop.map{ crop =>
+      ImageContainer(Seq(crop), main.delegate)
+    }
   }
 
   def images: List[ImageElement]
   def videos: List[VideoElement]
   def thumbnail: Option[ImageElement]
-  def mainPicture: Option[ImageAsset]
+
+  // main picture is used on the content page (i.e. the article page or the video page)
+  def mainPicture: Option[ImageContainer] = mainPictureElement
+  lazy val hasMainPicture = mainPicture.nonEmpty
+
+  // trail picture is used on index pages (i.e. Fronts and tag pages)
+  def trailPicture: Option[ImageContainer] = mainPicture.orElse(thumbnail)
+
   def mainVideo: Option[VideoElement]
 
   private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
-  // Find the the lowest index imageContainer.
-  private lazy val mainImageElement: Option[ImageContainer] = imageElements.find(!_.largestImage.isEmpty)
+
   private lazy val crops: List[ImageAsset] = imageElements.flatMap(_.imageCrops)
   lazy val videoAssets: List[VideoAsset] = videos.flatMap(_.videoAssets)
 
   // Return the biggest main picture crop.
-  lazy val largestMainPicture: Option[ImageAsset] = mainImageElement.flatMap(_.largestImage)
   lazy val largestCrops: List[ImageAsset] = imageElements.flatMap(_.largestImage)
 }
 

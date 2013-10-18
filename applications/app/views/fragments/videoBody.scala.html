@@ -20,7 +20,7 @@
                 <div class="article-v2__main-column">
 
                     <div class="player media-content">
-                        <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
+                        <video controls="controls" @video.mainPicture.map{ img =>  poster="@ArticleMainPicture.bestFor(img)" }>
                             @video.encodings.map{ encoding =>
                                 <source src="@encoding.url" />
                             }

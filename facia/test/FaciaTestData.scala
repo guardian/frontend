@@ -20,7 +20,7 @@ case class TestTrail(url: String) extends Trail {
   def images: List[ImageElement] = Nil
   def videos: List[VideoElement] = Nil
   def thumbnail: Option[ImageElement] = None
-  def mainPicture: Option[ImageAsset] = None
+  override def mainPicture: Option[ImageContainer] = None
   def mainVideo: Option[VideoElement] = None
 }
 

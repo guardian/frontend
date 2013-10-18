@@ -25,11 +25,7 @@
             <div class="article-v2__columning-wrapper">
                 <div class="article-v2__main-column">
 
-                    @image.mainPicture.map{ mainPicture =>
-                        @image.mainPicture(width=220).map{ smallCrop =>
-                            @fragments.img(mainPicture, smallCrop)
-                        }
-                    }
+                    @image.mainPicture.map{ mainPicture => @fragments.img(mainPicture) }
 
                     <div class="article__meta-container">
                         @fragments.byline(image.byline, image)

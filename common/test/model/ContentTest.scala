@@ -79,27 +79,27 @@ class ContentTest extends FlatSpec with Matchers {
                                               image("test-image-1","body", "body picture 2", 50, 0),
                                               image("test-image-2","main", "main picture 1", 50, 0)))
 
-    testContent.mainPicture.get.caption should be(Some("main picture 1"))
+    testContent.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
   }
 
 
-  it should "understand that main image is the image of relation 'gallery'" in {
+  it should "understand that trail image is the image of relation 'gallery'" in {
 
     val testContent = content("gallery", List(image("test-image-0","body", "body picture 1", 50, 0),
                                               image("test-image-1","body", "body picture 2", 50, 0),
                                               image("test-image-2","main", "main picture 1", 50, 0),
                                               image("test-image-3","gallery", "gallery picture 1", 50, 0)))
 
-    testContent.mainPicture.get.caption should be(Some("gallery picture 1"))
+    testContent.trailPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("gallery picture 1"))
   }
 
-  it should "understand that main image can be an image of type 'video'" in {
+  it should "understand that trail image can be an image of type 'video'" in {
 
     val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50, 0),
                                               image("test-image-1","body", "body picture 2", 50, 0),
                                               video("test-image-3","main", "video poster", 50, 0)))
 
-    testContent.mainPicture.get.caption should be(Some("video poster"))
+    testContent.trailPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("video poster"))
   }
 
   it should "detect if content is commentable" in{
