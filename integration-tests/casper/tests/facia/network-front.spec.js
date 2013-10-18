@@ -127,6 +127,7 @@ casper.test.begin('Items display their comment count', function(test) {
 casper.test.begin('Popular collection appears at the bottom of the page', function(test) {
     casper.waitForSelector('.collection--popular', function(){
         test.assertExists('.collection--popular', 'popular collection displayed');
+        test.assertElementCount('.collection--popular .item:nth-child(-n+3):not(.u-h)', 3, 'first three items visible');
     });
 
     casper.run(function() {
