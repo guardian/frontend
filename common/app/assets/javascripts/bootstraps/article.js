@@ -84,7 +84,7 @@ define([
 
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable) {
-                    var discussionLoader = new DiscussionLoader();
+                    var discussionLoader = new DiscussionLoader(context);
                     discussionLoader.attachTo();
                     // discussionLoader.attachTo(qwery())
                     // var discussionArticle = new Discussion({
