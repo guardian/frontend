@@ -8,7 +8,7 @@ class VideoFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     info("In order to experience all the wonderful videos the Guardian publish")
     info("As a sighted Guardian reader")
-    info("I want to view a version of the video optimized for my browser")
+    info("I want to view a version of the video optimised for my browser")
 
     scenario("Load HTML5 video formats") {
       Given("I am on a video page")
