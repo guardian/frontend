@@ -350,3 +350,12 @@
 .nav .nav__item .nav__link--faded {
     color: #9DBBD4;
 }
+
+
+/* No left-right spacing
+   ========================================================================== */
+
+.nav--no-horizontal-spacing {
+    padding-left: 0;
+    padding-right: 0;
+}

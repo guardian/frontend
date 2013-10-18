@@ -1,4 +1,4 @@
-@(metaData: MetaData, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">
@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
     @fragments.metaData(metaData)
-    @fragments.commonCssSetup()
+    @fragments.commonCssSetup(projectName)
     @fragments.commonJavaScriptSetup(metaData, "app", switches)
 
     @head
