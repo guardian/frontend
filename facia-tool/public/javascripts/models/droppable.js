@@ -187,7 +187,7 @@ define([
     };
 
     function alertBadContent() {
-        window.alert('Sorry, that content wasn\'t recognised')
+        window.alert('Sorry, that isn\'t a Guardian article!')
     }
 
     function saveChanges(method, collection, data) {
