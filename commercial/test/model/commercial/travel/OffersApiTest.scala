@@ -1,13 +1,10 @@
-package model.travel.service
+package model.commercial.travel
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FlatSpec
 import scala.concurrent.{Await, Future}
 import common.ExecutionContexts
 import scala.concurrent.duration._
-import model.commercial.travel.Offer
-import org.joda.time.DateTime
-import model.commercial.travel.OffersApi
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.FlatSpec
 
 class OffersApiTest extends FlatSpec with ShouldMatchers with ExecutionContexts {
 
@@ -192,34 +189,7 @@ class OffersApiTest extends FlatSpec with ShouldMatchers with ExecutionContexts 
 
   "OffersApi" should "build Offers from XML" in {
     val offers = Await.result(api.getAllOffers, atMost = 1.seconds)
-    offers should be {
-      List(
-        Offer(0,
-          Some("Southern Tanzania"),
-          "http://www.guardianholidayoffers.co.uk/holiday/4980/southern-tanzania",
-          "http://resource.guim.co.uk/travel/holiday-offers-micro/image?id=33679&type=ThreeColumn",
-          "5595"
-          , new DateTime(2014, 1, 12, 0, 0),
-          Nil,
-          List("Tanzania")),
-        Offer(1,
-          Some("Lake Maggiore, Orta & the Matterhorn"),
-          "http://www.guardianholidayoffers.co.uk/holiday/3552/lake-maggiore-orta-and-the-matterhorn",
-          "http://resource.guim.co.uk/travel/holiday-offers-micro/image?id=26842&type=ThreeColumn",
-          "979",
-          new DateTime(2014, 4, 29, 0, 0),
-          Nil,
-          List("Italy", "Switzerland")),
-        Offer(2,
-          Some("Horse riding holiday for intermediate and experienced riders"),
-          "http://www.guardianholidayoffers.co.uk/holiday/5037/horse-riding-holiday-for-intermediate-and-experienced-riders",
-          "http://resource.guim.co.uk/travel/holiday-offers-micro/image?id=33819&type=ThreeColumn",
-          "1284",
-          new DateTime(2013, 11, 2, 0, 0),
-          Nil,
-          List("France"))
-      )
-    }
+    offers should be(Fixtures.untaggedOffers)
   }
 
 }

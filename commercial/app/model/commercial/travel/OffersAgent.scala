@@ -6,9 +6,15 @@ import conf.ContentApi
 
 object OffersAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Map[String, List[Offer]]](Map.empty)
+  private lazy val agent = AkkaAgent[Map[String, List[Offer]]](Map.empty)
 
   def allOffers: List[Offer] = agent().get("offers").getOrElse(Nil)
+
+  def offers(keywords: Seq[String], offersToChooseFrom: List[Offer] = allOffers) = {
+    offersToChooseFrom.filter {
+      offer => (keywords.map(_.toLowerCase).toSet & offer.keywords.map(_.name.toLowerCase).toSet).size > 0
+    }
+  }
 
   def refresh() {
 
