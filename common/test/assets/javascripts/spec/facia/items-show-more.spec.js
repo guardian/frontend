@@ -5,20 +5,25 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
         var itemsShowMore,
             collection,
             items,
+            $template,
             $style,
             clickstreamEvent = 'module:clickstream:click';
 
         beforeEach(function() {
             collection = bonzo.create(
                 '<section>' +
-                    '<ul></ul>' +
+                    '<ul>' +
+                        '<script class="collection--template"></script>' +
+                    '</ul>' +
                 '</section>'
             )[0];
             items = common.$g('ul', collection)[0];
+            $template = common.$g('.collection--template', items);
             // add items
             var i = 10;
             while(i--) {
-                bonzo(items).append('<li class="item">item</li>');
+                bonzo(items).prepend('<li class="item">item</li>');
+                $template.append('<li class="item">item</li>');
             }
             itemsShowMore = new ItemsShowMore(items);
             // add breakpoint style
@@ -64,6 +69,7 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
             itemsShowMore.addShowMore();
             var button = common.$g('button', collection)[0];
             bean.fire(button, 'click');
+            bean.fire(button, 'click');
             common.mediator.emit(clickstreamEvent, {target: button});
             expect(common.$g('button', collection).length).toEqual(0);
         });
@@ -78,21 +84,21 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
         it('should initially show 2 items at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             itemsShowMore.addShowMore();
-            expect(common.$g('.item.u-h', items).length).toEqual(8);
+            expect(common.$g('.item', items).length).toEqual(2);
         });
 
         it('should initially 5 items in the "news" container at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             bonzo(collection).attr('data-type', 'news');
             itemsShowMore.addShowMore();
-            expect(common.$g('.item.u-h', items).length).toEqual(5);
+            expect(common.$g('.item', items).length).toEqual(5);
         });
 
         it('should show 5 more at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             itemsShowMore.addShowMore();
             bean.fire(common.$g('button', collection)[0], 'click');
-            expect(common.$g('.item.u-h', items).length).toEqual(3);
+            expect(common.$g('.item', items).length).toEqual(7);
         });
 
     });
