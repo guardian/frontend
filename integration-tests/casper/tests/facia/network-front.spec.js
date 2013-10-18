@@ -1,6 +1,3 @@
-/* global window, document */
-'use strict';
-
 var collection = '.collection--sport',
     button = collection + ' .collection__display-toggle';
 
