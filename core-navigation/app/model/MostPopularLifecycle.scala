@@ -3,10 +3,13 @@ package model
 import common.{ CoreNavivationMetrics, Jobs }
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
-import feed.{MostPopularFromFacebookAgent, MostPopularExpandableAgent, MostPopularAgent}
+import feed.{MostPopularExpandableAgent, MostPopularAgent}
 import play.api.mvc.WithFilters
 import play.api.{ Application => PlayApp, Play, GlobalSettings }
 import play.api.Play.current
+import common.editions.Uk
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
 
 trait MostPopularLifecycle extends GlobalSettings {
@@ -14,7 +17,6 @@ trait MostPopularLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("MostPopularAgentRefreshJob")
-    Jobs.deschedule("MostPopularFromFacebookAgentRefreshJob")
 
     // fire every min
     Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?", CoreNavivationMetrics.MostPopularLoadTimingMetric) {
@@ -22,23 +24,13 @@ trait MostPopularLifecycle extends GlobalSettings {
       MostPopularExpandableAgent.refresh()
     }
 
-    // fire every 15 mins
-    Jobs.schedule("MostPopularFromFacebookAgentRefreshJob",  "0 2/15 * * * ?", CoreNavivationMetrics.MostPopularLoadTimingMetric) {
-      MostPopularFromFacebookAgent.refresh()
-    }
-    // refresh facebook referral list immediately to avoid initial wait of up to 15 mins
-    MostPopularFromFacebookAgent.refresh()
-
     if (Play.isTest) {
-      MostPopularAgent.refresh()
-      MostPopularAgent.await()
-      MostPopularFromFacebookAgent.await()
+      Await.result(MostPopularAgent.refresh(Uk), 5.seconds)
     }
   }
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("MostPopularAgentRefreshJob")
-    Jobs.deschedule("MostPopularFromFacebookAgentRefreshJob")
     super.onStop(app)
   }
 }

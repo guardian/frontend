@@ -2,7 +2,7 @@ package idapiclient
 
 import org.scalatest.path
 import org.scalatest.mock.MockitoSugar
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers => ShouldMatchers}
 import org.mockito.Mockito._
 import org.mockito.Matchers.argThat
 import org.mockito.Matchers

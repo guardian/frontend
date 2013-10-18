@@ -48,8 +48,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Money",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -62,8 +61,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Comment is free",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -76,8 +74,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Business",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -90,8 +87,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -104,8 +100,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Film",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -118,8 +113,7 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     }
   )
@@ -156,16 +150,18 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           if (path != editionalisedPath) {
             LinkTo.redirectWithParameters(request, editionalisedPath)
           } else {
-            if (request.isJson) {
-              val html = views.html.fragments.frontBody(frontPage, faciaPage)
-              JsonComponent(
-                "html" -> html,
-                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
-                "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
-              )
+            Cached(frontPage) {
+              if (request.isJson) {
+                val html = views.html.fragments.frontBody(frontPage, faciaPage)
+                JsonComponent(
+                  "html" -> html,
+                  "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
+                  "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
+                )
+              }
+              else
+                Ok(views.html.front(frontPage, faciaPage))
             }
-            else
-              Ok(views.html.front(frontPage, faciaPage))
           }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
@@ -185,9 +181,15 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       } else {
         val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
-        renderFormat(response, response, frontPage)
+        Cached(frontPage) { renderFormat(response, response, frontPage) }
       }
     }.getOrElse(NotFound)
+  }
+
+  def renderResponsiveViewer() = Action {
+    Cached(60) {
+      Ok(views.html.fragments.responsiveViewer())
+    }
   }
 
 }

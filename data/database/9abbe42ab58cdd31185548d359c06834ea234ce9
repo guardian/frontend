@@ -1,0 +1,145 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"news/datablog/2013/oct/15/pupil-absence-on-the-rise",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-10-15T14:07:00Z",
+      "webTitle":"Pupil absence on the rise",
+      "webUrl":"http://www.theguardian.com/news/datablog/2013/oct/15/pupil-absence-on-the-rise",
+      "apiUrl":"http://content.guardianapis.com/news/datablog/2013/oct/15/pupil-absence-on-the-rise",
+      "fields":{
+        "trailText":"<p>Pupil absenteeism in primary and secondary schools has risen for the first time in five years. The characteristics of those pupils as well as the reasons they've stated for not attending school point to possible explanations for the rise</p>",
+        "headline":"Pupil absence on the rise",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jhe6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/15/1334506103217/Truancy-003.jpg",
+        "wordcount":"681",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/datablog",
+        "type":"blog",
+        "webTitle":"Datablog",
+        "webUrl":"http://www.theguardian.com/news/datablog",
+        "apiUrl":"http://content.guardianapis.com/news/datablog",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"profile/mona-chalabi",
+        "type":"contributor",
+        "webTitle":"Mona Chalabi",
+        "webUrl":"http://www.theguardian.com/profile/mona-chalabi",
+        "apiUrl":"http://content.guardianapis.com/profile/mona-chalabi",
+        "bio":"<p>Mona Chalabi is a researcher and reporter for the Guardian's data team. She previously worked at the Bank of England, the Economist Intelligence Unit, Transparency International and a UN permanent observer - all of which has made her passionate about reforming aid.</p>",
+        "r2ContributorId":"33692",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/25/1377458443947/Mona-Chalabi.jpg",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"education/schoolmeals",
+        "type":"keyword",
+        "webTitle":"School meals",
+        "webUrl":"http://www.theguardian.com/education/schoolmeals",
+        "apiUrl":"http://content.guardianapis.com/education/schoolmeals",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/pupilbehaviour",
+        "type":"keyword",
+        "webTitle":"Pupil behaviour",
+        "webUrl":"http://www.theguardian.com/education/pupilbehaviour",
+        "apiUrl":"http://content.guardianapis.com/education/pupilbehaviour",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/truancy",
+        "type":"keyword",
+        "webTitle":"Truancy",
+        "webUrl":"http://www.theguardian.com/education/truancy",
+        "apiUrl":"http://content.guardianapis.com/education/truancy",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"type/data",
+        "type":"type",
+        "webTitle":"Data",
+        "webUrl":"http://www.theguardian.com/data",
+        "apiUrl":"http://content.guardianapis.com/data",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420048790",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/15/1334506109764/Truancy-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Bubbles Photolibrary ",
+            "altText":"Truancy",
+            "height":"276",
+            "credit":"Bubbles Photolibrary /Alamy",
+            "caption":"From fines to prison sentences for parents, various government policies have attempted to curb persistent absenteeism. Have they proved effective? Photograph: Bubbles Photolibrary /Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420048791",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/15/1334506103217/Truancy-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Bubbles Photolibrary ",
+            "altText":"Truancy",
+            "height":"84",
+            "credit":"Bubbles Photolibrary /Alamy",
+            "caption":"The government's adviser on behaviour wants fines for truancy to rise to £60. Photograph: Bubbles Photolibrary /Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

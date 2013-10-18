@@ -1,29 +1,25 @@
 @(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
+<h2 class="article-zone tone-@VisualTone(interactive) tone-accent-border">
+    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName.toLowerCase)</a>
+</h2>
+
 <div class="article-wrapper monocolumn-wrapper">
-
-    <div class="article__main-column">
-        <h2 class="article-zone type-1">
-            <a class="zone-color" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName)</a>
-        </h2>
-    </div>
-
     <article id="article" class="article"
         itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
-        
-        <div class="article__main-column">
+
+        <div class="article-v2__inner">
             <header class="article__head">
-                @fragments.dateline(interactive.webPublicationDate, interactive.isLive)
+                @fragments.dateline(interactive.webPublicationDate)
                 @fragments.headline(interactive.headline)
                 @fragments.standfirst(interactive)
             </header>
             <div class="after-header"></div>
         </div>
 
-         <div class="article__container">
-             <figure class="interactive" data-interactive="@request.path.drop(1)"></figure>
-         </div>
+        <div class="article__container">
+            <figure class="interactive" data-interactive="@request.path.drop(1)"></figure>
+        </div>
     </article>
-
 </div>

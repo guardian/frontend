@@ -1,6 +1,15 @@
 @(trails: Seq[Trail])(implicit request: RequestHeader)
 
-<h2 class="type-1 article-zone">Top stories</h2>
-<div class="headline-list box-indent" data-link-name="top-stories" role="navigation">
-    @fragments.trailblocks.link(trails, trails.size)
-</div>
+<main itemprop="mainContentOfPage" role="main">
+    <h1 class="article-zone">Top stories</h1>
+    <div class="article-wrapper monocolumn-wrapper">
+        <div class="article-v2__columning-wrapper">
+            <div class="article-v2__main-column">
+                <div class="headline-list" data-link-name="top-stories">
+                    @fragments.trailblocks.link(trails, trails.size)
+                </div>
+            </div>
+            <div class="article-v2__secondary-column" aria-hidden="true"></div>
+        </div>
+    </div>
+</main>

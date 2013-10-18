@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-    <h2 class="article-zone  tone-@VisualTone(article) tone-accent-border">
+    <h2 class="article-zone tone-@VisualTone(article) tone-accent-border">
         <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
@@ -58,7 +58,7 @@
                         </div>
                     </div>
 
-                    @if(article.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                    @if(ArticleKeywordsSwitch.isSwitchedOn){
                         <div class="article__keywords" data-link-name="article keywords">
                             @fragments.keywordList(article.keywords)
                         </div>

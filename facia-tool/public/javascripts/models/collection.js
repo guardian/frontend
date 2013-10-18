@@ -76,6 +76,10 @@ define([
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
+    Collection.prototype.currentGroups = function() {
+        return this.state.liveMode() ? this.live : this.draft;
+    };
+
     Collection.prototype.toggleEditingConfig = function() {
         this.state.editingConfig(!this.state.editingConfig());
     };

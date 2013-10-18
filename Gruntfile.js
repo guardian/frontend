@@ -23,9 +23,9 @@ module.exports = function (grunt) {
                     // head css must go where Play can find it from resources at runtime,
                     // Everything else goes into frontend-static bundling.
                     'common/conf/assets/head.min.css': 'common/app/assets/stylesheets/head.scss',
+                    'common/conf/assets/head.facia.min.css': 'common/app/assets/stylesheets/head.facia.scss',
                     'common/conf/assets/head.identity.min.css': 'common/app/assets/stylesheets/head.identity.scss',
                     'static/target/compiled/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
-                    'static/target/compiled/stylesheets/facia.min.css': 'common/app/assets/stylesheets/facia.scss',
                     'static/target/compiled/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
                     'static/target/compiled/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
@@ -41,6 +41,7 @@ module.exports = function (grunt) {
                     noCache: (isDev) ? false : true,
                     debugInfo: (isDev) ? true : false,
                     style: (isDev) ? 'nested' : 'compressed',
+                    sourcemap: (isDev) ? true : false,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
@@ -312,7 +313,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/*.js',[
+                         'common/test/assets/javascripts/spec/*.spec.js',[
                         '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
                         '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
                         '!common/test/assets/javascripts/spec/Fonts.spec.js',
@@ -418,12 +419,13 @@ module.exports = function (grunt) {
             }
         },
 
+        casperjsLogFile: 'results.xml',
         casperjs: {
             options: {
                 // Pre-prod environments have self-signed SSL certs
                 ignoreSslErrors: 'yes',
                 includes: ['integration-tests/casper/tests/shared.js'],
-                xunit: 'integration-tests/target/casper/',
+                xunit: 'integration-tests/target/casper/<%= casperjsLogFile %>',
                 loglevel: 'debug',
                 direct: true
             },
@@ -443,10 +445,17 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/discussion/*.spec.js']
             },
             article: {
-                src: ['integration-tests/casper/tests/article/*.spec.js']
+                src: [
+
+                ]
             },
-            front: {
-                src: ['integration-tests/casper/tests/front/*.js']
+            applications: {
+                src: [
+                    'integration-tests/casper/tests/applications/*.spec.js'
+                ]
+            },
+            facia: {
+                src: ['integration-tests/casper/tests/facia/*.spec.js']
             },
             corenavigation: {
                 src: ['integration-tests/casper/tests/core-navigation/*.js']
@@ -498,6 +507,7 @@ module.exports = function (grunt) {
             compile: [
                 'static/target',
                 'common/conf/assets/head.min.css',
+                'common/conf/assets/head.facia.min.css',
                 'common/conf/assets/head.identity.min.css',
                 'common/conf/assets/assets.map'
             ],
@@ -563,17 +573,11 @@ module.exports = function (grunt) {
     ]);
 
     // Test tasks
-    grunt.registerTask('test:integration', ['test:integration:allexceptadmin']); // ...until Facia fix the admin tests they broke.
-
-    grunt.registerTask('test:integration:all', ['env:casperjs', 'casperjs:all']);
-    grunt.registerTask('test:integration:allexceptadmin', ['env:casperjs', 'casperjs:allexceptadmin']);
-
-    grunt.registerTask('test:integration:admin', ['env:casperjs', 'casperjs:admin']);
-    grunt.registerTask('test:integration:discussion', ['env:casperjs', 'casperjs:discussion']);
-    grunt.registerTask('test:integration:article', ['env:casperjs', 'casperjs:article']);
-    grunt.registerTask('test:integration:front', ['env:casperjs', 'casperjs:front']);
-    grunt.registerTask('test:integration:corenavigation', ['env:casperjs', 'casperjs:corenavigation']);
-
+    grunt.registerTask('test:integration', function(app) {
+        app = app || 'allexceptadmin';
+        grunt.config('casperjsLogFile', app + '.xml');
+        grunt.task.run(['env:casperjs', 'casperjs:' + app]);
+    });
     grunt.registerTask('test', ['compile', 'jshint:common', 'jasmine', 'test:integration']);
 
     // Analyse tasks

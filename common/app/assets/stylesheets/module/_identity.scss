@@ -42,8 +42,8 @@
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
-    margin: $gutter 0;
-    padding-top: $gutter - 1;
+    margin: $baseline*4 0;
+    padding-top: $baseline*4 - 1;
 
     .identity-section__head {
         @extend %type-5;
@@ -55,7 +55,7 @@
 }
 
 .nav--registration {
-    margin-top: $baseline*9;
+    margin-top: $baseline*8;
     text-align: center;
 
     @include mq($to:tablet) {
@@ -77,26 +77,42 @@
     .social-signin__item {
         @include box-sizing(border-box);
         display: inline-block;
-        margin: 0 $gutter/2 $baseline*3;
-        padding: 7px 0;
-        position: relative;
-        width: 200px;
-    }
-
-    .social-signin__item--fb {
-        background-color: #3b5998;
-    }
-
-    .social-signin__item--gplus {
-        background-color: #dd4b39;
+        margin-bottom: $baseline*3;
     }
 
     .social-signin__action {
         color: #fff;
+        display: block;
         font-family: $sans-serif;
         font-size: 14px;
         font-size: 1.4rem;
-        margin-left: 24px;
+        padding: 8px 0 9px;
+        position: relative;
+        text-align: center;
+        text-indent: 24px;
+        width: 218px;
+    }
+
+    .social-signin__action--fb {
+        background-color: #3b5998;
+        margin-right: $gs-gutter/2;
+
+        @include mq($to:500px) {
+            margin-left: 0;
+            margin-right: 0;
+            width: 240px;
+        }
+    }
+
+    .social-signin__action--gplus {
+        background-color: #dd4b39;
+        margin-left: $gs-gutter/2;
+
+        @include mq($to:500px) {
+            margin-left: 0;
+            margin-right: 0;
+            width: 240px;
+        }
     }
 
     .social-signin__icon {

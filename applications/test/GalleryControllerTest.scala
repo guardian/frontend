@@ -2,11 +2,11 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
 
-class GalleryControllerTest extends FlatSpec with ShouldMatchers {
+class GalleryControllerTest extends FlatSpec with Matchers {
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
   val callbackName = "aFunction"

@@ -1,107 +1,22 @@
 .collection--container {
-    &.collection--news,
-    &.collection--sport {
-        @include mq($to: tablet) {
-            @include first-row(1);
-            .item:nth-child(1) {
-                @include card($with-image: true);
-            }
-            .items--without-sport-stats {
-                .item:nth-child(2),
-                .item:nth-child(3) {
-                    @include card-half-width($with-image: true);
-                }
-                .item:nth-child(4),
-                .item:nth-child(5) {
-                    @include card-half-width;
-                }
-                .item:nth-child(2),
-                .item:nth-child(4) {
-                    @include row-start;
-                }
-                .item:nth-child(3),
-                .item:nth-child(5) {
-                    @include row-end;
-                }
-                .item:nth-child(n+6) {
-                    @include card-headline;
-                }
-            }
-            .items--with-sport-stats {
-                .item:nth-child(3),
-                .item:nth-child(4) {
-                    @include card-half-width($with-image: true);
-                }
-                .item:nth-child(5),
-                .item:nth-child(6) {
-                    @include card-half-width;
-                }
-                .item:nth-child(3),
-                .item:nth-child(5) {
-                    @include row-start;
-                }
-                .item:nth-child(4),
-                .item:nth-child(6) {
-                    @include row-end;
-                }
-                .item:nth-child(n+7) {
-                    @include card-headline;
-                }
-            }
-        }
-    }
-    &.collection--culture,
-    &.collection--commentisfree {
-        @include mq($to: tablet) {
-            .item:nth-child(n+4) {
-                @include card-headline;
-            }
-        }
-    }
-    &.collection--culture {
-        @include mq($to: tablet) {
-            @include first-row(1);
-            .item:nth-child(1) {
-                @include card($with-image: true);
-            }
-            .item:nth-child(2),
-            .item:nth-child(3) {
-                @include card-half-width($with-image: true);
-            }
-            .item:nth-child(2) {
-                @include row-start;
-            }
-            .item:nth-child(3) {
-                @include row-end;
-            }
-        }
-    }
-    &.collection--commentisfree {
-        @include mq($to: tablet) {
-            @include first-row(1);
-            .item:first-child {
-                @include card($with-image: true);
-            }
-            .item:nth-child(2),
-            .item:nth-child(3) {
-                @include card;
-            }
-        }
-    }
-    &.collection--football-nav {
-        margin-top: $baseline*6;
+    @include mq($to: desktop) {
+        @include first-row(1);
     }
     @include mq(tablet) {
-        @include first-row(1);
         .items {
             overflow: hidden;
         }
         .item:first-child {
             @include card-double-width;
         }
+        .item:nth-child(n+2) {
+            @include card;
+        }
+        .item:nth-child(2) {
+            @include card-image;
+        }
     }
     @include mq(tablet, desktop) {
-        @include first-row(1);
         .item:first-child,
         .item:nth-child(2n+2) {
             @include row-start;
@@ -110,30 +25,11 @@
         .item:nth-child(2n+3) {
             @include row-end;
         }
-        &.collection--news,
-        &.collection--sport {
-            .item:nth-child(n+2):nth-child(-n+5) {
-                @include card($with-image: true);
-            }
-            .item:nth-child(n+6) {
-                @include card;
-            }
-        }
-        &.collection--culture,
-        &.collection--commentisfree {
-            .item:nth-child(2),
-            .item:nth-child(3) {
-                @include card($with-image: true);
-            }
-            .item:nth-child(n+4) {
-                @include card;
-            }
-        }
     }
     @include mq(desktop, wide) {
         @include first-row(2);
         .item:nth-child(3) {
-            @include card($not-first-row: true);
+            margin-top: 0;
         }
         .item:first-child,
         .item:nth-child(3n+4) {
@@ -144,31 +40,12 @@
         .item:nth-child(3n+6) {
             @include row-end;
         }
-        &.collection--news,
-        &.collection--sport {
-            .item:nth-child(2),
-            .item:nth-child(n+4):nth-child(-n+6) {
-                @include card($with-image: true);
-            }
-            .item:nth-child(n+6) {
-                @include card;
-            }
-        }
-        &.collection--culture,
-        &.collection--commentisfree {
-            .item:nth-child(2) {
-                @include card($with-image: true);
-            }
-            .item:nth-child(n+3) {
-                @include card;
-            }
-        }
     }
     @include mq(wide) {
         @include first-row(3);
         .item:nth-child(4),
         .item:nth-child(5){
-            @include card($not-first-row: true);
+            margin-top: 0;
         }
         .item:first-child,
         .item:nth-child(4n+6) {
@@ -178,27 +55,6 @@
         .item:nth-child(5),
         .item:nth-child(4n+9) {
             @include row-end;
-        }
-        &.collection--news,
-        &.collection--sport {
-            .item:nth-child(3),
-            .item:nth-child(2),
-            .item:nth-child(n+6):nth-child(-n+9) {
-                @include card($with-image: true);
-            }
-            .item:nth-child(n+10) {
-                @include card;
-            }
-        }
-        &.collection--culture,
-        &.collection--commentisfree {
-            .item:nth-child(2),
-            .item:nth-child(3) {
-                @include card($with-image: true);
-            }
-            .item:nth-child(n+4) {
-                @include card;
-            }
         }
     }
     .item--sport-stats {
@@ -216,7 +72,9 @@
                 padding-top: 0;
             }
             h3 {
-                @include fs-headline(3);
+                @include mq($to: tablet) {
+                    @include fs-headline(3, $size-only: true);
+                }
                 @include mq(tablet) {
                     @include fs-headline(4, $size-only: true);
                 }
@@ -232,4 +90,117 @@
             }
         }
     }
+}
+.collection--news,
+.collection--sport {
+    @include mq($to: tablet) {
+        .item:nth-child(1) {
+            @include card-mobile($with-image: true);
+        }
+        .item:nth-child(3) {
+            @include card-half-width-image;
+        }
+        .items--without-sport-stats {
+            .item:nth-child(n+2):nth-child(-n+5) {
+                @include card-half-width;
+            }
+            .item:nth-child(2) {
+                @include card-half-width-image;
+            }
+            .item:nth-child(2),
+            .item:nth-child(4) {
+                @include row-start;
+            }
+            .item:nth-child(3),
+            .item:nth-child(5) {
+                @include row-end;
+            }
+            .item:nth-child(n+6) {
+                @include card-headline;
+            }
+        }
+        .items--with-sport-stats {
+            .item:nth-child(n+3):nth-child(-n+6) {
+                @include card-half-width;
+            }
+            .item:nth-child(4) {
+                @include card-half-width-image;
+            }
+            .item:nth-child(3),
+            .item:nth-child(5) {
+                @include row-start;
+            }
+            .item:nth-child(4),
+            .item:nth-child(6) {
+                @include row-end;
+            }
+            .item:nth-child(n+7) {
+                @include card-headline;
+            }
+        }
+    }
+    @include mq(tablet, desktop) {
+        .item:nth-child(n+3):nth-child(-n+5) {
+            @include card-image;
+        }
+    }
+    @include mq(desktop, wide) {
+        .item:nth-child(n+4):nth-child(-n+6) {
+            @include card-image;
+        }
+    }
+    @include mq(wide) {
+        .item:nth-child(3),
+        .item:nth-child(n+6):nth-child(-n+9) {
+            @include card-image;
+        }
+    }
+}
+.collection--culture,
+.collection--commentisfree {
+    @include mq($to: tablet) {
+        .item:nth-child(n+4) {
+            @include card-headline;
+        }
+    }
+    @include mq(tablet, desktop) {
+        .item:nth-child(3) {
+            @include card-image;
+        }
+    }
+    @include mq(wide) {
+        .item:nth-child(3) {
+            @include card-image;
+        }
+    }
+}
+.collection--culture {
+    @include mq($to: tablet) {
+        .item:nth-child(1) {
+            @include card-mobile($with-image: true);
+        }
+        .item:nth-child(2),
+        .item:nth-child(3) {
+            @include card-half-width($with-image: true);
+        }
+        .item:nth-child(2) {
+            @include row-start;
+        }
+        .item:nth-child(3) {
+            @include row-end;
+        }
+    }
+}
+.collection--commentisfree {
+    @include mq($to: tablet) {
+        .item:nth-child(-n+3) {
+            @include card-mobile;
+        }
+        .item:first-child {
+            @include card-mobile-image;
+        }
+    }
+}
+.collection--football-nav {
+    margin-top: $baseline*6;
 }

@@ -1,9 +1,9 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
-class VideoTemplateTest extends FlatSpec with ShouldMatchers {
+class VideoTemplateTest extends FlatSpec with Matchers {
   //  "Article Template" should "render article metadata" in HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
   //    import browser._
   //

@@ -27,7 +27,7 @@
                 @extend .i-comment-#{$tone};
                 @if $svg-support {
                     .svg & {
-                        @extend .i-svg-comment-#{$tone};
+                        @extend .svg-i-comment-#{$tone} !optional;
                     }
                 }
             }
@@ -50,5 +50,5 @@
 
 /* Feature
    ========================================================================== */
-   
+
 @include tone(feature, $c-featureDefault, $c-featureAccent);

@@ -1,25 +1,27 @@
 .headline-list {
-    li {
-        display: block;
-        overflow: auto;
-        padding: $baseline 0 $baseline*5;
-        @include mq(tablet) {
-            padding: $baseline*2 0 $baseline*6;
-        }
+}
+.headline-list__item {
+    display: block;
+    overflow: auto;
+    padding: $baseline 0 $baseline*5;
+    @include fs-bodyCopy(2);
 
-        + li {
-            border-top: 1px solid $c-neutral6;
-        }
+    @include mq(tablet) {
+        padding-top: $baseline*2;
+        padding-bottom: $baseline*6;
+        @include fs-bodyCopy(3);
     }
-    p {
-        float: left;
-        width: 90%;
-        padding-left: $baseline*2;
 
-        @include mq(tablet) {
-            @include fs-bodyCopy(3);
-        }
+    & + & {
+        border-top: 1px solid $c-neutral6;
     }
+}
+
+.headline-list__body {
+    float: left;
+    width: 90%;
+    padding-left: $baseline*2;
+
     a {
         color: $c-neutral1;
 
@@ -27,19 +29,19 @@
             color: $c-neutral2;
         }
     }
-    .count {
-        font-family: $serifheadline;
-        @include fs-bodyCopy(1, true);
-        float: left;
-        color: $c-neutral2;
-        width: 14px;
-        width: 1.4rem;
+}
+.headline-list__count {
+    font-family: $serifheadline;
+    @include fs-bodyCopy(1, true);
+    float: left;
+    color: $c-neutral2;
+    width: 14px;
+    width: 1.4rem;
 
-        @include mq(tablet) {
-            @include fs-bodyCopy(3, true);
-            width: 20px;
-            width: 2rem;
-        }
+    @include mq(tablet) {
+        @include fs-bodyCopy(3, true);
+        width: 20px;
+        width: 2rem;
     }
 }
 .headline-list__title {

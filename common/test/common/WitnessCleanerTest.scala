@@ -1,12 +1,12 @@
 package common
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import views.support.{ WitnessCleaner, withJsoup }
 import play.api.templates.Html
 import conf.Switches
 
-class WitnessCleanerTest extends FlatSpec with ShouldMatchers {
+class WitnessCleanerTest extends FlatSpec with Matchers {
 
   "Witness cleaner" should "remove video embeds if it is switched off" in {
 

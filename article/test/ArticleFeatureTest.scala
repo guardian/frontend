@@ -2,11 +2,11 @@ package test
 
 import conf.Configuration
 import conf.Switches._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -441,6 +441,19 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         Then("I should see links to keywords")
         $(".article__keywords a").size should be (5)
+      }
+    }
+
+    scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords"){
+      Given("I am on an article entitled 'Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick'")
+
+      ArticleKeywordsSwitch.switchOn
+
+      HtmlUnit("/info/2013/aug/26/2"){ browser =>
+        import browser._
+
+        Then("I should not see a keywords list")
+        $(".article__keywords *").size should be (0)
       }
     }
     

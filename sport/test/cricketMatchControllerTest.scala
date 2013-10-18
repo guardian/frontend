@@ -2,10 +2,10 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
-class cricketMatchControllerTest extends FlatSpec with ShouldMatchers {
+class cricketMatchControllerTest extends FlatSpec with Matchers {
 
   val cricketUrl = "sport/cricket/match/34780"
   val matchId = "34780"

@@ -10,7 +10,9 @@ define([
     'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
     'modules/adverts/audience-science',
-    'modules/adverts/quantcast'
+    'modules/adverts/quantcast',
+    'modules/adverts/userAdTargeting'
+
 ],
 function (
     common,
@@ -24,7 +26,8 @@ function (
     DocumentWriteSlot,
     dimensionMap,
     audienceScience,
-    quantcast
+    quantcast,
+    userAdTargeting
 ) {
     
     var currConfig,
@@ -77,7 +80,8 @@ function (
         //Make the request to ad server
         documentWrite.load({
             config: currConfig,
-            slots: slots
+            slots: slots,
+            userSegments : userAdTargeting.getUserSegments()
         });
     }
 

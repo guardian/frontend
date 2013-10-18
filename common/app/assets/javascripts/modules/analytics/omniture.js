@@ -103,7 +103,8 @@ define([
             s.prop1     = config.page.headline || '';
 
             if(id.getUserFromCookie()) {
-                s.prop2   = "GUID:" + id.getUserFromCookie().id;
+                s.prop2 = "GUID:" + id.getUserFromCookie().id;
+                s.eVar2 = "GUID:" + id.getUserFromCookie().id;
             }
 
             s.prop3     = config.page.publication || '';
@@ -154,10 +155,6 @@ define([
             }
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
-
-            // NB: only needs to be in while we're serving both old fronts and new facia
-            var propValue = ((config.page.isFacia) ? 'Facia' : 'Fronts') + '-application';
-            s.prop69 = s.eVar55 = propValue;
 
             s.prop65    = config.page.headline || '';
 
