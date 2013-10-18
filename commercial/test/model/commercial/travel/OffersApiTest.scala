@@ -1,12 +1,13 @@
 package model.commercial.travel
 
+import org.scalatest.Matchers
+import org.scalatest.FlatSpec
 import scala.concurrent.{Await, Future}
 import common.ExecutionContexts
 import scala.concurrent.duration._
-import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
-class OffersApiTest extends FlatSpec with ShouldMatchers with ExecutionContexts {
+class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
   val api = new OffersApi {
     val getOffersRequestBody = Future {

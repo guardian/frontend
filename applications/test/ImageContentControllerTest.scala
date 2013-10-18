@@ -1,11 +1,11 @@
 package test
 
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import common.UsesElasticSearch
 
-class ImageContentControllerTest extends FlatSpec with ShouldMatchers with UsesElasticSearch {
+class ImageContentControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
 
   val cartoonUrl = "/commentisfree/cartoon/2013/jul/15/iain-duncan-smith-benefits-cap"
   val pictureUrl = "/artanddesign/picture/2013/oct/08/photography"

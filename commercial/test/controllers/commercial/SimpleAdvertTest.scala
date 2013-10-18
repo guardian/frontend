@@ -1,11 +1,11 @@
 package controllers.commercial
 
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import test.{Fake, TestRequest}
 
-class SimpleAdvertTest extends FlatSpec with ShouldMatchers {
+class SimpleAdvertTest extends FlatSpec with Matchers {
   
   val advertUrl = "jobs"
 

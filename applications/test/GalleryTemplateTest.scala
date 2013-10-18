@@ -1,10 +1,10 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import scala.collection.JavaConversions._
 
-class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
+class GalleryTemplateTest extends FlatSpec with Matchers {
 
   it should "render gallery headline" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") {
     browser =>

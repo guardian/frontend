@@ -1,7 +1,7 @@
 package controllers
 
 import org.scalatest.path
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import test.{TestRequest, Fake}
 import idapiclient.{TrackingData, EmailPassword, IdApiClient}

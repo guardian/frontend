@@ -3,12 +3,12 @@ package model
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag }
 import org.joda.time.DateTime
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.Play
 import play.api.mvc.Request
 import play.api.test.FakeHeaders
 
-class UrlsTest extends FlatSpec with ShouldMatchers {
+class UrlsTest extends FlatSpec with Matchers {
 
   Play.unsafeApplication
 

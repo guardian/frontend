@@ -2,11 +2,11 @@ package services
 
 import org.scalatest.FunSuite
 import conf.IdentityConfiguration
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsText, Request}
 import play.api.test.{FakeHeaders, FakeRequest}
 
-class ReturnUrlVerifierTest extends FunSuite with ShouldMatchers {
+class ReturnUrlVerifierTest extends FunSuite with Matchers {
 
   val conf = new IdentityConfiguration
 
