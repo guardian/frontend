@@ -22,7 +22,7 @@ var Api = {
  */
 Api.init = function(config) {
     Api.root = config.page.discussionApiRoot;
-    Api.header = config.page.discussionApiClientHeader;
+    Api.clientHeader = config.page.discussionApiClientHeader;
 };
 
 /**
