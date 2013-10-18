@@ -1,0 +1,872 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/sep/30/nsa-americans-metadata-year-documents",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-30T16:35:07Z",
+      "webTitle":"NSA stores metadata of millions of web users for up to a year, secret files show",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/30/nsa-americans-metadata-year-documents",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/30/nsa-americans-metadata-year-documents",
+      "fields":{
+        "trailText":"<p>Vast amounts kept in repository codenamed Marina, with data retained regardless of whether person is NSA target</p>",
+        "headline":"NSA stores metadata of millions of web users for up to a year, secret files show",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j6mj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380555063863/NSA-internet-network-cabl-005.jpg",
+        "wordcount":"1175",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/the-nsa-files",
+        "type":"keyword",
+        "webTitle":"The NSA files",
+        "webUrl":"http://www.theguardian.com/world/the-nsa-files",
+        "apiUrl":"http://content.guardianapis.com/world/the-nsa-files",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/data-protection",
+        "type":"keyword",
+        "webTitle":"Data protection",
+        "webUrl":"http://www.theguardian.com/technology/data-protection",
+        "apiUrl":"http://content.guardianapis.com/technology/data-protection",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jamesball",
+        "type":"contributor",
+        "webTitle":"James Ball",
+        "webUrl":"http://www.theguardian.com/profile/jamesball",
+        "apiUrl":"http://content.guardianapis.com/profile/jamesball",
+        "bio":"<p>James Ball is a data journalist working for the Guardian investigations team. He joined the Guardian from <a href=\"http://www.wikileaks.ch\">Wikileaks</a>, and the <a href=\"http://www.tbij.com\">Bureau of Investigative Journalism</a>. He is the Washington Post Laurence Stern Fellow for 2012.</p>",
+        "rcsId":"GNL043866",
+        "r2ContributorId":"22541",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/25/1319546073704/james_ball.jpg",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/us-constitution-and-civil-liberties",
+        "type":"keyword",
+        "webTitle":"US constitution and civil liberties",
+        "webUrl":"http://www.theguardian.com/law/us-constitution-and-civil-liberties",
+        "apiUrl":"http://content.guardianapis.com/law/us-constitution-and-civil-liberties",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418679448",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380555077752/NSA-internet-network-cabl-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"NSA internet network cable",
+            "height":"276",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Any computer metadata picked up by NSA collection systems is routed to the Marina database, the guide explains. Photograph: Felix Clay",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418679449",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380555063863/NSA-internet-network-cabl-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"NSA internet network cable",
+            "height":"84",
+            "credit":"Felix Clay/Guardian",
+            "caption":"NSA internet network cable. Photograph: Felix Clay for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/2013/oct/01/glenn-greenwald-janine-gibson-reddit-nsa",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-01T21:54:20Z",
+      "webTitle":"Glenn Greenwald and Janine Gibson: 10 highlights from their Reddit AMA",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/01/glenn-greenwald-janine-gibson-reddit-nsa",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/01/glenn-greenwald-janine-gibson-reddit-nsa",
+      "fields":{
+        "trailText":"Guardian US&nbsp;columnist Glenn Greenwald and&nbsp;editor-in-chief Janine Gibson spoke to Redditors about the NSA files, Edward Snowden, and the surveillance state. The full transcript is <strong><a href=\"http://www.reddit.com/r/IAmA/comments/1nisdy/were_glenn_greenwald_and_janine_gibson_of_the/\">here</a></strong>",
+        "headline":"Glenn Greenwald and Janine Gibson: 10 highlights from their Reddit AMA",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j7n5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380663971491/e20107a6-704b-40fb-9ba6-1ebe466a7310-140x84.jpeg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/the-nsa-files",
+        "type":"keyword",
+        "webTitle":"The NSA files",
+        "webUrl":"http://www.theguardian.com/world/the-nsa-files",
+        "apiUrl":"http://content.guardianapis.com/world/the-nsa-files",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/reddit",
+        "type":"keyword",
+        "webTitle":"Reddit",
+        "webUrl":"http://www.theguardian.com/technology/reddit",
+        "apiUrl":"http://content.guardianapis.com/technology/reddit",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/data-protection",
+        "type":"keyword",
+        "webTitle":"Data protection",
+        "webUrl":"http://www.theguardian.com/technology/data-protection",
+        "apiUrl":"http://content.guardianapis.com/technology/data-protection",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/katie-rogers",
+        "type":"contributor",
+        "webTitle":"Katie Rogers",
+        "webUrl":"http://www.theguardian.com/profile/katie-rogers",
+        "apiUrl":"http://content.guardianapis.com/profile/katie-rogers",
+        "bio":"<p>Katie Rogers is social news editor for Guardian US. Previously, she was a local news blogger and social media manager for The Washington Post. Before that, she was a blogger for The Chicago Tribune's RedEye. Her writing has appeared in The Chicago Tribune, McClatchy Newspapers and The Elkhart Truth (Indiana), her hometown paper. Follow Katie on Twitter <a href=\"http://twitter.com/#!/katierogers\">@katierogers</a> and <a href=\"https://plus.google.com/111906142081978488853?rel=author\">Google+</a></p>",
+        "r2ContributorId":"50574",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359392582389/Katie_Rogers.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-7f250130-9f24-470c-a99f-019464408e3a",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380663973402/e20107a6-704b-40fb-9ba6-1ebe466a7310-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/1/1380663973402/e20107a6-704b-40fb-9ba6-1ebe466a7310-460x276.jpeg",
+            "source":"Demotix/Corbis",
+            "photographer":"Vito Di Stefano",
+            "altText":"Glenn Greenwald spoke to Redditors.",
+            "height":"276",
+            "credit":"Vito Di Stefano/Demotix/Corbis",
+            "caption":"Glenn Greenwald spoke to Redditors. Photograph: Vito Di Stefano/Demotix/Corbis",
+            "mediaId":"gu-fc-7f250130-9f24-470c-a99f-019464408e3a",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/30/nsa-americans-metadata-year-documents",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-30T16:35:07Z",
+      "webTitle":"NSA stores metadata of millions of web users for up to a year, secret files show",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/30/nsa-americans-metadata-year-documents",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/30/nsa-americans-metadata-year-documents",
+      "fields":{
+        "trailText":"<p>Vast amounts kept in repository codenamed Marina, with data retained regardless of whether person is NSA target</p>",
+        "headline":"NSA stores metadata of millions of web users for up to a year, secret files show",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j6mj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380555063863/NSA-internet-network-cabl-005.jpg",
+        "wordcount":"1175",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/the-nsa-files",
+        "type":"keyword",
+        "webTitle":"The NSA files",
+        "webUrl":"http://www.theguardian.com/world/the-nsa-files",
+        "apiUrl":"http://content.guardianapis.com/world/the-nsa-files",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/data-protection",
+        "type":"keyword",
+        "webTitle":"Data protection",
+        "webUrl":"http://www.theguardian.com/technology/data-protection",
+        "apiUrl":"http://content.guardianapis.com/technology/data-protection",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jamesball",
+        "type":"contributor",
+        "webTitle":"James Ball",
+        "webUrl":"http://www.theguardian.com/profile/jamesball",
+        "apiUrl":"http://content.guardianapis.com/profile/jamesball",
+        "bio":"<p>James Ball is a data journalist working for the Guardian investigations team. He joined the Guardian from <a href=\"http://www.wikileaks.ch\">Wikileaks</a>, and the <a href=\"http://www.tbij.com\">Bureau of Investigative Journalism</a>. He is the Washington Post Laurence Stern Fellow for 2012.</p>",
+        "rcsId":"GNL043866",
+        "r2ContributorId":"22541",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/25/1319546073704/james_ball.jpg",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/us-constitution-and-civil-liberties",
+        "type":"keyword",
+        "webTitle":"US constitution and civil liberties",
+        "webUrl":"http://www.theguardian.com/law/us-constitution-and-civil-liberties",
+        "apiUrl":"http://content.guardianapis.com/law/us-constitution-and-civil-liberties",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418679448",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380555077752/NSA-internet-network-cabl-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"NSA internet network cable",
+            "height":"276",
+            "credit":"Felix Clay/Guardian",
+            "caption":"Any computer metadata picked up by NSA collection systems is routed to the Marina database, the guide explains. Photograph: Felix Clay",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418679449",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/30/1380555063863/NSA-internet-network-cabl-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Felix Clay",
+            "altText":"NSA internet network cable",
+            "height":"84",
+            "credit":"Felix Clay/Guardian",
+            "caption":"NSA internet network cable. Photograph: Felix Clay for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/30/nsa-director-intelligence-public-support",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-30T21:13:40Z",
+      "webTitle":"Former NSA chief: western intelligence agencies must be more transparent",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/30/nsa-director-intelligence-public-support",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/30/nsa-director-intelligence-public-support",
+      "fields":{
+        "trailText":"<p>General Michael Hayden, who also headed CIA, admits US and UK agencies have become too secretive for their own good</p>",
+        "headline":"Former NSA chief: western intelligence agencies must be more transparent",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j7xz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/30/0530_hayden_140x84.jpg",
+        "wordcount":"625",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/nickhopkins",
+        "type":"contributor",
+        "webTitle":"Nick Hopkins",
+        "webUrl":"http://www.theguardian.com/profile/nickhopkins",
+        "apiUrl":"http://content.guardianapis.com/profile/nickhopkins",
+        "bio":"<p>Nick Hopkins is the Guardian's defence and security correspondent</p>",
+        "rcsId":"GNL004726",
+        "r2ContributorId":"16183",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/3/10/1299772973963/nick-hopkins.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/gchq",
+        "type":"keyword",
+        "webTitle":"GCHQ",
+        "webUrl":"http://www.theguardian.com/uk/gchq",
+        "apiUrl":"http://content.guardianapis.com/uk/gchq",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418688811",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/30/0530_hayden_460x276.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kevin Wolf",
+            "altText":"CIA director Michael Hayden. Photograph: Kevin Wolf/AP",
+            "height":"276",
+            "credit":"Kevin Wolf/AP",
+            "caption":"Former NSA director Michael Hayden said he did not consider Edward Snowden a whistleblower because he did not expose wrongdoing. Photograph: Kevin Wolf/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418688812",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/30/0530_hayden_140x84.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kevin Wolf",
+            "altText":"CIA director Michael Hayden. Photograph: Kevin Wolf/AP",
+            "height":"84",
+            "credit":"Kevin Wolf/AP",
+            "caption":"CIA director Michael Hayden. Photograph: Kevin Wolf/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/02/nsa-us-cell-phone-data-location-programs",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-02T18:11:00Z",
+      "webTitle":"NSA chief admits agency tracked US cellphone locations in secret tests",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/02/nsa-us-cell-phone-data-location-programs",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/02/nsa-us-cell-phone-data-location-programs",
+      "fields":{
+        "trailText":"<p>Keith Alexander insists pilot programs were not used for analysis but that tracking location data 'may be a future requirement'</p>",
+        "headline":"NSA chief admits agency tracked US cellphone locations in secret tests",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j8kk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380736830240/James-Clapper-left-and-Ke-005.jpg",
+        "wordcount":"1273",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-senate",
+        "type":"keyword",
+        "webTitle":"US Senate",
+        "webUrl":"http://www.theguardian.com/world/us-senate",
+        "apiUrl":"http://content.guardianapis.com/world/us-senate",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.theguardian.com/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/paullewis",
+        "type":"contributor",
+        "webTitle":"Paul Lewis",
+        "webUrl":"http://www.theguardian.com/profile/paullewis",
+        "apiUrl":"http://content.guardianapis.com/profile/paullewis",
+        "bio":"<p>Paul Lewis is Washington correspondent for the Guardian. He was previously special projects editor • <a href=\"https://docs.google.com/document/d/1YteveK_REbUbzBNfpTo5knPbDKWCUNkegoC9jBT3WmU/edit\">Full biography</a></p>",
+        "r2ContributorId":"19990",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/12/21/1261414668260/paul_lewis.jpg",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418893204",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380736839192/James-Clapper-left-and-Ke-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Evan Vucci",
+            "altText":"James Clapper, left, and Keith Alexander of the NSA",
+            "height":"276",
+            "credit":"Evan Vucci/AP",
+            "caption":"Keith Alexander, right, with James Clapper, the director of national intelligence. The pair appealed to Congress not to limit the powers of the NSA. Photo: Evan Vucci/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418893205",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/2/1380736830240/James-Clapper-left-and-Ke-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Evan Vucci",
+            "altText":"James Clapper, left, and Keith Alexander of the NSA",
+            "height":"84",
+            "credit":"Evan Vucci/AP",
+            "caption":"James Clapper, left, and Keith Alexander of the NSA. Photograph: Evan Vucci/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

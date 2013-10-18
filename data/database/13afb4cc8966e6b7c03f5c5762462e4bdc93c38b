@@ -1,0 +1,1695 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"news/2013/oct/15/10-best-photographs-of-the-day",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-10-15T16:36:17Z",
+      "webTitle":"10 photo highlights of the day",
+      "webUrl":"http://www.theguardian.com/news/2013/oct/15/10-best-photographs-of-the-day",
+      "apiUrl":"http://content.guardianapis.com/news/2013/oct/15/10-best-photographs-of-the-day",
+      "fields":{
+        "trailText":"Each day the picture editor of the Guardian brings you a selection of photo highlights<br /><br />",
+        "headline":"10 photo highlights of the day",
+        "body":"<div id=\"block-525d48fee4b0667d2b3c66ad\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-15T17:35:47.757+01:00\">5.35pm <span class=\"timezone\">BST</span></time> </p> <div class=\"block-elements\"> <figure class=\"element element-image\" data-media-id=\"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845244171/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-620x372.jpeg\" alt=\"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.\" width=\"620\" height=\"372\" class=\"gu-image\" /> <figcaption>A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282179/72d2e74b-58b5-4ec7-9c29-065aea300856-620x414.jpeg\" alt=\"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.\" width=\"620\" height=\"414\" class=\"gu-image\" /> <figcaption>An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328617/ba76db86-ec2c-4237-85f6-7427b166dca9-620x372.jpeg\" alt=\"RAF and French Air Force fast jets on exercise.\" width=\"620\" height=\"372\" class=\"gu-image\" /> <figcaption>A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416034/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-620x372.jpeg\" alt=\"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.\" width=\"620\" height=\"372\" class=\"gu-image\" /> <figcaption>US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849893194/57d7a532-d459-4e9c-8b73-108703c20c6b-620x372.jpeg\" alt=\"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.\" width=\"620\" height=\"372\" class=\"gu-image\" /> <figcaption>Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962472/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-620x417.jpeg\" alt=\"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.\" width=\"620\" height=\"417\" class=\"gu-image\" /> <figcaption>A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535540/531d6cd9-1d24-4d11-ab23-486a879e7077-620x412.jpeg\" alt=\"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.\" width=\"620\" height=\"412\" class=\"gu-image\" /> <figcaption>The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849805898/dcd311a8-55a7-4850-b94c-30e677794100-620x372.jpeg\" alt=\"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.\" width=\"620\" height=\"372\" class=\"gu-image\" /> <figcaption>We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852619694/56b540e1-839c-40ae-958d-28db4657ab2c-620x459.jpeg\" alt=\"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.\" width=\"620\" height=\"459\" class=\"gu-image\" /> <figcaption>This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex</figcaption> </figure> <figure class=\"element element-image\" data-media-id=\"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846259689/eaab91d4-a698-47e7-89ca-4990595f0890-620x457.jpeg\" alt=\"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.\" width=\"620\" height=\"457\" class=\"gu-image\" /> <figcaption>A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters</figcaption> </figure> </div> </div><!-- Guardian Watermark: internal-code/content/420030486|2013-10-16T15:58:10Z|7a5e849e215ecdad6ae88b1c3857812a0a8fc907 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T10:22:07Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850743294/fcb824d3-1d2a-4aad-aac8-bef9ea43d8a9-140x84.jpeg",
+        "standfirst":"Each day the picture editor of the Guardian brings you a selection of photo highlights.<br /><br /><a href=\"http://www.theguardian.com/news/2013/oct/09/10-best-funny-photographs-of-the-day\">&bull;</a>&nbsp;For more from the Guardian picture desk today see our <a href=\"http://www.theguardian.com/news/2013/oct/15/best-pictures-of-the-day-live#start-of-comments\">live blog</a>",
+        "displayHint":"photo",
+        "shortUrl":"http://gu.com/p/3jhyq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381850743294/fcb824d3-1d2a-4aad-aac8-bef9ea43d8a9-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"420030486",
+        "allowUgc":"false",
+        "internalComposerCode":"525d4837e4b0931fa88f55cd",
+        "isPremoderated":"false",
+        "byline":"Joanna Ruck",
+        "displayRelativeTimes":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981286",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-16T15:00:00Z"
+      },
+      "tags":[{
+        "id":"news/series/ten-best-photographs-of-the-day",
+        "type":"series",
+        "webTitle":"10 best photographs of the day",
+        "webUrl":"http://www.theguardian.com/news/series/ten-best-photographs-of-the-day",
+        "apiUrl":"http://content.guardianapis.com/news/series/ten-best-photographs-of-the-day",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.theguardian.com/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/joanna-ruck",
+        "type":"contributor",
+        "webTitle":"Joanna Ruck",
+        "webUrl":"http://www.theguardian.com/profile/joanna-ruck",
+        "apiUrl":"http://content.guardianapis.com/profile/joanna-ruck",
+        "bio":"<p>Joanna Ruck is picture editor, news at the Guardian</p>",
+        "r2ContributorId":"49041",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/4/1370353220670/Joanna-Ruck-staff-byline-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845241555/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845241555/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-380x228.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"228",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845241964/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845241964/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-1020x612.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"612",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845242248/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845242248/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-460x276.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"276",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845242431/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845242431/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-540x324.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"324",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845243048/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845243048/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-2060x1236.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"1236",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845243717/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845243717/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-220x132.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"132",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845243838/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845243838/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-300x180.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"180",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845244171/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845244171/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-620x372.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"372",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845244394/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845244394/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-140x84.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"84",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845244972/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845244972/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-2048x1536.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"1536",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845245849/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845245849/a16f62ab-131a-47bd-9b5f-0a1ce3c4b81a-1024x768.jpeg",
+            "source":"REUTERS",
+            "photographer":"KIM KYUNG-HOON",
+            "altText":"A member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors, performs before their NBA Global Game against the Los Angeles Lakers in Beijing.",
+            "height":"768",
+            "credit":"KIM KYUNG-HOON/REUTERS",
+            "caption":"A fast shutter speed freezes a member of the Flying Dubs, an acrobatic dunk team of the Golden State Warriors in mid air as he performs before their NBA Global Game against the Los Angeles Lakers in Beijing, China. Photograph: Kim Kyung-hoon/Reuters",
+            "mediaId":"gu-fc-e179c81c-71b4-4161-b81d-b57510b3071c",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845281238/72d2e74b-58b5-4ec7-9c29-065aea300856-380x253.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845281238/72d2e74b-58b5-4ec7-9c29-065aea300856-380x253.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"253",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845281659/72d2e74b-58b5-4ec7-9c29-065aea300856-1020x680.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845281659/72d2e74b-58b5-4ec7-9c29-065aea300856-1020x680.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"680",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282011/72d2e74b-58b5-4ec7-9c29-065aea300856-220x147.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282011/72d2e74b-58b5-4ec7-9c29-065aea300856-220x147.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"147",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282179/72d2e74b-58b5-4ec7-9c29-065aea300856-620x414.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282179/72d2e74b-58b5-4ec7-9c29-065aea300856-620x414.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"414",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282409/72d2e74b-58b5-4ec7-9c29-065aea300856-140x93.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282409/72d2e74b-58b5-4ec7-9c29-065aea300856-140x93.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"93",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282971/72d2e74b-58b5-4ec7-9c29-065aea300856-2060x1374.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845282971/72d2e74b-58b5-4ec7-9c29-065aea300856-2060x1374.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"1374",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845283663/72d2e74b-58b5-4ec7-9c29-065aea300856-300x200.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845283663/72d2e74b-58b5-4ec7-9c29-065aea300856-300x200.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"200",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845284352/72d2e74b-58b5-4ec7-9c29-065aea300856-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845284352/72d2e74b-58b5-4ec7-9c29-065aea300856-2048x1536.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"1536",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845285252/72d2e74b-58b5-4ec7-9c29-065aea300856-460x307.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845285252/72d2e74b-58b5-4ec7-9c29-065aea300856-460x307.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"307",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845285436/72d2e74b-58b5-4ec7-9c29-065aea300856-540x360.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845285436/72d2e74b-58b5-4ec7-9c29-065aea300856-540x360.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"360",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845285778/72d2e74b-58b5-4ec7-9c29-065aea300856-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845285778/72d2e74b-58b5-4ec7-9c29-065aea300856-1024x768.jpeg",
+            "source":"EPA",
+            "photographer":"JIM LO SCALZO",
+            "altText":"The US Capitol dome is pictured at dawn in the reflection of frosted glass above the Capitol Visitor Centre in Washington DC.",
+            "height":"768",
+            "credit":"JIM LO SCALZO/EPA",
+            "caption":"An imaginative way to keep shooting the same story. The US Capitol dome is pictured at dawn in the reflection of frosted glass during the government shutdown in Washington DC. Photograph: Jim Lo Scalzo/EPA",
+            "mediaId":"gu-fc-4aa66452-4c6a-45c8-8c6a-9a5d5c91fa54",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845327168/ba76db86-ec2c-4237-85f6-7427b166dca9-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845327168/ba76db86-ec2c-4237-85f6-7427b166dca9-300x180.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"180",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845327677/ba76db86-ec2c-4237-85f6-7427b166dca9-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845327677/ba76db86-ec2c-4237-85f6-7427b166dca9-2060x1236.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"1236",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328270/ba76db86-ec2c-4237-85f6-7427b166dca9-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328270/ba76db86-ec2c-4237-85f6-7427b166dca9-380x228.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"228",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328440/ba76db86-ec2c-4237-85f6-7427b166dca9-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328440/ba76db86-ec2c-4237-85f6-7427b166dca9-540x324.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"324",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328617/ba76db86-ec2c-4237-85f6-7427b166dca9-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328617/ba76db86-ec2c-4237-85f6-7427b166dca9-620x372.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"372",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328801/ba76db86-ec2c-4237-85f6-7427b166dca9-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845328801/ba76db86-ec2c-4237-85f6-7427b166dca9-460x276.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"276",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845329363/ba76db86-ec2c-4237-85f6-7427b166dca9-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845329363/ba76db86-ec2c-4237-85f6-7427b166dca9-2048x1536.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"1536",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330207/ba76db86-ec2c-4237-85f6-7427b166dca9-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330207/ba76db86-ec2c-4237-85f6-7427b166dca9-1020x612.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"612",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330439/ba76db86-ec2c-4237-85f6-7427b166dca9-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330439/ba76db86-ec2c-4237-85f6-7427b166dca9-140x84.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"84",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330569/ba76db86-ec2c-4237-85f6-7427b166dca9-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330569/ba76db86-ec2c-4237-85f6-7427b166dca9-220x132.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"132",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330783/ba76db86-ec2c-4237-85f6-7427b166dca9-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845330783/ba76db86-ec2c-4237-85f6-7427b166dca9-1024x768.jpeg",
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"RAF and French Air Force fast jets on exercise.",
+            "height":"768",
+            "credit":"Lynne Cameron/PA",
+            "caption":"A moment of perfect alignment of the RAF Typhoon and the French Air Force 2000N jet shot from a C130 Herucles during joint exercises. Photograph: Lynne Cameron/PA",
+            "mediaId":"gu-fc-8f2a2544-0fec-4c95-b57f-39e0fa6e9f68",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845415178/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845415178/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-2060x1236.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"1236",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845415840/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845415840/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-220x132.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"132",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416034/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416034/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-620x372.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"372",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416287/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416287/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-380x228.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"228",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416446/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416446/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-140x84.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"84",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416592/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845416592/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-540x324.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"324",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845417232/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845417232/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-2048x1536.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"1536",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418023/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418023/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-460x276.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"276",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418249/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418249/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-1020x612.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"612",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418516/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418516/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-300x180.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"180",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418748/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845418748/8a4b83a6-533b-4182-a17e-f3d0a1bd3424-1024x768.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"SAUL LOEB",
+            "altText":"US President Barack Obama makes bologna sandwiches at Martha's Table in Washington DC. The non-profit organization helps low income and homeless families and many of the current volunteers are furloughed federal workers.",
+            "height":"768",
+            "credit":"SAUL LOEB/AFP/Getty Images",
+            "caption":"US president Barack Obama doesn't look convinced by the bologna sandwiches he is helping to make at Martha's Table in Washington DC. The non-profit organisation helps low-income and homeless families. Photograph: Saul Loeb/AFP/Getty Images",
+            "mediaId":"gu-fc-878d802f-39a7-44a5-880b-f7cb0529ef8c",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849889363/57d7a532-d459-4e9c-8b73-108703c20c6b-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849889363/57d7a532-d459-4e9c-8b73-108703c20c6b-2060x1236.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"1236",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890200/57d7a532-d459-4e9c-8b73-108703c20c6b-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890200/57d7a532-d459-4e9c-8b73-108703c20c6b-540x324.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"324",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890350/57d7a532-d459-4e9c-8b73-108703c20c6b-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890350/57d7a532-d459-4e9c-8b73-108703c20c6b-380x228.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"228",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890529/57d7a532-d459-4e9c-8b73-108703c20c6b-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890529/57d7a532-d459-4e9c-8b73-108703c20c6b-460x276.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"276",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890797/57d7a532-d459-4e9c-8b73-108703c20c6b-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849890797/57d7a532-d459-4e9c-8b73-108703c20c6b-1020x612.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"612",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849891545/57d7a532-d459-4e9c-8b73-108703c20c6b-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849891545/57d7a532-d459-4e9c-8b73-108703c20c6b-2048x1536.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"1536",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849892419/57d7a532-d459-4e9c-8b73-108703c20c6b-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849892419/57d7a532-d459-4e9c-8b73-108703c20c6b-220x132.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"132",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849892657/57d7a532-d459-4e9c-8b73-108703c20c6b-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849892657/57d7a532-d459-4e9c-8b73-108703c20c6b-1024x768.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"768",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849893028/57d7a532-d459-4e9c-8b73-108703c20c6b-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849893028/57d7a532-d459-4e9c-8b73-108703c20c6b-300x180.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"180",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849893194/57d7a532-d459-4e9c-8b73-108703c20c6b-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849893194/57d7a532-d459-4e9c-8b73-108703c20c6b-620x372.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"372",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849893351/57d7a532-d459-4e9c-8b73-108703c20c6b-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849893351/57d7a532-d459-4e9c-8b73-108703c20c6b-140x84.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"DANIEL REINHARDT",
+            "altText":"Gorilla Shira holds its offspring in the zoo enclosure inFrankfurt, Germany.",
+            "height":"84",
+            "credit":"DANIEL REINHARDT/AFP/Getty Images",
+            "caption":"Baby gorillas always make cute pictures but a baby gorilla with its tongue out is even better. Gorilla Shira holds its offspring in the zoo enclosure in Frankfurt, Germany. Photograph: Daniel Reinhardt/AFP/Getty Images",
+            "mediaId":"gu-fc-e910a800-0309-4a7c-96d6-853b9c1b63fb",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962016/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-140x94.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962016/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-140x94.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"94",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962152/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-220x148.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962152/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-220x148.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"148",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962309/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-380x256.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962309/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-380x256.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"256",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962472/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-620x417.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962472/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-620x417.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"417",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962685/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-540x363.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849962685/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-540x363.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"363",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849963425/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849963425/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-2048x1536.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"1536",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849965334/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-2060x1386.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849965334/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-2060x1386.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"1386",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849966132/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-460x310.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849966132/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-460x310.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"310",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849966531/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849966531/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-1024x768.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"768",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849966890/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-300x202.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849966890/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-300x202.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"202",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849967106/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-1020x686.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849967106/39c869e8-8cb4-4d24-b07a-3c6c5a27521c-1020x686.jpeg",
+            "source":"EPA",
+            "photographer":"HARISH TYAGI",
+            "altText":"Chinese performers dance during the closing ceremony of the 6th East Asian Games in Tianjin, China.",
+            "height":"686",
+            "credit":"HARISH TYAGI/EPA",
+            "caption":"A splash of colour and movement is provided by Chinese performers as they dance during the closing ceremony of the 6th East Asian Games in Tianjin, China. Photograph: Harish Tyagi/EPA",
+            "mediaId":"gu-fc-b72ff76a-87c0-4bb5-8131-6c59f87ffe77",
+            "width":"1020"
+          }
+        }]
+      },{
+        "id":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535331/531d6cd9-1d24-4d11-ab23-486a879e7077-460x306.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535331/531d6cd9-1d24-4d11-ab23-486a879e7077-460x306.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"306",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535540/531d6cd9-1d24-4d11-ab23-486a879e7077-620x412.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535540/531d6cd9-1d24-4d11-ab23-486a879e7077-620x412.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"412",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535758/531d6cd9-1d24-4d11-ab23-486a879e7077-300x199.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535758/531d6cd9-1d24-4d11-ab23-486a879e7077-300x199.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"199",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535891/531d6cd9-1d24-4d11-ab23-486a879e7077-220x146.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845535891/531d6cd9-1d24-4d11-ab23-486a879e7077-220x146.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"146",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845536575/531d6cd9-1d24-4d11-ab23-486a879e7077-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845536575/531d6cd9-1d24-4d11-ab23-486a879e7077-2048x1536.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"1536",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845537529/531d6cd9-1d24-4d11-ab23-486a879e7077-1020x678.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845537529/531d6cd9-1d24-4d11-ab23-486a879e7077-1020x678.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"678",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845537835/531d6cd9-1d24-4d11-ab23-486a879e7077-380x252.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845537835/531d6cd9-1d24-4d11-ab23-486a879e7077-380x252.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"252",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845537987/531d6cd9-1d24-4d11-ab23-486a879e7077-540x359.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845537987/531d6cd9-1d24-4d11-ab23-486a879e7077-540x359.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"359",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845538269/531d6cd9-1d24-4d11-ab23-486a879e7077-140x93.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845538269/531d6cd9-1d24-4d11-ab23-486a879e7077-140x93.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"93",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845538529/531d6cd9-1d24-4d11-ab23-486a879e7077-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845538529/531d6cd9-1d24-4d11-ab23-486a879e7077-1024x768.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"768",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845539382/531d6cd9-1d24-4d11-ab23-486a879e7077-2060x1369.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845539382/531d6cd9-1d24-4d11-ab23-486a879e7077-2060x1369.jpeg",
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"People sit on top of a train to leave for villages for the upcoming religious festival Eid-al-Adha in Dhaka, Bangladesh.",
+            "height":"1369",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"The sheer number of people on top of a train roof makes you wonder how it will ever move as people return home for the festival Eid-al-Adha in Dhaka, Bangladesh. Photograph: Xinhua/Landov/Barcroft Media",
+            "mediaId":"gu-fc-173e4860-b2d9-41ee-834e-2759c649c4a2",
+            "width":"2060"
+          }
+        }]
+      },{
+        "id":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802073/dcd311a8-55a7-4850-b94c-30e677794100-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802073/dcd311a8-55a7-4850-b94c-30e677794100-380x228.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"228",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802320/dcd311a8-55a7-4850-b94c-30e677794100-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802320/dcd311a8-55a7-4850-b94c-30e677794100-1020x612.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"612",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802634/dcd311a8-55a7-4850-b94c-30e677794100-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802634/dcd311a8-55a7-4850-b94c-30e677794100-460x276.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"276",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802811/dcd311a8-55a7-4850-b94c-30e677794100-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849802811/dcd311a8-55a7-4850-b94c-30e677794100-540x324.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"324",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849804809/dcd311a8-55a7-4850-b94c-30e677794100-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849804809/dcd311a8-55a7-4850-b94c-30e677794100-2060x1236.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"1236",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849805574/dcd311a8-55a7-4850-b94c-30e677794100-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849805574/dcd311a8-55a7-4850-b94c-30e677794100-220x132.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"132",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849805688/dcd311a8-55a7-4850-b94c-30e677794100-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849805688/dcd311a8-55a7-4850-b94c-30e677794100-300x180.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"180",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849805898/dcd311a8-55a7-4850-b94c-30e677794100-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849805898/dcd311a8-55a7-4850-b94c-30e677794100-620x372.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"372",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849806065/dcd311a8-55a7-4850-b94c-30e677794100-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849806065/dcd311a8-55a7-4850-b94c-30e677794100-140x84.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"84",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849806723/dcd311a8-55a7-4850-b94c-30e677794100-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849806723/dcd311a8-55a7-4850-b94c-30e677794100-2048x1536.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"1536",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849807758/dcd311a8-55a7-4850-b94c-30e677794100-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381849807758/dcd311a8-55a7-4850-b94c-30e677794100-1024x768.jpeg",
+            "source":"Getty Images",
+            "photographer":"Ulet Ifansasti",
+            "altText":"A boy plays with a toy gun as Indonesian muslims attend Eid Al-Adha prayers in Yogyakarta, Indonesia.",
+            "height":"768",
+            "credit":"Ulet Ifansasti/Getty Images",
+            "caption":"We've had thousands of photographs from Eid celebrations today, but this one of a boy with his toy gun stood out for its playfulness. Muslims attend Eid al-Adha prayers in Yogyakarta, Indonesia. Photograph: Ulet Ifansasti/Getty Images",
+            "mediaId":"gu-fc-b0367331-0d47-4620-b28e-06226d4b90cf",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852619527/56b540e1-839c-40ae-958d-28db4657ab2c-220x163.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852619527/56b540e1-839c-40ae-958d-28db4657ab2c-220x163.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"163",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852619694/56b540e1-839c-40ae-958d-28db4657ab2c-620x459.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852619694/56b540e1-839c-40ae-958d-28db4657ab2c-620x459.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"459",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852619990/56b540e1-839c-40ae-958d-28db4657ab2c-1020x755.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852619990/56b540e1-839c-40ae-958d-28db4657ab2c-1020x755.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"755",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852620382/56b540e1-839c-40ae-958d-28db4657ab2c-540x400.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852620382/56b540e1-839c-40ae-958d-28db4657ab2c-540x400.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"400",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852620564/56b540e1-839c-40ae-958d-28db4657ab2c-380x281.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852620564/56b540e1-839c-40ae-958d-28db4657ab2c-380x281.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"281",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852621200/56b540e1-839c-40ae-958d-28db4657ab2c-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852621200/56b540e1-839c-40ae-958d-28db4657ab2c-2048x1536.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"1536",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852621996/56b540e1-839c-40ae-958d-28db4657ab2c-140x104.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852621996/56b540e1-839c-40ae-958d-28db4657ab2c-140x104.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"104",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852622123/56b540e1-839c-40ae-958d-28db4657ab2c-460x341.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852622123/56b540e1-839c-40ae-958d-28db4657ab2c-460x341.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"341",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852622356/56b540e1-839c-40ae-958d-28db4657ab2c-300x222.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852622356/56b540e1-839c-40ae-958d-28db4657ab2c-300x222.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"222",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852622660/56b540e1-839c-40ae-958d-28db4657ab2c-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852622660/56b540e1-839c-40ae-958d-28db4657ab2c-1024x768.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"768",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852623518/56b540e1-839c-40ae-958d-28db4657ab2c-2060x1526.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381852623518/56b540e1-839c-40ae-958d-28db4657ab2c-2060x1526.jpeg",
+            "source":"REX/Christine Haines",
+            "photographer":"REX/Christine Haines",
+            "altText":"This could almost be an oil painting. The farmland of the Palouse region of the northwestern United States with distinctive rolling hills and crops of wheat and rapeseed.",
+            "height":"1526",
+            "credit":"REX/Christine Haines/REX/Christine Haines",
+            "caption":"This could almost be an oil painting. The farmland of the Palouse region of the north-western United States with distinctive rolling hills and crops of wheat and rapeseed. Photograph: Christine Haines/Rex",
+            "mediaId":"gu-fc-f1a683ce-91e1-4d27-86d1-10d4dc469fc1",
+            "width":"2060"
+          }
+        }]
+      },{
+        "id":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257148/eaab91d4-a698-47e7-89ca-4990595f0890-140x103.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257148/eaab91d4-a698-47e7-89ca-4990595f0890-140x103.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"103",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257393/eaab91d4-a698-47e7-89ca-4990595f0890-1020x751.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257393/eaab91d4-a698-47e7-89ca-4990595f0890-1020x751.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"751",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257674/eaab91d4-a698-47e7-89ca-4990595f0890-220x162.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257674/eaab91d4-a698-47e7-89ca-4990595f0890-220x162.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"162",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257812/eaab91d4-a698-47e7-89ca-4990595f0890-460x339.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846257812/eaab91d4-a698-47e7-89ca-4990595f0890-460x339.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"339",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846258007/eaab91d4-a698-47e7-89ca-4990595f0890-540x398.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846258007/eaab91d4-a698-47e7-89ca-4990595f0890-540x398.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"398",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846258198/eaab91d4-a698-47e7-89ca-4990595f0890-380x280.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846258198/eaab91d4-a698-47e7-89ca-4990595f0890-380x280.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"280",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846258829/eaab91d4-a698-47e7-89ca-4990595f0890-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846258829/eaab91d4-a698-47e7-89ca-4990595f0890-2048x1536.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"1536",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846259689/eaab91d4-a698-47e7-89ca-4990595f0890-620x457.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846259689/eaab91d4-a698-47e7-89ca-4990595f0890-620x457.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"457",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846259971/eaab91d4-a698-47e7-89ca-4990595f0890-300x221.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846259971/eaab91d4-a698-47e7-89ca-4990595f0890-300x221.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"221",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846260256/eaab91d4-a698-47e7-89ca-4990595f0890-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846260256/eaab91d4-a698-47e7-89ca-4990595f0890-1024x768.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"768",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846260976/eaab91d4-a698-47e7-89ca-4990595f0890-2060x1517.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381846260976/eaab91d4-a698-47e7-89ca-4990595f0890-2060x1517.jpeg",
+            "source":"REUTERS",
+            "photographer":"ERIK DE CASTRO",
+            "altText":"Medical workers revive a newly-born baby at a covered court after hospital patients were evacuated after an earthquake struck Cebu city, in central Philippines.",
+            "height":"1517",
+            "credit":"ERIK DE CASTRO/REUTERS",
+            "caption":"A shocking photograph of medical workers reviving a newborn baby at a covered court after patients were evacuated from a hospital after an earthquake struck Cebu city in central Philippines. Photograph: Erik De Castro/Reuters",
+            "mediaId":"gu-fc-9495cdb6-1864-490d-837f-e5b0321c3bfd",
+            "width":"2060"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

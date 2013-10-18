@@ -1,0 +1,3247 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5975,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":598,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/rugbyleague",
+      "type":"keyword",
+      "webTitle":"Rugby league",
+      "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+      "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/oct/16/parramatta-eels-appoint-brad-arthur-coach",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-16T01:46:51Z",
+      "webTitle":"Parramatta Eels appoint Brad Arthur as head coach",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/16/parramatta-eels-appoint-brad-arthur-coach",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/16/parramatta-eels-appoint-brad-arthur-coach",
+      "fields":{
+        "trailText":"<p>The Eels have appointed Manly Sea Eagles assistant coach Brad Arthur as the replacement for Ricky Stuart</p>",
+        "headline":"Parramatta Eels appoint Brad Arthur as head coach",
+        "body":"<p>The Parramatta Eels have appointed Brad Arthur as their new head coach for the next three seasons, replacing Ricky Stuart who departed for Canberra Raiders. </p><p>\"To return as a head coach in an area and a club where I played football as a young man is extremely humbling and very exciting,\" Arthur said. \"I have full confidence in the playing roster for next year, as well as the people at the Parramatta Eels to get this club moving in the right direction.\"</p><p>Arthur was assistant coach at the Eels  before leaving for a season as deputy at the Manly Sea Eagles.</p><p>\"This has been a thorough process and both myself and the PNRL Board are incredibly satisfied with this result,\" the Eels CEO, Scott Seward said. \"Brad Arthur has served a wonderful apprenticeship under the likes of Craig Bellamy and Geoff Toovey and we are confident that he is the right man to take us forward.\"</p><p>Parramatta finished at the bottom of the NRL ladder in 2013 for the second season in a row.</p><!-- Guardian Watermark: internal-code/content/420085555|2013-10-16T10:54:20Z|880a60b0da394d293efa18a3c101042f06bc1f24 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T01:46:51Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381887350841/Brad-Arthur-003.jpg",
+        "standfirst":"• Coach was assistant at Manly Sea Eagles<br />• Club finished bottom of NRL ladder",
+        "shortUrl":"http://gu.com/p/3jt7c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381887350841/Brad-Arthur-003.jpg",
+        "wordcount":"171",
+        "commentable":"true",
+        "internalContentCode":"420085555",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Tom Lutz",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981623",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T01:46:51Z"
+      },
+      "tags":[{
+        "id":"sport/parramatta-eels",
+        "type":"keyword",
+        "webTitle":"Parramatta Eels",
+        "webUrl":"http://www.theguardian.com/sport/parramatta-eels",
+        "apiUrl":"http://content.guardianapis.com/sport/parramatta-eels",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/tomlutz",
+        "type":"contributor",
+        "webTitle":"Tom Lutz",
+        "webUrl":"http://www.theguardian.com/profile/tomlutz",
+        "apiUrl":"http://content.guardianapis.com/profile/tomlutz",
+        "bio":"<p>Tom Lutz is a journalist for Guardian sport</p>",
+        "rcsId":"GNL012925",
+        "r2ContributorId":"16533",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/tom_lutz_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420085556",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381887366538/Brad-Arthur-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Brad Arthur",
+            "height":"276",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Brad Arthur during his last spell at Parramatta.  Photograph: Colin Whelan/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420085557",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/16/1381887350841/Brad-Arthur-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Brad Arthur",
+            "height":"84",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Brad Arthur during his last spell at Parramatta.  Photograph: Colin Whelan/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/gallery/2013/oct/15/best-beards-facial-hair-world-sports",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-15T13:00:00Z",
+      "webTitle":"The greatest beards in world sports, part II – in pictures",
+      "webUrl":"http://www.theguardian.com/sport/gallery/2013/oct/15/best-beards-facial-hair-world-sports",
+      "apiUrl":"http://content.guardianapis.com/sport/gallery/2013/oct/15/best-beards-facial-hair-world-sports",
+      "fields":{
+        "trailText":"<p><strong>Martin Pengelly:</strong> You told us which great beards we missed in our first round-up, so here they are: Guardian readers' favourite beards in world sport</p>",
+        "headline":"The greatest beards in world sports, part II – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T13:58:19Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381769110106/Josh-Strauss-attends-a-tr-005.jpg",
+        "standfirst":"Last week, as a tribute to the playoff beards being sported by the Boston Red Sox, we published <a href=\"http://www.theguardian.com/sport/gallery/2013/oct/11/best-beards-facial-hair-world-sport\">a gallery of the greatest beards in world sports</a>. We also asked you, the readers, to tell us who we'd missed. This you did with some emotion, so here it is – Beardorama II: the Revenge.<br /><br />• Are we <em>still</em> missing the best beards in world sports? The comments section awaits…",
+        "shortUrl":"http://gu.com/p/3jh3k",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381769110106/Josh-Strauss-attends-a-tr-005.jpg",
+        "commentable":"true",
+        "internalContentCode":"419941657",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Martin Pengelly in New York",
+        "publication":"theguardian.com",
+        "internalPageCode":"1980794",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T13:02:00Z"
+      },
+      "tags":[{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cricket",
+        "type":"keyword",
+        "webTitle":"Cricket",
+        "webUrl":"http://www.theguardian.com/sport/cricket",
+        "apiUrl":"http://content.guardianapis.com/sport/cricket",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-union",
+        "type":"keyword",
+        "webTitle":"Rugby union",
+        "webUrl":"http://www.theguardian.com/sport/rugby-union",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-union",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nfl",
+        "type":"keyword",
+        "webTitle":"NFL",
+        "webUrl":"http://www.theguardian.com/sport/nfl",
+        "apiUrl":"http://content.guardianapis.com/sport/nfl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ufc",
+        "type":"keyword",
+        "webTitle":"UFC",
+        "webUrl":"http://www.theguardian.com/sport/ufc",
+        "apiUrl":"http://content.guardianapis.com/sport/ufc",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/athletics",
+        "type":"keyword",
+        "webTitle":"Athletics",
+        "webUrl":"http://www.theguardian.com/sport/athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boxing",
+        "type":"keyword",
+        "webTitle":"Boxing",
+        "webUrl":"http://www.theguardian.com/sport/boxing",
+        "apiUrl":"http://content.guardianapis.com/sport/boxing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/martin-pengelly",
+        "type":"contributor",
+        "webTitle":"Martin Pengelly",
+        "webUrl":"http://www.theguardian.com/profile/martin-pengelly",
+        "apiUrl":"http://content.guardianapis.com/profile/martin-pengelly",
+        "bio":"<p>Martin is a copy editor for the Guardian, and a writer for <a href=\"http://www.fitzroviaradio.co.uk/\">The Fitzrovia Radio Hour</a>. Follow him on Twitter <a https://twitter.com/MartinPengelly> @MartinPengelly</a></p>",
+        "r2ContributorId":"36464",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359392068140/Martin_Pengelly.jpg",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420031321",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381769110106/Josh-Strauss-attends-a-tr-005.jpg",
+          "typeData":{
+            "source":"Getty Images Europe",
+            "photographer":"Gallo Images",
+            "altText":"Josh Strauss attends a training session",
+            "height":"84",
+            "credit":"Gallo Images/Getty Images Europe",
+            "caption":"Josh Strauss attends a training session. Photograph: Gallo Images/Getty Images Europe",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419938482",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381766997761/WG-Grace-001.jpg",
+          "typeData":{
+            "source":"Popperfoto/Getty Images",
+            "photographer":"Paul Popper/Popperfoto",
+            "altText":"WG Grace",
+            "height":"700",
+            "credit":"Paul Popper/Popperfoto/Popperfoto/Getty Images",
+            "caption":"In the beginning, there was the greatest cricketer a) ever to have lived and b) ever to have taken the only course of action open to a true gentleman when confronted with complaints about shaving and its deleterious effect on the the plughole in the bathroom sink. I give you Dr WG Grace, of MCC, Gloucestershire, London County and England, circa 1902.",
+            "width":"500"
+          }
+        }]
+      },{
+        "id":"gu-image-419938910",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767046402/Botham-beard-001.jpg",
+          "typeData":{
+            "source":"Bob Thomas/Getty Images",
+            "photographer":"Bob Thomas",
+            "altText":"Botham beard",
+            "height":"700",
+            "credit":"Bob Thomas/Bob Thomas/Getty Images",
+            "caption":"Almost a hundred years later, there was Beefy, possibly a) the second-greatest cricketer ever to have lived and b) the best putative casting for the lead role in a long overdue TV adaptation of the Flashman novels. Here, England's Ian Botham and his noble yeoman's beard enjoy together a small cigar, or possibly cheroot, after flaying the Australians in the Fourth Test at Edgbaston in 1981. Botham was man of the match – the beard won a silver salver and a special jeroboam of Cornhill-sponsored champagne-style wine.",
+            "width":"450"
+          }
+        }]
+      },{
+        "id":"gu-image-420031312",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381845442624/george-best-001.jpg",
+          "typeData":{
+            "source":"Bob Thomas/Getty Images",
+            "photographer":"Bob Thomas",
+            "altText":"george best: george best",
+            "height":"480",
+            "credit":"Bob Thomas/Bob Thomas/Getty Images",
+            "caption":"Yes, I said football – or soccer, defiantly, commenters who keep complaining about America – didn't have much of a tradition when it came to the sporting of suitably sporting face-fuzz. Here to kick-off a lengthy and well-deserved rebuke is the great George Best, in his Manchester United kit in 1972 and with a somewhat boutique offering – just before the wheels came off and the clippers were, possibly aggravatingly if not causationally, put away.",
+            "width":"581"
+          }
+        }]
+      },{
+        "id":"gu-image-419939508",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381768164184/Trevor-Hockey-001.jpg",
+          "typeData":{
+            "source":"Bob Thomas Sports Photography",
+            "photographer":"Bob Thomas",
+            "altText":"Trevor Hockey",
+            "height":"500",
+            "credit":"Bob Thomas/Bob Thomas Sports Photography",
+            "caption":"…and here, circa 1971, is Sheffield United's Trevor Hockey, of whom I had never heard. Now I have heard of him and I am duly and tremendously impressed. You don't see beards like this on footballers anymore – as much as you don't see such old-school leg muscles, hauser-esque, cably things formed by nothing more than running up and down the slag heaps Yorkshire still had in those days. Nice Zapata on the chap behind, too.",
+            "width":"700"
+          }
+        }]
+      },{
+        "id":"gu-image-419938620",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767879464/Paul-Breitner-001.jpg",
+          "typeData":{
+            "source":"Bob Thomas Sports Photography",
+            "photographer":"Bob Thomas",
+            "altText":"Paul Breitner",
+            "height":"700",
+            "credit":"Bob Thomas/Bob Thomas Sports Photography",
+            "caption":"And finally, before we leave retro corner, we have the West Germany defender Paul Breitner, pictured in 1982. Words, of course, cannot do justice. Full beard + afro + slightly disconcerting stare + Maoist politics = model for morally ambivalent professor at new university in novel by David Lodge or Malcolm Bradbury, and/thus/or a dead ringer for my Dad.",
+            "width":"450"
+          }
+        }]
+      },{
+        "id":"gu-image-419938843",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381766901041/Roy-Keane-as-manager-of-S-001.jpg",
+          "typeData":{
+            "source":"Getty Images Europe",
+            "photographer":"Matthew Lewis",
+            "altText":"Roy Keane as manager of Sunderland",
+            "height":"500",
+            "credit":"Matthew Lewis/Getty Images Europe",
+            "caption":"Into or towards the present day, we arrive at the example of the Manchester United and Ireland great Roy Keane, here in his days as manager of Sunderland, a job which as any fule kno is enough to turn the pointy chin bit of any chap's beard white. In the course of discussing the last gallery, word reached me from an old London colleague that Keane now looks “looks like Santa's drunk and furious younger brother”. I couldn't possibly comment.",
+            "width":"700"
+          }
+        }]
+      },{
+        "id":"gu-image-419938742",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767138397/Swedens-Olof-Mellberg-001.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jonathan Nackstrand",
+            "altText":"Sweden's Olof Mellberg",
+            "height":"700",
+            "credit":"Jonathan Nackstrand/AFP",
+            "caption":"The absence of Sweden's Olof Mellberg from our first list caused considerable comment, and not only from a Swede in the Guardian's London office, the football editor no less, who has a slightly disconcerting emotional attachment to the chap. You have to say, it's a solid effort – somehow more, I don't know, Thirty Years War than 'Viking', as is that sported by Erik Lund, the Norwegian rugby player who we picked out last time. But then, the Vikings didn't come from Sweden. I think. Or did they? Top beard, either way.",
+            "width":"500"
+          }
+        }]
+      },{
+        "id":"gu-image-419938697",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767189635/Andrea-Pirlo-of-Italy-001.jpg",
+          "typeData":{
+            "source":"Getty Images South America",
+            "photographer":"Michael Regan",
+            "altText":"Andrea Pirlo of Italy",
+            "height":"500",
+            "credit":"Michael Regan/Getty Images South America",
+            "caption":"Yes, yes. Andrea Pirlo. I am truly sorry that I forgot about the Italy midfielder. He's a genius and he's genuinely quite old for a top footballer but he's still going strong – no doubt in large part thanks to his superb facial hair, which is of a tarry Mediterranean lustre that simply disallows the whole concept of going grey and slowing down. It's like bitumen. I'd like to think Pirlo gives something of an idea about what Trevor Hockey would look like if subject to a modern fitness regime. I may also be the first person ever to compare the two.",
+            "width":"700"
+          }
+        }]
+      },{
+        "id":"gu-image-419938720",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767255017/Davide-Moscardelli-of-Bol-001.jpg",
+          "typeData":{
+            "source":"Getty Images Europe",
+            "photographer":"Mario Carlini / Iguana Press",
+            "altText":"Davide Moscardelli of Bologna",
+            "height":"700",
+            "credit":"Mario Carlini / Iguana Press/Getty Images Europe",
+            "caption":"I didn't forget Davide Moscardelli of Bologna – I simply hadn't heard of him. Glad I have now, of course, although I am still a little suspicious of what appears to be evidence of 'styling' in parts of his otherwise bristlingly raw and natural marvel. Can one ever trust a footballer not to do silly things with his hair, whether it's on top of or on the front and sides of his face? A question for the ages.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419941425",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381769009668/Api-Naikatini--001.jpg",
+          "typeData":{
+            "source":"Getty Images AsiaPac",
+            "photographer":"Hannah Johnston",
+            "altText":"Api Naikatini ",
+            "height":"700",
+            "credit":"Hannah Johnston/Getty Images AsiaPac",
+            "caption":"Back to rugby union, and to New Zealand. Here's the Fijian Api Naikatini, playing in a club match a few years ago. Alas, we couldn't find a photo of what the ITM Cup star looks like these days – at least, not from any of the agencies the Guardian uses. That explains the admittedly-impressive-but strictly-speaking-barred-from-these-galleries Abraham Lincoln chinstrap he wears here. Think of this beard with added moustache, added length and added mohican on top, and there you'll have it. Remarkable work.",
+            "width":"450"
+          }
+        }]
+      },{
+        "id":"gu-image-419938804",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767090046/Josh-Strauss-001.jpg",
+          "typeData":{
+            "source":"Getty Images Europe",
+            "photographer":"Gallo Images",
+            "altText":"Josh Strauss",
+            "height":"500",
+            "credit":"Gallo Images/Getty Images Europe",
+            "caption":"Being lost for the appropriate words with which to describe the beard worn by the South African back row Josh Strauss, who has now completed the necessary quarantine period and installed his magnificent specimen in a suitably airy, light and fecund greenhouse somewhere in Glasgow, I'm reduced to wondering exactly which Confederate Civil War general he resembles most. Maybe James Longstreet crossbred with Stonewall Jackson? If nothing else, it's an image.",
+            "width":"700"
+          }
+        }]
+      },{
+        "id":"gu-image-419938795",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767432737/David-Williams-of-the-Man-001.jpg",
+          "typeData":{
+            "source":"Getty Images AsiaPac",
+            "photographer":"Cameron Spencer",
+            "altText":"David Williams of the Manly Warringah Sea Eagles",
+            "height":"500",
+            "credit":"Cameron Spencer/Getty Images AsiaPac",
+            "caption":"And yes, there's rugby league too. This is David Williams of the Manly Warringah Sea Eagles, Australia's nearly but not quite finest, who goes by an entirely deserved but in the end somewhat predictable nickname: The Wolfman. Top marks for the headband of household insulation tape, which helps make him look like a sort of larrikin Socrates. Also for the stripy mouthguard which makes him also resemble an illustration of the mythical Scottish cannibal Sawney Bean which terrified me as a child. Unless those <em>are</em> his teeth, I suppose. ",
+            "width":"700"
+          }
+        }]
+      },{
+        "id":"gu-image-419939879",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381768513291/Jason-Kelce-of-the-Philad-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Al Bello",
+            "altText":"Jason Kelce of the Philadelphia Eagles",
+            "height":"700",
+            "credit":"Al Bello/Getty Images",
+            "caption":"Back to the NFL, and to Jason Kelce of the Philadelphia Eagles. Shaggy of hair and excessively grizzly of chin, the center has become something of a cult figure – somewhat predictably, his beard now has its own Twitter account, <strong>@JkelceBeard</strong>. Sample, slightly irascible tweet: 'By 2015, the NFL's weekly awards will look something like 'Downy Super Soft's Arm Tackle' or 'Dove Lotion's Push Out of Bounds' of the Week.' I'm guessing Kelce's beard doesn't see <em>too much</em> moisturising soap or lotion itself.",
+            "width":"450"
+          }
+        }]
+      },{
+        "id":"gu-image-419938832",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":14,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767291177/USA-ultra-runner-Anton-Kr-001.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jean-Pierre Clatot",
+            "altText":"USA ultra runner Anton Krupicka",
+            "height":"700",
+            "credit":"JEAN-PIERRE CLATOT/AFP",
+            "caption":"This is the USA ultra runner Anton Krupicka, taking full advantage of his sport's suitability for the wearing of sunglasses more commonly seen on the average Williamsburg or Park Slope hipster in order to top off a distinctly impressive, full-but-not-too-full privet. Rangy, headbanded, bearded, long-haired and (thanks to his rather niche sport) slightly out of place … that makes Krupicka the Oddball (meaning Donald Sutherland in Kelly's Heroes, obviously) of bearded sportsmen.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419938822",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":15,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381767680794/Big-Country-Roy-Nelson-001.jpg",
+          "typeData":{
+            "source":"Zuffa LLC via Getty Images",
+            "photographer":"Josh Hedges/Zuffa LLC",
+            "altText":"\"Big Country\" Roy Nelson",
+            "height":"500",
+            "credit":"Josh Hedges/Zuffa LLC/Zuffa LLC via Getty Images",
+            "caption":"I'm guessing that the beard found on the UFC fighter 'Big Country' Roy Nelson (on his face, that is – he may well have the beards of his vanquished enemies sewn like scalps on his jockstrap, if such fellows do such things, as I rather suspect they might) is on the same page of the beard-spotters' guide as Jason Kelce. The full 'gentleman of the road', this beard seems to have had a little more work put into it than Nelson's biceps or abs. Not that I'd tell him that.",
+            "width":"700"
+          }
+        }]
+      },{
+        "id":"gu-image-419938818",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":16,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381766970582/UFC-fighter-Kimbo-Slice-001.jpg",
+          "typeData":{
+            "source":"Getty Images North America",
+            "photographer":"J Kopaloff",
+            "altText":"UFC fighter Kimbo Slice",
+            "height":"700",
+            "credit":"J Kopaloff/Getty Images North America",
+            "caption":"And finally, another UFC fighter, though now an undefeated professional boxer and sometime actor in such cinematic milestones as Circle of Pain (me neither) and The Scorpion King 3 – Battle for Redemption. I finished the first gallery with a swipe at the sculpted, gelled and downright dilletantish David Beckham. Let it be said, then, that if Becks ever again takes his beard less than seriously, the unutterably great Kimbo Slice (real name Kevin Ferguson) will be the one doing the swiping. And as of course there is no topping the greatness of Kimbo Slice, this is … the end.",
+            "width":"500"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/14/england-rugby-league-world-cup-australia",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-14T20:43:00Z",
+      "webTitle":"England likely to play three Burgess brothers in World Cup warm-up",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/14/england-rugby-league-world-cup-australia",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/14/england-rugby-league-world-cup-australia",
+      "fields":{
+        "newspaperPageNumber":"45",
+        "trailText":"<p>England plan to play the three Burgess brothers in a warm-up with Italy in preparation for their World Cup opener against Australia</p>",
+        "headline":"England likely to play three Burgess brothers in World Cup warm-up",
+        "body":"<p>England are likely to play all five Australia-based members of their World Cup squad in Saturday's warm-up match against Italy, including the three Burgess brothers, as the coach, Steve McNamara, finalises his plans for the opening match of the tournament against the Kangaroos in Cardiff seven days later.</p><p>McNamara confirmed from the team's training camp in South Africa that one of the main reasons he was keen to organise a competitive fixture before the tournament proper – in contrast to Australia, whose coach Tim Sheens will be an interested spectator at the City of Salford Stadium on Saturday afternoon – was to accelerate the assimilation process for Sam, George and Tom Burgess, plus the Canterbury prop James Graham and the Melbourne Storm stand-off Gareth Widdop.</p><p>Graham, Widdop and 24-year-old Sam Burgess have not played for England since the 2011 Four Nations series and the 21-year-old Burgess twins are both uncapped. The Italy game could be especially significant for Widdop, who has made an unexpectedly quick recovery after suffering a dislocated hip in June but has made only two appearances in four months. \"I was there at the game when he suffered the injury and I didn't think he had a cat in hell's chance,\" said McNamara. Now he has the chance to press his claims either as a half-back option or possibly at centre.</p><p>McNamara will select 20 of his 24-man squad to be used in a game likely to be played with unlimited interchanges, meaning it will not have full international status.</p><p>Two more players are likely to drop into the England Knights team who will face Samoa in a potentially intriguing curtain-raiser, along with Brett Ferres, the Huddersfield forward who was taken to South Africa as cover in case any members of the original 24 are injured before the tournament.</p><p>Sean O'Loughlin, the Wigan captain who played his first match in more than a month in the Super League Grand Final on 5 October, was not considered, to give him an extra week to ensure a full recovery from his achilles problems, and the Warrington forward Ben Westwood is serving a one-match suspension for punching Blake Green at Old Trafford.</p><p>\"None of our Australian-based players were available for the tournament we had at the end of last year [against Wales and France] or the Exiles match we had in June, so it is important that we fit them back in,\" said McNamara. \"We're excited about playing a game. We don't play enough games as England as it is and Italy will be completely new opposition for us.</p><p>\"We've done some quality work out here in South Africa. That was the whole purpose of getting away. But it was important for us to play a game.</p><p>\"Each international team has their own way of preparing – Australia's is different from quite a few countries but that's not saying it's right or wrong. It's important for us that we come back from South Africa and play on the Saturday afternoon, because that gives us a seven-day turnaround before Cardiff and our whole tournament is based around Saturdays, so we can get into that routine.\"</p><p>The England squad will fly back into Manchester on Wednesday, with the Kangaroos due 24 hours earlier. They have not organised a warm-up match, with Sheens happy that an intense practice session will prove as valuable as England's game against an Italy team who will be making their World Cup debut – also at the Millennium Stadium on Saturday week, against Wales in the second match of the opening double-header – and who McNamara admits are very much an unknown quantity.</p><p>They include several recognisable and high-calibre names, led by Anthony Minichiello, the Sydney Roosters full-back who was a Grand Final winner against Manly last weekend and won 19 Australia caps between 2003-05. He is relishing the opportunity of playing alongside his younger brother Mark, a second-row with the Gold Coast Titans, and Italy also include the St Helens forward Anthony Laffranchi and the Newcastle Knights prop Kade Snowden in a team boasting plenty of senior experience.</p><p>But they have suffered a major blow to what was already fragile credibility, given their almost total reliance on Australians and a corresponding lack of authenticity – partly as a result of a split between two domestic competitions in Italy – with the late withdrawals of Terry Campese, Vic Mauro and Craig Gower, the latter a former Italy rugby union international.</p><p>Other warm-up games next weekend include New Zealand against the Cook Islands in Doncaster, with a possible appearance by Sonny Bill Williams following his late decision to make himself available for the Kiwis' title defence; Scotland versus Papua New Guinea in Featherstone; and France against the United States in Toulouse.</p><!-- Guardian Watermark: internal-code/content/419929973|2013-10-16T10:54:20Z|d38727ae1bf616c32a85917aa56e8bfd64160954 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-14T23:46:00Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764775432/Tom-Burgess-has-been-call-006.jpg",
+        "standfirst":"• Coach using Italy game to integrate Australia-based players<br />• Steve McNamara plans for World Cup opener against Australia",
+        "shortUrl":"http://gu.com/p/3jhv8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764775432/Tom-Burgess-has-been-call-006.jpg",
+        "wordcount":"780",
+        "commentable":"true",
+        "internalContentCode":"419929973",
+        "allowUgc":"false",
+        "internalOctopusCode":"8193791",
+        "isPremoderated":"false",
+        "byline":"Andy Wilson",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-15",
+        "internalPageCode":"1980701",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-17T15:36:00Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australiarugbyleague",
+        "type":"keyword",
+        "webTitle":"Australia rugby league",
+        "webUrl":"http://www.theguardian.com/sport/australiarugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/australiarugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419956869",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764769111/Tom-Burgess-has-been-call-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"340",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764770377/Tom-Burgess-has-been-call-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"130",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764771731/Tom-Burgess-has-been-call-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"720",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764773392/Tom-Burgess-has-been-call-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"1536",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764775432/Tom-Burgess-has-been-call-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"84",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764776673/Tom-Burgess-has-been-call-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"132",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764778046/Tom-Burgess-has-been-call-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"168",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764779126/Tom-Burgess-has-been-call-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"180",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764780468/Tom-Burgess-has-been-call-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"228",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764781659/Tom-Burgess-has-been-call-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"276",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764783075/Tom-Burgess-has-been-call-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"372",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764784560/Tom-Burgess-has-been-call-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"1116",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764786770/Tom-Burgess-has-been-call-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"1536",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764766505/Tom-Burgess-has-been-call-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"54",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764781659/Tom-Burgess-has-been-call-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"276",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside his twin, George, and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419956870",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/14/1381764775432/Tom-Burgess-has-been-call-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Howarth",
+            "altText":"Tom Burgess has been called into England's World Cup squad alongside twin George and brother Sam",
+            "height":"84",
+            "credit":"Dave Howarth/PA",
+            "caption":"Tom Burgess has been called into England's World Cup squad alongside twin George and elder brother Sam.  Photograph: Dave Howarth/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/13/sonny-bill-williams-all-blacks-2015",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-13T03:05:12Z",
+      "webTitle":"Sonny Bill Williams hopes to return to rugby union in 2015",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/13/sonny-bill-williams-all-blacks-2015",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/13/sonny-bill-williams-all-blacks-2015",
+      "fields":{
+        "trailText":"<p>Sonny Bill Williams has confirmed he is hoping to return to the All Blacks after another season in league with the Sydney Roosters</p>",
+        "headline":"Sonny Bill Williams hopes to return to rugby union in 2015",
+        "body":"<p>Sonny Bill Williams has confirmed he is hoping to return to rugby union in 2015 after another season in league with the Sydney Roosters. </p><p>Williams this week turned down an offer from the New Zealand Rugby Union (NZRU) and Waikato Chiefs, opting instead to stay another year in the NRL. </p><p>The 28-year-old made it clear, though, that he had not given up on a return to play for New Zealand in 2015 when they attempt to retain the World Cup he helped them win 2011. </p><p>\"It's been a tough couple of days but I am happy to have my future sorted,\" Williams told reporters at a training camp for the New Zealand rugby league World Cup squad in Sydney on Sunday. </p><p>\"I will go back to the New Zealand Rugby Union to try and put my foot in the door for a franchise in New Zealand, hopefully the Chiefs. But I understand, with the situation of staying in league, that might not be an option. </p><p>\"But it's good to have made my intentions clear for the next three years. I wanted to put it all out there as I am overhearing what I am going to do as everyone else.\" </p><p>Controversy is never far from Williams and even his decision to play in the upcoming league World Cup involved a backflip on his original plan and another player being dropped.</p><p>With Williams also hoping to feature in the New Zealand sevens team at the 2016 Olympics, he said he had decided to put his boxing career on hold. </p><p>\"I won't have the time to box in the next three years,\" he said.  The NZRU had better luck in their negotiations with All Blacks No8 Kieran Read and lock Sam Whitelock, who on Sunday announced they had committed to playing on with the national team and Canterbury Crusaders until 2017.<br /> <br />\"The fact that two world-class players in Kieran and Sam have re-signed for four more years is a huge positive for the All Blacks,\" All Blacks coach Steve Hansen said in a news release. </p><p>\"Not only are they part of the current success of the team, but it means we have a nucleus of experienced players to take the team into the future beyond 2015, which is fantastic.\"</p><!-- Guardian Watermark: internal-code/content/419814857|2013-10-16T10:54:20Z|41527bc6f20c96307afd82e70adc3a9e10db2fb3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-13T03:30:42Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+        "standfirst":"• Player eyes 2015 World Cup with All Blacks<br />• Will not resume his career in boxing",
+        "shortUrl":"http://gu.com/p/3jg56",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+        "wordcount":"376",
+        "commentable":"false",
+        "internalContentCode":"419814857",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Reuters",
+        "publication":"theguardian.com",
+        "internalPageCode":"1980105",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-16T03:05:12Z"
+      },
+      "tags":[{
+        "id":"sport/sonny-bill-williams",
+        "type":"keyword",
+        "webTitle":"Sonny Bill Williams",
+        "webUrl":"http://www.theguardian.com/sport/sonny-bill-williams",
+        "apiUrl":"http://content.guardianapis.com/sport/sonny-bill-williams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-union-team",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby union team",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-union-team",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-union-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-rugby",
+        "type":"keyword",
+        "webTitle":"Super Rugby",
+        "webUrl":"http://www.theguardian.com/sport/super-rugby",
+        "apiUrl":"http://content.guardianapis.com/sport/super-rugby",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-world-cup-2015",
+        "type":"keyword",
+        "webTitle":"Rugby World Cup 2015",
+        "webUrl":"http://www.theguardian.com/sport/rugby-world-cup-2015",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-world-cup-2015",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-union",
+        "type":"keyword",
+        "webTitle":"Rugby union",
+        "webUrl":"http://www.theguardian.com/sport/rugby-union",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-union",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419814858",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340668413/Sonny-Bill-Williams-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"276",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419814859",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"84",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/11/sonny-bill-williams-stays-with-rugby-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-11T04:42:00Z",
+      "webTitle":"Sonny Bill Williams rejects All Blacks and stays in rugby league",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/11/sonny-bill-williams-stays-with-rugby-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/11/sonny-bill-williams-stays-with-rugby-league",
+      "fields":{
+        "trailText":"<p>Sonny Bill Williams says he'll stay with the NRL champions, Sydney Roosters, after knocking back a return to rugby union in New Zealand</p>",
+        "headline":"Sonny Bill Williams rejects All Blacks and stays in rugby league",
+        "body":"<p>Sonny Bill Williams says he'll stay with the NRL champions, Sydney Roosters, next season after knocking back a return to rugby union in New Zealand.</p><p>The Roosters said in a statement on Friday that Williams had pledged his commitment to the club for 2014 and it expected him to sign a new deal in mid-February on the same terms and conditions as his 2013 contract.</p><p>Williams had been weighing up a return to the World Cup holders, New Zealand, and Super Rugby champions the Chiefs since spearheading the Roosters to their NRL grand final triumph over Manly on Sunday in his first season at the club.</p><p>The New Zealand Rugby Union (NZRU) broke the news first that Williams had rejected their offer on the official All Blacks Twitter account.</p><p>\"@SonnyBWilliams NOT coming back to play rugby for @ChiefsRugby and #AllBlacks in 2014. It is likely he will be playing for the Roosters,\" it wrote. \"Disappointing but we put our best foot forward, &amp; in the end @SonnyBWilliams made his decision, NZ Rugby's Neil Sorensen said.\"</p><p>Sorenson, the NZRU general manager of professional rugby, indicated they would leave the door open for Williams to return in 2015 ahead of that year's Rugby World Cup.</p><p>\"We obviously worked pretty hard to bring Sonny home, and we have had some really good conversations with him,\" he said. \"As we do with many players who leave New Zealand, we will continue to keep the lines of communication open with him about his playing career.\"</p><p>The Chiefs coach Dave Rennie took a similar line after failing to get Williams back to the club  where he won a title in 2012.</p><p>\"While we are disappointed that Sonny won't be with us in 2014 now, well be keen to keep talking to him about future options,\" said Rennie.</p><p>Williams and his agent Khoder Nasser were on Thursday filmed having lunch with Sorenson, Rennie and his assistant coach Wayne Smith in Sydney, fuelling speculation he was returning to rugby union.</p><p>The 28-year-old looked set to walk away from the NRL when he made himself unavailable for the Rugby League World Cup on Monday.</p><p>However, later that day he contacted Kiwis coach Stephen Kearney to say he had changed his mind and wanted to help New Zealand defend their title in Britain later this month.</p><p>Williams was subsequently added to the squad at the expense of Melbourne back-rower Tohu Harris.</p><!-- Guardian Watermark: internal-code/content/419665044|2013-10-16T10:54:20Z|b9033ea1794e549c4b135600c61fb445ea516619 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-11T04:43:17Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/11/1381466478579/Sonny-Bill-Williams-005.jpg",
+        "standfirst":"• Player had been linked with return to rugby union<br />• International will continue with role at Sydney Roosters",
+        "shortUrl":"http://gu.com/p/3jf3g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/11/1381466478579/Sonny-Bill-Williams-005.jpg",
+        "wordcount":"389",
+        "commentable":"true",
+        "internalContentCode":"419665044",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1979332",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-14T04:42:00Z"
+      },
+      "tags":[{
+        "id":"sport/sonny-bill-williams",
+        "type":"keyword",
+        "webTitle":"Sonny Bill Williams",
+        "webUrl":"http://www.theguardian.com/sport/sonny-bill-williams",
+        "apiUrl":"http://content.guardianapis.com/sport/sonny-bill-williams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-union-team",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby union team",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-union-team",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-union-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419665051",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/11/1381466492787/Sonny-Bill-Williams-010.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sonny Bill Williams",
+            "height":"276",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sonny Bill Williams had been weighing up a return to the All Blacks and the Chiefs.  Photograph: Renee McKay/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419665052",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/11/1381466478579/Sonny-Bill-Williams-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sonny Bill Williams",
+            "height":"84",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sonny Bill Williams Photograph: Renee McKay/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/10/wigan-world-club-challenge-sydney-roosters-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-10T16:12:40Z",
+      "webTitle":"Wigan would welcome World Club Challenge in Sydney against Roosters",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/10/wigan-world-club-challenge-sydney-roosters-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/10/wigan-world-club-challenge-sydney-roosters-nrl",
+      "fields":{
+        "newspaperPageNumber":"43",
+        "trailText":"Wigan have welcomed suggestions from Australia they will be offered the chance to become the first British team to play a World Club Challenge fixture in Sydney for almost 40 years",
+        "headline":"Wigan would welcome World Club Challenge in Sydney against Roosters",
+        "body":"<p>Wigan have welcomed suggestions from Australia that they will be offered the chance to become the first British team to play a World Club Challenge fixture in Sydney for almost 40 years.</p><p>The Super League champions have enjoyed home advantage in each of the 14 games against Australasia's champion club team since the challenge was revived in 2000. But now the Sydney Roosters, who <a href=\"http://www.theguardian.com/sport/2013/oct/06/sydney-roosters-win-nrl-grand-final\" title=\"\">won the National Rugby League Grand Final by beating Manly last weekend</a>, are said to be receptive to the idea of hosting the fixture.</p><p>\"We would love to go to Sydney,\" said Wigan's chairman, Ian Lenagan. \"Wigan were the last British club to play in Australia, with that great win against the Broncos in Brisbane in 1994, so this would be an elegant way to celebrate the 20th anniversary. The practicalities aren't marvellous, but we would be delighted to find a way around them.\"</p><p>The Roosters were the last Sydney team to stage the challenge, when they were known as Eastern Suburbs and beat St Helens 25-2 at the Sydney Cricket Ground in June 1976.  That was the first World Club Challenge, and since then it has been held only once in Australia – when Wigan claimed their famous victory in Brisbane in 1994.</p><p>English clubs – most often Leeds, who have played in five of the last six games – have regularly urged the Australian authorities to show more enthusiasm for the concept, rather than complaining about the odds being stacked against them when they swapthe southern-hemisphere summer for a one-off game in February in the north of England.</p><p>That has not stopped Australian dominance of the fixture, with four wins in the last five years. But Andrew Hill, the NRL's general manager, told the Sydney Daily Telegraph: \"There is a strong consideration for the game to be played in Australia.\"</p><p>Hull have made a rare signing from English rugby union, recruiting Tom Biggs, a Bath wing who has played for the England Saxons and Sevens team but was born in east Yorkshire, on a three-year contract.</p><p>Sam Burgess has welcomed the surprise inclusion of Sonny Bill Williams in New Zealand's World Cup squad. The South Sydney forward, who is currently in South Africa with his younger twin brothers Tom and George at England's training base in Potchefstroom, has relished <a href=\"http://www.youtube.com/watch?v=K-dhEcvkY7U&amp;feature=youtu.be\" title=\"\">two clashes with Williams in derbies between the Rabbitohs and the Roosters this season</a>.</p><p>\"He's one of the best players in the world so I'm certainly looking forward to that,\" said Burgess. \"I'll stick within the structure here and hopefully not go stray far out and go looking for him. But if it arises in the middle of the game, I'm sure neither me nor him will shy away from the confrontation.\"</p><p><em>• England will kick off their Rugby League World Cup 2013 campaign against Australia on 26 October at the Millennium Stadium. To purchase tickets visit </em><a href=\"http://www.rlwc2013.com/tickets\" title=\"\"><em>www.rlwc2013.com/tickets</em></a></p><!-- Guardian Watermark: internal-code/content/419621900|2013-10-16T10:54:20Z|0c548c1bf7b9d37773933604bde55d8bfed8010e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-10T23:06:09Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421029706/Wigan--006.jpg",
+        "standfirst":"• Super League champions played at home in last 14 matches<br />• NRL says 'strongly considering' staging game in Australia",
+        "shortUrl":"http://gu.com/p/3jeyg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421029706/Wigan--006.jpg",
+        "wordcount":"474",
+        "commentable":"false",
+        "internalContentCode":"419621900",
+        "allowUgc":"false",
+        "internalOctopusCode":"8179990",
+        "isPremoderated":"false",
+        "byline":"Andy Wilson",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-11",
+        "internalPageCode":"1979089",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-13T16:12:40Z"
+      },
+      "tags":[{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419622647",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421021010/Wigan--001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"54",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421023502/Wigan--002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"340",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421024760/Wigan--003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"130",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421026256/Wigan--004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"720",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421028017/Wigan--005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"1536",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421029706/Wigan--006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421030920/Wigan--007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"132",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421032252/Wigan--008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"168",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421033498/Wigan--009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"180",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421034903/Wigan--010.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"228",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421036262/Wigan--011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421037666/Wigan--012.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"372",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421039186/Wigan--013.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"1116",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421041055/Wigan--014.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"1536",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421036262/Wigan--011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419622648",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/10/1381421029706/Wigan--006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Wigan ",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Wigan earned their spot in the World Club Challenge by beating Warrington 30-16 in last Saturday's Grand Final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/10/tom-biggs-rugby-league-hull-bath",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-09T23:24:20Z",
+      "webTitle":"Wing Tom Biggs switches codes to join rugby league side Hull from Bath",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/10/tom-biggs-rugby-league-hull-bath",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/10/tom-biggs-rugby-league-hull-bath",
+      "fields":{
+        "trailText":"Wing Tom Biggs switched codes when he joined the rugby league side Hull from rugby union club Bath",
+        "headline":"Wing Tom Biggs switches codes to join rugby league side Hull from Bath",
+        "body":"<p>Hull have made a rare signing from English rugby union by recruiting Tom Biggs from Bath on a three-year contract. The  29-year-old wing, who has played for the England Saxons and Sevens teams, fits with the declared intention of the club's chairman, Adam Pearson, and newly promoted coach, Lee Radford, to emphasise homegrown talent in the squad, following the successful models of Wigan and Leeds.</p><p>Biggs, who is from Beverley, attended Hymers College in Hull, and has supported the black and whites all his life, said: \"I think it is a big challenge in a sport that I've never played before, but it's one that I'm really excited about.\"</p><p>Radford, who has taken over from Peter Gentle after the Australian was sacked following an emphatic play-off defeat at Huddersfield, said: \"Tom looked very comfortable and competent playing in rugby union, but it was his enthusiasm about the prospect of leaving that to join Hull FC and the challenge in store that excited me.</p><p>\"He could quite easily remain set on his current deal in union, but he was keen to have the opportunity to test himself in rugby league and play for us.</p><p>\"He is a local lad and an FC supporter, which you can see means a lot to him, and we're hoping we can nurture that enthusiasm to help him make a positive transition into our sport, which I am sure he will excel in.\"</p><!-- Guardian Watermark: internal-code/content/419533795|2013-10-16T10:54:20Z|3bd014c4eac06c9c9c3f78c6c3fa9e3b19f37081 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-09T23:24:20Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354551092/Tom-Biggs-will-face-the-c-006.jpg",
+        "standfirst":"• England Saxons player signs three-year contract<br />• He is a life-long supporter of the Super League club",
+        "shortUrl":"http://gu.com/p/3jev6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354551092/Tom-Biggs-will-face-the-c-006.jpg",
+        "wordcount":"233",
+        "commentable":"false",
+        "internalContentCode":"419533795",
+        "allowUgc":"false",
+        "internalOctopusCode":"8176730",
+        "isPremoderated":"false",
+        "byline":"Andy Wilson",
+        "publication":"theguardian.com",
+        "internalPageCode":"1978512",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-12T23:24:20Z"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hull-fc",
+        "type":"keyword",
+        "webTitle":"Hull FC",
+        "webUrl":"http://www.theguardian.com/sport/hull-fc",
+        "apiUrl":"http://content.guardianapis.com/sport/hull-fc",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/bath",
+        "type":"keyword",
+        "webTitle":"Bath",
+        "webUrl":"http://www.theguardian.com/sport/bath",
+        "apiUrl":"http://content.guardianapis.com/sport/bath",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-union",
+        "type":"keyword",
+        "webTitle":"Rugby union",
+        "webUrl":"http://www.theguardian.com/sport/rugby-union",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-union",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419534109",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354541685/Tom-Biggs-will-face-the-c-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"54",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354543733/Tom-Biggs-will-face-the-c-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"340",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354545308/Tom-Biggs-will-face-the-c-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"130",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354546957/Tom-Biggs-will-face-the-c-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"720",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354548955/Tom-Biggs-will-face-the-c-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"1536",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354551092/Tom-Biggs-will-face-the-c-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"84",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354552692/Tom-Biggs-will-face-the-c-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"132",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354554248/Tom-Biggs-will-face-the-c-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"168",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354555846/Tom-Biggs-will-face-the-c-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"180",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354557422/Tom-Biggs-will-face-the-c-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"228",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354559036/Tom-Biggs-will-face-the-c-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"276",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354560699/Tom-Biggs-will-face-the-c-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"372",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354562516/Tom-Biggs-will-face-the-c-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"1116",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354564778/Tom-Biggs-will-face-the-c-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"1536",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354559036/Tom-Biggs-will-face-the-c-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"276",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419534110",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381354551092/Tom-Biggs-will-face-the-c-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Clive Brunskill",
+            "altText":"Tom Biggs will face the challenge of competing in a sport he has not played before.",
+            "height":"84",
+            "credit":"Clive Brunskill/Getty Images",
+            "caption":"Tom Biggs will face the challenge of competing in a sport he has not played before. Photograph: Clive Brunskill/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/09/rugby-league-wigan-revolt",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-09T20:34:31Z",
+      "webTitle":"Super League rift widens as players' union backs Ian Lenagan's revolt",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/09/rugby-league-wigan-revolt",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/09/rugby-league-wigan-revolt",
+      "fields":{
+        "trailText":"The Halifax chairman, Michael Steele, condemened the rebels as 'self-centred' as it emerged that any decision on the structure of the league will be postponed until after the World Cup",
+        "headline":"Super League rift widens as players' union backs Ian Lenagan's revolt",
+        "body":"<p>Rugby league's rift deepened on Wednesday when the players' union backed the revolt led by the Wigan owner, Ian Lenagan, whose actions were then roundly condemned by a rival chairman as \"self-centred\".</p><p>Evidence that the game is in danger of tearing itself apart over plans for a major restructuring surfaced when the Halifax chairman, Michael Steele, launched a stout defence of the Rugby Football League, while 1eagu3, the body representing Super League players, gave its robust support to the rebellion.</p><p>Ernie Benbow, the chief executive of 1eagu3, welcomed the decision of the governing body to postpone Wednesday's extraordinary general meeting which was expected to ratify a convoluted proposal to introduce two divisions of 12 teams, dividing into three of eight after 23 rounds, from 2015.</p><p>The RFL bowed to pressure from a majority of disgruntled Super League clubs, led by Lenagan, to put off any decision on restructuring until after the World Cup.</p><p>In a statement, 1eagu3 said: \"We are delighted that sense has prevailed and the EGM to vote in the RFL's preferred restructuring proposal has been postponed following a revolt by a majority of the Super League clubs.</p><p>\"The league structure is not the central problem. There is nothing inherently wrong with the wonderful, simple yet totally enthralling, compelling and thrilling sport of rugby league.</p><p>\"Given the expertise delivering clear commercial success at some of the games' top clubs we would urge those Super League clubs in that category to show leadership, take charge of the commercial strategy, grasp the opportunity and move the game forward with vision.\"</p><p>A poll of Super League players overwhelmingly rejected the RFL's preferred restructuring option and 1eagu3 says it detailed its opposition in a formal written submission on 5 September, arguing that the extra matches would increase the burden on players.</p><p>Benbow said: \"The game as a whole is seriously under-sold and undervalued.</p><p>\"The players, our members, are often neglected but are indeed the crown jewels in the process of moving the game to a level at which it deserves to be.</p><p>\"We welcome this pause for further debate and consultation. On the main issue within the game, the lack of revenue, almost all [97% of members in a recent player poll] felt that the marketing of the game is simply not good enough.\"</p><p>Meanwhile, Steele said his club were ready to vote for the RFL's proposals after being fully consulted throughout the review process and claimed Lenagan demonstrated a lack of understanding in claiming in a letter to other Super League clubs that they were being undermined by the process.</p><p>In a statement, Steele said: \"At all times, throughout that process, we have been aware of, and supported, the purpose of the exercise which is to create a vibrant, player-focused structure which serves the whole game from children playing in community clubs to the outstanding professional athletes in the English national side.</p><p>\"As such, we were content to support the adoption of the review conclusions and move on from the EGM to their implementation in time for the 2015 season.</p><p>\"There is nothing in Mr Lenagan's letter of objection which leads us to alter that conclusion. Indeed, we find his analysis self-centred and wrong.</p><p>\"Contrary to his assertions, rugby league does not belong to a minority of successful Super League clubs, neither is the review over-hasty or misdirected. It represents a genuine attempt to secure long-term growth of the greatest game to the benefit of all who play it, support it or watch it.</p><p>\"We find it surprising that an active chairman of a leading club can have reached this point with as little understanding as Mr Lenagan claims.</p><p>\"We look forward to the reconvening and successful conclusion of the EGM after the delivery of a memorable RLWC 2013.\"</p><!-- Guardian Watermark: internal-code/content/419530126|2013-10-16T10:54:20Z|96fb4ba71ad67cd7feb7ffa09601a2fd7dd1061f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-09T20:45:29Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350744932/Super-League-row-006.jpg",
+        "standfirst":"• Halifax chairman Michael Steele condemns 'self-centred' rebels<br />• Decision on league structure postponed until after World Cup",
+        "shortUrl":"http://gu.com/p/3jdqk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350744932/Super-League-row-006.jpg",
+        "wordcount":"611",
+        "commentable":"false",
+        "internalContentCode":"419530126",
+        "allowUgc":"false",
+        "internalOctopusCode":"8175967",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "internalPageCode":"1978499",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-12T20:34:31Z"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.theguardian.com/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419530532",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350737072/Super-League-row-001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"54",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350738638/Super-League-row-002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"340",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350739914/Super-League-row-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"130",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350741424/Super-League-row-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"720",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350743117/Super-League-row-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"1536",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350744932/Super-League-row-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350746171/Super-League-row-007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"132",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350747385/Super-League-row-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"168",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350748653/Super-League-row-009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"180",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350749911/Super-League-row-010.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"228",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350751274/Super-League-row-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350752610/Super-League-row-012.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"372",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350754128/Super-League-row-013.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"1116",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350756196/Super-League-row-014.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"1536",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350751274/Super-League-row-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as disagreements regarding the structure of the game continue to grow. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419530533",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381350744932/Super-League-row-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Super League row",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Clouds are gathering over the future of Super League as rifts continue between groups of clubs and players regarding the structure of the game. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/09/sonny-bill-williams-new-zealand-world-cup",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-09T17:48:30Z",
+      "webTitle":"Sonny Bill Williams makes U-turn on playing for New Zealand in World Cup",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/09/sonny-bill-williams-new-zealand-world-cup",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/09/sonny-bill-williams-new-zealand-world-cup",
+      "fields":{
+        "newspaperPageNumber":"41",
+        "trailText":"The dual-code rugby player and boxer has decided he will, after all, play for New Zealand in the Rugby League World Cup",
+        "headline":"Sonny Bill Williams makes U-turn on playing for New Zealand in World Cup",
+        "body":"<p>They were the three little words that the organisers of rugby league's 14th World Cup have been dreaming of including in their pre-tournament promotion for months, but which seemed increasingly likely to remain forbidden fruit. But hours before each of the 14 competing nations was required to submit a 24-man squad, <a href=\"https://twitter.com/SonnyBWilliams/status/387699474321399808/photo/1\" title=\"\">Sonny Bill Williams confirmed on his Twitter feed</a> that, having previously informed the New Zealand selectors that he was not available for their title defence, he had changed his mind.</p><p>So the 28-year-old, a rugby union World Cup winner with the All Blacks on home territory in 2011, will now aim to make another slice of history in a remarkable, controversial career at Old Trafford next month by becoming the first player to be crowned a world champion in each code.</p><p>It made for an awkward telephone call for the New Zealand coach, Stephen Kearney, and heartbreak for Tohu Harris, a 21-year-old Melbourne Storm second-row whose World Cup dreams lasted less than 24 hours. Harris was deselected to make way for Williams as a result of Sonny Bill's late change of heart. \"As you would expect, I'm very disappointed,\" he said.</p><p>Williams responded on the BBC World Service: \"I actually feel like shit, to tell you the truth. I'm really sorry about the Tohu situation, it was never my intention. I just followed my heart, now I promise I'll play with all of it.\"</p><p>That left an open goal for the many who have been disgusted by the previous behaviour of a man occasionally dubbed Money Bill, most infamously when he walked out on the Canterbury Bulldogs in 2008 to begin his rugby union career with Toulon. <a href=\"http://www.nzherald.co.nz/sport/news/article.cfm?c_id=4&amp;objectid=11137645\" title=\"\">A New Zealand Herald columnist called Williams's \"flip flop\" \"a day of shame for Kiwis league\"</a>. Even Richie Barnett, the former New Zealand and London Broncos full-back who is now on the selection panel, admitted Williams had \"probably disrespected\" the rest of the squad by making such a late decision.</p><p>\"But we are here to win a World Cup, not to please people on moralistic grounds,\" Barnett added.</p><p>There will be few complaints about the decision in Warrington, Leeds or Avignon, where the Kiwis play their three group matches against Samoa, Papua New Guinea and France respectively – and certainly none from those tournament organisers, or from the television networks who have paid to screen it, including the BBC and Channel Seven in Australia.</p><p>Williams insisted in that BBC interview that the chance to make more history was not part of his motivation. For months his \"sole focus\" had been on marking his return to rugby league with the Sydney Roosters at the start of the year with a Grand Final victory, secured against Manly last weekend. Then he had been looking forward to \"the chance to chill out and rest\" – a first lengthy break since that dramatic departure for Toulon in 2008, since when he has combined rugby with boxing, winning six professional heavyweight bouts. \"I guess it took 24 hours and the team to be named for it to sink in,\" he added. \"But a gut feeling … in 10 years would I have regrets about not making myself available? I've got a lot of time after I'm retired. It can be played off as selfish, but I just left it in the coach's hands.\"</p><p>That left Kearney with no other realistic option. The presence of Williams, who was named the Roosters' player of the year this week, greatly enhances the prospects of the Kiwis retaining the title they won so surprisingly in 2008 – months after he had quit the Bulldogs.</p><p>History is not on their side – remarkably, Williams has yet to win in seven appearances in a New Zealand league jersey. But at their pre-tournament training camp in South Africa, the England squad will appreciate that his presence makes the Kiwis an even more formidable force – and raises the stakes for their opening game against Australia in Cardiff, where victory would probably condemn the Kangaroos to facing the Kiwis in the semi-finals at Wembley, opening up a theoretically more straightforward path to Old Trafford for Kevin Sinfield's team.</p><p>However, the most striking feature of the 14 squads when they were confirmed at 3pm, other than the inclusion of Williams, was the potential of the less-established league nations, reflecting the growing Polynesian influence on the NRL. Tonga, Samoa and Fiji, who will be captained by the former Brisbane Broncos and Australia prop Petero Civoniceva and include three sets of brothers, all look formidable, and even the tournament newcomers Italy, despite the late withdrawals of Terry Campese and Craig Gower, promise to be thoroughly awkward opening opponents for Wales at the Millennium Stadium on 26 October.</p><p>Perhaps the most mouthwatering of the early matches, however, will be New Zealand's clash with Samoa, for whom Williams was also eligible through ancestry, at Warrington's tight and atmospheric Halliwell Jones Stadium the following night. Then, as now, he will be the centre of attention. Those three little words could dominate the World Cup.</p><!-- Guardian Watermark: internal-code/content/419520410|2013-10-16T10:54:20Z|d8ded15bed6e37152710ab53416879b3921464b4 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-09T23:23:30Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+        "standfirst":"• Williams in dramatic about-turn on Twitter<br />• Decision makes England's World Cup task harder",
+        "shortUrl":"http://gu.com/p/3jdz2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+        "wordcount":"832",
+        "commentable":"false",
+        "internalContentCode":"419520410",
+        "allowUgc":"false",
+        "internalOctopusCode":"8173316",
+        "isPremoderated":"false",
+        "byline":"Andy Wilson",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-10",
+        "internalPageCode":"1978427",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-12T17:48:30Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sonny-bill-williams",
+        "type":"keyword",
+        "webTitle":"Sonny Bill Williams",
+        "webUrl":"http://www.theguardian.com/sport/sonny-bill-williams",
+        "apiUrl":"http://content.guardianapis.com/sport/sonny-bill-williams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419525991",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340653602/Sonny-Bill-Williams-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"54",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340655797/Sonny-Bill-Williams-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"340",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340657036/Sonny-Bill-Williams-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"130",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340658350/Sonny-Bill-Williams-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"720",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340660178/Sonny-Bill-Williams-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"1536",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"84",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340663308/Sonny-Bill-Williams-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"132",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340664520/Sonny-Bill-Williams-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"168",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340665731/Sonny-Bill-Williams-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"180",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340666948/Sonny-Bill-Williams-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"228",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340668413/Sonny-Bill-Williams-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"276",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340669706/Sonny-Bill-Williams-012.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"372",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340671183/Sonny-Bill-Williams-013.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"1116",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340673069/Sonny-Bill-Williams-014.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"1536",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340668413/Sonny-Bill-Williams-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"276",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419525992",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/9/1381340662070/Sonny-Bill-Williams-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Gabriel Bouys",
+            "altText":"Sonny Bill Williams",
+            "height":"84",
+            "credit":"Gabriel Bouys/AFP/Getty Images",
+            "caption":"Sonny Bill Williams was a rugby union World Cup winner in 2011. He now has a chance to add the rugby league version. Photograph: Gabriel Bouys/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/09/sonny-bill-williams-rugby-league-world-cup",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-09T06:16:00Z",
+      "webTitle":"Sonny Bill Williams added to New Zealand World Cup squad",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/09/sonny-bill-williams-rugby-league-world-cup",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/09/sonny-bill-williams-rugby-league-world-cup",
+      "fields":{
+        "trailText":"<p>Sonny Bill Williams has been confirmed in New Zealand's official squad for the Rugby League World Cup</p>",
+        "headline":"Sonny Bill Williams added to New Zealand World Cup squad",
+        "body":"<p>Sonny Bill Williams has been confirmed in New Zealand's official squad for the Rugby League World Cup. </p><p>It had been expected the 28-year-old would miss the Kiwi's defence of their title after selectors said he had \"other commitments\", and he was not in the 24-man party named on Monday. </p><p>The New Zealand coach, Stephen Kearney, indicated there had been a change of heart on Tuesday, though, and on Wednesday morning the NZRL confirmed Williams had replaced Tohu Harris in its squad. </p><p>Kearney admitted the decision to stand Harris down had been a tough one, but felt Williams – <a href=\"http://www.theguardian.com/sport/2013/oct/06/sydney-roosters-win-nrl-grand-final\">fresh from an NRL title with Sydney Roosters in his return season in league</a> – offered things which could not be overlooked. </p><p>\"It's been a tough situation, but Sonny brings things to the group that we couldn't ignore,\" Kearney said.  \"He has had time since his NRL grand final win to clear his head and he wants to represent the Kiwis on the world stage. He missed our 2008 World Cup win and his inclusion will be a great asset in trying to repeat that success this year. It's not only his footballing ability, but also what he brings off the field which will benefit the team. </p><p>\"Tohu handled the situation as well as anyone could. It was a conversation no coach would like to have, but he's a terrific young man and I'm sure he'll have many more opportunities to pull on the black jersey. It's been a unique set of circumstances for all involved, but for now our focus is getting set to defend the World Cup with the team we have.\" </p><p>The selection caps a remarkable year for Williams, who was a key figure for the Roosters in their run to the NRL grand final and subsequent win over Manly. </p><p>He originally left league for the 15-man code in 2008, going on to win the World Cup with the All Blacks while winning the Super Rugby title with the Chiefs in 2012. </p><p>He had been expected to return to union this winter, but his participation in the World Cup suggests he may now have other plans.</p><!-- Guardian Watermark: internal-code/content/419452922|2013-10-16T10:54:20Z|564d5ed85312c6c2dc6b103a084c902788e01555 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-09T07:20:54Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/28/1374997823215/Sonny-Bill-Williams-001.jpg",
+        "standfirst":"• Player had been due to miss tournament<br />• Tohu Harris misses out after late decision<br /><a href=\"http://www.theguardian.com/sport/blog/2013/oct/08/sonny-boy-williams-new-zealand-world-cup\">• Andy Wilson: an open letter to Sonny Bill Williams</a>",
+        "shortUrl":"http://gu.com/p/3jdx9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/28/1374997823215/Sonny-Bill-Williams-001.jpg",
+        "wordcount":"357",
+        "commentable":"true",
+        "internalContentCode":"419452922",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "internalPageCode":"1977813",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-12T06:16:00Z"
+      },
+      "tags":[{
+        "id":"sport/sonny-bill-williams",
+        "type":"keyword",
+        "webTitle":"Sonny Bill Williams",
+        "webUrl":"http://www.theguardian.com/sport/sonny-bill-williams",
+        "apiUrl":"http://content.guardianapis.com/sport/sonny-bill-williams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419456512",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/28/1374997786848/Sonny-Bill-Williams-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sonny Bill Williams",
+            "height":"276",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sonny Bill Williams has been linked with a switch to rugby union.  Photograph: Renee McKay/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419456513",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/28/1374997823215/Sonny-Bill-Williams-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sonny Bill Williams",
+            "height":"84",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sonny Bill Williams in action for the Sydney Roosters against Newcastle Knights.  Photograph: Renee McKay/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-12T12:28:37Z",
+      "webTitle":"Australian doping investigators look at six rugby league clubs - video",
+      "webUrl":"http://www.theguardian.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "fields":{
+        "trailText":"<p>National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting</p>",
+        "headline":"Australian doping investigators look at six rugby league clubs - video",
+        "body":"<video data-media-id=\"gu-video-403913910\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/2/12/130212Ausdope-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/ad/130212Ausdope/130212Ausdope.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/2/12/130212Ausdope_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/2/12/130212Ausdope_3gpLg16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/403913910|2013-10-16T10:54:20Z|f4a38de8469d07e497fe7080ee58aa6cdad9c535 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-02-12T12:28:37Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "standfirst":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation as part of an explosive government report into the use of banned performance-enhancing drugs in Australia. The clubs Manly, Cronulla, Newcastle, Penrith, North Queensland and Canberra say they are named in the report",
+        "shortUrl":"http://gu.com/p/3dm52",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "commentable":"false",
+        "internalContentCode":"403913910",
+        "allowUgc":"false",
+        "internalOctopusCode":"7239976",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1866377",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-02-15T12:28:37Z"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-403913910",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670916587/Australian-doping-probe-s-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"230",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670918097/Australian-doping-probe-s-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"90",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670919487/Australian-doping-probe-s-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"225",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670920754/Australian-doping-probe-s-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670925668/Australian-doping-probe-s-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"54",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670927255/Australian-doping-probe-s-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"340",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670928656/Australian-doping-probe-s-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"130",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670931876/Australian-doping-probe-s-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"132",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670933195/Australian-doping-probe-s-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"168",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670934454/Australian-doping-probe-s-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"180",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670935828/Australian-doping-probe-s-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"228",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670937108/Australian-doping-probe-s-015.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"276",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670938599/Australian-doping-probe-s-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"372",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/2/12/130212Ausdope_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/2/12/130212Ausdope_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/2/12/130212Ausdope-720.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130212Ausdope/130212Ausdope.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        }]
+      },{
+        "id":"gu-image-403914887",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
