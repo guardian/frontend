@@ -14,15 +14,6 @@ import play.api.libs.ws.Response
 
 class CustomException(message: String) extends Exception(message)
 
-class FakeParseConfig(response: Future[Seq[Config]]) extends ParseConfig {
-  override def getConfig(id: String): Future[Seq[Config]] = response
-}
-
-class FakeParseCollection(response: Future[Collection]) extends ParseCollection {
-  override def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection]
-    = response
-}
-
 class FailingConfigQuery(id: String) extends Query(id, Uk) {
   override def getConfig(id: String): Future[Seq[Config]] = Future.failed(new CustomException("Config Failed"))
   override def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection]
