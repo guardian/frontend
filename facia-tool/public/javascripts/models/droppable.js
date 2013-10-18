@@ -16,14 +16,25 @@ define([
     var fromList;
 
     function init() {
+
+        init = function() {}; // make idempotent
+
+        window.addEventListener("dragover", function(event) {
+            event.preventDefault();
+        },false);
+
+        window.addEventListener("drop", function(event) {
+            event.preventDefault();
+        },false);
+
         ko.bindingHandlers.makeDropabble = {
             init: function(element) {
 
-                element.addEventListener('dragstart', function(event){
+                element.addEventListener('dragstart', function(event) {
                     fromList = ko.dataFor(element);
                 }, false);
 
-                element.addEventListener('dragover', function(event){
+                element.addEventListener('dragover', function(event) {
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target);
 
@@ -38,7 +49,7 @@ define([
                     });
                 }, false);
 
-                element.addEventListener('dragleave', function(event){
+                element.addEventListener('dragleave', function(event) {
                     var targetList = ko.dataFor(element);
 
                     event.preventDefault();
@@ -51,7 +62,7 @@ define([
                     });
                 }, false);
 
-                element.addEventListener('drop', function(event){
+                element.addEventListener('drop', function(event) {
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
