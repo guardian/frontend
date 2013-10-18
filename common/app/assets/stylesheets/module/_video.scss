@@ -6,8 +6,12 @@ object {
 }
 
 .player {
-    margin-left: $gutter * -1;
-    margin-right: $gutter * -1;
+    margin-left: $gs-gutter/2 * -1;
+    margin-right: $gs-gutter/2 * -1;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter * -1;
+        margin-right: $gs-gutter * -1;
+    }
     margin-bottom: $gs-column-height;
     background: #000000;
     text-align: center; // prevents poster from loading to left then centering
@@ -19,4 +23,18 @@ object {
 
 .gallery-byline {
     margin-top: $baseline*4;
+}
+
+.media-proportional-container {
+    @include fix-aspect-ratio(5, 3);
+
+    object,
+    iframe,
+    video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
 }
