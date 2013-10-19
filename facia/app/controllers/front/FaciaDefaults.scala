@@ -5,6 +5,7 @@ import common.Edition
 
 trait FaciaDefaults {
 
+  val defaultStyle = "regular-stories"
   val emptyCollection = Collection(items=Nil, displayName=None)
   val defaultIds: List[String] = List(
     "uk", "uk/commentisfree", "uk/sport", "uk/culture", "uk/business", "uk/money",
@@ -13,7 +14,7 @@ trait FaciaDefaults {
   )
 
   def createConfig(id: String): Config = Config(
-    id              = id,
+    id              = "%s/%s".format(id, defaultStyle),
     contentApiQuery = Option(generateContentApiQuery(id)),
     displayName     = None
   )
