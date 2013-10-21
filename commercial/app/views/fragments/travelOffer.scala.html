@@ -1,5 +1,9 @@
 @(offers: Seq[model.commercial.travel.Offer])
 
+<style>
+    img { width: 100%; }
+</style>
+
 @offers.map { offer => 
     <div>
         <a href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I" class="link">
