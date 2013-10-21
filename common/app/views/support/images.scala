@@ -9,6 +9,7 @@ case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int
 
 // Configuration of our different image profiles
 object Contributor extends Profile("c", Some(140), Some(140), 70) {}
+object GalleryLargeImage extends Profile("gli", Some(1024), None, 70) {}
 object GalleryLargeTrail extends Profile("glt", Some(480), Some(288), 70) {}
 object GallerySmallTrail extends Profile("gst", Some(280), Some(168), 70) {}
 object FeaturedTrail extends Profile("f", Some(640), None, 70) {}
@@ -22,7 +23,19 @@ object FrontItemMainMobile extends Profile("fim-mobile", Some(300), None, 70) {}
 object Naked extends Profile("n", None, None, 70) {}
 
 object Profile {
-  lazy val all = Seq(Contributor, GalleryLargeTrail, GallerySmallTrail, FeaturedTrail, Naked, ArticleMainPicture, FrontItem, FrontItemMobile, FrontItemMain, FrontItemMainMobile)
+  lazy val all = Seq(
+    Contributor,
+    GalleryLargeImage,
+    GalleryLargeTrail,
+    GallerySmallTrail,
+    FeaturedTrail,
+    Naked,
+    ArticleMainPicture,
+    FrontItem,
+    FrontItemMobile,
+    FrontItemMain,
+    FrontItemMainMobile
+  )
 }
 
 
