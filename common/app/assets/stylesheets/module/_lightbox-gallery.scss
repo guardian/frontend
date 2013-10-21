@@ -337,7 +337,7 @@ i.gallery__watermark {
         overflow: hidden;
         position: relative;
     }
-    
+
     .gallery__item {
         float: left;
         width: 100%;
@@ -382,5 +382,6 @@ i.gallery__watermark {
 
     .gallery__nav {
         opacity: 0;
+        pointer-events: none;
     }
 }
