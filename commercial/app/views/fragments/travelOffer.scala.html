@@ -1,23 +1,25 @@
 @(offers: Seq[model.commercial.travel.Offer])
 
 <style>
-    img { width: 100%; }
+    img { width: 100%; max-width: 700px; }
 </style>
 
 @offers.take(5).map { offer => 
+
     <div>
-        <a href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I" class="link">
-            <img src="@offer.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" alt="@offer.title" class="offer-image">
+        <a href="@offer.offerUrl" class="link">
+            <img src="@offer.imageUrl" alt="@offer.title" class="offer-image">
         </a>
         <p class="deal">
-            <a href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I">@offer.title - from £@offer.fromPrice</a>
+            <a href="@offer.offerUrl">@offer.title - from £@offer.fromPrice</a>
         </p>
     </div>
-    }
 
-    <form action="http://www.guardianholidayoffers.co.uk/Search" class="travel-offers-search">
-        <label for="travel-offer">Find hand picked holidays for hundreds of destinations</label>
-        <input value="France" id="travel-offer" name="search" class="plain-search" type="text">
-        <input value="ILCTOFFTXT5263I" name="INTCMP" type="hidden">
-        <input value="Search" name="go" class="submit" type="submit">
-    </form>
+}
+
+<form action="http://www.guardianholidayoffers.co.uk/Search" class="travel-offers-search">
+    <label for="travel-offer">Find hand picked holidays for hundreds of destinations</label>
+    <input value="France" id="travel-offer" name="search" class="plain-search" type="text">
+    <input value="ILCTOFFTXT5263I" name="INTCMP" type="hidden">
+    <input value="Search" name="go" class="submit" type="submit">
+</form>
