@@ -147,8 +147,6 @@ define([
             }
 
             setConfig(next);
-            section = (getConfig() || '').split('/')[1]; // assumes ids are formed "edition/section/.."
-            model.latestArticles.setSection(common.config.sectionSearches[section || 'default'] || section);
         });
 
         function updateLayout() {

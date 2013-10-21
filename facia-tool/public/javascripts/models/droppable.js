@@ -101,10 +101,11 @@ define([
 
                     position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
 
-                    // parse url query param if present, e.g. http://google.com/?url=...
-                    if (common.util.parseQueryParams(item).url) {
-                        item = decodeURIComponent(common.util.parseQueryParams(item).url);
-                    }
+                    _.each(common.util.parseQueryParams(item), function(url){
+                        if (url && url.match(/^http:\/\/www.theguardian.com/)) {
+                            item = url;
+                        }
+                    });
 
                     item = common.util.urlAbsPath(item);
 
