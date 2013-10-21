@@ -594,7 +594,7 @@ module.exports = function (grunt) {
 
     // Analyse tasks
     grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
-    grunt.registerTask('analyse:common:css', ['sass:compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:css:common', ['sass:compile', 'cssmetrics:common']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
