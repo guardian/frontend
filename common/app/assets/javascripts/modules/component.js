@@ -72,7 +72,7 @@ Component.prototype.attachTo = function(elem) {
 Component.prototype.render = function(parent) {
     var conf = this.conf(),
         template = bonzo.create(document.getElementById('tmpl-'+ conf.templateName).innerHTML)[0],
-        container = parent || this.getContainer(conf.containerClass) || document;
+        container = parent || document;
 
     this.elems = {};
     bonzo(container).append(template);
@@ -97,8 +97,9 @@ Component.prototype.dispose = function() {};
  * @param {Function} handler
  * @param {*} args
  */
-Component.prototype.on = function(eventName, handler, data) {
-    bean.on(this.elem, eventName, handler.bind(this), data);
+Component.prototype.on = function(eventName, elem, handler) {
+    elem = !elem.length ? [elem] : elem;
+    bean.on(this.elem, eventName, elem, handler.bind(this));
 };
 
 /**
@@ -110,6 +111,7 @@ Component.prototype.emit = function(eventName, args) {
 };
 
 /**
+ * TODO: After working on comments, wondering if this should support NodeLists
  * @param {string} elemName this corresponds to CONFIG.classes
  */
 Component.prototype.getElem = function(elemName) {
@@ -128,14 +130,6 @@ Component.prototype.getClass = function(elemName, sansDot) {
     var config = this.conf();
     return (sansDot ? '' : '.') + config.classes[elemName] || null;
 };
-
-/**
- * @return {Element}
- */
-Component.prototype.getContainer = function() {
-    return qwery('.' + this.conf().containerClass)[0];
-};
-
 
 /**
  * @return {Object}
