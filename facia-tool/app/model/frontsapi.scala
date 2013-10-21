@@ -23,7 +23,8 @@ case class Trail(
                   id: String,
                   title: Option[String],
                   trailImage: Option[String],
-                  linkText: Option[String]
+                  linkText: Option[String],
+                  meta: Option[Map[String, String]]
                   ) extends JsonShape
 
 
