@@ -345,23 +345,18 @@ module.exports = function (grunt) {
                 options: {
                     specs: grunt.file.expand(
                          'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js', [
+                            // works, but slow
                             '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
                             '!common/test/assets/javascripts/spec/CommentCount.spec.js',
                             '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
                             '!common/test/assets/javascripts/spec/Fonts.spec.js',
-                            '!common/test/assets/javascripts/spec/FootballFixtures.spec.js',
-                            '!common/test/assets/javascripts/spec/FootballTables.spec.js',
                             '!common/test/assets/javascripts/spec/Gallery.spec.js',
                             '!common/test/assets/javascripts/spec/GallerySwipe.spec.js',
                             '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
                             '!common/test/assets/javascripts/spec/MatchNav.spec.js',
                             '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
                             '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
-                            '!common/test/assets/javascripts/spec/Popular.spec.js',
-                            '!common/test/assets/javascripts/spec/ProfileNav.spec.js',
-                            '!common/test/assets/javascripts/spec/Related.spec.js',
-                            '!common/test/assets/javascripts/spec/TopStories.spec.js',
-                            '!common/test/assets/javascripts/spec/TrailblockShowMore.spec.js'
+                            '!common/test/assets/javascripts/spec/ProfileNav.spec.js'
                         ]
                     )
                 }
@@ -461,14 +456,10 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/discussion/*.spec.js']
             },
             article: {
-                src: [
-
-                ]
+                src: []
             },
             applications: {
-                src: [
-                    'integration-tests/casper/tests/applications/*.spec.js'
-                ]
+                src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
