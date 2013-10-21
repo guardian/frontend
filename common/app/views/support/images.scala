@@ -58,7 +58,7 @@ object Profile {
 
 object ImgSrc {
 
-  val imageHost = Configuration.images.path
+  val imageHost = "http://localhost:9001"// Configuration.images.path
 
   def apply(url: String, imageType: Profile): String = {
     val uri = new URI(url.trim)
@@ -67,7 +67,7 @@ object ImgSrc {
       uri.getHost == "static.guim.co.uk" &&
       !uri.getPath.toLowerCase().endsWith(".gif")
 
-    if (ImageServerSwitch.isSwitchedOn && isSupportedImage) {
+    if (isSupportedImage) {
       s"$imageHost/${imageType.prefix}${uri.getPath}"
     } else s"${url}"
   }

@@ -4,7 +4,7 @@ import pa._
 import org.joda.time.{ DateTime, DateMidnight }
 import model._
 import views.MatchStatus
-
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 
 trait Football extends Collections {
 
@@ -71,6 +71,8 @@ trait Football extends Collections {
 
   implicit class Match2trail(m: FootballMatch) extends Trail {
 
+    override val delegate: ApiContent = ApiContent("", None, None, new DateTime, "", "", "", elements = None, fields = None)
+
     private def text = if (m.isFixture) {
       s"${m.homeTeam.name} v ${m.awayTeam.name}"
     } else {
@@ -88,8 +90,6 @@ trait Football extends Collections {
       case _ => false
     }
 
-    override lazy val images: List[ImageElement] = Nil
-    override lazy val videos: List[VideoElement] = Nil
     override lazy val thumbnail: Option[ImageElement] = None
     override lazy val mainPicture = None
     override lazy val url: String = MatchUrl(m)

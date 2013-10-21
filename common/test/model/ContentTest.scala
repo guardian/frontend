@@ -44,7 +44,7 @@ class ContentTest extends FlatSpec with Matchers {
 
     trail.linkText should be("Some article")
     trail.url should be("/foo/2012/jan/07/bar")
-    trail.images.headOption.flatMap(_.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
+    trail.mainPicture.flatMap(_.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
   }
 
   "Tags" should "understand tag types" in {

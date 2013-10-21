@@ -22,11 +22,6 @@ object Element {
 
 trait ImageContainer extends Element {
 
-
-  // this is the absolute definition of a main picture, until the content Api changes, there is no other
-  lazy val isMain = delegate.relation == "main"
-
-
   lazy val imageCrops: Seq[ImageAsset] = delegate.assets.filter(_.assetType == "image").map(ImageAsset(_,index)).
                                            sortBy(-_.width)
 
@@ -40,7 +35,6 @@ object ImageContainer {
     override lazy val imageCrops = crops
   }
 }
-
 
 trait VideoContainer extends Element {
 
