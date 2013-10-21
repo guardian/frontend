@@ -31,7 +31,7 @@ case class Trail(
 case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean]) extends JsonShape
 case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson) extends JsonShape
 case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int], displayName: Option[String])
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean) extends JsonShape
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, String]], live: Boolean, draft: Boolean) extends JsonShape
 
 trait JsonExtract {
   implicit val updateListRead = Json.reads[UpdateList]
@@ -58,7 +58,7 @@ trait UpdateActions {
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
 
-  def emptyTrailWithId(id: String) = Trail(id, None, None, None)
+  def emptyTrailWithId(id: String) = Trail(id, None, None, None, None)
 
   def shouldUpdate[T](cond: Boolean, original: T, updated: => T) = if (cond) updated else original
 
