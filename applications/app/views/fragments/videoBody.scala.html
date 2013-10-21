@@ -20,6 +20,7 @@
                 <div class="article-v2__main-column">
 
                     <div class="player media-content">
+
                         <div class="media-proportional-container">
                             <video controls="controls" preload="none" @video.mainPicture.map{ img =>  poster="@ArticleMainPicture.bestFor(img)" }>
                                 @video.encodings.map{ encoding =>
@@ -30,7 +31,7 @@
                                     <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
                                         <param name="allowFullScreen" value="true" />
                                         <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                        <param name="flashvars" value="controls=true&amp;@video.mainPicture.map{ img =>  poster="@ArticleMainPicture.bestFor(img)" }&amp;file=@encoding.url" />
+                                        <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
                                         <img @video.mainPicture.map{ img =>  src="@ArticleMainPicture.bestFor(img)" } alt="" width="620" height="350" />
                                         Sorry, your browser is unable to play this video.
                                     </object>
