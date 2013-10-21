@@ -146,7 +146,6 @@ input[type=text] {
 .list-header__status__live.active {
     color: #47ae38;
     height: 20px;
-    background-color: #ededed;
 }
 
 .list-header__status__draft.has-draft {
