@@ -119,14 +119,14 @@ module.exports = function (grunt) {
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-weight": "700",
-                            "file": "resources/fonts/EgyptianText-Medium.woff",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.woff",
                             "format": "woff"
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-style": "italic",
-                            "file": "resources/fonts/EgyptianText-RegularItalic.woff",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.woff",
                             "format": "woff"
                         },
                         {
@@ -169,14 +169,14 @@ module.exports = function (grunt) {
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-weight": "700",
-                            "file": "resources/fonts/EgyptianText-Medium.ttf",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
                             "format": "ttf"
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-style": "italic",
-                            "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.ttf",
                             "format": "ttf"
                         },
                         {
