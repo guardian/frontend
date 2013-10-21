@@ -29,6 +29,6 @@ In your local settings file, you should have the following:
     # Code API
     content.api.host=(/¯◡ ‿ ◡)/¯ ~ ┻━┻
 
-_Please Note: CODE Content API URL is tip top secret, please refer to your colleagues for it_
+**Please Note: CODE Content API URL is tip top secret, please refer to your colleagues for it**
 
 Once this is done, you should be able to use the platform as though you are live.
