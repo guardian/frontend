@@ -90,7 +90,6 @@ trait Elements {
   def mainVideo: Option[VideoElement] = videoMap("main").headOption
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
 
-  lazy val largestCrops: List[ImageAsset] = imageElements.flatMap(_.largestImage)
   lazy val bodyImages: List[ImageElement] = imageMap("body")
   lazy val videoAssets: List[VideoAsset] = videos.flatMap(_.videoAssets)
   lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption

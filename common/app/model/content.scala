@@ -219,6 +219,7 @@ class Gallery(content: ApiContent) extends Content(content) {
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
   lazy val galleryImages: List[ImageElement] = imageMap("gallery")
+  lazy val largestCrops: List[ImageAsset] = galleryImages.flatMap(_.largestImage)
   
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "gallery",

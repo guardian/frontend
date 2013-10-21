@@ -8,7 +8,7 @@ import org.joda.time.DateTime
 
 class ElementsTest extends FlatSpec with Matchers {
 
-  "Elements" should "find the biggest crops of all the pictures" in {
+  "Elements" should "find the biggest crop of the main picture" in {
     val images = new Elements {
       def delegate = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
                                 "http://www.guardian.co.uk/foo/2012/jan/07/bar",
@@ -19,8 +19,7 @@ class ElementsTest extends FlatSpec with Matchers {
                                 fields = None)
     }
 
-    images.largestCrops(0).caption should be(Some("biggest picture 1"))
-    images.largestCrops(1).caption should be(Some("a single picture 2"))
+    images.mainPicture.flatMap(_.largestImage.map(_.caption)) should be(Some("biggest picture 1"))
   }
 
   private def image(  id: String,
