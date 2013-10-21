@@ -379,13 +379,13 @@ define(["bean",
 
             bonzo(galleryNode).removeClass('gallery--grid-mode').addClass('gallery--fullimage-mode');
 
-            self.preloadImages();
-
             // Update CTAs
             self.gridModeCta.style.display = 'block';
             self.fullModeCta.style.display = 'none';
 
             self.layout();
+
+            self.preloadImages();
 
             if (e) { e.preventDefault(); }
         };
