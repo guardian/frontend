@@ -21,7 +21,7 @@
 
                     <div class="player media-content">
                         <div class="media-proportional-container">
-                            <video controls="controls" preload="none" poster="@video.imageOfWidth(640).map{image=>@image.path}.getOrElse("")">
+                            <video controls="controls" poster="@video.imageOfWidth(640).map{image=>@image.path}.getOrElse("")">
                                 @video.encodings.map{ encoding =>
                                     <source src="@encoding.url" />
                                 }
