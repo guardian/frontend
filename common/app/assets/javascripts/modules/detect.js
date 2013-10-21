@@ -164,7 +164,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
         } else {
             mStyle.cssText = prop + value;
         }
-        return mStyle[ property ].indexOf( value ) !== -1;
+        return mStyle[property].indexOf(value) !== -1;
     }
 
     function hasTouchScreen() {

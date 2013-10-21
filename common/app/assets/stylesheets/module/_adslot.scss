@@ -84,17 +84,14 @@
     height: 100%;
 }
 .mpu-container {
-    position: static;
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: sticky;
+    top: $baseline*4;
+
     &.is-affixed {
         position: fixed;
-        top: $baseline*4;
-    }
-    &.is-sticked {
-        position: -webkit-sticky;
-        position: -moz-sticky;
-        position: -ms-sticky;
-        position: sticky;
-        top: $baseline*4;
     }
 }
 
