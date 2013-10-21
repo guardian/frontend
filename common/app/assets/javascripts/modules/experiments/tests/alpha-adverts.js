@@ -12,7 +12,8 @@ define([
         var self = this,
             nParagraphs = '10',
             alphaOasUrl = 'www.theguardian-alpha.com',
-            inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>';
+            inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>',
+            mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle1" data-extended="Middle1"><div class="ad-container"></div></div>';
 
         this.id = 'AlphaAdverts';
         this.expiry = '2013-11-30';
@@ -58,6 +59,7 @@ define([
                             id: 'Top2'
                         });
                     } else {
+                        document.getElementsByClassName('js-mpu-ad-slot')[0].appendChild(bonzo.create(mpuTemp)[0]);
                         s = new Sticky({
                             elCls: 'js-mpu-ad-slot',
                             id: 'mpu-ad-slot'
