@@ -19,7 +19,7 @@ object TravelOffers extends Controller with ExecutionContexts {
       val offers = keywords map (OffersAgent.offers(_)) getOrElse OffersAgent.allOffers
       if (offers.size > 1) {
         val shuffled = Random.shuffle(offers.indices.toList)
-        val view = views.html.fragments.travelOffer(offers(shuffled(0)), offers(shuffled(1)))
+        val view = views.html.fragments.travelOffer(offers.take(5))
         Ok(view) withHeaders ("Cache-Control" -> "max-age=60")
       } else {
         Ok("No offers") withHeaders ("Cache-Control" -> "max-age=60")
