@@ -103,7 +103,6 @@ define(["bean",
                     // If the tap is within the caption area, then do nothing
                     if (captionAreaHit) { return; }
 
-
                     // If user taps in the left 25% of the screen, go backwards, otherwise go forwards
                     var tappedPositionPerc = (e.pageX/galleryNode.offsetWidth * 100);
                     if (tappedPositionPerc < 25) {
@@ -167,7 +166,7 @@ define(["bean",
                     setTimeout(function() {
                         overlay.hide();
                         self.removeOverlay();
-                    },10);
+                    }, 10);
 
                     // Remove keyboard handlers
                     bean.off(document.body, 'keydown', self.handleKeyEvents);
@@ -407,7 +406,7 @@ define(["bean",
 
         this.layout = function() {
             var orientation = detect.getOrientation(),
-                contentHeight = window.innerHeight - overlay.headerNode.offsetHeight;
+                contentHeight = bonzo.viewport().height - overlay.headerNode.offsetHeight;
 
             // set the height of the gallery to the height of the current image
             // preventing a large scrollable space to appear underneath the image
@@ -417,12 +416,17 @@ define(["bean",
 
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
             $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
+            var $items = common.$g('.gallery__item', galleryNode);
 
-            if (orientation === 'landscape' && mode === 'fullimage') {
-                // In landscape, size all images to the height of the screen
+
+            if (mode === 'fullimage') {
+                // Size all images to the height of the screen
                 $images.css({'height': contentHeight + 'px', 'width': 'auto'});
-            } else if (mode === 'fullimage') {
-                $images.css({'height': 'auto', 'width': '100%'});
+                $items.css('height', contentHeight+'px');
+            } else {
+                // Lets the default stylesheets do the work here
+                $images.removeAttr('style');
+                $items.removeAttr('style');
             }
 
             self.alignNavArrows();
