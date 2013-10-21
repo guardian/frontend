@@ -4,7 +4,7 @@
     img { width: 100%; }
 </style>
 
-@offers.map { offer => 
+@offers.take(5).map { offer => 
     <div>
         <a href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I" class="link">
             <img src="@offer.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" alt="@offer.title" class="offer-image">
