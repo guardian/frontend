@@ -1,9 +1,9 @@
 package conf
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class SwitchesTest extends FlatSpec with ShouldMatchers {
+class SwitchesTest extends FlatSpec with Matchers {
 
   val SwitchNamePattern = """([a-z\d-]+)""".r
 

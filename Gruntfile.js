@@ -313,7 +313,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/*.js',[
+                         'common/test/assets/javascripts/spec/*.spec.js',[
                         '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
                         '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
                         '!common/test/assets/javascripts/spec/Fonts.spec.js',
@@ -419,12 +419,13 @@ module.exports = function (grunt) {
             }
         },
 
+        casperjsLogFile: 'results.xml',
         casperjs: {
             options: {
                 // Pre-prod environments have self-signed SSL certs
                 ignoreSslErrors: 'yes',
                 includes: ['integration-tests/casper/tests/shared.js'],
-                xunit: 'integration-tests/target/casper/',
+                xunit: 'integration-tests/target/casper/<%= casperjsLogFile %>',
                 loglevel: 'debug',
                 direct: true
             },
@@ -453,8 +454,8 @@ module.exports = function (grunt) {
                     'integration-tests/casper/tests/applications/*.spec.js'
                 ]
             },
-            front: {
-                src: ['integration-tests/casper/tests/front/*.js']
+            facia: {
+                src: ['integration-tests/casper/tests/facia/*.spec.js']
             },
             corenavigation: {
                 src: ['integration-tests/casper/tests/core-navigation/*.js']
@@ -572,17 +573,11 @@ module.exports = function (grunt) {
     ]);
 
     // Test tasks
-    grunt.registerTask('test:integration', ['test:integration:allexceptadmin']); // ...until Facia fix the admin tests they broke.
-
-    grunt.registerTask('test:integration:all', ['env:casperjs', 'casperjs:all']);
-    grunt.registerTask('test:integration:allexceptadmin', ['env:casperjs', 'casperjs:allexceptadmin']);
-
-    grunt.registerTask('test:integration:admin', ['env:casperjs', 'casperjs:admin']);
-    grunt.registerTask('test:integration:discussion', ['env:casperjs', 'casperjs:discussion']);
-    grunt.registerTask('test:integration:article', ['env:casperjs', 'casperjs:article']);
-    grunt.registerTask('test:integration:front', ['env:casperjs', 'casperjs:front']);
-    grunt.registerTask('test:integration:corenavigation', ['env:casperjs', 'casperjs:corenavigation']);
-
+    grunt.registerTask('test:integration', function(app) {
+        app = app || 'allexceptadmin';
+        grunt.config('casperjsLogFile', app + '.xml');
+        grunt.task.run(['env:casperjs', 'casperjs:' + app]);
+    });
     grunt.registerTask('test', ['compile', 'jshint:common', 'jasmine', 'test:integration']);
 
     // Analyse tasks

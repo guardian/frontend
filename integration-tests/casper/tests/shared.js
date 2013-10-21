@@ -1,4 +1,3 @@
-casper = require('casper').create();
 system = require('system');
 environment = system.env.ENVIRONMENT;
 host = {

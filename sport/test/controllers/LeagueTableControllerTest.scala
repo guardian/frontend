@@ -2,10 +2,10 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
-class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
+class LeagueTableControllerTest extends FlatSpec with Matchers {
   
   "League Table Controller" should "200 when content type is table" in Fake {
     val result = football.controllers.LeagueTableController.renderLeagueTable()(TestRequest())

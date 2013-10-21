@@ -5,8 +5,12 @@ video {
 }
 
 .player {
-    margin-left: $gutter * -1;
-    margin-right: $gutter * -1;
+    margin-left: $gs-gutter/2 * -1;
+    margin-right: $gs-gutter/2 * -1;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter * -1;
+        margin-right: $gs-gutter * -1;
+    }
     margin-bottom: $gs-column-height;
     background: #000;
     text-align: center; // prevents poster from loading to left then centering

@@ -75,7 +75,7 @@ input[type=text] {
 }
 
 .droppable {
-    padding: 0 0 25px 0;
+    padding: 0 0 15px 0;
     -webkit-transition: background-color 50ms;
        -moz-transition: background-color 50ms;
             transition: background-color 50ms;
@@ -115,19 +115,11 @@ input[type=text] {
 }
 
 .list-header__saving  { color: #d61d00; font-weight: bold; }
-.list-header__id      { display: none;}
 
 .list-header__role {
     font-style: italic;
     text-transform: lowercase;
     color: #666666;
-}
-
-.collection:hover .list-header__id {
-    display: block;
-    float: right;
-    color: #999999;
-    font-size: 12px;
 }
 
 .list-header__timings {
@@ -154,6 +146,7 @@ input[type=text] {
 .list-header__status__live.active {
     color: #47ae38;
     height: 20px;
+    background-color: #ededed;
 }
 
 .list-header__status__draft.has-draft {
@@ -241,9 +234,15 @@ a.list-header__status__control:visited {
     -webkit-transition: background-color 100ms;
        -moz-transition: background-color 100ms;
             transition: background-color 100ms;
+    border-bottom: 1px dotted #cccccc;
 }
 
-.draft-zones .trail {
+.trail:last-child {
+    border-bottom: 0;
+}
+
+.draft-groups,
+.draft-groups .trail {
     background-color: #EEEEEE;
 }
 
@@ -271,7 +270,7 @@ a.list-header__status__control:visited {
 }
 
 .trail .webTitle {
-    margin: 0 140px 0 80px;
+    margin: 0 190px 0 80px;
     display: block;
     text-decoration: none;
     font-size: 15px;
@@ -297,6 +296,9 @@ a.list-header__status__control:visited {
 }
 
 .trail .trail__meta {
+    position: absolute;
+    top: 36px;
+    right: 135px;
     color: #999999;
     font-size: 10px;
     line-height: 14px;
@@ -319,7 +321,7 @@ a.list-header__status__control:visited {
     display: none;
     position: absolute;
     top: 4px;
-    right: 13px;
+    right: 3px;
     background: #CCCCCC;
     width: 14px;
     height: 20px;
@@ -365,7 +367,6 @@ button {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     min-height: 53px;
-    padding: 0 15px 0 0;
 }
 
 .clipboard__title {
@@ -413,13 +414,13 @@ button {
 }
 
 .trail_stats {
+    position: absolute;
+    top: 6px;
+    right: 0;
     width: 130px;
     height: 40px;
-    float: right;
-    clear: right;
     font-size: 9px;
     line-height: 12px;
-    position: relative;
 }
 
 .pageviews {
@@ -438,11 +439,12 @@ button {
     right: 33px;
 }
 
-.zone-name {
-    padding: 0 0 0 4px;
-    font-size: 14px;
-    font-style: italic;
-    color: #666666;
+.group-name {
+    padding: 4px 0 0px 4px;
+    font-size: 10px;
+    line-height: 12px;
+    color: #999999;
+    text-transform: uppercase;
 }
 
 .frames {

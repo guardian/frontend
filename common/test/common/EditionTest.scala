@@ -1,12 +1,12 @@
 package common
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.test.FakeRequest
 import common.editions.{Uk, Us}
 import play.api.mvc.Cookie
 
-class EditionTest extends FlatSpec with ShouldMatchers {
+class EditionTest extends FlatSpec with Matchers {
 
   "Edition" should "resolve correct edition from header" in {
 

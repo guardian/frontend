@@ -1,4 +1,5 @@
 import common.{CommercialMetrics, Jobs}
+import dev.DevParametersLifecycle
 import model.commercial.travel.OffersAgent
 import play.api.{Application => PlayApp, GlobalSettings}
 
@@ -24,4 +25,4 @@ trait TravelOffersLifecycle extends GlobalSettings {
 }
 
 
-object Global extends TravelOffersLifecycle
+object Global extends TravelOffersLifecycle with DevParametersLifecycle

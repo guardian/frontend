@@ -1,0 +1,228 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/16/greek-golden-dawn-mps-immunity",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-16T12:58:06Z",
+      "webTitle":"Greek parliament lifts Golden Dawn MPs' immunity",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/16/greek-golden-dawn-mps-immunity",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/16/greek-golden-dawn-mps-immunity",
+      "fields":{
+        "trailText":"Move paves way for deeper investigation into claims Golden Dawn members involved in criminal offences",
+        "headline":"Greek parliament lifts Golden Dawn MPs' immunity",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jttb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928159163/Greek-parliament-003.jpg",
+        "wordcount":"319",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/golden-dawn",
+        "type":"keyword",
+        "webTitle":"Golden Dawn party",
+        "webUrl":"http://www.theguardian.com/world/golden-dawn",
+        "apiUrl":"http://content.guardianapis.com/world/golden-dawn",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/greece",
+        "type":"keyword",
+        "webTitle":"Greece",
+        "webUrl":"http://www.theguardian.com/world/greece",
+        "apiUrl":"http://content.guardianapis.com/world/greece",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420145070",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928156161/Greek-parliament-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"54",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928157914/Greek-parliament-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"130",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928159163/Greek-parliament-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"84",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928160353/Greek-parliament-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"132",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928161587/Greek-parliament-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"168",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928162805/Greek-parliament-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"180",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928164019/Greek-parliament-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"228",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928165259/Greek-parliament-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"276",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928165259/Greek-parliament-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"276",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420145071",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381928159163/Greek-parliament-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Louisa Gouliamaki",
+            "altText":"Greek parliament",
+            "height":"84",
+            "credit":"Louisa Gouliamaki/AFP/Getty Images",
+            "caption":"A ceremony at the Greek parliament. Photograph: Louisa Gouliamaki/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

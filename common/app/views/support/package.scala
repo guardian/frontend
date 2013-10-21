@@ -19,29 +19,45 @@ import conf.Switches.ShowUnsupportedEmbedsSwitch
 
 sealed trait Style {
   val className: String
+  val showMore: Boolean
 }
 
-object Featured extends Style { val className = "featured" }
+object Featured extends Style {
+  val className = "featured"
+  val showMore = false
+}
 
 /**
  * trails display trailText and thumbnail (if available)
  */
-object Thumbnail extends Style { val className = "with-thumbnail" }
+object Thumbnail extends Style {
+  val className = "with-thumbnail"
+  val showMore = false
+}
 
 /**
  * trails only display headline
  */
-object Headline extends Style { val className = "headline-only" }
+object Headline extends Style {
+  val className = "headline-only"
+  val showMore = false
+}
 
 /**
  * trails for the section fronts
  */
-object SectionFront extends Style { val className = "section-front" }
+object SectionFront extends Style {
+  val className = "section-front"
+  val showMore = false
+}
 
 /**
  * New 'collection' templates
  */
-object Masthead extends Style { val className = "masthead" }
+object Masthead extends Style {
+  val className = "masthead"
+  val showMore = false
+}
 
 case class SectionZone(val tone: String = "news", val showMore: Boolean = false) extends Style {
   val className = "section-zone"

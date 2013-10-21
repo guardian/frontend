@@ -2,10 +2,10 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
-class VideoControllerTest extends FlatSpec with ShouldMatchers {
+class VideoControllerTest extends FlatSpec with Matchers {
 
   val videoUrl = "/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val callbackName = "aFunction"

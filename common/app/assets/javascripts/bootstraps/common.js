@@ -89,7 +89,7 @@ define([
                 // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
                 common.$g('.collection', context).each(function(collection) {
                     common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, collection.getAttribute('data-collection-type') === 'container' && index === 0)
+                        new ImageUpgrade(item, index === 0)
                             .upgrade();
                     });
                 });

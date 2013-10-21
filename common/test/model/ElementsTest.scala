@@ -1,11 +1,11 @@
 package model
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
 import com.gu.openplatform.contentapi.model.{ Asset, MediaAsset, Element => ApiElement, Content => ApiContent, Tag => ApiTag }
 
-class ElementsTest extends FlatSpec with ShouldMatchers {
+class ElementsTest extends FlatSpec with Matchers {
 
   "Images" should "find exact size image" in {
 

@@ -1,10 +1,10 @@
 package common
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import views.support.{StripHtmlTagsAndUnescapeEntities}
 
-class StripHtmlTagsAndUnescapeEntitiesTest extends FlatSpec with ShouldMatchers {
+class StripHtmlTagsAndUnescapeEntitiesTest extends FlatSpec with Matchers {
 
   "Strip HTML tags and unescape entities" should "unescape entities" in {
 

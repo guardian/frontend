@@ -1,7 +1,7 @@
 package common
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import com.gu.openplatform.contentapi.model.{ Section, ItemResponse, Tag, Content }
 import org.joda.time.DateTime
 import play.api.test.Helpers._
@@ -11,7 +11,7 @@ import scala.concurrent.Future
 
 private object TestModel
 
-class ModelOrResultTest extends FlatSpec with ShouldMatchers with ExecutionContexts {
+class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
 
   implicit val request: RequestHeader = TestRequest()
 

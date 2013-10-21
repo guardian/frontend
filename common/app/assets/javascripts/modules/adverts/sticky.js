@@ -11,7 +11,10 @@ define([
         this.$el = bonzo(this.el);
         this.top =  bonzo(this.options.context.querySelector(".js-sticky-upper[data-id=" + this.options.id + "]")).offset().top;
         this.bottom = bonzo(this.options.context.querySelector(".js-sticky-lower[data-id=" + this.options.id + "]")).offset().top - 250;
-        this.bindListeners();
+
+        if (!detect.hasCSSSupport('position', 'sticky') && detect.hasCSSSupport('position', 'fixed', true)) {
+            this.bindListeners();
+        }
     };
 
     Sticky.prototype.DEFAULTS = {
@@ -24,7 +27,6 @@ define([
     Sticky.prototype.bindListeners = function () {
         var self = this;
 
-        var e = detect.hasTouchScreen() ? 'touchmove' : 'scroll';
         bean.on(window, 'scroll', function(){
             common.requestAnimationFrame(function(){
                 self.checkPosition.call(self);
@@ -36,9 +38,9 @@ define([
         var scrollTop = bonzo(document.body).scrollTop();
 
         if(scrollTop > this.top && scrollTop < this.bottom) {
-            this.el.classList.add(this.options.affixCls);
+            bonzo(this.el).addClass(this.options.affixCls);
         } else {
-            this.el.classList.remove(this.options.affixCls);
+            bonzo(this.el).removeClass(this.options.affixCls);
         }
 
     };
