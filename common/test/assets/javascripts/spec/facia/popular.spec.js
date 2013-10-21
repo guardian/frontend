@@ -38,7 +38,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             server.respondWith([200, {}, response]);
             server.autoRespond = true;
             // seem to need this, or sinon gets ahead of itself
-            server.autoRespondAfter = 11;
+            server.autoRespondAfter = 20;
         });
 
         afterEach(function() {

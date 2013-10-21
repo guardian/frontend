@@ -34,6 +34,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/userPrefs', 'he
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
 
         });
 
