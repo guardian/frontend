@@ -347,9 +347,9 @@ module.exports = function (grunt) {
                          'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js', [
                             // works, but slow
                             '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
-                            '!common/test/assets/javascripts/spec/CommentCount.spec.js',
                             '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
                             '!common/test/assets/javascripts/spec/Fonts.spec.js',
+                            // needs fixture data
                             '!common/test/assets/javascripts/spec/Gallery.spec.js',
                             '!common/test/assets/javascripts/spec/GallerySwipe.spec.js',
                             '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
