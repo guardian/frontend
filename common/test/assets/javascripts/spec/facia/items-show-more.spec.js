@@ -13,7 +13,7 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
             collection = bonzo.create(
                 '<section>' +
                     '<ul>' +
-                        '<script class="collection--template"></script>' +
+                        '<script type="text/x-template" class="collection--template"></script>' +
                     '</ul>' +
                 '</section>'
             )[0];
