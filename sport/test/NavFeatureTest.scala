@@ -1,10 +1,10 @@
 package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import collection.JavaConversions._
 
-class NavFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Football Nav") {
 

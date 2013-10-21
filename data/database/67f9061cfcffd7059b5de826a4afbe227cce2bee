@@ -1,0 +1,2416 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":10,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":1,
+    "orderBy":"newest",
+    "results":[{
+      "id":"film/2013/oct/10/nymphomaniac-orgasm-posters-coming-gainsbourg-von-trier",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-10T13:57:00Z",
+      "webTitle":"Nymphomaniac orgasm posters literally show what's coming soon",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/10/nymphomaniac-orgasm-posters-coming-gainsbourg-von-trier",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/10/nymphomaniac-orgasm-posters-coming-gainsbourg-von-trier",
+      "fields":{
+        "trailText":"<p>Charlotte Gainsbourg, Shia LaBeouf, Uma Thurman and Christian Slater among stars apparently enjoying a moment of orgasm in the latest promo for Lars Von Trier's latest movie</p>",
+        "headline":"Nymphomaniac orgasm posters literally show what's coming soon",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jefx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2013/10/10/1381411982769/Nymphomaniac-poster-Charl-005.jpg",
+        "wordcount":"244",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/lars-von-trier",
+        "type":"keyword",
+        "webTitle":"Lars von Trier",
+        "webUrl":"http://www.theguardian.com/film/lars-von-trier",
+        "apiUrl":"http://content.guardianapis.com/film/lars-von-trier",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/charlotte-gainsbourg",
+        "type":"keyword",
+        "webTitle":"Charlotte Gainsbourg",
+        "webUrl":"http://www.theguardian.com/culture/charlotte-gainsbourg",
+        "apiUrl":"http://content.guardianapis.com/culture/charlotte-gainsbourg",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"culture/pornography",
+        "type":"keyword",
+        "webTitle":"Pornography",
+        "webUrl":"http://www.theguardian.com/culture/pornography",
+        "apiUrl":"http://content.guardianapis.com/culture/pornography",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419604590",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2013/10/10/1381411989607/Nymphomaniac-poster-Charl-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Nymphomaniac poster: Charlotte Gainsbourg",
+            "height":"276",
+            "credit":"PR",
+            "caption":"My name is Joe … Charlotte Gainsbourg's Nymphomaniac poster",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2013/10/10/1381413395546/Nymphomaniac-poster-Charl-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Nymphomaniac poster: Charlotte Gainsbourg",
+            "height":"949",
+            "credit":"PR",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-419604592",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2013/10/10/1381411982769/Nymphomaniac-poster-Charl-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Nymphomaniac poster: Charlotte Gainsbourg",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Nymphomaniac poster: Charlotte Gainsbourg",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/oct/10/malting-arctic-ice-pirate-chases-cop19-organisers",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-10-10T12:45:41Z",
+      "webTitle":"Arctic melt means more pirate chases, say Polish climate hosts",
+      "webUrl":"http://www.theguardian.com/environment/2013/oct/10/malting-arctic-ice-pirate-chases-cop19-organisers",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/oct/10/malting-arctic-ice-pirate-chases-cop19-organisers",
+      "fields":{
+        "trailText":"<p>Organisers of upcoming climate change conference are under fire for a 'crazy' blogpost about melting polar ice</p>",
+        "headline":"Arctic melt means more pirate chases, say Polish climate hosts",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jed3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/7/24/1374661954101/Arctic-iceberg-003.jpg",
+        "wordcount":"452",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/poles",
+        "type":"keyword",
+        "webTitle":"Polar regions",
+        "webUrl":"http://www.theguardian.com/environment/poles",
+        "apiUrl":"http://content.guardianapis.com/environment/poles",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/arctic",
+        "type":"keyword",
+        "webTitle":"Arctic",
+        "webUrl":"http://www.theguardian.com/world/arctic",
+        "apiUrl":"http://content.guardianapis.com/world/arctic",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/piracy",
+        "type":"keyword",
+        "webTitle":"Piracy at sea",
+        "webUrl":"http://www.theguardian.com/world/piracy",
+        "apiUrl":"http://content.guardianapis.com/world/piracy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/adam-vaughan",
+        "type":"contributor",
+        "webTitle":"Adam Vaughan",
+        "webUrl":"http://www.theguardian.com/profile/adam-vaughan",
+        "apiUrl":"http://content.guardianapis.com/profile/adam-vaughan",
+        "bio":"<p>Adam Vaughan is editor of <a href=\"http://www.guardian.co.uk/environment\">environmentguardian.co.uk</a>. He previously edited sites for CBS and Haymarket </p>",
+        "r2ContributorId":"30252",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2009/6/8/1244479493691/Adam-Vaughan-001.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419615518",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/7/24/1374661959462/Arctic-iceberg-008.jpg",
+          "typeData":{
+            "source":"Delphine Star",
+            "altText":"Arctic iceberg",
+            "height":"276",
+            "credit":"Delphine Star",
+            "caption":"Melting Arctic ice has opened up the Northwest Passage. Photograph: Delphine Star",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419615519",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/7/24/1374661954101/Arctic-iceberg-003.jpg",
+          "typeData":{
+            "source":"Delphine Star",
+            "altText":"Arctic iceberg",
+            "height":"84",
+            "credit":"Delphine Star",
+            "caption":"Widespread warming of Arctic region let a 'gian pulse of methane' escape from a thinning permafrost, with a devastating impact on the world's climate system. Photograph: Delphine Star",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419615520",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/10/10/1381407818715/Warsaw-COP19-blog-006.jpg",
+          "typeData":{
+            "source":"COP19",
+            "altText":"Warsaw COP19 blog",
+            "height":"276",
+            "credit":"COP19",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/womens-blog/2013/oct/10/everyday-sexism-why-men-shouldnt-shout-women-street",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-10T12:23:44Z",
+      "webTitle":"Everyday Sexism: five reasons why men shouldn't shout at women in the street",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/womens-blog/2013/oct/10/everyday-sexism-why-men-shouldnt-shout-women-street",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/womens-blog/2013/oct/10/everyday-sexism-why-men-shouldnt-shout-women-street",
+      "fields":{
+        "trailText":"<strong>Laura Bates: </strong>It's passé, it ruins our day – and it's bad karma. An open letter from Laura Bates of Everyday Sexism to men who still haven't got the message",
+        "headline":"Everyday Sexism: five reasons why men shouldn't shout at women in the street",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jeaz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407103677/You-said-WHAT-Many-men-st-003.jpg",
+        "wordcount":"790",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/womens-blog",
+        "type":"blog",
+        "webTitle":"The women's blog",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/womens-blog",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/womens-blog",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/laura-bates",
+        "type":"contributor",
+        "webTitle":"Laura Bates",
+        "webUrl":"http://www.theguardian.com/profile/laura-bates",
+        "apiUrl":"http://content.guardianapis.com/profile/laura-bates",
+        "bio":"<p>Laura Bates is the founder of the <a href=\"http://www.everydaysexism.com/\">Everyday Sexism Project</a>, a collection of over 10,000 women's daily experiences of gender inequality</p>",
+        "r2ContributorId":"54862",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/7/1362678319287/Laura-Bates.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419590033",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407100426/You-said-WHAT-Many-men-st-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407102270/You-said-WHAT-Many-men-st-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407103677/You-said-WHAT-Many-men-st-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407104913/You-said-WHAT-Many-men-st-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407106201/You-said-WHAT-Many-men-st-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407107485/You-said-WHAT-Many-men-st-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407108732/You-said-WHAT-Many-men-st-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407109997/You-said-WHAT-Many-men-st-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407109997/You-said-WHAT-Many-men-st-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419590034",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/10/1381407103677/You-said-WHAT-Many-men-st-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"You said WHAT? Many men still haven't got the mesage.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"You said WHAT? Many men still haven't got the message. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/gallery/2013/oct/10/football-kits-weird-horrendous-in-pictures",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-10T09:00:00Z",
+      "webTitle":"Football kits: 20 of the most weird and horrendous – in pictures",
+      "webUrl":"http://www.theguardian.com/football/gallery/2013/oct/10/football-kits-weird-horrendous-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/football/gallery/2013/oct/10/football-kits-weird-horrendous-in-pictures",
+      "fields":{
+        "trailText":"<p>Following the unexpected success of a vegetable-inspired kit in Spain, we look back at some of the most peculiar and, at times, downright horrendous football jerseys in history. Let us know your suggestions below the line and we'll add pictures of the best and worst</p>",
+        "headline":"Football kits: 20 of the most weird and horrendous – in pictures",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jd9t",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381318698455/Jorge-Campos-004.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/football-league",
+        "type":"keyword",
+        "webTitle":"Football League",
+        "webUrl":"http://www.theguardian.com/football/football-league",
+        "apiUrl":"http://content.guardianapis.com/football/football-league",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"profile/jonny-weeks",
+        "type":"contributor",
+        "webTitle":"Jonny Weeks",
+        "webUrl":"http://www.theguardian.com/profile/jonny-weeks",
+        "apiUrl":"http://content.guardianapis.com/profile/jonny-weeks",
+        "bio":"<p>Jonny Weeks works on the picture desk at the Guardian &amp; Observer and is also a writer and photographer</p>",
+        "r2ContributorId":"35809",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419582792",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381318698455/Jorge-Campos-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Billy Stickland",
+            "altText":"Jorge Campos",
+            "height":"84",
+            "credit":"Billy Stickland/Getty Images",
+            "caption":"24 JUN 1994:  GOAL KEEPER JORGE CAMPOS OF MEXICO CELEBRATES MEXIC0's 2-1 VICTORY OVER IRELAND IN A 1994 WORLD CUP GAME AT GIANTS STADIUM IN THE MEADOWLANDS. Mandatory Credit: Billy Stickland/ALLSPORT\rIRELAND\rV\rMEXICO\rIRELAND\rV\rMEXICO Photograph: Billy Stickland/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419511392",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381334911294/kit-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"sport -: kit",
+            "height":"409",
+            "credit":"lahoyalorcacf.com",
+            "caption":"In the long and unglamorous history of awful football kits, no one (to the best of our knowledge) has ever dared create a kit that looks like a stick of broccoli – until this one. La Hoya Lorca, who were in the Spanish Tercera Division, unveiled this outrageous kit last season. The club is based in Murcia, 'the vegetable garden of Spain' – justification of sorts for a truly bizarre design. They went on to win the league last season and, fittingly, they've released another broccoli-based design this season which, we hear, is selling fast all around the world",
+            "width":"630"
+          }
+        }]
+      },{
+        "id":"gu-image-419499022",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317558049/Coventry-City.-003.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"Bob Thomas",
+            "altText":"football kits: Coventry City.",
+            "height":"600",
+            "credit":"Getty Images",
+            "caption":"Coventry City have been much derided for their infamous <a href=\"http://www.coventrytelegraph.net/sport/football/transfer-news/coventrys-infamous-chocolate-brown-kit-4066416\">brown 'egg-timer' kit of the 1970s</a>, often cited as the worst kit of all time, but this supposedly ingenious design, worn from 1981-83, trumps even that one. The brainchild of former manager Jimmy Hill, it incorporated the sponsor's logo into the kit design, giving the brand extra emphasis. The only problem was the TV companies had banned all kit sponsorship for televised games, so, even without the word Talbot, it fell foul of the laws and City were forced to wear a bland alternate strip any time they were in the limelight",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419499019",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317567237/Cameroon-v-Nigeria-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Shaun Botterill",
+            "altText":"football kits: Cameroon v Nigeria",
+            "height":"480",
+            "credit":"Shaun Botterill/Getty Images",
+            "caption":"At the African Nations Cup in 2004, the Cameroon team sported what could reasonably be called a onesie. It was so bad the Cameroon Football Federation were fined $154,000 and docked six World Cup qualifying points for contravening football regulations which stated that: 'The basic equipment of a player is a jersey or shirt, shorts, stockings, shinguards, footwear'. The points were later restored as common sense kicked in. Cameroon had previous, of course, having worn a sleeveless vest in 2002",
+            "width":"717"
+          }
+        }]
+      },{
+        "id":"gu-image-419499024",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317701449/Derk-Dougan-014.jpg",
+          "typeData":{
+            "source":"Bob Thomas/Getty Images",
+            "altText":"football kits: Derk Dougan",
+            "height":"557",
+            "credit":"Bob Thomas/Getty Images",
+            "caption":"Hitachi are often blamed for the uglification of football kits, as it was they who paid Liverpool to <a href=\"http://www.liverpoolkits.com/liverpool1980hp.html\">become the first top-flight club to wear a sponsor on their shirt in 1979</a>. Yet, three years earlier, Kettering Town did the unthinkable and plastered lettering for a local firm across their chests. Derek Dougan, then chief executive and manager, is seen here in their home top, having organised the deal. It was worn in a Southern League game against Bath City, before being outlawed by the FA. Kettering Tyres are the real villains, then",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419499034",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317555608/IRELAND-V-MEXICO-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Billy Stickland",
+            "altText":"football kits: IRELAND V MEXICO",
+            "height":"600",
+            "credit":"Billy Stickland/Getty Images",
+            "caption":"Goalkeepers jerseys have a rich tradition of being garish – don't believe us … <a href=\"http://www.theguardian.com/football/gallery/2011/jul/06/terrible-goalkeeping-kits-gallery\">check out this archived gallery</a> – but none could beat this one, a fluorescent Count Dracula effort, designed and worn by Mexico's goalkeeper Jorge Campos at the 1994 World Cup",
+            "width":"369"
+          }
+        }]
+      },{
+        "id":"gu-image-419511229",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381334826405/Dutch-Eredivisie---sc-Hee-005.jpg",
+          "typeData":{
+            "source":"VI-Images via Getty Images",
+            "altText":"sport: Dutch Eredivisie - sc Heerenveen v SC Cambuur Leeuwarden",
+            "height":"480",
+            "credit":"VI-Images via Getty Images",
+            "caption":"Here's an unusual design with an interesting premise. SC Heereveen's kit is based on the Frisian flag, the official flag of the Dutch province of Friesland. The seven red Pompeblêd – seal lily leaves – symbolise seven independent regions from Medieval times",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-419499040",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317576451/Manchester-United-team-gr-009.jpg",
+          "typeData":{
+            "source":"Popperfoto/Getty Images",
+            "altText":"football kits: Manchester United team group",
+            "height":"430",
+            "credit":"Popperfoto/Getty Images",
+            "caption":"A plunging V-pattern is more typically associated with jockeys' silks, but Manchester United's footballers sported them on their home kits in the early 1920s. If the design doesn't seem peculiar enough, how about this: the majority of the kit was white. It only lasted for four years from 1922, but by that stage United had already been wearing red home kits for 20 years (aside from FA Cup final of 1909 when a similar white kit was worn). The only other time United have not worn a red home kit was in 1934 when a lucky maroon and white horizontal striped kit was adopted",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-419511233",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381334068556/Reggina-Calcio-Press-Conf-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Maurizio Lagana",
+            "altText":"sport: Reggina Calcio Press Conference",
+            "height":"570",
+            "credit":"Maurizio Lagana/Getty Images",
+            "caption":"This Reggina shirt looks inoffensive, but closer inspection reveals something rather weird about the blurry design lurking behind the logos. Yes, it's a male torso. Surely the only thing that could be as bad as this is <a href=\"http://www.whoateallthepies.tv/kits/52436/shit-football-kits-the-hull-city-tiger-stripes-disaster-1992-93.html\">an animal print – say, um, that of a tiger</a>",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419499029",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317698483/FA-Carling-Premiership-So-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Shaun Botterill",
+            "altText":"football kits: FA Carling Premiership: Southampton v Manchester United",
+            "height":"480",
+            "credit":"Shaun Botterill/Getty Images",
+            "caption":"A kit loathed by the players who wore it, according to Sir Alex Ferguson at least. It was worn just five times and, remarkably, United never won in it. One of its outings came against Southampton at the Dell in 1996. Ferguson made the players switch tops at half-time, when they were 3-0 down, blaming the kit for United's poor passing game. ‘The players couldn’t pick each other out; they said it was difficult to see their team-mates at distance when they lifted their heads,’ he claimed. United pulled one goal back in the second half but still lost 3-1",
+            "width":"736"
+          }
+        }]
+      },{
+        "id":"gu-image-419499032",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317691599/GILLINGHAM-V-CHELSEA-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gary M. Prior",
+            "altText":"football kits: GILLINGHAM V CHELSEA",
+            "height":"600",
+            "credit":"Gary M. Prior/Getty Images",
+            "caption":"Chelsea also had a grey kit; theirs came in 1995 and featured panels of orange for a nauseating high-vis effect",
+            "width":"395"
+          }
+        }]
+      },{
+        "id":"gu-image-419511395",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381334914873/sport-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"sport -: sport",
+            "height":"464",
+            "credit":"PR",
+            "caption":"Recreativo opted for a polkadot away kit last season – and what's most surprising is that Danish manufacturing legends Hummel were responsible for it. It was predictably mocked for looking like it was inspired by Minnie Mouse",
+            "width":"619"
+          }
+        }]
+      },{
+        "id":"gu-image-419499044",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317695304/Southampton-v-Tottenham-H-012.jpg",
+          "typeData":{
+            "source":"EMPICS Sport",
+            "photographer":"Peter Robinson",
+            "altText":"football kits: Southampton v Tottenham Hotspur - The Dell",
+            "height":"480",
+            "credit":"Peter Robinson/EMPICS Sport",
+            "caption":"This Tottenham kit from 1977 was shocking not only for the number of times the Admiral logo appeared on it (a close rival came two decades later when Kappa <a href=\"http://www.vintagefootballshirts.com/product-list.php?Retro_Manchester_City_Shirts-pg2-cid81.html\">designed an awful kit for Manchester City</a> in what was practically shell-suit material), but also for the bizarre paneling which ran down from the shoulders. Let's call them shoulder sideburns. The lemon yellow wasn't too clever either",
+            "width":"686"
+          }
+        }]
+      },{
+        "id":"gu-image-419499027",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317569731/Eddie-Lewis-Clash-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Otto Greule Jr",
+            "altText":"football kits: Eddie Lewis Clash",
+            "height":"600",
+            "credit":"Otto Greule Jr/Getty Images",
+            "caption":"Half-and-half tops have been around as long as the game itself, but when San Jose Clash unveiled this razor-edged gold, turquoise and white number they went a step too far in our book",
+            "width":"391"
+          }
+        }]
+      },{
+        "id":"gu-image-419512834",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":14,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381335699751/ASIAN-CUP-WINNERS-CUP-X-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stanley Chou",
+            "altText":"sport -: ASIAN CUP WINNERS'' CUP X",
+            "height":"565",
+            "credit":"Stanley Chou/Getty Images",
+            "caption":"Japanese side Shimizu S-Pulse have a habit of wearing eye-popping kits – this effort, from 2001, is among of collection of bright orange designs featuring world maps across the chest. Note also the subtle camouflage pattern in the background",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419499037",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":15,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317563087/Jack-Stamps-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Topical Press Agency",
+            "altText":"football kits: Jack Stamps",
+            "height":"565",
+            "credit":"Topical Press Agency/Getty Images",
+            "caption":"Back in the day, 1949 to be precise, Derby County took the button down approach several steps too far",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419518078",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":16,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381337957215/ENGLISH-SOCCER-009.jpg",
+          "typeData":{
+            "source":"EMPICS Sport",
+            "photographer":"Neal Simpson",
+            "altText":"sport -: ENGLISH SOCCER",
+            "height":"600",
+            "credit":"Neal Simpson/EMPICS Sport",
+            "caption":"Huddersfield Town went all tie-dye in the 1991-92 season. <a href=\"http://www.football-shirts.co.uk/fans/worst-football-kits-in-history-huddersfield-town-199394-away-goalkeeper-shirt_18955\">Their away goalkeeper jersey</a> of 1993-94 was pretty vile too",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419499049",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":17,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317551754/scunthorpe-001.jpg",
+          "typeData":{
+            "source":"EMPICS Sport",
+            "photographer":"Paul Marriott",
+            "altText":"football kits: scunthorpe",
+            "height":"600",
+            "credit":"Paul Marriott/EMPICS Sport",
+            "caption":"Another classic 90s kit, here, which took all the worst colours from the colour wheel and splattered them on to Scunthorpe United's kit. And to think, this came two years after <a href=\"http://norwichcity.wordpress.com/2008/03/03/memorable-kits-norwich-city-1992-1994/\">Norwich's similarly chronic home kit</a> which was released in 1992",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419499042",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":18,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317560575/Soccer---Italian-Serie-A--004.jpg",
+          "typeData":{
+            "source":"Buzzi/Press Association Images",
+            "photographer":"Studio Buzzi",
+            "altText":"football kits: Soccer - Italian Serie A - AC Milan Photocall",
+            "height":"593",
+            "credit":"Studio Buzzi/Buzzi/Press Association Images",
+            "caption":"What a way to ruin a perfectly acceptable kit. Joe Jordan, seen here in his Milan days, surely wouldn't have been too happy about this choice of shirt sponsor in 1981. But the real question is, what on earth were the founders of Pooh Jeans thinking when they named their company?",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-419499046",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":19,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317582882/The-Royal-Engineers-010.jpg",
+          "typeData":{
+            "source":"Popperfoto/Getty Images",
+            "altText":"football kits: The Royal Engineers",
+            "height":"480",
+            "credit":"Popperfoto/Getty Images",
+            "caption":"And speaking of founders, check out the clobber worn by The Royal Engineers team who competed in the first FA Cup Final in 1872. Hats and leggings for a team-photo, no less. They lost 1-0 to the Wanderers at the Kennington Oval in London",
+            "width":"686"
+          }
+        }]
+      },{
+        "id":"gu-image-419499051",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":20,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381317705071/sport-015.jpg",
+          "typeData":{
+            "source":"Denver Post",
+            "altText":"football kits: sport",
+            "height":"471",
+            "credit":"Denver Post",
+            "caption":"Now here's a serious abomination, featuring tassels on what looks like a horse polo top, which is beige, of all colours. We actually didn't believe this was real until we hunted around for pictures of it being worn, and, lo and behold, we found some. The shirt belonged to the 1978 Colorado Caribous of the North American Soccer League. They only played one season and, frills aside, weren't especially dazzling; they lost 22 of their 30 games",
+            "width":"760"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"artanddesign/2013/oct/09/leigh-ledare-photographs-mother-having-sex",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-09T23:26:00Z",
+      "webTitle":"Oedipal exposure: Leigh Ledare's photographs of his mother having sex",
+      "webUrl":"http://www.theguardian.com/artanddesign/2013/oct/09/leigh-ledare-photographs-mother-having-sex",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/oct/09/leigh-ledare-photographs-mother-having-sex",
+      "fields":{
+        "trailText":"<p>Leigh Ledare takes photographs of his mother having sex with young men. Is he just out to shock? By <strong>Sean&nbsp;O'Hagan</strong></p>",
+        "headline":"Oedipal exposure: Leigh Ledare's photographs of his mother having sex",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jcjm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/8/1381248537892/Leigh-Ledare-Tina-Reflect-006.jpg",
+        "wordcount":"1575",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/exhibition",
+        "type":"keyword",
+        "webTitle":"Exhibitions",
+        "webUrl":"http://www.theguardian.com/artanddesign/exhibition",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/exhibition",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"profile/seanohagan",
+        "type":"contributor",
+        "webTitle":"Sean O'Hagan",
+        "webUrl":"http://www.theguardian.com/profile/seanohagan",
+        "apiUrl":"http://content.guardianapis.com/profile/seanohagan",
+        "bio":"<p>Sean O'Hagan writes about photography for the Guardian and the Observer and is also a general feature writer. He was named interviewer of the year in the British press awards in 2003 for his profiles of <a href=\"http://www.guardian.co.uk/sport/2002/sep/01/football.newsstory2\">footballer Roy Keane</a> and <a href=\"http://www.guardian.co.uk/theobserver/2002/jan/06/features.review87\">musician Brian Wilson</a>, among others. He is the winner of the 2011 J Dudley Johnston award from the Royal Photographic Society \"for major achievement in the field of photographic criticism\" for his writing in the Observer and the Guardian</p>",
+        "rcsId":"GNL025833",
+        "r2ContributorId":"15296",
+        "references":[]
+      },{
+        "id":"film/larry-clark",
+        "type":"keyword",
+        "webTitle":"Larry Clark",
+        "webUrl":"http://www.theguardian.com/film/larry-clark",
+        "apiUrl":"http://content.guardianapis.com/film/larry-clark",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2/arts",
+        "type":"newspaper-book-section",
+        "webTitle":"Arts",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/arts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/arts",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419609424",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/8/1381248544212/Leigh-Ledare-Tina-Reflect-011.jpg",
+          "typeData":{
+            "source":"courtesy Leigh Ledare/Pilar Corrias London",
+            "altText":"Leigh Ledare: Tina Reflecting",
+            "height":"276",
+            "credit":"courtesy Leigh Ledare/Pilar Corrias London",
+            "caption":"Not for the easily offended … Tina Reflecting, 2003, by Leigh Ledare. Photograph: courtesy Leigh Ledare/Pilar Corrias London",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/8/1381248544212/Leigh-Ledare-Tina-Reflect-011.jpg",
+          "typeData":{
+            "source":"courtesy Leigh Ledare/Pilar Corrias London",
+            "altText":"Leigh Ledare: Tina Reflecting",
+            "height":"276",
+            "credit":"courtesy Leigh Ledare/Pilar Corrias London",
+            "caption":"Not for the easily offended … Tina Reflecting, 2003, by Leigh Ledare. Photograph: courtesy Leigh Ledare/Pilar Corrias London",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/8/1381229681186/Leigh-Ledare-006.jpg",
+          "typeData":{
+            "source":"Courtesy of the artist and Pilar Corrias, London",
+            "photographer":"Leigh Ledare",
+            "altText":"Leigh Ledare",
+            "height":"180",
+            "credit":"Leigh Ledare/Courtesy of the artist and Pilar Corrias, London",
+            "caption":"Leigh Ledare, Tina Reflecting, 2003 Photograph: Leigh Ledare/Courtesy of the artist and Pilar Corrias, London",
+            "width":"300"
+          }
+        }]
+      },{
+        "id":"gu-image-419609425",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/8/1381248537892/Leigh-Ledare-Tina-Reflect-006.jpg",
+          "typeData":{
+            "source":"courtesy Leigh Ledare/Pilar Corrias London",
+            "altText":"Leigh Ledare: Tina Reflecting",
+            "height":"84",
+            "credit":"courtesy Leigh Ledare/Pilar Corrias London",
+            "caption":"… Tina Reflecting, 2003, by Leigh Ledare (detail – click to see full). Photograph: courtesy Leigh Ledare/Pilar Corrias London",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419609426",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/9/1381335801297/Leigh-Ledare-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"© Leigh Ledare\rCourtesy of the artist and Pilar Corrias, London\r© Leigh Ledare\rCourtesy of the artist and Pilar Corrias, London\rCopyright Leigh Ledare",
+            "altText":"Leigh Ledare",
+            "height":"639",
+            "credit":"© Leigh Ledare\rCourtesy of the artist and Pilar Corrias, London\r© Leigh Ledare\rCourtesy of the artist and Pilar Corrias, London\rCopyright Leigh Ledare/PR",
+            "caption":"Leigh Ledare, Mother and Catch 22, 2002 Photograph: © Leigh Ledare Courtesy of the artist and Pilar Corrias, London © Leigh Ledare Courtesy of the artist and Pilar Corrias, London Copyright Leigh Ledare",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/09/julian-assange-benedict-cumberbatch-letter",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-09T19:07:24Z",
+      "webTitle":"Julian Assange's letter to Benedict Cumberbatch",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/09/julian-assange-benedict-cumberbatch-letter",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/09/julian-assange-benedict-cumberbatch-letter",
+      "fields":{
+        "trailText":"<p>The text of the letter sent by the WikiLeaks founder to the actor playing him in The Fifth Estate, in response to an approach by Cumberbatch to meet</p>",
+        "headline":"Julian Assange's letter to Benedict Cumberbatch",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jdpt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/8/1381189239173/The-Fifth-Estate-004.jpg",
+        "wordcount":"1075",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/benedict-cumberbatch",
+        "type":"keyword",
+        "webTitle":"Benedict Cumberbatch",
+        "webUrl":"http://www.theguardian.com/culture/benedict-cumberbatch",
+        "apiUrl":"http://content.guardianapis.com/culture/benedict-cumberbatch",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"media/julian-assange",
+        "type":"keyword",
+        "webTitle":"Julian Assange",
+        "webUrl":"http://www.theguardian.com/media/julian-assange",
+        "apiUrl":"http://content.guardianapis.com/media/julian-assange",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/wikileaks",
+        "type":"keyword",
+        "webTitle":"WikiLeaks",
+        "webUrl":"http://www.theguardian.com/media/wikileaks",
+        "apiUrl":"http://content.guardianapis.com/media/wikileaks",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/julian-assange",
+        "type":"contributor",
+        "webTitle":"Julian Assange",
+        "webUrl":"http://www.theguardian.com/profile/julian-assange",
+        "apiUrl":"http://content.guardianapis.com/profile/julian-assange",
+        "bio":"<p>Australian journalist Julian Assange is the founder of <a href=\"wikileaks.org/\">WikiLeaks</a>, an online nonprofit that publishes news leaks and classified information from anonymous sources</p>",
+        "r2ContributorId":"57460",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/3/1372864722535/Julian_Assange.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419526317",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/8/1381189239173/The-Fifth-Estate-004.jpg",
+          "typeData":{
+            "source":"AP/Dreamworks Pictures",
+            "photographer":"Frank Connor",
+            "altText":"The Fifth Estate",
+            "height":"84",
+            "credit":"Frank Connor/AP/Dreamworks Pictures",
+            "caption":"Benedict Cumberbatch as WikiLeaks founder Julian Assange in a scene from The Fifth Estate.   Photograph: Frank Connor/AP/Dreamworks Pictures",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-412995861",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/17/130717FifthEstate-16x9.mp4",
+          "typeData":{
+            "source":"Entertainment One",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/7/17/130717FifthEstate_7846912.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/7/17/130717FifthEstate_7846912.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/17/130717FifthEstate_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Entertainment One",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/7/17/130717FifthEstate_7846912.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/7/17/130717FifthEstate_7846912.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/17/130717FifthEstate_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Entertainment One",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/7/17/130717FifthEstate_7846912.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/7/17/130717FifthEstate_7846912.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/7/17/130717FifthEstate-720.mp4",
+          "typeData":{
+            "source":"Entertainment One",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/7/17/130717FifthEstate_7846912.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/7/17/130717FifthEstate_7846912.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/17/130717FifthEstate/130717FifthEstate.m3u8",
+          "typeData":{
+            "source":"Entertainment One",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/7/17/130717FifthEstate_7846912.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/7/17/130717FifthEstate_7846912.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/oct/09/carrie-stunt-new-york-cafe-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-09T10:43:00Z",
+      "webTitle":"Carrie stunt terrifies New York cafe customers - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/oct/09/carrie-stunt-new-york-cafe-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/oct/09/carrie-stunt-new-york-cafe-video",
+      "fields":{
+        "trailText":"<p>This video promoting a remake of the 1976 horror movie Carrie uses unsuspecting New York cafe customers as unwitting participants in a stunt to recreate the supernatural abilities displayed in the cult film</p>",
+        "headline":"Carrie stunt terrifies New York cafe customers - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jd36",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308353838/Carrie-recreated-010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-419462486",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308341959/Carrie-recreated-001.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"230",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308343534/Carrie-recreated-002.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"90",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308344745/Carrie-recreated-003.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"225",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308345941/Carrie-recreated-004.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"360",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308347181/Carrie-recreated-005.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"360",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308349823/Carrie-recreated-007.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"54",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308351014/Carrie-recreated-008.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"340",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308352575/Carrie-recreated-009.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"130",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308353838/Carrie-recreated-010.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"84",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308355251/Carrie-recreated-011.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"132",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308356510/Carrie-recreated-012.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"168",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308358153/Carrie-recreated-013.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"180",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308359384/Carrie-recreated-014.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"228",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308360605/Carrie-recreated-015.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"276",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308361883/Carrie-recreated-016.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"372",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/9/131008Carrie_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"LiveLeak",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/9/131008Carrie_8171811.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/9/131008Carrie_8171811.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/9/131008Carrie-16x9.mp4",
+          "typeData":{
+            "source":"LiveLeak",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/9/131008Carrie_8171811.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/9/131008Carrie_8171811.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/9/131008Carrie_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"LiveLeak",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/9/131008Carrie_8171811.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/9/131008Carrie_8171811.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/9/131008Carrie/131008Carrie.m3u8",
+          "typeData":{
+            "source":"LiveLeak",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/9/131008Carrie_8171811.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/9/131008Carrie_8171811.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        }]
+      },{
+        "id":"gu-image-419504189",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/9/1381308353838/Carrie-recreated-010.jpg",
+          "typeData":{
+            "source":"ITN",
+            "photographer":"ITN",
+            "altText":"Carrie recreated",
+            "height":"84",
+            "credit":"ITN/ITN",
+            "caption":"Carrie recreated Photograph: ITN",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/07/new-york-1percent-stifles-creative-talent",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-07T13:30:00Z",
+      "webTitle":"If the 1% stifles New York's creative talent, I'm out of here | David Byrne ",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/07/new-york-1percent-stifles-creative-talent",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/07/new-york-1percent-stifles-creative-talent",
+      "fields":{
+        "trailText":"<p><strong>David Byrne for Creative Time Reports:</strong> Rampant inequality is squeezing out the artistic genius that made New York such a vibrant cultural capital. We can't let that happen</p>",
+        "headline":"If the 1% stifles New York's creative talent, I'm out of here",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j9mx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/9/1370793426144/Aerial-Shot-Of-New-York-C-006.jpg",
+        "wordcount":"1928",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/david-byrne-contributor",
+        "type":"contributor",
+        "webTitle":"David Byrne",
+        "webUrl":"http://www.theguardian.com/profile/david-byrne-contributor",
+        "apiUrl":"http://content.guardianapis.com/profile/david-byrne-contributor",
+        "bio":"<p>David Byrne is an artist and musician. He was a co-founder of the band Talking Heads, and he has displayed his art installations in Belfast, Toronto, Stockholm, San Francisco, Tokyo, and Sydney. <a href=\"http://www.davidbyrne.com/\">Visit his website.</a></p>",
+        "r2ContributorId":"58963",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/3/1380822981368/David-Byrne140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"artanddesign/architecture",
+        "type":"keyword",
+        "webTitle":"Architecture",
+        "webUrl":"http://www.theguardian.com/artanddesign/architecture",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/architecture",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/michaelbloomberg",
+        "type":"keyword",
+        "webTitle":"Michael Bloomberg",
+        "webUrl":"http://www.theguardian.com/world/michaelbloomberg",
+        "apiUrl":"http://content.guardianapis.com/world/michaelbloomberg",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bill-de-blasio",
+        "type":"keyword",
+        "webTitle":"Bill de Blasio",
+        "webUrl":"http://www.theguardian.com/world/bill-de-blasio",
+        "apiUrl":"http://content.guardianapis.com/world/bill-de-blasio",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"business/useconomy",
+        "type":"keyword",
+        "webTitle":"US economy",
+        "webUrl":"http://www.theguardian.com/business/useconomy",
+        "apiUrl":"http://content.guardianapis.com/business/useconomy",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419268913",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/9/1370793432233/Aerial-Shot-Of-New-York-C-011.jpg",
+          "typeData":{
+            "source":"Jason Hawkes/Barcroft Media",
+            "altText":"Aerial Shot Of New York City",
+            "height":"276",
+            "credit":"Jason Hawkes/Barcroft Media",
+            "caption":"An aerial view of lower Manhattan, NYC. ",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419268914",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/9/1370793426144/Aerial-Shot-Of-New-York-C-006.jpg",
+          "typeData":{
+            "source":"Jason Hawkes/Barcroft Media",
+            "altText":"Aerial Shot Of New York City",
+            "height":"84",
+            "credit":"Jason Hawkes/Barcroft Media",
+            "caption":"Aerial shot of the Battery Park and the Financial District, New York.  These are the towering images taken from a flying perspective above the skyscrapers of New York. The stunning aerial shots of the Big Apple focus on iconic landmarks such as the Empire State building, The Freedom Tower and the Statue of Liberty.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/2013/oct/05/daily-rituals-creative-minds-mason-currey",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-05T08:00:00Z",
+      "webTitle":"Rise and shine: the daily routines of history's most creative minds",
+      "webUrl":"http://www.theguardian.com/science/2013/oct/05/daily-rituals-creative-minds-mason-currey",
+      "apiUrl":"http://content.guardianapis.com/science/2013/oct/05/daily-rituals-creative-minds-mason-currey",
+      "fields":{
+        "trailText":"<p>Benjamin Franklin spent his mornings naked. Patricia Highsmith ate only&nbsp;bacon and eggs.&nbsp;The&nbsp;path to greatness is paved with a thousand tiny rituals (and a fair bit of substance abuse) – but six key rules emerge, says <strong>Oliver Burkeman</strong></p>",
+        "headline":"Rise and shine: the daily routines of history's most creative minds",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j6qb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642828788/Daily-rituals-005.jpg",
+        "wordcount":"2841",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"science/psychology",
+        "type":"keyword",
+        "webTitle":"Psychology",
+        "webUrl":"http://www.theguardian.com/science/psychology",
+        "apiUrl":"http://content.guardianapis.com/science/psychology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"music/ludwig-van-beethoven",
+        "type":"keyword",
+        "webTitle":"Ludwig van Beethoven",
+        "webUrl":"http://www.theguardian.com/music/ludwig-van-beethoven",
+        "apiUrl":"http://content.guardianapis.com/music/ludwig-van-beethoven",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"books/marcelproust",
+        "type":"keyword",
+        "webTitle":"Marcel Proust",
+        "webUrl":"http://www.theguardian.com/books/marcelproust",
+        "apiUrl":"http://content.guardianapis.com/books/marcelproust",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/ernesthemingway",
+        "type":"keyword",
+        "webTitle":"Ernest Hemingway",
+        "webUrl":"http://www.theguardian.com/books/ernesthemingway",
+        "apiUrl":"http://content.guardianapis.com/books/ernesthemingway",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"money/work-and-careers",
+        "type":"keyword",
+        "webTitle":"Work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-and-careers",
+        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/work-life-balance",
+        "type":"keyword",
+        "webTitle":"Work-life balance",
+        "webUrl":"http://www.theguardian.com/money/work-life-balance",
+        "apiUrl":"http://content.guardianapis.com/money/work-life-balance",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/oliverburkeman",
+        "type":"contributor",
+        "webTitle":"Oliver Burkeman",
+        "webUrl":"http://www.theguardian.com/profile/oliverburkeman",
+        "apiUrl":"http://content.guardianapis.com/profile/oliverburkeman",
+        "bio":"<p>Oliver Burkeman is a Guardian writer based in New York. Read his <a href=\"http://www.guardian.co.uk/commentisfree/oliver-burkemans-blog\">blog</a> here. He is the author of The Antidote: Happiness for People Who Can't Stand Positive Thinking</p>",
+        "rcsId":"GNL001559",
+        "r2ContributorId":"16207",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/oliver_burkeman_140x140.jpg",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/extract",
+        "type":"tone",
+        "webTitle":"Extracts",
+        "webUrl":"http://www.theguardian.com/tone/extract",
+        "apiUrl":"http://content.guardianapis.com/tone/extract",
+        "references":[]
+      },{
+        "id":"books/sigmundfreud",
+        "type":"keyword",
+        "webTitle":"Sigmund Freud",
+        "webUrl":"http://www.theguardian.com/books/sigmundfreud",
+        "apiUrl":"http://content.guardianapis.com/books/sigmundfreud",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/whauden",
+        "type":"keyword",
+        "webTitle":"WH Auden",
+        "webUrl":"http://www.theguardian.com/books/whauden",
+        "apiUrl":"http://content.guardianapis.com/books/whauden",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/sylviaplath",
+        "type":"keyword",
+        "webTitle":"Sylvia Plath",
+        "webUrl":"http://www.theguardian.com/books/sylviaplath",
+        "apiUrl":"http://content.guardianapis.com/books/sylviaplath",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/david-foster-wallace",
+        "type":"keyword",
+        "webTitle":"David Foster Wallace",
+        "webUrl":"http://www.theguardian.com/books/david-foster-wallace",
+        "apiUrl":"http://content.guardianapis.com/books/david-foster-wallace",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/alice-munro",
+        "type":"keyword",
+        "webTitle":"Alice Munro",
+        "webUrl":"http://www.theguardian.com/books/alice-munro",
+        "apiUrl":"http://content.guardianapis.com/books/alice-munro",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/ingmarbergman",
+        "type":"keyword",
+        "webTitle":"Ingmar Bergman",
+        "webUrl":"http://www.theguardian.com/film/ingmarbergman",
+        "apiUrl":"http://content.guardianapis.com/film/ingmarbergman",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"theguardian/weekend/features2",
+        "type":"newspaper-book-section",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend/features2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend/features2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/weekend",
+        "type":"newspaper-book",
+        "webTitle":"Weekend",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419342897",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642837641/Daily-rituals-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Jean Julien",
+            "altText":"Daily rituals",
+            "height":"276",
+            "credit":"Jean Julien/Guardian",
+            "caption":"Click on image for full illustration. Illustration: Jean Julien for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642820839/Daily-rituals-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Jean Julien",
+            "altText":"Daily rituals",
+            "height":"700",
+            "credit":"Jean Julien/Guardian",
+            "caption":"Illustration: Jean Julien for the Guardian",
+            "width":"600"
+          }
+        }]
+      },{
+        "id":"gu-image-419342899",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/1/1380642828788/Daily-rituals-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Jean Julien",
+            "altText":"Daily rituals",
+            "height":"84",
+            "credit":"Jean Julien/Guardian",
+            "caption":"Click on image for full illustration. Illustration: Jean Julien for the Guardian",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-419342900",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380704720008/Georgia-OKeeffe-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":" ",
+            "altText":"Georgia O'Keeffe",
+            "height":"310",
+            "credit":" /AP",
+            "caption":"Georgia O'Keeffe: one of a majority of very early morning risers. Photograph: AP",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342901",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380704966448/TS-Eliot-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Hulton Archive",
+            "altText":"TS Eliot",
+            "height":"310",
+            "credit":"Hulton Archive/Getty Images",
+            "caption":"TS Eliot’s day job at Lloyds bank gave him crucial financial security. Photograph: Hulton Archive/Getty Images",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342902",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380705148183/Tchaikovsky-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Hulton Archive",
+            "altText":"Tchaikovsky",
+            "height":"310",
+            "credit":"Hulton Archive/Getty Images",
+            "caption":"Tchaikovsky 'believed he had to take a walk of exactly two hours a day and that if he returned even a few minutes early, great misfortunes would befall him.' Photograph: Hulton Archive/Getty Images",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342903",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380705754166/Patricia-Highsmith-001.jpg",
+          "typeData":{
+            "source":"Corbis Sygma ",
+            "photographer":" ",
+            "altText":"Patricia Highsmith",
+            "height":"310",
+            "credit":" /Corbis Sygma ",
+            "caption":"Patricia Highsmith, among others, ate virtually the same thing for every meal, in her case bacon and fried eggs. Photograph: Corbis Sygma ",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342904",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380706053022/Ayn-Rand-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"New York Times Co.",
+            "altText":"Ayn Rand",
+            "height":"310",
+            "credit":"New York Times Co./Getty Images",
+            "caption":"Ayn Rand took Benzedrine. Photograph: New York Times Co/Getty Images",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-419342905",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/2/1380706701505/Agatha-Christie-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"-",
+            "altText":"Agatha Christie",
+            "height":"310",
+            "credit":"-/AFP/Getty Images",
+            "caption":"Agatha Christie didn’t have a desk. Any stable tabletop for her typewriter would do.\r\n Photograph: AFP/Getty Images",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/2012/feb/01/top-five-regrets-of-the-dying",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2012-02-01T11:49:00Z",
+      "webTitle":"Top five regrets of the dying  ",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2012/feb/01/top-five-regrets-of-the-dying",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2012/feb/01/top-five-regrets-of-the-dying",
+      "fields":{
+        "trailText":"<p>A palliative nurse has recorded the most common regrets of the dying. What would your biggest regret be if this was your last day of life?</p>",
+        "headline":"Top five regrets of the dying",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/356tg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2012/2/1/1328095379406/The-top-five-regrets-of-t-003.jpg",
+        "wordcount":"561",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/death-and-dying",
+        "type":"keyword",
+        "webTitle":"Death and dying",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/death-and-dying",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/death-and-dying",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/susiesteiner",
+        "type":"contributor",
+        "webTitle":"Susie Steiner",
+        "webUrl":"http://www.theguardian.com/profile/susiesteiner",
+        "apiUrl":"http://content.guardianapis.com/profile/susiesteiner",
+        "bio":"<p>Susie Steiner is a novelist and freelance journalist. She was a staff writer and editor on the Guardian for 11 years, specialising in lifestyle features. Her <a href=\"http://www.amazon.co.uk/Homecoming-Susie-Steiner/dp/0571297196/ref=sr_1_1?ie=UTF8&amp;qid=1359140260&amp;sr=8-1\">novel will be published by Faber &amp; Faber in spring 2013</a>. Follow her on twitter (<a href=\"https://twitter.com/#!/susiesteiner1\">@susiesteiner1</a>) or via her website, <a href=\"http://www.susiesteiner.co.uk\">susiesteiner.co.uk</a></p>",
+        "rcsId":"GNL029962",
+        "r2ContributorId":"16502",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/29/1359466469383/Susie-Steiner.jpg",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-413201828",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2012/2/1/1328095383283/The-top-five-regrets-of-t-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Montgomery Martin / Alamy",
+            "altText":"The top five regrets of the dying",
+            "height":"276",
+            "credit":"Montgomery Martin / Alamy/Alamy",
+            "caption":"A palliative nurse has recorded the top five regrets of the dying. Photograph: Montgomery Martin/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-413201829",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2012/2/1/1328095379406/The-top-five-regrets-of-t-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Montgomery Martin / Alamy",
+            "altText":"The top five regrets of the dying",
+            "height":"84",
+            "credit":"Montgomery Martin / Alamy/Alamy",
+            "caption":"A palliative nurse has recorded the top five regrets of the dying Photograph: Montgomery Martin / Alamy/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

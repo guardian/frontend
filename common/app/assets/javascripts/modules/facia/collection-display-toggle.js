@@ -1,6 +1,6 @@
 define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo, bean, userPrefs) {
 
-    return function(collection, config) {
+    return function(collection) {
 
         var _$collection = bonzo(collection),
             _$button = bonzo(bonzo.create(
@@ -9,8 +9,7 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
                     + '<span class="collection__display-toggle__text u-h">Hide</span>'
                 +'</button>'
             )),
-            _prefName = 'front-trailblocks',
-            _edition = config.page.edition.toLowerCase(),
+            _prefName = 'collection-states',
             _toggleText = {
                 hidden: 'Show',
                 displayed: 'Hide'
@@ -20,28 +19,27 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
             _updatePref = function($collection, state) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName),
-                    prefValue = $collection.attr('data-collection-type') + '|' + $collection.attr('data-section');
+                    prefValue = $collection.attr('data-id');
                 if (state === 'displayed') {
-                    delete prefs[_edition][prefValue];
+                    delete prefs[prefValue];
                 } else {
                     if (!prefs) {
                         prefs = {};
                     }
-                    if (!prefs[_edition]) {
-                        prefs[_edition] = {};
-                    }
-                    prefs[_edition][prefValue] = 1;
+                    prefs[prefValue] = 'closed';
                 }
                 userPrefs.set(_prefName, prefs);
             },
             _readPrefs = function($collection) {
                 // update user prefs
-                var prefs = userPrefs.get(_prefName),
-                    prefValue = $collection.attr('data-collection-type') + '|' + $collection.attr('data-section');
-                if (prefs && prefs[_edition] && prefs[_edition][prefValue]) {
+                var prefs = userPrefs.get(_prefName);
+                if (prefs && prefs[$collection.attr('data-id')]) {
                     bean.fire(_$button[0], 'click');
                 }
             };
+
+        // delete old key
+        userPrefs.remove('front-trailblocks');
 
         this.addToggle =  function () {
             // append toggle button

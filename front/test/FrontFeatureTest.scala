@@ -10,12 +10,12 @@ import org.scalatest.concurrent.Eventually
 import org.scalatest.time.SpanSugar
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.mvc._
 import play.api.test.Helpers._
 
 
-class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results with Eventually with SpanSugar{
+class FrontFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with Results with Eventually with SpanSugar{
 
   val TrailblockDescription = ItemTrailblockDescription
 

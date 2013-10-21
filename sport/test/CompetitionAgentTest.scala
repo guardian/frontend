@@ -3,13 +3,13 @@ package test
 import feed.{CompetitionSupport, Competitions, CompetitionAgent}
 import model.Competition
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Millis, Span}
 import org.joda.time.DateMidnight
 
 
-class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.Football with Eventually {
+class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually {
 
   override implicit lazy val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 

@@ -2,11 +2,11 @@ package test
 
 import conf.Configuration
 import conf.Switches._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 

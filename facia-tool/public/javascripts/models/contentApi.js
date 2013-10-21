@@ -18,6 +18,9 @@ function (
         } else {
             fetchData([item.meta.id()])
             .done(function(result){
+                if(result.length !== 1) {
+                    defer.reject();
+                }
                 result = result[0];
                 cache.put('contentApi', result.id, result);
                 populate(result, item);
