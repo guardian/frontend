@@ -1,6 +1,6 @@
 .ad-slot {
     width: 100%;
-    padding: 10px 0 0 0;
+    padding: 10px 0 6px 0;
     text-align: center;
     height: 54px;
 
@@ -28,7 +28,7 @@
 }
 
 .top-banner-ad-container {
-    height: 64px;
+    height: 70px;
     @include mq(desktopAd) {
         height: auto;
     }
@@ -63,6 +63,13 @@
     }
 }
 
+.parts__head {
+    &.is-sticky {
+        top: 0;
+        @include sticky;
+    }
+}
+
 .ad-slot--inline {
     min-height: auto;
     padding: 0;
@@ -85,10 +92,7 @@
     height: 100%;
 }
 .mpu-container {
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -ms-sticky;
-    position: sticky;
+    @include sticky;
     top: $baseline*4;
 
     &.is-affixed {

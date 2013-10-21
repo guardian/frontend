@@ -33,7 +33,7 @@ define([
                     var article = document.getElementsByClassName('js-article__container')[0];
                     bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function() {
                         bonzo(bonzo.create(inlineTmp)).attr({
-                            'data-inview-name' : 'every '+ nParagraphs +'th para',
+                            'data-inview-name' : 'Every '+ nParagraphs +'th para',
                             'data-inview-advert' : 'true',
                             'data-base' : 'Bottom3',
                             'data-median' : 'Middle',
@@ -51,7 +51,8 @@ define([
                     var viewport = detect.getLayoutMode(),
                         s;
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait'){
-                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name');
+                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name', 'Top adhesive');
+                        document.getElementsByClassName('parts__head')[0].className += ' is-sticky';
                         s = new Sticky({
                             elCls: 'ad-slot--top-banner-ad',
                             id: 'Top2'
