@@ -40,6 +40,7 @@ define([
                             'data-extended' : 'Middle'
                         }).insertAfter(this);
                     });
+                    //document.getElementsByClassName('ad-slot--mpu-banner-ad')[0].remove();
                     inview(document);
                     return true;
                 }
@@ -79,6 +80,7 @@ define([
             {
                 id: 'control', //Article D
                 test: function() {
+                    //document.getElementsByClassName('ad-slot--mpu-banner-ad')[0].remove();
                     return true;
                 }
             }

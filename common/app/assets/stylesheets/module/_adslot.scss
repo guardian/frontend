@@ -47,6 +47,7 @@
             z-index: 1001;
             position: fixed;
             top: 0;
+            padding: 10px 0;
         }
     }
 
@@ -100,6 +101,7 @@
 }
 
 .ad-slot--mpu-banner-ad {
+    padding-top: 60px;
     width: 300px;
     height: 250px;
     overflow: hidden;
