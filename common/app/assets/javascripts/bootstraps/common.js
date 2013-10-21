@@ -111,7 +111,7 @@ define([
                 sections = new Sections(config),
                 search = new Search(config),
                 editions = new EditionSwitch(),
-                header = document.body.querySelector('#header'),
+                header = document.getElementById('header'),
                 profile;
 
             if (config.switches.idProfileNavigation) {
