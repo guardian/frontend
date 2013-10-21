@@ -105,10 +105,19 @@ trait UpdateActions {
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
-    val index = update.after.filter {_ == true}
-      .map {_ => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1}
-      .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
-    val splitList = listWithoutItem.splitAt(index)
+    val splitList = {
+      if (update.item == update.position.getOrElse("")) {
+        val index = blocks.indexWhere(_.id == update.item)
+        listWithoutItem.splitAt(index)
+      }
+      else {
+        val index = update.after.filter {_ == true}
+          .map {_ => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1}
+          .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
+        listWithoutItem.splitAt(index)
+      }
+    }
+
     splitList._1 ++ List(emptyTrailWithId(update.item)) ++ splitList._2
   }
 
