@@ -152,7 +152,7 @@ define([
                                 live:     targetList.collection.state.liveMode(),
                                 draft:   !targetList.collection.state.liveMode(),
                                 itemMeta: {
-                                    group: targetList.group
+                                    group: targetList.group + ''
                                 }
                             }
                         )
