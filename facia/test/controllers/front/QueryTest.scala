@@ -51,7 +51,7 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
 
   "Query" should "start with minimal contents depending on id" in Fake {
     def defaultTuple(id: String): (Config, Collection) =
-      (Config(id, Some(FaciaDefaults.generateContentApiQuery(id)), None), Collection(Nil))
+      (Config("%s/%s".format(id, "regular-stories"), Some(FaciaDefaults.generateContentApiQuery(id)), None), Collection(Nil))
 
     val query = new FailingConfigQuery("uk")
     query.queryAgent() should be (Some(List(defaultTuple("uk"))))
