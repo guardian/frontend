@@ -77,8 +77,15 @@ trait UpdateActions {
       lazy val updatedDraft: Option[List[Trail]] = block.draft map { l =>
         updateList(update, l)
       } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
-      lazy val updatedLive = updateList(update, block.live)
-      updateCollection(id, block, update, identity, updatedDraft, updatedLive)
+      lazy val updatedLive: List[Trail] = updateList(update, block.live)
+
+      val collectionWithUpdatedMeta = {
+        for {
+          metaMap <- update.itemMeta
+        } yield updateItemMetaList(update.item, updatedLive, metaMap)
+      } getOrElse updatedLive
+
+      updateCollection(id, block, update, identity, updatedDraft, collectionWithUpdatedMeta)
     } getOrElse {
       UpdateActions.createBlock(id, identity, update)
     }
@@ -125,6 +132,19 @@ trait UpdateActions {
       FaciaApi.putBlock(id, newBlock, identity)
     }
   }
+
+  def updateItemMetaList(id: String, l: List[Trail], m: Map[String, String]): List[Trail] = {
+    lazy val fields: Seq[String] = Seq("webTitle", "group")
+    lazy val newMetaMap = m.filter{case (k, v) => fields.contains(k)}
+
+    for {
+      trail <- l
+      metaMap <- trail.meta.orElse(Option(Map.empty[String, String]))
+    } yield {
+      if (id == trail.id) trail.copy(meta = Some(metaMap ++ newMetaMap)) else trail
+    }
+  }
+
 }
 
 object UpdateActions extends UpdateActions
