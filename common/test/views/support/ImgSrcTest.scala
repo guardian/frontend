@@ -1,7 +1,7 @@
 package views.support
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.Matchers
+import org.scalatest.Matchers
 import model.{ImageContainer, ImageAsset}
 import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches.ImageServerSwitch

@@ -51,14 +51,14 @@ object Profile {
     FrontItemMobile,
     FrontItemMain,
     FrontItemMainMobile,
-	LargeThumbnail
+    LargeThumbnail
   )
 }
 
 
 object ImgSrc {
 
-  val imageHost = "http://localhost:9001"// Configuration.images.path
+  val imageHost = Configuration.images.path
 
   def apply(url: String, imageType: Profile): String = {
     val uri = new URI(url.trim)
@@ -67,7 +67,7 @@ object ImgSrc {
       uri.getHost == "static.guim.co.uk" &&
       !uri.getPath.toLowerCase().endsWith(".gif")
 
-    if (isSupportedImage) {
+    if (ImageServerSwitch.isSwitchedOn && isSupportedImage) {
       s"$imageHost/${imageType.prefix}${uri.getPath}"
     } else s"${url}"
   }
