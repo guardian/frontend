@@ -340,8 +340,6 @@ define(["bean",
         };
 
         this.switchToGrid = function(e) {
-            mode = 'grid';
-
             if (slideshowActive) {
                 self.stopSlideshow();
             }
@@ -350,11 +348,13 @@ define(["bean",
                 self.removeSwipe();
             }
 
+            mode = 'grid';
+
             bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
+            // Switch all images back to thumbnail versions
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
                 el.src = el.getAttribute('data-src');
-                el.removeAttribute('style');
             });
 
             // Update CTAs
