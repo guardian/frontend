@@ -18,6 +18,7 @@ define([
         context: document,
         elCls: 'ad-slot--mpu-banner-ad',
         affixCls: 'is-affixed',
+        stickCls: 'is-sticked',
         id: 'Middle1'
     };
 
@@ -25,11 +26,16 @@ define([
         var self = this;
 
         var e = detect.hasTouchScreen() ? 'touchmove' : 'scroll';
-        bean.on(window, 'scroll', function(){
-            common.requestAnimationFrame(function(){
-                self.checkPosition.call(self);
+        
+        if (detect.hasCSSSupport('position', 'sticky')) {
+            this.el.classList.add(this.options.stickCls);
+        } else if (detect.hasCSSSupport('position', 'fixed', true)) {
+            bean.on(window, 'scroll', function(){
+                common.requestAnimationFrame(function(){
+                    self.checkPosition.call(self);
+                });
             });
-        });
+        }
     };
 
     Sticky.prototype.checkPosition = function () {
