@@ -21,9 +21,6 @@ case class Block(
 
 case class Trail(
                   id: String,
-                  title: Option[String],
-                  trailImage: Option[String],
-                  linkText: Option[String],
                   meta: Option[Map[String, String]]
                   ) extends JsonShape
 
@@ -57,8 +54,6 @@ trait UpdateActions {
 
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
-
-  def emptyTrailWithId(id: String, itemMeta: Option[Map[String, String]]) = Trail(id, None, None, None, itemMeta)
 
   def shouldUpdate[T](cond: Boolean, original: T, updated: => T) = if (cond) updated else original
 
@@ -120,14 +115,14 @@ trait UpdateActions {
       }
     }
 
-    splitList._1 ++ List(emptyTrailWithId(update.item, None)) ++ splitList._2
+    splitList._1 ++ List(Trail(update.item, None)) ++ splitList._2
   }
 
   def createBlock(id: String, identity: Identity, update: UpdateList) {
     if (update.live)
-      FaciaApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
     else
-      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(emptyTrailWithId(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
   }
 
   def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
