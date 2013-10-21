@@ -21,7 +21,6 @@ define([
         context: document,
         elCls: 'ad-slot--mpu-banner-ad',
         affixCls: 'is-affixed',
-        stickCls: 'is-sticked',
         id: 'Middle1'
     };
 
