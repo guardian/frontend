@@ -35,8 +35,10 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             });
             // set up fake server
             server = sinon.fakeServer.create();
-            server.autoRespond = true;
             server.respondWith([200, {}, response]);
+            server.autoRespond = true;
+            // seem to need this, or sinon gets ahead of itself
+            server.autoRespondAfter = 11;
         });
 
         afterEach(function() {
@@ -129,6 +131,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
                });
            });
        });
+
     });
 
 });
