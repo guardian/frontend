@@ -1,9 +1,9 @@
 package client.filters
 
 import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class ElemMatchTest extends FunSuite with ShouldMatchers {
+class ElemMatchTest extends FunSuite with Matchers {
   test("should add elemMatch with a single filter") {
     val elemMatch = ElemMatch("arrayPath", List(ElemMatchFilter("fieldPath", "value")))
     elemMatch.parameters should contain(("elemMatch", "arrayPath"))

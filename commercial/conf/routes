@@ -1,0 +1,12 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# For dev machines
+GET    /assets/*path                                            dev.DevAssetsController.at(path)
+
+# Travel offers
+GET    /commercial/travel/offers                                controllers.commercial.TravelOffers.listOffers
+
+# Simple advert tests
+GET    /commercial/$advert<(jobs|soulmates|masterclasses)>      controllers.commercial.SimpleAdvert.render(advert)

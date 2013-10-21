@@ -3,6 +3,20 @@ Frontend
 The Guardian website frontend.
 
 
+Core Development Principles (lines in the sand)
+===============================================
+
+This applies to all requests on `www.theguardian.com` and `api.nextgen.guardianapps.co.uk` (our Ajax URL)
+
+On the server
+-------------
+
+* Every request can be cached and has an appropriate Cache-Control header set.
+* Each request may only perform 1 I/O operation on the backend. (you cannot make 2 calls to the content API or any
+  other 3rd party)
+* The average response time of any endpoint is less than 500ms.
+* Requests that take longer than 2 seconds will be terminated.
+
 New developers quick-start
 ===========================
 Frontend is a set of Play Framework 2 Scala applications.
@@ -52,7 +66,7 @@ For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number
 
 Configuration
 -------------
-You'll need a config file called _/etc/gu/install_vars_ with the following content :-
+You'll need a config file called `/etc/gu/install_vars` with the following content :-
 
 ```
 STAGE=DEV
@@ -60,7 +74,7 @@ INT_SERVICE_DOMAIN=gudev.gnl
 EXT_SERVICE_DOMAIN=
 ```
 
-And one called _~/.gu/frontend.properties_, ( alternatively _/gu/etc/frontend.properties_ ) with the following content :-
+And one called `~/.gu/frontend.properties`, ( alternatively `/gu/etc/frontend.properties` ) with the following content :-
 
 ```
 content.api.key=XXXX

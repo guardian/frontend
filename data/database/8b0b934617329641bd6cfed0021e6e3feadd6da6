@@ -1,0 +1,1468 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk-news/2013/oct/16/grangemouth-refinery-closes-dispute-ineos-unite",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-16T19:02:35Z",
+      "webTitle":"Grangemouth oil refinery shuts as owners refuse to back down in dispute",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/16/grangemouth-refinery-closes-dispute-ineos-unite",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/16/grangemouth-refinery-closes-dispute-ineos-unite",
+      "fields":{
+        "trailText":"Dispute over pensions divides owner Ineos and the Unite union; Scottish secretary says 'stakes are exceptionally high'",
+        "headline":"Grangemouth oil refinery shuts as owners refuse to back down in dispute",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jj3m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949994912/Ineoss-Grangemouth-oil-re-004.jpg",
+        "wordcount":"1037",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/scotland",
+        "type":"keyword",
+        "webTitle":"Scotland",
+        "webUrl":"http://www.theguardian.com/uk/scotland",
+        "apiUrl":"http://content.guardianapis.com/uk/scotland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/unite",
+        "type":"keyword",
+        "webTitle":"Unite",
+        "webUrl":"http://www.theguardian.com/politics/unite",
+        "apiUrl":"http://content.guardianapis.com/politics/unite",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/sean-farrell",
+        "type":"contributor",
+        "webTitle":"Sean Farrell",
+        "webUrl":"http://www.theguardian.com/profile/sean-farrell",
+        "apiUrl":"http://content.guardianapis.com/profile/sean-farrell",
+        "r2ContributorId":"58999",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420185448",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949989982/Ineoss-Grangemouth-oil-re-001.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"54",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949991767/Ineoss-Grangemouth-oil-re-002.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"340",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949993352/Ineoss-Grangemouth-oil-re-003.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"130",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949994912/Ineoss-Grangemouth-oil-re-004.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"84",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949996466/Ineoss-Grangemouth-oil-re-005.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"132",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949998049/Ineoss-Grangemouth-oil-re-006.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"168",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949999615/Ineoss-Grangemouth-oil-re-007.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"180",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950001189/Ineoss-Grangemouth-oil-re-008.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"228",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950002772/Ineoss-Grangemouth-oil-re-009.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"276",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950005036/Ineoss-Grangemouth-oil-re-010.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"372",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950002772/Ineoss-Grangemouth-oil-re-009.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"276",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420185449",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949994912/Ineoss-Grangemouth-oil-re-004.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"84",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"politics/2013/oct/06/unite-emergency-summit-strikes-scottish-oil",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-06T18:39:07Z",
+      "webTitle":"Unite calls for emergency summit to avert strikes at Scottish oil refinery",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/06/unite-emergency-summit-strikes-scottish-oil",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/06/unite-emergency-summit-strikes-scottish-oil",
+      "fields":{
+        "trailText":"UK's largest trade union accuses Ineos of trying to 'provoke' a strike and warns it would be hugely damaging to economy",
+        "headline":"Unite calls for emergency summit to avert strikes at Scottish oil refinery",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jb4y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084513477/uk-union-calls-emergency--003.jpg",
+        "wordcount":"281",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"politics/unite",
+        "type":"keyword",
+        "webTitle":"Unite",
+        "webUrl":"http://www.theguardian.com/politics/unite",
+        "apiUrl":"http://content.guardianapis.com/politics/unite",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/scotland",
+        "type":"keyword",
+        "webTitle":"Scotland",
+        "webUrl":"http://www.theguardian.com/uk/scotland",
+        "apiUrl":"http://content.guardianapis.com/uk/scotland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/commodities",
+        "type":"keyword",
+        "webTitle":"Commodities",
+        "webUrl":"http://www.theguardian.com/business/commodities",
+        "apiUrl":"http://content.guardianapis.com/business/commodities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419193834",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084510380/uk-union-calls-emergency--001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"54",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084512290/uk-union-calls-emergency--002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"130",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084513477/uk-union-calls-emergency--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"84",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084514667/uk-union-calls-emergency--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"132",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084515890/uk-union-calls-emergency--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"168",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084517085/uk-union-calls-emergency--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"180",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084518289/uk-union-calls-emergency--007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"228",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084519568/uk-union-calls-emergency--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"276",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084519568/uk-union-calls-emergency--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"276",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419193835",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/6/1381084513477/uk-union-calls-emergency--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"uk union calls emergency summit to avert strikes at oil refinery",
+            "height":"84",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The Ineos refinery at Grangemouth, Scotland, where workers have voted in favour of action up to and including a strike. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"politics/2013/oct/11/oil-workers-scotland-strike-stephen-deans-unite",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-11T20:15:38Z",
+      "webTitle":"Oil workers in Scotland to strike over treatment of Stephen Deans",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/11/oil-workers-scotland-strike-stephen-deans-unite",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/11/oil-workers-scotland-strike-stephen-deans-unite",
+      "fields":{
+        "trailText":"Unite says members at Grangemouth in Scotland will down tools for 48 hours on Sunday 20 October",
+        "headline":"Oil workers in Scotland to strike over treatment of Stephen Deans",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jfp5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522021448/oil-workers-to-strike-ste-003.jpg",
+        "wordcount":"255",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"politics/unite",
+        "type":"keyword",
+        "webTitle":"Unite",
+        "webUrl":"http://www.theguardian.com/politics/unite",
+        "apiUrl":"http://content.guardianapis.com/politics/unite",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/scotland",
+        "type":"keyword",
+        "webTitle":"Scotland",
+        "webUrl":"http://www.theguardian.com/uk/scotland",
+        "apiUrl":"http://content.guardianapis.com/uk/scotland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/commodities",
+        "type":"keyword",
+        "webTitle":"Commodities",
+        "webUrl":"http://www.theguardian.com/business/commodities",
+        "apiUrl":"http://content.guardianapis.com/business/commodities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419754189",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522018013/oil-workers-to-strike-ste-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"54",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522020228/oil-workers-to-strike-ste-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"130",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522021448/oil-workers-to-strike-ste-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"84",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522022732/oil-workers-to-strike-ste-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"132",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522024064/oil-workers-to-strike-ste-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"168",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522025461/oil-workers-to-strike-ste-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"180",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522026779/oil-workers-to-strike-ste-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"228",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522028129/oil-workers-to-strike-ste-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"276",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522028129/oil-workers-to-strike-ste-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"276",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos warned that the Grangemouth site will close by 2017 without investment and reduced costs. Photograph: Andrew Milligan/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419754190",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/11/1381522021448/oil-workers-to-strike-ste-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"oil workers to strike stephen deans ineos",
+            "height":"84",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Ineos has launched an internal investigation into Stephen Deans, who was involved in the dispute over the selection of a Labour candidate in Falkirk. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/16/grangemouth-strike-refinery-unite-talks",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-16T06:54:26Z",
+      "webTitle":"Union calls off strike at Grangemouth oil refinery despite talks stalemate",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/16/grangemouth-strike-refinery-unite-talks",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/16/grangemouth-strike-refinery-unite-talks",
+      "fields":{
+        "trailText":"Unite – which had planned 48-hour walkout – says it wants to protect 'national asset' from owner Ineos's 'scandalous behaviour'",
+        "headline":"Union calls off strike at Grangemouth oil refinery despite talks stalemate",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jt8g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906011603/Grangemouth-oil-refinery--004.jpg",
+        "wordcount":"417",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/scotland",
+        "type":"keyword",
+        "webTitle":"Scotland",
+        "webUrl":"http://www.theguardian.com/uk/scotland",
+        "apiUrl":"http://content.guardianapis.com/uk/scotland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/commodities",
+        "type":"keyword",
+        "webTitle":"Commodities",
+        "webUrl":"http://www.theguardian.com/business/commodities",
+        "apiUrl":"http://content.guardianapis.com/business/commodities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/unite",
+        "type":"keyword",
+        "webTitle":"Unite",
+        "webUrl":"http://www.theguardian.com/politics/unite",
+        "apiUrl":"http://content.guardianapis.com/politics/unite",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420096878",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906005118/Grangemouth-oil-refinery--001.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"54",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906008216/Grangemouth-oil-refinery--002.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"340",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906009838/Grangemouth-oil-refinery--003.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"130",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906011603/Grangemouth-oil-refinery--004.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"84",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906013416/Grangemouth-oil-refinery--005.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"132",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906015058/Grangemouth-oil-refinery--006.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"168",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906019821/Grangemouth-oil-refinery--008.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"228",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906021461/Grangemouth-oil-refinery--009.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"276",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906023066/Grangemouth-oil-refinery--010.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"372",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906016844/Grangemouth-oil-refinery--007.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"180",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906021461/Grangemouth-oil-refinery--009.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"276",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant, which Unite said would now return to full production. Photograph: Murdo Macleod",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420096879",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381906011603/Grangemouth-oil-refinery--004.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Grangemouth oil refinery, near Falkirk, Scotland, operated by Ineos",
+            "height":"84",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"The Grangemouth oil refinery and petrochemical plant. Unite said the plant would now return to full production. Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/16/grangemouth-refinery-closes-dispute-ineos-unite",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-16T19:02:35Z",
+      "webTitle":"Grangemouth oil refinery shuts as owners refuse to back down in dispute",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/16/grangemouth-refinery-closes-dispute-ineos-unite",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/16/grangemouth-refinery-closes-dispute-ineos-unite",
+      "fields":{
+        "trailText":"Dispute over pensions divides owner Ineos and the Unite union; Scottish secretary says 'stakes are exceptionally high'",
+        "headline":"Grangemouth oil refinery shuts as owners refuse to back down in dispute",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jj3m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949994912/Ineoss-Grangemouth-oil-re-004.jpg",
+        "wordcount":"1037",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/scotland",
+        "type":"keyword",
+        "webTitle":"Scotland",
+        "webUrl":"http://www.theguardian.com/uk/scotland",
+        "apiUrl":"http://content.guardianapis.com/uk/scotland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/unite",
+        "type":"keyword",
+        "webTitle":"Unite",
+        "webUrl":"http://www.theguardian.com/politics/unite",
+        "apiUrl":"http://content.guardianapis.com/politics/unite",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/sean-farrell",
+        "type":"contributor",
+        "webTitle":"Sean Farrell",
+        "webUrl":"http://www.theguardian.com/profile/sean-farrell",
+        "apiUrl":"http://content.guardianapis.com/profile/sean-farrell",
+        "r2ContributorId":"58999",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420185448",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949989982/Ineoss-Grangemouth-oil-re-001.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"54",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949991767/Ineoss-Grangemouth-oil-re-002.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"340",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949993352/Ineoss-Grangemouth-oil-re-003.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"130",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949994912/Ineoss-Grangemouth-oil-re-004.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"84",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949996466/Ineoss-Grangemouth-oil-re-005.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"132",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949998049/Ineoss-Grangemouth-oil-re-006.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"168",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949999615/Ineoss-Grangemouth-oil-re-007.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"180",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950001189/Ineoss-Grangemouth-oil-re-008.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"228",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950002772/Ineoss-Grangemouth-oil-re-009.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"276",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950005036/Ineoss-Grangemouth-oil-re-010.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"372",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381950002772/Ineoss-Grangemouth-oil-re-009.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"276",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420185449",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949994912/Ineoss-Grangemouth-oil-re-004.jpg",
+          "typeData":{
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"Ineos's Grangemouth oil refinery has been shut in a dispute",
+            "height":"84",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"Ineos's Grangemouth oil refinery has been shut in a dispute over workers' pensions Photograph: Murdo Macleod",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

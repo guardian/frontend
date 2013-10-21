@@ -1,4 +1,5 @@
 define([
+    'Config',
     'knockout',
     'models/common',
     'models/droppable',
@@ -7,9 +8,9 @@ define([
     'models/article',
     'models/latestArticles',
     'models/contentApi',
-    'models/ophanApi',
-    'models/viewer',
+    'models/ophanApi'
 ], function(
+    Config,
     ko,
     common,
     droppable,
@@ -18,35 +19,35 @@ define([
     Article,
     LatestArticles,
     contentApi,
-    ophanApi,
-    viewer
+    ophanApi
 ) {
     return function(selector) {
 
         var self = this,
             model = {
-                collections:    ko.observableArray(),
-                configs:        ko.observableArray(),
-                config:         ko.observable(),
+                collections: ko.observableArray(),
+                configs: ko.observableArray(),
+                config: ko.observable(),
 
                 latestArticles: new LatestArticles({
                     filterTypes: common.config.filterTypes
                 }),
 
-                viewer:         viewer,
-                showViewer:     ko.observable(),
-
                 clipboard: {
-                    articles:  ko.observableArray(),
+                    articles: ko.observableArray(),
                     underDrag: ko.observable(),
+                    callback: updateLayout,
+                    dropItem: function(item) {
+                        model.clipboard.articles.remove(item);
+                        updateLayout();
+                    },
                     keepCopy:  true
-                },
-
-                actions: {
-                    flushClipboard: flushClipboard,
-                    toggleViewer:   toggleViewer
                 }
             };
+
+        model.previewUrl = ko.computed(function() {
+            return common.config.previewUrls[Config.env] + '/responsive-viewer#/' + model.config();
+        })
 
         function fetchConfigsList() {
             return authedAjax({
@@ -105,17 +106,6 @@ define([
             startPoller = function() {}; // make idempotent
         }
 
-        function toggleViewer() {
-            model.showViewer(!model.showViewer());
-            if (model.showViewer()) {
-                model.viewer.render();
-            }
-        }
-
-        function flushClipboard() {
-            model.clipboard.articles.removeAll();
-        };
-
         ko.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
                 var graphs = ko.utils.unwrapObservable(valueAccessor()),
@@ -142,11 +132,31 @@ define([
             }
         };
 
-        model.config.subscribe(function(config) {
-            var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
+        model.config.subscribe(function(next) {
+            var previous = getConfig(), // previous config is still in queryStr
+                section;
+
+            if (Config.env.toLowerCase() === 'prod'
+                &&  next
+                && !next.match(/sandbox/) 
+                &&(!previous || previous.match(/sandbox/)) 
+                && !window.confirm("BEWARE! You are about to edit a LIVE page")) {
+                
+                model.config(previous);
+                return;
+            }
+
+            setConfig(next);
+            section = (getConfig() || '').split('/')[1]; // assumes ids are formed "edition/section/.."
             model.latestArticles.setSection(common.config.sectionSearches[section || 'default'] || section);
-            setConfig(config);
         });
+
+        function updateLayout() {
+            var height = $(window).height();
+            $('.scrollable').each(function() {
+                $(this).height(Math.max(100, height - $(this).offset().top) - 1)
+            });
+        };
 
         this.init = function() {
             droppable.init();
@@ -157,6 +167,9 @@ define([
                 window.onpopstate = renderConfig;
 
                 ko.applyBindings(model);
+
+                updateLayout();
+                window.onresize = updateLayout;
 
                 startPoller();
 

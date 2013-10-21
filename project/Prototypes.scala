@@ -71,7 +71,7 @@ trait Prototypes {
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+      "org.scalatest" %% "scalatest" % "2.0.RC1" % "test",
       "org.mockito" % "mockito-all" % "1.9.5" % "test"
     ),
 

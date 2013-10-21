@@ -21,7 +21,7 @@ define([
             deBounced,
             opts = opts || {},
             counter = 0,
-            container = document.querySelector('#latest-articles');
+            container = document.querySelector('.latest-articles');
 
         this.articles   = ko.observableArray();
 

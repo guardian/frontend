@@ -1,11 +1,15 @@
 define([
     "common",
     "modules/identity",
-    "modules/password-strength"
+    "modules/password-strength",
+    "modules/id",
+    "modules/adverts/userAdTargeting"
 ], function(
     common,
     Identity,
-    PasswordStrength
+    PasswordStrength,
+    Id,
+    UserAdTargeting
 ) {
 
     var modules = {
@@ -36,6 +40,16 @@ define([
             common.mediator.on('page:identity:ready', function(config, context) {
                 Identity.usernameAvailable(config, context);
             });
+        },
+        idConfig : function (config) {
+            common.mediator.on('page:identity:ready', function(config, context) {
+                Id.init(config);
+            });
+        },
+        userAdTargeting : function () {
+            common.mediator.on('page:identity:ready', function(config, context) {
+                UserAdTargeting.requestUserSegmentsFromId();
+            });
         }
     };
 
@@ -47,6 +61,8 @@ define([
             modules.passwordStrength();
             modules.passwordToggle();
             modules.usernameAvailable();
+            modules.idConfig(config);
+            modules.userAdTargeting();
         }
         common.mediator.emit("page:identity:ready", config, context);
     };

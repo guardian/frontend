@@ -38,7 +38,7 @@
                         @fragments.standfirst(video)
                     </div>
 
-                    @if(video.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
+                    @if(ArticleKeywordsSwitch.isSwitchedOn){
                         <div class="article__keywords" data-link-name="video keywords">
                             @fragments.keywordList(video.keywords)
                         </div>

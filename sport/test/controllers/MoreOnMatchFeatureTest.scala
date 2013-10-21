@@ -1,12 +1,12 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import football.controllers.MoreOnMatchController
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
 
-class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   val theMatch =
 

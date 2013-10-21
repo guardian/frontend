@@ -17,7 +17,7 @@
     }
 
     @include mq(tablet) {
-        min-height: auto;
+        min-height: 0;
         padding: $baseline*3 0;
         border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 
@@ -46,8 +46,7 @@
         margin-left: 0;
     }
 
-    &.sport-header,
-    &.article-zone--sport { // TODO: temporary until football gets side cols
+    &.sport-header { // TODO: temporary until football gets side cols
         padding-left: 0;
         margin-left: $gs-gutter;
     }
@@ -89,7 +88,7 @@
         -webkit-font-smoothing: antialiased;
         @include fs-headline(8, true);
         margin-bottom: $gs-column-height;
-        padding-top: 0px;
+        padding-top: 0;
         border-top: none;
     }
 
@@ -153,11 +152,6 @@
             time {
                 display: inline-block;
                 width: 85%;
-            }
-
-            i {
-                vertical-align: top;
-                margin-top: 1px;
             }
         }
     }
@@ -434,8 +428,8 @@ video {
 
 @include mq(leftCol) {
     .article-wrapper {
-        padding-left: $gutter;
-        padding-right: $gutter;
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
     .article__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;

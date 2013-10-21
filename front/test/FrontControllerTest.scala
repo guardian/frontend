@@ -2,11 +2,11 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import conf.Switches
 
-class FrontControllerTest extends FlatSpec with ShouldMatchers {
+class FrontControllerTest extends FlatSpec with Matchers {
   
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"

@@ -2,10 +2,10 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
-class CompetitionResultsControllerTest extends FlatSpec with ShouldMatchers {
+class CompetitionResultsControllerTest extends FlatSpec with Matchers {
   
   val url = "/football/competition/premierleague/results/2012/oct/20"
   val callbackName = "aFunction"

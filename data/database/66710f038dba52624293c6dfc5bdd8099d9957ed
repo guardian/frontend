@@ -4154,9 +4154,16 @@
         "sectionId":"news",
         "sectionName":"News",
         "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-419188158",
+        "id":"gu-image-419237606",
         "relation":"main",
         "type":"image",
         "assets":[{
@@ -4304,7 +4311,7 @@
           }
         }]
       },{
-        "id":"gu-image-419188159",
+        "id":"gu-image-419237607",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{

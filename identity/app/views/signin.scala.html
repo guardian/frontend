@@ -1,7 +1,7 @@
 @(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
-@import views.html.fragments.form.{idInputEmail, idInputPassword, idCheckbox}
+@import views.html.fragments.form.{idInput, idCheckbox}
 @import views.html.fragments.socialSignin
 
 @main(page, conf.Switches.all){
@@ -10,10 +10,10 @@
     <h1>Sign in to the Guardian</h1>
     <p>Don't have an account? <a href="@idUrlBuilder.buildUrl("/register", idRequest)">Register now</a>.</p>
 
-    @socialSignin(page, idRequest, idUrlBuilder)
+    @socialSignin("Sign in", page, idRequest, idUrlBuilder)
 
     <div class="form__note">
-        By proceeding, you agree to The Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
+        By proceeding, you agree to the Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
     </div>
 
     <div class="identity-section">
@@ -24,8 +24,8 @@
 
             <ul class="form-fields">
 
-                @idInputEmail(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email")
-                @idInputPassword(signinForm("password"), '_label -> "Password")
+                @idInput(Email(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email"))
+                @idInput(Password(signinForm("password"), '_label -> "Password"))
 
                 <li>
                     <div class="form-field__note">

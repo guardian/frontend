@@ -66,7 +66,11 @@ define([
             }
 
             function hasImageSibling(el) {
-                return (/img-extended/).test(el.previousElementSibling.className);
+                var prevSibling = el.previousElementSibling;
+                if (prevSibling) {
+                    return (/img-extended/).test(prevSibling.className);
+                }
+                return false;
             }
 
             function cardifyRelatedInBodyLink(link) {
