@@ -223,6 +223,10 @@ span.control__menu.i-menu {
         top: 0;
         right: 178px;
         white-space: nowrap;
+
+        &.control--profile-right {
+            right: 0;
+        }
     }
 }
 
