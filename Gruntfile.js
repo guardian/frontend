@@ -370,9 +370,11 @@ module.exports = function (grunt) {
             },
             discussion: {
                 options: {
-                    specs: [
-                        'common/test/assets/javascripts/spec/discussion/' + jasmineSpec + '.spec.js'
-                    ]
+                    specs: grunt.file.expand(
+                        'common/test/assets/javascripts/spec/discussion/' + jasmineSpec + '.spec.js', [
+                            '!common/test/assets/javascripts/spec/discussion/CommentBox.spec.js'
+                        ]
+                    )
                 }
             },
             admin: {
