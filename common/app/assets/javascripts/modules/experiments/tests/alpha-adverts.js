@@ -32,14 +32,15 @@ define([
                 id: 'Inline', //Article A
                 test: function() {
                     var article = document.getElementsByClassName('js-article__container')[0];
-                    bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function() {
+                    bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function(el, i) {
+                        var cls = (i % 2 === 0) ? 'is-odd' : 'is-even';
                         bonzo(bonzo.create(inlineTmp)).attr({
                             'data-inview-name' : 'Every '+ nParagraphs +'th para',
                             'data-inview-advert' : 'true',
                             'data-base' : 'Bottom3',
                             'data-median' : 'Middle',
                             'data-extended' : 'Middle'
-                        }).insertAfter(this);
+                        }).addClass(cls).insertAfter(this);
                     });
                     //document.getElementsByClassName('ad-slot--mpu-banner-ad')[0].remove();
                     inview(document);
@@ -72,6 +73,7 @@ define([
             {
                 id: 'Both',  //Article C
                 test: function() {
+                    document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
                             variant.test.call(self);
