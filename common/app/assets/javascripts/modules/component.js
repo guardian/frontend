@@ -1,15 +1,16 @@
 define([
     'bean',
-    'qwery'
+    'qwery',
+    'bonzo'
 ], function(
     bean,
-    qwery
+    qwery,
+    bonzo
 ) {
 
 /**
  * TODO (jamesgorrie):
  * * ERROR HANDLING!
- * * Remove bean dependency (make it an arg (DI?))
  * * Find a way to run the Component constructor manually,
  *   Perhaps in the create method somewhere.
  * @constructor
@@ -55,12 +56,11 @@ Component.prototype.defaultOptions = {};
  * @param {Element|string=} elem (optional)
  */
 Component.prototype.attachTo = function(elem) {
-    var selector = '.'+ this.conf().componentClass;
     this.elems = {};
 
-    elem = (elem && elem.nodeType === 1) ? [elem] : qwery(selector, this.context);
+    elem = (elem && elem.nodeType === 1) ? [elem] : qwery('.'+ this.conf().componentClass, this.context);
 
-    if (elem.length === 0) { throw new ComponentError('No element of type "'+ selector +'" to attach to.'); }
+    if (elem.length === 0) { throw new ComponentError('No element of type "'+ '.'+ this.conf().componentClass +'" to attach to.'); }
     this.elem = elem[0];
     this.ready();
 };
@@ -70,11 +70,14 @@ Component.prototype.attachTo = function(elem) {
  * @param {Element=} parent (optional)
  */
 Component.prototype.render = function(parent) {
-    var conf = this.conf();
-    var template = document.getElementById('tmpl-'+ conf.templateName).innerHTML,
-        container = parent || this.getElem(conf.containerClass) || document;
+    var conf = this.conf(),
+        template = bonzo.create(document.getElementById('tmpl-'+ conf.templateName).innerHTML)[0],
+        container = parent || this.getContainer(conf.containerClass) || document;
 
-    // console.log(template, container);
+    this.elems = {};
+    bonzo(container).append(template);
+    this.elem = template;
+    this.ready();
 };
 
 /**
@@ -125,6 +128,14 @@ Component.prototype.getClass = function(elemName, sansDot) {
     var config = this.conf();
     return (sansDot ? '' : '.') + config.classes[elemName] || null;
 };
+
+/**
+ * @return {Element}
+ */
+Component.prototype.getContainer = function() {
+    return qwery('.' + this.conf().containerClass)[0];
+};
+
 
 /**
  * @return {Object}

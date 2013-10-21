@@ -1,5 +1,7 @@
 define([
     'ajax',
+    'bonzo',
+    'qwery',
     'modules/component',
     'modules/discussion/api',
     'modules/discussion/comments',
@@ -7,10 +9,12 @@ define([
     'modules/id'
 ], function(
     ajax,
+    bonzo,
+    qwery,
     Component,
+    DiscussionApi,
     Comments,
     CommentBox,
-    DiscussionApi,
     Id
 ) {
 
@@ -35,8 +39,11 @@ Loader.CONFIG = {
     }
 };
 
-/** @type {Discussion} */
-Loader.prototype.discussion = null;
+/** @type {Comments} */
+Loader.prototype.comments = null;
+
+/** @type {CommentBox} */
+Loader.prototype.commentBox = null;
 
 /** @override */
 Loader.prototype.ready = function() {
@@ -52,16 +59,14 @@ Loader.prototype.ready = function() {
  * @param {Object} resp
  */
 Loader.prototype.renderDiscussion = function(resp) {
-    var commentsElem = this.getElement('comments');
+    var commentsElem = this.getElem('comments');
 
     // comments
     commentsElem.innerHTML = resp.html;
     this.comments = new Comments(this.context);
     this.comments.attachTo(commentsElem);
 
-    // comment box
-    this.commentBox = new CommentBox(this.context, this.mediator);
-    this.commentBox.render();
+    this.renderCommentBar();
 };
 
 /**
@@ -70,10 +75,9 @@ Loader.prototype.renderDiscussion = function(resp) {
  * Else render comment box
  */
 Loader.prototype.renderCommentBar = function() {
-    var discussionClosed = this.getDiscussionClosed(),
-        user = Id.getUserFromCookie();
+    var user = Id.getUserFromCookie();
 
-    if (discussionClosed) {
+    if (this.getDiscussionClosed()) {
         this.renderDiscussionClosedMessage();
     } else if (!user) {
         this.renderSignin();
@@ -86,27 +90,36 @@ Loader.prototype.renderCommentBar = function() {
  *
  */
 Loader.prototype.renderDiscussionClosedMessage = function() {
-    // console.log('Closed');
-
+    
 };
 
 /****/
 Loader.prototype.renderSignin = function() {
-    // console.log('Signin');
+    
 };
 
 /****/
 Loader.prototype.renderCommentBox = function() {
+    // This is a bit of a hack for now
+    // We'll move the rendering to the play app once we
+    // have the discussion stack up that can read cookies
     var success = function(resp) {
         var user = resp.userProfile;
-        // If this isn't in there, they're not the right person
+        // If this privateFields aren't there,
+        // they're not the right person
         // More a sanity check than anything
         if (!user.privateFields) {
             this.renderSignin();
         } else if (!user.privateFields.canPostComment) {
             this.renderUserBanned();
         } else {
-            var commentBox = new CommentBox(this.context, this.mediator);
+            this.commentBox = new CommentBox(this.context, this.mediator, {
+                discussionId: this.getDiscussionId()
+            });
+            this.commentBox.render();
+            if (!user.privateFields.isPremoderated) {
+                bonzo(qwery('.d-comment-box__premod'), this.commentBox.elem).remove();
+            }
         }
     };
 
