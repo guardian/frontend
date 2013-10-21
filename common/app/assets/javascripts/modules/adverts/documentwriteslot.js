@@ -26,6 +26,8 @@ define([
             this.loaded = true;
             callback(this.context);
          } catch(e) {
+             //Hide slot to prevent layout bugs
+             this.el.parentNode.className += ' u-h';
              common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }
     };
