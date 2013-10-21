@@ -40,6 +40,7 @@ class Input(val inputType: String, val field: Field, initialArgs: (Symbol, Any)*
   val autocomplete = getArgOrElse('autocomplete, "on", initialArgs)
   val autocapitalize = getArgOrElse('autocapitalize, "on", initialArgs)
   val autocorrect = getArgOrElse('autocorrect, "on", initialArgs)
+  val autofocus = getArgOrElse('autofocus, "", initialArgs)
   val spellcheck = getArgOrElse('spellcheck, "false", initialArgs)
   val required = field.constraints.exists(constraint => constraint._1 == "constraint.required")
 
