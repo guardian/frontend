@@ -19,7 +19,7 @@ class ElementsTest extends FlatSpec with Matchers {
                                 fields = None)
     }
 
-    images.mainPicture.flatMap(_.largestImage.map(_.caption)) should be(Some("biggest picture 1"))
+    images.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
   }
 
   private def image(  id: String,
