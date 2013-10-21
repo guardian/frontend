@@ -46,9 +46,10 @@
         margin-left: 0;
     }
 
-    &.sport-header { // TODO: temporary until football gets side cols
+    &.sport-header { // TODO: temporary until football & cricket gets side cols
         padding-left: 0;
-        margin-left: $gs-gutter;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
