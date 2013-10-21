@@ -289,13 +289,7 @@ a.competition-title {
     border-top: 1px solid $c-neutral7;
     display: block;
     height: auto;
-    color: #999;
-}
-
-.nav--columns.nav--top-border-off > li:nth-child(-n+2) span,
-.nav--stacked.nav--top-border-off > li:nth-child(1) span {
-    border-top: none;
-    padding-top: 0;
+    color: $c-neutral2;
 }
 
 .football-filters .cta {
@@ -310,13 +304,9 @@ a.competition-title {
 
 .football-filter {
     background: $c-sportBright;
-    margin: 0 $gs-gutter/2;
+    margin-top: 0;
+    margin-bottom: 0;
     padding: $baseline*3 32px $baseline*1.5 8px;
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
     color: #fff;
     border-bottom: none;
 

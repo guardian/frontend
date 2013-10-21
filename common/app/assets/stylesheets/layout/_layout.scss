@@ -82,14 +82,15 @@ $headerHeight: 58px;
     padding-left: $gs-gutter / 2;
     padding-right: $gs-gutter / 2;
 
-    .page-head {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
+    }
+
+    .page-head,
+    .page__sub-head {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
