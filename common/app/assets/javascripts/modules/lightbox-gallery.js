@@ -516,8 +516,9 @@ define(["bean",
 
             if (swipeActive) {
                 self.removeSwipe();
-                self.goTo(currentImage);
             }
+
+            self.goTo(currentImage);
 
             self.slideshowTimer = setInterval(function() {
                 self.goTo(currentImage+1);
