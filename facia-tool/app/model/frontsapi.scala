@@ -79,17 +79,19 @@ trait UpdateActions {
       } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
       lazy val updatedLive: List[Trail] = updateList(update, block.live)
 
-      val collectionWithUpdatedMeta = {
-        for {
-          metaMap <- update.itemMeta
-        } yield updateItemMetaList(update.item, updatedLive, metaMap)
-      } getOrElse updatedLive
+      val liveCollectionWithUpdatedMeta = updateListMeta(update, updatedLive)
+      val draftCollectionWithUpdatedMeta = updatedDraft.map(updateListMeta(update, _))
 
-      updateCollection(id, block, update, identity, updatedDraft, collectionWithUpdatedMeta)
+      updateCollection(id, block, update, identity, draftCollectionWithUpdatedMeta, liveCollectionWithUpdatedMeta)
     } getOrElse {
       UpdateActions.createBlock(id, identity, update)
     }
   }
+
+  def updateListMeta(update: UpdateList, l: List[Trail]): List[Trail] = {for {
+      metaMap <- update.itemMeta
+      } yield updateItemMetaList(update.item, l, metaMap)
+    } getOrElse l
 
   def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => Option[List[Trail]], updatedLive: => List[Trail]): Unit = {
       val live = shouldUpdate(update.live, block.live, updatedLive)
