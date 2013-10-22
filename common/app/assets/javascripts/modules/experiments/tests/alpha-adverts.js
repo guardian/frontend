@@ -52,8 +52,8 @@ define([
                     var viewport = detect.getLayoutMode(),
                         s;
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait'){
-                        document.getElementsByClassName('ad-slot--top-banner-ad')[0].setAttribute('data-inview-name', 'Top adhesive');
-                        document.getElementsByClassName('parts__head')[0].className += ' is-sticky';
+                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top adhesive');
+                        bonzo(qwery('.parts__head')).addClass('is-sticky');
                         s = new Sticky({
                             elCls: 'ad-slot--top-banner-ad',
                             id: 'Top2'
