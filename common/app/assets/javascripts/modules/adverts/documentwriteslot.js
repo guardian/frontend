@@ -7,24 +7,22 @@ define([
     domwrite
 ) {
 
-    var DocWriteAdSlot = function(name, el, context) {
+    var DocWriteAdSlot = function(name, el) {
         this.name = name;
         this.el = el;
         this.loaded = false;
-        this.context = context;
     };
 
     DocWriteAdSlot.prototype.setDimensions = function(dimensions) {
         this.dimensions = dimensions;
     };
 
-    DocWriteAdSlot.prototype.render = function (callback) {
+    DocWriteAdSlot.prototype.render = function () {
          try {
             OAS_RICH(this.name);
             var slot = this.el;
             domwrite.render(slot);
             this.loaded = true;
-            callback(this.context);
          } catch(e) {
              //Hide slot to prevent layout bugs
              this.el.parentNode.className += ' u-h';

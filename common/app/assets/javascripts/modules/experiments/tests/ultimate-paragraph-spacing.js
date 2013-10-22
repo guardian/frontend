@@ -15,7 +15,7 @@ define(['bonzo'], function (bonzo) {
             {
                 id: 'control',
                 test: function() {
-                    return true;
+                   return true;
                 }
             },
             {
