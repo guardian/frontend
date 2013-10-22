@@ -204,15 +204,3 @@
         }
     }
 }
-
-/**
- * @todo: Clean these up into proper modifiers
- */
-
-.matches-container .trail__text {
-    display: none;
-}
-.competition .trail {
-    margin-top: $baseline*3;
-    border-bottom: none;
-}
