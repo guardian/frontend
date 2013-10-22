@@ -1,14 +1,13 @@
 @(headerLink: model.Link, links: Seq[model.Link])(implicit request: RequestHeader)
 @import common.LinkTo
-<div class="tone-news">
-    <h3 class="article__sub-head tone-colour">
-        <a class="tone-colour" href="@headerLink.url" data-link-name="football index @headerLink.linkName">@headerLink.linkText.toLowerCase</a>
-    </h3>
-    <div class="sections u-cf football-nav" data-link-name="football bottom nav">
-        <ul class="nav nav--columns sections u-cf">
-        @links.map{ link: model.Link =>
-            <li class="nav__item"><a class="nav__link" href="@LinkTo{@link.url}" data-link-name="@link.linkName">@link.linkText</a></li>
-        }
-        </ul>
-    </div>
+
+<h3 class="page-sub-header tone-news">
+    <a class="tone-colour" href="@headerLink.url" data-link-name="football index @headerLink.linkName">@headerLink.linkText.toLowerCase</a>
+</h3>
+<div class="u-cf football-nav" data-link-name="football bottom nav">
+    <ul class="nav nav--columns nav--no-horizontal-spacing nav--links-neutral1 u-cf">
+    @links.map{ link: model.Link =>
+        <li class="nav__item"><a class="nav__link" href="@LinkTo{@link.url}" data-link-name="@link.linkName">@link.linkText</a></li>
+    }
+    </ul>
 </div>

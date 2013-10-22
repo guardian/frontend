@@ -2,8 +2,8 @@
 
 <div class="monocolumn-wrapper tone-news">
     @renderTeamList(comp: model.Competition) = {
-        <section class="sections team-list" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
-            <h1 class="page__sub-head">@comp.fullName</h1>
+        <section class="team-list component" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
+            <h1 class="page-sub-header">@comp.fullName</h1>
 
             <ul class="nav nav--columns nav--columns-edge u-cf">
                 @comp.teams.map{ team =>
@@ -22,7 +22,7 @@
         <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
     </h2>
 
-    <h1 class="page-head">@pageModel.page.webTitle</h1>
+    <h1 class="page-header">@pageModel.page.webTitle</h1>
 
 
     @comps.map{ comp =>
