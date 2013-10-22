@@ -46,11 +46,7 @@
                                 </div>
                             }
                         } else {
-                            @article.mainPicture.map{ mainPicture =>
-                                @article.mainPicture(width=220).map{ smallCrop =>
-                                    @fragments.img(mainPicture, smallCrop)
-                                }
-                            }
+                            @fragments.img(article.mainPicture)
                         }
                     }
 

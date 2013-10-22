@@ -225,6 +225,7 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
   }
 }
 
+// TODO I am pretty sure this class is useless here, I'm going to have a think about it
 case class VideoPosterCleaner(poster: Option[ImageAsset]) extends HtmlCleaner {
 
   def clean(body: Document): Document = {

@@ -34,11 +34,7 @@
                 <div class="article-v2__main-column">
 
                     @if(!article.isLive && !article.hasVideoAtTop) {
-                        @article.mainPicture.map{ mainPicture =>
-                            @article.mainPicture(width=220).map{ smallCrop =>
-                                @fragments.img(mainPicture, smallCrop)
-                            }
-                        }
+                        @fragments.img(article.mainPicture)
                     }
                     <div class="article__meta-container">
                         @fragments.byline(article.byline, article)
