@@ -270,7 +270,7 @@ object Switches extends Collections {
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
-    ABAlphaAdverts
+    ABAlphaAdvertsData
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
