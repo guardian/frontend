@@ -48,6 +48,9 @@
     .item__title {
         margin-top: $gs-baseline*(2/3);
         @include fs-headline(3, $size-only: true);
+        @include mq(mobileLandscape) {
+            @include fs-headline(4, $size-only: true);
+        }
     }
     &.item--no-image .item__title {
         margin-top: 2px;
@@ -65,12 +68,10 @@
         display: block;
     }
 }
-@mixin card-headline {
+@mixin card-headline() {
     float: left;
+    width: 100%;
     margin-top: $gs-baseline*(5/3);
-    .item__link {
-        border-top: 1px dotted $c-neutral5;
-    }
     .item__title,
     .item__byline {
         @include fs-headline(1, $size-only: true);
@@ -90,12 +91,20 @@
     padding-right: $gs-gutter/2;
     border-left: 1px dotted $c-neutral5;
     float: left;
-    .item__title,
+    .item__title {
+        @include fs-headline(1, $size-only: true);
+    }
     .item__byline {
         @include fs-header(1, $size-only: true);
+        @include mq(mobileLandscape) {
+            @include fs-header(2, $size-only: true);
+        }
     }
     .item__title {
-        min-height: 100px
+        min-height: 100px;
+        @include mq(mobileLandscape) {
+            @include fs-headline(2, $size-only: true);
+        }
     }
     .item__live-indicator {
         @include fs-data(1, true);
@@ -107,7 +116,7 @@
 }
 @mixin card-half-width-image() {
     &.item--no-image .item__title {
-        min-height: 226px
+        min-height: 186px
     }
     .item__image-container {
         display: block;
