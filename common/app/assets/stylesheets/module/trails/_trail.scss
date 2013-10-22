@@ -16,6 +16,7 @@
 
 .trail--gallery,
 .trail + .trail--gallery,
+.matches + .trail,
 .trail--gallery + .trail {
     border-top: none;
     padding-top: $baseline*3;
