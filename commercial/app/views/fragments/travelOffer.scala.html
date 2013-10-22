@@ -1,6 +1,36 @@
 @(offers: Seq[model.commercial.travel.Offer])
 
 <style>
+    /* Common commercial styles */
+    .commercial {
+        text-align: left;
+        margin-top: 12px;
+    }
+
+    .commercial__title {
+        font-family: "EgyptianHeadline", georgia, serif;
+        font-size: 20px;
+        line-height: 24px;
+        padding-top: 4px;
+        border-top: 1px dotted #e3e3db;
+    }
+
+    .commercial__foot {
+        box-sizing: border-box;
+        font-size: 14px;
+        overflow: hidden;
+        background: #f4f4ee;
+        padding: 8px;
+    }
+
+    .commercial__foot label {
+        display: block;
+    }
+
+
+
+
+
     .commercial__title {
         color: #085FA6;
     }
@@ -37,7 +67,7 @@
     }
 </style>
 
-<div class="commercial">
+<div class="commercial commercial--travel">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian<span>holiday</span>offers</h3>
     </div>
