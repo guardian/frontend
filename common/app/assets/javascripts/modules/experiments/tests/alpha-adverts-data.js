@@ -7,7 +7,7 @@ define([
     'modules/adverts/sticky'
 ], function (qwery, bonzo, detect, inview, Sticky) {
 
-    var AlphaAdverts = function () {
+    var AlphaAdvertsData = function () {
 
         var self = this,
             nParagraphs = '10',
@@ -19,7 +19,7 @@ define([
 
         this.id = 'AlphaAdvertsData';
         this.expiry = '2013-11-30';
-        this.audience = 1;
+        this.audience = 0.01;
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article') {
@@ -101,6 +101,6 @@ define([
         ];
     };
 
-    return AlphaAdverts;
+    return AlphaAdvertsData;
 
 });
