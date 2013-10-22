@@ -3,6 +3,7 @@ define([
     'domwrite',
     'qwery',
     'bonzo',
+    'ajax',
 
     'modules/userPrefs',
     'modules/detect',
@@ -19,6 +20,7 @@ function (
     domwrite,
     qwery,
     bonzo,
+    ajax,
 
     userPrefs,
     detect,
@@ -134,9 +136,29 @@ function (
         }
     }
 
+    function loadCommercialComponents() {
+        var keywordsParams = documentWrite.getKeywords(currConfig.page),
+            requestUrl = "/commercial/travel/offers?" + keywordsParams,
+            commercialSlot = currContext.querySelector('.ad-slot--commercial');
+
+        if (commercialSlot) {
+            ajax({
+                url: requestUrl,
+                type: 'html',
+                method: 'get',
+                crossOrigin: true,
+                success: function(response) {
+                    //console.log(response);
+                    commercialSlot.innerHTML =response;
+                }
+            });
+        }
+    }
+
     return {
         init: init,
         loadAds: loadAds,
+        loadCommercialComponents: loadCommercialComponents,
         isOnScreen: isOnScreen
     };
 

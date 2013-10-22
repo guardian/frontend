@@ -1,0 +1,23 @@
+.commercial {
+    text-align: left;
+    margin-top: $gs-baseline;
+}
+
+.commercial__title {
+    //@include fs-header(2);
+    @include fs-headline(2);
+    padding-top: $baseline;
+    border-top: 1px dotted $c-neutral5;
+}
+
+.commercial__foot {
+    @include box-sizing(border-box);
+    font-size: 14px;
+    overflow: hidden;
+    background: $c-neutral7;
+    padding: 8px;
+}
+
+.commercial__foot label {
+    display: block;
+}

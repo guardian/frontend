@@ -114,7 +114,8 @@ define([
 
     return {
         load: load,
-        generateUrl: generateUrl
+        generateUrl: generateUrl,
+        getKeywords: getKeywords
     };
 
 });

@@ -271,6 +271,7 @@ define([
                 });
                 common.mediator.on('modules:adverts:docwrite:loaded', function(){
                     Adverts.loadAds();
+                    Adverts.loadCommercialComponents();
                 });
             }
         },
