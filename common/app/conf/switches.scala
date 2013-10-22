@@ -46,6 +46,11 @@ object Switches extends Collections {
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
     safeState = Off)
 
+  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
+    "If this switch is on, then extra logging will be done for edition redirects.",
+    safeState = Off
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -270,7 +275,8 @@ object Switches extends Collections {
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
-    ABAlphaAdvertsData
+    ABAlphaAdvertsData,
+    EditionRedirectLoggingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

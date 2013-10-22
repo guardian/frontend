@@ -6,6 +6,7 @@ import model._
 import conf._
 import play.api.mvc._
 import play.api.libs.json.Json
+import Switches.EditionRedirectLoggingSwitch
 
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
@@ -142,6 +143,13 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     val redirectPath = path match {
       case "" => editionBase
       case sectionFront => s"$editionBase/$sectionFront"
+    }
+
+    if (EditionRedirectLoggingSwitch.isSwitchedOn) {
+      val country = request.headers.get("X-GU-GeoLocation").getOrElse("not set")
+      val editionCookie = request.headers.get("X-GU-Edition-From-Cookie").getOrElse("false")
+
+      log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
     }
   
     NoCache(Redirect(redirectPath))
