@@ -7,12 +7,10 @@
     overflow: hidden;
     margin: 0;
     padding: $baseline 0 $baseline*6;
+    border-top: 1px solid $c-neutral5;
 
     .relative-timestamp {
         display: inline-block;
-    }
-    & + & {
-        border-top: 1px solid $c-neutral5;
     }
 }
 
