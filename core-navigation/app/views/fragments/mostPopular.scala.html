@@ -20,7 +20,7 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                class="@if(isTabbed){tabs__pane @if(!info.isFirst){ js-hidden}} headline-list"
+                class="@if(isTabbed){tabs__pane @if(!info.isFirst){js-hidden}} headline-list"
                 data-link-name="@section.heading"
                 data-link-context="most-read/@section.section">
 
