@@ -1,9 +1,11 @@
 /*global OAS_RICH:true */
 define([
     'common',
+    'bonzo',
     'domwrite'
 ], function (
     common,
+    bonzo,
     domwrite
 ) {
 
@@ -25,7 +27,7 @@ define([
             this.loaded = true;
          } catch(e) {
              //Hide slot to prevent layout bugs
-             this.el.parentNode.className += ' u-h';
+             bonzo(this.el.parentNode).addClass('u-h');
              common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }
     };

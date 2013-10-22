@@ -9,8 +9,8 @@ define([
         this.options = common.extend(this.DEFAULTS, options);
         this.el = this.options.context.getElementsByClassName(this.options.elCls)[0];
         this.$el = bonzo(this.el);
-        this.top =  bonzo(this.options.context.querySelector(".js-sticky-upper[data-id=" + this.options.id + "]")).offset().top;
-        this.bottom = bonzo(this.options.context.querySelector(".js-sticky-lower[data-id=" + this.options.id + "]")).offset().top - 250;
+        this.top =  common.$g(".js-sticky-upper[data-id=" + this.options.id + "]", this.options.context).offset().top;
+        this.bottom = common.$g(".js-sticky-lower[data-id=" + this.options.id + "]", this.options.context).offset().top - 250;
 
         if (!detect.hasCSSSupport('position', 'sticky') && detect.hasCSSSupport('position', 'fixed', true)) {
             this.bindListeners();
