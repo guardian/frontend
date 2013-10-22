@@ -26,7 +26,7 @@
 
     @filters(model.filters, model.page, model.pageType)
 
-    <div class="matches-container" role="main">
+    <div class="matches-container component" role="main">
         @matchesList(model, model.pageType)
 
         @if(model.previousPage.isDefined || model.nextPage.isDefined) {

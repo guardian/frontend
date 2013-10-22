@@ -81,13 +81,8 @@
     }
 }
 
-.nav--columns-edge {
-    padding-left: 0;
-    padding-right: 0;
-}
-
 .nav--columns-football {
-    @extend .nav--columns-edge;
+    @extend .nav--no-horizontal-spacing;
     padding-top: $baseline*2;
     padding-bottom: $baseline;
 }

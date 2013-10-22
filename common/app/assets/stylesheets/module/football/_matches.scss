@@ -230,27 +230,17 @@ a.competition-title {
 
 .football-nav {
     clear: left;
-    padding: 0 0 16px;
-    margin: 0;
-    color: #064951;
-
-    a {
-        color: #333333;
-    }
-
-    .nav {
-        padding: $baseline*2 0;
-    }
-
-    .nav--stacked > li > a {
-        border-color: #a1c391;
-    }
+    padding-bottom: $baseline*4;
 }
 
 // football-filters is the dropdown list
 
 .football-filters {
-    margin-bottom: $baseline*2;
+    margin-bottom: $baseline*4;
+
+    .football-filter + & {
+        margin-top: $baseline*-4;
+    }
 
     > li {
         background: $c-sportMid;
@@ -289,13 +279,14 @@ a.competition-title {
 .football-filter {
     background: $c-sportBright;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: $baseline*4;
     padding: $baseline*3 32px $baseline*1.5 8px;
     color: #fff;
     border-bottom: none;
 
     > a,
-    > a:hover {
+    > a:hover,
+    > a:focus {
         color: $c-neutral1;
         @include fs-bodyCopy(1);
     }
