@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+
+/* ==========================================================================
+   Non-JS Gallery Styles
+   ========================================================================== */
 .gallery-container {
     overflow: hidden;
     margin: 0;
@@ -31,6 +35,10 @@
 }
 
 
+
+/* ==========================================================================
+   Gallery nav
+   ========================================================================== */
 .gallery-nav {
     text-align: center;
     margin-bottom: $baseline*2;
@@ -55,26 +63,6 @@
     text-align: right;
 }
 
-.gallery-swipe .gallery-prev {
-    @extend .i !optional;
-    @extend .i-filter-arrow-left !optional;
-}
-
-.gallery-swipe .gallery-next {
-    @extend .i !optional;
-    @extend .i-filter-arrow-right !optional;
-}
-
-.gallery-swipe .gallery-prev ,
-.gallery-swipe .gallery-next {
-    text-indent: -1000em;
-    display: inline-block;
-    text-align: left;
-}
-
-.gallery-prev {
-    float: left;
-}
 
 .gallery-prev:before {
     content: "« ";
@@ -90,19 +78,4 @@
 
 .gallery-nav i {
     display: inline-block;
-}
-
-.gallery-fullscreen-toggle {
-    cursor: pointer;
-}
-
-.gallery-swipe .gallery-fullscreen-toggle {
-    display: none;
-    float: right;
-}
-
-
-// Temporary, just for the A/B test
-.ab-gallerytest--newstyle {
-    display: none;
 }
