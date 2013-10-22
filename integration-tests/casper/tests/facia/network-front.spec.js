@@ -77,8 +77,25 @@ casper.test.begin('Users can show more items in a collection', function(test) {
 *    Then the first item in each collection should have an image
 **/
 casper.test.begin('First item in a collection displays an image', function(test) {
-    casper.waitForSelector('.collection .item--image-upgraded', function(){
-        test.assertExists('.collection .item--image-upgraded', 'item\'s image shown');
+    casper.waitWhileSelector('.collection .item:first-child.item--no-image', function() {
+        test.assertDoesntExist('.collection .item:first-child.item--no-image', 'item\'s image shown');
+    });
+
+    casper.run(function() {
+        test.done();
+    })
+});
+
+/**
+ * Scenario: First item in each container has a main image
+ *    Given I visit the network front
+ *    Then the first item in each container should have a main image
+ **/
+casper.test.begin('First item in a container displays a main image', function(test) {
+    casper.waitWhileSelector('.collection .item:first-child.item--no-image', function() {
+        this.getElementsInfo('.collection[data-type] .item:first-child .item__image').forEach(function(elementInfo) {
+            test.assertEquals(elementInfo.attributes.src, elementInfo.attributes['data-src-main-mobile'], 'item\'s main image shown');
+        });
     });
 
     casper.run(function() {

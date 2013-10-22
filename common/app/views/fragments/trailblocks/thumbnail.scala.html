@@ -1,18 +1,13 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, numThumbnails: Int = 5, headingLevel: Int = 2, expandable: Boolean = false)(implicit request: RequestHeader)
+@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, numThumbnails: Int = 5, headingLevel: Int = 2)(implicit request: RequestHeader)
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
 
         @trail match {
             case g: Gallery => { @fragments.trails.gallery(g, info.rowNum) }
-            case other => { 
-                @if(expandable) {
-                    @fragments.trails.thumbnailExpandable(other, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)
-                } else {
-                    @fragments.trails.thumbnail(other, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)
-                }
+            case other => {
+                @fragments.trails.thumbnail(other, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)
             }
         }
-
     }
 </ul>

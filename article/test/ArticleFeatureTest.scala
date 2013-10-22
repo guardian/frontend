@@ -83,7 +83,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
-          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues Goegr Monbiot. Photograph: Alamy")
+          be("Gunnerside village Swaledale Yorkshire Dales")
       }
     }
 
