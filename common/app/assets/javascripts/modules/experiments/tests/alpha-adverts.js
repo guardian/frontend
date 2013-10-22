@@ -17,7 +17,7 @@ define([
             supportsSticky = detect.hasCSSSupport('position', 'sticky'),
             supportsFixed  = detect.hasCSSSupport('position', 'fixed', true);
 
-        this.id = 'AlphaAdverts';
+        this.id = 'AlphaAdvertsData';
         this.expiry = '2013-11-30';
         this.audience = 1;
         this.description = 'Test new advert formats for alpha release';
