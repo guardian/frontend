@@ -23,7 +23,9 @@ define([
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article') {
-                guardian.config.oasSiteIdHost = alphaOasUrl;
+                if(detect.getLayoutMode() !== 'mobile') {
+                    guardian.config.oasSiteIdHost = alphaOasUrl;
+                }
                 return true;
             } else {
                 return false;
@@ -40,7 +42,7 @@ define([
                         bonzo(bonzo.create(inlineTmp)).attr({
                             'data-inview-name' : inviewName,
                             'data-inview-advert' : 'true',
-                            'data-base' : 'Bottom3',
+                            'data-base' : 'Top2',
                             'data-median' : 'Middle',
                             'data-extended' : 'Middle'
                         }).addClass(cls).insertAfter(this);
