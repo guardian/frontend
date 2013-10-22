@@ -88,7 +88,6 @@ function (
     }
 
     function loadAds() {
-
         domwrite.capture();
 
         //Run through adslots and check if they are on screen. Load if so.
@@ -139,17 +138,16 @@ function (
     function loadCommercialComponents() {
         var keywordsParams = documentWrite.getKeywords(currConfig.page),
             requestUrl = "/commercial/travel/offers?" + keywordsParams,
-            commercialSlot = currContext.querySelector('.ad-slot--commercial');
+            $commercialSlot = bonzo(currContext.querySelector('.js-mpu-ad-slot'));
 
-        if (commercialSlot) {
+        if ($commercialSlot) {
             ajax({
                 url: requestUrl,
                 type: 'html',
                 method: 'get',
                 crossOrigin: true,
                 success: function(response) {
-                    //console.log(response);
-                    commercialSlot.innerHTML =response;
+                    $commercialSlot.append(response);
                 }
             });
         }
