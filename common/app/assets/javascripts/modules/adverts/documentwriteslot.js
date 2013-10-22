@@ -1,9 +1,11 @@
 /*global OAS_RICH:true */
 define([
     'common',
+    'bonzo',
     'domwrite'
 ], function (
     common,
+    bonzo,
     domwrite
 ) {
 
@@ -24,6 +26,9 @@ define([
             domwrite.render(slot);
             this.loaded = true;
          } catch(e) {
+             //Hide slot to prevent layout bugs
+             var node = (this.name === 'Top2') ? this.el.parentNode.parentNode : this.el.parentNode;
+             bonzo(node).addClass('u-h');
              common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }
     };
