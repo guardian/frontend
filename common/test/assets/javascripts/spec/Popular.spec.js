@@ -15,6 +15,7 @@ define(['common', 'bonzo', 'ajax', 'modules/popular'], function(common, bonzo, a
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
             $popularContainer = bonzo(bonzo.create('<div>')).addClass('js-popular').appendTo('body');
         });
 

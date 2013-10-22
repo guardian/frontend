@@ -24,9 +24,10 @@ define(['common', 'ajax', 'modules/matchnav', 'modules/pageconfig'], function(co
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
         });
 
-        // json test needs to be run asynchronously 
+        // json test needs to be run asynchronously
         it("should request the related links and graft them on to the dom", function(){
 
             server.respondWith([200, {}, '{"nav":"1", "related":"2", "refreshStatus":true}']);
