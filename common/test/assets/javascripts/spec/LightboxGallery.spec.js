@@ -50,6 +50,7 @@ define(['common',
             // setup fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
             server.respondWith(galleryResponse);
 
             historyStub = sinon.stub(history, 'pushState');

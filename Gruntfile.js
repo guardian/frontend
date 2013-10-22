@@ -313,60 +313,71 @@ module.exports = function (grunt) {
         jasmine: {
             options: {
                 template: require('grunt-template-jasmine-requirejs'),
-                keepRunner: true
+                keepRunner: true,
+                vendor: [
+                    'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
+                    'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
+                    'common/test/assets/javascripts/components/seedrandom/index.js'
+                ],
+                helpers: 'common/test/assets/javascripts/setup.js',
+                outfile: 'common-spec-runner.html',
+                templateOptions: {
+                    requireConfig: {
+                        baseUrl: 'common/app/assets/javascripts/',
+                        paths: {
+                            common:       'common',
+                            analytics:    'modules/analytics',
+                            bonzo:        'components/bonzo/src/bonzo',
+                            qwery:        'components/qwery/mobile/qwery-mobile',
+                            bean:         'components/bean/bean',
+                            reqwest:      'components/reqwest/src/reqwest',
+                            domwrite:     'components/dom-write/dom-write',
+                            EventEmitter: 'components/eventEmitter/EventEmitter',
+                            swipe:        'components/swipe/swipe',
+                            swipeview:    'components/swipeview/src/swipeview',
+                            moment:       'components/moment/moment',
+                            omniture:     '../../../app/public/javascripts/vendor/omniture',
+                            fixtures:     '../../../test/assets/javascripts/fixtures',
+                            helpers:      '../../../test/assets/javascripts/helpers'
+                        }
+                    }
+                }
             },
             common: {
                 options: {
                     specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/*.spec.js',[
-                        '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
-                        '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
-                        '!common/test/assets/javascripts/spec/Fonts.spec.js',
-                        '!common/test/assets/javascripts/spec/FootballFixtures.spec.js',
-                        '!common/test/assets/javascripts/spec/FootballTables.spec.js',
-                        '!common/test/assets/javascripts/spec/Gallery.spec.js',
-                        '!common/test/assets/javascripts/spec/GallerySwipe.spec.js',
-                        '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
-                        '!common/test/assets/javascripts/spec/MatchNav.spec.js',
-                        '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
-                        '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
-                        '!common/test/assets/javascripts/spec/Popular.spec.js',
-                        '!common/test/assets/javascripts/spec/ProfileNav.spec.js',
-                        '!common/test/assets/javascripts/spec/Related.spec.js',
-                        '!common/test/assets/javascripts/spec/TopStories.spec.js',
-                        '!common/test/assets/javascripts/spec/TrailblockShowMore.spec.js'
-                        ]),
-                    vendor: [
-                        'common/test/assets/javascripts/components/sinon/lib/sinon.js',
-                        'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
-                        'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
-                        'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
-                        'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
-                        'common/test/assets/javascripts/components/seedrandom/index.js'
-                    ],
-                    helpers: 'common/test/assets/javascripts/setup.js',
-                    outfile: 'common-spec-runner.html',
-                    templateOptions: {
-                        requireConfig: {
-                            baseUrl: 'common/app/assets/javascripts/',
-                            paths: {
-                                common:       'common',
-                                analytics:    'modules/analytics',
-                                bonzo:        'components/bonzo/src/bonzo',
-                                qwery:        'components/qwery/mobile/qwery-mobile',
-                                bean:         'components/bean/bean',
-                                reqwest:      'components/reqwest/src/reqwest',
-                                domwrite:     'components/dom-write/dom-write',
-                                EventEmitter: 'components/eventEmitter/EventEmitter',
-                                swipe:        'components/swipe/swipe',
-                                swipeview:    'components/swipeview/src/swipeview',
-                                moment:       'components/moment/moment',
-                                omniture:     '../../../app/public/javascripts/vendor/omniture',
-                                fixtures:     '../../../test/assets/javascripts/fixtures',
-                                helpers:      '../../../test/assets/javascripts/helpers'
-                            }
-                        }
-                    }
+                         'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js', [
+                            // works, but slow
+                            '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
+                            '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
+                            '!common/test/assets/javascripts/spec/Fonts.spec.js',
+                            // needs fixture data
+                            '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
+                            '!common/test/assets/javascripts/spec/MatchNav.spec.js',
+                            '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
+                            '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
+                            '!common/test/assets/javascripts/spec/ProfileNav.spec.js'
+                        ]
+                    )
+                }
+            },
+            facia: {
+                options: {
+                    specs: [
+                        'common/test/assets/javascripts/spec/facia/' + jasmineSpec + '.spec.js'
+                    ]
+                }
+            },
+            discussion: {
+                options: {
+                    specs: grunt.file.expand(
+                        'common/test/assets/javascripts/spec/discussion/' + jasmineSpec + '.spec.js', [
+                            '!common/test/assets/javascripts/spec/discussion/CommentBox.spec.js'
+                        ]
+                    )
                 }
             },
             admin: {
@@ -453,14 +464,10 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/gallery/*.spec.js']
             },
             article: {
-                src: [
-
-                ]
+                src: []
             },
             applications: {
-                src: [
-                    'integration-tests/casper/tests/applications/*.spec.js'
-                ]
+                src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
@@ -586,12 +593,14 @@ module.exports = function (grunt) {
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-
-    grunt.registerTask('test', ['compile', 'jshint:common', 'jasmine', 'test:integration']);
+    grunt.registerTask('test:unit', function(app) {
+        grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
+    });
+    grunt.registerTask('test', ['compile', 'jshint:common', 'test:unit', 'test:integration']);
 
     // Analyse tasks
     grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
-    grunt.registerTask('analyse:common:css', ['sass:compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:css:common', ['sass:compile', 'cssmetrics:common']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);

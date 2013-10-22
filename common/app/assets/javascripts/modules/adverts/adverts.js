@@ -29,7 +29,7 @@ function (
     quantcast,
     userAdTargeting
 ) {
-    
+
     var currConfig,
         currContext,
         slots,
@@ -49,7 +49,7 @@ function (
 
             // Run through slots and create documentWrite for each.
             // Other ad types such as iframes and custom can be plugged in here later
-            
+
             for (var c in contexts) {
                 var els = contexts[c].querySelectorAll('.ad-slot');
                 for(var i = 0, l = els.length; i < l; i += 1) {
@@ -60,7 +60,7 @@ function (
                     container.innerHTML = '';
                     // Load the currContext ads only
                     if (contexts[c] === currContext ) {
-                        name = els[i].getAttribute('data-' + size),
+                        name = els[i].getAttribute('data-' + size);
                         slot = new DocumentWriteSlot(name, container);
                         slot.setDimensions(dimensionMap[name]);
                         slots.push(slot);
@@ -68,7 +68,7 @@ function (
                 }
             }
         }
-        
+
         if (currConfig.switches.audienceScience) {
             audienceScience.load(currConfig.page);
         }
