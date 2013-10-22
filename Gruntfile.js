@@ -25,7 +25,7 @@ module.exports = function (grunt) {
                     src: ['*.scss', '!_*'],
                     dest: 'static/target/compiled/stylesheets/',
                     rename: function(dest, src) {
-                        return dest + src.replace('scss', 'min.css');
+                        return dest + src.replace('scss', 'css');
                     }
                 }],
                 options: {
@@ -279,7 +279,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'static/target/compiled/stylesheets',
                     src: ['**/*.css'],
-                    dest: 'common/app/assets/stylesheets'
+                    dest: 'common/conf/assets'
                 }]
             }
         },
