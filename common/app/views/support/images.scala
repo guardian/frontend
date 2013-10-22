@@ -1,11 +1,26 @@
 package views.support
 
-import model.ImageAsset
+import model.{ImageElement, ImageContainer, ImageAsset}
 import conf.Switches.ImageServerSwitch
 import java.net.URI
 import conf.Configuration
 
-case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int] = None, compression: Int = 10) {}
+case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int] = None, compression: Int = 10) {
+
+  def elementFor(image: ImageContainer): Option[ImageAsset] = {
+    val sortedCorps = image.imageCrops.sortBy(_.width)
+    width.flatMap{ desiredWidth =>
+      sortedCorps.find(_.width >= desiredWidth)
+    }.orElse(image.largestImage)
+  }
+
+  def bestFor(image: ImageContainer): Option[String] =
+    elementFor(image).flatMap(_.url).map{ url => ImgSrc(url, this) }
+
+
+  def captionFor(image: ImageContainer): Option[String] =
+    elementFor(image).flatMap(_.altText)
+}
 
 // Configuration of our different image profiles
 object Contributor extends Profile("c", Some(140), Some(140), 70) {}
@@ -18,6 +33,7 @@ object FrontItem extends Profile("fi", Some(300), None, 70) {}
 object FrontItemMobile extends Profile("fi-mobile", Some(140), None, 70) {}
 object FrontItemMain extends Profile("fim", Some(620), None, 70) {}
 object FrontItemMainMobile extends Profile("fim-mobile", Some(300), None, 70) {}
+object LargeThumbnail extends Profile("thumb", Some(220), None, 70)
 
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile("n", None, None, 70) {}
@@ -34,7 +50,8 @@ object Profile {
     FrontItem,
     FrontItemMobile,
     FrontItemMain,
-    FrontItemMainMobile
+    FrontItemMainMobile,
+    LargeThumbnail
   )
 }
 
@@ -42,8 +59,6 @@ object Profile {
 object ImgSrc {
 
   val imageHost = Configuration.images.path
-
-  def apply(image: ImageAsset, imageType: Profile): String = image.url.map{ url => apply(url, imageType) }.getOrElse("")
 
   def apply(url: String, imageType: Profile): String = {
     val uri = new URI(url.trim)

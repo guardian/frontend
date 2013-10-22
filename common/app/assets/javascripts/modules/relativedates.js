@@ -25,6 +25,11 @@ define(['common', 'bonzo'], function (common, bonzo) {
         return (date.toDateString() === today.toDateString());
     }
 
+    function isWithin24Hours(date) {
+        var today = new Date();
+        return (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
+    }
+
     function isYesterday(relative) {
         var today = new Date(),
             yesterday = new Date();
@@ -66,7 +71,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
         } else if (delta < (55 * 60)) {
             return (Math.round(delta / 60, 10)) + 'm';
 
-        } else if (isToday(then)) {
+        } else if (isToday(then) || (isWithin24Hours(then) && opts.format === 'short')) {
             return (Math.round(delta / 3600)) + 'h';
 
         } else if (isWithinPastWeek(then) && opts.format === 'short') {

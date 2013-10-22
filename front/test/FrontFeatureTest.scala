@@ -13,7 +13,7 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
 import play.api.mvc._
 import play.api.test.Helpers._
-
+import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with Results with Eventually with SpanSugar{
 
@@ -282,15 +282,11 @@ private case class StubTrail(url: String) extends Trail {
 
   override def sectionName = ""
 
-  override def images = Nil
-
-  override def videos = Nil
-
   override def isLive = false
 
-  override def thumbnail = None
-
-  override def mainPicture = None
-
-  override def mainVideo = None
+  override def delegate = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some trail",
+    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    elements = None,
+    fields = None)
 }
