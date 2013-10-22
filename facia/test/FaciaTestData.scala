@@ -7,6 +7,7 @@ import model._
 import model.Config
 import model.FaciaPage
 import org.joda.time.DateTime
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 
 case class TestTrail(url: String) extends Trail {
   def webPublicationDate: DateTime = DateTime.now
@@ -17,11 +18,11 @@ case class TestTrail(url: String) extends Trail {
   def sectionName: String = ""
   def isLive: Boolean = true
 
-  def images: List[ImageElement] = Nil
-  def videos: List[VideoElement] = Nil
-  def thumbnail: Option[ImageElement] = None
-  def mainPicture: Option[ImageAsset] = None
-  def mainVideo: Option[VideoElement] = None
+  override def delegate = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some trail",
+    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    elements = None,
+    fields = None)
 }
 
 class TestPageFront(override val id: String, edition: Edition, faciaPage: FaciaPage) extends PageFront(id, edition) {

@@ -29,18 +29,24 @@
                     @if(!article.hasVideoAtTop) {
                         @if(article.hasMainVideo) {
                             @article.mainVideo.map{ mainVideo =>
-                                <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                                    @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
-                                        <source src="@url"></source>
-                                    }
-                                </video>
+                                <div class="media-proportional-container">
+                                    <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
+                                        @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
+                                            <source src="@url"></source>
+                                        }
+                                        @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
+                                            <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                                <param name="allowFullScreen" value="true" />
+                                                <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                                <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
+                                                Sorry, your browser is unable to play this video.
+                                            </object>
+                                        }
+                                    </video>
+                                </div>
                             }
                         } else {
-                            @article.mainPicture.map{ mainPicture =>
-                                @article.mainPicture(width=220).map{ smallCrop =>
-                                    @fragments.img(mainPicture, smallCrop)
-                                }
-                            }
+                            @fragments.img(article.mainPicture)
                         }
                     }
 

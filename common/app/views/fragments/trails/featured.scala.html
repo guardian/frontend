@@ -1,6 +1,6 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}"
+<@element class="trail trail--featured t@rowNum @if(trail.hasMainPicture) { trail--has-image}"
      data-link-name="trail"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     @CricketMatch(trail).map{ id => data-cricket-match="@id" }>
@@ -15,15 +15,13 @@
 
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
 
-    @trail.mainPicture(width=220).map{ smallCrop =>
+    @trail.trailPicture.map{ mainPicture =>
         <a href="@LinkTo{@trail.url}" class="trail__img" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image" aria-hidden="true">
-            <img class="maxed" src="@smallCrop.path"
+            <img class="maxed" src="@LargeThumbnail.bestFor(mainPicture)"
                 data-force-upgrade="true"
-                data-thumb-width="@smallCrop.width"
-                @trail.mainPicture.map { largeCrop =>
-                    data-fullsrc="@largeCrop.url.map(ImgSrc(_, FeaturedTrail))"
-                    data-full-width="640"
-                }
+                data-thumb-width="@LargeThumbnail.bestFor(mainPicture)"
+                data-fullsrc="@FeaturedTrail.bestFor(mainPicture)"
+                @FeaturedTrail.width.map{w => data-full-width="@w" }
                 itemprop="contentURL"
                 alt=""
             />

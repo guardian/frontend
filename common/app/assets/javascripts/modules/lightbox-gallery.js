@@ -115,6 +115,7 @@ define(["bean",
 
             bean.on(overlay.bodyNode, 'touchmove', '.gallery__item', function() {
                 isSwiping = true;
+                self.stopSlideshow();
             });
 
             bean.on(overlay.bodyNode, 'touchend', '.gallery__item', function() {
@@ -515,8 +516,9 @@ define(["bean",
 
             if (swipeActive) {
                 self.removeSwipe();
-                self.goTo(currentImage);
             }
+
+            self.goTo(currentImage);
 
             self.slideshowTimer = setInterval(function() {
                 self.goTo(currentImage+1);
