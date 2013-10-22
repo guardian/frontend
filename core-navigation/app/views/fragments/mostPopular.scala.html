@@ -11,7 +11,7 @@
                 <ol class="tabs__container js-tabs" id="js-popular-tabs">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
                         <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}">
-                            <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
+                            <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Most read: </span>@Html(section.heading)</a>
                         </li>
                     }
                 </ol>
