@@ -10,7 +10,7 @@ class ElementsTest extends FlatSpec with Matchers {
 
   "Elements" should "find the biggest crop of the main picture" in {
     val images = new Elements {
-      def delegate = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
+      override def delegate = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
                                 "http://www.guardian.co.uk/foo/2012/jan/07/bar",
                                 "http://content.guardianapis.com/foo/2012/jan/07/bar",
                                 elements = Some(List(
