@@ -74,8 +74,8 @@ trait UpdateActions {
       } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
       lazy val updatedLive: List[Trail] = updateList(update, block.live)
 
-      val liveCollectionWithUpdatedMeta = updateListMeta(update, updatedLive)
-      val draftCollectionWithUpdatedMeta = updatedDraft.map(updateListMeta(update, _))
+      lazy val liveCollectionWithUpdatedMeta = updateListMeta(update, updatedLive)
+      lazy val draftCollectionWithUpdatedMeta = updatedDraft.map(updateListMeta(update, _))
 
       updateCollection(id, block, update, identity, draftCollectionWithUpdatedMeta, liveCollectionWithUpdatedMeta)
     } getOrElse {
