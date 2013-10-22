@@ -61,20 +61,20 @@ define(['modules/relativedates',
                     'expectedOutput' :      '4h',
                     'expectedShortOutput' : '4h'
                 },
-                'withinTwentyFourHoursButNotSameDay': {
-                    'date'           :      '2012-08-12T20:00:00+01:00',
-                    'expectedOutput' :      'Yesterday, 8:00pm',
-                    'expectedShortOutput' : '16h'
-                },
                 'moreThanFiveHoursAgo': { // ... but still today
                     'date'           :      '2012-08-13T02:03:00+01:00',
                     'expectedOutput' :      '10h',
                     'expectedShortOutput' : '10h'
                 },
                 'yesterday': {
-                    'date'           :      '2012-08-12T23:45:00+01:00',
-                    'expectedOutput' :      'Yesterday, 11:45pm',
-                    'expectedShortOutput' : '12h'
+                    'date'           :      '2012-08-12T08:45:00+01:00',
+                    'expectedOutput' :      'Yesterday, 8:45am',
+                    'expectedShortOutput' : '1d'
+                },
+                'yesterdayButWithinTwentyFourHours': {
+                    'date'           :      '2012-08-12T20:00:00+01:00',
+                    'expectedOutput' :      'Yesterday, 8:00pm',
+                    'expectedShortOutput' : '16h'
                 },
                 'moreThanTwoDaysAgo': {
                     'date'           :      '2012-08-09T08:34:00+01:00',
