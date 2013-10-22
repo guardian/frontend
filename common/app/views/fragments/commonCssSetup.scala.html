@@ -1,8 +1,12 @@
 @(projectName: Option[String])(implicit request: RequestHeader)
 <!--[if (gt IE 8) | (IEMobile)]><!-->
-<style type="text/css">
-    @Html(Static.css.head(projectName))
-</style>
+@if(play.Play.isDev()) {
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse("") + ".min.css")" />
+} else {
+    <style type="text/css">
+        @Html(Static.css.head(projectName))
+    </style>
+}
 <!--<![endif]-->
 <!--[if (lt IE 9) & (!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts.min.css")" />
