@@ -12,9 +12,7 @@ define([
         this.top =  common.$g(".js-sticky-upper[data-id=" + this.options.id + "]", this.options.context).offset().top;
         this.bottom = common.$g(".js-sticky-lower[data-id=" + this.options.id + "]", this.options.context).offset().top - 250;
 
-        if (!detect.hasCSSSupport('position', 'sticky') && detect.hasCSSSupport('position', 'fixed', true)) {
-            this.bindListeners();
-        }
+        this.bindListeners();
     };
 
     Sticky.prototype.DEFAULTS = {

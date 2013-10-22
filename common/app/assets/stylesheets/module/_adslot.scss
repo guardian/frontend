@@ -55,7 +55,7 @@
             .ad-container {
                 width: 100%;
                 height: 54px;
-                max-width: 620px;
+                max-width: gs-span(8);
                 margin: 0 auto;
                 border-bottom: 1px solid $c-neutral5;
             }
@@ -91,7 +91,7 @@
 .test-inline-adverts--on .ad-slot--inline {
     @include mq(tablet) {
         float: left;
-        padding-right: 20px;
+        padding-right: $gs-gutter;
         padding-left: 0;
     }
 }

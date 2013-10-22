@@ -13,7 +13,9 @@ define([
             nParagraphs = '10',
             alphaOasUrl = 'www.theguardian-alpha.com',
             inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>',
-            mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle" data-extended="Middle"><div class="ad-container"></div></div>';
+            mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle" data-extended="Middle"><div class="ad-container"></div></div>',
+            supportsSticky = detect.hasCSSSupport('position', 'sticky'),
+            supportsFixed  = detect.hasCSSSupport('position', 'fixed', true);
 
         this.id = 'AlphaAdverts';
         this.expiry = '2013-11-30';
@@ -54,16 +56,20 @@ define([
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait'){
                         bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top adhesive');
                         bonzo(qwery('.parts__head')).addClass('is-sticky');
-                        s = new Sticky({
-                            elCls: 'ad-slot--top-banner-ad',
-                            id: 'Top2'
-                        });
+                        if(!supportsSticky && supportsFixed) {
+                            s = new Sticky({
+                                elCls: 'ad-slot--top-banner-ad',
+                                id: 'Top2'
+                            });
+                        }
                     } else {
                         document.getElementsByClassName('js-mpu-ad-slot')[0].appendChild(bonzo.create(mpuTemp)[0]);
-                        s = new Sticky({
-                            elCls: 'js-mpu-ad-slot',
-                            id: 'mpu-ad-slot'
-                        });
+                        if(!supportsSticky && supportsFixed) {
+                            s = new Sticky({
+                                elCls: 'js-mpu-ad-slot',
+                                id: 'mpu-ad-slot'
+                            });
+                        }
                     }
                     inview(document);
                     return true;
