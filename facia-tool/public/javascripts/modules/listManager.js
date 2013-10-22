@@ -46,7 +46,7 @@ define([
             };
 
         model.previewUrl = ko.computed(function() {
-            return common.config.previewUrls[Config.env] + '/responsive-viewer#/' + model.config();
+            return common.config.previewUrlBase[Config.env] + '/' + model.config() + '?view=mobile';
         })
 
         function fetchConfigsList() {
