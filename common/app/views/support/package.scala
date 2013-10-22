@@ -166,13 +166,33 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-object VideoEmbedCleaner extends HtmlCleaner {
+case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
       element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
     }
+
+    document.getElementsByClass("gu-video").foreach { element: Element =>
+      val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
+
+      val mediaId = element.attr("data-media-id")
+      val asset = findVideoFromId(mediaId)
+      asset.foreach( video =>
+        element.append(
+          s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
+                <param name="allowFullScreen" value="true" >
+                <param name="movie" value="$flashMediaElement" >
+                <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
+                Sorry, your browser is unable to play this video.
+              </object>""")
+      )
+    }
     document
+  }
+
+  def findVideoFromId(id:String): Option[VideoAsset] = {
+    contentVideos.filter(_.id == id).flatMap(_.videoAssets).filter(_.mimeType == Some("video/mp4")).headOption
   }
 }
 
@@ -222,19 +242,6 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
 
   def findImageFromId(id:String): Option[ImageAsset] = {
     contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
-  }
-}
-
-// TODO I am pretty sure this class is useless here, I'm going to have a think about it
-case class VideoPosterCleaner(poster: Option[ImageAsset]) extends HtmlCleaner {
-
-  def clean(body: Document): Document = {
-    poster.map{ posterImage =>
-      body.getElementsByTag("video").filter(_.hasClass("data-media-id")).foreach { videoTag =>
-        videoTag.attr("poster", posterImage.url.getOrElse(""))
-      }
-    }
-    body
   }
 }
 
