@@ -130,6 +130,7 @@ define([
             s.eVar19     = platform;
 
             s.prop31    = id.getUserFromCookie() ? "registered user" : "guest user";
+            s.eVar31    = id.getUserFromCookie() ? "registered user" : "guest user";
 
             s.prop47    = config.page.edition || '';
 
