@@ -187,12 +187,12 @@ define([
         });
 
         _.toArray(source).forEach(function(item, index) {
-            var group;
+            var groupInt,
+                group;
 
-            // FAKE a group - for testing.
-            //item.group = Math.max(0, 2 - Math.floor(index/2));
+            groupInt = parseInt((item.meta || {}).group, 10) || 0;
 
-            group = _.find(groups, function(g){ return g.group === item.group; }) || groups[0];
+            group = _.find(groups, function(g){ return g.group === groupInt; }) || groups[0];
             group.articles.push(new Article(item));
         });
     }

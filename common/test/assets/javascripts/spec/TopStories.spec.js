@@ -25,6 +25,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'helpers/fixtures']
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
         });
 
         afterEach(function () {
