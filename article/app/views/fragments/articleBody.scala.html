@@ -94,7 +94,7 @@
                                 <div class="u-table__cell u-table__cell--collapse u-table__cell--bottom">
                                     <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
                                     @if(storyPackage.nonEmpty) {
-                                      @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "visible")
+                                      @fragments.cards.card(storyPackage.head, "right", "More on this story", "Story package card", "visible")
                                     }
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
             }
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" data-link-context="@article.section">
-                    @fragments.relatedTrails(storyPackage.dropRight(1), heading = "More on this story", visibleTrails = 5)
+                    @fragments.relatedTrails(storyPackage.drop(1), heading = "More on this story", visibleTrails = 5)
                 </aside>
             } else {
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
