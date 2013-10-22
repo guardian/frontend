@@ -102,7 +102,10 @@ trait UpdateActions {
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
-    val splitList = {
+
+    val splitList: (List[Trail], List[Trail]) = {
+      //Different index logic if item is being place at itself in list
+      //(Eg for metadata update, or group change, index must come from list without item removed)
       if (update.item == update.position.getOrElse("")) {
         val index = blocks.indexWhere(_.id == update.item)
         listWithoutItem.splitAt(index)
