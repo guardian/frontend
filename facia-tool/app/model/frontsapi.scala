@@ -83,10 +83,10 @@ trait UpdateActions {
     }
   }
 
-  def updateListMeta(update: UpdateList, l: List[Trail]): List[Trail] = {for {
+  def updateListMeta(update: UpdateList, trailList: List[Trail]): List[Trail] = {for {
       metaMap <- update.itemMeta
-      } yield updateItemMetaList(update.item, l, metaMap)
-    } getOrElse l
+      } yield updateItemMetaList(update.item, trailList, metaMap)
+    } getOrElse trailList
 
   def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => Option[List[Trail]], updatedLive: => List[Trail]): Unit = {
       val live = shouldUpdate(update.live, block.live, updatedLive)
@@ -142,12 +142,12 @@ trait UpdateActions {
     }
   }
 
-  def updateItemMetaList(id: String, l: List[Trail], m: Map[String, String]): List[Trail] = {
+  def updateItemMetaList(id: String, trailList: List[Trail], metaData: Map[String, String]): List[Trail] = {
     lazy val fields: Seq[String] = Seq("webTitle", "group")
-    lazy val newMetaMap = m.filter{case (k, v) => fields.contains(k)}
+    lazy val newMetaMap = metaData.filter{case (k, v) => fields.contains(k)}
 
     for {
-      trail <- l
+      trail <- trailList
       metaMap <- trail.meta.orElse(Option(Map.empty[String, String]))
     } yield {
       if (id == trail.id) trail.copy(meta = Some(metaMap ++ newMetaMap)) else trail
