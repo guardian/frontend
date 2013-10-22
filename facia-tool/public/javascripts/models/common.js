@@ -13,8 +13,8 @@ define([
                 { width:  768,  height: 1024, name: "Tablet portrait" },
                 { width:  1024, height: 768,  name: "Tablet landscape" }
             ],
-            previewUrls: {
-                dev:  'http://localhost:9000/responsive-viewer#http://localhost:9000',
+            previewUrlBase: {
+                dev:  'http://localhost:9000/responsive-viewer#',
                 code: 'http://code.preview.guardianapps.co.uk/responsive-viewer#http://m.code.dev-theguardian.com',
                 prod: 'http://preview.guardianapps.co.uk/responsive-viewer#http://www.theguardian.com'
             },
