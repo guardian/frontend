@@ -23,10 +23,6 @@ define([
                 tag:     { display: 'with tag:',   param: "tag",     path: "tags",     placeholder: "e.g. sport/triathlon" }
             },
             searchPageSize:        50,
-            sectionSearches: {
-                "default": "news|uk|uk-news|world",
-                "culture": "culture|film|music|books|artanddesign|tv-and-radio|stage"
-            },
 
             pvmHot:                50,    // pageviews-per-min to qualify as 'hot'
             pvmWarm:               25,    // pageviews-per-min to qualify as 'warm'
