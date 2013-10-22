@@ -6,9 +6,9 @@ import conf.ContentApi
 
 object OffersAgent extends Logging with ExecutionContexts {
 
-  private lazy val agent = AkkaAgent[Map[String, List[Offer]]](Map.empty)
+  private lazy val agent = AkkaAgent[List[Offer]](Nil)
 
-  def allOffers: List[Offer] = agent().get("offers").getOrElse(Nil)
+  def allOffers: List[Offer] = agent()
 
   def offers(keywords: Seq[String], offersToChooseFrom: List[Offer] = allOffers) = {
     offersToChooseFrom.filter {
@@ -69,7 +69,7 @@ object OffersAgent extends Logging with ExecutionContexts {
           case countryTags =>
             val offers = tagOffers(untaggedOffers, countryTags)
             log info s"Tagged ${offers.size} travel offers"
-            agent send Map("offers" -> offers)
+            agent send offers
         }
     }
   }
