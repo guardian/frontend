@@ -32,12 +32,13 @@ define([
         this.variants = [
             {
                 id: 'Inline', //Article A
-                test: function() {
+                test: function(isBoth) {
                     var article = document.getElementsByClassName('js-article__container')[0];
                     bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function(el, i) {
-                        var cls = (i % 2 === 0) ? 'is-odd' : 'is-even';
+                        var cls = (i % 2 === 0) ? 'is-odd' : 'is-even',
+                            inviewName =  (isBoth) ? 'Both:Every '+ nParagraphs +'th para' : 'Inline:Every '+ nParagraphs +'th para';
                         bonzo(bonzo.create(inlineTmp)).attr({
-                            'data-inview-name' : 'Every '+ nParagraphs +'th para',
+                            'data-inview-name' : inviewName,
                             'data-inview-advert' : 'true',
                             'data-base' : 'Bottom3',
                             'data-median' : 'Middle',
@@ -50,11 +51,13 @@ define([
             },
             {
                 id: 'Adhesive', //Article B
-                test: function() {
+                test: function(isBoth) {
                     var viewport = detect.getLayoutMode(),
+                        inviewName,
                         s;
-                    if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait'){
-                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top adhesive');
+                    if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait') {
+                        inviewName = (isBoth) ? 'Both:Top banner' : 'Adhesive:Top banner';
+                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', inviewName);
                         bonzo(qwery('.parts__head')).addClass('is-sticky');
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
@@ -63,7 +66,9 @@ define([
                             });
                         }
                     } else {
+                        inviewName = (isBoth) ? 'Both : MPU' : 'Adhesive: MPU';
                         document.getElementsByClassName('js-mpu-ad-slot')[0].appendChild(bonzo.create(mpuTemp)[0]);
+                        bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
                                 elCls: 'js-mpu-ad-slot',
@@ -81,7 +86,7 @@ define([
                     document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
-                            variant.test.call(self);
+                            variant.test.call(self, true);
                         }
                     });
                     return true;

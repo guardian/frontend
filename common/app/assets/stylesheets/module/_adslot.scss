@@ -64,6 +64,7 @@
 }
 
 .parts__head {
+    z-index: 1002;
     &.is-sticky {
         top: 0;
         @include sticky;

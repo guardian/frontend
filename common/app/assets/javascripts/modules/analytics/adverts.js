@@ -4,14 +4,11 @@ define(['common', 'bean', 'modules/inview'], function (common, bean, Inview) {
 
         // Setup listeners
         bean.on(document, 'inview', function(e) {
-            var inviewName = e.target.getAttribute('data-inview-name');
+            var size = (window.innerWidth > 810) ? 'median' : 'base',
+                inviewName = e.target.getAttribute('data-inview-name'),
+                slot = e.target.getAttribute('data-' + size);
 
-            common.mediator.emit('module:analytics:adimpression', inviewName);
-        });
-
-        // Label up ad slots
-        common.$g('.ad-slot').each(function() {
-            this.setAttribute('data-inview-name', this.getAttribute('data-link-name'));
+            common.mediator.emit('module:analytics:adimpression', inviewName+ ':' + slot);
         });
 
         var inview = new Inview('[data-inview-name]', document);

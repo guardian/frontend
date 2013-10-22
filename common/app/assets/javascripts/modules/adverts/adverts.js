@@ -60,7 +60,7 @@ function (
                     container.innerHTML = '';
                     // Load the currContext ads only
                     if (contexts[c] === currContext ) {
-                        name = els[i].getAttribute('data-' + size),
+                        name = els[i].getAttribute('data-' + size);
                         slot = new DocumentWriteSlot(name, container);
                         slot.setDimensions(dimensionMap[name]);
                         slots.push(slot);
