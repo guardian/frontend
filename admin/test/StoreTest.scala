@@ -3,9 +3,9 @@ package test
 import java.util.UUID
 import tools.Store
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class StoreTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class StoreTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Front configuration"){
 

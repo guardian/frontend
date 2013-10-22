@@ -1,0 +1,2147 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"money/2013/oct/17/british-gas-backlash-price-hike-energy-bills",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-18T08:47:00Z",
+      "webTitle":"British Gas: energy bills price hike turns into PR disaster",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/17/british-gas-backlash-price-hike-energy-bills",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/17/british-gas-backlash-price-hike-energy-bills",
+      "fields":{
+        "trailText":"<p>Energy giant faces public relations disaster over increase in energy bills with nearly 16,000 Twitter comments during Q&amp;A</p>",
+        "headline":"British Gas: energy bills price hike turns into PR disaster",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jkvt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039086520/British-Gas-faces-backlas-003.jpg",
+        "wordcount":"1046",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/commodities",
+        "type":"keyword",
+        "webTitle":"Commodities",
+        "webUrl":"http://www.theguardian.com/business/commodities",
+        "apiUrl":"http://content.guardianapis.com/business/commodities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/gas",
+        "type":"keyword",
+        "webTitle":"Gas",
+        "webUrl":"http://www.theguardian.com/business/gas",
+        "apiUrl":"http://content.guardianapis.com/business/gas",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/household-bills",
+        "type":"keyword",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/terrymacalister",
+        "type":"contributor",
+        "webTitle":"Terry Macalister",
+        "webUrl":"http://www.theguardian.com/profile/terrymacalister",
+        "apiUrl":"http://content.guardianapis.com/profile/terrymacalister",
+        "bio":"<p>Terry Macalister is energy editor of the Guardian. He has been employed at the paper and website for 12 years and previously worked for the Independent and other national titles</p>",
+        "rcsId":"GNL030712",
+        "r2ContributorId":"16511",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/terry_macallister_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/jennifer-rankin",
+        "type":"contributor",
+        "webTitle":"Jennifer Rankin",
+        "webUrl":"http://www.theguardian.com/profile/jennifer-rankin",
+        "apiUrl":"http://content.guardianapis.com/profile/jennifer-rankin",
+        "r2ContributorId":"55690",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/14/1376462480287/Jennifer-Rankin-003.jpg",
+        "references":[]
+      },{
+        "id":"business/centrica",
+        "type":"keyword",
+        "webTitle":"Centrica",
+        "webUrl":"http://www.theguardian.com/business/centrica",
+        "apiUrl":"http://content.guardianapis.com/business/centrica",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/utilities",
+        "type":"keyword",
+        "webTitle":"Utilities",
+        "webUrl":"http://www.theguardian.com/business/utilities",
+        "apiUrl":"http://content.guardianapis.com/business/utilities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/ed-davey",
+        "type":"keyword",
+        "webTitle":"Ed Davey",
+        "webUrl":"http://www.theguardian.com/politics/ed-davey",
+        "apiUrl":"http://content.guardianapis.com/politics/ed-davey",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"media/social-media",
+        "type":"keyword",
+        "webTitle":"Social media",
+        "webUrl":"http://www.theguardian.com/media/social-media",
+        "apiUrl":"http://content.guardianapis.com/media/social-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420335031",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039082075/British-Gas-faces-backlas-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"54",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039084723/British-Gas-faces-backlas-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"130",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039086520/British-Gas-faces-backlas-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"84",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039088278/British-Gas-faces-backlas-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"132",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039090056/British-Gas-faces-backlas-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"168",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039092009/British-Gas-faces-backlas-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"180",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039093860/British-Gas-faces-backlas-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"228",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039095577/British-Gas-faces-backlas-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"276",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039095577/British-Gas-faces-backlas-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"276",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420335032",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039086520/British-Gas-faces-backlas-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"84",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"business/2013/oct/10/sse-raises-prices-average-annual-bill",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-10T18:48:00Z",
+      "webTitle":"Ed Miliband condemns 'rip-off' energy firms after SSE 8% price rise",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/10/sse-raises-prices-average-annual-bill",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/10/sse-raises-prices-average-annual-bill",
+      "fields":{
+        "trailText":"SSE boasts of 'obsession' with increasing dividends as Labour leader says David Cameron lets firms 'get away with it'",
+        "headline":"Ed Miliband condemns 'rip-off' energy firms after SSE 8% price rise",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3je3f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/10/1381389110981/SSE-energy-minister-Micha-003.jpg",
+        "wordcount":"933",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"politics/edmiliband",
+        "type":"keyword",
+        "webTitle":"Ed Miliband",
+        "webUrl":"http://www.theguardian.com/politics/edmiliband",
+        "apiUrl":"http://content.guardianapis.com/politics/edmiliband",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/scottishandsouthernenergy",
+        "type":"keyword",
+        "webTitle":"SSE",
+        "webUrl":"http://www.theguardian.com/business/scottishandsouthernenergy",
+        "apiUrl":"http://content.guardianapis.com/business/scottishandsouthernenergy",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/utilities",
+        "type":"keyword",
+        "webTitle":"Utilities",
+        "webUrl":"http://www.theguardian.com/business/utilities",
+        "apiUrl":"http://content.guardianapis.com/business/utilities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/gas",
+        "type":"keyword",
+        "webTitle":"Gas",
+        "webUrl":"http://www.theguardian.com/business/gas",
+        "apiUrl":"http://content.guardianapis.com/business/gas",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/household-bills",
+        "type":"keyword",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/angela-monaghan",
+        "type":"contributor",
+        "webTitle":"Angela Monaghan",
+        "webUrl":"http://www.theguardian.com/profile/angela-monaghan",
+        "apiUrl":"http://content.guardianapis.com/profile/angela-monaghan",
+        "bio":"<p>Angela Monaghan is a reporter at the Guardian</p>",
+        "r2ContributorId":"56451",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/8/1375945830573/Angela-Monaghan-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/terrymacalister",
+        "type":"contributor",
+        "webTitle":"Terry Macalister",
+        "webUrl":"http://www.theguardian.com/profile/terrymacalister",
+        "apiUrl":"http://content.guardianapis.com/profile/terrymacalister",
+        "bio":"<p>Terry Macalister is energy editor of the Guardian. He has been employed at the paper and website for 12 years and previously worked for the Independent and other national titles</p>",
+        "rcsId":"GNL030712",
+        "r2ContributorId":"16511",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/terry_macallister_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/rowena-mason",
+        "type":"contributor",
+        "webTitle":"Rowena Mason",
+        "webUrl":"http://www.theguardian.com/profile/rowena-mason",
+        "apiUrl":"http://content.guardianapis.com/profile/rowena-mason",
+        "r2ContributorId":"58040",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419588753",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/10/1381389110981/SSE-energy-minister-Micha-003.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "altText":"SSE: energy minister Michael Fallon",
+            "height":"84",
+            "credit":"Barcroft Media",
+            "caption":"Energy minister Michael Fallon called the SSE price hike 'disappointing' and urged customers to switch to the best deal. Photograph: Barcroft Media",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-419576960",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/10/ITNP_NF_ENERGY_10_dv-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"51"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/10/ITNP_NF_ENERGY_10_dv_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"51"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/10/ITNP_NF_ENERGY_10_dv_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"51"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/10/ITNP_NF_ENERGY_10_dv/ITNP_NF_ENERGY_10_dv.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"51"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/oct/13/50000-switch-suppliers-energy-price-rise",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-13T13:14:58Z",
+      "webTitle":"50,000 consumers switch suppliers after energy price rise, claim experts",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/13/50000-switch-suppliers-energy-price-rise",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/13/50000-switch-suppliers-energy-price-rise",
+      "fields":{
+        "trailText":"<p>Other 'big six' firms hold back from upping prices hoping to win over SSE customers after last week's 8.2% increase</p>",
+        "headline":"50,000 consumers switch suppliers after energy price rise, claim experts",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jg7j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669927014/SSE-006.jpg",
+        "wordcount":"535",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/scottishandsouthernenergy",
+        "type":"keyword",
+        "webTitle":"SSE",
+        "webUrl":"http://www.theguardian.com/business/scottishandsouthernenergy",
+        "apiUrl":"http://content.guardianapis.com/business/scottishandsouthernenergy",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/utilities",
+        "type":"keyword",
+        "webTitle":"Utilities",
+        "webUrl":"http://www.theguardian.com/business/utilities",
+        "apiUrl":"http://content.guardianapis.com/business/utilities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/terrymacalister",
+        "type":"contributor",
+        "webTitle":"Terry Macalister",
+        "webUrl":"http://www.theguardian.com/profile/terrymacalister",
+        "apiUrl":"http://content.guardianapis.com/profile/terrymacalister",
+        "bio":"<p>Terry Macalister is energy editor of the Guardian. He has been employed at the paper and website for 12 years and previously worked for the Independent and other national titles</p>",
+        "rcsId":"GNL030712",
+        "r2ContributorId":"16511",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/terry_macallister_140x140.jpg",
+        "references":[]
+      },{
+        "id":"money/household-bills",
+        "type":"keyword",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/family-finances",
+        "type":"keyword",
+        "webTitle":"Family finances",
+        "webUrl":"http://www.theguardian.com/money/family-finances",
+        "apiUrl":"http://content.guardianapis.com/money/family-finances",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419948257",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669918784/SSE-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"54",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669920630/SSE-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"340",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669922181/SSE-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"130",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669923627/SSE-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"720",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669925215/SSE-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"1536",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669927014/SSE-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"84",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669928166/SSE-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"132",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669929469/SSE-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"168",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669930757/SSE-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"180",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669933681/SSE-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"228",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669934955/SSE-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"276",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669936142/SSE-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"372",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669937512/SSE-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"1116",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669939307/SSE-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"1536",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669934955/SSE-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"276",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419948258",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/13/1381669927014/SSE-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"SSE",
+            "height":"84",
+            "credit":"Andrew Milligan/PA",
+            "caption":"The mass switching after the SSE price rise will be welcomed by the government, which had urged consumers  to find cheaper options. Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/10/what-are-best-fixed-rate-energy-deals",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-10T14:05:54Z",
+      "webTitle":"What are the best fixed-rate energy deals?",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/10/what-are-best-fixed-rate-energy-deals",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/10/what-are-best-fixed-rate-energy-deals",
+      "fields":{
+        "trailText":"<p>As the second of the 'big six' energy firms raises its prices in time for winter, we track down the best fixed-rate deals currently on offer</p>",
+        "headline":"What are the best fixed-rate energy deals?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jef5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413467493/A-real-flame-gas-fire-hea-004.jpg",
+        "wordcount":"443",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/household-bills",
+        "type":"keyword",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/saving-money",
+        "type":"keyword",
+        "webTitle":"Saving money",
+        "webUrl":"http://www.theguardian.com/money/saving-money",
+        "apiUrl":"http://content.guardianapis.com/money/saving-money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/family-finances",
+        "type":"keyword",
+        "webTitle":"Family finances",
+        "webUrl":"http://www.theguardian.com/money/family-finances",
+        "apiUrl":"http://content.guardianapis.com/money/family-finances",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/utilities",
+        "type":"keyword",
+        "webTitle":"Utilities",
+        "webUrl":"http://www.theguardian.com/business/utilities",
+        "apiUrl":"http://content.guardianapis.com/business/utilities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/money/money",
+        "type":"newspaper-book-section",
+        "webTitle":"Money news & features",
+        "webUrl":"http://www.theguardian.com/theguardian/money/money",
+        "apiUrl":"http://content.guardianapis.com/theguardian/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"theguardian/money",
+        "type":"newspaper-book",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/theguardian/money",
+        "apiUrl":"http://content.guardianapis.com/theguardian/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/milesbrignall",
+        "type":"contributor",
+        "webTitle":"Miles Brignall",
+        "webUrl":"http://www.theguardian.com/profile/milesbrignall",
+        "apiUrl":"http://content.guardianapis.com/profile/milesbrignall",
+        "bio":"<p>Miles Brignall covers consumer issues for the Guardian in the <a href=\"http://www.guardian.co.uk/money\">money</a> section, published each Saturday.</p>",
+        "rcsId":"GNL342816",
+        "r2ContributorId":"16152",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/miles_brignall_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420334109",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413462608/A-real-flame-gas-fire-hea-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"54",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413465132/A-real-flame-gas-fire-hea-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"340",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413466289/A-real-flame-gas-fire-hea-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"130",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413467493/A-real-flame-gas-fire-hea-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"84",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413470265/A-real-flame-gas-fire-hea-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"132",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413471491/A-real-flame-gas-fire-hea-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"168",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413476497/A-real-flame-gas-fire-hea-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"180",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413478548/A-real-flame-gas-fire-hea-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"228",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413479883/A-real-flame-gas-fire-hea-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"276",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413481030/A-real-flame-gas-fire-hea-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"372",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413479883/A-real-flame-gas-fire-hea-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"276",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420334110",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/10/1381413467493/A-real-flame-gas-fire-hea-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Trevor Smithers",
+            "altText":"A real flame gas fire heater",
+            "height":"84",
+            "credit":"Trevor Smithers/Alamy",
+            "caption":"First Utility currently has the best gas and electricity deals, but it's also a regular fixture in Guardian Money's postbag. Photograph: Trevor Smithers/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/oct/17/askbg-british-gas-hikes-prices-then-takes-to-twitter",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-17T13:07:35Z",
+      "webTitle":"#AskBG: British Gas hikes prices, then takes to Twitter",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/17/askbg-british-gas-hikes-prices-then-takes-to-twitter",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/17/askbg-british-gas-hikes-prices-then-takes-to-twitter",
+      "fields":{
+        "trailText":"<p>British Gas customers have taken to Twitter hijacking BG's hashtag #askBG to vent their fury over price hikes</p>",
+        "headline":"#AskBG: British Gas hikes prices, then takes to Twitter",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jjfc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148633/49e67499-4e25-4876-a26c-b12acef25631-140x84.png",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/blog",
+        "type":"blog",
+        "webTitle":"Business blog",
+        "webUrl":"http://www.theguardian.com/business/blog",
+        "apiUrl":"http://content.guardianapis.com/business/blog",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/centrica",
+        "type":"keyword",
+        "webTitle":"Centrica",
+        "webUrl":"http://www.theguardian.com/business/centrica",
+        "apiUrl":"http://content.guardianapis.com/business/centrica",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148288/bb886ed0-096e-43f7-b15a-3942f5a624c8-380x228.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148288/bb886ed0-096e-43f7-b15a-3942f5a624c8-380x228.png",
+            "source":"British Gas",
+            "altText":"British Gas Customer Service Director, Bert Pijls",
+            "height":"228",
+            "credit":"British Gas",
+            "caption":"British Gas Customer Service Director, Bert Pijls Photograph: /British Gas",
+            "mediaId":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148497/a34da9a4-94ee-46ea-bb9a-8b6733fe489c-300x180.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148497/a34da9a4-94ee-46ea-bb9a-8b6733fe489c-300x180.png",
+            "source":"British Gas",
+            "altText":"British Gas Customer Service Director, Bert Pijls",
+            "height":"180",
+            "credit":"British Gas",
+            "caption":"British Gas Customer Service Director, Bert Pijls Photograph: /British Gas",
+            "mediaId":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148633/49e67499-4e25-4876-a26c-b12acef25631-140x84.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148633/49e67499-4e25-4876-a26c-b12acef25631-140x84.png",
+            "source":"British Gas",
+            "altText":"British Gas Customer Service Director, Bert Pijls",
+            "height":"84",
+            "credit":"British Gas",
+            "caption":"British Gas Customer Service Director, Bert Pijls Photograph: /British Gas",
+            "mediaId":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148846/446e2404-9dda-4c55-86ee-68f7fb5573f7-bestSizeAvailable.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015148846/446e2404-9dda-4c55-86ee-68f7fb5573f7-bestSizeAvailable.png",
+            "source":"British Gas",
+            "altText":"British Gas Customer Service Director, Bert Pijls",
+            "height":"351",
+            "credit":"British Gas",
+            "caption":"British Gas Customer Service Director, Bert Pijls Photograph: /British Gas",
+            "mediaId":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015149063/e30a5aba-368c-4860-a44a-fe147c200760-220x132.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015149063/e30a5aba-368c-4860-a44a-fe147c200760-220x132.png",
+            "source":"British Gas",
+            "altText":"British Gas Customer Service Director, Bert Pijls",
+            "height":"132",
+            "credit":"British Gas",
+            "caption":"British Gas Customer Service Director, Bert Pijls Photograph: /British Gas",
+            "mediaId":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015149244/1813d067-fb8b-4bd3-9175-bd6feab1333e-460x276.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015149244/1813d067-fb8b-4bd3-9175-bd6feab1333e-460x276.png",
+            "source":"British Gas",
+            "altText":"British Gas Customer Service Director, Bert Pijls",
+            "height":"276",
+            "credit":"British Gas",
+            "caption":"British Gas Customer Service Director, Bert Pijls Photograph: /British Gas",
+            "mediaId":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015149496/dafe4d67-930e-43cc-8959-a55586cf8622-540x324.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015149496/dafe4d67-930e-43cc-8959-a55586cf8622-540x324.png",
+            "source":"British Gas",
+            "altText":"British Gas Customer Service Director, Bert Pijls",
+            "height":"324",
+            "credit":"British Gas",
+            "caption":"British Gas Customer Service Director, Bert Pijls Photograph: /British Gas",
+            "mediaId":"gu-fc-60826618-0c20-4e5f-a73c-e3b4b8b244e4",
+            "width":"540"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/oct/17/british-gas-energy-prices-gas-electricity-centrica",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-17T10:16:40Z",
+      "webTitle":"British Gas raises energy prices by 9.2%",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/17/british-gas-energy-prices-gas-electricity-centrica",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/17/british-gas-energy-prices-gas-electricity-centrica",
+      "fields":{
+        "trailText":"Centrica move – which follows SSE's price rise last week – will add £107 to the average annual dual-fuel bill with British Gas",
+        "headline":"British Gas raises energy prices by 9.2%",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jjam",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004824373/British-Gas-increases-gas-003.jpg",
+        "wordcount":"450",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/centrica",
+        "type":"keyword",
+        "webTitle":"Centrica",
+        "webUrl":"http://www.theguardian.com/business/centrica",
+        "apiUrl":"http://content.guardianapis.com/business/centrica",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/utilities",
+        "type":"keyword",
+        "webTitle":"Utilities",
+        "webUrl":"http://www.theguardian.com/business/utilities",
+        "apiUrl":"http://content.guardianapis.com/business/utilities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/household-bills",
+        "type":"keyword",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/angela-monaghan",
+        "type":"contributor",
+        "webTitle":"Angela Monaghan",
+        "webUrl":"http://www.theguardian.com/profile/angela-monaghan",
+        "apiUrl":"http://content.guardianapis.com/profile/angela-monaghan",
+        "bio":"<p>Angela Monaghan is a reporter at the Guardian</p>",
+        "r2ContributorId":"56451",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/8/1375945830573/Angela-Monaghan-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420241175",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004820337/British-Gas-increases-gas-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"54",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004822636/British-Gas-increases-gas-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"130",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004824373/British-Gas-increases-gas-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"84",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004826104/British-Gas-increases-gas-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"132",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004827683/British-Gas-increases-gas-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"168",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004829285/British-Gas-increases-gas-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"180",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004830909/British-Gas-increases-gas-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"228",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004832539/British-Gas-increases-gas-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"276",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004832539/British-Gas-increases-gas-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"276",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420241176",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1382004824373/British-Gas-increases-gas-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Rui Vieira",
+            "altText":"British Gas increases gas and electricity prices",
+            "height":"84",
+            "credit":"Rui Vieira/PA",
+            "caption":"British Gas is increasing its electricity prices by 10.4% and gas by 8.4% from next month. \r Photograph: Rui Vieira/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/oct/17/british-gas-backlash-price-hike-energy-bills",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-18T08:47:00Z",
+      "webTitle":"British Gas: energy bills price hike turns into PR disaster",
+      "webUrl":"http://www.theguardian.com/money/2013/oct/17/british-gas-backlash-price-hike-energy-bills",
+      "apiUrl":"http://content.guardianapis.com/money/2013/oct/17/british-gas-backlash-price-hike-energy-bills",
+      "fields":{
+        "trailText":"<p>Energy giant faces public relations disaster over increase in energy bills with nearly 16,000 Twitter comments during Q&amp;A</p>",
+        "headline":"British Gas: energy bills price hike turns into PR disaster",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jkvt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039086520/British-Gas-faces-backlas-003.jpg",
+        "wordcount":"1046",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"money/energy",
+        "type":"keyword",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/commodities",
+        "type":"keyword",
+        "webTitle":"Commodities",
+        "webUrl":"http://www.theguardian.com/business/commodities",
+        "apiUrl":"http://content.guardianapis.com/business/commodities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/gas",
+        "type":"keyword",
+        "webTitle":"Gas",
+        "webUrl":"http://www.theguardian.com/business/gas",
+        "apiUrl":"http://content.guardianapis.com/business/gas",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/household-bills",
+        "type":"keyword",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/terrymacalister",
+        "type":"contributor",
+        "webTitle":"Terry Macalister",
+        "webUrl":"http://www.theguardian.com/profile/terrymacalister",
+        "apiUrl":"http://content.guardianapis.com/profile/terrymacalister",
+        "bio":"<p>Terry Macalister is energy editor of the Guardian. He has been employed at the paper and website for 12 years and previously worked for the Independent and other national titles</p>",
+        "rcsId":"GNL030712",
+        "r2ContributorId":"16511",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/terry_macallister_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/jennifer-rankin",
+        "type":"contributor",
+        "webTitle":"Jennifer Rankin",
+        "webUrl":"http://www.theguardian.com/profile/jennifer-rankin",
+        "apiUrl":"http://content.guardianapis.com/profile/jennifer-rankin",
+        "r2ContributorId":"55690",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/14/1376462480287/Jennifer-Rankin-003.jpg",
+        "references":[]
+      },{
+        "id":"business/centrica",
+        "type":"keyword",
+        "webTitle":"Centrica",
+        "webUrl":"http://www.theguardian.com/business/centrica",
+        "apiUrl":"http://content.guardianapis.com/business/centrica",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/utilities",
+        "type":"keyword",
+        "webTitle":"Utilities",
+        "webUrl":"http://www.theguardian.com/business/utilities",
+        "apiUrl":"http://content.guardianapis.com/business/utilities",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/ed-davey",
+        "type":"keyword",
+        "webTitle":"Ed Davey",
+        "webUrl":"http://www.theguardian.com/politics/ed-davey",
+        "apiUrl":"http://content.guardianapis.com/politics/ed-davey",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"media/social-media",
+        "type":"keyword",
+        "webTitle":"Social media",
+        "webUrl":"http://www.theguardian.com/media/social-media",
+        "apiUrl":"http://content.guardianapis.com/media/social-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420335031",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039082075/British-Gas-faces-backlas-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"54",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039084723/British-Gas-faces-backlas-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"130",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039086520/British-Gas-faces-backlas-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"84",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039088278/British-Gas-faces-backlas-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"132",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039090056/British-Gas-faces-backlas-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"168",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039092009/British-Gas-faces-backlas-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"180",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039093860/British-Gas-faces-backlas-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"228",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039095577/British-Gas-faces-backlas-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"276",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039095577/British-Gas-faces-backlas-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"276",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420335032",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382039086520/British-Gas-faces-backlas-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Christopher Furlong",
+            "altText":"British Gas faces backlash over price hikes",
+            "height":"84",
+            "credit":"Christopher Furlong/Getty Images",
+            "caption":"The energy price increases – three times the level of inflation – will affect 16 ­million customers. Photograph: Christopher Furlong/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

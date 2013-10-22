@@ -43,7 +43,7 @@
 
             function loadCssWithAjax() {
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', '@Static("stylesheets/global.min.css")');
+                xhr.open('GET', '@Static("stylesheets/global.min.css")?type=ajax');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if(xhr.status === 200) {

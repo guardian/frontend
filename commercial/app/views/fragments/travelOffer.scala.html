@@ -1,0 +1,162 @@
+@(offerA: model.commercial.travel.Offer, offerB: model.commercial.travel.Offer)
+
+<div class="travel-offers promo-component component b2 four-col">
+
+    <style type="text/css">
+        .travel-offers.component {
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .travel-offers .two-col.trail {
+            width: 135px !important;
+            margin-right: 10px;
+        }
+
+        .travel-offers h3 {
+            text-indent: -1000px;
+            overflow: hidden;
+            background-image: url(http://resource.guim.co.uk/travel/holiday-offers-micro/static/gho.png);
+            background-repeat: no-repeat;
+            background-position: 0 0;
+        }
+
+        .travel-offers.four-col h3,
+        .travel-offers.two-col h3
+        {
+            width: 230px;
+            height: 24px;
+            background-position: 0 -69px;
+            margin-top: 7px;
+            margin-bottom: 10px !important;
+        }
+
+        .travel-offers.two-col h3 {
+            width: 98px;
+            height: 33px;
+            background-position: 0 0;
+            margin-left: 5px;
+            margin-top: 4px;
+            margin-bottom: 6px !important;
+        }
+
+        .travel-offers.two-col.variant-color-blue h3 {
+            background-position: 0 -34px;
+            height: 34px
+        }
+
+        .travel-offers h4 {
+            margin-bottom: 0.5em;
+            margin-top: 2px;
+        }
+
+        .travel-offers .trail-text {
+            font-family: georgia, serif;
+        }
+
+        .travel-offers input.submit {
+            margin-left: 5px;
+        }
+
+        .travel-offers.two-col input.submit {
+            float: right;
+        }
+
+        .travel-offers.two-col .plain-search {
+            margin-bottom: 0.2em;
+            width: 124px;
+        }
+
+        .travel-offers.four-col .plain-search {
+            float: left;
+        }
+
+        .travel-offers label {
+            clear: both;
+            display: block;
+            margin-bottom: 0.5em;
+        }
+
+        .travel-offers .links {
+            list-style-type: disc;
+            list-style-position: inside;
+            padding-left: 2px;
+            margin-bottom: 0.5em;
+        }
+
+        .travel-offers .more-links {
+            border-top-style: dotted;
+            border-top-width: 1px;
+            border-top-color: #999;
+            padding: 10px 0 0 0;
+            margin-top: 10px;
+        }
+
+        .travel-offers {
+            background-color: #ececec;
+        }
+
+        .travel-offers.variant-color-grey {
+            background-color: #ececec;
+        }
+
+        .travel-offers.variant-color-blue {
+            background-color: #B1E1FC;
+        }
+
+        .travel-offers .trail-text,
+        .travel-offers .links,
+        .travel-offers form {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .r3 {
+            border-top : 3px solid #65C5FB !important
+        }
+    </style>
+
+
+
+    <!-- TODO: needs new heading image  -->
+
+    <!-- variants:
+                Generic Data / Travel Offer
+
+                2 variations
+
+                Position ? Above and below 2 x 2 = 24
+            -->
+
+    <h3 class="heading">guardian holiday offers</h3>
+
+    <div class="two-col trail">
+
+        <a href="@offerA.offerUrl?INTCMP=ILCTOFFTXT5263I" class="link">
+            <img src="@offerA.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" width="140px" alt="@offerA.title" class="offer-image">
+        </a>
+
+        <h4 class="trail-text t3"><a class="link" href="@offerA.offerUrl?INTCMP=ILCTOFFTXT5263I">@offerA.title - from £@offerA.fromPrice</a></h4>
+
+
+    </div><div class="two-col edge trail">
+
+    <a href="@offerB.offerUrl?INTCMP=ILCTOFFTXT5263I" class="link">
+        <img src="@offerB.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" width="140px" alt="@offerB.title" class="offer-image">
+    </a>
+
+    <h4 class="trail-text t3"><a class="link" href="@offerB.offerUrl?INTCMP=ILCTOFFTXT5263I">@offerB.title - from £@offerB.fromPrice</a></h4>
+
+
+</div>
+
+
+    <form action="http://www.guardianholidayoffers.co.uk/Search" class="travel-offers-search">
+
+        <label for="travel-offer">Find hand picked holidays for hundreds of destinations</label>
+        <input value="France" id="travel-offer" name="search" class="plain-search" type="text">
+        <input value="ILCTOFFTXT5263I" name="INTCMP" type="hidden">
+        <input value="Search" name="go" class="submit" type="submit">
+    </form>
+
+</div>

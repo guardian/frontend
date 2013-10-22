@@ -2,11 +2,11 @@ package test
 
 import conf.Configuration
 import conf.Switches._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -83,7 +83,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
-          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues Goegr Monbiot. Photograph: Alamy")
+          be("Gunnerside village Swaledale Yorkshire Dales")
       }
     }
 
@@ -206,15 +206,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         When("the page is rendered")
 
         Then("the ad slot placeholder is rendered")
-        val adPlaceholder = $(".ad-slot-top-banner-ad").first()
+        val adPlaceholder = $(".ad-slot--top-banner-ad").first()
 
         And("the placeholder has the correct slot names")
         adPlaceholder.getAttribute("data-base") should be("Top2")
         adPlaceholder.getAttribute("data-median") should be("Top")
-        adPlaceholder.getAttribute("data-extended") should be("x54")
+        adPlaceholder.getAttribute("data-extended") should be("Top")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot-top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")

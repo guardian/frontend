@@ -1,0 +1,222 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/defence-and-security-blog/2013/sep/26/israel-iran-nuclear-weapons-terror",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-26T16:06:51Z",
+      "webTitle":"Terror and Nukes - two key issues facing world leaders",
+      "webUrl":"http://www.theguardian.com/world/defence-and-security-blog/2013/sep/26/israel-iran-nuclear-weapons-terror",
+      "apiUrl":"http://content.guardianapis.com/world/defence-and-security-blog/2013/sep/26/israel-iran-nuclear-weapons-terror",
+      "fields":{
+        "trailText":"<p>• Iran's nuclear programme and Israel's nuclear weapons<br />• Cities will become increasingly vulnerable to terror attacks</p>",
+        "headline":"Terror and Nukes - two key issues facing world leaders",
+        "body":"<p>We are witnessing an extraordinary conjuncture, or combination of circumstances, a critical time in the world of defence and security.</p><p>Iran's new president, Hassan Rouhani, is holding out the prospect of a breakthrough after his country's three decade cold war, and nuclear standoff, with the US.</p><p>Russia and the US have agreed to a peaceful solution to rid Syria of its chemical weapons stocks. And the world has witnessed a horrific terrorist attack by al-Shabaab extremists on a soft target, a shopping mall in the Kenyan capital, Nairobi.</p><p>These are connected.</p><p>Vladimir Putin <a href=\"http://www.reuters.com/article/2013/09/23/us-syria-crisis-russia-militancy-idUSBRE98M0M320130923\">warned</a> that militants fighting President Bashar al-Assad in Syria could strike elsewhere. \"The militant groups (in Syria) did not come out of nowhere, and they will not vanish into thin air,\" Putin said, adding \"We are now witnessing a terrible tragedy unfold in Kenya. The militants came from another country, as far as we can judge, and are committing horrendous, bloody crimes.\"</p><p>Moscow has for long been concerned about Islamist militants on and within Russia's borders. Most western commentators say al-Shabaab will stick to its part of the world.</p><p>Though al-Shabaab announced in 2012 it had linked up with al-Qaeda, it is unlikely to link up with other  Islamist groups such as al-Qaeda in the Islamic Maghreb (AQM). However, this North African al-Qaeda affiliate has links to Boko Haram.</p><p>Boko Haram has killed about 3,000 people in northern Nigeria over the past four years and Nigeria's security forces are having great difficulty in hunting it down.</p><p>British spooks suggest that it does not present a great threat to the UK since most Nigerians in Britain are Christians from the south of the country, not Moslems from the north.</p><p>Yet those in the British Foreign Office tasked with searching for \"over the horizon\" dangers have singled out Nigeria as posing an increasing security threat. Nigeria has special problems.</p><p>Adewale Maja-Pearce, a Nigerian author recently <a href=\"http://www.nytimes.com/2013/09/23/opinion/nigerias-long-emergency.html?_r=0\">observed</a>: \"Today Nigeria - the world's seventh most populuos country - is the world's second-largest importer of Champagne but is unable to deliver more than a few hours of electricity a day\".</p><p>The country's chronic infrastructure problem makes Lagos a classic case for David Kilcullen, former counter-insurgency adviser to General David Petraeus in Iraq and Nato forces in Afghanistan. His main concern in Out of the Mountains, The Coming Age of <a href=\"https://mail.google.com/mail/u/0/?ui=2&amp;shva=1#inbox/1415954b02ac117f\">The Urban Guerrilla</a>, is the vulnerability of large, and fast growing coastal cities of the future. </p><p>\"In the future environment of overcrowded, undergoverned, urban, coastal areas - combined  with increasingly excellent remote surveillance capabilities (including drones, satellites, and signals intelligence) in remote rural areas - the cover is going to be in the cities\", he writes.</p><p>Nonstate armed groups will be able to draw on the technical skills of urban populations. Kilcullen cites the example of Syrian rebels who built a homemade armoured vehicle which used a videogame controller to manipulate a remotely mounted machine gun and linked cameras to a flat screen TV to  help the driver see - \"urban populations can turn consumer entertainment gadgets into military systems\".</p><p>Back to Syria, and the Middle East, the heart of the most serious, difficult, but solvable disputes. Unsurprisingly during his speech to the United Nations on Tuesday Rouhani did not mention Israel by name. He said: \"Iran's nuclear programme — and for that matter, that of all other countries — must pursue exclusively peaceful purposes\".</p><p>Putin was reported on Thursday to say that Israel's alleged nuclear weapons stockpile only served to make it \"a target\" and created \"foreign policy problems.\" He said Syria had developed chemical weapons \"as an alternative to the nuclear weapons of Israel\", according to AFP, the French news agency.</p><p>Putin added that \"the technical advantage of Israel – we need to say this directly – is such that it doesn't need nuclear weapons. Israel is already in a technical military sense several heads above the countries in the region.\"</p><p>Israel is estimated now to have 80 nuclear weapons, according to the Bulletin of the Atomic Scientists. Israel sticks to its longstanding policy of neither confirming nor denying its possession of nuclear arms.</p><p>A UN attempt to convene a conference last year to establish a weapons of mass destruction free zone in the Middle East broke down at least partly because of Israel's refusal to confirm whether it would attend or not.</p><p>\"If Israel's policy on the subject is so frozen that it is unable to come clean, Mr. Obama must let the United States government be honest about Israel's arsenal and act on those facts, for both America's good and Israel's\", two commentators observed  <a href=\"http://www.nytimes.com/2013/09/19/opinion/global/lets-be-honest-about-israels-nukes.html\">recently</a> in the New York Times. </p><p>WMD in the Middle East and the proliferation of armed terrorist groups - some but not all influenced by al-Qaeda ideology - are two of the most serious issues that should be faced up to as a matter of urgency.</p><!-- Guardian Watermark: internal-code/content/418359660|2013-10-17T14:14:17Z|15ca10f83153d3ee7950af02c7e7b6f6a69b2ec5 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-26T16:06:51Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376040966852/Hasan-Rouhani-003.jpg",
+        "standfirst":"• Iran's nuclear programme and Israel's nuclear weapons<br />• Cities will become increasingly vulnerable to terror attacks",
+        "shortUrl":"http://gu.com/p/3j4hy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376040966852/Hasan-Rouhani-003.jpg",
+        "wordcount":"793",
+        "commentable":"true",
+        "internalContentCode":"418359660",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Richard Norton-Taylor",
+        "publication":"theguardian.com",
+        "internalPageCode":"1971696",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-03T16:06:51Z"
+      },
+      "tags":[{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/israel",
+        "type":"keyword",
+        "webTitle":"Israel",
+        "webUrl":"http://www.theguardian.com/world/israel",
+        "apiUrl":"http://content.guardianapis.com/world/israel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/vladimir-putin",
+        "type":"keyword",
+        "webTitle":"Vladimir Putin",
+        "webUrl":"http://www.theguardian.com/world/vladimir-putin",
+        "apiUrl":"http://content.guardianapis.com/world/vladimir-putin",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/al-shabaab",
+        "type":"keyword",
+        "webTitle":"Al-Shabaab",
+        "webUrl":"http://www.theguardian.com/world/al-shabaab",
+        "apiUrl":"http://content.guardianapis.com/world/al-shabaab",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/boko-haram",
+        "type":"keyword",
+        "webTitle":"Boko Haram",
+        "webUrl":"http://www.theguardian.com/world/boko-haram",
+        "apiUrl":"http://content.guardianapis.com/world/boko-haram",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/chemical-weapons",
+        "type":"keyword",
+        "webTitle":"Chemical weapons",
+        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/al-qaida",
+        "type":"keyword",
+        "webTitle":"Al-Qaida",
+        "webUrl":"http://www.theguardian.com/world/al-qaida",
+        "apiUrl":"http://content.guardianapis.com/world/al-qaida",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"news/defence-and-security-blog",
+        "type":"blog",
+        "webTitle":"Defence and security blog",
+        "webUrl":"http://www.theguardian.com/news/defence-and-security-blog",
+        "apiUrl":"http://content.guardianapis.com/news/defence-and-security-blog",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"profile/richardnortontaylor",
+        "type":"contributor",
+        "webTitle":"Richard Norton-Taylor",
+        "webUrl":"http://www.theguardian.com/profile/richardnortontaylor",
+        "apiUrl":"http://content.guardianapis.com/profile/richardnortontaylor",
+        "bio":"<p>Richard Norton-Taylor regularly contributes to BBC news and current affairs programmes. He writes for The Guardian on defence and security and until recently was the paper's security  editor. He won the Freedom of Information Campaign Award for journalism in 1986. He edits the <a href=\"http://www.guardian.co.uk/news/defence-and-security-blog\">Guardian Defence and Security blog with Nick Hopkins</a>.</p><p><strong>Email him at: richard.norton-taylor [at] guardian.co.uk</strong></p>",
+        "rcsId":"GNL004743",
+        "r2ContributorId":"16331",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/richard_norton-taylor_140x1.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418362436",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376040971986/Hasan-Rouhani-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ebrahim Noroozi",
+            "altText":"Hasan Rouhani",
+            "height":"276",
+            "credit":"Ebrahim Noroozi/AP",
+            "caption":"Iran's new president Hassan Rouhani has said he wants direct negotiations with the United States. Photograph: Ebrahim Noroozi/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418362437",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/9/1376040966852/Hasan-Rouhani-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ebrahim Noroozi",
+            "altText":"Hasan Rouhani",
+            "height":"84",
+            "credit":"Ebrahim Noroozi/AP",
+            "caption":"Iran's new president Hassan Rouhani has said he wants direct negotiations with the United States. Photograph: Ebrahim Noroozi/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

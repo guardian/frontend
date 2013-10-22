@@ -46,7 +46,7 @@ define([
             };
 
         model.previewUrl = ko.computed(function() {
-            return common.config.previewUrls[Config.env] + '/responsive-viewer#/' + model.config();
+            return common.config.previewUrlBase[Config.env] + '/' + model.config() + '?view=mobile';
         })
 
         function fetchConfigsList() {
@@ -132,10 +132,21 @@ define([
             }
         };
 
-        model.config.subscribe(function(config) {
-            var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
-            model.latestArticles.setSection(common.config.sectionSearches[section || 'default'] || section);
-            setConfig(config);
+        model.config.subscribe(function(next) {
+            var previous = getConfig(), // previous config is still in queryStr
+                section;
+
+            if (Config.env.toLowerCase() === 'prod'
+                &&  next
+                && !next.match(/sandbox/) 
+                &&(!previous || previous.match(/sandbox/)) 
+                && !window.confirm("BEWARE! You are about to edit a LIVE page")) {
+                
+                model.config(previous);
+                return;
+            }
+
+            setConfig(next);
         });
 
         function updateLayout() {

@@ -21,6 +21,7 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMet
     val contentApiTimeout = Configuration.contentApi.timeout
 
     val start = currentTimeMillis
+
     val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics

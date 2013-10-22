@@ -16,14 +16,25 @@ define([
     var fromList;
 
     function init() {
+
+        init = function() {}; // make idempotent
+
+        window.addEventListener("dragover", function(event) {
+            event.preventDefault();
+        },false);
+
+        window.addEventListener("drop", function(event) {
+            event.preventDefault();
+        },false);
+
         ko.bindingHandlers.makeDropabble = {
             init: function(element) {
 
-                element.addEventListener('dragstart', function(event){
+                element.addEventListener('dragstart', function(event) {
                     fromList = ko.dataFor(element);
                 }, false);
 
-                element.addEventListener('dragover', function(event){
+                element.addEventListener('dragover', function(event) {
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target);
 
@@ -38,7 +49,7 @@ define([
                     });
                 }, false);
 
-                element.addEventListener('dragleave', function(event){
+                element.addEventListener('dragleave', function(event) {
                     var targetList = ko.dataFor(element);
 
                     event.preventDefault();
@@ -51,41 +62,55 @@ define([
                     });
                 }, false);
 
-                element.addEventListener('drop', function(event){
+                element.addEventListener('drop', function(event) {
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
-                        offset = 0,
                         article,
-                        insertAt;
+                        groups,
+                        insertAt,
+                        isAfter = false;
 
                     event.preventDefault();
 
-                    if (!targetList.articles || !targetList.underDrag) {
-                        return;
-                    }
+                    if (!targetList.articles || !targetList.underDrag) { return; }
 
                     targetList.underDrag(false);
                     _.each(targetList.articles(), function(item) {
                         item.state.underDrag(false);
                     });
 
+                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other articles in this group,
                     if (targetItem.constructor !== Article) {
-                        targetItem = _.last(targetList.articles ? targetList.articles() : undefined);
-                        offset  = 0 + !!targetItem;
+                        targetItem = _.last(targetList.articles());
+                        if (targetItem) {
+                            isAfter = true;
+                        // or if there arent't any other articles, after those in the first preceding group that contains articles.
+                        } else if (targetList.collection) {
+                            var groups = targetList.collection.currentGroups(); 
+                            for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
+                                targetItem = _.last(groups[i].articles());
+                                if (targetItem) {
+                                    isAfter = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
 
-                    // parse url query param if present, e.g. http://google.com/?url=...
-                    if (common.util.parseQueryParams(item).url) {
-                        item = decodeURIComponent(common.util.parseQueryParams(item).url);
-                    }
+                    _.each(common.util.parseQueryParams(item), function(url){
+                        if (url && url.match(/^http:\/\/www.theguardian.com/)) {
+                            item = url;
+                        }
+                    });
 
                     item = common.util.urlAbsPath(item);
 
-                    if (item === position) { // adding an item next to itself
+                    if (!item) { 
+                        alertBadContent();
                         return;
                     }
 
@@ -93,7 +118,7 @@ define([
                         targetList.collection.state.loadIsPending(true);
                     }
 
-                    insertAt = targetList.articles().indexOf(targetItem) + offset;
+                    insertAt = targetList.articles().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
  
                     article = new Article({id: item});
@@ -105,7 +130,7 @@ define([
                             targetList.collection.state.loadIsPending(false);
                         }
                         targetList.articles.remove(article);
-                        window.alert('Sorry, that content wasn\'t recognised');
+                        alertBadContent();
                     })
                     .done(function() {
                         ophanApi.decorateItems([article]);
@@ -124,21 +149,25 @@ define([
                             {
                                 item:     item,
                                 position: position,
-                                after:    offset > 0 ? true : undefined,
+                                after:    isAfter,
                                 live:     targetList.collection.state.liveMode(),
                                 draft:   !targetList.collection.state.liveMode(),
                                 itemMeta: {
-                                    group: targetList.group
+                                    group: targetList.group + ''
                                 }
                             }
                         )
 
-                        if (!fromList || !fromList.collection || fromList.keepCopy || fromList === targetList) {
+                        if (!fromList || !fromList.collection || fromList.keepCopy) {
+                            return;
+                        }
+
+                        if (fromList.collection.id === targetList.collection.id) {
                             return;
                         }
 
                         fromList.collection.state.loadIsPending(true);
-                        
+
                         fromList.articles.remove(function(article) {
                             return article.meta.id() === item;
                         })
@@ -158,12 +187,18 @@ define([
         };
     };
 
+    function alertBadContent() {
+        window.alert('Sorry, that isn\'t a Guardian article!')
+    }
+
     function saveChanges(method, collection, data) {
         authedAjax({
             url: common.config.apiBase + '/collection/' + collection.id,
             type: method,
             data: JSON.stringify(data)
-        }).then(function() {
+        }).fail(function(xhr) {
+            window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
+        }).always(function() {
             collection.load();
         });
     };

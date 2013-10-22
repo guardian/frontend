@@ -80,10 +80,10 @@ define([
         };
 
         this.trackAdImpression = function(tagStr) {
-            s.linkTrackVars = 'eVar73,events';
+            s.linkTrackVars = 'eVar53,events';
             s.linkTrackEvents = 'event29';
             s.events = 'event29';
-            s.eVar73 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
+            s.eVar53 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
             s.tl(true, 'o', tagStr);
         };
 

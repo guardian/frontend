@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-    <h2 class="article-zone  tone-@VisualTone(article) tone-accent-border">
+    <h2 class="article-zone tone-@VisualTone(article) tone-accent-border">
         <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
@@ -29,18 +29,24 @@
                     @if(!article.hasVideoAtTop) {
                         @if(article.hasMainVideo) {
                             @article.mainVideo.map{ mainVideo =>
-                                <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                                    @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
-                                        <source src="@url"></source>
-                                    }
-                                </video>
+                                <div class="media-proportional-container">
+                                    <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
+                                        @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
+                                            <source src="@url"></source>
+                                        }
+                                        @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
+                                            <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                                <param name="allowFullScreen" value="true" />
+                                                <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                                <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
+                                                Sorry, your browser is unable to play this video.
+                                            </object>
+                                        }
+                                    </video>
+                                </div>
                             }
                         } else {
-                            @article.mainPicture.map{ mainPicture =>
-                                @article.mainPicture(width=220).map{ smallCrop =>
-                                    @fragments.img(mainPicture, smallCrop)
-                                }
-                            }
+                            @fragments.img(article.mainPicture)
                         }
                     }
 
@@ -70,11 +76,23 @@
                 </div>
                 <div class="article-v2__secondary-column" aria-hidden="true">
                     <div class="article-v2__secondary-column__inner">
+                        <div class="js-sticky-upper" data-id="mpu-ad-slot"></div>
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
-                                    <h2 class="article__meta-heading tone-colour">Share this article</h2>
-                                    @fragments.social(article, "next to content")
+                                    <div class="mpu-context">
+                                        <div class="mpu-container js-mpu-ad-slot">
+                                            <h2 class="article__meta-heading tone-colour">Share this article</h2>
+                                            @fragments.social(article, "next to content")
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="u-table__row">
+                                <div class="u-table__cell u-table__cell--collapse u-table__cell--bottom">
+                                    <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
                                 </div>
                             </div>
                         </div>

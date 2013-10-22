@@ -16,12 +16,12 @@
         </div>
 
         @trail.thumbnailPath.map{ thumbnailPath =>
-            @trail.mainPicture(width=220).map { largeCrop =>
+            @trail.trailPicture.map { mainPicture =>
                 <a href="@trail.url" data-link-name="@linkName">
                     <img class="card__media" src="@thumbnailPath"
                     data-thumb-width="140"
-                    data-fullsrc="@largeCrop.path"
-                    data-full-width="@largeCrop.width"
+                    data-fullsrc="@LargeThumbnail.bestFor(mainPicture)"
+                    @LargeThumbnail.width.map{ w => data-full-width="@w" }
                     alt=""
                     itemprop="contentURL"
                     />

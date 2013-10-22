@@ -46,8 +46,7 @@
         margin-left: 0;
     }
 
-    &.sport-header,
-    &.article-zone--sport { // TODO: temporary until football gets side cols
+    &.sport-header { // TODO: temporary until football gets side cols
         padding-left: 0;
         margin-left: $gs-gutter;
     }
@@ -89,7 +88,7 @@
         -webkit-font-smoothing: antialiased;
         @include fs-headline(8, true);
         margin-bottom: $gs-column-height;
-        padding-top: 0px;
+        padding-top: 0;
         border-top: none;
     }
 
@@ -153,11 +152,6 @@
             time {
                 display: inline-block;
                 width: 85%;
-            }
-
-            i {
-                vertical-align: top;
-                margin-top: 1px;
             }
         }
     }
