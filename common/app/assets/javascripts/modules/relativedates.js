@@ -71,10 +71,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
         } else if (delta < (55 * 60)) {
             return (Math.round(delta / 60, 10)) + 'm';
 
-        } else if (isToday(then)) {
-            return (Math.round(delta / 3600)) + 'h';
-
-        } else if (isWithin24Hours(then) && opts.format === 'short') {
+        } else if (isToday(then) || (isWithin24Hours(then) && opts.format === 'short')) {
             return (Math.round(delta / 3600)) + 'h';
 
         } else if (isWithinPastWeek(then) && opts.format === 'short') {
