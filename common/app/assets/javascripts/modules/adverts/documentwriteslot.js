@@ -27,7 +27,8 @@ define([
             this.loaded = true;
          } catch(e) {
              //Hide slot to prevent layout bugs
-             bonzo(this.el.parentNode).addClass('u-h');
+             var node = (this.name === 'Top2') ? this.el.parentNode.parentNode : this.el.parentNode;
+             bonzo(node).addClass('u-h');
              common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }
     };
