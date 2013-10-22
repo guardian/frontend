@@ -40,12 +40,12 @@ class Input(val inputType: String, val field: Field, initialArgs: (Symbol, Any)*
   val autocomplete = getArgOrElse('autocomplete, "on", initialArgs)
   val autocapitalize = getArgOrElse('autocapitalize, "on", initialArgs)
   val autocorrect = getArgOrElse('autocorrect, "on", initialArgs)
-  val autofocus = getArgOrElse('autofocus, "", initialArgs)
   val spellcheck = getArgOrElse('spellcheck, "false", initialArgs)
+  val autofocus = getArgOrElse('autofocus, false, initialArgs)
   val required = field.constraints.exists(constraint => constraint._1 == "constraint.required")
 
   val args = initialArgs ++ Seq('_showConstraints -> false).filter(_._1 != 'type)
 
-  private def getArgOrElse(property: Symbol, default: String, args: Seq[(Symbol, Any)]): String =
-    args.toMap.get(property).map(_.toString).getOrElse(default)
+  private def getArgOrElse[T](property: Symbol, default: T, args: Seq[(Symbol, Any)]): T =
+    args.toMap.get(property).map(_.asInstanceOf[T]).getOrElse(default)
 }
