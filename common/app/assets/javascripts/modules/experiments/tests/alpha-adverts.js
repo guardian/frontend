@@ -13,7 +13,7 @@ define([
             nParagraphs = '10',
             alphaOasUrl = 'www.theguardian-alpha.com',
             inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>',
-            mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle1" data-extended="Middle1"><div class="ad-container"></div></div>';
+            mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle" data-extended="Middle"><div class="ad-container"></div></div>';
 
         this.id = 'AlphaAdverts';
         this.expiry = '2013-11-30';
@@ -42,7 +42,6 @@ define([
                             'data-extended' : 'Middle'
                         }).addClass(cls).insertAfter(this);
                     });
-                    //document.getElementsByClassName('ad-slot--mpu-banner-ad')[0].remove();
                     inview(document);
                     return true;
                 }
