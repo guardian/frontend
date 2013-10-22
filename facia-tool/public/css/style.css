@@ -75,7 +75,7 @@ input[type=text] {
 }
 
 .droppable {
-    padding: 0 0 15px 0;
+    padding: 0 0 20px 0;
     -webkit-transition: background-color 50ms;
        -moz-transition: background-color 50ms;
             transition: background-color 50ms;
@@ -146,7 +146,6 @@ input[type=text] {
 .list-header__status__live.active {
     color: #47ae38;
     height: 20px;
-    background-color: #ededed;
 }
 
 .list-header__status__draft.has-draft {

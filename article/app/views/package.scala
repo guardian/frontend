@@ -19,6 +19,6 @@ object BodyCleaner {
     TweetCleaner,
     WitnessCleaner,
     VideoEmbedCleaner,
-    VideoPosterCleaner(article.imageOfWidth(640))
+    VideoPosterCleaner(article.mainPicture.flatMap(ArticleMainPicture.elementFor))
   )
 }

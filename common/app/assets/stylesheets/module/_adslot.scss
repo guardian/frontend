@@ -1,6 +1,6 @@
 .ad-slot {
     width: 100%;
-    padding: 10px 0 0 0;
+    padding: 10px 0 6px 0;
     text-align: center;
     height: 54px;
 
@@ -16,7 +16,6 @@
         margin: 0 auto;
     }
 }
-
 .ad-container {
     display: inline-block;
     width: auto;
@@ -28,21 +27,104 @@
     background-color: #fff;
 }
 
-.ad-slot-top-banner-ad {
+.top-banner-ad-container {
+    height: 70px;
+    @include mq(desktopAd) {
+        height: auto;
+    }
+}
+
+.ad-slot--top-banner-ad {
     background-color: #f0f0f0;
 
     @include mq(tablet) {
         background-color: #ffffff;
     }
+
+    @include mq($to: desktop) {
+        &.is-affixed {
+            z-index: 1001;
+            position: fixed;
+            top: 0;
+            padding: 10px 0;
+        }
+    }
+
+    @include mq($from: tablet, $to: desktop) {
+        &.is-affixed {
+            .ad-container {
+                width: 100%;
+                height: 54px;
+                max-width: gs-span(8);
+                margin: 0 auto;
+                border-bottom: 1px solid $c-neutral5;
+            }
+        }
+    }
 }
 
-.ad-slot-middle-banner-ad {
+.parts__head {
+    z-index: 1002;
+    &.is-sticky {
+        top: 0;
+        @include sticky;
+    }
+}
+
+.ad-slot--inline {
+    min-height: auto;
+    padding: 0;
+    padding-bottom: $baseline;
+
+    .ad-container {
+        line-height: 0;
+    }
+
+    @include mq(tablet) {
+        width: auto;
+        float: right;
+        padding-top: $baseline;
+        padding-left: $gs-gutter;
+    }
+}
+
+.ad-slot--inline.is-even,
+.test-inline-adverts--on .ad-slot--inline {
+    @include mq(tablet) {
+        float: left;
+        padding-right: $gs-gutter;
+        padding-left: 0;
+    }
+}
+
+
+.mpu-context {
+    // Provides context to sticky positioned blocks
+    height: 100%;
+}
+.mpu-container {
+    @include sticky;
+    top: $baseline*4;
+
+    &.is-affixed {
+        position: fixed;
+    }
+}
+
+.ad-slot--middle-banner-ad {
     background-color: #fff;
     min-height: 0;
     border-bottom: 1px solid $c-neutral6;
 }
 
-.ad-slot-middle-banner-ad .ad-container {
+.ad-slot--middle-banner-ad .ad-container {
     max-height: 50px;
     padding: 5px 0 10px 0;
+}
+
+.ad-slot--mpu-banner-ad {
+    padding-top: 60px;
+    width: 300px;
+    height: 250px;
+    overflow: hidden;
 }

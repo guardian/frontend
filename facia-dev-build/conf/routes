@@ -17,8 +17,6 @@ GET     /discussion/*shortUrl                                                   
 GET        /most-read                                                                                       controllers.MostPopularController.render(path = "")
 GET        /most-read.json                                                                                  controllers.MostPopularController.render(path = "")
 GET        /most-read/card.json                                                                             controllers.MostPopularController.renderCard()
-GET        /most-read/expandable/*path.json                                                                 controllers.MostPopularController.renderExpandableJson(path)
-GET        /most-read/expandable/*path                                                                      controllers.MostPopularController.renderExpandable(path)
 GET        /most-read/*path.json                                                                            controllers.MostPopularController.renderJson(path)
 GET        /most-read/*path                                                                                 controllers.MostPopularController.render(path)
 
@@ -91,12 +89,13 @@ GET        /football/match/:matchId.json                                        
 GET        /football/match/:matchId                                                                         football.controllers.MatchController.renderMatchId(matchId)
 
 # Facia
+# Editionalised redirects
+GET        /                                                                                         controllers.FaciaController.editionRedirect(path = "")
+GET        /$path<(culture|sport|australia|commentisfree|business|money)>                            controllers.FaciaController.editionRedirect(path)
 GET        /$path<(us|uk|au)?>                                                                              controllers.FaciaController.renderEditionFront(path)
 GET        /$path<(us|uk|au)?>.json                                                                         controllers.FaciaController.renderEditionFrontJson(path)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                           controllers.FaciaController.renderEditionSectionFront(path)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json                      controllers.FaciaController.renderEditionSectionFrontJson(path)
-GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails                    controllers.FaciaController.renderTrails(path)
-GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json               controllers.FaciaController.renderTrailsJson(path)
 
 GET        /responsive-viewer                                                                               controllers.FaciaController.renderResponsiveViewer()
 

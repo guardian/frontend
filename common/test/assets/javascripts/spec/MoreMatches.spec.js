@@ -13,6 +13,7 @@ define(['modules/more-matches', 'bonzo', 'qwery', 'common', 'ajax'], function(Mo
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
 
             server.respondWith([200, {}, '{ "html": "<p>foo</p>", "more": "fixtures/football-next" }']);
         });

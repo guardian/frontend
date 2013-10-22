@@ -46,7 +46,7 @@ define([
             };
 
         model.previewUrl = ko.computed(function() {
-            return common.config.previewUrls[Config.env] + '/responsive-viewer#/' + model.config();
+            return common.config.previewUrlBase[Config.env] + '/' + model.config() + '?view=mobile';
         })
 
         function fetchConfigsList() {
@@ -147,8 +147,6 @@ define([
             }
 
             setConfig(next);
-            section = (getConfig() || '').split('/')[1]; // assumes ids are formed "edition/section/.."
-            model.latestArticles.setSection(common.config.sectionSearches[section || 'default'] || section);
         });
 
         function updateLayout() {

@@ -1,8 +1,9 @@
+import common.UsesElasticSearch
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import test.HtmlUnit
 
-class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
 
   feature("Related links") {
 
@@ -45,7 +46,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         article.findFirst("a").getAttribute("href").length should be > 0
         article.findFirst("h3").getText.length should be > 0
         article.find(".trail__text").size should be > 0
-        article.findFirst("time").getAttribute("data-timestamp") should be("1344426007000")
+        article.findFirst("time").getAttribute("data-timestamp") should not be empty
 
         findFirst("ul").find(".trail__headline") should have length 5
       }

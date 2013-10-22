@@ -157,10 +157,6 @@ $headerHeight: 58px;
     width: 100%;
 }
 
-.preload {
-    @include transform(translateZ(0));
-}
-
 .has-swipe {
     .preload {
         position: absolute;
