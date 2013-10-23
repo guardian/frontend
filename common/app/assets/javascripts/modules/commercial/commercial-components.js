@@ -58,14 +58,14 @@ function (
     }
 
     function loadComponents() {
-        //loadTravel();
+        loadTravel();
         loadMasterclasses();
     }
 
 
     function loadTravel() {
         var requestUrl = "/commercial/travel/offers?" + keywordsParams,
-            $commercialSlot = bonzo(currContext.querySelector('.js-mpu-ad-slot'));
+            $commercialSlot = bonzo(currContext.querySelector('.ad-slot--mpu-banner-ad'));
 
         if ($commercialSlot) {
             ajax({
@@ -88,13 +88,15 @@ function (
 
         var rnd = Math.floor((Math.random()*relevantEvents.length)+1),
             displayEvent = relevantEvents[rnd].event,
-            ticket = displayEvent.tickets[0].ticket;
+            ticket = displayEvent.tickets[0].ticket,
+            description = qwery('p', bonzo.create('<div>'+displayEvent.description+'</div>'))[0].innerText;
 
         //console.log(displayEvent);
-        render('.js-mpu-ad-slot', {
+        render('.article-v2__main-column', {
             title:  'guardian<span>masterclasses</span>',
             body:   '<h3>' + displayEvent.title + '</h3>' +
-                    '<p>' + ticket.display_price + ticket.currency + '</p>',
+                    '<p>' + ticket.display_price + ticket.currency + '</p>' +
+                    '<p>' + description + '</p>',
             footer: '<a href="' + displayEvent.url + '" class="submit-input">Find out more</a>'
         });
     }
@@ -104,7 +106,7 @@ function (
                              .replace('{body}',   data.body || '')
                              .replace('{footer}', data.footer || '');
 
-        bonzo(currContext.querySelector(targetSelector)).append(output);
+        common.$g(targetSelector, currContext).append(output);
     }
 
     return {
