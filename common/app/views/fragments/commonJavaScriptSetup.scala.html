@@ -83,7 +83,7 @@
                 var styleNodes = document.querySelectorAll('[data-cache-name]');
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     var style = styleNodes[i],
-                        nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
+                        nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.js$/),
                         cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
                         @* try to parse it (should really use the storage module) *@
                         try {
