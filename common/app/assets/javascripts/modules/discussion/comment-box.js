@@ -129,6 +129,7 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} resp
  */
 CommentBox.prototype.success = function(comment, resp) {
+    comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
     this.setFormState();
     this.emit('post:success', comment);

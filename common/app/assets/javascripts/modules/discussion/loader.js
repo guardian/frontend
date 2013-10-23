@@ -60,6 +60,9 @@ Loader.prototype.commentBox = null;
 /** @type {CommentBox} */
 Loader.prototype.bottomCommentBox = null;
 
+/** @type {Object.<srtring.*>} */
+Loader.prototype.user = null;
+
 /** @override */
 Loader.prototype.ready = function() {
     var id = this.getDiscussionId();
@@ -136,6 +139,7 @@ Loader.prototype.renderSignin = function() {
 Loader.prototype.renderCommentBox = function() {
     var success = function(resp) {
         var user = resp.userProfile;
+        this.user = user;
         // If this privateFields aren't there,
         // they're not the right person
         // More a sanity check than anything
@@ -151,6 +155,7 @@ Loader.prototype.renderCommentBox = function() {
             if (!user.privateFields.isPremoderated) {
                 bonzo(qwery('.d-comment-box__premod'), this.commentBox.elem).remove();
             }
+            this.commentBox.on('post:success', this.addComment.bind(this));
         }
     };
 
@@ -159,6 +164,10 @@ Loader.prototype.renderCommentBox = function() {
         .then(success.bind(this));
 };
 
+/**
+ * This comment box is only rendered
+ * When you load more comments
+ */
 Loader.prototype.renderBottomCommentBox = function() {
     var commentBoxElem = bonzo(this.commentBox.elem).clone()[0];
     bonzo(this.getElem('commentBoxBottom')).append(commentBoxElem);
@@ -167,6 +176,55 @@ Loader.prototype.renderBottomCommentBox = function() {
         discussionId: this.getDiscussionId()
     });
     this.bottomCommentBox.attachTo(commentBoxElem);
+    this.bottomCommentBox.on('post:success', this.addComment.bind(this));
+};
+
+/**
+ * TODO (jamesgorrie): Move this functionality over to component
+ * It hasn't been done yet as I don't have a comment component
+ * @param {object.<string.*>} comment
+ */
+Loader.prototype.addComment = function(comment) {
+    var key, val, selector, elem,
+        attr,
+        map = {
+            username: 'd-comment__author',
+            timestamp: 'js-timestamp',
+            body: 'd-comment__body',
+            report: 'd-comment__action--report',
+            avatar: 'd-comment__avatar'
+        },
+        values = {
+            username: this.user.displayName,
+            timestamp: 'Just now',
+            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
+            report: {
+                href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
+            },
+            avatar: {
+                src: this.user.avatar
+            }
+        },
+        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
+
+    for (key in map) {
+        if (map.hasOwnProperty(key)) {
+            selector = map[key];
+            val = values[key];
+            elem = qwery('.'+ selector, commentElem)[0];
+            if (typeof val === 'string') {
+                elem.innerHTML = val;
+            } else {
+                for (attr in val) {
+                    elem.setAttribute(attr, val[attr]);
+                }
+            }
+        }
+    }
+    commentElem.id = 'comment-'+ comment.id;
+    bonzo(this.comments.getElem('comments')).prepend(commentElem);
+    window.location.hash = '';
+    window.location.hash = '#comment-'+ comment.id;
 };
 
 /**
