@@ -460,6 +460,9 @@ module.exports = function (grunt) {
             discussion: {
                 src: ['integration-tests/casper/tests/discussion/*.spec.js']
             },
+            gallery: {
+                src: ['integration-tests/casper/tests/gallery/*.spec.js']
+            },
             article: {
                 src: []
             },

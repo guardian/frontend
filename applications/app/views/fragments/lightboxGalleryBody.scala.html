@@ -4,14 +4,18 @@
 <div class="gallery gallery--lightbox" data-total="@gallery.size" data-link-name="Lightbox gallery">
     <ul class="gallery__images unstyled">
         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-            <li class="js-gallery-item-@row.rowNum gallery__item @if(image.width >= image.height){gallery__item--landscape} else {gallery__item--portrait}"
+            <li class="js-gallery-item-@row.rowNum gallery__item @if(image.width > image.height){gallery__item--landscape} else {gallery__item--portrait}"
                 data-index="@row.rowNum">
                     <figure itemprop="associatedMedia" itemtype="http://schema.org/ImageObject" itemscope>
                         <img class="gallery__img"
                              src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
                              alt="@image.altText"
                              data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
-                             data-fullsrc="@image.path"
+                             @if(image.width >= 1024) {
+                                 data-fullsrc="@image.url.map(ImgSrc(_, GalleryLargeImage))"
+                             } else {
+                                 data-fullsrc="@image.path"
+                             }
                              data-width="@image.width"
                              data-height="@image.height"
                         />
