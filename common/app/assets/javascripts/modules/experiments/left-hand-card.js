@@ -12,6 +12,7 @@ define([
         function LeftHandCard(options) {
             this.options = common.extend(this.DEFAULTS, options);
             this.origin = this.options.origin;
+            this.cardifiedLinks = [];
 
             if (typeof this.options.supportedOrigins[this.origin] !== 'undefined') {
                 this.loadCard();
@@ -121,10 +122,12 @@ define([
                             hrefPath = new RegExp(normalisedHref.split("?")[0].split("#")[0]);
                             if (
                                 isWhiteListed(normalisedHref, self.options.origin)
-                                    && !(hrefPath).test(window.location) // No link to self
-                                    && !hasImageSibling(articleParagraphs[i])
-                                ) {
+                                && !(hrefPath).test(window.location) // No link to self
+                                && !hasImageSibling(articleParagraphs[i])
+                                && self.cardifiedLinks.indexOf(normalisedHref) === -1 // Have we cardified this link before?
+                            ) {
                                 cardifyRelatedInBodyLink(linksInParagraph[j]);
+                                self.cardifiedLinks.push(normalisedHref);
                                 linkWasCardified = true;
 
                                 break;
