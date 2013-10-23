@@ -219,13 +219,18 @@
         .item:first-child {
             @include card-mobile-image;
         }
-        .item:nth-child(2),
-        .item:nth-child(3) {
+        .item:nth-child(n+2):nth-child(-n+3),{
             .item__title {
                 @include fs-headline(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-headline(3, $size-only: true);
+                }
             }
             .item__byline {
                 @include fs-header(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-header(3, $size-only: true);
+                }
             }
         }
     }

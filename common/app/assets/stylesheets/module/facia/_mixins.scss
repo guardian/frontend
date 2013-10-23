@@ -48,8 +48,13 @@
     .item__title {
         margin-top: $gs-baseline*(2/3);
         @include fs-headline(3, $size-only: true);
-        @include mq(mobileLandscape) {
+    }
+    @include mq(mobileLandscape) {
+        .item__title {
             @include fs-headline(4, $size-only: true);
+        }
+        .item__standfirst {
+            @include fs-bodyHeading(2);
         }
     }
     &.item--no-image .item__title {
