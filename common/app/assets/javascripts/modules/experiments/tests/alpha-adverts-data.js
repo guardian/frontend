@@ -23,9 +23,7 @@ define([
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article') {
-                if(detect.getLayoutMode() !== 'mobile') {
                     guardian.config.oasSiteIdHost = alphaOasUrl;
-                }
                 return true;
             } else {
                 return false;
