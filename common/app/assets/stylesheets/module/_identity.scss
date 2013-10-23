@@ -1,29 +1,4 @@
 
-/* Global header and navigation
-   ========================================================================== */
-
-.zone-identity {
-    /* Hide sections menu for Identity pages */
-    #header {
-        .nav-container,
-        .nav-popup-sections,
-        .control--sections,
-        &:after {
-            display: none;
-        }
-    }
-
-    /* Position in absence of section menu */
-    #preloads {
-        margin-top: 58px;
-    }
-
-    /* Ads aren't served */
-    .ad-slot {
-        display: none;
-    }
-}
-
 /* Identity and registration
    ========================================================================== */
 

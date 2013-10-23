@@ -41,36 +41,35 @@
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 
-    .article-zone-no-indent & {
-        padding-left: 0 !important;
-        margin-left: 0;
+    > a {
+        display: block;
     }
 
-    &.sport-header { // TODO: temporary until football gets side cols
-        padding-left: 0;
-        margin-left: $gs-gutter;
+    .article-zone-no-indent &,
+    &.sport-header {
+        padding-left: 0 !important;
+        padding-right: 0;
+        margin-left: 0;
     }
 }
 
-.article__sub-head {
-    @include fs-header(2);
-    padding: $baseline/2 0 $baseline*2;
-    margin-left: $gs-gutter/2;
-    margin-right: $gs-gutter/2;
-    margin-bottom: $baseline*3;
+.article-zone--bleed-out {
+    margin-left: -$gs-gutter/2;
+    margin-right: -$gs-gutter/2;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
-    .article-zone-no-indent &,
-    .monocolumn-wrapper & {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    .article__popular & {
-        border-bottom: none;
+    @include mq(tablet) {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 

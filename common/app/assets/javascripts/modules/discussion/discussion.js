@@ -156,7 +156,7 @@ define([
                             }
                         }
 
-                        RecommendComments.init(context, { apiRoot: apiRoot });
+                        RecommendComments.init(context);
                         commentsHaveLoaded = true;
                     },
                     error: function() {

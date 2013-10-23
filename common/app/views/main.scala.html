@@ -3,14 +3,7 @@
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">
 <head>
-    <meta charset="utf-8" />
-    <title>@Html(metaData.webTitle)</title>
-    @fragments.metaData(metaData)
-    @fragments.commonCssSetup(projectName)
-    @fragments.commonJavaScriptSetup(metaData, "app", switches)
-
-    @head
-
+    @fragments.head(metaData, switches, projectName, head)
 </head>
 <body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
 

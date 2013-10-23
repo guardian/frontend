@@ -19,7 +19,7 @@ define([ 'common',
                                   '<ul class="nav nav--footer"><li class="nav__item"><a href="/culture" class="nav__link">Culture</a></li></ul>' +
                                 '</div>',
                                 '<h1 class="section-head zone-color">World news</h1>',
-                                '<h2 class="article-zone type-1"><a href="/test">Test Section</a></h2>',
+                                '<h2 class="article-zone"><a href="/test">Test Section</a></h2>',
                                 '<h3 id="related-content-head" class="type-2 article-zone">Related content</h3>',
                                 '<h3 id="related-content-head" class="type-2 article-zone">More on this story</h3>'
                               ]

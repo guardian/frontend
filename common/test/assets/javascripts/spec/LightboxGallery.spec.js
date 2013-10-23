@@ -245,5 +245,11 @@ define(['common',
             expect(document.querySelector('.js-image-index').innerHTML).toBe('3');
         });
 
+        it("should close the gallery when the ESC button is pressed", function() {
+            expect(document.querySelector('.overlay').style.display).toBe('block');
+            bean.fire(document.body, 'keydown', { keyCode: 27 });
+            expect(document.querySelector('.overlay').style.display).toBe('none');
+        });
+
     });
 });

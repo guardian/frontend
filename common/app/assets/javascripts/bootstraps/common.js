@@ -18,7 +18,6 @@ define([
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/toggles',
     'modules/relativedates',
@@ -57,7 +56,6 @@ define([
     Sections,
     Search,
 
-    EditionSwitch,
     Tabs,
     Toggles,
     RelativeDates,
@@ -110,8 +108,7 @@ define([
                 topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                editions = new EditionSwitch(),
-                header = document.body,
+                header = document.getElementById('header'),
                 profile;
 
             if (config.switches.idProfileNavigation) {
