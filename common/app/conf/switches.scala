@@ -148,7 +148,7 @@ object Switches extends Collections {
     safeState = Off)
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
-    "If this switch is on, gallery trails are opened in a lightbox.",
+    "If this switch is on, galleries open in a lightbox.",
     safeState = Off)
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
