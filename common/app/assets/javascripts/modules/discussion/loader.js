@@ -19,6 +19,11 @@ define([
 ) {
 
 /**
+ * We have a few rendering hacks in here
+ * We'll move the rendering to the play app once we
+ * have the discussion stack up that can read cookies
+ * This is true for the comment-box / sigin / closed discussion
+ * And also the premod / banned state of the user
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -32,7 +37,7 @@ var Loader = function(context, mediator, options) {
 };
 Component.define(Loader);
 
-/**  */
+/** @type {Element} */
 Loader.prototype.context = null;
 
 /** @type {Object.<string.*>} */
@@ -41,6 +46,7 @@ Loader.CONFIG = {
     classes: {
         comments: 'discussion__comments',
         commentBox: 'discussion__comment-box',
+        commentBoxBottom: 'discussion__comment-box--bottom',
         show: 'd-show-cta'
     }
 };
@@ -51,14 +57,17 @@ Loader.prototype.comments = null;
 /** @type {CommentBox} */
 Loader.prototype.commentBox = null;
 
+/** @type {CommentBox} */
+Loader.prototype.bottomCommentBox = null;
+
 /** @override */
 Loader.prototype.ready = function() {
     var id = this.getDiscussionId();
 
-    // TODO: Move this into the Comments module
+    // TODO (jamesgorrie): Move this into the Comments module
     this.getElem('comments').innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
     ajax({
-        url: '/discussion'+ id + '.json'
+        url: '/discussion'+ id +'.json'
     }).then(this.renderDiscussion.bind(this));
     bonzo(this.getElem('show')).remove();
 };
@@ -77,6 +86,7 @@ Loader.prototype.renderDiscussion = function(resp) {
     });
     this.comments.attachTo(commentsElem);
 
+    this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
     this.renderCommentBar();
 };
 
@@ -97,23 +107,24 @@ Loader.prototype.renderCommentBar = function() {
     }
 };
 
-/**
- *
- */
+/** TODO: This logic will be moved to the Play app renderer */
 Loader.prototype.renderDiscussionClosedMessage = function() {
-    
+    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
 };
 
-/****/
+/** TODO: This logic will be moved to the Play app renderer */
 Loader.prototype.renderSignin = function() {
-    
+    var url = Id.getUrl() +'/{1}?returnUrl='+ window.location.href;
+    this.getElem('commentBox').innerHTML =
+        '<div class="d-bar d-bar--signin">Open for comments. <a href="'+
+            url.replace('{1}', 'signin') +'">Sign in</a> or '+
+            '<a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> '+
+            'to join the discussion.'+
+        '</div>';
 };
 
-/****/
+/** TODO: This logic will be moved to the Play app renderer */
 Loader.prototype.renderCommentBox = function() {
-    // This is a bit of a hack for now
-    // We'll move the rendering to the play app once we
-    // have the discussion stack up that can read cookies
     var success = function(resp) {
         var user = resp.userProfile;
         // If this privateFields aren't there,
@@ -127,7 +138,7 @@ Loader.prototype.renderCommentBox = function() {
             this.commentBox = new CommentBox(this.context, this.mediator, {
                 discussionId: this.getDiscussionId()
             });
-            this.commentBox.render(this.getElem(''));
+            this.commentBox.render(this.getElem('commentBox'));
             if (!user.privateFields.isPremoderated) {
                 bonzo(qwery('.d-comment-box__premod'), this.commentBox.elem).remove();
             }
@@ -137,6 +148,16 @@ Loader.prototype.renderCommentBox = function() {
     DiscussionApi
         .getUser()
         .then(success.bind(this));
+};
+
+Loader.prototype.renderBottomCommentBox = function() {
+    var commentBoxElem = bonzo(this.commentBox.elem).clone()[0];
+    bonzo(this.getElem('commentBoxBottom')).append(commentBoxElem);
+
+    this.bottomCommentBox = new CommentBox(this.context, this.mediator, {
+        discussionId: this.getDiscussionId()
+    });
+    this.bottomCommentBox.attachTo(commentBoxElem);
 };
 
 /**

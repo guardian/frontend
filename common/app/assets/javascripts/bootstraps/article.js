@@ -86,12 +86,6 @@ define([
                 if (config.page.commentable) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator);
                     discussionLoader.attachTo();
-                    // discussionLoader.attachTo(qwery())
-                    // var discussionArticle = new Discussion({
-                    //     id: config.page.shortUrl,
-                    //     context: context,
-                    //     config: config
-                    // }).init();
                 }
             });
         },

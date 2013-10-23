@@ -94,12 +94,17 @@ Component.prototype.dispose = function() {};
 
 /**
  * @param {string} eventName
+ * @param {Element|Function} elem if ommited which is also handler
  * @param {Function} handler
- * @param {*} args
  */
 Component.prototype.on = function(eventName, elem, handler) {
-    elem = !elem.length ? [elem] : elem;
-    bean.on(this.elem, eventName, elem, handler.bind(this));
+    if (typeof elem === 'function') {
+        handler = elem;
+        bean.on(this.elem, eventName, handler.bind(this));
+    } else {
+        elem = !elem.length ? [elem] : elem;
+        bean.on(this.elem, eventName, elem, handler.bind(this));
+    }
 };
 
 /**

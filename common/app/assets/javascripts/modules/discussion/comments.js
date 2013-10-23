@@ -36,7 +36,8 @@ Comments.CONFIG = {
 /** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {
     discussionId: null,
-    initialShow: 10
+    initialShow: 10,
+    showRepliesCount: 3
 };
 
 /** @type {Boolean} */
@@ -60,6 +61,8 @@ Comments.prototype.ready = function() {
             }
         });
         this.on('click', this.getElem('showMore'), this.showMore);
+        this.on('click', '.js-show-more-replies', this.showMoreReplies);
+        this.hideExcessReplies();
     } else {
         this.renderNoCommentsMessage();
     }
@@ -92,6 +95,39 @@ Comments.prototype.showHiddenComments = function() {
         elem.className += elem.className.replace(' u-h', '');
     });
     this.hasHiddenComments = false;
+    this.emit('first-load');
+};
+
+/**
+ * @param {Event}
+ */
+Comments.prototype.showMoreReplies = function(e) {
+    bonzo(qwery('.d-comment--response', bonzo(e.currentTarget).parent()[0])).removeAttr('hidden');
+    bonzo(e.currentTarget).remove();
+};
+
+/**
+ * @param {Array.<Element>=} comments (optional)
+ */
+Comments.prototype.hideExcessReplies = function(comments) {
+    var replies, repliesToHide,
+        self = this;
+
+    comments = comments || qwery(this.getClass('topLevel'), this.elem);
+    comments.forEach(function(elem, i) {
+        replies = qwery('.d-comment--response', elem);
+
+        if (replies.length > self.options.showRepliesCount) {
+            repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
+            bonzo(repliesToHide).attr('hidden', 'hidden');
+            // TODO: Don't like using d-thread,
+            // perhaps enhance to d-thread--replies
+            bonzo(qwery('.d-thread', elem)).append(
+                '<li class="js-show-more-replies cta" data-link-name="Show more replies" data-is-ajax>Show '+
+                    repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
+                '</li>');
+        }
+    });
 };
 
 /**
@@ -109,6 +145,8 @@ Comments.prototype.commentsLoaded = function(resp) {
 
     showMoreButton.innerHTML = 'Show more';
     showMoreButton.removeAttribute('data-disabled');
+    this.hideExcessReplies(comments);
+    this.emit('loaded');
 };
 
 /****/
