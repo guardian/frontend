@@ -2,15 +2,18 @@ define([
     'ajax',
     'bonzo',
     'qwery',
-    'modules/component'
+    'modules/component',
+    'modules/discussion/recommend-comments'
 ], function(
     ajax,
     bonzo,
     qwery,
-    Component
+    Component,
+    RecommendComments
 ) {
 
 /**
+ * TODO (jamesgorrie): Move recommending into this
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -64,6 +67,7 @@ Comments.prototype.ready = function() {
         this.on('click', this.getElem('showMore'), this.showMore);
         this.on('click', '.js-show-more-replies', this.showMoreReplies);
         this.hideExcessReplies();
+        RecommendComments.init(this.context);
     } else {
         this.renderNoCommentsMessage();
     }
@@ -147,6 +151,7 @@ Comments.prototype.commentsLoaded = function(resp) {
     showMoreButton.innerHTML = 'Show more';
     showMoreButton.removeAttribute('data-disabled');
     this.hideExcessReplies(comments);
+    RecommendComments.init(this.context);
     this.emit('loaded');
 };
 
