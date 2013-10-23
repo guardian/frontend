@@ -153,7 +153,7 @@ object Switches extends Collections {
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-    safeState = Off)
+    safeState = On)
 
   val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
