@@ -13,7 +13,8 @@ define([
 ) {
 
 /**
- * TODO (jamesgorrie): Move recommending into this
+ * TODO (jamesgorrie): Move recommending into this,
+ * it has no need for it's own module.
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -68,8 +69,6 @@ Comments.prototype.ready = function() {
         this.on('click', '.js-show-more-replies', this.showMoreReplies);
         this.hideExcessReplies();
         RecommendComments.init(this.context);
-    } else {
-        this.renderNoCommentsMessage();
     }
 };
 
@@ -157,10 +156,6 @@ Comments.prototype.commentsLoaded = function(resp) {
 
 Comments.prototype.removeShowMoreButton = function() {
     bonzo(this.getElem('showMore')).remove();
-};
-
-Comments.prototype.renderNoCommentsMessage = function() {
-
 };
 
 return Comments;

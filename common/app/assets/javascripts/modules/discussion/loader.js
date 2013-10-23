@@ -68,7 +68,7 @@ Loader.prototype.ready = function() {
     this.getElem('comments').innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
     ajax({
         url: '/discussion'+ id +'.json'
-    }).then(this.renderDiscussion.bind(this));
+    }).then(this.renderDiscussion.bind(this), this.loadingError.bind(this));
     bonzo(this.getElem('show')).remove();
 };
 
@@ -88,6 +88,15 @@ Loader.prototype.renderDiscussion = function(resp) {
 
     this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
     this.renderCommentBar();
+};
+
+/**
+ * Just removes the comments module
+ * This state should never really be reached but
+ * often is on code due to syncing problems
+ */
+Loader.prototype.loadingError = function() {
+    bonzo(this.elem).remove();
 };
 
 /**
