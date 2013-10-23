@@ -1,7 +1,7 @@
 define([
     'bean',
     'modules/discussion/api',
-    'modules/component',
+    'modules/component'
 ], function(
     bean,
     DiscussionApi,
