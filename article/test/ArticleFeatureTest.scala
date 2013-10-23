@@ -254,6 +254,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("I should see navigation to related content")
         $("[itemprop=relatedLink]").size() should be > 0
       }
+
     }
 
     scenario("Story package ordered by date published") {
