@@ -21,9 +21,9 @@
         ),
         css: {
             loaded: false,
-            football: '@Static("stylesheets/football.min.css")',
-            gallery: '@Static("stylesheets/gallery.min.css")',
-            video: '@Static("stylesheets/video.min.css")'
+            football: '@Static("stylesheets/football.css")',
+            gallery: '@Static("stylesheets/gallery.css")',
+            video: '@Static("stylesheets/video.css")'
         }
     },
     curl = {
@@ -41,7 +41,7 @@
 
         @if(CssFromStorageSwitch.isSwitchedOn) {
             function loadCssFromStorage() {
-                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.min.css").md5Key'), s, sc;
+                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, sc;
                 if(c) {
                     s = document.createElement('style');
                     sc = document.getElementsByTagName('script')[0];
@@ -58,7 +58,7 @@
             x = document.getElementById('gu');
             f = document.createElement('link');
             f.rel = 'stylesheet';
-            f.href = '@Static("stylesheets/webfonts.min.css")';
+            f.href = '@Static("stylesheets/webfonts.css")';
             window.setTimeout(function() {
                 x.parentNode.insertBefore(f, x);
             }, 0);
