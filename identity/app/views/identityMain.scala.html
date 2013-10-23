@@ -1,0 +1,26 @@
+@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+<html class="js-off" lang="en-GB">
+<head>
+    @fragments.head(metaData, switches, projectName, head)
+</head>
+<body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
+
+    @fragments.releaseMessage(metaData)
+    @fragments.identityHeader(metaData)
+
+    <div id="preloads">
+        <div id="preload-1">
+            @body
+        </div>
+    </div>
+
+    @fragments.footer(metaData)
+
+    @fragments.loadCss()
+
+    @fragments.analytics(metaData)
+    @fragments.debug()
+</body>
+</html>
