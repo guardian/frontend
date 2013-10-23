@@ -88,8 +88,8 @@
     color: #545454;
     display: inline-block;
     font-family: $sans-serif;
-    font-size: 14px;
-    font-size: 1.4rem;
+    font-size: 16px;
+    font-size: 1.6rem;
     line-height: 1.4;
     padding: 8px 8px 7px;
     @include rounded-corners(0);
@@ -100,9 +100,9 @@
         border-color: $c-neutral2;
     }
 
-    @include mq($to:tablet) {
-        font-size: 16px;
-        font-size: 1.6rem;
+    @include mq(tablet) {
+        font-size: 14px;
+        font-size: 1.4rem;
     }
 }
 
