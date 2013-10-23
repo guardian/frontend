@@ -28,13 +28,16 @@ define([
     }
 
     function getContentUrl(node) {
-        return node.querySelector('a').pathname + '#comments';
+        return node.getElementsByTagName('a')[0].pathname + '#comments';
     }
 
     function renderCounts(counts, context) {
         counts.forEach(function(c){
             var node = context.querySelector('[data-discussion-id="' + c.id +'"]');
-            if(node) {
+            if (node) {
+                if (node.getAttribute('data-discussion-closed') === 'true' && c.count === 0) {
+                    return; // Discussion is closed and had no comments, we don't want to show a comment count
+                }
                 var url = getContentUrl(node),
                     data = tpl.replace("[URL]", url);
 

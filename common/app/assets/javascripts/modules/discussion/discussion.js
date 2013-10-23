@@ -73,7 +73,7 @@ define([
                         }
 
                         self.getCommentCount(function(commentCount) {
-                            if (commentCount > 0) {
+                            if (commentCount > 0 && !self.discussionClosed) {
                                 // Remove non-JS links
                                 common.$g('.js-show-discussion, .js-show-discussion a').attr('href', '#comments');
 
