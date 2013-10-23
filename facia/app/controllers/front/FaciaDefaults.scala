@@ -2,6 +2,7 @@ package controllers.front
 
 import model.{Collection, Config}
 import common.Edition
+import conf.ContentApi
 
 trait FaciaDefaults {
 
@@ -15,15 +16,11 @@ trait FaciaDefaults {
 
   def createConfig(id: String): Config = Config(
     id              = "%s/%s".format(id, defaultStyle),
-    contentApiQuery = Option(generateContentApiQuery(id)),
+    contentApiQuery = Option(ContentApi.FaciaDefaults.generateContentApiQuery(id)),
     displayName     = None
   )
 
   def getEdition(id: String): Edition = Edition.all.find(edition => id.toLowerCase.startsWith(edition.id.toLowerCase)).getOrElse(Edition.defaultEdition)
-
-  def generateContentApiQuery(id: String): String =
-    "%s?tag=type/gallery|type/article|type/video|type/sudoku&show-editors-picks=true&edition=UK&show-fields=headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl&show-elements=all"
-    .format(id)
 
   def configTuple(id: String): (Config, Collection) = (createConfig(id), emptyCollection)
 
