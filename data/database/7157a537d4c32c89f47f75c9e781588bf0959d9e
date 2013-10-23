@@ -1,0 +1,45 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"info/2013/aug/26/2",
+      "sectionId":"info",
+      "sectionName":"Info",
+      "webPublicationDate":"2013-08-26T10:02:13Z",
+      "webTitle":"Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick",
+      "webUrl":"http://www.theguardian.com/info/2013/aug/26/2",
+      "apiUrl":"http://content.guardianapis.com/info/2013/aug/26/2",
+      "fields":{
+        "trailText":"<p>Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick</p>",
+        "headline":"Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tavq",
+        "wordcount":"21",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-29T10:02:13Z"
+      },
+      "tags":[{
+        "id":"info/info",
+        "type":"keyword",
+        "webTitle":"Information",
+        "webUrl":"http://www.theguardian.com/info/info",
+        "apiUrl":"http://content.guardianapis.com/info/info",
+        "sectionId":"info",
+        "sectionName":"Info",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

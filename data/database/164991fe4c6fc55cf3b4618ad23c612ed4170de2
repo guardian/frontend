@@ -1,0 +1,301 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"artanddesign/2013/oct/21/china-landscape-painting",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-21T17:13:07Z",
+      "webTitle":"Made in China: how landscape painting was invented in the east",
+      "webUrl":"http://www.theguardian.com/artanddesign/2013/oct/21/china-landscape-painting",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/oct/21/china-landscape-painting",
+      "fields":{
+        "newspaperPageNumber":"18",
+        "trailText":"The history books say that western Renaissance artists invented landscape painting. Not if you believe a new V&amp;A exhibition of Chinese art, writes Jonathan Jones",
+        "headline":"Made in China: how landscape painting was invented in the east",
+        "body":"<p>On 5 August 1473, a young artist drew the first ever landscape. The date is known precisely because <a href=\"http://www.theguardian.com/artanddesign/davinci\" title=\"\">Leonardo da Vinci</a> wrote it on the sheet of paper, as if aware of the revolutionary nature of what he was doing. To look at mountains and trees just for themselves was unprecedented.</p><p>Or was it? The invention of landscape painting is one of the great moments of European art. Painting nature is a way to get inside yourself. To this day, people enjoy doing watercolours in the outdoors as a form of meditation. Leonardo's discovery of the mystery of nature – which you see in all his paintings, with their dreamy rocks and pools – is the invention of a new kind of inner life.</p><p>Yet it is a lot less original than we might like to think. There is an uncanny likeness between Leonardo's rocks, trees and rivers and the rocks, trees and rivers that Chinese artists were painting centuries before he was born. It is bizarre: that 1473 drawing actually looks like a reworking of classic Chinese paintings such as Li Gongnian's Winter Evening Landscape. When was that painted? I look at the label in the V&amp;A's new exhibition Masterpieces of Chinese Painting. It says 1120. That's 353 years before the very similar sketch by Leonardo.</p><p>It is conventional, nowadays, to pay lip service to the fact that many versions of art exist, that beautiful art comes from all over the world and every way of life. Yet the story of art that most of us absorb – as told in <a href=\"http://www.theguardian.com/books/2009/may/17/story-of-art-eh-gombrich\" title=\"\">The Story of Art by EH Gombrich</a>, first published in 1950 and still the definitive account of art's progress – puts European innovation at the centre of the action. All peoples make art, but the west takes it forward.</p><p>Masterpieces of Chinese Painting is the most devastating refutation of such assumptions I have ever seen. It shows that during the Song dynasty, at a time when Europeans were fighting barbaric crusades and had long forgotten the creativity that flourished in ancient Greece, artists in China were taking painting to heights of sensitivity and poetry that would not be attained elsewhere until the ages of Leonardo – or for that matter, when you look at the most radical Chinese touches, Van Gogh.</p><p>I'd go further. Looking at this show being installed and talking to its curator <a href=\"http://books.google.co.uk/books/about/China_Design_Now.html?id=TbHrAAAAMAAJ&amp;redir_esc=y\" title=\"\">Zhang Hongxing</a>, I can't resist airing the theory that Leonardo stole the idea of landscape painting from China. Could he somehow have seen Chinese paintings? Might something have reached the west along <a href=\"http://www.theguardian.com/artanddesign/2004/jun/19/heritage\" title=\"\">the Silk Road</a>? Excitedly, I get Leonardo's 1473 drawing up on my iPad and hold it among the 12th-century Chinese landscapes for comparison. The shapes of the hills and trees in Leonardo's sketch perfectly mirror the sugar-loaf peaks and willowy trees in 900-year-old Chinese paintings.</p><p>Zhang's well aware of this idea: it was raised very seriously in the 1950s, he says, but there is no proof. It's a mystery. Nor is Leonardo the only European pioneer of landscape who looks &quot;Chinese&quot;. Zhang points out that <a href=\"http://www.theguardian.com/artanddesign/pieter-bruegel-the-elder\" title=\"\">Pieter Bruegel the Elder</a> is also very &quot;Chinese&quot; looking. This is true. Bruegel's much-loved <a href=\"http://www.theguardian.com/artanddesign/picture/2011/dec/09/pieter-bruegel-the-elder-painting\" title=\"\">Hunters in the Snow</a> has all the elements that delighted medieval Chinese landscape painters, including all that snow.</p><p>But why did China invent landscape art in the first place? Why did artists begin to depict, not gods and battles as elsewhere, but the grandeur of nature? It has something to do with Buddhism, which spread to China before AD1,000 and inspired a culture of contemplation. It also has to do with the technical achievements of the Song era. The scientific mind that perfected porcelain also looked at nature with a new clarity.</p><p>One of the first things you see in the show was actually painted by a Song emperor – though it comes with a warning to rulers, for Emperor Huizong's dreamy fascination with art helped to lose him his throne. Indeed, as the curator explains, painting in China has always been associated with retreat and escapism. Not all the works in this exhibition are landscapes. There are pictures of courtesans and the tremendous <a href=\"http://www.mfa.org/collections/object/nine-dragons-28526\" title=\"\">Nine Dragons</a>, a dazzling mythic vision painted by Chen Rong in 1244. Yet for me, the escapist pursuit of pastoral in China's pioneering landscapes is utterly beguiling. After the Mongols conquered China there was a clear association of art with the rejection of power. Turning their backs on the court, intellectuals created gardens, wrote poetry and painted expressive scenes of wintry trees. They rendered nature in a free, subjective style that anticipated – and of&nbsp;course, influenced – Van Gogh.</p><p>Personally, I am convinced that Leonardo must have got access to the art of China. He was fascinated by the east and once applied for a job in Istanbul, offering to serve the Ottoman empire and praising Allah in a letter that survives. Did all this interest in Asia lead him to some hushed library where he unrolled a silk scroll and saw mountains, cherry blossoms and water?</p><p>One thing is certain. Zhang's great&nbsp;exhibition turns the story of art&nbsp;upside down.</p><!-- Guardian Watermark: internal-code/content/420544970|2013-10-23T17:15:01Z|0cf1c01f4ae620b9a6fe20649d6a366cdb7716bc -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-21T23:06:15Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364723650/A-detail-from-Saying-Fare-004.jpg",
+        "standfirst":"The history books say that western Renaissance artists invented landscape painting. Not if you believe a new V&amp;A exhibition of Chinese art",
+        "shortUrl":"http://gu.com/p/3jyzc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364723650/A-detail-from-Saying-Fare-004.jpg",
+        "wordcount":"841",
+        "commentable":"true",
+        "internalContentCode":"420544970",
+        "allowUgc":"false",
+        "internalOctopusCode":"8213491",
+        "isPremoderated":"false",
+        "byline":"Jonathan Jones",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-22",
+        "internalPageCode":"1984269",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T15:02:00Z"
+      },
+      "tags":[{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2/arts",
+        "type":"newspaper-book-section",
+        "webTitle":"Arts",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/arts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/arts",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/jonathanjones",
+        "type":"contributor",
+        "webTitle":"Jonathan Jones",
+        "webUrl":"http://www.theguardian.com/profile/jonathanjones",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanjones",
+        "bio":"<p>Jonathan Jones writes on art for the Guardian and was on the jury for the 2009 Turner prize</p>",
+        "rcsId":"GNL234013",
+        "r2ContributorId":"15906",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_jones_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420546679",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364717680/A-detail-from-Saying-Fare-001.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"54",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364720553/A-detail-from-Saying-Fare-002.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"340",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364722139/A-detail-from-Saying-Fare-003.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"130",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364723650/A-detail-from-Saying-Fare-004.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"84",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364725246/A-detail-from-Saying-Fare-005.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"132",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364726790/A-detail-from-Saying-Fare-006.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"168",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364728348/A-detail-from-Saying-Fare-007.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"180",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364729867/A-detail-from-Saying-Fare-008.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"228",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364731457/A-detail-from-Saying-Fare-009.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"276",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364733085/A-detail-from-Saying-Fare-010.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"372",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364731457/A-detail-from-Saying-Fare-009.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"276",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420546680",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364723650/A-detail-from-Saying-Fare-004.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"84",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
