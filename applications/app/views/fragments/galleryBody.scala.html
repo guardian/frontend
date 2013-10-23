@@ -31,7 +31,7 @@
 
                 <!-- Non-JS Gallery / LightboxSwitch off mode -->
                 <div class="@if(LightboxGalleriesSwitch.isSwitchedOn) { js-hidden }">
-                    <p class="gallery-nav type-11">
+                    <p class="gallery-nav">
 
                         @if(index > 1) {
                             <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
@@ -53,8 +53,8 @@
                                 src="@image.path" />
 
                                 <div class="gallery-caption">
-                                    <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
-                                    <p class="caption-credit type-12">@image.credit</p>
+                                    <p class="caption">@Html(image.caption.getOrElse(""))</p>
+                                    <p class="caption-credit">@image.credit</p>
                                 </div>
                             }
                         }

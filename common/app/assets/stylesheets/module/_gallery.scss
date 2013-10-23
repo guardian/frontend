@@ -40,6 +40,7 @@
    Gallery nav
    ========================================================================== */
 .gallery-nav {
+    @include fs-data(3);
     text-align: center;
     margin-bottom: $baseline*2;
 }
