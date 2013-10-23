@@ -63,6 +63,9 @@ Loader.prototype.bottomCommentBox = null;
 /** @type {Object.<srtring.*>} */
 Loader.prototype.user = null;
 
+/** @type {boolean} */
+Loader.prototype.canComment = false;
+
 /** @override */
 Loader.prototype.ready = function() {
     var id = this.getDiscussionId();
@@ -89,7 +92,6 @@ Loader.prototype.renderDiscussion = function(resp) {
     });
     this.comments.attachTo(commentsElem);
 
-    this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
     this.renderCommentBar();
 };
 
@@ -116,6 +118,8 @@ Loader.prototype.renderCommentBar = function() {
         this.renderSignin();
     } else {
         this.renderCommentBox();
+        this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
+        this.canComment = true;
     }
 };
 
