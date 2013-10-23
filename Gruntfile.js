@@ -19,29 +19,20 @@ module.exports = function (grunt) {
 
         sass: {
             compile: {
-                files: {
-                    // head css must go where Play can find it from resources at runtime,
-                    // Everything else goes into frontend-static bundling.
-                    'common/conf/assets/head.min.css': 'common/app/assets/stylesheets/head.scss',
-                    'common/conf/assets/head.facia.min.css': 'common/app/assets/stylesheets/head.facia.scss',
-                    'common/conf/assets/head.identity.min.css': 'common/app/assets/stylesheets/head.identity.scss',
-                    'static/target/compiled/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
-                    'static/target/compiled/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
-                    'static/target/compiled/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
-                    'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
-                    'static/target/compiled/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
-                    'static/target/compiled/stylesheets/old-ie.head.identity.min.css': 'common/app/assets/stylesheets/old-ie.head.identity.scss',
-                    'static/target/compiled/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
-                    'static/target/compiled/stylesheets/webfonts.min.css': 'common/app/assets/stylesheets/webfonts.scss'
-                },
-
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/stylesheets',
+                    src: ['*.scss', '!_*'],
+                    dest: 'static/target/compiled/stylesheets/',
+                    rename: function(dest, src) {
+                        return dest + src.replace('scss', 'css');
+                    }
+                }],
                 options: {
-                    check: false,
-                    quiet: true,
+                    style: 'compressed',
+                    sourcemap: false,
                     noCache: (isDev) ? false : true,
-                    debugInfo: (isDev) ? true : false,
-                    style: (isDev) ? 'nested' : 'compressed',
-                    sourcemap: (isDev) ? true : false,
+                    quiet: (isDev) ? false : true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
@@ -282,6 +273,14 @@ module.exports = function (grunt) {
                     src: ['**/*.swf'],
                     dest: 'static/target/compiled/flash'
                 }]
+            },
+            headCss: {
+                files: [{
+                    expand: true,
+                    cwd: 'static/target/compiled/stylesheets',
+                    src: ['**/*.css'],
+                    dest: 'common/conf/assets'
+                }]
             }
         },
 
@@ -293,7 +292,7 @@ module.exports = function (grunt) {
                 srcBasePath: 'static/target/compiled',
                 destBasePath: 'static/target/hashed',
                 flatten: false,
-                hashLength: 32
+                hashLength: (isDev) ? 0 : 32
             },
 
             files: {
@@ -301,7 +300,11 @@ module.exports = function (grunt) {
                 cwd: 'static/target/compiled/',
                 src: '**/*',
                 filter: 'isFile',
-                dest: 'static/target/hashed/'
+                dest: 'static/target/hashed/',
+                rename: function(dest, src) {
+                    // remove .. when hash length is 0
+                    return dest + src.split('/').slice(0, -1).join('/');
+                }
             }
         },
 
@@ -542,7 +545,7 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: ['common/**/*.scss'],
-                tasks: ['sass:compile', 'hash'],
+                tasks: ['sass:compile', 'copy:headCss', 'hash'],
                 options: {
                     spawn: false
                 }
@@ -584,6 +587,7 @@ module.exports = function (grunt) {
         'shell:icons',
         'imagemin:compile',
         'copy:compile',
+        'copy:headCss',
         'hash'
     ]);
 
