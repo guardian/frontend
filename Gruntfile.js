@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                 }],
                 options: {
                     style: 'compressed',
-                    sourcemap: false,
+                    sourcemap: (isDev) ? true : false,
                     noCache: (isDev) ? false : true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
@@ -554,6 +554,23 @@ module.exports = function (grunt) {
                 files: ['common/app/assets/images/**/*'],
                 tasks: ['shell:icons', 'imagemin:compile', 'copy:compile', 'hash']
             }
+        },
+
+        "string-replace": {
+            cssSourceMaps: {
+                files: [{
+                  expand: true,
+                  cwd: 'static/target/compiled/stylesheets',
+                  src: ['**/*.map'],
+                  dest: 'static/target/compiled/stylesheets'
+                }],
+                options: {
+                  replacements: [{
+                    pattern: /\.\.\/\.\.\/\.\.\/\.\.\/common\/app\/assets\/stylesheets\//g,
+                    replacement: ''
+                  }]
+                }
+            }
         }
     });
 
@@ -574,6 +591,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-string-replace');
 
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
@@ -590,6 +608,7 @@ module.exports = function (grunt) {
         'copy:headCss',
         'hash'
     ]);
+    grunt.registerTask('compile:css', ['sass:compile', 'string-replace:cssSourceMaps', 'copy:headCss', 'hash']);
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
