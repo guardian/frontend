@@ -207,7 +207,7 @@ class Gallery(content: ApiContent) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 
-  override def trailPicture: Option[ImageContainer] = galleryImages.headOption.orElse(thumbnail)
+  override def trailPicture: Option[ImageContainer] = thumbnail
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:type" -> "article",
