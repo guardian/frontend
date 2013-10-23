@@ -82,17 +82,6 @@ class ContentTest extends FlatSpec with Matchers {
     testContent.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
   }
 
-
-  it should "understand that trail image is the image of relation 'gallery'" in {
-
-    val testContent = content("gallery", List(image("test-image-0","body", "body picture 1", 50, 0),
-                                              image("test-image-1","body", "body picture 2", 50, 0),
-                                              image("test-image-2","main", "main picture 1", 50, 0),
-                                              image("test-image-3","gallery", "gallery picture 1", 50, 0)))
-
-    testContent.trailPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("gallery picture 1"))
-  }
-
   it should "understand that trail image can be an image of type 'video'" in {
 
     val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50, 0),
