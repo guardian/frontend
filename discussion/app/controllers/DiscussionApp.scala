@@ -21,8 +21,8 @@ object DiscussionApp extends DiscussionDispatcher {
 
 class DiscussionApiPlugin(app: Application) extends DiscussionApi with Plugin{
   protected val apiRoot =   Configuration.discussion.apiRoot
+  override protected val clientHeaderValue:String = Configuration.discussion.apiClientHeader
 
   protected def GET(url: String, headers: (String, String)*): Future[Response] =
-    WS.url(url).withHeaders(headers:_*).withRequestTimeout(2000).get()
-
+      WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).get()
 }
