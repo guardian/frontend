@@ -178,15 +178,17 @@ case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlClea
 
       val mediaId = element.attr("data-media-id")
       val asset = findVideoFromId(mediaId)
-      asset.foreach( video =>
+      asset.foreach( video => {
         element.append(
           s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
-                <param name="allowFullScreen" value="true" >
-                <param name="movie" value="$flashMediaElement" >
+                <param name="allowFullScreen" value="true" />
+                <param name="movie" value="$flashMediaElement" />
                 <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
                 Sorry, your browser is unable to play this video.
               </object>""")
-      )
+
+        element.wrap("<div class=\"media-proportional-container\"></div>")
+      })
     }
     document
   }
