@@ -52,6 +52,8 @@ object Edition {
     val currentEdition = Edition(request)
     all.filter(_ != currentEdition)
   }
+
+  def byId(id: String) = all.find(_.id.equalsIgnoreCase(id))
 }
 
 object Editionalise {
