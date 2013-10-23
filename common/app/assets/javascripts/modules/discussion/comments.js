@@ -29,7 +29,8 @@ Comments.CONFIG = {
     classes: {
         comments: 'd-thread--top-level',
         topLevel: 'd-comment--top-level',
-        showMore: 'js-show-more-comments'
+        showMore: 'js-show-more-comments',
+        reply: 'd-comment--response'
     }
 };
 
@@ -102,7 +103,7 @@ Comments.prototype.showHiddenComments = function() {
  * @param {Event}
  */
 Comments.prototype.showMoreReplies = function(e) {
-    bonzo(qwery('.d-comment--response', bonzo(e.currentTarget).parent()[0])).removeAttr('hidden');
+    bonzo(qwery(this.getClass('reply'), bonzo(e.currentTarget).parent()[0])).removeAttr('hidden');
     bonzo(e.currentTarget).remove();
 };
 
@@ -115,7 +116,7 @@ Comments.prototype.hideExcessReplies = function(comments) {
 
     comments = comments || qwery(this.getClass('topLevel'), this.elem);
     comments.forEach(function(elem, i) {
-        replies = qwery('.d-comment--response', elem);
+        replies = qwery(self.getClass('reply'), elem);
 
         if (replies.length > self.options.showRepliesCount) {
             repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
@@ -149,14 +150,8 @@ Comments.prototype.commentsLoaded = function(resp) {
     this.emit('loaded');
 };
 
-/****/
 Comments.prototype.removeShowMoreButton = function() {
     bonzo(this.getElem('showMore')).remove();
-};
-
-
-Comments.prototype.renderShowFirstCommentsButton = function() {
-
 };
 
 Comments.prototype.renderNoCommentsMessage = function() {
