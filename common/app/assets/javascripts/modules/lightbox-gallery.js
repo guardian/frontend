@@ -2,6 +2,7 @@ define(["bean",
         "common",
         "ajax",
         "bonzo",
+        "qwery",
         "modules/detect",
         "modules/url",
         "modules/overlay"
@@ -11,6 +12,7 @@ define(["bean",
         common,
         ajax,
         bonzo,
+        qwery,
         detect,
         url,
         Overlay) {
@@ -42,7 +44,7 @@ define(["bean",
 
             if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
                 // Apply tracking to links
-                bonzo(context.querySelectorAll(self.selector + ' a')).attr('data-is-ajax', '1');
+                common.$g(self.selector + ' a', context).attr('data-is-ajax', '1');
 
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     e.preventDefault();
@@ -91,7 +93,7 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__item', function(e) {
                 if (swipeActive && !isSwiping) {
                     // Check if the tap has happened within the caption control areas
-                    var currentItemEl = galleryNode.querySelector('.js-gallery-item-'+currentImage),
+                    var currentItemEl = qwery('.js-gallery-item-'+currentImage, galleryNode)[0],
                         captionAreaHit = false;
 
                     common.$g('.gallerycaption, .captioncontrol', currentItemEl).each(function(el) {
@@ -211,9 +213,9 @@ define(["bean",
 
                     overlay.setBody(response.html);
 
-                    galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
-                    $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
-                    $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
+                    galleryNode  = qwery('.gallery--lightbox', overlay.bodyNode)[0];
+                    $navArrows   = common.$g('.gallery__nav', galleryNode);
+                    $images      = common.$g('.gallery__img', galleryNode);
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
                     // Save the first state of the gallery
@@ -222,7 +224,7 @@ define(["bean",
 
                     // Keep a copy of the original images markup, so we can
                     // easily restore it back when removing swipe
-                    imagesNode = galleryNode.querySelector('.gallery__images');
+                    imagesNode = qwery('.gallery__images', galleryNode)[0];
                     originalImagesHtml = imagesNode.innerHTML;
 
                     // If currentimage is out of bounds, start from the beginning
@@ -316,7 +318,7 @@ define(["bean",
                 index = totalImages;
             }
 
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__item'), function(el) {
+            common.$g('.gallery__item', overlay.bodyNode).each(function(el) {
                 var itemIndex = parseInt(el.getAttribute('data-index'), 10);
 
                 if (itemIndex === index) {
@@ -354,7 +356,7 @@ define(["bean",
             bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
             // Switch all images back to thumbnail versions
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
+            common.$g('.gallery__img', overlay.bodyNode).each(function(el) {
                 el.src = el.getAttribute('data-src');
             });
 
@@ -406,17 +408,16 @@ define(["bean",
         };
 
         this.layout = function() {
-            var orientation = detect.getOrientation(),
-                contentHeight = bonzo.viewport().height - overlay.headerNode.offsetHeight;
+            var contentHeight = bonzo.viewport().height - overlay.headerNode.offsetHeight;
 
             // set the height of the gallery to the height of the current image
             // preventing a large scrollable space to appear underneath the image
             if (swipeActive) {
-                galleryNode.style.height = galleryNode.querySelector('.js-gallery-item-'+currentImage).offsetHeight + 'px';
+                galleryNode.style.height = qwery('.js-gallery-item-'+currentImage, galleryNode)[0].offsetHeight + 'px';
             }
 
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
-            $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
+            $images = common.$g('.gallery__img', galleryNode);
             var $items = common.$g('.gallery__item', galleryNode);
 
 
@@ -511,8 +512,8 @@ define(["bean",
 
             bonzo(galleryNode).addClass('gallery--slideshow');
 
-            overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'none';
-            overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'block';
+            qwery('.js-start-slideshow', overlay.toolbarNode)[0].style.display = 'none';
+            qwery('.js-stop-slideshow',  overlay.toolbarNode)[0].style.display = 'block';
 
             if (swipeActive) {
                 self.removeSwipe();
@@ -531,8 +532,8 @@ define(["bean",
 
                 bonzo(galleryNode).removeClass('gallery--slideshow');
 
-                overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'block';
-                overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
+                qwery('.js-start-slideshow', overlay.toolbarNode)[0].style.display = 'block';
+                qwery('.js-stop-slideshow',  overlay.toolbarNode)[0].style.display = 'none';
 
                 clearInterval(self.slideshowTimer);
                 self.goTo(currentImage);
