@@ -2,35 +2,29 @@
 
 <main itemprop="mainContentOfPage" role="main">
     @Edition(request).zones.map{ zone =>
+        <div class="monocolumn-wrapper">
+            @if(zone.name.title == "News") {
+                <h1 class="article-zone article-zone--bleed-out tone-news tone-border">All sections</h1>
+            }
+            @if(zone.name.title != "News") {
+                <h2 class="page-sub-header">
+                    <a href="@LinkTo(zone.name.href)" class="c-neutral1" data-link-name="zone:text">
+                        @HtmlFormat.raw(zone.name.title)
+                    </a>
+                </h2>
+            }
 
-        @if(zone.name.title == "News") {
-            <h1 class="article-zone">All sections</h1>
-        }
-        @if(zone.name.title != "News") {
-            <h2 class="article-zone">
-                <a href="@LinkTo(zone.name.href)" data-link-name="zone:text" class="zone-color">
-                    @HtmlFormat.raw(zone.name.title)
-                </a>
-            </h2>
-        }
-
-        <div class="article-wrapper monocolumn-wrapper">
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
-                    <section class="sections zone-@zone.name.zone" data-link-name="@zone.name.linkName">
-                        <ul class="nav nav--columns nav--top-border-off nav--no-horizontal-spacing u-cf">
-                            @zone.sections.map{ section =>
-                                <li class="nav__item">
-                                    <a class="nav__link" href="@LinkTo(section.href)" data-link-name="@section.linkName:text">
-                                        @HtmlFormat.raw(section.title)
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </section>
-                </div>
-                <div class="article-v2__secondary-column" aria-hidden="true"></div>
-            </div>
+            <section class="component zone-@zone.name.zone" data-link-name="@zone.name.linkName">
+                <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">
+                    @zone.sections.map{ section =>
+                        <li class="nav__item">
+                            <a class="nav__link c-neutral1" href="@LinkTo(section.href)" data-link-name="@section.linkName:text">
+                                @HtmlFormat.raw(section.title)
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </section>
         </div>
     }
 </main>

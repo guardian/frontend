@@ -24,7 +24,7 @@
 
     h2.article-zone:only-child,
     .parts__body > .article-zone,
-    .article__head > .article-zone,
+    .hide-on-mobile-if-localnav,
     .section-head,
     .front-section:first-child .sub-section-head {
         display: none;

@@ -77,7 +77,7 @@
 /* Static pages and misc
    ========================================================================== */
 
-.page-head {
+.page-header {
     @include fs-headline(2);
     padding: 0 0 $baseline*4;
     margin: 0 $gs-gutter/2 $baseline $gs-gutter/2;
@@ -89,32 +89,41 @@
     }
 }
 
-.page__sub-head {
-    @include fs-header(1);
-    padding: 0;
-    margin: 0 $gs-gutter/2 $baseline*4 $gs-gutter/2;
+.page-sub-header {
+    @include fs-header(2);
+    padding: $baseline/2 0 $baseline;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    margin-bottom: $baseline*3;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
     }
+    .article-zone-no-indent &,
+    .monocolumn-wrapper & {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    > a {
+        display: block;
+    }
 }
 
 .release {
     display: none;
+
     @include mq(tablet) {
-        margin: 18px 0 0 0;
-        color:  white;
-        font-size: 10px;
-        float:  left;
-        display: inline-block;
+        margin: 18px 0 0;
+        float: left;
+        display: block;
         color: #95B1CA;
+        font-size: 10px;
+        font-size: 1rem;
     }
 }
 
 .message {
-    
     padding: 11px;
-    background-color: #ffe;
-
+    background-color: #ffffee;
 }

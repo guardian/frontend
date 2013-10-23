@@ -2,29 +2,31 @@
 @import support._
 @import org.joda.time.DateTime
 
-<h2 class="article-zone type-1 sport-header">
-    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-</h2>
+<div class="monocolumn-wrapper tone-news">
 
-@filterBar(page.webTitle)
+    <h2 class="article-zone hide-on-mobile-if-localnav sport-header">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+    </h2>
 
-@filters(filtersMap, page, "fixtures")
+    @filterBar(page.webTitle)
 
-<div class="matches-container box-indent" role="main">
-    @fixtures.map{ fixture =>
-        <h2 class="competitions-date type-4">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
+    @filters(filtersMap, page, "fixtures")
 
-        <a class="competition-title football-table-link tone-colour type-4" href="@fixture.competition.url" data-link-name="view competition">
-            @fixture.competition.fullName <i class="i i-sport-arrow"></i>
-        </a>
-        <ol class="matches unstyled">
-            @renderMatch(fixture.fixture)
-        </ol>
-    }
-</div>
+    <div class="matches-container component" role="main">
+        @fixtures.map{ fixture =>
+            <h2 class="competitions-date type-4">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
-<div class="box-indent article-zone-no-indent">
+            <a class="competition-title football-table-link tone-colour type-4" href="@fixture.competition.url" data-link-name="view competition">
+                @fixture.competition.fullName<i class="i i-sport-arrow"></i>
+            </a>
+            <ol class="matches unstyled">
+                @renderMatch(fixture.fixture)
+            </ol>
+        }
+    </div>
+
     @fragments.footballNav(page)
 
     @fragments.mostPopularPlaceholder("sport")
+
 </div>

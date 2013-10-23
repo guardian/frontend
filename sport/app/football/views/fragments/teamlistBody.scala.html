@@ -1,35 +1,36 @@
 @(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader)
 
-@renderTeamList(comp: model.Competition) = {
-    <section class="sections team-list" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
-        <h1 class="page__sub-head">@comp.fullName</h1>
+<div class="monocolumn-wrapper tone-news">
+    @renderTeamList(comp: model.Competition) = {
+        <section class="team-list component" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
+            <h1 class="page-sub-header">@comp.fullName</h1>
 
-        <ul class="nav nav--columns u-cf">
-            @comp.teams.map{ team =>
-            <li class="nav__item" data-team-id="@team.id">
-                @TeamUrl(team).map{ url => <a href="@LinkTo{@url}" class="nav__link" data-link-name="@team.name">
-                    @team.name
-                </a> }.getOrElse{ <span class="nav__link no-link-team">@team.name</span> }
+            <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">
+                @comp.teams.map{ team =>
+                <li class="nav__item" data-team-id="@team.id">
+                    @TeamUrl(team).map{ url => <a href="@LinkTo{@url}" class="nav__link" data-link-name="@team.name">
+                        @team.name
+                    </a> }.getOrElse{ <span class="nav__link">@team.name</span> }
 
-            </li>
-            }
-        </ul>
-    </section>
-}
+                </li>
+                }
+            </ul>
+        </section>
+    }
 
-<h2 class="article-zone sport-header">
-    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-</h2>
+    <h2 class="article-zone sport-header hide-on-mobile-if-localnav">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+    </h2>
 
-<h1 class="page-head">@pageModel.page.webTitle</h1>
+    <h1 class="page-header">@pageModel.page.webTitle</h1>
 
 
-@comps.map{ comp =>
-    @renderTeamList(comp)
-}
+    @comps.map{ comp =>
+        @renderTeamList(comp)
+    }
 
-<div class="box-indent article-zone-no-indent">
     @fragments.footballNav(pageModel.page)
 
     @fragments.mostPopularPlaceholder("sport")
+
 </div>
