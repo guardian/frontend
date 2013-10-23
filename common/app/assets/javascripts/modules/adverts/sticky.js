@@ -10,7 +10,7 @@ define([
         this.el = this.options.context.getElementsByClassName(this.options.elCls)[0];
         this.$el = bonzo(this.el);
         this.top =  common.$g(".js-sticky-upper[data-id=" + this.options.id + "]", this.options.context).offset().top;
-        this.bottom = common.$g(".js-sticky-lower[data-id=" + this.options.id + "]", this.options.context).offset().top - 250;
+        this.bottom = common.$g(".js-sticky-lower[data-id=" + this.options.id + "]", this.options.context).offset().top;
 
         this.bindListeners();
     };

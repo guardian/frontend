@@ -13,7 +13,7 @@ define([
             nParagraphs = '10',
             alphaOasUrl = 'www.theguardian-alpha.com',
             inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>',
-            mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle" data-extended="Middle"><div class="ad-container"></div></div>',
+            mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle1" data-extended="Middle1"><div class="ad-container"></div></div>',
             supportsSticky = detect.hasCSSSupport('position', 'sticky'),
             supportsFixed  = detect.hasCSSSupport('position', 'fixed', true);
 
@@ -23,9 +23,7 @@ define([
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article') {
-                if(detect.getLayoutMode() !== 'mobile') {
-                    guardian.config.oasSiteIdHost = alphaOasUrl;
-                }
+                guardian.config.oasSiteIdHost = alphaOasUrl;
                 return true;
             } else {
                 return false;
