@@ -12,7 +12,7 @@ define([
         countUrl = "/discussion/comment-counts.json?shortUrls=",
         tpl = '<span class="trail__count trail__count--commentcount">';
         tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-light-grey"></i>[COUNT]';
-        tpl += '<span class="u-h"> comments</span></a></span>';
+        tpl += '<span class="u-h"> [LABEL]</span></a></span>';
 
     function getContentIds(context) {
         var nodes = context.querySelectorAll("[" + attributeName + "]"),
@@ -37,6 +37,8 @@ define([
             if(node) {
                 var url = getContentUrl(node),
                     data = tpl.replace("[URL]", url);
+
+                data = data.replace("[LABEL]", (c.count === 1 ? "comment" : "comments"));
 
                 // put in trail__meta, if exists
                 var meta = node.querySelector('.item__meta, .card__meta'),
