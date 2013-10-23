@@ -29,10 +29,7 @@ trait OffersApi extends ExecutionContexts {
         id,
         Some((node \\ "title").text),
         (node \\ "offerurl").text,
-        (node \\ "imageurl").text
-          .replace("NoResize", "ThreeColumn")
-          .replace("http://www.guardianholidayoffers.co.uk/Image.aspx",
-          "http://resource.guim.co.uk/travel/holiday-offers-micro/image"),
+        (node \\ "imageurl").text,
         (node \ "@fromprice").text.replace(".00", ""),
         dateFormat.parseDateTime((node \ "@earliestdeparture").text),
         Nil,
