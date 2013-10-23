@@ -3,6 +3,7 @@ package controllers.commercial
 import play.api.mvc._
 import common.ExecutionContexts
 import model.commercial.travel.OffersAgent
+import scala.util.Random
 
 object TravelOffers extends Controller with ExecutionContexts {
 
@@ -14,13 +15,15 @@ object TravelOffers extends Controller with ExecutionContexts {
 
   def listOffers = Action {
     implicit request =>
-      val allOffers = OffersAgent.allOffers
-      val offers = request.queryString.get("k").map {
-        keywords => allOffers.filter {
-          offer => (keywords.map(_.toLowerCase).toSet & offer.keywords.map(_.name.toLowerCase).toSet).size > 0
-        }
-      }.getOrElse(allOffers)
-      Ok(views.html.fragments.travelOffer(offers(0), offers(1))) withHeaders ("Cache-Control" -> "max-age=60")
+      val keywords = request.queryString.get("k")
+      val offers = keywords map (OffersAgent.offers(_)) getOrElse OffersAgent.allOffers
+      if (offers.size > 1) {
+        val shuffled = Random.shuffle(offers.indices.toList)
+        val view = views.html.fragments.travelOffer(offers)
+        Ok(view) withHeaders ("Cache-Control" -> "max-age=60")
+      } else {
+        Ok("No offers") withHeaders ("Cache-Control" -> "max-age=60")
+      }
   }
 
 }

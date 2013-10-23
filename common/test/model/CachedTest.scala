@@ -3,13 +3,13 @@ package model
 import conf.Switches
 import conf.Switches.DoubleCacheTimesSwitch
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import play.api.mvc.Results
 import org.scala_tools.time.Imports._
 
-class CachedTest extends FlatSpec with ShouldMatchers with Results {
+class CachedTest extends FlatSpec with Matchers with Results {
 
   "Cached" should "cache live content for 5 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()

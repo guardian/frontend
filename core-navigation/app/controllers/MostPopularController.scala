@@ -44,10 +44,10 @@ object MostPopularController extends Controller with Logging with ExecutionConte
                 },
                 "mainPicture" -> trail.mainPicture.map{ mainPicture =>
                   Json.obj(
-                    "item" -> ImgSrc(mainPicture, FrontItem),
-                    "itemMain" -> ImgSrc(mainPicture, FrontItemMain),
-                    "itemMobile" -> ImgSrc(mainPicture, FrontItemMobile),
-                    "itemMainMobile" -> ImgSrc(mainPicture, FrontItemMainMobile)
+                    "item" -> FrontItem.bestFor(mainPicture),
+                    "itemMain" -> FrontItemMain.bestFor(mainPicture),
+                    "itemMobile" -> FrontItemMobile.bestFor(mainPicture),
+                    "itemMainMobile" -> FrontItemMainMobile.bestFor(mainPicture)
                   )
                 },
                 "published" ->Json.obj(
@@ -57,26 +57,6 @@ object MostPopularController extends Controller with Logging with ExecutionConte
                 )
               )
             })
-          )
-        }
-      }
-    }
-  }
-
-  def renderExpandableJson(path: String) = renderExpandable(path)
-  def renderExpandable(path: String) = Action.async { implicit request =>
-    val edition = Edition(request)
-    val globalPopular = MostPopular("The Guardian", "", MostPopularExpandableAgent.mostPopular(edition))
-    val sectionPopular = if (path.nonEmpty) lookupExpandable(edition, path).map(_.toList) else Future(Nil)
-
-    sectionPopular.map { sectionPopular =>
-      sectionPopular :+ globalPopular match {
-        case Nil => NotFound
-        case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
-        case popular => Cached(900) {
-          JsonComponent(
-            "html" -> views.html.fragments.mostPopularExpandable(popular, 5),
-            "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
           )
         }
       }

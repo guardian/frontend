@@ -1,9 +1,9 @@
 package client.filters
 
 import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class ValueFilterTest extends FunSuite with ShouldMatchers {
+class ValueFilterTest extends FunSuite with Matchers {
   test("value filter should return correct querystring params") {
     ValueFilter("testName", "testVal").parameters should contain(("filter", "testName:testVal"))
   }

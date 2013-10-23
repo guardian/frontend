@@ -96,6 +96,10 @@
 .u-table__cell--bottom {
     vertical-align: bottom;
 }
+.u-table__cell--collapse {
+    // Cell / row will only take the height it needs
+    height: 1px;
+}
 
 
 /**

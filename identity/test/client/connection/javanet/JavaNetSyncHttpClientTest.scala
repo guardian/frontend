@@ -1,13 +1,13 @@
 package client.connection.javanet
 
 import org.scalatest.path
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import java.net.{MalformedURLException, HttpURLConnection}
 import org.mockito.Mockito._
 
 
-class JavaNetSyncHttpClientTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class JavaNetSyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar {
 
   val urlConnection = mock[HttpURLConnection]
 

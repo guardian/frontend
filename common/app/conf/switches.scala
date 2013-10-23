@@ -46,6 +46,11 @@ object Switches extends Collections {
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
     safeState = Off)
 
+  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
+    "If this switch is on, then extra logging will be done for edition redirects.",
+    safeState = Off
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -192,6 +197,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
     safeState = Off)
 
+  val ABAlphaAdvertsData = Switch("A/B Tests", "ab-alpha-adverts-data",
+    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -265,7 +274,9 @@ object Switches extends Collections {
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
-    ArticleKeywordsSwitch
+    ArticleKeywordsSwitch,
+    ABAlphaAdvertsData,
+    EditionRedirectLoggingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

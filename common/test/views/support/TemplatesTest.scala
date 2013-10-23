@@ -2,13 +2,13 @@ package views.support
 
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import xml.XML
 import common.editions.Uk
 import com.gu.openplatform.contentapi.model.Asset
 
-class TemplatesTest extends FlatSpec with ShouldMatchers {
+class TemplatesTest extends FlatSpec with Matchers {
 
   "RemoveOuterPara" should "remove outer paragraph tags" in {
     RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be(" foo <b>bar</b> ")

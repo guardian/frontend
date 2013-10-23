@@ -4,11 +4,11 @@ import org.scalatest.path
 import net.liftweb.json.JsonAST.{JString, JValue}
 import client.Error
 import client.connection.HttpResponse
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import net.liftweb.json.{DefaultFormats, Formats}
 
 
-class JsonBodyParserTest extends path.FreeSpec with ShouldMatchers {
+class JsonBodyParserTest extends path.FreeSpec with Matchers {
   case class TestType(test: String)
 
   val testErrors = List(Error("Test error", "Test description"))

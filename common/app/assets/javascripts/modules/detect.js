@@ -152,6 +152,21 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
         return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
     }
 
+    function hasCSSSupport(property, value, noPrefixes) {
+        // Thanks Modernizr: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
+        // and Filament Group: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
+        var prop = property + ':',
+            el = document.createElement('test'),
+            mStyle = el.style;
+
+        if (!noPrefixes) {
+            mStyle.cssText = prop + ['-webkit-', '-moz-', '-ms-', '-o-', ''].join(value + ';' + prop) + value + ';';
+        } else {
+            mStyle.cssText = prop + value;
+        }
+        return mStyle[property].indexOf(value) !== -1;
+    }
+
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
     }
@@ -305,6 +320,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
         getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
         hasSvgSupport: hasSvgSupport,
+        hasCSSSupport: hasCSSSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,

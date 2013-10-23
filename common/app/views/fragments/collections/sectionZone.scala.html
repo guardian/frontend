@@ -3,8 +3,7 @@
 @if(collection.items.nonEmpty) {
     <section class="collection collection--@style.className js-collection--display-toggle tone-@style.tone"
              data-link-name="block | @config.id"
-             data-collection-type="@style.className"
-             data-section="@config.section">
+             data-id="@config.id">
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
             @if(title.nonEmpty) {
@@ -14,11 +13,7 @@
             }
         }
 
-        <ul class="unstyled items item-count-@collection.items.size @if(style.showMore){js-items--show-more} items--without-sport-stats">
-            @collection.items.zipWithIndex.map{ case (trail, index) =>
-                @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0, limit = style.showMore)
-            }
-        </ul>
+        @fragments.collections.standard(collection, style, containerIndex)
 
     </section>
 }

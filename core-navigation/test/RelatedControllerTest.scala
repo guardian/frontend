@@ -2,10 +2,11 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import common.UsesElasticSearch
 
-class RelatedControllerTest extends FlatSpec with ShouldMatchers {
+class RelatedControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
   
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"

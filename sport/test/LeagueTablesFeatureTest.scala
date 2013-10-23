@@ -3,10 +3,10 @@ package test
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.libs.ws.WS
 
-class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     WS
   feature("League Tables") {
 

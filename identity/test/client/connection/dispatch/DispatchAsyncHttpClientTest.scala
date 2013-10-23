@@ -1,7 +1,7 @@
 package client.connection.dispatch
 
 import org.scalatest.path
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import common.ExecutionContexts
@@ -9,7 +9,7 @@ import client.connection.HttpResponse
 import dispatch.Req
 
 
-class DispatchAsyncHttpClientTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class DispatchAsyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar {
   val client = mock[dispatch.Http]
   object TestDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts
 

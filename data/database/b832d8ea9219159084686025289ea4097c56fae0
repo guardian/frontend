@@ -1,0 +1,1563 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk-news/2013/oct/14/royal-mail-share-investors-300-profit",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-14T17:53:44Z",
+      "webTitle":"Royal Mail share investors set to make £300 profit with new price surge",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/14/royal-mail-share-investors-300-profit",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/14/royal-mail-share-investors-300-profit",
+      "fields":{
+        "newspaperPageNumber":"25",
+        "trailText":"<p>Around 350,000 small investors receive share certificates after shares close at 475p, a 44% rise on the 330p selling price</p>",
+        "headline":"Royal Mail share investors set to make £300 profit with new price surge",
+        "body":"<p>Hundreds of thousands of small investors could make a profit of more than £300 on Royal Mail stock on Tuesday morning following a further surge in the company's shares on their second day of trading.</p><p>Around 350,000 shareholders who bought their stakes through a government website – out of a total of 690,000 retail investors – receive their share certificates on Tuesday, allowing them to cash in on the float's instant success.</p><p>The shares, which the government sold for 330p on Friday morning, closed at 475p  on Monday night – 20p higher than at the end of trading on Friday. The 44% jump in the launch share price means that 227 shares bought from the government for £749.10 – the allocation for every retail investor – are now worth £1,078.</p><p>Danny Cox, of stockbroker Hargreaves Lansdown, said he expected Tuesday's trading activity to be as busy as Friday, when more than 100m shares were traded in the first hour. David Jones, chief market strategist at spread betting firm IG Index, said: \"We're expecting a similar level of excitement as in the first hour on Friday.\"</p><p>Those who bought shares directly from the government will have to pay £17.50 to sell their shares online. People who bought through a broker could sell the shares for a fee as low as £12.</p><p>Jones said many of the buyers are wealthy individuals who failed to buy any Royal Mail shares after the government decided to block applications from anyone who ordered more than £10,000 worth of shares. \"The most active [buyers] are high net worth clients who missed out on the allocations they wanted,\" he said.</p><p>Until now the shares could only be bought and sold via stockbrokers. The company will be fully listed on the London Stock Exchange at 8am on Tuesday triggering \"unconditional dealing\" – allowing anyone to buy and sell.</p><p>About 40 people applied for shares worth £1m or more. City investors, including pension funds and hedge funds, have also been big buyers of the stock after 500 of the 800 institutions that applied for shares failed to get any following overwhelming demand.</p><p>The proportion available to institutions was reduced from 70% to 67% to make slightly more stock available to the public. The government said 90% of the shares sold to the City have gone to \"responsible institutional investors\" such as pension funds. Investors include Threadneedle, Fidelity, Blackrock and Standard Life.</p><p>The remaining 10% went to hedge funds, including Lansdowne Partners.</p><p>The Guardian understands that 13.5% of the company was bought by foreign investors, including the sovereign wealth funds of Kuwait, Singapore and Norway.</p><p>Private investors may be extra keen to sell their shares before the result of a strike ballot of postal workers due on Wednesday  afternoon. <a href=\"http://www.theguardian.com/business/2013/oct/13/postal-workers-strike-ballot-pay-conditions\" title=\"\">The Communication Workers Union (CWU) said it is \"almost certain\" that its 115,000 members will vote for industrial action</a>.</p><p>A nationwide strike, the first since 2009, could be held as soon as 23 October. It comes despite 150,000 postal workers making paper profits of more than £900 from the £2,200 of shares they were granted for free as part of the privatisation.</p><p>Billy Hayes, general secretary of the CWU, said: \"Shares will make no scintilla of difference to postal workers who are far more concerned about their jobs. We expect our members will vote to protect their terms and conditions. It's more important than ever to get protections for job security and terms and conditions under privatisation. CWU won't stand idly by; whoever owns the company will have to deal with us and the workforce.\"</p><p>The union will hold a mass meeting outside Royal Mail's Mount Pleasant sorting office in central London on Tuesday morning to coincide with the start of full trading in the company's shares on the Stock Exchange.</p><p>Brokers said the threatened strike action – which could lead to days of disruption in the run up to Christmas – has already been factored into Royal Mail's share price. The attraction of a 6% dividend yield could also persuade retail investors to hold on to their shares rather than sell them, despite a note from analysts at Canaccord Genuity arguing that the shares should be priced at 599p.</p><p>The soaring share price, which values Royal Mail at £4.7bn compared with the government's maximum £3.3bn valuation, has fuelled <a href=\"http://www.theguardian.com/uk-news/2013/oct/11/royal-mail-share-price-buyers-profit\" title=\"\">accusations that the government sold off the 500-year-old company too cheaply</a>.</p><p>Ed Miliband, the Labour leader, said it showed the privatisation was a \"fire sale of a great British institution\".</p><p>Chuka Umunna, the shadow business secretary, said the government had \"massively shortchanged\" taxpayers by significantly undervaluing the institution.</p><p>If the government had sold the shares at 450p, rather than 330p, it would have made an extra £600m for the taxpayer on top of the £1.7bn it made from the 52% stake in Royal Mail.</p><p>The government's pricing of Royal Mail will be investigated by both the National Audit Office, the public spending watchdog, and the public accounts committee.</p><!-- Guardian Watermark: internal-code/content/419945859|2013-10-16T15:58:10Z|db7c7776f5ba8f5e359dcc2fc02f9371b9f0807c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T06:20:04Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772941654/Royal-Mail-share-prices-p-004.jpg",
+        "standfirst":"Around 350,000 small investors receive share certificates after shares close at 475p, a 44% rise on the 330p selling price",
+        "shortUrl":"http://gu.com/p/3jh55",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772941654/Royal-Mail-share-prices-p-004.jpg",
+        "wordcount":"806",
+        "commentable":"true",
+        "internalContentCode":"419945859",
+        "allowUgc":"false",
+        "internalOctopusCode":"8194450",
+        "isPremoderated":"false",
+        "byline":"Rupert Neate",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-15",
+        "internalPageCode":"1980833",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-17T17:53:44Z"
+      },
+      "tags":[{
+        "id":"uk/royal-mail",
+        "type":"keyword",
+        "webTitle":"Royal Mail",
+        "webUrl":"http://www.theguardian.com/uk/royal-mail",
+        "apiUrl":"http://content.guardianapis.com/uk/royal-mail",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/post",
+        "type":"keyword",
+        "webTitle":"Postal service",
+        "webUrl":"http://www.theguardian.com/uk/post",
+        "apiUrl":"http://content.guardianapis.com/uk/post",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/investing",
+        "type":"keyword",
+        "webTitle":"Investing",
+        "webUrl":"http://www.theguardian.com/business/investing",
+        "apiUrl":"http://content.guardianapis.com/business/investing",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.theguardian.com/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/privatisation",
+        "type":"keyword",
+        "webTitle":"Privatisation",
+        "webUrl":"http://www.theguardian.com/politics/privatisation",
+        "apiUrl":"http://content.guardianapis.com/politics/privatisation",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/economy",
+        "type":"keyword",
+        "webTitle":"Economic policy",
+        "webUrl":"http://www.theguardian.com/politics/economy",
+        "apiUrl":"http://content.guardianapis.com/politics/economy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"money/shares",
+        "type":"keyword",
+        "webTitle":"Shares",
+        "webUrl":"http://www.theguardian.com/money/shares",
+        "apiUrl":"http://content.guardianapis.com/money/shares",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/moneyinvestments",
+        "type":"keyword",
+        "webTitle":"Investments",
+        "webUrl":"http://www.theguardian.com/money/moneyinvestments",
+        "apiUrl":"http://content.guardianapis.com/money/moneyinvestments",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rupertneate",
+        "type":"contributor",
+        "webTitle":"Rupert Neate",
+        "webUrl":"http://www.theguardian.com/profile/rupertneate",
+        "apiUrl":"http://content.guardianapis.com/profile/rupertneate",
+        "bio":"<p>Rupert Neate is a reporter. He was shortlisted for Reporter of the Year at the 2012 British Press Awards and the British Journalism Awards for <a href=\"http://www.pressgazette.co.uk/story.asp?storycode=48784\">his investigation that led to Liam Fox's resignation as defence secretary</a>. He joined the Guardian in 2011 from the Daily Telegraph, were he worked for four years as City Diary editor and telecoms and technology correspondent. He was <a href=\"http://www.guardian.co.uk/student-media-awards-2012/success-stories-rupert-neate\">named Student Journalist of the Year</a> at the Guardian Student Media Awards in 2006.</p>",
+        "r2ContributorId":"26470",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2011/10/17/1318845485033/Rupert-Neate-Guardian-byl-004.jpg",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/edmiliband",
+        "type":"keyword",
+        "webTitle":"Ed Miliband",
+        "webUrl":"http://www.theguardian.com/politics/edmiliband",
+        "apiUrl":"http://content.guardianapis.com/politics/edmiliband",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/labour",
+        "type":"keyword",
+        "webTitle":"Labour",
+        "webUrl":"http://www.theguardian.com/politics/labour",
+        "apiUrl":"http://content.guardianapis.com/politics/labour",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/vincentcable",
+        "type":"keyword",
+        "webTitle":"Vince Cable",
+        "webUrl":"http://www.theguardian.com/politics/vincentcable",
+        "apiUrl":"http://content.guardianapis.com/politics/vincentcable",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419976428",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772933924/Royal-Mail-share-prices-p-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"54",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772937973/Royal-Mail-share-prices-p-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"340",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772940019/Royal-Mail-share-prices-p-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"130",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772941654/Royal-Mail-share-prices-p-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"84",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772943258/Royal-Mail-share-prices-p-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"132",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772944873/Royal-Mail-share-prices-p-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"168",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772946765/Royal-Mail-share-prices-p-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"180",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772948950/Royal-Mail-share-prices-p-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"228",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772951510/Royal-Mail-share-prices-p-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"276",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772953456/Royal-Mail-share-prices-p-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"372",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772951510/Royal-Mail-share-prices-p-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"276",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419976429",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/14/1381772941654/Royal-Mail-share-prices-p-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Facundo Arrizabalaga",
+            "altText":"Royal Mail share prices postbox",
+            "height":"84",
+            "credit":"Facundo Arrizabalaga/EPA",
+            "caption":"The golden oppotunity for investor profit from Royal Mail shares continued as prices surged to 44% above the original selling price. Photograph: Facundo Arrizabalaga/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"uk-news/2013/oct/15/royal-mail-shares-official-trading-investors",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-15T13:04:00Z",
+      "webTitle":"Royal Mail investors struggle to cash in as sellers swamp official trading service",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/15/royal-mail-shares-official-trading-investors",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/15/royal-mail-shares-official-trading-investors",
+      "fields":{
+        "trailText":"<p>Share dealers Equiniti overloaded as thousands rush to book £300-plus profit on privatised firm's first official day of trading</p>",
+        "headline":"Royal Mail investors struggle to cash in as sellers swamp official trading service",
+        "body":"<p>Thousands of Royal Mail investors have been unable to sell their shares after the government's official trading service struggled under the pressure of tens of thousands of people trying to cash in their stakes, which have increased in value by 44%.</p><p>Investors who bought their shares directly from the government have struggled to place sell orders with the official  Equiniti share-dealing service over the phone and others have yet to receive official notification required to sell online.</p><p>One investor trying to sell the 227 shares he was allocated in the flotation said he had redialled the 0845 268-8405 number \"about 100 times\" but been unable to get through.</p><p><a href=\"https://twitter.com/John_230/status/390081142633689088\" title=\"\">Another investor tweeted</a>: \"Your phone lines are engaged and have been for hours. Online trade requires code sent through post (2days).\"</p><p><a href=\"https://twitter.com/Hughgles/status/390068779730104320\" title=\"\">Also on Twitter, another investor said: \"Took me 400 attempts to get through to #equiniti Royal Mail sale line. Price dropped 12p in the 1 1/2 hours it took. #arseholes.\"</a></p><p>A spokesman for Equiniti said the company's phone lines had been swamped by sellers and apologised to people who had experienced difficulties. He said the company was urgently trying to fix the problem.</p><p>The government has warned that it could take up to 48 hours for emails detailing share allocations to be sent to all of the 690,000 investors who bought 227 shares in the flotation. Details in the emails are required for online selling.</p><p>Some investors are desperate to cash in their shares, which have soared in value by more than £300 since Friday.</p><figure data-media-id='gu-image-420054166'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381857154570/Royal-Mail-share-price-001.jpg' alt='Royal Mail share price' width='460' height='276' class='gu-image'/><figcaption>Royal Mail’s share price since trading started. Photograph: theguardian.com</figcaption></figure><p>Royal Mail shares hit a high of 490p in early trading on Tuesday, a 48% increase on the government's 330p flotation price. The shares, <a href=\"http://www.theguardian.com/uk-news/2013/oct/11/royal-mail-share-price-buyers-profit\" title=\"\">which had already risen in conditional trading on Friday and Monday</a>, settled at 478p at 2pm.</p><p>The spike in the share price means that 227 shares bought from the government for £749.10, the allocation to each of the 690,000 retail investors, are now worth about £1,090 – a £340 increase.</p><p>More than 20m shares had changed hands before 2pm, but this was significantly less than the 100m traded in the first hour on Friday, when those who bought via a broker could start selling their shares.</p><p>Stockbroker Hargreaves Lansdown was so overwhelmed with demand on Friday that its website crashed and phone lines were jammed.</p><p>The Bristol-based brokerage said it was \"very busy\" again on Tuesday but its service was back to normal.</p><p>David Jones, chief market strategist at spread-betting firm IG Index, said about half of the shares traded on Tuesday were sold by retail investors.</p><p>Jones said many of the buyers were wealthy individuals who failed to buy any Royal Mail shares after the government decided to block applications from anyone who ordered more than £10,000 in shares. \"The most active [buyers] are high net worth clients who missed out on the allocations they wanted,\" he said.</p><p>The further surge in the share price, which values Royal Mail at £4.8bn compared with the government's maximum £3.3bn valuation, has fuelled accusations that the government sold off the 500-year-old company too cheaply.</p><p>Adrian Bailey, the Labour chair of the business department select committee, said the share price surge \"vindicated\" concerns the committee raised when it questioned the business secretary, Vince Cable, last week.</p><p>\"At the meeting last week it's fair to say that members of the committee had one view and the secretary of state had another,\" Bailey said. \"The share price movements have vindicated the concerns of the committee members. Let's see where the price settles.\"</p><p>Bailey said the committee will also question Lazard, the investment bank that advised the government on how much to sell the shares.</p><p>Michael Fallon, the business minister in charge of the privatisation, and Danny Alexander, the chief secretary to the Treasury, joined Royal Mail's chief executive, Moya Greene, at the London Stock Exchange to officially mark the postal service's first day as a public company.</p><p>\"This marks the exciting next phase in our company's long and proud history,\" she said. \"With the support of our new shareholders, we are in a strong position to move forward, to compete effectively across our markets and to grow our business.</p><p>\"Royal Mail will continue to be an essential part of the fabric of the UK, providing the universal postal service that is cherished by the 29m households and businesses across the country that we serve.\"</p><p>Meanwhile hundreds of Royal Mail workers met for a final mass meeting before the Communication Workers Union, which represents more than 100,000 postal workers, announces <a href=\"http://www.theguardian.com/business/2013/oct/13/postal-workers-strike-ballot-pay-conditions\" title=\"\">the results of a strike ballot</a> on Wednesday.</p><p>Dave Ward, CWU deputy general secretary, said: \"We may have lost the battle over privatisation, but we are here to fight the war for jobs, services and terms and conditions in Royal Mail and the wider postal industry. Privatisation makes the need for a legally binding deal on jobs more important than ever. CWU is here for the long term, regardless of who owns this company.\"</p><p>The CWU said it is \"almost certain\" that its 115,000 members will vote for industrial action.A nationwide strike, the first since 2009, could be held as soon as 23 October.</p><p>The 99% of Royal Mail's 150,000 workers who accepted £2,200 worth of free shares as part of the privatisation have made paper profits of more than £900, although they cannot sell the shares for three years.</p><!-- Guardian Watermark: internal-code/content/420008309|2013-10-16T15:58:10Z|d31de47df7f3f5b5f34e150104685955061e2b28 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T17:14:14Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834690196/Royal-Mail-workers-at-a-C-003.jpg",
+        "standfirst":"Share dealers Equiniti overloaded as thousands rush to book £300-plus profit on privatised firm's first official day of trading",
+        "shortUrl":"http://gu.com/p/3jhgk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834690196/Royal-Mail-workers-at-a-C-003.jpg",
+        "wordcount":"867",
+        "commentable":"true",
+        "internalContentCode":"420008309",
+        "allowUgc":"false",
+        "internalOctopusCode":"8196960",
+        "isPremoderated":"false",
+        "byline":"Rupert Neate and Hilary Osborne",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981145",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T11:06:00Z"
+      },
+      "tags":[{
+        "id":"uk/royal-mail",
+        "type":"keyword",
+        "webTitle":"Royal Mail",
+        "webUrl":"http://www.theguardian.com/uk/royal-mail",
+        "apiUrl":"http://content.guardianapis.com/uk/royal-mail",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/post",
+        "type":"keyword",
+        "webTitle":"Postal service",
+        "webUrl":"http://www.theguardian.com/uk/post",
+        "apiUrl":"http://content.guardianapis.com/uk/post",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/stock-markets",
+        "type":"keyword",
+        "webTitle":"Stock markets",
+        "webUrl":"http://www.theguardian.com/business/stock-markets",
+        "apiUrl":"http://content.guardianapis.com/business/stock-markets",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/londonstockexchangegroup",
+        "type":"keyword",
+        "webTitle":"London Stock Exchange",
+        "webUrl":"http://www.theguardian.com/business/londonstockexchangegroup",
+        "apiUrl":"http://content.guardianapis.com/business/londonstockexchangegroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rupertneate",
+        "type":"contributor",
+        "webTitle":"Rupert Neate",
+        "webUrl":"http://www.theguardian.com/profile/rupertneate",
+        "apiUrl":"http://content.guardianapis.com/profile/rupertneate",
+        "bio":"<p>Rupert Neate is a reporter. He was shortlisted for Reporter of the Year at the 2012 British Press Awards and the British Journalism Awards for <a href=\"http://www.pressgazette.co.uk/story.asp?storycode=48784\">his investigation that led to Liam Fox's resignation as defence secretary</a>. He joined the Guardian in 2011 from the Daily Telegraph, were he worked for four years as City Diary editor and telecoms and technology correspondent. He was <a href=\"http://www.guardian.co.uk/student-media-awards-2012/success-stories-rupert-neate\">named Student Journalist of the Year</a> at the Guardian Student Media Awards in 2006.</p>",
+        "r2ContributorId":"26470",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2011/10/17/1318845485033/Rupert-Neate-Guardian-byl-004.jpg",
+        "references":[]
+      },{
+        "id":"business/investing",
+        "type":"keyword",
+        "webTitle":"Investing",
+        "webUrl":"http://www.theguardian.com/business/investing",
+        "apiUrl":"http://content.guardianapis.com/business/investing",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/hilaryosborne",
+        "type":"contributor",
+        "webTitle":"Hilary Osborne",
+        "webUrl":"http://www.theguardian.com/profile/hilaryosborne",
+        "apiUrl":"http://content.guardianapis.com/profile/hilaryosborne",
+        "bio":"<p>Hilary Osborne is the editor of guardian.co.uk's <a href=\"http://www.guardian.co.uk/money\">money</a> site. Before working for the Guardian, she worked at several personal finance magazines, including a three-year stint as editor of What Mortgage. Follow her on Twitter at <a href=\"http://twitter.com/#!/hilaryosborne\">@hilaryosborne</a>.</p>",
+        "r2ContributorId":"19188",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/hilary_osborne_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420054165",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834684899/Royal-Mail-workers-at-a-C-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"54",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834688053/Royal-Mail-workers-at-a-C-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"130",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834690196/Royal-Mail-workers-at-a-C-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834692068/Royal-Mail-workers-at-a-C-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"132",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834694008/Royal-Mail-workers-at-a-C-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"168",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834695794/Royal-Mail-workers-at-a-C-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"180",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834697928/Royal-Mail-workers-at-a-C-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"228",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834699676/Royal-Mail-workers-at-a-C-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834699676/Royal-Mail-workers-at-a-C-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420054166",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381857154570/Royal-Mail-share-price-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "altText":"Royal Mail share price",
+            "height":"276",
+            "credit":"theguardian.com",
+            "caption":"Royal Mail’s share price since trading started. Photograph: theguardian.com",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420054167",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381834690196/Royal-Mail-workers-at-a-C-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at a CWU rally",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a CWU rally. The union will announce the result of a strike ballot on Wednesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/15/royal-mail-moya-greene-protection-strikes-share-trading",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-15T13:47:24Z",
+      "webTitle":"Royal Mail boss Moya Greene calls for protection from strikes",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/15/royal-mail-moya-greene-protection-strikes-share-trading",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/15/royal-mail-moya-greene-protection-strikes-share-trading",
+      "fields":{
+        "trailText":"Chief executive's comments on first day of official share trading come as CWU union prepares to announce plans for industrial action",
+        "headline":"Royal Mail boss Moya Greene calls for protection from strikes",
+        "body":"<p>Royal Mail boss Moya Greene has called for \"protections\" from strikes as more than 100,000 postal workers prepare to announce plans for industrial action that could take place as soon as 23 October.</p><p>In an interview to mark <a href=\"http://www.theguardian.com/uk-news/2013/oct/15/royal-mail-shares-official-trading-investors\" title=\"\">Royal Mail's first official day as a public company</a>, Greene said: \"We need to start thinking about what sort of protections do we need as a company from our people, from what has been probably too quick an approach to resort to industrial action.</p><p>\"I just think we need to look at alternative ways to resolve disputes,\" she told ITV News.</p><p>Greene's comments come as the Communication Workers Union (CWU) prepares to announce the result of a strike ballot on Wednesday.</p><p>The CWU, which represents more than 115,000 of Royal Mail's 150,000 employees, said it was \"confident\" that its members will vote on Wednesday for industrial action.</p><p>It is understood that <a href=\"http://www.theguardian.com/business/2013/oct/13/postal-workers-strike-ballot-pay-conditions\" title=\"\">the union has already made tentative plans for days of disruption in the run-up to Christmas.</a></p><p>Dave Ward, the CWU's deputy general secretary, said: \"The Royal Mail share price has soared further today, bringing more proof that the company was undervalued by the government's City mates.</p><p>\"The taxpayer has lost over £1bn already in this bungled fire sale of a cherished national institution. Postal workers cannot trade their shares for three years and they are far more concerned about their jobs than the share price. We're confident our members will return a yes vote in tomorrow's ballot result for strike action, strengthening our position to secure a deal on protecting jobs, services and terms and conditions in the company.\"</p><p>Royal Mail's shares have soared by 44% since the government privatised the 500-year-old company on Friday.</p><p>The share price spike means the 690,000 people who managed to buy a stake in the company have made paper profits of more than £300.</p><p>It also means the government could have collected at least more than £800m more for the taxpayer if it had sold the shares at 450p rather than 330p. The shares are currently changing hands at 481p.</p><p>Adrian Bailey, the Labour chair of the business department select committee, said the share price surge \"vindicated\" concerns the committee raised when it questioned the business secretary, Vince Cable, last week.</p><p>\"At the meeting last week it's fair to say that members of the committee had one view and the secretary of state had another,\" Bailey said. \"The share price movements have vindicated the concerns of the committee members. Let's see where the price settles.\"</p><p>Bailey said the committee will also call Lazard, the investment bank that advised the government on how to price Royal Mail, to answer questions about its valuation advice.</p><p>The National Audit Office, the public spending watchdog, and the public accounts committee will also investigate allegations that Royal Mail was sold too cheaply.</p><!-- Guardian Watermark: internal-code/content/420028784|2013-10-16T15:58:10Z|1f93f253c1e45212509dbfd36565d14cfa57b1ee -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-15T14:28:51Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844277523/Royal-Mail-workers-at-CWU-003.jpg",
+        "standfirst":"Chief executive's comments on first day of official share trading come as CWU union prepares to announce plans for industrial action",
+        "shortUrl":"http://gu.com/p/3jhyc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844277523/Royal-Mail-workers-at-CWU-003.jpg",
+        "wordcount":"458",
+        "commentable":"true",
+        "internalContentCode":"420028784",
+        "allowUgc":"false",
+        "internalOctopusCode":"8197904",
+        "isPremoderated":"false",
+        "byline":"Rupert Neate",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981272",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T13:47:24Z"
+      },
+      "tags":[{
+        "id":"uk/royal-mail",
+        "type":"keyword",
+        "webTitle":"Royal Mail",
+        "webUrl":"http://www.theguardian.com/uk/royal-mail",
+        "apiUrl":"http://content.guardianapis.com/uk/royal-mail",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/post",
+        "type":"keyword",
+        "webTitle":"Postal service",
+        "webUrl":"http://www.theguardian.com/uk/post",
+        "apiUrl":"http://content.guardianapis.com/uk/post",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rupertneate",
+        "type":"contributor",
+        "webTitle":"Rupert Neate",
+        "webUrl":"http://www.theguardian.com/profile/rupertneate",
+        "apiUrl":"http://content.guardianapis.com/profile/rupertneate",
+        "bio":"<p>Rupert Neate is a reporter. He was shortlisted for Reporter of the Year at the 2012 British Press Awards and the British Journalism Awards for <a href=\"http://www.pressgazette.co.uk/story.asp?storycode=48784\">his investigation that led to Liam Fox's resignation as defence secretary</a>. He joined the Guardian in 2011 from the Daily Telegraph, were he worked for four years as City Diary editor and telecoms and technology correspondent. He was <a href=\"http://www.guardian.co.uk/student-media-awards-2012/success-stories-rupert-neate\">named Student Journalist of the Year</a> at the Guardian Student Media Awards in 2006.</p>",
+        "r2ContributorId":"26470",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2011/10/17/1318845485033/Rupert-Neate-Guardian-byl-004.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420029258",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844272799/Royal-Mail-workers-at-CWU-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"54",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844275386/Royal-Mail-workers-at-CWU-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"130",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844277523/Royal-Mail-workers-at-CWU-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844279607/Royal-Mail-workers-at-CWU-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"132",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844281464/Royal-Mail-workers-at-CWU-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"168",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844283385/Royal-Mail-workers-at-CWU-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"180",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844285536/Royal-Mail-workers-at-CWU-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"228",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844287797/Royal-Mail-workers-at-CWU-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844287797/Royal-Mail-workers-at-CWU-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420029259",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/15/1381844277523/Royal-Mail-workers-at-CWU-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Royal Mail workers at CWU meeting",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail workers at a union meeting outside Mount Pleasant sorting office on Tuesday.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/15/royal-mail-cross-picket-lines-strike",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-15T18:20:20Z",
+      "webTitle":"Royal Mail offers £300 to postal workers to cross picket lines",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/15/royal-mail-cross-picket-lines-strike",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/15/royal-mail-cross-picket-lines-strike",
+      "fields":{
+        "newspaperPageNumber":"27",
+        "trailText":"<p>Communication Workers Union attacks 'act of desperation' by chief executive Moya Greene in run-up to results of strike ballot</p>",
+        "headline":"Royal Mail offers £300 to postal workers to cross picket lines",
+        "body":"<p>The Royal Mail is offering a £300 bonus to any of its 150,000 staff who cross the picket line in any forthcoming nationwide postal strikes.</p><p>Moya Greene, its chief executive, wrote to all employees before Wednesday's strike ballot result to offer the sum if they continue working while colleagues are out on strike.</p><p>The offer came as MPs said they would call the business secretary, Vince Cable, back to parliament to answer claims that he \"massively shortchanged taxpayers\" by pricing the shares in the Royal Mail too low. Lazard, the investment bank that collected millions of pounds from the government for its advice on how to price the shares, will also be called to give evidence before the business select committee.</p><p>Royal Mail's shares rose to 489p on Tuesday – 48% more than the government sold them for on Friday. If the government had sold the shares at 450p, rather than 330p, it would have made an extra £600m for the taxpayer on top of the £1.7bn it made from selling the 52% stake in Royal Mail.</p><p>Greene's last-ditch attempt to avert the first nationwide strike in four years came as the Communication Workers Union (CWU) said it was confident workers would back industrial action when it announces the results of a strike ballot on Wednesday afternoon.</p><p>Postal workers described her offer as an \"act of desperation and discrimination\" and a \"scab bonus\". Paul Firmage, one of the 371 of Royal Mail's 150,000 staff to rejected free shares in the privatisation, said the £300 bonus was \"yet another bribe\".</p><p>\"They are offering people money to be a scab. It is a scab bonus,\" he said.\"</p><p>The CWU said: \"It's an act of desperation and discrimination. We believe it's irrelevant and will make no difference to the strike ballot.\"</p><p>In a consultative ballot this year 96% of postal workers were opposed to the privatisation, which they said will erode their pay and conditions.</p><p>If staff have voted in favour of industrial action, the first strike could take place on 23 October and would likely be followed by a series of rolling strikes in the runup to Christmas.</p><p>In a letter to staff, Greene said: \"We offered a lump sum of £300 (pro-rata to part timers), payable in December, as long as there is no industrial action. Many of you have said to me that it is unfair that people should lose this money if others in their office go on strike and they work normally. I agree. So, we would make this payment provided you have not taken action yourself.\"</p><p>Greene, who toured the TV studios on Tuesday to promote Royal Mail's first official day as a private company, also claimed it needed protections from the threat of strike action and that strikes may lead to more job losses. \"We need to start thinking about what sort of protections do we need as a company from our people, from what has been probably too quick an approach to resort to industrial action,\" she said in an interview with ITV News.</p><p>On Sky News, Greene warned staff that strikes may put thousands of jobs at risk. She said Royal Mail could only continue to provide high quality jobs with good protections and benefits if the company remained strike-free. \"It is a competitive world that we are in, [so] if we ever disappoint our customers... then we put a lot at risk,\" she said.</p><p>Greene, who was paid £1.6m last year, was given £2,200 worth of shares for free, along with all of Royal Mail's staff, and bought a further £10,000 worth. She had tried to buy hundreds of thousands of pounds worth of shares but was scaled back to £10,000 alongside hundreds of thousands of others following overwhelming demand. Her stake was worth £17,568 at Tuesday's closing price.</p><p>The 227 shares each bought by 690,000 members of the public were worth £1,110 on Tuesday night – £361 more than they were bought for on Friday.</p><p>Peter Hargreaves of the brokers Hargreaves Lansdown said the shares were \"absolutely underpriced and the issue badly managed\".</p><p>Cable, who has dismissed the share price rise as \"froth\", faced calls to resign over his handling of the privatisation.</p><p>Mario Dunn, director of the Save Our Royal Mail campaign, said: \"The share price today is proof positive that the government chronically undervalued Royal Mail. This is larceny on a grand scale. Vince Cable has the temerity to call the matter froth.</p><p>If Mr Cable thinks ripping the taxpayer off by a billion pounds is froth then he is not fit for office. Mr Cable should do the decent thing and resign.\"</p><!-- Guardian Watermark: internal-code/content/420058654|2013-10-16T15:58:10Z|a247b58a40a544636348bddca0c2f0c074c5f49d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T00:02:30Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861162436/Postal-workers-attend-a-r-004.jpg",
+        "standfirst":"Communication Workers Union attacks 'act of desperation' by chief executive Moya Greene in run-up to results of strike ballot",
+        "shortUrl":"http://gu.com/p/3jt3n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861162436/Postal-workers-attend-a-r-004.jpg",
+        "wordcount":"755",
+        "commentable":"false",
+        "internalContentCode":"420058654",
+        "allowUgc":"false",
+        "internalOctopusCode":"8199856",
+        "isPremoderated":"false",
+        "byline":"Rupert Neate",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-16",
+        "internalPageCode":"1981526",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-18T18:20:20Z"
+      },
+      "tags":[{
+        "id":"uk/royal-mail",
+        "type":"keyword",
+        "webTitle":"Royal Mail",
+        "webUrl":"http://www.theguardian.com/uk/royal-mail",
+        "apiUrl":"http://content.guardianapis.com/uk/royal-mail",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/post",
+        "type":"keyword",
+        "webTitle":"Postal service",
+        "webUrl":"http://www.theguardian.com/uk/post",
+        "apiUrl":"http://content.guardianapis.com/uk/post",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rupertneate",
+        "type":"contributor",
+        "webTitle":"Rupert Neate",
+        "webUrl":"http://www.theguardian.com/profile/rupertneate",
+        "apiUrl":"http://content.guardianapis.com/profile/rupertneate",
+        "bio":"<p>Rupert Neate is a reporter. He was shortlisted for Reporter of the Year at the 2012 British Press Awards and the British Journalism Awards for <a href=\"http://www.pressgazette.co.uk/story.asp?storycode=48784\">his investigation that led to Liam Fox's resignation as defence secretary</a>. He joined the Guardian in 2011 from the Daily Telegraph, were he worked for four years as City Diary editor and telecoms and technology correspondent. He was <a href=\"http://www.guardian.co.uk/student-media-awards-2012/success-stories-rupert-neate\">named Student Journalist of the Year</a> at the Guardian Student Media Awards in 2006.</p>",
+        "r2ContributorId":"26470",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2011/10/17/1318845485033/Rupert-Neate-Guardian-byl-004.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420061753",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861156669/Postal-workers-attend-a-r-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"54",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861159091/Postal-workers-attend-a-r-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"340",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861160810/Postal-workers-attend-a-r-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"130",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861162436/Postal-workers-attend-a-r-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861164012/Postal-workers-attend-a-r-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"132",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861165709/Postal-workers-attend-a-r-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"168",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861167326/Postal-workers-attend-a-r-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"180",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861168958/Postal-workers-attend-a-r-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"228",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861170691/Postal-workers-attend-a-r-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861172339/Postal-workers-attend-a-r-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"372",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861170691/Postal-workers-attend-a-r-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420061754",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381861162436/Postal-workers-attend-a-r-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Postal workers attend a rally organised by the Communication Workers Union",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Royal Mail employees at a Communication Workers Union rally at Mount Pleasant sorting office, London, on the first day of official share trading.  Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/16/royal-mail-workers-vote-favour-strike-privatisation",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-16T14:57:02Z",
+      "webTitle":"Royal Mail workers vote in favour of strike following privatisation",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/16/royal-mail-workers-vote-favour-strike-privatisation",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/16/royal-mail-workers-vote-favour-strike-privatisation",
+      "fields":{
+        "trailText":"Postal workers will stage 24-hour strike on 4 November unless demands for improved pay and conditions are met",
+        "headline":"Royal Mail workers vote in favour of strike following privatisation",
+        "body":"<p>Royal Mail workers have voted 4-1 in favour of strike action over pay and conditions and the privatisation of the 500-year-old postal service.</p><p>More than 100,000 postal workers will walk out on a 24-hour strike on 4 November unless the company agrees to the union's demands for improved pay and conditions.</p><p>The Communication Workers Union, which balloted 115,000 members, said 78% of those who voted had backed strike action, despite the company offering all staff a £300 bonus if they committed not to strike. Turnout was 63%.</p><p>The union said it was considering further action in the runup to Christmas if the dispute cannot be resolved.</p><p>Dave Ward, CWU deputy general secretary, said: \"Postal workers have spoken very clearly that they care about their jobs, terms and conditions far more than they care about shares.</p><p>\"The stakes have become much higher for postal workers since privatisation, making this ballot more important than ever. Postal workers will not be the people who pay for the profits of private operators and faceless shareholders.</p><p>\"We have offered the company a two-week period to reach an agreement and, having already had many hours of negotiation, this is achievable if there is a will. The clock is ticking for both sides and we need Royal Mail to work to reach agreement before this deadline.</p><p>\"What we want is a groundbreaking, long-term, legally binding agreement that not only protects postal workers' job security, pay and pensions, but will also determine the strategy, principles and values of how the Royal Mail group will operate as a private entity.\"</p><p>The union also announced plans for a second ballot, asking workers to support a boycott of rival companies' mail.</p><p>\"On top of a strike, the union will seek a mandate from members to carry out the boycott of competitors' mail. In law, this needs a separate ballot and we will commence the procedures for this at the earliest opportunity,\" Ward said.</p><p>\"The boycott will be used to supplement strike action. Royal Mail needs to reach an agreement with us now and avoid the consequences of these two types of action from postal workers.\"</p><p>Michael Fallon, the business minister in charge of the privatisation, has attacked the union for pressing ahead with plans for strike action despite an offer of an 8.6% pay rise over three years. The CWU dismissed the pay offer as a misleading and unacceptable sweetener designed to win support for the privatisation.</p><p>Royal Mail said it was very disappointed that the CWU was pushing ahead with the strike ballot. The company said an Ipsos Mori survey it commissioned found 78% of Britons think the company's pay offer is fair or very fair, and 72% of the 1,468 people polled said the union should accept it and call off the strike.</p><p>Royal Mail's shares, which have risen by more than 40% since the privatisation on Friday, were down 3.4% to 473p following the strike announcement.</p><!-- Guardian Watermark: internal-code/content/420159042|2013-10-16T15:58:10Z|4f81eadcee60fcfc3415dc932040a80af0c1162a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T15:41:19Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935332399/General-view-of-Royal-Mai-004.jpg",
+        "standfirst":"Postal workers will stage 24-hour strike on 4 November unless demands for improved pay and conditions are met",
+        "shortUrl":"http://gu.com/p/3jtmf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935332399/General-view-of-Royal-Mai-004.jpg",
+        "wordcount":"475",
+        "commentable":"false",
+        "internalContentCode":"420159042",
+        "allowUgc":"false",
+        "internalOctopusCode":"8203211",
+        "isPremoderated":"false",
+        "byline":"Rupert Neate",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982031",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T14:57:02Z"
+      },
+      "tags":[{
+        "id":"uk/royal-mail",
+        "type":"keyword",
+        "webTitle":"Royal Mail",
+        "webUrl":"http://www.theguardian.com/uk/royal-mail",
+        "apiUrl":"http://content.guardianapis.com/uk/royal-mail",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/post",
+        "type":"keyword",
+        "webTitle":"Postal service",
+        "webUrl":"http://www.theguardian.com/uk/post",
+        "apiUrl":"http://content.guardianapis.com/uk/post",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/tradeunions",
+        "type":"keyword",
+        "webTitle":"Trade unions",
+        "webUrl":"http://www.theguardian.com/politics/tradeunions",
+        "apiUrl":"http://content.guardianapis.com/politics/tradeunions",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/privatisation",
+        "type":"keyword",
+        "webTitle":"Privatisation",
+        "webUrl":"http://www.theguardian.com/politics/privatisation",
+        "apiUrl":"http://content.guardianapis.com/politics/privatisation",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/economy",
+        "type":"keyword",
+        "webTitle":"Economic policy",
+        "webUrl":"http://www.theguardian.com/politics/economy",
+        "apiUrl":"http://content.guardianapis.com/politics/economy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/rupertneate",
+        "type":"contributor",
+        "webTitle":"Rupert Neate",
+        "webUrl":"http://www.theguardian.com/profile/rupertneate",
+        "apiUrl":"http://content.guardianapis.com/profile/rupertneate",
+        "bio":"<p>Rupert Neate is a reporter. He was shortlisted for Reporter of the Year at the 2012 British Press Awards and the British Journalism Awards for <a href=\"http://www.pressgazette.co.uk/story.asp?storycode=48784\">his investigation that led to Liam Fox's resignation as defence secretary</a>. He joined the Guardian in 2011 from the Daily Telegraph, were he worked for four years as City Diary editor and telecoms and technology correspondent. He was <a href=\"http://www.guardian.co.uk/student-media-awards-2012/success-stories-rupert-neate\">named Student Journalist of the Year</a> at the Guardian Student Media Awards in 2006.</p>",
+        "r2ContributorId":"26470",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2011/10/17/1318845485033/Rupert-Neate-Guardian-byl-004.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420159454",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935322593/General-view-of-Royal-Mai-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"54",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935328070/General-view-of-Royal-Mai-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"340",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935330815/General-view-of-Royal-Mai-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"130",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935332399/General-view-of-Royal-Mai-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"84",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935333977/General-view-of-Royal-Mai-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"132",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935335545/General-view-of-Royal-Mai-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"168",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935337133/General-view-of-Royal-Mai-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"180",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935339003/General-view-of-Royal-Mai-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"228",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935340601/General-view-of-Royal-Mai-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"276",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935342183/General-view-of-Royal-Mai-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"372",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935340601/General-view-of-Royal-Mai-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"276",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420159455",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/16/1381935332399/General-view-of-Royal-Mai-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"General view of Royal Mail sorting Office",
+            "height":"84",
+            "credit":"Dave Thompson/PA",
+            "caption":"More than 100,000 postal workers will walk out on a 24-hour strike on 4 November. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
