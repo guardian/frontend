@@ -144,12 +144,14 @@ define(["bean",
             }));
 
             common.mediator.on('modules:overlay:close', function() {
+                // Remove events
+                bean.off(overlay.toolbarNode, 'click');
+                bean.off(overlay.bodyNode, 'click touchmove touchend');
+                bean.off(document.body, 'keydown', self.handleKeyEvents);
+
                 self.removeOverlay();
 
                 self.stopSlideshow();
-
-                // Remove keyboard handlers
-                bean.off(document.body, 'keydown', self.handleKeyEvents);
 
                 // Go back to the URL that we started on
                 if (pushUrlChanges) {
