@@ -206,15 +206,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         When("the page is rendered")
 
         Then("the ad slot placeholder is rendered")
-        val adPlaceholder = $(".ad-slot-top-banner-ad").first()
+        val adPlaceholder = $(".ad-slot--top-banner-ad").first()
 
         And("the placeholder has the correct slot names")
         adPlaceholder.getAttribute("data-base") should be("Top2")
         adPlaceholder.getAttribute("data-median") should be("Top")
-        adPlaceholder.getAttribute("data-extended") should be("x54")
+        adPlaceholder.getAttribute("data-extended") should be("Top")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot-top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
@@ -252,8 +252,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be(30)
+        $("[itemprop=relatedLink]").size() should be > 0
       }
+
     }
 
     scenario("Story package ordered by date published") {
@@ -269,7 +270,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         relatedContent.get(1).getText should be("Iraq war logs: media reaction around the world")
         relatedContent.get(2).getText should be("Iraq war logs: 'The US was part of the Wolf Brigade operation against us'")
         relatedContent.get(3).getText should be("Iraq war logs: Prisoner beaten to death days after British handover to police")
-        relatedContent.get(4).getText should be("Iraq war logs: These crimes were not secret, they were tolerated")
+        relatedContent.get(4).getText should be("Iraq war logs: US turned over captives to Iraqi torture squads")
       }
     }
 

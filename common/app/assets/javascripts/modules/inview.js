@@ -9,7 +9,9 @@ define(["common", "bean"], function (common, bean) {
         this.checkForVisibleNodes();
 
         bean.on(window, 'scroll', common.debounce(function() {
-            self.checkForVisibleNodes();
+            common.requestAnimationFrame(function(){
+                self.checkForVisibleNodes();
+            });
         }, 200));
     }
 

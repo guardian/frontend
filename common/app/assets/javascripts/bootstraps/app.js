@@ -161,7 +161,7 @@ define('bootstraps/app', [
                     Tag.init(config, context);
                 }
 
-                if (config.page.contentType === "Section") {
+                if (config.page.contentType === "Section" && !config.page.isFront) {
                     Section.init(config, context);
                 }
 

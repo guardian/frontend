@@ -4,12 +4,14 @@
 
     <div class="tool-title">Fronts Editor <span data-bind="visible: false">loading...</span></div>
 
+    <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
+
     <div class="list-picker" data-bind="visible: true" style="display: none">
         <span>Editing front:</span>
         <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
         <a class="preview-link" data-bind="
             attr: {href: previewUrl},
-            visible: config">View</a>
+            visible: config">View Previews</a>
     </div>
 
     <div class="finder">

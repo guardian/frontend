@@ -35,7 +35,6 @@ object Frontend extends Build with Prototypes {
 
   val commonWithTests = withTests(common)
 
-  val front = application("front").dependsOn(commonWithTests).aggregate(common)
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
@@ -127,7 +126,6 @@ object Frontend extends Build with Prototypes {
     .dependsOn(
       withTests(article)
     ).dependsOn(
-      front,
       facia,
       applications,
       sport,
@@ -140,22 +138,8 @@ object Frontend extends Build with Prototypes {
       commercial
     )
 
-  val faciaDev = application("facia-dev-build").dependsOn(
-    facia,
-    article,
-    applications,
-    sport,
-    coreNavigation,
-    image,
-    discussion,
-    router,
-    diagnostics,
-    identity
-  )
-
   val main = root().aggregate(
     common,
-    front,
     facia,
     article,
     applications,

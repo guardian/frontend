@@ -1,6 +1,3 @@
-/* global window, document */
-'use strict';
-
 var collection = '.collection--sport',
     button = collection + ' .collection__display-toggle';
 
@@ -79,15 +76,36 @@ casper.test.begin('Users can show more items in a collection', function(test) {
 *    Given I visit the network front
 *    Then the first item in each collection should have an image
 **/
+/*
 casper.test.begin('First item in a collection displays an image', function(test) {
-    casper.waitForSelector('.collection .item--image-upgraded', function(){
-        test.assertExists('.collection .item--image-upgraded', 'item\'s image shown');
+    casper.waitWhileSelector('.collection .item:first-child.item--no-image', function() {
+        test.assertDoesntExist('.collection .item:first-child.item--no-image', 'item\'s image shown');
     });
 
     casper.run(function() {
         test.done();
     })
 });
+*/
+
+/**
+ * Scenario: First item in each container has a main image
+ *    Given I visit the network front
+ *    Then the first item in each container should have a main image
+ **/
+/*
+casper.test.begin('First item in a container displays a main image', function(test) {
+    casper.waitWhileSelector('.collection .item:first-child.item--no-image', function() {
+        this.getElementsInfo('.collection[data-type] .item:first-child .item__image').forEach(function(elementInfo) {
+            test.assertEquals(elementInfo.attributes.src, elementInfo.attributes['data-src-main-mobile'], 'item\'s main image shown');
+        });
+    });
+
+    casper.run(function() {
+        test.done();
+    })
+});
+*/
 
 /**
 * Scenario: Timestamps relativise
@@ -109,6 +127,7 @@ casper.test.begin('Timestamps are relative', function(test) {
 *    Given I visit the network front
 *    Then I should see the comment count for an item
 **/
+/*
 casper.test.begin('Items display their comment count', function(test) {
     casper.waitForSelector('.trail__count--commentcount', function(){
         test.assertExists('.trail__count--commentcount', 'comment count exists');
@@ -118,6 +137,7 @@ casper.test.begin('Items display their comment count', function(test) {
         test.done();
     })
 });
+*/
 
 /**
 * Scenario: Popular collection appears at the bottom of the page
@@ -127,6 +147,7 @@ casper.test.begin('Items display their comment count', function(test) {
 casper.test.begin('Popular collection appears at the bottom of the page', function(test) {
     casper.waitForSelector('.collection--popular', function(){
         test.assertExists('.collection--popular', 'popular collection displayed');
+        test.assertElementCount('.collection--popular .item:nth-child(-n+3):not(.u-h)', 3, 'first three items visible');
     });
 
     casper.run(function() {

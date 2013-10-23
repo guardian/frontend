@@ -118,10 +118,10 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             waits(100);
             runs(function() {
                 common.mediator.emit('module:analytics:adimpression', 'top banner');
-                expect(s.linkTrackVars).toBe('eVar73,events');
+                expect(s.linkTrackVars).toBe('eVar53,events');
                 expect(s.linkTrackEvents).toBe('event29');
                 expect(s.events).toBe('event29');
-                expect(s.eVar73).toBe('top banner');
+                expect(s.eVar53).toBe('top banner');
             });
         });
 

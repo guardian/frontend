@@ -1,15 +1,25 @@
-@(mainPicture: ImageAsset, smallCrop: ImageAsset)
+@(image: Option[model.ImageContainer])
+@import views.support.ImgSrc
+@import views.support.LargeThumbnail
+@import views.support.ArticleMainPicture
 
-<figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
-    <img class="maxed main-image" src="@smallCrop.path"
+@image.map{ picture =>
+
+    <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
+        <img class="maxed main-image" src="@LargeThumbnail.bestFor(picture)"
         data-force-upgrade="true"
-        data-thumb-width="@smallCrop.width"
-        data-fullsrc="@mainPicture.url.map(ImgSrc(_, ArticleMainPicture))"
-        data-full-width="640"
+        @LargeThumbnail.width.map{w => data-thumb-width="@w"}
+        data-fullsrc="@ArticleMainPicture.bestFor(picture)"
+        @ArticleMainPicture.width.map{w => data-full-width="@w"}
         itemprop="contentURL"
-        alt="@Html(mainPicture.altText.getOrElse(""))"
-        title="@StripHtmlTagsAndUnescapeEntities(mainPicture.caption.getOrElse(""))" />
-    @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
-    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
-    }
-</figure>
+        @ArticleMainPicture.captionFor(picture).map{ caption =>
+            alt="@Html(caption)"
+            title="@StripHtmlTagsAndUnescapeEntities(caption)" />
+        }
+
+        @LargeThumbnail.captionFor(picture).map{ caption =>
+            <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
+        }
+
+    </figure>
+}

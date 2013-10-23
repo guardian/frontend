@@ -19,29 +19,45 @@ import conf.Switches.ShowUnsupportedEmbedsSwitch
 
 sealed trait Style {
   val className: String
+  val showMore: Boolean
 }
 
-object Featured extends Style { val className = "featured" }
+object Featured extends Style {
+  val className = "featured"
+  val showMore = false
+}
 
 /**
  * trails display trailText and thumbnail (if available)
  */
-object Thumbnail extends Style { val className = "with-thumbnail" }
+object Thumbnail extends Style {
+  val className = "with-thumbnail"
+  val showMore = false
+}
 
 /**
  * trails only display headline
  */
-object Headline extends Style { val className = "headline-only" }
+object Headline extends Style {
+  val className = "headline-only"
+  val showMore = false
+}
 
 /**
  * trails for the section fronts
  */
-object SectionFront extends Style { val className = "section-front" }
+object SectionFront extends Style {
+  val className = "section-front"
+  val showMore = false
+}
 
 /**
  * New 'collection' templates
  */
-object Masthead extends Style { val className = "masthead" }
+object Masthead extends Style {
+  val className = "masthead"
+  val showMore = false
+}
 
 case class SectionZone(val tone: String = "news", val showMore: Boolean = false) extends Style {
   val className = "section-zone"
@@ -150,13 +166,35 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-object VideoEmbedCleaner extends HtmlCleaner {
+case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
       element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
     }
+
+    document.getElementsByClass("gu-video").foreach { element: Element =>
+      val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
+
+      val mediaId = element.attr("data-media-id")
+      val asset = findVideoFromId(mediaId)
+      asset.foreach( video => {
+        element.append(
+          s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
+                <param name="allowFullScreen" value="true" />
+                <param name="movie" value="$flashMediaElement" />
+                <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
+                Sorry, your browser is unable to play this video.
+              </object>""")
+
+        element.wrap("<div class=\"media-proportional-container\"></div>")
+      })
+    }
     document
+  }
+
+  def findVideoFromId(id:String): Option[VideoAsset] = {
+    contentVideos.filter(_.id == id).flatMap(_.videoAssets).filter(_.mimeType == Some("video/mp4")).headOption
   }
 }
 
@@ -206,18 +244,6 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
 
   def findImageFromId(id:String): Option[ImageAsset] = {
     contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
-  }
-}
-
-case class VideoPosterCleaner(poster: Option[ImageAsset]) extends HtmlCleaner {
-
-  def clean(body: Document): Document = {
-    poster.map{ posterImage =>
-      body.getElementsByTag("video").filter(_.hasClass("data-media-id")).foreach { videoTag =>
-        videoTag.attr("poster", posterImage.url.getOrElse(""))
-      }
-    }
-    body
   }
 }
 
