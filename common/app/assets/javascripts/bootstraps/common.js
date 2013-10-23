@@ -36,7 +36,8 @@ define([
     "modules/lightbox-gallery",
     "modules/swipe/ears",
     "modules/swipe/bar",
-    "modules/facia/image-upgrade"
+    "modules/facia/image-upgrade",
+    "modules/commercial/commercial-components"
 ], function (
     common,
     ajax,
@@ -75,7 +76,8 @@ define([
     LightboxGallery,
     ears,
     SwipeBar,
-    ImageUpgrade
+    ImageUpgrade,
+    CommercialComponents
 ) {
 
     var modules = {
@@ -267,11 +269,12 @@ define([
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
                         Adverts.init(config, context);
+                        CommercialComponents.init(config, context);
                     }
                 });
                 common.mediator.on('modules:adverts:docwrite:loaded', function(){
                     Adverts.loadAds();
-                    Adverts.loadCommercialComponents();
+                    CommercialComponents.loadComponents();
                 });
             }
         },

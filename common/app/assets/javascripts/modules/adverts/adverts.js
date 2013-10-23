@@ -135,28 +135,9 @@ function (
         }
     }
 
-    function loadCommercialComponents() {
-        var keywordsParams = documentWrite.getKeywords(currConfig.page),
-            requestUrl = "/commercial/travel/offers?" + keywordsParams,
-            $commercialSlot = bonzo(currContext.querySelector('.js-mpu-ad-slot'));
-
-        if ($commercialSlot) {
-            ajax({
-                url: requestUrl,
-                type: 'html',
-                method: 'get',
-                crossOrigin: true,
-                success: function(response) {
-                    $commercialSlot.append(response);
-                }
-            });
-        }
-    }
-
     return {
         init: init,
         loadAds: loadAds,
-        loadCommercialComponents: loadCommercialComponents,
         isOnScreen: isOnScreen
     };
 
