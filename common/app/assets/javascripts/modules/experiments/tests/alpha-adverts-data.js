@@ -34,7 +34,7 @@ define([
         this.variants = [
             {
                 id: 'Inline', //Article A
-                test: function(isBoth) {
+                test: function(context, isBoth) {
                     var article = document.getElementsByClassName('js-article__container')[0];
                     bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function(el, i) {
                         var cls = (i % 2 === 0) ? 'is-odd' : 'is-even',
@@ -53,7 +53,7 @@ define([
             },
             {
                 id: 'Adhesive', //Article B
-                test: function(isBoth) {
+                test: function(context, isBoth) {
                     var viewport = detect.getLayoutMode(),
                         inviewName,
                         s;
@@ -68,7 +68,7 @@ define([
                             });
                         }
                     } else {
-                        inviewName = (isBoth) ? 'Both : MPU' : 'Adhesive: MPU';
+                        inviewName = (isBoth) ? 'Both:MPU' : 'Adhesive:MPU';
                         document.getElementsByClassName('js-mpu-ad-slot')[0].appendChild(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
                         if(!supportsSticky && supportsFixed) {
@@ -88,7 +88,7 @@ define([
                     document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
-                            variant.test.call(self, true);
+                            variant.test.call(self, {}, true);
                         }
                     });
                     return true;
