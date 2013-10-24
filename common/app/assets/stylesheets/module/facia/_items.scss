@@ -1,4 +1,4 @@
-$live: #e81818;
+$c-live: #e81818;
 
 .collection {
     position: relative;
@@ -109,7 +109,7 @@ $live: #e81818;
 }
 .item__live-indicator {
     color: #ffffff;
-    background-color: $live;
+    background-color: $c-live;
     @include fs-data(5, $size-only: true);
     display: inline-block;
     padding: 0 3px;
