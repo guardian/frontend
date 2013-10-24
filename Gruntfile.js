@@ -469,7 +469,7 @@ module.exports = function (grunt) {
          */
         cssmetrics: {
             common: {
-                src: [staticTargetDir + 'stylesheets/**/.css'],
+                src: [staticTargetDir + 'stylesheets/**/*.css'],
                 options: {
                     quiet: false,
                     maxRules: 4096, //IE max rules
@@ -599,11 +599,11 @@ module.exports = function (grunt) {
     grunt.registerTask('test:unit', function(app) {
         grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
     });
-    grunt.registerTask('test', ['compile', 'jshint:common', 'test:unit', 'test:integration']);
+    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
     // Analyse tasks
-    grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
-    grunt.registerTask('analyse:css:common', ['sass:compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
+    grunt.registerTask('analyse', ['analyse:css']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'copy:hooks']);
