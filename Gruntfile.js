@@ -552,7 +552,7 @@ module.exports = function (grunt) {
             },
             icons: {
                 files: ['common/app/assets/images/**/*'],
-                tasks: ['imagemin:compile', 'copy:compile', 'hash']
+                tasks: ['shell:icons', 'imagemin:compile', 'copy:compile', 'hash']
             }
         }
     });
