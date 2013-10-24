@@ -19,8 +19,8 @@
         }
     }
     @include mq(tablet, desktop) {
-        @include row(2);
-        .item:nth-child(-n+2) {
+        @include row(3);
+        .item:nth-child(-n+3) {
             @include card-image;
         }
     }

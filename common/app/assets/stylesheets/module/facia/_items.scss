@@ -31,6 +31,7 @@ $c-live: #e81818;
     }
     @include mq(tablet) {
         margin-top: $gs-baseline*2;
+        margin-bottom: $gs-baseline;
         border-top-width: 2px;
         background-color: transparent !important;
         line-height: 1em;
