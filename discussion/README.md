@@ -21,7 +21,7 @@ In your local settings file, you should have the following:
     id.apiClientToken=frontend-code-client-token
 
     # Discussion
-    guardian.page.discussionApiRoot=http://discussion.code.dev-guardianapis.com/discussion-api
+    discussion.apiRoot=http://discussion.code.dev-guardianapis.com/discussion-api
     
     # Generic
     guardian.page.host=http://m.thegulocal.com
