@@ -20,7 +20,8 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
-    "bootstraps/imagecontent"
+    "bootstraps/imagecontent",
+    "bootstraps/facebook"
 ], function (
     qwery,
     common,
@@ -43,7 +44,8 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
-    ImageContent
+    ImageContent,
+    Facebook
 ) {
 
     var modules = {
@@ -149,6 +151,7 @@ define('bootstraps/app', [
                     ImageContent.init(config, context);
                 }
 
+                Facebook.init(config, context);
                 //Kick it all off
                 r.init();
             };

@@ -148,6 +148,64 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     }
   }
 
+  "the unauth method" - {
+    "given a valid response " - {
+      val validCookieResponse = HttpResponse("""{"expiresAt": "2013-10-30T12:21:00+00:00", "values": [{"name": testName", "value": "testValue"}]}""", 200, "OK")
+      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
+        .thenReturn(toFuture(Right(validCookieResponse)))
+
+      "accesses the unauth endpoint" in {
+          api.unauth(Anonymous, trackingParameters)
+          verify(http).POST(Matchers.eq("http://example.com/unauth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
+      }
+
+      "adds the client access token parameter to the request" in {
+        api.unauth(Anonymous, trackingParameters)
+        verify(http).POST(Matchers.eq("http://example.com/unauth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
+      }
+      "passes the auth parameters to the http lib's GET method" in {
+        val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
+        api.unauth(auth, trackingParameters)
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
+      }
+
+      "passes the auth header to the http lib's GET method" in {
+        val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
+        api.unauth(auth, trackingParameters)
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
+      }
+
+      "returns a cookies response" in {
+        api.unauth(Anonymous, trackingParameters).map(_ match {
+          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+          case Right(cookiesResponse) => {
+            cookiesResponse.expiresAt should equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2013-10-30T12:21:00+00:00"))
+            val cookies = cookiesResponse.values
+            cookies.size should equal(1)
+            cookies(0) should have('name("testName"))
+            cookies(0) should have('value("testValue"))
+          }
+        })
+      }
+
+      "given an error" - {
+        when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
+          .thenReturn(toFuture(Left(errors)))
+
+        "returns the errors" in {
+          api.unauth(Anonymous, trackingParameters).map(_ match {
+            case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
+            case Left(responseErrors) => {
+              responseErrors should equal(errors)
+            }
+          })
+        }
+      }
+
+
+    }
+  }
+
 
   "the user method" - {
     "when receiving a valid response" - {
@@ -258,7 +316,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
          verify(http).POST(Matchers.eq("http://example.com/pwd-reset/reset-pwd-for-user"), Matchers.eq(Option(requestJson)), Matchers.eq(clientAuthHeaders), Matchers.eq(Nil))
       }
 
-      "returns a successful unit response" in {
+      "returns a successful #it response" in {
          api.resetPassword(token, newPassword).map( _ match {
             case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
             case Right(_: Unit) => {
