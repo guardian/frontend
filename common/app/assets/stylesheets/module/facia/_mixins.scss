@@ -43,7 +43,7 @@
 }
 @mixin card-image {
     .item__title {
-        min-height: 124px;
+        min-height: 128px;
     }
     .item__image-container,
     .connection--low & .item__standfirst,

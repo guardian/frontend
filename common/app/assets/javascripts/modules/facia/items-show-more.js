@@ -28,11 +28,11 @@ define([
                         culture: 3
                     },
                     tablet: {
-                        default: 2,
+                        default: 3,
                         news: 6,
-                        sport: 5,
-                        commentisfree: 3,
-                        culture: 3
+                        sport: 6,
+                        commentisfree: 4,
+                        culture: 4
                     },
                     mobile: {
                         default: 2,
