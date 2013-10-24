@@ -1,117 +1,67 @@
 define([
     'common',
-    'domwrite',
     'qwery',
     'bonzo',
-    'ajax',
-
-    'modules/userPrefs',
-    'modules/detect',
-    'modules/adverts/document-write',
-    'modules/commercial/eventbrite-events'
-],
-function (
+    'bean',
+    'modules/adverts/document-write'
+], function (
     common,
-    domwrite,
     qwery,
     bonzo,
-    ajax,
-
-    userPrefs,
-    detect,
-    documentWrite,
-
-    eventbriteEvents
+    bean,
+    documentWrite
 ) {
 
-    var currConfig,
-        currContext,
-        slots,
-        contexts = {},
-        keywords,
-        keywordsParams;
-
-    var template = '<div class="commercial">' +
-                   '     <div class="commercial__head">' +
-                   '         <h3 class="commercial__title">{title}</h3>' +
-                   '     </div>' +
-                   '     <div class="commercial__body">' +
-                   '         {body}' +
-                   '     </div>' +
-                   '     <div class="commercial__foot">' +
-                   '         {footer}' +
-                   '     </div>' +
-                   '</div>';
-
-    function init(config, context) {
-        var id = context.id;
-
-        if(id) {
-
-            contexts[id] = context;
-            currConfig  = config;
-            currContext = context;
-            slots = [];
-            keywords = currConfig.page.keywords.split(',');
-            keywordsParams = documentWrite.getKeywords(currConfig.page);
-        }
-    }
-
-    function loadComponents() {
-        loadTravel();
-        loadMasterclasses();
-    }
-
-
-    function loadTravel() {
-        var requestUrl = "/commercial/travel/offers?" + keywordsParams,
-            $commercialSlot = bonzo(currContext.querySelector('.ad-slot--mpu-banner-ad'));
-
-        if ($commercialSlot) {
-            ajax({
-                url: requestUrl,
-                type: 'html',
-                method: 'get',
-                crossOrigin: true,
-                success: function(response) {
-                    $commercialSlot.append(response);
-                }
-            });
-        }
-    }
-
-    function loadMasterclasses() {
-        var relevantEvents = eventbriteEvents.events.filter(function(ev) {
-            var tags = ev.event.tags.replace(/,\ /g,',').split(',');
-            return ev.event.status === 'Live';
-        });
-
-        var rnd = Math.floor((Math.random()*relevantEvents.length)+1),
-            displayEvent = relevantEvents[rnd].event,
-            ticket = displayEvent.tickets[0].ticket,
-            description = qwery('p', bonzo.create('<div>'+displayEvent.description+'</div>'))[0].innerText;
-
-        //console.log(displayEvent);
-        render('.article-v2__main-column', {
-            title:  'guardian<span>masterclasses</span>',
-            body:   '<h3>' + displayEvent.title + '</h3>' +
-                    '<p>' + ticket.display_price + ticket.currency + '</p>' +
-                    '<p>' + description + '</p>',
-            footer: '<a href="' + displayEvent.url + '" class="submit-input">Find out more</a>'
-        });
-    }
-
-    function render(targetSelector, data) {
-        var output = template.replace('{title}',  data.title || '')
-                             .replace('{body}',   data.body || '')
-                             .replace('{footer}', data.footer || '');
-
-        common.$g(targetSelector, currContext).append(output);
-    }
-
-    return {
-        init: init,
-        loadComponents: loadComponents
+    var Commercial = function(options) {
+        this.options        = common.extend(this.DEFAULTS, options);
+        this.keywords       = this.options.config.page.keywords.split(',');
+        this.keywordsParams = documentWrite.getKeywords(this.options.config.page);
     };
 
+
+    Commercial.prototype.DEFAULTS = {
+        context: document,
+        elCls: 'commercial',
+        smallAdWidth:  300,  // Up to, but excluding
+        mediumAdWidth: 600
+    };
+
+    Commercial.prototype.init = function(options) {
+        var self = this;
+
+        bean.on(window, 'resize', common.debounce(function(e) {
+            self.applyClassnames();
+        }, 250));
+
+        common.mediator.on('modules:commercial:loaded', function() {
+            self.applyClassnames();
+        });
+
+        this.applyClassnames();
+
+        return this;
+    };
+
+
+    Commercial.prototype.applyClassnames = function() {
+        var classname = this.options.elCls;
+
+        common.$g('.' + classname, this.options.context).each(function() {
+            var $node = bonzo(this),
+                width = $node.dim().width;
+
+            $node.removeClass(classname + '--small ' + classname + '--medium');
+
+            if (width >= 300 && width < 600) {
+                $node.addClass(classname + '--medium');
+            } else {
+                $node.addClass(classname + '--small');
+            }
+
+            $node.attr('data-width', width);
+        });
+
+    };
+
+    return Commercial;
 });
