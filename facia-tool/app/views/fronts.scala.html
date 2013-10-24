@@ -103,35 +103,36 @@
                 </div>
 
                 <div class="list-header__status">
-                    <div class="list-header__status__live" data-bind="
-                        css: {
-                            active: state.liveMode()
-                        }">
-                        <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
-                    </div>
-                    <div class="list-header__status__draft" data-bind="
+                    <a class="list-header__status__draft" data-bind="
+                        click: setDraftMode,
                         css: {
                             'active':   !state.liveMode(),
                             'has-draft': state.hasDraft()
-                        }">
-                        <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
-                            DRAFT
-                            <span data-bind="if: state.hasDraft() && state.liveMode()">EXISTS</span>
-                        </span>
-                        <span data-bind="if: !state.liveMode() && state.hasDraft()">
-                            &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish draft</a>
-                            &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
-                        </span>
-                    </div>
-                </div>
-                <div class="list-header__timings">
-                    <!-- ko if: state.timeAgo -->
-                        <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
-                        by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
-                    <!-- /ko -->
-                    <!-- ko ifnot: state.timeAgo -->
-                        empty
-                    <!-- /ko -->
+                        }">DRAFT
+
+                    </a><a class="list-header__status__control" data-bind="
+                        visible: state.hasDraft(),
+                        click: publishDraft">publish
+
+                    </a><a class="list-header__status__control" data-bind="
+                        visible: state.hasDraft(),
+                        click: discardDraft">discard
+
+                    </a><a class="list-header__status__live" data-bind="
+                        click: setLiveMode,
+                        css: {
+                            active: state.liveMode()
+                        }">LIVE</a>
+                    
+                    <span class="list-header__timings">
+                        <!-- ko if: state.timeAgo -->
+                            <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                            by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
+                        <!-- /ko -->
+                        <!-- ko ifnot: state.timeAgo -->
+                            empty
+                        <!-- /ko -->
+                    </span>
                 </div>
             </div>
 
