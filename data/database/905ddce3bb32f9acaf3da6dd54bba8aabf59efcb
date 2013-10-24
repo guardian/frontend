@@ -1,0 +1,283 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"artanddesign/2013/oct/21/china-landscape-painting",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-21T17:13:07Z",
+      "webTitle":"Made in China: how landscape painting was invented in the east",
+      "webUrl":"http://www.theguardian.com/artanddesign/2013/oct/21/china-landscape-painting",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/oct/21/china-landscape-painting",
+      "fields":{
+        "trailText":"The history books say that western Renaissance artists invented landscape painting. Not if you believe a new V&amp;A exhibition of Chinese art, writes Jonathan Jones",
+        "headline":"Made in China: how landscape painting was invented in the east",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jyzc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364723650/A-detail-from-Saying-Fare-004.jpg",
+        "wordcount":"841",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2/arts",
+        "type":"newspaper-book-section",
+        "webTitle":"Arts",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/arts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/arts",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/jonathanjones",
+        "type":"contributor",
+        "webTitle":"Jonathan Jones",
+        "webUrl":"http://www.theguardian.com/profile/jonathanjones",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanjones",
+        "bio":"<p>Jonathan Jones writes on art for the Guardian and was on the jury for the 2009 Turner prize</p>",
+        "rcsId":"GNL234013",
+        "r2ContributorId":"15906",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_jones_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420546679",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364717680/A-detail-from-Saying-Fare-001.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"54",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364720553/A-detail-from-Saying-Fare-002.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"340",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364722139/A-detail-from-Saying-Fare-003.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"130",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364723650/A-detail-from-Saying-Fare-004.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"84",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364725246/A-detail-from-Saying-Fare-005.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"132",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364726790/A-detail-from-Saying-Fare-006.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"168",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364728348/A-detail-from-Saying-Fare-007.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"180",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364729867/A-detail-from-Saying-Fare-008.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"228",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364731457/A-detail-from-Saying-Fare-009.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"276",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364733085/A-detail-from-Saying-Fare-010.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"372",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364731457/A-detail-from-Saying-Fare-009.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"276",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420546680",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/10/21/1382364723650/A-detail-from-Saying-Fare-004.jpg",
+          "typeData":{
+            "source":"Nelson-Atkins Museum of Art",
+            "photographer":"John Lamberton",
+            "altText":"A detail from Saying Farewell at Xunyang, by Qiu Ying",
+            "height":"84",
+            "credit":"John Lamberton/Nelson-Atkins Museum of Art",
+            "caption":"A detail from Saying Farewell at Xunyang, by Qiu Ying, c1500-50\r Photograph: John Lamberton/Nelson-Atkins Museum of Art",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

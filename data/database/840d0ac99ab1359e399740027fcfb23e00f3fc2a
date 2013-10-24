@@ -1,0 +1,1522 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"politics/2013/oct/22/facebook-irresponsible-beheadings-david-cameron",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-22T10:25:55Z",
+      "webTitle":"PM calls Facebook irresponsible for allowing beheading clips",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/22/facebook-irresponsible-beheadings-david-cameron",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/22/facebook-irresponsible-beheadings-david-cameron",
+      "fields":{
+        "trailText":"David Cameron says social network must explain to parents its decision to allow images showing decapitations",
+        "headline":"PM calls Facebook irresponsible for allowing beheading clips",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jmcf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437495788/Facebook-004.jpg",
+        "wordcount":"768",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/facebook",
+        "type":"keyword",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.theguardian.com/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/socialnetworking",
+        "type":"keyword",
+        "webTitle":"Social networking",
+        "webUrl":"http://www.theguardian.com/media/socialnetworking",
+        "apiUrl":"http://content.guardianapis.com/media/socialnetworking",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/charlesarthur",
+        "type":"contributor",
+        "webTitle":"Charles Arthur",
+        "webUrl":"http://www.theguardian.com/profile/charlesarthur",
+        "apiUrl":"http://content.guardianapis.com/profile/charlesarthur",
+        "bio":"<p>Charles Arthur is the Guardian's<br /><a href=\"http://www.guardian.co.uk/technology\">technology</a> editor. Previously, he covered science, technology and health at the Independent for nine years</p>",
+        "r2ContributorId":"19137",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2007/10/17/charles_arthur_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/freedom-of-speech",
+        "type":"keyword",
+        "webTitle":"Freedom of speech",
+        "webUrl":"http://www.theguardian.com/world/freedom-of-speech",
+        "apiUrl":"http://content.guardianapis.com/world/freedom-of-speech",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/censorship",
+        "type":"keyword",
+        "webTitle":"Censorship",
+        "webUrl":"http://www.theguardian.com/world/censorship",
+        "apiUrl":"http://content.guardianapis.com/world/censorship",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420625803",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437490404/Facebook-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"54",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437492536/Facebook-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"340",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437494181/Facebook-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"130",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437495788/Facebook-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"84",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437497374/Facebook-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"132",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437498985/Facebook-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"168",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437500573/Facebook-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"180",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437502686/Facebook-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"228",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437504298/Facebook-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"276",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437505987/Facebook-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"372",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437504298/Facebook-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"276",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420625804",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437495788/Facebook-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"84",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/oct/22/beheading-videos-facebook",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-22T19:52:28Z",
+      "webTitle":"Cruelty and the crowd: beheading videos on Facebook | Editorial",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/22/beheading-videos-facebook",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/22/beheading-videos-facebook",
+      "fields":{
+        "trailText":"<strong>Editorial:</strong> What an irony that modern communications should have put primeval displays of bloodlust back in front of a mass audience",
+        "headline":"Cruelty and the crowd: beheading videos on Facebook",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn2e",
+        "wordcount":"664",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"technology/facebook",
+        "type":"keyword",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.theguardian.com/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/socialnetworking",
+        "type":"keyword",
+        "webTitle":"Social networking",
+        "webUrl":"http://www.theguardian.com/media/socialnetworking",
+        "apiUrl":"http://content.guardianapis.com/media/socialnetworking",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/freedom-of-speech",
+        "type":"keyword",
+        "webTitle":"Freedom of speech",
+        "webUrl":"http://www.theguardian.com/world/freedom-of-speech",
+        "apiUrl":"http://content.guardianapis.com/world/freedom-of-speech",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/censorship",
+        "type":"keyword",
+        "webTitle":"Censorship",
+        "webUrl":"http://www.theguardian.com/world/censorship",
+        "apiUrl":"http://content.guardianapis.com/world/censorship",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/editorials",
+        "type":"tone",
+        "webTitle":"Editorials",
+        "webUrl":"http://www.theguardian.com/tone/editorials",
+        "apiUrl":"http://content.guardianapis.com/tone/editorials",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/editorial",
+        "type":"contributor",
+        "webTitle":"Editorial",
+        "webUrl":"http://www.theguardian.com/profile/editorial",
+        "apiUrl":"http://content.guardianapis.com/profile/editorial",
+        "bio":"<p>Editorials from the Guardian. All Guardian and Observer editorials can be found <a href=\"http://www.guardian.co.uk/tone/editorials\">here</a></p>",
+        "r2ContributorId":"56303",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367609515569/guardianlogo_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/22/facebook-standards-beheading-breastfeeding-social-networking",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-22T13:16:28Z",
+      "webTitle":"Facebook's changing standards: from beheading to breastfeeding images",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/22/facebook-standards-beheading-breastfeeding-social-networking",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/22/facebook-standards-beheading-breastfeeding-social-networking",
+      "fields":{
+        "trailText":"Latest controversy about what the social networking site will or won't allow its users to share has echoes of previous rows",
+        "headline":"Facebook's changing standards: from beheading to breastfeeding images",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jmta",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447734110/Facebook-001.jpg",
+        "wordcount":"551",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/facebook",
+        "type":"keyword",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.theguardian.com/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/socialnetworking",
+        "type":"keyword",
+        "webTitle":"Social networking",
+        "webUrl":"http://www.theguardian.com/media/socialnetworking",
+        "apiUrl":"http://content.guardianapis.com/media/socialnetworking",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"lifeandstyle/breastfeeding",
+        "type":"keyword",
+        "webTitle":"Breastfeeding",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/breastfeeding",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/breastfeeding",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/alex-hern",
+        "type":"contributor",
+        "webTitle":"Alex Hern",
+        "webUrl":"http://www.theguardian.com/profile/alex-hern",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-hern",
+        "bio":"<p>Alex Hern is a technology reporter for the Guardian</p>",
+        "r2ContributorId":"56277",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089603491/Alex-Hern-Guardian-staff--017.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420648214",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447734110/Facebook-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"84",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447737220/Facebook-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"132",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447738848/Facebook-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"168",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447740797/Facebook-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"180",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447742510/Facebook-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"228",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447744199/Facebook-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"276",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447745818/Facebook-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"372",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447744199/Facebook-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"276",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420648215",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382447734110/Facebook-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook",
+            "height":"84",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"In 2012, Facebook’s image censorship guidelines were leaked, revealing that moderators were told to ban images of breastfeeding if the nipples were exposed. Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/22/facebook-beheading-videos-editorial-judgment-breastfeeding",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-22T09:23:28Z",
+      "webTitle":"Facebook has got it spectacularly wrong on beheading videos | Jonathan Freedland",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/22/facebook-beheading-videos-editorial-judgment-breastfeeding",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/22/facebook-beheading-videos-editorial-judgment-breastfeeding",
+      "fields":{
+        "trailText":"<strong>Jonathan Freedland: First thoughts: </strong>Facebook is making an editorial judgment in allowing head-chopping yet banning breastfeeding. And it is a very bad one",
+        "headline":"Facebook has got it spectacularly wrong on beheading videos",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jmb6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433549288/Facebook-pic-003.jpg",
+        "wordcount":"512",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/first-thoughts",
+        "type":"series",
+        "webTitle":"First thoughts",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/first-thoughts",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/first-thoughts",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"technology/facebook",
+        "type":"keyword",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.theguardian.com/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/socialnetworking",
+        "type":"keyword",
+        "webTitle":"Social networking",
+        "webUrl":"http://www.theguardian.com/media/socialnetworking",
+        "apiUrl":"http://content.guardianapis.com/media/socialnetworking",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/social-media",
+        "type":"keyword",
+        "webTitle":"Social media",
+        "webUrl":"http://www.theguardian.com/media/social-media",
+        "apiUrl":"http://content.guardianapis.com/media/social-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/digital-media",
+        "type":"keyword",
+        "webTitle":"Digital media",
+        "webUrl":"http://www.theguardian.com/media/digital-media",
+        "apiUrl":"http://content.guardianapis.com/media/digital-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"lifeandstyle/breastfeeding",
+        "type":"keyword",
+        "webTitle":"Breastfeeding",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/breastfeeding",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/breastfeeding",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/jonathanfreedland",
+        "type":"contributor",
+        "webTitle":"Jonathan Freedland",
+        "webUrl":"http://www.theguardian.com/profile/jonathanfreedland",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanfreedland",
+        "bio":"<p>Jonathan Freedland writes a weekly column for the Guardian. He is also a regular contributor to the New York Times and the New York Review of Books, and presents BBC Radio 4's contemporary history series, The Long View. He was named columnist of the year in the 2002 What the Papers Say awards and in 2008 was awarded the David Watt prize for journalism. He has also published seven books, including five bestselling thrillers under the name Sam Bourne. He tweets as <a href=\"https://twitter.com/Freedland\">@freedland</a></p>",
+        "rcsId":"GNL042070",
+        "r2ContributorId":"15904",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_freedland_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420616218",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433544701/Facebook-pic-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"54",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433547450/Facebook-pic-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"130",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433549288/Facebook-pic-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"84",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433550965/Facebook-pic-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"132",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433552999/Facebook-pic-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"168",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433554989/Facebook-pic-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"180",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433556789/Facebook-pic-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"228",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433558523/Facebook-pic-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"276",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433558523/Facebook-pic-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"276",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"'Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath.' Photograph: David Sillitoe for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420616219",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382433549288/Facebook-pic-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Facebook pic",
+            "height":"84",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Facebook has decided that a 13-year-old – for that is the permitted minimum age of a Facebook user – can watch a video of a decapitation, but must be protected from the potentially scarring effects of seeing a breastfeeding mother and child briefly pause for breath. Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"politics/2013/oct/22/facebook-irresponsible-beheadings-david-cameron",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-22T10:25:55Z",
+      "webTitle":"PM calls Facebook irresponsible for allowing beheading clips",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/22/facebook-irresponsible-beheadings-david-cameron",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/22/facebook-irresponsible-beheadings-david-cameron",
+      "fields":{
+        "trailText":"David Cameron says social network must explain to parents its decision to allow images showing decapitations",
+        "headline":"PM calls Facebook irresponsible for allowing beheading clips",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jmcf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437495788/Facebook-004.jpg",
+        "wordcount":"768",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/facebook",
+        "type":"keyword",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.theguardian.com/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/socialnetworking",
+        "type":"keyword",
+        "webTitle":"Social networking",
+        "webUrl":"http://www.theguardian.com/media/socialnetworking",
+        "apiUrl":"http://content.guardianapis.com/media/socialnetworking",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/charlesarthur",
+        "type":"contributor",
+        "webTitle":"Charles Arthur",
+        "webUrl":"http://www.theguardian.com/profile/charlesarthur",
+        "apiUrl":"http://content.guardianapis.com/profile/charlesarthur",
+        "bio":"<p>Charles Arthur is the Guardian's<br /><a href=\"http://www.guardian.co.uk/technology\">technology</a> editor. Previously, he covered science, technology and health at the Independent for nine years</p>",
+        "r2ContributorId":"19137",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2007/10/17/charles_arthur_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/freedom-of-speech",
+        "type":"keyword",
+        "webTitle":"Freedom of speech",
+        "webUrl":"http://www.theguardian.com/world/freedom-of-speech",
+        "apiUrl":"http://content.guardianapis.com/world/freedom-of-speech",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/censorship",
+        "type":"keyword",
+        "webTitle":"Censorship",
+        "webUrl":"http://www.theguardian.com/world/censorship",
+        "apiUrl":"http://content.guardianapis.com/world/censorship",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420625803",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437490404/Facebook-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"54",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437492536/Facebook-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"340",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437494181/Facebook-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"130",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437495788/Facebook-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"84",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437497374/Facebook-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"132",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437498985/Facebook-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"168",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437500573/Facebook-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"180",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437502686/Facebook-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"228",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437504298/Facebook-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"276",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437505987/Facebook-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"372",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437504298/Facebook-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"276",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420625804",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/22/1382437495788/Facebook-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dave Thompson",
+            "altText":"Facebook",
+            "height":"84",
+            "credit":"Dave Thompson/PA",
+            "caption":"Facebook introduced a temporary ban on beheading videos in May but has since decided to remove the block. Photograph: Dave Thompson/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/23/facebook-removes-beheading-video",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-23T09:16:00Z",
+      "webTitle":"Facebook removes Mexican beheading video",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/23/facebook-removes-beheading-video",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/23/facebook-removes-beheading-video",
+      "fields":{
+        "trailText":"<p>Social networking site backs down after protests and withdraws video showing masked man beheading woman in Mexico</p>",
+        "headline":"Facebook removes Mexican beheading video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn5q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382506473123/Facebook-admitted-it-was--005.jpg",
+        "wordcount":"403",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/facebook",
+        "type":"keyword",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.theguardian.com/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/freedom-of-speech",
+        "type":"keyword",
+        "webTitle":"Freedom of speech",
+        "webUrl":"http://www.theguardian.com/world/freedom-of-speech",
+        "apiUrl":"http://content.guardianapis.com/world/freedom-of-speech",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/socialnetworking",
+        "type":"keyword",
+        "webTitle":"Social networking",
+        "webUrl":"http://www.theguardian.com/media/socialnetworking",
+        "apiUrl":"http://content.guardianapis.com/media/socialnetworking",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/censorship",
+        "type":"keyword",
+        "webTitle":"Censorship",
+        "webUrl":"http://www.theguardian.com/world/censorship",
+        "apiUrl":"http://content.guardianapis.com/world/censorship",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/haroonsiddique",
+        "type":"contributor",
+        "webTitle":"Haroon Siddique",
+        "webUrl":"http://www.theguardian.com/profile/haroonsiddique",
+        "apiUrl":"http://content.guardianapis.com/profile/haroonsiddique",
+        "bio":"<p>Haroon Siddique is a news reporter on the Guardian website. He previously worked for North London institution the Ham&amp;High, and before pursuing his passion for journalism he was a commodity trader in the City</p>",
+        "r2ContributorId":"19136",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/haroon_siddique.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420735813",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382506481554/Facebook-admitted-it-was--009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Facebook admitted it was mistaken to allow videos of beheadings to be posted",
+            "height":"228",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Facebook admitted it was mistaken to allow videos of beheadings to be posted. Photograph: Paul Sakuma/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382506483923/Facebook-admitted-it-was--010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Facebook admitted it was mistaken to allow videos of beheadings to be posted",
+            "height":"276",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Facebook admitted it was mistaken to allow videos of beheadings to be posted. Photograph: Paul Sakuma/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420735814",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382506473123/Facebook-admitted-it-was--005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Facebook admitted it was mistaken to allow videos of beheadings to be posted",
+            "height":"84",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Facebook admitted it was mistaken to allow videos of beheadings to be posted. Photograph: Paul Sakuma/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
