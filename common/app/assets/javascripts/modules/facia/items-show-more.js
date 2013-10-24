@@ -55,7 +55,13 @@ define([
             },
             _renderToggle = function($items, extraItems) {
                 var buttonText = 'Show more',
-                    $button = bonzo(bonzo.create('<button class="items__show-more" data-link-name="' + buttonText + ' | 0">' + buttonText + '</button>'))
+                    $button = bonzo(bonzo.create(
+                                        '<button class="items__show-more tone-background" data-link-name="' + buttonText + ' | 0">' +
+                                            '<span class="i i-arrow-white-large">' +
+                                                buttonText +
+                                            '</span>' +
+                                        '</button>'
+                                    ))
                                   .insertAfter($items);
                 bean.on($button[0], 'click', function(e) {
                     // increment button counter
