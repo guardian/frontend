@@ -1,6 +1,6 @@
 @mixin first-row($first-row-size) {
     .item:nth-child(-n+#{$first-row-size}) {
-        margin-top: $gs-baseline/3;
+        margin-top: 0;
         .item__link {
             border-top-style: none;
         }
@@ -33,17 +33,30 @@
     }
 }
 @mixin card($with-image: false) {
-    min-height: gs-height(4) + $gs-baseline;
+    width: gs-span(3);
     @if $with-image {
         @include card-mobile;
     }
+    .item__title {
+        min-height: 114px;
+    }
 }
 @mixin card-image {
-    min-height: gs-height(8);
+    .item__title {
+        min-height: 124px;
+    }
     .item__image-container,
     .connection--low & .item__standfirst,
     &.item--has-no-image .item__standfirst {
         display: block;
+    }
+    &.item--no-image {
+        .item__standfirst {
+            min-height: 162px;
+        }
+        .item__title {
+            min-height: 0;
+        }
     }
 }
 @mixin card-mobile($with-image: false) {
@@ -132,11 +145,15 @@
     }
 }
 @mixin card-double-width {
-    width: gs-span(8);
-    min-height: gs-height(12);
+    width: gs-span(6);
+    min-height: gs-height(9);
     float: left;
     .item__title {
-        @include fs-headline(7, $size-only: true);
+        @include fs-headline(5, $size-only: true);
+    }
+    &.item--image-upgraded .item__title {
+        margin-top: $gs-baseline;
+        min-height: 118px;
     }
     .item__image-container,
     .connection--low & .item__standfirst,

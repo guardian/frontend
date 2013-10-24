@@ -29,7 +29,7 @@ define([
                     },
                     tablet: {
                         default: 2,
-                        news: 5,
+                        news: 6,
                         sport: 5,
                         commentisfree: 3,
                         culture: 3
@@ -49,7 +49,7 @@ define([
                 return {
                     wide: 8,
                     desktop: 6,
-                    tablet: 4,
+                    tablet: 6,
                     mobile: 5
                 }[detect.getBreakpoint()];
             },
