@@ -54,7 +54,7 @@
             @include fs-headline(4, $size-only: true);
         }
         .item__standfirst {
-            @include fs-bodyHeading(2);
+            @include fs-headline(2, $size-only: true);
         }
     }
     &.item--no-image .item__title {

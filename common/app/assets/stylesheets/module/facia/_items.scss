@@ -119,7 +119,8 @@ $live: #e81818;
     text-transform: uppercase;
 }
 .item--sport-stats .competition-table h3,
-.item__title {
+.item__title,
+.item__standfirst {
     @include f-headline;
 }
 .item__title {
@@ -143,7 +144,7 @@ $live: #e81818;
 .item__standfirst {
     display: none;
     margin: 20px 0 0;
-    @include fs-bodyHeading(1);
+    @include fs-headline(1, $size-only: true);
 }
 .item__meta {
     overflow: hidden;
