@@ -225,6 +225,11 @@
                 @include mq(mobileLandscape) {
                     @include fs-headline(3, $size-only: true);
                 }
+                .svg & .i {
+                    width: 26px;
+                    height: 16px;
+                    background-size: 100%;
+                }
             }
             .item__byline {
                 @include fs-header(2, $size-only: true);
