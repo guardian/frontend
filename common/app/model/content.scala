@@ -46,7 +46,7 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
-  override lazy val isClosedForComments: Boolean = fields.get("commentCloseDate").filter(_.parseISODateTimeNoMillis.isAfterNow).isEmpty
+  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTimeNoMillis.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
     val souped = body flatMap { body =>
