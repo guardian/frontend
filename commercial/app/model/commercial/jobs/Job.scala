@@ -1,6 +1,7 @@
 package model.commercial.jobs
 
 import org.joda.time.DateTime
+import model.commercial.Keyword
 
 case class Job(id: Int,
                adType: String,
@@ -17,4 +18,5 @@ case class Job(id: Int,
                listingUrl: String,
                applyUrl: String,
                sectorTags: Seq[String],
-               locationTags: Seq[String])
+               locationTags: Seq[String],
+               keywords: Set[Keyword] = Set())
