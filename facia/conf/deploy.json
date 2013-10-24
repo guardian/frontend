@@ -1,7 +1,7 @@
 {
     "packages":{
         "frontend-facia":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::facia" ],
             "data":{
                 "secondsToWait":1200,

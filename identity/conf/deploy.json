@@ -1,7 +1,7 @@
 {
     "packages":{
         "frontend-identity":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::identity" ],
             "data":{
                 "secondsToWait":1200,

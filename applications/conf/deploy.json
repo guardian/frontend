@@ -1,7 +1,7 @@
 {
     "packages":{
         "frontend-applications":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::applications" ],
             "data":{
                 "secondsToWait":1200,
