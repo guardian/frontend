@@ -12,8 +12,16 @@ object JobsApi extends ExecutionContexts with Logging {
   private val dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
 
   private def loadXml: Future[Elem] = {
-    CommercialConfiguration.jobsApi.url map {
-      WS.url(_) withRequestTimeout 30000 get() map {
+
+    def buildUrl: Option[String] = {
+      for {
+        url <- CommercialConfiguration.jobsApi.url
+        key <- CommercialConfiguration.jobsApi.key
+      } yield s"$url?login=$key"
+    }
+
+    buildUrl map {
+      WS.url(_) withRequestTimeout 60000 get() map {
         response => response.xml
       }
     } getOrElse {

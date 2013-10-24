@@ -1,5 +1,15 @@
-@(path: String)
+@(jobs: Seq[model.commercial.jobs.Job])
 
 <div>
     hello! jobs. 
 </div>
+<table>
+    @for(job <- jobs) {
+    <tr>
+        <td>@job.id</td>
+        <td>@job.title</td>
+        <td>@job.salary</td>
+        <td>@(job.sectorTags.mkString("; "))</td>
+    </tr>
+    }
+</table>
