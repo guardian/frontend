@@ -7,7 +7,9 @@
     }
 
     .parts__head {
-        padding-top: $baseline*12;
+        @include mq(tablet) {
+            padding-top: $baseline*12;
+        }
     }
 
     .parts__body {
