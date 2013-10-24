@@ -37,7 +37,7 @@
         @include card-mobile;
     }
 }
-@mixin card-image() {
+@mixin card-image {
     min-height: gs-height(8);
     .item__image-container,
     &.item--no-image .item__standfirst {
@@ -67,13 +67,13 @@
         @include card-mobile-image;
     }
 }
-@mixin card-mobile-image() {
+@mixin card-mobile-image {
     .item__image-container,
     &.item--no-image .item__standfirst {
         display: block;
     }
 }
-@mixin card-headline() {
+@mixin card-headline {
     float: left;
     width: 100%;
     margin-top: $gs-baseline*(5/3);
@@ -119,7 +119,7 @@
         @include card-half-width-image;
     }
 }
-@mixin card-half-width-image() {
+@mixin card-half-width-image {
     &.item--no-image .item__title {
         min-height: 186px
     }
