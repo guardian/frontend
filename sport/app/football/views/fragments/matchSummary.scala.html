@@ -7,6 +7,10 @@
 
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
   @if(theMatch.isLive || theMatch.isResult){
+    <h1 class="u-h">
+        @homeTeam.name @homeTeam.score - @awayTeam.score @awayTeam.name
+    </h1>
+
     <h2 class="match-summary__team">
         @homeTeam.name
         <span class="match-summary__score">@homeTeam.score</span>
@@ -23,7 +27,7 @@
         <p class="match-summary__scorers match-summary__scorers--home">@cleanScorers(awayTeam.scorers)</p>
     }
   } else {
-    <h2 class="match-summary__team">@homeTeam.name v @awayTeam.name</h2>
+    <h1 class="match-summary__team">@homeTeam.name v @awayTeam.name</h1>
   }
 
     @if(theMatch.homeTeam.aggregateScore){

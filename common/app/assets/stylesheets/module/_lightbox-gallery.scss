@@ -26,7 +26,6 @@ i.gallery__watermark {
 }
 
 .gallery__item {
-    cursor: pointer;
     overflow: hidden;
 }
 
@@ -56,7 +55,9 @@ i.gallery__watermark {
 
     .gallery__item {
         float: left;
+        vertical-align: top;
         margin: $baseline * 2;
+        cursor: pointer;
 
         @include mq(tablet) {
             margin: 6px 5px;
@@ -118,14 +119,19 @@ i.gallery__watermark {
         text-align: center;
     }
 
+    @include mq($and: '(orientation: portrait)') {
+        .gallery__item--landscape .gallery__img {
+            width: 100% !important;
+            height: auto !important;
+        }
+    }
+
     .gallery__item--active {
         display: block;
     }
 
-    @include mq($and: '(orientation: landscape)') {
-        .gallery__img {
-            margin: 0 auto;
-        }
+    .gallery__img {
+        margin: 0 auto;
     }
 }
 
@@ -233,6 +239,11 @@ i.gallery__watermark {
 .gallerycaption {
     color: #aaaaaa;
     text-align: left;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 60;
 
     a {
         color: #ffffff;
@@ -240,14 +251,6 @@ i.gallery__watermark {
 
     &:before {
         display: none; // Hide the caption icon
-    }
-
-    @include mq($and: '(orientation: landscape)') {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 60;
     }
 }
 
@@ -288,6 +291,7 @@ i.gallery__watermark {
     height: 29px;
     display: block;
     padding: 0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
     .gallery__arrow-cta {
         margin: 0 auto;
@@ -296,14 +300,11 @@ i.gallery__watermark {
 
 .captioncontrol--show {
     display: none;
+    position: absolute;
+    bottom: 0;
 
     .gallery--hide-furniture & {
         display: block;
-    }
-
-    @include mq($and: '(orientation: landscape)') {
-        position: absolute;
-        bottom: 0;
     }
 }
 
@@ -336,7 +337,7 @@ i.gallery__watermark {
         overflow: hidden;
         position: relative;
     }
-    
+
     .gallery__item {
         float: left;
         width: 100%;
@@ -381,5 +382,6 @@ i.gallery__watermark {
 
     .gallery__nav {
         opacity: 0;
+        pointer-events: none;
     }
 }

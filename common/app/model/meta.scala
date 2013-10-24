@@ -91,6 +91,7 @@ trait Elements {
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
 
   lazy val bodyImages: List[ImageElement] = imageMap("body")
+  lazy val bodyVideos: List[VideoElement] = videoMap("body")
   lazy val videoAssets: List[VideoAsset] = videos.flatMap(_.videoAssets)
   lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
 

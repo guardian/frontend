@@ -43,11 +43,6 @@
     width: 100%;
 }
 
-.team-list {
-    list-style: none;
-    margin-bottom: $baseline*3;
-}
-
 .team-list-name {
     float: left;
     width: 49.5%;
@@ -113,8 +108,4 @@
     border-bottom: 1px solid $c-neutral7;
     padding-top: $baseline * 2;
     padding-bottom: $baseline * 3;
-}
-
-.place-holder {
-    padding-bottom: 10px;
 }

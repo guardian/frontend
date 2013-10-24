@@ -1,0 +1,1856 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/21/chinese-authorities-arrest-wang-gongquan",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-21T09:32:40Z",
+      "webTitle":"Chinese authorities arrest wealthy activist Wang Gongquan",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/21/chinese-authorities-arrest-wang-gongquan",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/21/chinese-authorities-arrest-wang-gongquan",
+      "fields":{
+        "trailText":"Wang, a venture capitalist, was detained last month on suspicion of 'gathering crowds to disturb public order'",
+        "headline":"Chinese authorities arrest wealthy activist Wang Gongquan",
+        "body":"<p>Chinese authorities have formally arrested a wealthy Chinese businessman who was a key supporter of a civil society group targeted in a wide-ranging crackdown this year, his lawyer said on Monday.</p><p>Beijing prosecutors approved the arrest of venture capitalist Wang Gongquan on Sunday, according to Chen Youxi, Wang's lawyer, who said prosecutors notified him by phone of the decision on Monday.</p><p>Wang was detained in mid-September on suspicion of \"gathering crowds to disturb public order\" but had not been formally arrested until Sunday. The vaguely defined charge has been used to prosecute many members of a loosely organised movement that's been pushing for greater public participation in Chinese political issues.</p><p>The notification of Wang's formal arrest underscores the seriousness with which Chinese authorities are treating his case. When Chinese prosecutors approve an arrest, it usually indicates that police have gathered enough evidence – or are in the process of doing so – to proceed with an indictment and perhaps trial.</p><p>Chen declined to comment further but Chen Min, a veteran journalist and close family friend of Wang', said the businessman's family had not yet received notice of the arrest.</p><p>Wang has been a supporter of the New Citizens Movement, a loose network of activists that has come under official scrutiny this year, with an estimated 30 members rounded up since March.</p><p>\"Gongquan has mainly been trying to promote efforts to turn this country toward democracy and constitutionalism from the perspective of a citizen,\" said Chen, who is better known in China by his pen name Xiao Shu.</p><p>\"If these types of actions are deemed intolerable by this country then they are warning all Chinese that this government does not allow its people to be citizens.\"</p><p>The group's members have done little more than lobby for rights of rural children and public disclosure of officials' assets, although they have urged people to hold peaceful street demonstrations and dinner meetings to discuss such issues.</p><p>Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.</p><p>Beijing prosecutors did not immediately respond to a request for comment.</p><!-- Guardian Watermark: internal-code/content/420515256|2013-10-23T16:01:38Z|c462d83c08b6bf9587f2f3650d28813e7fd79d70 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-21T09:49:37Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+        "standfirst":"Wang, a venture capitalist, was detained last month on suspicion of 'gathering crowds to disturb public order'",
+        "shortUrl":"http://gu.com/p/3jyfm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+        "wordcount":"345",
+        "commentable":"false",
+        "internalContentCode":"420515256",
+        "allowUgc":"false",
+        "internalOctopusCode":"8220115",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Beijing",
+        "publication":"theguardian.com",
+        "internalPageCode":"1984036",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-24T09:32:40Z"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.theguardian.com/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420516798",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347913005/The-Chinese-president-Xi--001.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"54",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347914668/The-Chinese-president-Xi--002.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"340",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347915925/The-Chinese-president-Xi--003.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"130",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"84",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347922983/The-Chinese-president-Xi--005.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"132",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347925943/The-Chinese-president-Xi--006.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"168",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347927194/The-Chinese-president-Xi--007.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"180",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347930391/The-Chinese-president-Xi--008.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"228",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347931673/The-Chinese-president-Xi--009.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"276",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347932943/The-Chinese-president-Xi--010.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"372",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347931673/The-Chinese-president-Xi--009.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"276",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420516799",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"84",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/2013/may/08/china-detains-activist-liu-ping",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-05-08T09:43:48Z",
+      "webTitle":"China detains activist Liu Ping on subversion charges",
+      "webUrl":"http://www.theguardian.com/world/2013/may/08/china-detains-activist-liu-ping",
+      "apiUrl":"http://content.guardianapis.com/world/2013/may/08/china-detains-activist-liu-ping",
+      "fields":{
+        "trailText":"Liu Ping is one of at least 10 activists who have been detained for campaigning for officials to publicly disclose their assets",
+        "headline":"China detains activist Liu Ping on subversion charges",
+        "body":"<p>Chinese police have detained an activist agitating for officials to disclose their assets on subversion charges, her lawyer said on Wednesday, underscoring the limits of an anti-corruption push by President Xi Jinping.</p><p>Xi, who became Communist party chief in November and president in March, has called for a crackdown on corruption, warning, as many have before him, that the problem is so severe it could threaten the party's survival.</p><p>But China has detained at least 10 activists who have led a campaign for officials to publicly disclose their wealth – the first co-ordinated crackdown by the new government on activists, according to Maya Wang, a researcher with the Asia division at Human Rights Watch.</p><p>The detention of Liu Ping, 48, makes her the first person to be singled out by the government for putting pressure on officials over their wealth.</p><p>Police from Xinyu, in the southern province of Jiangxi, detained Liu for \"inciting subversion of state power\", her lawyer, Zheng Jianwei, said. The charge is often levelled against critics of the party.</p><p>Police could not be reached for comment.</p><p>Liu, who has also advocated on women's rights issues, last year started demanding that officials disclose their assets, Zheng said. She took her campaign to the internet and to fellow Chinese.</p><p>Zheng said he did not know the exact reason for Liu's detention, but added that he had warned her \"to be aware of her actions\" six months ago.</p><p>\"I felt that her profile was too high, I thought she should quieten her heart and just carry out very basic activities for citizens' rights and the law,\" Zheng said. \"But Liu Ping is a person who can't be idle.\"</p><p>Xi's ascendancy in a once-in-a-decade generational leadership transition had given many Chinese hope for political reform, spurring citizens to push officials to disclose their wealth in several movements throughout the country.</p><p>Xu Zhiyong, the founder of one such movement, said he was being held under house arrest and that \"it could be due to his campaign to push for asset disclosure\".</p><p>Wang of Human Rights Watch said the detentions of the anti-corruption activists appeared to be part of a co-ordinated campaign to halt public calls for fighting corruption.</p><p>\"How can calling for anti-graft measures be a crime?\" Wang said. \"Liu Ping's detention makes Xi Jinping's stated policy goal to fight graft seem like tiresome, broken rhetoric.\"</p><!-- Guardian Watermark: internal-code/content/408473460|2013-10-23T16:01:38Z|46875942336c8e369a5a873c9b48b5e22c4689bd -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T22:30:52Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006181575/Xi-Jinping-005.jpg",
+        "standfirst":"Liu Ping is one of at least 10 activists who have been detained for campaigning for officials to publicly disclose their assets",
+        "shortUrl":"http://gu.com/p/3fkez",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006181575/Xi-Jinping-005.jpg",
+        "wordcount":"382",
+        "commentable":"false",
+        "internalContentCode":"408473460",
+        "allowUgc":"false",
+        "internalOctopusCode":"7572988",
+        "isPremoderated":"false",
+        "byline":"Reuters in Beijing",
+        "publication":"theguardian.com",
+        "internalPageCode":"1904550",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-05-11T09:43:48Z"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-408476599",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006177444/Xi-Jinping-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"54",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006178807/Xi-Jinping-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"340",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006180229/Xi-Jinping-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"130",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006181575/Xi-Jinping-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"84",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006182995/Xi-Jinping-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"132",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006184383/Xi-Jinping-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"168",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006185960/Xi-Jinping-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"180",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006187311/Xi-Jinping-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"228",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006188645/Xi-Jinping-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"276",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006190019/Xi-Jinping-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"372",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006188645/Xi-Jinping-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"276",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese president Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-408476600",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/5/8/1368006181575/Xi-Jinping-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Feng Li",
+            "altText":"Xi Jinping",
+            "height":"84",
+            "credit":"Feng Li/Getty Images",
+            "caption":"Chinese President Xi Jinping has announced an anti-corruption drive. Photograph: Feng Li/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jun/21/liu-xiaobo-wife-sue-beijing-authorities-chinese-dissident",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-06-21T12:06:07Z",
+      "webTitle":"Liu Xiaobo's wife to sue Beijing authorities",
+      "webUrl":"http://www.theguardian.com/world/2013/jun/21/liu-xiaobo-wife-sue-beijing-authorities-chinese-dissident",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jun/21/liu-xiaobo-wife-sue-beijing-authorities-chinese-dissident",
+      "fields":{
+        "trailText":"Chinese dissident's wife, Liu Xia, mounts legal challenge over house arrest and husband and brother's 11-year jail term",
+        "headline":"Liu Xiaobo's wife to sue Beijing authorities",
+        "body":"<p>The wife of the Chinese dissident Liu Xiaobo is preparing a legal challenge against authorities after her husband and brother were jailed for 11 years and she was made a prisoner in her home.</p><p>Lawyers representing Liu Xia said she would sue Beijing police for illegal house arrest and prepare a petition for her husband's subversion case to be retried.</p><p>Her brother, Liu Hui, has filed an appeal against the 11-year prison sentence handed down to him this month for fraud. He was jailed over a real-estate dispute, and the family's supporters say his sentence is further punishment of the Nobel peace prizewinner's family and an attempt to intimidate fellow activists.</p><p>Shang Baojun, one of Liu Xia's lawyers, said her decision to pursue legal action was driven by her frustration over the way authorities had treated her family, and that her brother's conviction in particular had led her to speak out.</p><p>\"Her biggest worry at the moment is her brother. She feels guilty for causing such huge trouble and negative influence to his family,\" he said. \"She says would do anything to alleviate her brother's suffering.\"</p><p>The move marks the latest step by Liu Xia to challenge the alleged persecution of her family. A week ago, her lawyers released an open letter she wrote to the Chinese premier, Xi Jinping, to protest against her brother's sentence.</p><p>Since her house arrest Liu Xia has had few opportunities to express herself amid fears of further retaliation. She was permitted a rare opportunity to leave her flat on Thursday to speak to her lawyers, handing them a letter authorising them to prepare a legal petition for her husband's case be reopened, Shang said.</p><p>She also gave her legal team a separate letter entrusting them to represent her in suing the Beijing police for keeping her under house arrest since her husband won the Nobel prize in 2010.</p><p>Liu Xiaobo was jailed on subversion charges brought after he called for sweeping changes to Beijing's one-party communist political system. He was convicted in 2009 and a court dismissed his appeal in early 2010.</p><p>In 2010, the Nobel committee awarded the peace prize to Liu Xiaobo, infuriating the Chinese government, which denounced the accolade, called him a criminal and locked up his wife in her home.</p><!-- Guardian Watermark: internal-code/content/411310297|2013-10-23T16:01:38Z|af1e30518f8b5e5ed6794126982a2b5ae3bf9594 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-06-21T12:27:33Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815073966/Liu-Xia-wife-of-Chinese-d-003.jpg",
+        "standfirst":"Chinese dissident's wife, Liu Xia, mounts legal challenge over house arrest and husband and brother's 11-year jail term",
+        "shortUrl":"http://gu.com/p/3gmqv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815073966/Liu-Xia-wife-of-Chinese-d-003.jpg",
+        "wordcount":"371",
+        "commentable":"false",
+        "internalContentCode":"411310297",
+        "allowUgc":"false",
+        "internalOctopusCode":"7748894",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Beijing",
+        "publication":"theguardian.com",
+        "internalPageCode":"1925991",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-06-24T12:06:07Z"
+      },
+      "tags":[{
+        "id":"world/liu-xiaobo",
+        "type":"keyword",
+        "webTitle":"Liu Xiaobo",
+        "webUrl":"http://www.theguardian.com/world/liu-xiaobo",
+        "apiUrl":"http://content.guardianapis.com/world/liu-xiaobo",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-411312549",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815071536/Liu-Xia-wife-of-Chinese-d-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"54",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815072873/Liu-Xia-wife-of-Chinese-d-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"130",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815073966/Liu-Xia-wife-of-Chinese-d-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"84",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815075083/Liu-Xia-wife-of-Chinese-d-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"132",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815076213/Liu-Xia-wife-of-Chinese-d-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"168",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815077403/Liu-Xia-wife-of-Chinese-d-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"180",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815078679/Liu-Xia-wife-of-Chinese-d-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"228",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815080191/Liu-Xia-wife-of-Chinese-d-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"276",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815080191/Liu-Xia-wife-of-Chinese-d-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"276",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xiaobo's wife, Liu Xia, sobs outside Huairou detention centre where her brother, Liu Hui, is being held. Photograph: Alexander F Yuan/Associated Press",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-411312550",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371815073966/Liu-Xia-wife-of-Chinese-d-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F. Yuan",
+            "altText":"Liu Xia, wife of Chinese dissident Liu Xiaobo",
+            "height":"84",
+            "credit":"Alexander F. Yuan/AP",
+            "caption":"Liu Xia, wife of Chinese dissident Liu Xiaobo, sobs outside Huairou detention centre where her brother is jailed. Photograph: Alexander F. Yuan/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/aug/16/liu-hui-loses-appeal-11-years-liu-xiaobo",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-08-16T04:34:00Z",
+      "webTitle":"Liu Xiaobo's brother-in-law Liu Hui to serve 11 years after losing appeal",
+      "webUrl":"http://www.theguardian.com/world/2013/aug/16/liu-hui-loses-appeal-11-years-liu-xiaobo",
+      "apiUrl":"http://content.guardianapis.com/world/2013/aug/16/liu-hui-loses-appeal-11-years-liu-xiaobo",
+      "fields":{
+        "trailText":"<p>Family angered over confirmation of verdict seen as persecution of the Nobel prize-winner's family</p>",
+        "headline":"Liu Xiaobo's brother-in-law Liu Hui to serve 11 years after losing appeal",
+        "body":"<p>The brother-in-law of jailed Nobel Peace Prize winner Liu Xiaobo will serve 11 years in jail after a Chinese court turned down his appeal on Friday, in a case that supporters have attacked as retribution against his family.</p><p>Liu Hui was <a href=\"http://www.theguardian.com/world/2013/jun/09/liu-xiaobo-brother-law-jailed\">convicted on fraud charges</a> in June, over a real estate dispute which lawyers said had already been settled. His sister, Liu Xiaobo's wife Liu Xia, has described the case as \"simply persecution\". </p><p>\"The court maintained the original verdict,\" said defence lawyer Shang Baojun. </p><p>\"Liu Hui thinks it is an unfair judgement. He does not think he committed the crime of fraud. We think this verdict is a mistake.\"</p><p>Liu Hui's brother, Liu Tong, told reporters he was furious at the decision. </p><p>\"This result fundamentally will make anyone angry, especially his family members. Because at its heart, it's a miscarriage of justice,\" he said. </p><p>\"The government says daily it wants to prevent wrongful convictions, miscarriages of justice from happening, but everyone knows that this is a miscarriage of justice.\" </p><p>Their sister Liu Xia planned to attend the appeal, but had to return home due to ill health. Liu Tong said her physical condition was \"very fragile\".</p><p>The political affairs counsellor for the European Union's mission in Beijing, Charles Parton, said the EU regretted Friday's judgement. Speaking outside the court, he told reporters: \"Liu's prosecution and conviction may have been linked to the situation of Liu Xiaobo and his sister, Liu Xia, Liu Xiaobo's wife, and therefore may have been politically motivated.\"</p><p>Earlier this month the senior US official overseeing the China-US human rights dialogue, Uzra Zeya, said the rights situation in China was worsening, <a href=\"http://www.theguardian.com/world/2013/aug/02/china-human-rights-worse-us\">citing the targeting of relatives and friends of activists</a> including Liu Xiaobo. </p><p>The author and critic was jailed for 11 years for inciting subversion after gathering support for Charter 08, a call for democratic reforms which he co-authored. His wife Liu Xia has been under house arrest since the announcement of the Nobel prize in 2010.</p><p>Her brother, Liu Hui, was initially arrested in September 2012 and bailed, but was rearrested after journalists and then Chinese activists managed to evade guards to visit Liu Xia at her home. </p><p>Liu Hui, a manager at a real estate firm in the southern city of Shenzhen, was accused with a colleague of defrauding another man. His lawyers say he had resolved the dispute before the case went to trial, handing over the disputed 3m yuan.</p><p>Liu Xia has barely been seen since she was placed under house arrest and has no access to the telephone or internet, but was <a href=\"http://www.theguardian.com/world/2013/apr/23/liu-xia-appears-in-public\">allowed to attend the court hearings</a>, where she shouted to waiting journalists and diplomats: \"I'm not free – tell everybody I'm not free.\"  </p><p>Foreign diplomats and journalists were barred from entering the court in Huairou, in the northern suburbs of Beijing.</p><!-- Guardian Watermark: internal-code/content/415151588|2013-10-23T16:01:38Z|8e3bf585445e3d6f963e1ba1ae5372ca87b152e9 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-08-16T07:34:53Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/9/1370759138379/Liu-Xia-the-wife-of-impri-005.jpg",
+        "standfirst":"Family angered over confirmation of verdict seen as persecution of the Nobel prize-winner's family",
+        "shortUrl":"http://gu.com/p/3t44y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/9/1370759138379/Liu-Xia-the-wife-of-impri-005.jpg",
+        "wordcount":"465",
+        "commentable":"false",
+        "internalContentCode":"415151588",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Tania Branigan in Beijing and Reuters",
+        "publication":"theguardian.com",
+        "internalPageCode":"1951662",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-19T04:34:38Z"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/liu-xiaobo",
+        "type":"keyword",
+        "webTitle":"Liu Xiaobo",
+        "webUrl":"http://www.theguardian.com/world/liu-xiaobo",
+        "apiUrl":"http://content.guardianapis.com/world/liu-xiaobo",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/taniabranigan",
+        "type":"contributor",
+        "webTitle":"Tania Branigan",
+        "webUrl":"http://www.theguardian.com/profile/taniabranigan",
+        "apiUrl":"http://content.guardianapis.com/profile/taniabranigan",
+        "bio":"<p>Tania Branigan is <a href=\"http://www.guardian.co.uk/world/china\">China correspondent</a> for the Guardian</p>",
+        "rcsId":"GNL004773",
+        "r2ContributorId":"16507",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/tania_branigan_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-415157438",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/9/1370759157563/Liu-Xia-the-wife-of-impri-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F Yuan",
+            "altText":"Liu Xia, the wife of imprisoned Nobel laureate Liu Xiaobo",
+            "height":"276",
+            "credit":"Alexander F Yuan/AP",
+            "caption":"Liu Xia cries after June's hearing when her brother Liu Hui was convicted. Photograph: Alexander F Yuan/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-415157439",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/9/1370759138379/Liu-Xia-the-wife-of-impri-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Alexander F Yuan",
+            "altText":"Liu Xia, the wife of imprisoned Nobel laureate Liu Xiaobo",
+            "height":"84",
+            "credit":"Alexander F Yuan/AP",
+            "caption":"Liu Xia, the wife of imprisoned Nobel laureate Liu Xiaobo, cries after hearing her brother Liu Hui has been jailed for 11 years. Photograph: Alexander F Yuan/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/17/chinese-communist-party-online-crackdown",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-17T06:09:20Z",
+      "webTitle":"Chinese Communist party intensifies online crackdown",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/17/chinese-communist-party-online-crackdown",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/17/chinese-communist-party-online-crackdown",
+      "fields":{
+        "trailText":"<p>Authorities target 'wanton defamation' by social media critics by bringing in even stricter controls</p>",
+        "headline":"Chinese Communist party intensifies online crackdown",
+        "body":"<p>An influential Communist party journal has compared online rumours to Cultural Revolution-style denunciations and warned of the need to curb \"wanton defamation\" of authority, as China intensifies its campaign to control social media.</p><p>It came as the Chinese state broadcaster aired video footage of the handcuffed businessman Xue Manzi, also known as Charles Xue, confessing that he had irresponsibly spread rumours because his 12 million microblog followers <a href=\"http://news.163.com/13/0915/00/98P8QHIO00014JB5.htm\" title=\"\">made him feel like an \"emperor\"</a>.</p><p>While China has repeatedly attempted to rein in the country's boisterous social media, a leading internet activist described the wide-ranging crackdown on dissent as unprecedented.</p><p>\"In their eyes, the internet is out of control now and it has become a tool to reduce their political base, and subvert the ideology of the government,\" said Wen Yunchao. \"This campaign includes the crackdown on 'big Vs' [verified microblog users with many followers] and inner rectification [of the Communist party]. It is a brutal and astute plan&nbsp;… At present, people do not talk.\"</p><p>Others have raised concerns about increased pressure on academia and the detention of activists, including legal scholar Xu Zhiyong.</p><p>The Communist party's top theoretical journal – Qiushi, or Seeking Truth – warned that some were using internet freedoms \"to engage in wanton defamation, attacking the party and the government&nbsp;…The internet is full of all kinds of negative news and critical voices saying the government only does bad things and everything it says is wrong.\"</p><p>It compared online rumours to \"big character posters\", the handwritten denunciations of people and institutions mostly associated with the Cultural Revolution, which began in 1966. The appearance of the posters was often the prelude to more vicious persecution.</p><p>Websites and social media have become an essential forum for discussion and the spread of information, despite censorship, because the restrictions on other media are still stricter.</p><p>But authorities have signalled they are increasing controls and targeting popular users by issuing a judicial decision that internet users could face three years in jail if they share rumours that are viewed more than 5,000 times or <a href=\"http://www.theguardian.com/world/2013/sep/10/china-social-media-jail-rumours\" title=\"\">forwarded more than 500 times</a>.</p><p>Chen Ziming, an independent Beijing-based scholar, said that normally in China one spoke of \"killing chickens to scare the monkeys\" – sending a warning to people by punishing lowlier folk.</p><p>\"This time they have killed a few monkeys, such as Xue Manzi, to try to terrify the chickens,\" he said.</p><p>Police arrested Xue last month for soliciting prostitutes for group sex, but supporters believed it was retaliation for his outspokenness.</p><p>On Saturday, the English-language edition of the state-run Global Times newspaper accused critics of seeking to portray any liberals who faced court as victims of \"political persecution\", adding: \"Even the prostitution scandal of Chinese-American investor Charles Xue has been seen by them as an 'official crackdown on freedom of speech'.\"</p><p>Only one day later Xue appeared – of his own volition, news anchors announced – on a major news bulletin, to talk about online responsibility. He told viewers: \"Freedom of speech cannot override the law.\"</p><p>The news programme cut between pictures of the venture capitalist in happier times, beaming from a magazine cover, and the image of him in handcuffs and a green detainee's uniform, with a scruffy beard and unkempt hair.</p><p>Last week, another prominent businessman known for his bold online comments – property tycoon Pan Shiyi – appeared on television news to stress that internet users should be socially responsible. Viewers were as struck by the normally fluent entrepreneur's marked stutter as his remarks, and he <a href=\"http://blogs.wsj.com/chinarealtime/2013/09/12/f-f-fear-and-loathing-on-the-chinese-internet/\" title=\"\">subsequently commented on his nervousness about the interview</a>.</p><p>Zhang Lifan, a well-known historian, predicted that controls, while effective in the short term, risked backfiring as authorities lost touch with public opinion.</p><p>\"If someone is speaking, a certain security remains; if everyone remains silent, then when the volcano erupts, no one can control it. This is what the rulers don't understand. They force the critics to be opponents,\" he said.</p><p>Wu Qiang, a political scientist at Tsinghua University, said the tightening of controls on civil society began before Xi Jinping became leader, under Hu Jintao and Wen Jiabao.</p><p>But he added: \"The government has a strong sense of insecurity because they see <a href=\"http://www.theguardian.com/world/2013/sep/13/multi-millionaire-investor-detained-china-crackdown-activists\" title=\"\">Xu Zhiyong and Wang Gongquan</a>, mild dissidents, as the growth of political opposition. Also, the internal political struggles didn't stop after the handover [of power to new leaders], but are developing&nbsp;… The third plenum is coming, and they need to avoid letting anything affect the internal struggles.\"</p><p>The event carries symbolic weight because Deng Xiaoping used a third plenum in 1978 to establish his vision of economic reform and opening.</p><!-- Guardian Watermark: internal-code/content/417476939|2013-10-23T16:01:38Z|d78afcf9b5e4ba302efbc7b5fd64911c5aa16705 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-17T08:34:00Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398063021/Xu-Zhiyong-005.jpg",
+        "standfirst":"Authorities target 'wanton defamation' by social media critics by bringing in even stricter controls",
+        "shortUrl":"http://gu.com/p/3tzde",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398063021/Xu-Zhiyong-005.jpg",
+        "wordcount":"744",
+        "commentable":"false",
+        "internalContentCode":"417476939",
+        "allowUgc":"false",
+        "internalOctopusCode":"8079813",
+        "isPremoderated":"false",
+        "byline":"Tania Branigan in Beijing",
+        "publication":"theguardian.com",
+        "internalPageCode":"1966478",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-20T06:09:20Z"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/social-media",
+        "type":"keyword",
+        "webTitle":"Social media",
+        "webUrl":"http://www.theguardian.com/media/social-media",
+        "apiUrl":"http://content.guardianapis.com/media/social-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/taniabranigan",
+        "type":"contributor",
+        "webTitle":"Tania Branigan",
+        "webUrl":"http://www.theguardian.com/profile/taniabranigan",
+        "apiUrl":"http://content.guardianapis.com/profile/taniabranigan",
+        "bio":"<p>Tania Branigan is <a href=\"http://www.guardian.co.uk/world/china\">China correspondent</a> for the Guardian</p>",
+        "rcsId":"GNL004773",
+        "r2ContributorId":"16507",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/tania_branigan_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417500054",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398059709/Xu-Zhiyong-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"54",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398060858/Xu-Zhiyong-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"340",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398061916/Xu-Zhiyong-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"130",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398063021/Xu-Zhiyong-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"84",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398064134/Xu-Zhiyong-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"132",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398065193/Xu-Zhiyong-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"168",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398066266/Xu-Zhiyong-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"180",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398067313/Xu-Zhiyong-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"228",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398068396/Xu-Zhiyong-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"276",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398069517/Xu-Zhiyong-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"372",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398068396/Xu-Zhiyong-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"276",
+            "credit":"Greg Baker/AP",
+            "caption":"Concerns are growing about pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417500055",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379398063021/Xu-Zhiyong-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Greg Baker",
+            "altText":"Xu Zhiyong",
+            "height":"84",
+            "credit":"Greg Baker/AP",
+            "caption":"There are growing concerns about increased pressure on academics and the detention of activists including legal scholar Xu Zhiyong (above). Photograph: Greg Baker/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/04/xi-jinping-china-communist-leadership",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-04T15:54:00Z",
+      "webTitle":"New leader of China's Communist party is in no mood to compromise",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/04/xi-jinping-china-communist-leadership",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/04/xi-jinping-china-communist-leadership",
+      "fields":{
+        "trailText":"<p>Liberal hopes for political reform are dashed as Xi Jinping gets a firm grip on the nation</p>",
+        "headline":"New leader of China's Communist party is in no mood to compromise",
+        "body":"<p>After<a href=\"http://www.theguardian.com/world/2013/aug/10/china-xi-jinping-opens-door-reform\" title=\"\"> Xi Jinping</a> took over as head of China's Communist party last December, some liberals dared to hope that change was in store for the world's most populous nation.</p><p>Xi's father, a veteran party leader, had a reputation for open-mindedness and moderation;  Xi embraced the idea of economic reform and even seemed to hint at a loosening of China's one-party system.</p><p>Almost no one noticed when Xi reportedly told Russian president <a href=\"http://www.theguardian.com/theobserver/2013/sep/15/observer-profile-vladimir-putin\" title=\"\">Vladimir Putin</a> in March that their \"personalities\" were similar. But now, six months later, Xi appears to be more of a Putin than a <a href=\"http://www.theguardian.com/profile/mikhailgorbachev\" title=\"\">Mikhail Gorbachev</a>, behaving like a leader more interested in consolidating his power and ensuring the survival of an authoritarian system than in adopting significant political reforms.</p><p>\"The fundamental priority for him is to guarantee the ruling position of the party,\" said historian Zhang Lifan. \"From the bottom of his heart, Xi Jinping wants to be a strong man. But I am not optimistic. In my understanding, a strong man should be creative. I don't see any new thoughts.\"</p><p>Xi was something of an enigma when he took over from Hu Jintao as China's supreme leader in an eagerly anticipated transfer of power. There was, after all, no election campaign to introduce him to China; instead, his ascent came about as the result of compromises between factions in the Communist party, reached entirely behind closed doors.</p><p>Complicating matters, Xi has sent different messages as he has sought to unify the party behind him. He has promised economic reforms but urged his party colleagues to promote the ideology of Marx and Mao. He has cast himself as a nationalist, determined to restore China to its ancient glories, but his \"Chinese dream\" seems mostly about achieving middle-class comfort. He has brought new energy to the relationship with the United States while simultaneously cosying up to Russia.</p><p>The emerging portrait of China's new leader is of a man who wants to reinvigorate the Communist party without relinquishing its stranglehold on Chinese politics. He looks set to become a stronger leader than his cautious predecessor, Hu Jintao, but he is no radical reformer, experts say.</p><p>Xi's signature initiative so far has been what he has called a \"thorough cleanup\" of the party, with cadres told to \"take baths\" to purify themselves of greed, extravagance, laziness and hedonism, to reconnect with the grassroots and to firmly adhere to Marxist ideology.</p><p>A profile in a regional newspaper last month painted a picture of Xi as a \"simple, low-profile, amiable and practical\" man, who ate steamed buns with ordinary folk when he worked as a local party secretary in <a href=\"http://en.wikipedia.org/wiki/Hebei\" title=\"\">Hebei</a> province in the early 1980s and used old clothes to patch his worn mattress. It seemed designed to cast Xi as the successor of <a href=\"http://www.theguardian.com/world/2011/jun/24/china-communism-anniversary-mao-zedong\" title=\"\">Mao</a>, a man connected with the \"masses\".</p><p>In reality, Xi's family has been able to accumulate assets worth hundreds of millions of dollars, according to a Bloomberg News report. But he is clearly aware that the party's image has been tarnished by lavish displays of wealth.</p><p>Xi's second, and related, campaign has been a wide-ranging attempt to <a href=\"http://www.theguardian.com/world/2013/jan/22/xi-jinping-tigers-flies-corruption\" title=\"\">battle corruption</a>, to bring down both the \"tigers\" and the \"flies\" – the high-ranking and lower-level officials whose actions have undercut the party's popularity.</p><p>Both campaigns reflect tactics employed since the days of Mao. They are attempts to bolster the party's legitimacy that are also useful tools to bash Xi's rivals.</p><p>So when corruption investigations were opened into state-owned PetroChina in August, experts saw not only a tough attempt to rein in a powerful vested interest group but also an attack on proteges of former security chief Zhou Yongkang, who had crossed Xi during a factional power struggle last year.</p><p>Xi realises that the Chinese people are angry about corruption, but his attempts to address the problem will almost inevitably fall short, experts say.</p><p>\"There is a pretty hard and deep and wide attempt to look at everybody's books,\" said Jeremy Goldkorn, the founder of a Beijing media research firm. \"But what will inevitably happen is, one, it will be used to pursue vendettas, and two, because they won't give up press control, because they won't open up the party to outside scrutiny – because they are not able to address the systemic problems – it won't be effective.\"</p><p>But it is the third campaign that has done the most to unsettle liberals – a crackdown launched on <a href=\"http://www.theguardian.com/world/2013/sep/17/chinese-communist-party-online-crackdown\" title=\"\">dissent</a> and limited freedoms of speech. Popular bloggers and businessmen have been arrested, and humiliating televised confessions extracted, in ways that carried faint echoes of Mao-era justice.</p><p>Instructions have reportedly also been distributed in recent months to officials throughout China banning discussion of \"dangerous western influences\" such as universal values, freedom of speech and civil rights.</p><p>Journalists say they are being more heavily censored this year than last. University professors say that they have been discouraged from speaking to foreign media and that there is widespread disillusionment within their ranks.</p><p>\"At least under Hu Jintao we had hope,\" said one professor at a major university in Beijing, who spoke on the condition of anonymity. \"Under Xi, we have no hope.\"</p><p>Xi is the son of a veteran Communist leader, Xi Zhongxun, who was purged and imprisoned under Mao. Rehabilitated under reformist leader Deng Xiaoping, the elder Xi helped champion the economic liberalisation that began in southern China in 1979. But he was sidelined again after he was thought to have opposed the use of force to break up the 1989 Tiananmen Square protests.</p><p>When Xi Jinping travelled to the economic powerhouse of Shenzhen in southern China shortly after taking over the party, the symbolism seemed unmistakable – like Deng and his father, Xi intended to open up China's still state-dominated economy.</p><p>Then, when he declared in February that no organisation should be above the rule of law or the constitution, liberals allowed themselves to dream that he might also consider meaningful political reform.</p><p>In March, shortly after being named president, Xi visited Russia and compared his character to Putin's, according to the Kremlin's Russian-language transcript. At the time, the remark, which did not appear in the English transcript, did not attract attention. Six months later, it rings increasingly true, says Zhang, the historian, who accuses Xi of moving toward a \"new authoritarianism\".</p><p>Some commentators are inclined to give Xi the benefit of the doubt, arguing that the clampdown on social media might not be his idea but instead the work of a hardline faction running the powerful propaganda department. Others, such as Zhang Ming, a political science professor at Renmin University of China, say Xi's actions are simply tactics.</p><p>\"There are problems in the party, and Xi wants to concentrate on handling that,\" he said. \"Cracking down on street protests and the internet are just showing he doesn't want more external chaos while he is trying to unify his authority from within.\"</p><p>Xi's plans for the economy may become clearer at an important party plenary meeting in November. But even if crackdowns on dissent are largely tactical, it is becoming clear that political change is unlikely.</p><p>Similarly, Robert Lawrence Kuhn, a corporate strategist and adviser to the Chinese government, believes that Xi is merely protecting his left flank as he prepares to undertake significant economic reforms.</p><p>\"The way to stop reform is to appeal to a nationalistic view, to accuse reformers of bowing down to the west,\" he said. \"Knowing that, Xi gets out in front of that. Nobody can accuse him of being soft. He has totally buttoned up the entire left.\"</p><p>The twin traumas of the Tiananmen Square protests and the Soviet Union's collapse produced a collective determination among Communist leaders in China to maintain the party's monopoly on political power, analysts say.</p><p>\"The main, single, ferocious idea of the party is that there is not going to be a Chinese Gorbachev,\" said James Mann, author of <a href=\"http://www.washingtonpost.com/wp-dyn/content/article/2007/03/01/AR2007030102078.html\" title=\"\">The China Fantasy</a>, a book that aims to explode the assumption that economic progress inexorably leads to democracy.</p><p>\"They are committed to a collective leadership, where nobody can get too far out in front of the others,\" he said. \"They are not open to restraints on the power of the party.\" There was no reason to think Xi wanted to relax the party's hold on power, Mann added. \"And if he did, he wouldn't be allowed to.\"</p><p><em>This article appeared in</em><strong> </strong><a href=\"http://www.theguardian.com/weekly\" title=\"\">Guardian Weekly</a><em>, which incorporates material from the Washington Post</em></p><p><em>• The article was amended on 4 October 2013 to correct a general subbing error</em></p><!-- Guardian Watermark: internal-code/content/419056128|2013-10-23T16:01:38Z|8051accc5b05b4dc8886857da1297b3571855959 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-04T16:23:57Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884535655/CHINA-POLITICS-CONGRESS-003.jpg",
+        "standfirst":"Liberal hopes for political reform are dashed as Xi Jinping gets a firm grip on the nation",
+        "shortUrl":"http://gu.com/p/3ja2z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884535655/CHINA-POLITICS-CONGRESS-003.jpg",
+        "wordcount":"1388",
+        "commentable":"true",
+        "internalContentCode":"419056128",
+        "allowUgc":"false",
+        "internalOctopusCode":"8153841",
+        "isPremoderated":"false",
+        "byline":"Simon Denyer for the Washington Post",
+        "publication":"Guardian Weekly",
+        "internalPageCode":"1975668",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-11T15:58:00Z"
+      },
+      "tags":[{
+        "id":"world/xi-jinping",
+        "type":"keyword",
+        "webTitle":"Xi Jinping",
+        "webUrl":"http://www.theguardian.com/world/xi-jinping",
+        "apiUrl":"http://content.guardianapis.com/world/xi-jinping",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/communism",
+        "type":"keyword",
+        "webTitle":"Communism",
+        "webUrl":"http://www.theguardian.com/world/communism",
+        "apiUrl":"http://content.guardianapis.com/world/communism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/simon-denyer",
+        "type":"contributor",
+        "webTitle":"Simon Denyer",
+        "webUrl":"http://www.theguardian.com/profile/simon-denyer",
+        "apiUrl":"http://content.guardianapis.com/profile/simon-denyer",
+        "bio":"<p>Simon Denyer is a journalist for the <a href=\"http://www.washingtonpost.com/\">Washington Post</a></p>",
+        "r2ContributorId":"54960",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419101164",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884532175/CHINA-POLITICS-CONGRESS-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"54",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884534359/CHINA-POLITICS-CONGRESS-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"130",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884535655/CHINA-POLITICS-CONGRESS-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"84",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884536936/CHINA-POLITICS-CONGRESS-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"132",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884538242/CHINA-POLITICS-CONGRESS-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"168",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884539582/CHINA-POLITICS-CONGRESS-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"180",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884541176/CHINA-POLITICS-CONGRESS-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"228",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884542835/CHINA-POLITICS-CONGRESS-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"276",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884542835/CHINA-POLITICS-CONGRESS-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"276",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant political reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419101165",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380884535655/CHINA-POLITICS-CONGRESS-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"AFP",
+            "altText":"CHINA-POLITICS-CONGRESS",
+            "height":"84",
+            "credit":"AFP/AFP/Getty Images",
+            "caption":"No significant politial reform… a disappointing first six months for China's Communist leader Xi Jinping. Photograph: AFP/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/21/chinese-professor-sacked-xia-yeliang",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-21T07:42:06Z",
+      "webTitle":"Chinese professor sacked amid free speech crackdown",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/21/chinese-professor-sacked-xia-yeliang",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/21/chinese-professor-sacked-xia-yeliang",
+      "fields":{
+        "trailText":"Peking University denies that dismissal of Xia Yeliang, a prominent pro-democracy advocate, was for political reasons",
+        "headline":"Chinese professor sacked amid free speech crackdown",
+        "body":"<p>One of China's most prestigious universities has sacked an outspoken economics professor, raising concerns about the extent of a continuing crackdown on free speech and dissent.</p><p>Xia Yeliang, an associate professor at Peking University's school of economics since 2002, was notified on Friday that his contract would not be renewed. Rumours of his dismissal had been circulating for weeks.</p><p>In an online statement, the school denied that the 53-year-old economist – a long-time advocate for constitutionalism and democracy – was fired for political reasons, adding that a faculty committee decided to sack him for \"poor teaching\" in a 30-3 vote. The university said Xia was the school's \"worst-ranked teacher for many years in a row\", adding that he had been the subject of 340 student complaints since 2006. His contract will expire on 31 January.</p><p>Xia rose to prominence in 2008 after helping <a href=\"http://www.theguardian.com/world/2009/dec/25/china-jails-liu-xiaobo\" title=\"\">Liu Xiaobo, the imprisoned Nobel peace prize laureate, draft Charter 08</a>, a petition demanding sweeping reforms to China's authoritarian one-party system. In 2009, he wrote a widely circulated blog criticising the then-propaganda minister Liu Yunshan for overseeing a draconian censorship regime. Liu is now a member of China's highest ruling body, the seven-person Politburo Standing Committee.</p><p>He claims that the school sacked him <a href=\"http://www.nytimes.com/2013/10/20/world/asia/xia-yeliang-an-outspoken-chinese-professor-says-he-has-been-dismissed.html\" title=\"\">under pressure</a> from high-level authorities.</p><p>\"Of course I'm angry, but I'm trying to control myself – not only because they dismissed me, but because they tried to smear me,\" Xia said in a phone interview. He called the statement full of \"errors and contradictions\".</p><p>\"If they dismiss the worst teachers, that would mean over many years, hundreds of faculty members would have been dismissed,\" he said. \"But over the past 30 years, no single teacher has been dismissed like this.\"</p><p>Xia added that university authorities have warned him against speaking to foreign media. \"My wife has been depressed, and I've to comfort her; my family members and friends have tried to comfort both of us,\" he said. \"One of my students cried over the phone.\"</p><p></p><p>Xia's expulsion comes amid a <a href=\"http://www.theguardian.com/world/2013/oct/17/china-corruption-crackdown-nanjing-mayor\" title=\"\">nationwide crackdown</a> on even moderate forms of dissent. Since the summer, Communist party-backed media have launched a united charge against \"western values\"; authorities have detained scores of outspoken bloggers and activists for \"spreading online rumours\" and organising small-scale demonstrations.</p><p>Last month, 136 faculty members at the  Wellesley College, Massachusetts, which is  planning an academic partnership with the university, protested against Xia's expected dismissal in an open letter to its president, Wang Enge. \"We believe that dismissing Professor Xia for political reasons is such a fundamental violation of academic freedom that we, as individuals, would find it very difficult to engage in scholarly exchanges with Peking University,\" it said.</p><p>Xia has been a visiting professor at Stanford University and the University of California, Berkeley.</p><p>\"I'd like to make a call to universities nationwide,\" Xia tweeted to his 36,000 followers on Sunday night. \"If your honorable university doesn't believe that I'm qualified for a teaching post, please give me an administrative position at your library. Peking University's School of Economics has once more emphasized that the termination of my contract has nothing to do with politics, so please don't worry about the hire.\"</p><!-- Guardian Watermark: internal-code/content/420507018|2013-10-23T16:01:38Z|5d44e8a6293675cbe52ad437d36ab4fd25df09dd -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-21T10:56:45Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340727011/Liu-Xiaobo-003.jpg",
+        "standfirst":"Peking University denies that dismissal of Xia Yeliang, a prominent pro-democracy advocate, was for political reasons",
+        "shortUrl":"http://gu.com/p/3jyea",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340727011/Liu-Xiaobo-003.jpg",
+        "wordcount":"516",
+        "commentable":"true",
+        "internalContentCode":"420507018",
+        "allowUgc":"false",
+        "internalOctopusCode":"8219929",
+        "isPremoderated":"false",
+        "byline":"Jonathan Kaiman in Beijing",
+        "publication":"theguardian.com",
+        "internalPageCode":"1983997",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-24T07:42:06Z"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/liu-xiaobo",
+        "type":"keyword",
+        "webTitle":"Liu Xiaobo",
+        "webUrl":"http://www.theguardian.com/world/liu-xiaobo",
+        "apiUrl":"http://content.guardianapis.com/world/liu-xiaobo",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/freedom-of-speech",
+        "type":"keyword",
+        "webTitle":"Freedom of speech",
+        "webUrl":"http://www.theguardian.com/world/freedom-of-speech",
+        "apiUrl":"http://content.guardianapis.com/world/freedom-of-speech",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"profile/jonathan-kaiman",
+        "type":"contributor",
+        "webTitle":"Jonathan Kaiman",
+        "webUrl":"http://www.theguardian.com/profile/jonathan-kaiman",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathan-kaiman",
+        "bio":"<p>Jonathan Kaiman writes for the Guardian from Beijing. Follow him on Twitter at <a href=\"https://twitter.com/JRKaiman\"> @JRKaiman</a></p>",
+        "r2ContributorId":"53598",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/11/16/1353064204982/Jonathan-Kaiman.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420507596",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340723783/Liu-Xiaobo-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"54",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340725776/Liu-Xiaobo-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"130",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340727011/Liu-Xiaobo-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"84",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340728217/Liu-Xiaobo-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"132",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340729455/Liu-Xiaobo-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"168",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340730799/Liu-Xiaobo-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"180",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340732052/Liu-Xiaobo-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"228",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340733489/Liu-Xiaobo-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"276",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340733489/Liu-Xiaobo-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"276",
+            "credit":"Kin Cheung/AP",
+            "caption":"In 2008, Xia Yeliang helped Liu Xiaobo draft Charter 08, calling for sweeping reform. Liu (above) was jailed and won the Nobel peace prize. Photograph: Kin Cheung/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420507597",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382340727011/Liu-Xiaobo-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kin Cheung",
+            "altText":"Liu Xiaobo",
+            "height":"84",
+            "credit":"Kin Cheung/AP",
+            "caption":"Xia Yeliang shot to prominence in 2008 after helping Liu Xiaobo draft Charter 08, a petition calling for sweeping reform. Liu (above) was later jailed and awarded the Nobel Peace Prize. Photograph: Kin Cheung/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/21/chinese-authorities-arrest-wang-gongquan",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-21T09:32:40Z",
+      "webTitle":"Chinese authorities arrest wealthy activist Wang Gongquan",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/21/chinese-authorities-arrest-wang-gongquan",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/21/chinese-authorities-arrest-wang-gongquan",
+      "fields":{
+        "trailText":"Wang, a venture capitalist, was detained last month on suspicion of 'gathering crowds to disturb public order'",
+        "headline":"Chinese authorities arrest wealthy activist Wang Gongquan",
+        "body":"<p>Chinese authorities have formally arrested a wealthy Chinese businessman who was a key supporter of a civil society group targeted in a wide-ranging crackdown this year, his lawyer said on Monday.</p><p>Beijing prosecutors approved the arrest of venture capitalist Wang Gongquan on Sunday, according to Chen Youxi, Wang's lawyer, who said prosecutors notified him by phone of the decision on Monday.</p><p>Wang was detained in mid-September on suspicion of \"gathering crowds to disturb public order\" but had not been formally arrested until Sunday. The vaguely defined charge has been used to prosecute many members of a loosely organised movement that's been pushing for greater public participation in Chinese political issues.</p><p>The notification of Wang's formal arrest underscores the seriousness with which Chinese authorities are treating his case. When Chinese prosecutors approve an arrest, it usually indicates that police have gathered enough evidence – or are in the process of doing so – to proceed with an indictment and perhaps trial.</p><p>Chen declined to comment further but Chen Min, a veteran journalist and close family friend of Wang', said the businessman's family had not yet received notice of the arrest.</p><p>Wang has been a supporter of the New Citizens Movement, a loose network of activists that has come under official scrutiny this year, with an estimated 30 members rounded up since March.</p><p>\"Gongquan has mainly been trying to promote efforts to turn this country toward democracy and constitutionalism from the perspective of a citizen,\" said Chen, who is better known in China by his pen name Xiao Shu.</p><p>\"If these types of actions are deemed intolerable by this country then they are warning all Chinese that this government does not allow its people to be citizens.\"</p><p>The group's members have done little more than lobby for rights of rural children and public disclosure of officials' assets, although they have urged people to hold peaceful street demonstrations and dinner meetings to discuss such issues.</p><p>Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.</p><p>Beijing prosecutors did not immediately respond to a request for comment.</p><!-- Guardian Watermark: internal-code/content/420515256|2013-10-23T16:01:38Z|c462d83c08b6bf9587f2f3650d28813e7fd79d70 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-21T09:49:37Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+        "standfirst":"Wang, a venture capitalist, was detained last month on suspicion of 'gathering crowds to disturb public order'",
+        "shortUrl":"http://gu.com/p/3jyfm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+        "wordcount":"345",
+        "commentable":"false",
+        "internalContentCode":"420515256",
+        "allowUgc":"false",
+        "internalOctopusCode":"8220115",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Beijing",
+        "publication":"theguardian.com",
+        "internalPageCode":"1984036",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-24T09:32:40Z"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.theguardian.com/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420516798",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347913005/The-Chinese-president-Xi--001.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"54",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347914668/The-Chinese-president-Xi--002.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"340",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347915925/The-Chinese-president-Xi--003.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"130",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"84",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347922983/The-Chinese-president-Xi--005.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"132",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347925943/The-Chinese-president-Xi--006.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"168",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347927194/The-Chinese-president-Xi--007.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"180",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347930391/The-Chinese-president-Xi--008.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"228",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347931673/The-Chinese-president-Xi--009.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"276",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347932943/The-Chinese-president-Xi--010.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"372",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347931673/The-Chinese-president-Xi--009.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"276",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420516799",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/21/1382347917165/The-Chinese-president-Xi--004.jpg",
+          "typeData":{
+            "source":"Ma Zhancheng/Xinhua Press/Corbis",
+            "altText":"The Chinese president, Xi Jinping",
+            "height":"84",
+            "credit":"Ma Zhancheng/Xinhua Press/Corbis",
+            "caption":"The Chinese president, Xi Jinping: Beijing is wary of anything it sees as having the potential to develop into a force that can challenge Communist party rule.\r Photograph: Ma Zhancheng/Xinhua Press/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

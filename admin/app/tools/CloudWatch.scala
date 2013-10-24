@@ -12,17 +12,17 @@ trait CloudWatch {
   val primaryLoadBalancers = Map(
     ("frontend-RouterLo-1HHMP4C9L33QJ", "Router"),
     ("frontend-ArticleL-T0BUR121RZIG", "Article"),
-    ("frontend-FrontLoa-L86HJF9PG40T", "Front"),
+    ("frontend-FaciaLoa-I92TZ7OEAX7W", "Front"),
     ("frontend-Applicat-V36EHVHAEI15", "Applications")
   )
 
   val secondaryLoadBalancers = Map(
     ("frontend-CoreNavi-19L03IVT6RTL5", "CoreNav"),
     ("frontend-Discussi-KC65SADEVHIE", "Discussion"),
-    ("frontend-FaciaLoa-I92TZ7OEAX7W", "Facia"),
     ("frontend-Identity-1ITBJ706CLQIC", "Identity"),
     ("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image"),
-    ("frontend-SportLoa-GLJK02HUD48W", "Sport")
+    ("frontend-SportLoa-GLJK02HUD48W", "Sport"),
+    ("frontend-Commerci-12ZQ79RIOLIYE", "Commercial")
   )
 
   private val fastlyMetrics = List(

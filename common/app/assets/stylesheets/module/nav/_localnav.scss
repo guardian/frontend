@@ -6,6 +6,12 @@
         margin-top: 156px;
     }
 
+    .parts__head {
+        @include mq(tablet) {
+            padding-top: $baseline*12;
+        }
+    }
+
     .parts__body {
         @include mq(tablet) {
             margin-top: 0;
@@ -24,7 +30,7 @@
 
     h2.article-zone:only-child,
     .parts__body > .article-zone,
-    .article__head > .article-zone,
+    .hide-on-mobile-if-localnav,
     .section-head,
     .front-section:first-child .sub-section-head {
         display: none;
