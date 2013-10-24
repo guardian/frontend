@@ -104,8 +104,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var toggles = new Toggles(),
-                topStories = new TopStories(),
+             var topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
                 header = document.getElementById('header'),
@@ -119,13 +118,8 @@ define([
             }
 
             sections.init(document);
-            toggles.init(header);
             topStories.load(config, header);
             search.init(header);
-
-            common.mediator.on('page:common:ready', function(){
-                toggles.reset();
-            });
         },
 
         transcludeRelated: function () {
@@ -149,8 +143,9 @@ define([
 
         showToggles: function() {
             var toggles = new Toggles();
+            toggles.init(document);
             common.mediator.on('page:common:ready', function(config, context) {
-                toggles.init(context);
+                toggles.reset();
             });
         },
 
@@ -379,12 +374,12 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
-            modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             if (config.switches.analyticsOnDomReady) {
