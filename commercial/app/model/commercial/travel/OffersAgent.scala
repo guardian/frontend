@@ -62,7 +62,7 @@ object OffersAgent extends Logging with ExecutionContexts {
       }
     }
 
-    OffersApi.getAllOffers onSuccess {
+    OffersApi.getAllOffers() onSuccess {
       case untaggedOffers =>
         log info s"Loaded ${untaggedOffers.size} travel offers"
         tagAssociatedCountries(untaggedOffers) onSuccess {
