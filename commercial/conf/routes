@@ -8,5 +8,8 @@ GET    /assets/*path                                            dev.DevAssetsCon
 # Travel offers
 GET    /commercial/travel/offers                                controllers.commercial.TravelOffers.listOffers
 
+# Jobs
+GET    /commercial/jobs                                         controllers.commercial.JobAds.jobs
+
 # Simple advert tests
-GET    /commercial/$advert<(jobs|soulmates|masterclasses)>      controllers.commercial.SimpleAdvert.render(advert)
+GET    /commercial/$advert<(soulmates|masterclasses)>           controllers.commercial.SimpleAdvert.render(advert)
