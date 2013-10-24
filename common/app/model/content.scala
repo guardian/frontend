@@ -22,7 +22,6 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
-  lazy val isClosedForComments: Boolean = fields.get("commentCloseDate").filter(_.parseISODateTimeNoMillis.isAfterNow).isEmpty
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
@@ -47,6 +46,7 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
+  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTimeNoMillis.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
     val souped = body flatMap { body =>

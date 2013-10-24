@@ -2,7 +2,8 @@
 
 @defining(VisualTone(trail)) { tone =>
     <li class="item item--no-image tone-@tone" data-link-name="trail | @{index + 1}"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }>
+        @trail.discussionId.map{ id => data-discussion-id="@id" }
+        data-discussion-closed="@trail.isClosedForComments">
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
 
             @trail.trailPicture(5,3).map{ mainPicture =>
