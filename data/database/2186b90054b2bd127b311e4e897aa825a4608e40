@@ -1,0 +1,313 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk-news/2013/oct/22/boy-barclays-bank-robbery-15-year-old",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-22T13:45:00Z",
+      "webTitle":"Fifteen-year-old boy sentenced for robbing Liverpool bank at gunpoint",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/22/boy-barclays-bank-robbery-15-year-old",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/22/boy-barclays-bank-robbery-15-year-old",
+      "fields":{
+        "trailText":"Teenager pleads guilty to holding up branch of Barclay's bank with fake firearm and stealing more than £2,000",
+        "headline":"Fifteen-year-old boy sentenced for robbing Liverpool bank at gunpoint",
+        "body":"<p>A 15-year-old schoolboy has been sentenced to 40 months in a young offenders' institution for robbing a bank with an imitation firearm.</p><p>The teenager was sentenced on Tuesday at Liverpool crown court after pleading guilty to holding up a branch of Barclays bank in Breck Road, Liverpool, on 20 September and making off with more than £2,000.</p><p>The boy, who cannot be identified for legal reasons, was motivated by greed when he carried out the raid, Liverpool youth court heard last month.</p><p>He was turned over to the police by his mother, who was shocked to find a stash of cash, stained with dye, and a fake firearm in his bedroom.</p><p>Passing sentence, Judge Clement Goldstone QC, the honorary recorder of Liverpool, told the boy: \"However innocent you look now, as you sit in your smart suit, you did not look innocent when you held up bank staff at gunpoint and terrified them.\"</p><p>The judge said the teenager had planned the robbery at that particular branch because he thought it would be a \"soft touch\".</p><p>The court heard that the boy wanted cash because he envied his friends' possessions but also to reduce the financial burden on his family, who were having to pay for private tuition for him as his school grades were falling.</p><p>The judge said that after the boy fled the scene with £2,200 – some of which had been dyed when a security device was triggered – he took the money home and \"carried on with his young life as if nothing had happened\".</p><p>\"Two days later, your mother found the money which you had hidden away, and then, later the same day, the gun,\" the judge told him.</p><p>Goldstone said the actions of the boy's mother were \"all the more commendable\" when he compared it with other cases in which parents were prepared to lie to protect their children when they knew they had committed serious crimes.</p><p>He said he accepted the boy's remorse was genuine but that custody was necessary, not simply to punish the defendant but to show other boys that \"if they choose to commit offences of this kind, they will be sent to detention\".</p><p>Kim Egerton, prosecuting, told the court that the robbery was carried out at 11.45am when a man was seen walking into the bank wearing a black Parka-style coat, with the hood up and a scarf covering his face. She said the man produced a black handgun, went up to one of the cashiers and said \"I'm not fucking messing around\", before handing a bag over to the cashier.</p><p>The robber ordered the cashier to fill the bag up with money, before adding: \"Don't do anything stupid. I have just got out of prison after five years.\" The cashiers filled the bag with a \"dummy bundle\" which is designed to detonate and spray dye over the cash when it leaves the building, the court heard.</p><p>Egerton said the boy's mother discovered the money while she was tidying his bedroom on the following Sunday and \"looking for socks\". She then discovered a yellow draw-string bag. \"Emptying the bag, she was horrified to discover the imitation firearm,\" the prosecutor said.</p><p>The boy's mother called her family together, placed the items on the coffee table in the living room and asked her son where they had come from. The boy initially said it was a BB gun and that he had been given the weapon and money to look after. His family refused to believe him and the boy admitted what he had done. They then took him to a police station, where he made a full confession, the court heard.</p><p>The boy told officers that he planned the raid and went on a stakeout of the bank a couple of days before. He targeted a bank because he thought it would provide him with the \"most money\". The court heard that the boy pointed the gun at two cashiers and a member of the public \"so that he was not attacked from behind\".</p><p>Theresa Loftus, defending, said: \"The facts of this case are as striking as they are tragic.\" She said the case was tragic for the victims of the defendant's crime, but also for his own family, who turned the boy in to the police when they had no other evidence against him.</p><p>\"As such, my lord, the honesty, integrity, and decency of this family shone through by their actions on 22 September this year. They were instrumental in bringing this young man to justice,\" Loftus told the judge, adding that they were \"brave and exceptional actions\".</p><p>She said the boy had shown genuine remorse and he knew he had \"brought shame on his family\". Loftus said the boy's mother, a nurse, had \"clearly instilled in him\" a real sense of family loyalty, duty and religious faith. \"But at the time he committed these offences it seems he gave very little thought to his family,\" she added.</p><p>Loftus described the boy as \"an intelligent young man who has shown some educational promise\", adding: \"He is someone who is determined to succeed educationally.\"</p><p>The boy's mother has been unable to work since due to stress, the court heard.</p><!-- Guardian Watermark: internal-code/content/420636257|2013-10-23T16:01:39Z|db55a750af0f8d503a3cef732f27deca575f9171 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-22T14:00:07Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443416070/Barclays-bank-006.jpg",
+        "standfirst":"Teenager pleads guilty to holding up branch of Barclay's bank with fake firearm and stealing more than £2,000",
+        "shortUrl":"http://gu.com/p/3jmgd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443416070/Barclays-bank-006.jpg",
+        "wordcount":"848",
+        "commentable":"false",
+        "internalContentCode":"420636257",
+        "allowUgc":"false",
+        "internalOctopusCode":"8225500",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "internalPageCode":"1984783",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-25T12:07:24Z"
+      },
+      "tags":[{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/liverpool",
+        "type":"keyword",
+        "webTitle":"Liverpool",
+        "webUrl":"http://www.theguardian.com/uk/liverpool",
+        "apiUrl":"http://content.guardianapis.com/uk/liverpool",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/barclay",
+        "type":"keyword",
+        "webTitle":"Barclays",
+        "webUrl":"http://www.theguardian.com/business/barclay",
+        "apiUrl":"http://content.guardianapis.com/business/barclay",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420637130",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443406220/Barclays-bank-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"54",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443407972/Barclays-bank-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"340",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443409236/Barclays-bank-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"130",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443412573/Barclays-bank-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"720",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443414266/Barclays-bank-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"1536",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443416070/Barclays-bank-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"84",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443417317/Barclays-bank-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"132",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443418555/Barclays-bank-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"168",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443419821/Barclays-bank-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"180",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443421062/Barclays-bank-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"228",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443422431/Barclays-bank-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"276",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443423849/Barclays-bank-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"372",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443425950/Barclays-bank-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"1116",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443428106/Barclays-bank-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"1536",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443422431/Barclays-bank-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"276",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420637131",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382443416070/Barclays-bank-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Joe Giddens",
+            "altText":"Barclays bank",
+            "height":"84",
+            "credit":"Joe Giddens/PA",
+            "caption":"The judge said the boy targeted the Barclays bank in Breck Road, Liverpool, because he thought it would be a 'soft touch'. Photograph: Joe Giddens/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
