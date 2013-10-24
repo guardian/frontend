@@ -208,17 +208,6 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: true
                 }
-            },
-            // Should be later in file but can't separate shell task definition
-            hooks: {
-                // Copy the project's pre-commit hook into .git/hooks
-                command: 'cp git-hooks/pre-commit .git/hooks/',
-
-                options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: false
-                }
             }
         },
 
@@ -232,20 +221,20 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            images: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/public/images',
-                    src: ['**/*'],
-                    dest: staticTargetDir + 'images'
-                }]
-            },
             js: {
                 files: [{
                     expand: true,
                     cwd: 'common/app/public/javascripts',
                     src: ['**/*'],
                     dest: staticTargetDir + 'javascripts'
+                }]
+            },
+            images: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/public/images',
+                    src: ['**/*'],
+                    dest: staticTargetDir + 'images'
                 }]
             },
             flash: {
@@ -263,6 +252,14 @@ module.exports = function (grunt) {
                     src: ['**/head*.css'],
                     dest: 'common/conf/assets'
                 }]
+            },
+            hooks: {
+                files: [{
+                    expand: true,
+                    cwd: 'git-hooks',
+                    src: ['*'],
+                    dest: '.git/hooks/'
+                }]
             }
         },
 
@@ -274,7 +271,7 @@ module.exports = function (grunt) {
                 srcBasePath: staticTargetDir,
                 destBasePath: staticTargetDir,
                 flatten: false,
-                hashLength: (isDev) ? 0 : 32
+                hashLength: (isDev) ? 5 : 32
             },
             files: {
                 expand: true,
@@ -512,13 +509,15 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
-            compile: [
-                staticTargetDir,
-                'common/conf/assets'
-            ],
-
+            js: [staticTargetDir + 'javascripts'],
+            css: [staticTargetDir + 'stylesheets'],
+            images: [staticTargetDir + 'images'],
+            flash: [staticTargetDir + 'flash'],
+            fonts: [staticTargetDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
-            hooks: ['.git/hooks/pre-commit']
+            hooks: ['.git/hooks/pre-commit'],
+            assets: ['common/conf/assets'],
+            screenshots: [screenshotsDir]
         },
 
         // Recompile on change
@@ -530,7 +529,7 @@ module.exports = function (grunt) {
                     spawn: false
                 }
             },
-            sass: {
+            css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
                 tasks: ['compile:css'],
                 options: {
@@ -574,6 +573,11 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
     // Compile tasks
+    grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
+    grunt.registerTask('compile:js', ['clean:js', 'copy:js', 'requirejs:compile']);
+    grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
+    grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', [
         'compile:images',
         'compile:css',
@@ -581,14 +585,10 @@ module.exports = function (grunt) {
         'compile:fonts',
         'compile:flash',
         // below should not run in dev
+        'clean:assets',
         'copy:headCss',
         'hash'
     ]);
-    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['sass:compile']);
-    grunt.registerTask('compile:js', ['copy:js', 'requirejs:compile']);
-    grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
-    grunt.registerTask('compile:flash', ['copy:flash']);
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
@@ -606,6 +606,6 @@ module.exports = function (grunt) {
     grunt.registerTask('analyse:css:common', ['sass:compile', 'cssmetrics:common']);
 
     // Miscellaneous task
-    grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
-    grunt.registerTask('snap', ['env:casperjs', 'clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
+    grunt.registerTask('hookmeup', ['clean:hooks', 'copy:hooks']);
+    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:upload']);
 };
