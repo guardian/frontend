@@ -51,6 +51,10 @@ module.exports = function (grunt) {
                         {
                             name: "bootstraps/app",
                             out: "app.js"
+                        },
+                        {
+                            name: "bootstraps/core",
+                            out: "core.js"
                         }
                     ],
                     paths: {
