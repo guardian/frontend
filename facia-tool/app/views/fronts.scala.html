@@ -9,7 +9,7 @@
     <div class="list-picker" data-bind="visible: true" style="display: none">
         <span>Editing front:</span>
         <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
-        <a class="preview-link" data-bind="
+        <a target="_preview" class="preview-link" data-bind="
             attr: {href: previewUrl},
             visible: config">View Previews</a>
     </div>
@@ -73,26 +73,6 @@
     </div>
 
     <!-- templates -->
-
-    <script type="text/html" id="template_breakpoint">
-        <div class="frame" data-bind="
-            style: {
-                'z-index': zIndex,
-                'left'   : left() + 'px'
-            }">
-
-            <div class="title" data-bind="text: name"></div>
-
-            <iframe data-bind="
-                attr: {
-                    src: $root.viewer.urlBase + '/' + $root.config() + '?view=mobile'
-                },
-                style: {
-                    'width'  : width + 15 + 'px', // +15 for vertical scrollbar
-                    'height' : height + 'px'
-                }"></iframe>
-        </div>
-    </script>
 
     <script type="text/html" id="template_collection">
         <div class="collection">
