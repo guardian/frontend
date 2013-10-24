@@ -180,14 +180,20 @@ $live: #e81818;
 }
 
 .items__show-more {
-    background-color: #f1f1f1;
     border-style: none;
-    min-width: gs-span(2);
-    min-height: gs-height(1);
-    color: #666666;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #ffffff;
     @include fs-data(4, $size-only: true);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;
-    margin-left: -(gs-span(1) + $gs-gutter/2);
+    margin-left: -15px;
+    padding: 0;
+    .i {
+        position: relative;
+        text-indent: -9999px;
+        top: 4px;
+    }
 }
