@@ -46,8 +46,13 @@ module.exports = function (grunt) {
             compile: {
                 options: {
                     baseUrl: "common/app/assets/javascripts",
-                    name: "bootstraps/app",
-                    out: "static/target/compiled/javascripts/bootstraps/app.js",
+                    dir: "static/target/compiled/javascripts/",
+                    modules: [
+                        {
+                            name: "bootstraps/app",
+                            out: "app.js"
+                        }
+                    ],
                     paths: {
                         "bean": "components/bean/bean",
                         "bonzo": "components/bonzo/src/bonzo",
