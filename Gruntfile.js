@@ -50,11 +50,24 @@ module.exports = function (grunt) {
                     modules: [
                         {
                             name: "bootstraps/app",
-                            out: "app.js"
+                            wrap : {
+                                "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
+                                "endFile": "common/app/assets/javascripts/bootstraps/go.js"
+                            }
                         },
                         {
-                            name: "bootstraps/core",
-                            out: "core.js"
+                            name: "modules/discussion/discussion",
+                            exclude: [  'common',
+                                        'bonzo',
+                                        'qwery',
+                                        'bean',
+                                        'ajax',
+                                        'modules/userPrefs',
+                                        'modules/analytics/clickstream',
+                                        'modules/inview',
+                                        'modules/detect',
+                                        'modules/id'
+                            ]
                         }
                     ],
                     paths: {
@@ -67,10 +80,6 @@ module.exports = function (grunt) {
                         "domwrite": "components/dom-write/dom-write",
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview"
-                    },
-                    "wrap" : {
-                        "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
-                        "endFile": "common/app/assets/javascripts/bootstraps/go.js"
                     },
                     optimize: (isDev) ? 'none' : 'uglify2',
                     useSourceUrl: (isDev) ? true : false,
