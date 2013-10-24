@@ -259,7 +259,7 @@ module.exports = function (grunt) {
             headCss: {
                 files: [{
                     expand: true,
-                    cwd: 'static/target/hashed/stylesheets',
+                    cwd: 'static/target/stylesheets',
                     src: ['**/head*.css'],
                     dest: 'common/conf/assets'
                 }]
