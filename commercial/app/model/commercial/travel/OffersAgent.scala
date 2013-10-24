@@ -3,6 +3,7 @@ package model.commercial.travel
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import scala.concurrent.Future
 import conf.ContentApi
+import model.commercial.Keyword
 
 object OffersAgent extends Logging with ExecutionContexts {
 
