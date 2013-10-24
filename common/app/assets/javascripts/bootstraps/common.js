@@ -118,7 +118,7 @@ define([
                 profile.init();
             }
 
-            sections.init(header);
+            sections.init(document);
             toggles.init(header);
             topStories.load(config, header);
             search.init(header);

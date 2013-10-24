@@ -6,6 +6,12 @@
         margin-top: 156px;
     }
 
+    .parts__head {
+        @include mq(tablet) {
+            padding-top: $baseline*12;
+        }
+    }
+
     .parts__body {
         @include mq(tablet) {
             margin-top: 0;
