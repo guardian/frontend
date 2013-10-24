@@ -30,8 +30,8 @@ module.exports = function (grunt) {
                     }
                 }],
                 options: {
-                    style: 'compressed',
-                    sourcemap: (isDev) ? true : false,
+                    style: (isDev) ? 'expanded' : 'compressed',
+                    sourcemap: false,
                     noCache: (isDev) ? false : true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
@@ -197,17 +197,6 @@ module.exports = function (grunt) {
         },
 
         shell: {
-            // grunt-mkdir wouldn't do what it was told for this
-            mkdirFontTarget: {
-                command: 'mkdir -p ' + staticTargetDir + 'fonts',
-
-                options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: true
-                }
-            },
-
             spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
@@ -220,7 +209,6 @@ module.exports = function (grunt) {
                     failOnError: true
                 }
             },
-
             // Should be later in file but can't separate shell task definition
             hooks: {
                 // Copy the project's pre-commit hook into .git/hooks
@@ -232,7 +220,6 @@ module.exports = function (grunt) {
                     failOnError: false
                 }
             }
-
         },
 
         imagemin: {
@@ -245,26 +232,26 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            publicImages: {
+            images: {
                 files: [{
                     expand: true,
                     cwd: 'common/app/public/images',
                     src: ['**/*'],
-                    dest: staticTargetDir
+                    dest: staticTargetDir + 'images'
                 }]
             },
-            publicJs: {
+            js: {
                 files: [{
                     expand: true,
                     cwd: 'common/app/public/javascript',
                     src: ['**/*'],
-                    dest: staticTargetDir
+                    dest: staticTargetDir + 'javascript'
                 }]
             },
             flash: {
                 files: [{
                     expand: true,
-                    cwd: 'common/app/assets/flash',
+                    cwd: 'common/app/public/flash',
                     src: ['**/*.swf'],
                     dest: staticTargetDir + 'flash'
                 }]
@@ -289,7 +276,6 @@ module.exports = function (grunt) {
                 flatten: false,
                 hashLength: (isDev) ? 0 : 32
             },
-
             files: {
                 expand: true,
                 cwd: staticTargetDir,
@@ -412,10 +398,13 @@ module.exports = function (grunt) {
             self: [
                 'Gruntfile.js'
             ],
-            common: [
-                'common/app/assets/javascripts/bootstraps/*.js',
-                'common/app/assets/javascripts/modules/**/*.js'
-            ]
+            common: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/javascripts/',
+                    src: ['**/*.js', '!components/**', '!common.js']
+                }]
+            }
         },
 
         // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
@@ -483,7 +472,7 @@ module.exports = function (grunt) {
          */
         cssmetrics: {
             common: {
-                src: [staticTargetDir + 'stylesheets/*.css'],
+                src: [staticTargetDir + 'stylesheets/**/.css'],
                 options: {
                     quiet: false,
                     maxRules: 4096, //IE max rules
@@ -497,7 +486,14 @@ module.exports = function (grunt) {
          */
         mkdir: {
             screenshots: {
-                create: [screenshotsDir]
+                options: {
+                    create: [screenshotsDir]
+                }
+            },
+            fontsTarget: {
+                options: {
+                    create: [staticTargetDir + 'fonts']
+                }
             }
         },
 
@@ -528,39 +524,30 @@ module.exports = function (grunt) {
         // Recompile on change
         watch: {
             js: {
-                files: ['common/**/*.js'],
-                tasks: ['requirejs:compile', 'hash'],
+                files: ['common/app/{assets, public}/javascript/**/*.js'],
+                tasks: ['compile:js'],
                 options: {
                     spawn: false
                 }
             },
             sass: {
-                files: ['common/**/*.scss'],
-                tasks: ['sass:compile', 'copy:headCss', 'hash'],
+                files: ['common/app/assets/stylesheets/**/*.scss'],
+                tasks: ['compile:css'],
                 options: {
                     spawn: false
                 }
             },
-            icons: {
-                files: ['common/app/assets/images/**/*'],
-                tasks: ['shell:icons', 'imagemin:compile', 'copy:compile', 'hash']
-            }
-        },
-
-        "string-replace": {
-            cssSourceMaps: {
-                files: [{
-                  expand: true,
-                  cwd: staticTargetDir + 'stylesheets',
-                  src: ['**/*.map'],
-                  dest: staticTargetDir + 'stylesheets'
-                }],
-                options: {
-                  replacements: [{
-                    pattern: /\.\.\/\.\.\/\.\.\/common\/app\/assets\/stylesheets\//g,
-                    replacement: ''
-                  }]
-                }
+            images: {
+                files: ['common/app/{assets, public}/images/**/*'],
+                tasks: ['compile:images']
+            },
+            flash: {
+                files: ['common/app/public/flash/**/*'],
+                tasks: ['compile:flash']
+            },
+            fonts: {
+                files: ['resources/fonts/**/*'],
+                tasks: ['compile:fonts']
             }
         }
     });
@@ -582,7 +569,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-string-replace');
 
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
@@ -598,10 +584,10 @@ module.exports = function (grunt) {
         'copy:headCss',
         'hash'
     ]);
-    grunt.registerTask('compile:images', ['copy:publicImages', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['sass:compile', 'string-replace:cssSourceMaps']);
-    grunt.registerTask('compile:js', ['copy:publicJs', 'requirejs:compile']);
-    grunt.registerTask('compile:fonts', ['shell:mkdirFontTarget', 'webfontjson']);
+    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:css', ['sass:compile']);
+    grunt.registerTask('compile:js', ['copy:js', 'requirejs:compile']);
+    grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
 
     // Test tasks
