@@ -3,19 +3,21 @@ define([
     'bonzo',
     'qwery',
     'modules/component',
+    'modules/analytics/discussion',
+    'modules/id',
     'modules/discussion/api',
     'modules/discussion/comments',
-    'modules/discussion/comment-box',
-    'modules/id'
+    'modules/discussion/comment-box'
 ], function(
     ajax,
     bonzo,
     qwery,
     Component,
+    DiscussionAnalytics,
+    Id,
     DiscussionApi,
     Comments,
-    CommentBox,
-    Id
+    CommentBox
 ) {
 
 /**
@@ -76,6 +78,8 @@ Loader.prototype.ready = function() {
         url: '/discussion'+ id +'.json'
     }).then(this.renderDiscussion.bind(this), this.loadingError.bind(this));
     bonzo(this.getElem('show')).remove();
+    DiscussionAnalytics.init();
+    this.renderCommentCount();
 };
 
 /**
@@ -243,6 +247,36 @@ Loader.prototype.getDiscussionId = function() {
  */
 Loader.prototype.getDiscussionClosed = function() {
     return this.elem.getAttribute('data-discussion-closed') === 'true';
+};
+
+/**
+ * TODO (jamesgorrie): Needs a refactor, good ol' copy and paste.
+ */
+Loader.prototype.renderCommentCount = function() {
+    ajax({
+        url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
+        type: 'json',
+        method: 'get',
+        crossOrigin: true,
+        success: function(response) {
+            if(response && response.counts &&response.counts.length) {
+                var commentCount = response.counts[0].count;
+                if (commentCount > 0) {
+                    // Remove non-JS links
+                    bonzo(qwery('.js-show-discussion, .js-show-discussion a', this.context)).attr('href', '#comments');
+
+                    var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
+                        html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
+                               '  <i class="i"></i>' + commentCount +
+                               '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
+                               '</a>';
+
+                    qwery('.js-commentcount__number', this.context).innerHTML = commentCount;
+                    bonzo(qwery('.js-comment-count', this.context)).html(html);
+                }
+            }
+        }
+    });
 };
 
 return Loader;
