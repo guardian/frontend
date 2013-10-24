@@ -3,6 +3,8 @@ package controllers
 import model.Cached
 import common.JsonComponent
 import play.api.mvc.Action
+import play.api.libs.json.JsonString
+import discussion.model.Comment
 
 trait CommentPageController extends DiscussionController {
 
@@ -12,6 +14,7 @@ trait CommentPageController extends DiscussionController {
     implicit request =>
       val page = request.getQueryString("page").getOrElse("1")
       val commentPage = discussionApi.commentsFor(shortUrl, page)
+      val blankComment = Comment(JsonString("{}"))
 
       commentPage map {
         commentPage =>
