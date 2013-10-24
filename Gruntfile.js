@@ -227,7 +227,7 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: staticTargetDir + 'images/',
                 src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
-                dest: staticTargetDir + 'images/'
+                dest: staticTargetDir + 'images'
             }
         },
 
@@ -243,9 +243,9 @@ module.exports = function (grunt) {
             js: {
                 files: [{
                     expand: true,
-                    cwd: 'common/app/public/javascript',
+                    cwd: 'common/app/public/javascripts',
                     src: ['**/*'],
-                    dest: staticTargetDir + 'javascript'
+                    dest: staticTargetDir + 'javascripts'
                 }]
             },
             flash: {
