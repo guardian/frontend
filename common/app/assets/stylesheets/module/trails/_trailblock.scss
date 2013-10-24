@@ -97,8 +97,8 @@
 /* more on this story trailblock
    ========================================================================== */
 .more-on-this-story {
-    @include mq($from:rightCol) {
-        li:first-child {
+    @include mq(rightCol) {
+        .t1 {
             display: none;
         }
 
