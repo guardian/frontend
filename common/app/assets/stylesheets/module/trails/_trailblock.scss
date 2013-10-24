@@ -93,3 +93,17 @@
     padding: 14px 0 0 6px;
     text-align: left;
 }
+
+/* more on this story trailblock
+   ========================================================================== */
+.more-on-this-story {
+    @include mq($from:rightCol) {
+        li:first-child {
+            display: none;
+        }
+
+        &.more-on-this-story--one-item {
+            display: none;
+        }
+    }
+}
