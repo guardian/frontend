@@ -2,12 +2,12 @@ package model.commercial.travel
 
 import scala.concurrent.Future
 import play.api.libs.ws.WS
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
 import conf.CommercialConfiguration
 
-object OffersApi extends ExecutionContexts {
+object OffersApi extends ExecutionContexts with Logging {
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
@@ -17,6 +17,7 @@ object OffersApi extends ExecutionContexts {
         response => response.xml
       }
     } getOrElse {
+      log.error("No Travel Offers API config properties set")
       Future(<offers/>)
     }
   }

@@ -25,6 +25,7 @@ object JobsApi extends ExecutionContexts with Logging {
         response => response.xml
       }
     } getOrElse {
+      log.error("No Jobs API config properties set")
       Future(<jobs/>)
     }
   }
