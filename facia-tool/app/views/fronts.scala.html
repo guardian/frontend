@@ -11,7 +11,17 @@
         <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
         <a target="preview" class="preview-link" data-bind="
             attr: {href: previewUrl},
-            visible: config">View Previews</a>
+            visible: config">Previews</a>
+
+        <span class="btn-group">
+            <button class="btn" data-bind="
+                click: toggleModeDefault,
+                css: {active: liveMode}">Live</button>
+
+            <button class="btn" data-bind="
+                click: toggleModeDefault,
+                css: {active: !liveMode}">Draft</button>
+        </span>
     </div>
 
     <div class="finder">

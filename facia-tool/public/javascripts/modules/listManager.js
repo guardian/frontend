@@ -21,6 +21,8 @@ define([
     contentApi,
     ophanApi
 ) {
+    var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
+
     return function(selector) {
 
         var self = this,
@@ -42,8 +44,25 @@ define([
                         updateLayout();
                     },
                     keepCopy:  true
-                }
+                },
             };
+
+        if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
+            model.liveMode = true;
+        } else {
+            model.liveMode = common.config.defaultToLiveMode;
+        }
+
+        model.toggleModeDefault = function() {
+            if (!window.localStorage) { return; }
+
+            if (window.localStorage.getItem(prefKeyDefaultMode)) {
+                window.localStorage.removeItem(prefKeyDefaultMode);
+            } else {
+                window.localStorage.setItem(prefKeyDefaultMode, 1);
+            }
+            window.location.href = window.location.href;
+        }
 
         model.previewUrl = ko.computed(function() {
             return common.config.previewUrlBase[Config.env] + '/' + model.config() + '?view=mobile';

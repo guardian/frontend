@@ -122,6 +122,7 @@ input[type=text] {
     text-transform: uppercase;
     font-weight: bold;
     border-right: 1px solid #EEEEEE;
+    border-bottom: 1px solid #EEEEEE;
     color: #999999;
 }
 
@@ -519,4 +520,8 @@ iframe {
 .ophan-legend {
     position: absolute;
     right: 51%;
+}
+
+.active {
+    font-weight: bold;
 }

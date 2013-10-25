@@ -46,7 +46,12 @@ define([
             'loadIsPending',
             'editingConfig',
             'timeAgo']);
-        this.state.liveMode(common.config.defaultToLiveMode);
+
+        if (window.localStorage.getItem('gu.frontsTool.defaultToLiveMode')) {
+            this.state.liveMode(true);
+        } else {
+            this.state.liveMode(common.config.defaultToLiveMode);
+        }
 
         this.saveItemConfig = function(item) {
             item.saveConfig(self.id);
