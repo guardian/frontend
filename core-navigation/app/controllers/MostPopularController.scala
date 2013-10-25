@@ -43,12 +43,14 @@ object MostPopularController extends Controller with Logging with ExecutionConte
                   cleanTrailText(text)(Edition(request)).toString()
                 },
                 "mainPicture" -> trail.mainPicture.map{ mainPicture =>
-                  Json.obj(
-                    "item" -> FrontItem.bestFor(mainPicture),
-                    "itemMain" -> FrontItemMain.bestFor(mainPicture),
-                    "itemMobile" -> FrontItemMobile.bestFor(mainPicture),
-                    "itemMainMobile" -> FrontItemMainMobile.bestFor(mainPicture)
-                  )
+                  FrontItem.bestFor(mainPicture).map { bestFitPicture =>
+                    Json.obj(
+                      "item" -> FrontItem.bestFor(mainPicture),
+                      "itemMain" -> FrontItemMain.bestFor(mainPicture),
+                      "itemMobile" -> FrontItemMobile.bestFor(mainPicture),
+                      "itemMainMobile" -> FrontItemMainMobile.bestFor(mainPicture)
+                    )
+                  }
                 },
                 "published" ->Json.obj(
                   "unix" -> trail.webPublicationDate.getMillis,
