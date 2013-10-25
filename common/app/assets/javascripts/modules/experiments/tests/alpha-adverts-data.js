@@ -31,7 +31,7 @@ define([
             {
                 id: 'Inline', //Article A
                 test: function(context, isBoth) {
-                    guardian.config.oasSiteIdHost = 'www.theguardian-alpha1.com';
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
                     var article = document.getElementsByClassName('js-article__container')[0];
                     bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function(el, i) {
                         var cls = (i % 2 === 0) ? 'is-odd' : 'is-even',
@@ -51,7 +51,7 @@ define([
             {
                 id: 'Adhesive', //Article B
                 test: function(context, isBoth) {
-                    guardian.config.oasSiteIdHost = 'www.theguardian-alpha2.com';
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
                     var viewport = detect.getLayoutMode(),
                         inviewName,
                         s;
@@ -83,7 +83,7 @@ define([
             {
                 id: 'Both',  //Article C
                 test: function() {
-                    guardian.config.oasSiteIdHost = 'www.theguardian-alpha3.com';
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
@@ -96,7 +96,7 @@ define([
             {
                 id: 'control', //Article D
                 test: function() {
-                    guardian.config.oasSiteIdHost = 'www.theguardian-alpha.com';
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
                     return true;
                 }
             }
