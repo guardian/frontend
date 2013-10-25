@@ -584,7 +584,7 @@ module.exports = function (grunt) {
         'compile:js',
         'compile:fonts',
         'compile:flash',
-        // below should not run in dev
+        // TODO - below should not run in dev
         'clean:assets',
         'copy:headCss',
         'hash'
