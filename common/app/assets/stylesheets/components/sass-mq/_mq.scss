@@ -60,8 +60,8 @@ $mq-breakpoints: (
 @mixin mq($from: false, $to: false, $and: false) {
 
     // Initialize variables
-    $max-width: 0;
     $min-width: 0;
+    $max-width: 0;
     $mediaQuery: '';
 
     // From: this breakpoint (inclusive)
