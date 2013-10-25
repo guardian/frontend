@@ -80,7 +80,7 @@ define([
         upgradeImages: function () {
             require(['js!imager'], function() {
                 var images = common.toArray(document.querySelectorAll('.item__image')).filter(function(img) {
-                        return bonzo(img).css('display') !== 'none';
+                        return bonzo(img).css('display') === 'block';
                     }),
                     options = {
                         availableWidths: [ 140, 220, 300, 460, 700 ],

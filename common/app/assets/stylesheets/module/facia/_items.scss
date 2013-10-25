@@ -87,25 +87,12 @@ $c-live: #e81818;
     display: block;
     border-top: 2px solid $c-newsAccent;
 }
-.item__image-container {
-    display: none;
-    .item--image-upgraded & {
-        margin-top: 2px;
-        overflow: hidden;
-        @include mq(tablet) {
-            height: gs-height(4);
-        }
-    }
-}
 .item__image {
-    display: block;
-    margin: 0 auto;
-    @include mq($to: tablet) {
-        width: 100%;
-    }
-    @include mq(tablet) {
-        height: 100%;
-    }
+    display: none;
+}
+.responsive-img {
+    margin-top: 2px;
+    width: 100%;
 }
 .item__live-indicator {
     color: #ffffff;
