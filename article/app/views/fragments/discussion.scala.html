@@ -1,13 +1,13 @@
-@(discussionClosed: Boolean, shortUrl: String)(implicit request: RequestHeader)
+@(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
 <div class="discussion"
-    data-discussion-id="@shortUrl"
+    data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
     <h3 id="comments" class="page-sub-header tone-colour tone-border">Comments</h3>
 
     <div class="discussion__comment-box discussion__comment-box--top"></div>
     <div class="discussion__comments"></div>
     <div class="discussion__comment-box discussion__comment-box--bottom"></div>
-    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@shortUrl}"
+    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@discussionId}"
         data-is-ajax data-link-name="View all comments" rel="nofollow">
         Join the discussion…
         <span class="d-commentcount speech-bubble tone-background tone-border">

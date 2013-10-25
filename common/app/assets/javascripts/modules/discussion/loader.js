@@ -239,7 +239,7 @@ Loader.prototype.addComment = function(comment) {
  * @return {string}
  */
 Loader.prototype.getDiscussionId = function() {
-    return this.elem.getAttribute('data-discussion-id');
+    return this.elem.getAttribute('data-discussion-key');
 };
 
 /**
