@@ -6,10 +6,14 @@
 <table>
     @for(job <- jobs) {
     <tr>
+        <td>@if(job.recruiterLogoUrl.isDefined){<img src="@job.recruiterLogoUrl" />}</td>
+        <td>@if(job.employerLogoUrl.isDefined){<img src="@job.employerLogoUrl" />}</td>
         <td>@job.id</td>
-        <td>@job.title</td>
+        <td><a href="@job.listingUrl">@job.title</a></td>
         <td>@job.salary</td>
+        <td><a href="@job.applyUrl">Apply</a></td>
         <td>@(job.sectorTags.mkString("; "))</td>
+        <td>@(job.keywords.map(_.name).mkString("; "))</td>
     </tr>
     }
 </table>
