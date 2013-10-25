@@ -1,23 +1,20 @@
 package utils
 
-import play.api.mvc.{RequestHeader, SimpleResult, ActionBuilder, Request}
+import play.api.mvc._
 import com.gu.identity.model.User
 import scala.concurrent.Future
 import conf.FrontendIdentityCookieDecoder
 import com.google.inject.{Singleton, Inject}
 import play.api.mvc.Results._
 import services.{IdentityUrlBuilder, IdRequestParser}
-import play.mvc.BodyParser.AnyContent
-import scala.language.implicitConversions
 import java.net.URLEncoder
 import client.Auth
 import idapiclient.ScGuU
+import scala.Some
+import play.api.mvc.SimpleResult
 
 
-case class AuthRequest[A](request: Request[A], user: User, auth: Auth)
-object AuthRequest {
-  implicit def toRequest[A](authRequest: AuthRequest[A]): Request[A] = authRequest.request
-}
+case class AuthRequest[A](request: Request[A], user: User, auth: Auth) extends WrappedRequest(request)
 
 @Singleton
 class AuthAction @Inject()(cookieDecoder: FrontendIdentityCookieDecoder,
