@@ -13,7 +13,7 @@ define(['modules/detect', 'bonzo'], function(detect, bonzo) {
 
             expect(detect.getLayoutMode(100)).toBe('mobile');
 
-            expect(detect.getLayoutMode(732)).toBe('tablet');
+            expect(detect.getLayoutMode(768)).toBe('tablet');
 
             expect(detect.getLayoutMode(2000)).toBe('extended');
         });
