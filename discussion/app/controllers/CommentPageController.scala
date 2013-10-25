@@ -3,7 +3,7 @@ package controllers
 import model.Cached
 import common.JsonComponent
 import play.api.mvc.Action
-import play.api.libs.json.JsonString
+import play.api.libs.json.Json
 import discussion.model.Comment
 
 trait CommentPageController extends DiscussionController {
@@ -14,14 +14,31 @@ trait CommentPageController extends DiscussionController {
     implicit request =>
       val page = request.getQueryString("page").getOrElse("1")
       val commentPage = discussionApi.commentsFor(shortUrl, page)
-      val blankComment = Comment(JsonString("{}"))
+      val blankComment = Comment(Json.parse("""{
+        "id": 5,
+        "body": "",
+        "responses": [],
+        "userProfile": {
+          "userId": "",
+          "displayName": "",
+          "webUrl": "",
+          "apiUrl": "",
+          "avatar": "",
+          "secureAvatarUrl": "",
+          "badge": []
+        },
+        "isoDateTime": "2011-10-10T09:25:49Z",
+        "status": "visible",
+        "numRecommends": 0,
+        "isHighlighted": false
+      }"""))
 
       commentPage map {
         commentPage =>
           Cached(60) {
             if (request.isJson)
               JsonComponent(
-                "html" -> views.html.fragments.commentsBody(commentPage).toString,
+                "html" -> views.html.fragments.commentsBody(commentPage, blankComment).toString,
                 "hasMore" -> commentPage.hasMore,
                 "currentPage" -> commentPage.currentPage
               )

@@ -1,4 +1,4 @@
-@(page: CommentPage)(implicit request: RequestHeader)
+@(page: CommentPage, blankComment: Comment = null)(implicit request: RequestHeader)
 
 <div class="d-discussion"
      data-page-count="@page.pages">
@@ -14,6 +14,7 @@
         <a class="js-show-more-comments cta" data-link-name="Show more comments" href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Show more comments</a>
     }
 </div>
-<script type="text/template" id="tmpl-comment-box">@fragments.commentBox(true, "")</script>
+
+<script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
 <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>
-<script type="text/template" id="tmpl-comment">@fragments.comment(page.comments(0), false)</script>
+@if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}

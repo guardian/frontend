@@ -65,7 +65,11 @@ Comments.prototype.ready = function() {
                 elem.className += elem.className +' u-h';
             }
         });
-        this.on('click', this.getElem('showMore'), this.showMore);
+
+        if (this.getElem('showMore')) {
+            this.on('click', this.getElem('showMore'), this.showMore);
+        }
+
         this.on('click', '.js-show-more-replies', this.showMoreReplies);
         this.hideExcessReplies();
         RecommendComments.init(this.context);
