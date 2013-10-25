@@ -271,7 +271,7 @@ module.exports = function (grunt) {
                 srcBasePath: staticTargetDir,
                 destBasePath: staticTargetDir,
                 flatten: false,
-                hashLength: (isDev) ? 5 : 32
+                hashLength: (isDev) ? 0 : 32
             },
             files: {
                 expand: true,
