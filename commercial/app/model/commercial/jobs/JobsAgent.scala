@@ -11,7 +11,7 @@ object JobsAgent extends ExecutionContexts with Logging {
 
   private lazy val agent = AkkaAgent[Seq[Job]](Nil)
 
-  def jobs(keywords: Seq[String], jobsToChooseFrom: Seq[Job] = allJobs) = {
+  def jobs(keywords: Seq[String], jobsToChooseFrom: Seq[Job] = currentJobs) = {
     jobsToChooseFrom filter {
       job =>
         val intersect = keywords.map(_.toLowerCase).toSet & job.keywords.map(_.name.toLowerCase)
@@ -19,15 +19,26 @@ object JobsAgent extends ExecutionContexts with Logging {
     }
   }
 
-  def allJobs: Seq[Job] = agent()
+  def currentJobs: Seq[Job] = agent()
 
   def refresh() {
-
-    // TODO only tag new jobs
     for {
       untaggedJobs <- JobsApi.getCurrentJobs()
-      jobs = tagWithKeywords(untaggedJobs)
+      (unchangedJobs, newUntaggedJobs) = unchangedJobsAndNewUntaggedJobs(untaggedJobs)
+      jobs = unchangedJobs ++ tagWithKeywords(newUntaggedJobs)
     } yield agent send jobs
+  }
+
+  def unchangedJobsAndNewUntaggedJobs(newJobs: Seq[Job], currJobs: Seq[Job] = currentJobs): (Seq[Job], Seq[Job]) = {
+    val currentUntaggedJobs = currJobs map (_.copy(keywords = Set()))
+    val (unchangedUntaggedJobs, newUntaggedJobs) = newJobs partition {
+      job => currentUntaggedJobs contains job
+    }
+    val unchangedJobIds = unchangedUntaggedJobs map (_.id)
+    val unchangedJobs = currJobs filter {
+      job => unchangedJobIds.contains(job.id)
+    }
+    (unchangedJobs, newUntaggedJobs)
   }
 
   def tagWithKeywords(untaggedJobs: Seq[Job],
