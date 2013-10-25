@@ -6,7 +6,7 @@ import client.connection.Http
 import scala.concurrent.{Future, ExecutionContext}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
-import client.connection.util.ExecutionContexts
+import client.connection.util.{ApiHelpers, ExecutionContexts}
 import net.liftweb.json.JsonAST.{JValue, JNothing}
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
@@ -14,7 +14,7 @@ import idapiclient.requests.TokenPassword
 
 
 abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, val clientAuth: Auth)
-  extends IdApiUtils with SafeLogging {
+  extends IdApiUtils with SafeLogging with ApiHelpers {
 
   implicit def executionContext: ExecutionContext
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
