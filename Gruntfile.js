@@ -49,11 +49,7 @@ module.exports = function (grunt) {
                     dir: "static/target/compiled/javascripts/",
                     modules: [
                         {
-                            name: "bootstraps/app",
-                            wrap : {
-                                "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
-                                "endFile": "common/app/assets/javascripts/bootstraps/go.js"
-                            }
+                            name: "bootstraps/app"
                         },
                         {
                             name: "modules/discussion/discussion",
@@ -70,6 +66,10 @@ module.exports = function (grunt) {
                             ]
                         }
                     ],
+                    wrap : {
+                        "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
+                        "endFile": "common/app/assets/javascripts/bootstraps/go.js"
+                    },
                     paths: {
                         "bean": "components/bean/bean",
                         "bonzo": "components/bonzo/src/bonzo",
