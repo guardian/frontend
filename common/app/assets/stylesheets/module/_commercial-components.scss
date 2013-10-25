@@ -55,11 +55,11 @@
         width: 30%;
         float: left;
         min-width: 0;
-        margin: 0 0 0 8px;
+        margin: 0 0 0 $gutter/2;
     }
 
     .offer {
-        padding-right: 8px;
+        padding-right: $gutter/2;
         float: left;
         width: 50%;
         box-sizing: border-box;
@@ -76,12 +76,12 @@
 
     .offer__deal {
         font-size: 14px;
-        padding: 8px;
+        padding: $gutter;
         box-sizing: border-box;
     }
 
     .offer__link:hover .offer__deal {
-        background-color: #e3e3db;
+        background-color: $c-neutral5;
     }
 
     &.commercial--small .offer:nth-child(2) {
