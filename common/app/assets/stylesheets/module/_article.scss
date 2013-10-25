@@ -407,7 +407,7 @@ video {
     }
     .article__inner {
         max-width: gs-span(8);
-        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+        padding-right: $a-rightCol-width + $gs-gutter;
     }
     .article__columning-wrapper {
         width: 100%;
@@ -441,9 +441,13 @@ video {
         }
     }
 }
-@include mq(gs-span(13)) {
+
+@include mq(gs-span(12) + $gs-gutter * 2) {
     .article__main-column {
         padding-right: gs-span(1) + $gs-gutter * 2;
+    }
+    .article__inner {
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 }
 
