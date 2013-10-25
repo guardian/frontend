@@ -79,11 +79,13 @@ define([
         },
 
         initDiscussion: function() {
+            console.log('attaching discussion event listener');
             common.mediator.on('page:article:ready', function(config, context) {
+                console.log('firing discussion event listener');
                 console.log(config.page.commentable);
-                require(['discussion'], function (D) {
-                    console.log('*** discussion has loaded via a requirejs call (article)', D);
-                })
+                //require(['discussion'], function (D) {
+                //    console.log('*** discussion has loaded via a requirejs call (article)', D);
+                //})
                 /*  if (config.page.commentable) {
                       var discussionArticle = new Discussion({
                         id: config.page.shortUrl,
