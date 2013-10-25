@@ -1,10 +1,11 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<h2 class="article-zone tone-@VisualTone(gallery) tone-accent-border">
-    <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+<h2 class="article-zone left-col-deport tone-@VisualTone(gallery) tone-accent-border">
+    <span class="left-col-deport__body">
+        <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+    </span>
 </h2>
-
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">

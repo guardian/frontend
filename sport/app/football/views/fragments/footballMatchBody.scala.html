@@ -2,8 +2,10 @@
 @import feed._
 @import implicits.Football._
 
-<h2 class="article-zone tone-news tone-accent-border">
-    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+<h2 class="article-zone left-col-deport tone-news tone-accent-border">
+    <span class="left-col-deport__body">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+    </span>
 </h2>
 <div class="article-wrapper monocolumn-wrapper tone-news">
     <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">

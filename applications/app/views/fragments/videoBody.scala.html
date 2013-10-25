@@ -2,8 +2,10 @@
 @import conf.Switches._
 
 @defining(page.video){ video =>
-    <h2 class="article-zone tone-@VisualTone(video) tone-accent-border">
-        <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+    <h2 class="article-zone left-col-deport tone-@VisualTone(video) tone-accent-border">
+        <span class="left-col-deport__body">
+            <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+        </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(video)">
 

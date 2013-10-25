@@ -18,7 +18,7 @@
 
     @include mq(tablet) {
         min-height: 0;
-        padding: $baseline*3 0;
+        padding: $baseline*3 0 $baseline*3;
         border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 
         max-width: gs-span(8);
@@ -50,6 +50,7 @@
         padding-left: 0 !important;
         padding-right: 0;
         margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -70,6 +71,28 @@
         padding-right: 0;
         margin-left: auto;
         margin-right: auto;
+    }
+}
+
+.left-col-deport {
+    @include mq(leftCol) {
+        padding: 0 0 $baseline;
+    }
+}
+.left-col-deport__body {
+    @include mq(leftCol) {
+        float: left;
+        padding-top: $baseline*4;
+        margin-left: 0;
+        width: $a-leftCol-width;
+
+        // Makes the block actionable
+        // when out of the flow
+        position: relative;
+        z-index: 1;
+    }
+    @include mq(wide) {
+        width: $a-leftColWide-width;
     }
 }
 
