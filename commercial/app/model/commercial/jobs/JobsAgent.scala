@@ -21,54 +21,62 @@ object JobsAgent extends ExecutionContexts with Logging {
 
   def refresh() {
 
-    def tagWithKeywords(jobs: Seq[Job]): Future[Seq[Job]] = {
-
-      def lookUpKeywords(jobApiTag: String): Future[Seq[Keyword]] = {
-        val query = jobApiTag replace("&", "") replace(",", "")
-        val futureKeywords = ContentApi.tags.stringParam("type", "keyword").stringParam("q", query).pageSize(50).response map {
-          _.results map (tag => Keyword(tag.id, tag.webTitle))
-        }
-
-        for (keywords <- futureKeywords)
-          log.debug(s"Looking up $jobApiTag gave ${keywords.map(_.id).mkString("; ")}")
-
-        futureKeywords
-      }
-
-      def jobApiTags: Set[String] = jobs.flatMap(job => job.sectorTags).toSet
-
-      def jobsHavingJobApiTag(tag: String) = jobs filter (_.sectorTags.contains(tag))
-
-      def jobApiTagsToKeywords: Map[String, Future[Seq[Keyword]]] = {
-        jobApiTags.foldLeft(Map[String, Future[Seq[Keyword]]]()) {
-          (acc, tag) => acc + (tag -> lookUpKeywords(tag))
-        }
-      }
-
-      val futureJobs = Future.sequence {
-        jobApiTagsToKeywords.map {
-          case (jobApiTag, futureKeywords) => futureKeywords.map {
-            keywords => jobsHavingJobApiTag(jobApiTag).map {
-              job => job.copy(keywords = job.keywords ++ keywords)
-            }.toSeq
-          }
-        }
-      }.map(_.flatten.toSeq)
-
-      for (jobs <- futureJobs) {
-        log.info(s"Tagged ${jobs.size} jobs")
-        log.debug(s"First jobs loaded: ${jobs.take(5).mkString("\n")}")
-        log.debug(s"Last jobs loaded: ${jobs.takeRight(5).mkString("\n")}")
-      }
-
-      futureJobs
-    }
-
-    // TODO only tag new jobs
+    // TODO only tag new jobs and don't include expired jobs in all jobs
     for {
       untaggedJobs <- JobsApi.getAllJobs()
       jobs <- tagWithKeywords(untaggedJobs)
     } yield agent send jobs
+  }
+
+  def tagWithKeywords(untaggedJobs: Seq[Job],
+                      lookUp: (String) => Future[Seq[Keyword]] = contentApiResponse): Future[Seq[Job]] = {
+
+    def lookUpKeywords(jobApiTag: String): Future[Seq[Keyword]] = {
+      val query = jobApiTag replace("&", "") replace(",", "")
+      val futureKeywords = lookUp(query)
+
+      for (keywords <- futureKeywords)
+        log.debug(s"Looking up $jobApiTag gave ${keywords.map(_.id).mkString("; ")}")
+
+      futureKeywords
+    }
+
+    val jobApiTags: Set[String] = untaggedJobs.flatMap(job => job.sectorTags).toSet
+
+    val jobApiTagsToKeywords: Map[String, Future[Seq[Keyword]]] = {
+      jobApiTags.foldLeft(Map[String, Future[Seq[Keyword]]]()) {
+        (acc, tag) => acc + (tag -> lookUpKeywords(tag))
+      }
+    }
+
+    def keywordsForJobApiTags(jobApiTags: Seq[String]): Future[Set[Keyword]] = {
+      val keywords = jobApiTagsToKeywords.filter {
+        case (jobApiTag, _) => jobApiTags contains jobApiTag
+      }.values
+      Future.sequence(keywords).map(_.flatten.toSet)
+    }
+
+    val futureJobs = Future.sequence {
+      untaggedJobs.map {
+        job => keywordsForJobApiTags(job.sectorTags) map {
+          jobKeywords => job.copy(keywords = jobKeywords)
+        }
+      }
+    }
+
+    for (jobs <- futureJobs) {
+      log.info(s"Tagged ${jobs.size} jobs")
+      log.debug(s"First jobs loaded: ${jobs.take(5).mkString("\n")}")
+      log.debug(s"Last jobs loaded: ${jobs.takeRight(5).mkString("\n")}")
+    }
+
+    futureJobs
+  }
+
+  def contentApiResponse(query: String): Future[Seq[Keyword]] = {
+    ContentApi.tags.stringParam("type", "keyword").stringParam("q", query).pageSize(50).response map {
+      _.results map (tag => Keyword(tag.id, tag.webTitle))
+    }
   }
 
 }
