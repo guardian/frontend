@@ -49,5 +49,3 @@ casper.then(function() {
 casper.run(function() {
     this.test.renderResults(true, 0, this.cli.get("xunit") + "article.xml");
 });
-
-
