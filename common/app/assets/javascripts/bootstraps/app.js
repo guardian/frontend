@@ -23,7 +23,8 @@ define('bootstraps/app', [
     "bootstraps/section",
     "bootstraps/imagecontent",
     "modules/id",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "modules/discussion/api"
 ], function (
     qwery,
     common,
@@ -48,7 +49,8 @@ define('bootstraps/app', [
     Section,
     ImageContent,
     Id,
-    UserAdTargeting
+    UserAdTargeting,
+    DiscussionApi
 ) {
 
     var modules = {
