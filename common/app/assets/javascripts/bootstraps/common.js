@@ -1,3 +1,4 @@
+/*global Imager:true */
 define([
     //Commmon libraries
     'common',
@@ -34,8 +35,7 @@ define([
     "modules/discussion/commentCount",
     "modules/lightbox-gallery",
     "modules/swipe/ears",
-    "modules/swipe/bar",
-    "modules/facia/image-upgrade"
+    "modules/swipe/bar"
 ], function (
     common,
     ajax,
@@ -72,25 +72,27 @@ define([
     CommentCount,
     LightboxGallery,
     ears,
-    SwipeBar,
-    ImageUpgrade
+    SwipeBar
 ) {
 
     var modules = {
 
         upgradeImages: function () {
+            require(['js!imager'], function() {
+                var images = common.toArray(document.querySelectorAll('.item__image')).filter(function(img) {
+                        return bonzo(img).css('display') !== 'none';
+                    }),
+                    options = {
+                        availableWidths: [ 140, 220, 300, 460, 700 ],
+                        strategy: 'replacer',
+                        replacementDelay: 200
+                    };
+                Imager.init(images, options);
+            });
+
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
-
-                // upgrade facia images
-                // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
-                common.$g('.collection', context).each(function(collection) {
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, collection.getAttribute('data-type') && index === 0)
-                            .upgrade();
-                    });
-                });
             });
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
