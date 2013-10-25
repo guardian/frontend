@@ -77,7 +77,7 @@
     <script type="text/html" id="template_collection">
         <div class="collection">
             <div class="list-header">
-                <div class="list-header__title" data-bind="visible: !state.editingConfig()">
+                <div class="title" data-bind="visible: !state.editingConfig()">
                     <span class="list-header__saving" data-bind="visible: state.loadIsPending">SAVING</span>
 
                     <a class="list-header__display" data-bind="
@@ -103,7 +103,12 @@
                 </div>
 
                 <div class="list-header__status">
-                    <a class="list-header__status__draft" data-bind="
+                    <a class="list-header__status__live" data-bind="
+                        click: setLiveMode,
+                        css: {
+                            active: state.liveMode()
+                        }">LIVE
+                    </a><a class="list-header__status__draft" data-bind="
                         click: setDraftMode,
                         css: {
                             'active':   !state.liveMode(),
@@ -118,12 +123,8 @@
                         visible: state.hasDraft(),
                         click: discardDraft">discard
 
-                    </a><a class="list-header__status__live" data-bind="
-                        click: setLiveMode,
-                        css: {
-                            active: state.liveMode()
-                        }">LIVE</a>
-                    
+                    </a>
+
                     <span class="list-header__timings">
                         <!-- ko if: state.timeAgo -->
                             <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>

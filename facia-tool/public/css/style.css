@@ -68,10 +68,14 @@ input[type=text] {
 }
 
 .title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     color: #000000;
-    padding: 2px 0 0 0;
+    padding: 6px 0 0 0;
+}
+
+.collections .title {
+    padding-left: 4px;
 }
 
 .droppable {
@@ -95,25 +99,6 @@ input[type=text] {
     color: #005580;
 }
 
-.list-header__title {
-    padding: 2px 4px 1px 4px;
-    height: 20px;
-    overflow: hidden;
-}
-
-.list-header__saving,
-.list-header__part,
-.list-header__role,
-.list-header__display {
-    font-size: 14px;
-}
-
-.list-header__display {
-    font-size: 16px;
-    font-weight: bold;
-    color: #000000;
-}
-
 .list-header__saving  { color: #d61d00; font-weight: bold; }
 
 .list-header__role {
@@ -125,7 +110,7 @@ input[type=text] {
 .list-header__timings {
     font-size: 10px;
     color: #999999;
-    padding: 0 0 0 5px;
+    padding: 0 0 0 4px;
 }
 
 .list-header__status a {
@@ -136,12 +121,7 @@ input[type=text] {
     cursor: pointer;
     text-transform: uppercase;
     font-weight: bold;
-    border-right: 1px solid #DDDDDD;
-    color: #999999;
-}
-
-a.list-header__status__draft,
-a.list-header__status__live {
+    border-right: 1px solid #EEEEEE;
     color: #999999;
 }
 
@@ -150,8 +130,9 @@ a.list-header__status__live.active {
     color: #333333;
 }
 
+a.list-header__status__draft.active,
 a.list-header__status__live.active {
-    background: #DDDDDD;
+    background: #EEEEEE;
 }
 
 a.list-header__status__draft.has-draft {
@@ -201,7 +182,7 @@ a.list-header__status__control:visited {
 
 .collections__inner {
     padding: 0 10px 0 0;
-    border-top: 1px solid #CCCCCC;
+    border-top: 2px solid #CCCCCC;
 }
 
 .collection {
@@ -209,9 +190,8 @@ a.list-header__status__control:visited {
     box-sizing: border-box;
     width: 100%;
     float: left;
-    padding: 0 0 5px 0;
     position: relative;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 2px solid #CCCCCC;
 }
 
 .trail {
@@ -233,7 +213,7 @@ a.list-header__status__control:visited {
 
 .live-groups,
 .live-groups .trail {
-    background-color: #DDDDDD;
+    background-color: #EEEEEE;
 }
 
 .trail.redundant {
@@ -360,7 +340,7 @@ button {
 }
 
 .clipboard__title {
-    border-top: 1px solid #CCCCCC;
+    border-top: 2px solid #CCCCCC;
 }
 
 .clipboard__wrapper {
