@@ -2,6 +2,7 @@ define(["bean",
         "common",
         "ajax",
         "bonzo",
+        "qwery",
         "modules/detect",
         "modules/url",
         "modules/overlay"
@@ -11,6 +12,7 @@ define(["bean",
         common,
         ajax,
         bonzo,
+        qwery,
         detect,
         url,
         Overlay) {
@@ -25,10 +27,12 @@ define(["bean",
             mode = 'fullimage',
             overlay,
             swipeActive,
+            isSwiping,
             slideshowActive,
             slideshowDelay = 5000, // in milliseconds
             captionControlHeight = 35, // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
             pushUrlChanges = true,
+            originalImagesHtml, // Used to keep a copy of the markup, before Swipe rewrites it
             $navArrows,
             $images;
 
@@ -40,12 +44,11 @@ define(["bean",
 
             if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
                 // Apply tracking to links
-                bonzo(context.querySelectorAll(self.selector + ' a')).attr('data-is-ajax', '1');
+                common.$g(self.selector + ' a', context).attr('data-is-ajax', '1');
 
                 bean.on(context, 'click', self.selector + ' a', function(e) {
+                    e.preventDefault();
                     var galleryUrl = e.currentTarget.getAttribute('href');
-
-                    self.galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json';
 
                     // Go to a specific image if it's in the query string. eg: index=3
                     if (galleryUrl.indexOf('index=') !== -1) {
@@ -55,15 +58,24 @@ define(["bean",
                         currentImage = parseInt(urlParams.index, 10);
                     }
 
-                    e.preventDefault();
-                    overlay = new Overlay();
-                    self.bindEvents();
-                    self.loadGallery();
+
+                    self.loadGallery({
+                        url: galleryUrl
+                    });
                 });
 
                 // Disable URL changes when the app-wide swipe is on
                 if(document.body.className.indexOf('has-swipe') !== -1) {
                     pushUrlChanges = false;
+                }
+
+                // Load gallery straight away if url contains a direct image link
+                var urlParams = url.getUrlVars();
+                if (urlParams.index) {
+                    this.loadGallery({
+                        url: '/' + config.page.pageId,
+                        startingImage: parseInt(urlParams.index, 10)
+                    });
                 }
             }
         };
@@ -78,57 +90,91 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
 
-            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function() {
-                if (swipeActive) {
-                    self.swipe.next();
+            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__item', function(e) {
+                if (swipeActive && !isSwiping) {
+                    // Check if the tap has happened within the caption control areas
+                    var currentItemEl = qwery('.js-gallery-item-'+currentImage, galleryNode)[0],
+                        captionAreaHit = false;
+
+                    common.$g('.gallerycaption, .captioncontrol', currentItemEl).each(function(el) {
+                        if (bonzo.isAncestor(el, e.target)) {
+                            captionAreaHit = true;
+                        }
+                    });
+
+                    // If the tap is within the caption area, then do nothing
+                    if (captionAreaHit) { return; }
+
+                    // If user taps in the left 25% of the screen, go backwards, otherwise go forwards
+                    var tappedPositionPerc = (e.pageX/galleryNode.offsetWidth * 100);
+                    if (tappedPositionPerc < 25) {
+                        self.swipe.prev();
+                    } else {
+                        self.swipe.next();
+                    }
                 }
             });
 
-            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery__item', function(el) {
+            bean.on(overlay.bodyNode, 'touchmove', '.gallery__item', function() {
+                isSwiping = true;
+                self.stopSlideshow();
+            });
+
+            bean.on(overlay.bodyNode, 'touchend', '.gallery__item', function() {
+                // This prevents a click event firing at the same time as swipe is finishing
+                setTimeout(function() {
+                    isSwiping = false;
+                }, 250);
+            });
+
+            bean.on(overlay.bodyNode, 'click', '.gallery--grid-mode .gallery__item', function(el) {
                 var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
                 self.goTo(index);
             });
 
-            bean.on(window, 'orientationchange', function() {
+            bean.on(window, 'orientationchange', common.debounce(function() {
                 self.layout();
                 if (detect.getOrientation() === 'landscape') {
                     self.jumpToContent();
                 }
-            });
+            }));
 
             bean.on(window, 'resize', common.debounce(function() {
                 self.layout();
             }));
 
             common.mediator.on('modules:overlay:close', function() {
+                // Remove events
+                bean.off(overlay.toolbarNode, 'click');
+                bean.off(overlay.bodyNode, 'click touchmove touchend');
+                bean.off(document.body, 'keydown', self.handleKeyEvents);
+
                 self.removeOverlay();
 
                 self.stopSlideshow();
 
-                // Remove keyboard handlers
-                bean.off(document.body, 'keydown', self.handleKeyEvents);
-
                 // Go back to the URL that we started on
                 if (pushUrlChanges) {
-                    url.pushUrl({}, document.title, pageUrl);
+                    url.pushUrl({}, document.title, pageUrl, true);
                 }
             });
 
             bean.on(window, 'popstate', function(event) {
-
-                if (event.state && event.state.lightbox) {
-                    // This keeps the back button to navigate back through images
+                if (event.state && event.state.lightbox && event.state.currentImage) {
                     self.goTo(event.state.currentImage, {
                         dontUpdateUrl: true
                     });
 
-                } else if (event.state && !event.state.lightbox) {
+                } else if (event.state && event.state.lightbox && !event.state.currentImage) {
                     // This happens when we reach back to the state before the lightbox was opened
                     // Needs a slight timeout as browsers reset the scroll position on popstate
                     setTimeout(function() {
                         overlay.hide();
                         self.removeOverlay();
-                    },10);
+                    }, 10);
+
+                    // Remove keyboard handlers
+                    bean.off(document.body, 'keydown', self.handleKeyEvents);
 
                     common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
                 }
@@ -142,12 +188,22 @@ define(["bean",
             } else if (e.keyCode === 39) { // right
                 self.next();
                 self.trackInteraction('keyboard:next');
+            } else if (e.keyCode === 27) { // esc
+                overlay.hide();
             }
         };
 
-        this.loadGallery = function() {
+        this.loadGallery = function(opts) {
             swipeActive = false;
+            overlay = new Overlay();
             overlay.showLoading();
+
+            this.galleryEndpoint = opts.url.split('?')[0] + '/lightbox.json';
+            this.bindEvents();
+
+            if (opts.startingImage) {
+                currentImage = opts.startingImage;
+            }
 
             ajax({
                 url: self.galleryEndpoint,
@@ -159,15 +215,19 @@ define(["bean",
 
                     overlay.setBody(response.html);
 
-                    galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
-                    $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
-                    $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
+                    galleryNode  = qwery('.gallery--lightbox', overlay.bodyNode)[0];
+                    $navArrows   = common.$g('.gallery__nav', galleryNode);
+                    $images      = common.$g('.gallery__img', galleryNode);
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
+
+                    // Save the first state of the gallery
+                    // This allows us to close the overlay if we go back far enough in the history
+                    url.pushUrl({ lightbox: true }, document.title, self.galleryUrl);
 
                     // Keep a copy of the original images markup, so we can
                     // easily restore it back when removing swipe
-                    imagesNode   = galleryNode.querySelector('.gallery__images');
-                    imagesNode._originalHtml = imagesNode.innerHTML;
+                    imagesNode = qwery('.gallery__images', galleryNode)[0];
+                    originalImagesHtml = imagesNode.innerHTML;
 
                     // If currentimage is out of bounds, start from the beginning
                     // Protects against ?index=0
@@ -230,14 +290,24 @@ define(["bean",
             if (e) { e.preventDefault(); }
 
             self.stopSlideshow();
-            self.goTo(currentImage - 1);
+
+            if (swipeActive) {
+                self.swipe.prev();
+            } else {
+                self.goTo(currentImage - 1);
+            }
         };
 
         this.next = function(e) {
             if (e) { e.preventDefault(); }
 
             self.stopSlideshow();
-            self.goTo(currentImage + 1);
+
+            if (swipeActive) {
+                self.swipe.next();
+            } else {
+                self.goTo(currentImage + 1);
+            }
         };
 
         this.goTo = function(index, opts) {
@@ -250,7 +320,7 @@ define(["bean",
                 index = totalImages;
             }
 
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__item'), function(el) {
+            common.$g('.gallery__item', overlay.bodyNode).each(function(el) {
                 var itemIndex = parseInt(el.getAttribute('data-index'), 10);
 
                 if (itemIndex === index) {
@@ -275,8 +345,6 @@ define(["bean",
         };
 
         this.switchToGrid = function(e) {
-            mode = 'grid';
-
             if (slideshowActive) {
                 self.stopSlideshow();
             }
@@ -285,9 +353,12 @@ define(["bean",
                 self.removeSwipe();
             }
 
+            mode = 'grid';
+
             bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
+            // Switch all images back to thumbnail versions
+            common.$g('.gallery__img', overlay.bodyNode).each(function(el) {
                 el.src = el.getAttribute('data-src');
             });
 
@@ -313,13 +384,13 @@ define(["bean",
 
             bonzo(galleryNode).removeClass('gallery--grid-mode').addClass('gallery--fullimage-mode');
 
-            self.preloadImages();
-
             // Update CTAs
             self.gridModeCta.style.display = 'block';
             self.fullModeCta.style.display = 'none';
 
             self.layout();
+
+            self.preloadImages();
 
             if (e) { e.preventDefault(); }
         };
@@ -335,23 +406,31 @@ define(["bean",
 
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
+            self.layout();
         };
 
         this.layout = function() {
-            var orientation = detect.getOrientation(),
-                contentHeight = window.innerHeight - overlay.headerNode.offsetHeight;
+            var contentHeight = bonzo.viewport().height - overlay.headerNode.offsetHeight;
 
-            // Make overlay large enough to allow the browser chrome to be hidden
-            overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
+            // set the height of the gallery to the height of the current image
+            // preventing a large scrollable space to appear underneath the image
+            if (swipeActive) {
+                galleryNode.style.height = qwery('.js-gallery-item-'+currentImage, galleryNode)[0].offsetHeight + 'px';
+            }
 
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
-            $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
+            $images = common.$g('.gallery__img', galleryNode);
+            var $items = common.$g('.gallery__item', galleryNode);
 
-            if (orientation === 'landscape' && mode === 'fullimage') {
-                // In landscape, size all images to the height of the screen
+
+            if (mode === 'fullimage') {
+                // Size all images to the height of the screen
                 $images.css({'height': contentHeight + 'px', 'width': 'auto'});
+                $items.css('height', contentHeight+'px');
             } else {
+                // Lets the default stylesheets do the work here
                 $images.removeAttr('style');
+                $items.removeAttr('style');
             }
 
             self.alignNavArrows();
@@ -384,9 +463,11 @@ define(["bean",
                         currentImage = index + 1;
                         self.imageIndexNode.innerHTML = currentImage;
 
-                        self.alignNavArrows();
+                        self.layout();
 
                         self.preloadImages();
+
+                        self.pushUrlState();
                     }
                 });
 
@@ -398,22 +479,24 @@ define(["bean",
         this.removeSwipe = function() {
             self.swipe.kill();
             bonzo(imagesNode).removeAttr('style')
-                             .html(imagesNode._originalHtml);
+                             .html(originalImagesHtml);
 
-            bonzo(galleryNode).removeClass('gallery--swipe');
+            bonzo(galleryNode).removeClass('gallery--swipe')
+                              .css('height', 'auto');
 
             swipeActive = false;
         };
 
 
-        this.pushUrlState = function() {
+        this.pushUrlState = function(opts) {
+            opts = opts || {};
             if (pushUrlChanges) {
                 var state = {
                     lightbox: true,
                     currentImage: currentImage
                 };
 
-                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
+                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage, opts.replace);
             }
         };
 
@@ -431,13 +514,14 @@ define(["bean",
 
             bonzo(galleryNode).addClass('gallery--slideshow');
 
-            overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'none';
-            overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'block';
+            qwery('.js-start-slideshow', overlay.toolbarNode)[0].style.display = 'none';
+            qwery('.js-stop-slideshow',  overlay.toolbarNode)[0].style.display = 'block';
 
             if (swipeActive) {
                 self.removeSwipe();
-                self.goTo(currentImage);
             }
+
+            self.goTo(currentImage);
 
             self.slideshowTimer = setInterval(function() {
                 self.goTo(currentImage+1);
@@ -450,8 +534,8 @@ define(["bean",
 
                 bonzo(galleryNode).removeClass('gallery--slideshow');
 
-                overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'block';
-                overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
+                qwery('.js-start-slideshow', overlay.toolbarNode)[0].style.display = 'block';
+                qwery('.js-stop-slideshow',  overlay.toolbarNode)[0].style.display = 'none';
 
                 clearInterval(self.slideshowTimer);
                 self.goTo(currentImage);

@@ -1,0 +1,1408 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"politics/2013/oct/23/plebgate-david-davis-surveillance-police",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-23T03:50:00Z",
+      "webTitle":"Plebgate: David Davis calls for surveillance of police",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/23/plebgate-david-davis-surveillance-police",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/23/plebgate-david-davis-surveillance-police",
+      "fields":{
+        "trailText":"<p>Senior Tory and Andrew Mitchell ally says watchdog needs more powers, while officers should wear cameras and microphones</p>",
+        "headline":"Plebgate: David Davis calls for surveillance of police",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn5a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500069510/David-Davis-has-attacked--005.jpg",
+        "wordcount":"591",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"politics/daviddavis",
+        "type":"keyword",
+        "webTitle":"David Davis",
+        "webUrl":"http://www.theguardian.com/politics/daviddavis",
+        "apiUrl":"http://content.guardianapis.com/politics/daviddavis",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/andrew-mitchell",
+        "type":"keyword",
+        "webTitle":"Andrew Mitchell",
+        "webUrl":"http://www.theguardian.com/politics/andrew-mitchell",
+        "apiUrl":"http://content.guardianapis.com/politics/andrew-mitchell",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/police",
+        "type":"keyword",
+        "webTitle":"Police",
+        "webUrl":"http://www.theguardian.com/uk/police",
+        "apiUrl":"http://content.guardianapis.com/uk/police",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420713697",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500077488/David-Davis-has-attacked--009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"David Davis has attacked the oversight of police",
+            "height":"228",
+            "credit":"Martin Argles/Guardian",
+            "caption":"David Davis has attacked the oversight of police, calling for a royal commission and more powers for watchdog the IPCC. Photograph: Martin Argles for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500079609/David-Davis-has-attacked--010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"David Davis has attacked the oversight of police",
+            "height":"276",
+            "credit":"Martin Argles/Guardian",
+            "caption":"David Davis has attacked the oversight of police, calling for a royal commission and more powers for watchdog the IPCC. Photograph: Martin Argles for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420713698",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500069510/David-Davis-has-attacked--005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"David Davis has attacked the oversight of police",
+            "height":"84",
+            "credit":"Martin Argles/Guardian",
+            "caption":"David Davis has attacked the oversight of police, calling for a royal commission and more powers for watchdog the IPCC. Photograph: Martin Argles for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"politics/2013/oct/18/michael-portillo-andrew-mitchell-pleb",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-18T14:58:35Z",
+      "webTitle":"Michael Portillo withdraws claim Mitchell used 'pleb' in private speech",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/18/michael-portillo-andrew-mitchell-pleb",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/18/michael-portillo-andrew-mitchell-pleb",
+      "fields":{
+        "trailText":"<p>Ex-minister says he got 'carried away' over claims made on BBC1's This Week programme regarding former chief whip</p>",
+        "headline":"Michael Portillo withdraws claim Mitchell used 'pleb' in private speech",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jkb8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108057386/Portillo-Plebgate-scandal-003.jpg",
+        "wordcount":"496",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"politics/andrew-mitchell",
+        "type":"keyword",
+        "webTitle":"Andrew Mitchell",
+        "webUrl":"http://www.theguardian.com/politics/andrew-mitchell",
+        "apiUrl":"http://content.guardianapis.com/politics/andrew-mitchell",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/police",
+        "type":"keyword",
+        "webTitle":"Police",
+        "webUrl":"http://www.theguardian.com/uk/police",
+        "apiUrl":"http://content.guardianapis.com/uk/police",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/jamesmeikle",
+        "type":"contributor",
+        "webTitle":"James Meikle",
+        "webUrl":"http://www.theguardian.com/profile/jamesmeikle",
+        "apiUrl":"http://content.guardianapis.com/profile/jamesmeikle",
+        "bio":"<p>James Meikle is a special correspondent for the Guardian</p>",
+        "rcsId":"GNL001970",
+        "r2ContributorId":"15777",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/james_meikle_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420403149",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108053949/Portillo-Plebgate-scandal-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"54",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108055793/Portillo-Plebgate-scandal-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"130",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108057386/Portillo-Plebgate-scandal-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"84",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108058963/Portillo-Plebgate-scandal-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"132",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108060621/Portillo-Plebgate-scandal-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"168",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108062152/Portillo-Plebgate-scandal-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"180",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108063798/Portillo-Plebgate-scandal-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"228",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108065459/Portillo-Plebgate-scandal-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"276",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108065459/Portillo-Plebgate-scandal-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"276",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420403150",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382108057386/Portillo-Plebgate-scandal-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian West",
+            "altText":"Portillo, Plebgate scandal",
+            "height":"84",
+            "credit":"Ian West/PA",
+            "caption":"Michael Portillo defended Andrew Mitchell in the immediate aftermath of the Downing Street incident last year. Photograph: Ian West/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"politics/2013/oct/21/police-apologise-andrew-mitchell",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-21T17:13:32Z",
+      "webTitle":"Police officers sorry for 'poor judgment' over Andrew Mitchell meeting",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/21/police-apologise-andrew-mitchell",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/21/police-apologise-andrew-mitchell",
+      "fields":{
+        "trailText":"<p>Three Police Federation officers acknowledge IPCC criticism of their handling of meeting with then chief whip about pleb row</p>",
+        "headline":"Police officers sorry for 'poor judgment' over Andrew Mitchell meeting",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jm3g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375317584/Andrew-Mitchell-003.jpg",
+        "wordcount":"501",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"politics/andrew-mitchell",
+        "type":"keyword",
+        "webTitle":"Andrew Mitchell",
+        "webUrl":"http://www.theguardian.com/politics/andrew-mitchell",
+        "apiUrl":"http://content.guardianapis.com/politics/andrew-mitchell",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/police",
+        "type":"keyword",
+        "webTitle":"Police",
+        "webUrl":"http://www.theguardian.com/uk/police",
+        "apiUrl":"http://content.guardianapis.com/uk/police",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/vikramdodd",
+        "type":"contributor",
+        "webTitle":"Vikram Dodd",
+        "webUrl":"http://www.theguardian.com/profile/vikramdodd",
+        "apiUrl":"http://content.guardianapis.com/profile/vikramdodd",
+        "bio":"<p>Vikram Dodd is a <a href=\"http://www.guardian.co.uk/uk/ukcrime\">crime correspondent</a></p>",
+        "rcsId":"GNL004781",
+        "r2ContributorId":"16558",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/vikram_dodd_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420629660",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375314193/Andrew-Mitchell-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"54",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375315944/Andrew-Mitchell-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"130",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375317584/Andrew-Mitchell-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"84",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375319364/Andrew-Mitchell-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"132",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375320990/Andrew-Mitchell-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"168",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375322667/Andrew-Mitchell-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"180",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375324380/Andrew-Mitchell-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"228",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375326127/Andrew-Mitchell-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"276",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375326127/Andrew-Mitchell-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"276",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420629661",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382375317584/Andrew-Mitchell-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Dominic Lipinski",
+            "altText":"Andrew Mitchell",
+            "height":"84",
+            "credit":"Dominic Lipinski/PA",
+            "caption":"Andrew Mitchell. Photograph: Dominic Lipinski/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"politics/2013/oct/23/plebgate-david-davis-surveillance-police",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-23T03:50:00Z",
+      "webTitle":"Plebgate: David Davis calls for surveillance of police",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/23/plebgate-david-davis-surveillance-police",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/23/plebgate-david-davis-surveillance-police",
+      "fields":{
+        "trailText":"<p>Senior Tory and Andrew Mitchell ally says watchdog needs more powers, while officers should wear cameras and microphones</p>",
+        "headline":"Plebgate: David Davis calls for surveillance of police",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn5a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500069510/David-Davis-has-attacked--005.jpg",
+        "wordcount":"591",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"politics/daviddavis",
+        "type":"keyword",
+        "webTitle":"David Davis",
+        "webUrl":"http://www.theguardian.com/politics/daviddavis",
+        "apiUrl":"http://content.guardianapis.com/politics/daviddavis",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/andrew-mitchell",
+        "type":"keyword",
+        "webTitle":"Andrew Mitchell",
+        "webUrl":"http://www.theguardian.com/politics/andrew-mitchell",
+        "apiUrl":"http://content.guardianapis.com/politics/andrew-mitchell",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/police",
+        "type":"keyword",
+        "webTitle":"Police",
+        "webUrl":"http://www.theguardian.com/uk/police",
+        "apiUrl":"http://content.guardianapis.com/uk/police",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420713697",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500077488/David-Davis-has-attacked--009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"David Davis has attacked the oversight of police",
+            "height":"228",
+            "credit":"Martin Argles/Guardian",
+            "caption":"David Davis has attacked the oversight of police, calling for a royal commission and more powers for watchdog the IPCC. Photograph: Martin Argles for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500079609/David-Davis-has-attacked--010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"David Davis has attacked the oversight of police",
+            "height":"276",
+            "credit":"Martin Argles/Guardian",
+            "caption":"David Davis has attacked the oversight of police, calling for a royal commission and more powers for watchdog the IPCC. Photograph: Martin Argles for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420713698",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382500069510/David-Davis-has-attacked--005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"David Davis has attacked the oversight of police",
+            "height":"84",
+            "credit":"Martin Argles/Guardian",
+            "caption":"David Davis has attacked the oversight of police, calling for a royal commission and more powers for watchdog the IPCC. Photograph: Martin Argles for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/23/plebgate-david-davis-royal-commission-police-ethics",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-23T09:33:00Z",
+      "webTitle":"Plebgate: David Davis calls for royal commission into police ethics",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/23/plebgate-david-davis-royal-commission-police-ethics",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/23/plebgate-david-davis-royal-commission-police-ethics",
+      "fields":{
+        "trailText":"Tory calls for IPCC to become 'British Untouchables' and says police should wear microphones to address decline in trust",
+        "headline":"Plebgate: David Davis calls for royal commission into police ethics",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn7p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518659477/David-Davis-006.jpg",
+        "wordcount":"753",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/police",
+        "type":"keyword",
+        "webTitle":"Police",
+        "webUrl":"http://www.theguardian.com/uk/police",
+        "apiUrl":"http://content.guardianapis.com/uk/police",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/daviddavis",
+        "type":"contributor",
+        "webTitle":"David Davis",
+        "webUrl":"http://www.theguardian.com/profile/daviddavis",
+        "apiUrl":"http://content.guardianapis.com/profile/daviddavis",
+        "bio":"<p>David Davis is the Conservative party member of parliament for the constituency of Haltemprice and Howden</p>",
+        "rcsId":"GNL041960",
+        "r2ContributorId":"15545",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/19/1355918393741/David-Davis.jpg",
+        "references":[]
+      },{
+        "id":"politics/andrew-mitchell",
+        "type":"keyword",
+        "webTitle":"Andrew Mitchell",
+        "webUrl":"http://www.theguardian.com/politics/andrew-mitchell",
+        "apiUrl":"http://content.guardianapis.com/politics/andrew-mitchell",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rowena-mason",
+        "type":"contributor",
+        "webTitle":"Rowena Mason",
+        "webUrl":"http://www.theguardian.com/profile/rowena-mason",
+        "apiUrl":"http://content.guardianapis.com/profile/rowena-mason",
+        "r2ContributorId":"58040",
+        "references":[]
+      },{
+        "id":"uk/metropolitan-police",
+        "type":"keyword",
+        "webTitle":"Metropolitan police",
+        "webUrl":"http://www.theguardian.com/uk/metropolitan-police",
+        "apiUrl":"http://content.guardianapis.com/uk/metropolitan-police",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/bernard-hogan-howe",
+        "type":"keyword",
+        "webTitle":"Bernard Hogan-Howe",
+        "webUrl":"http://www.theguardian.com/world/bernard-hogan-howe",
+        "apiUrl":"http://content.guardianapis.com/world/bernard-hogan-howe",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420733647",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518652808/David-Davis-001.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"54",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518654240/David-Davis-002.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"340",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518655277/David-Davis-003.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"130",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518656373/David-Davis-004.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"720",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518657882/David-Davis-005.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"1536",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518659477/David-Davis-006.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"84",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518660511/David-Davis-007.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"132",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518661563/David-Davis-008.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"168",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518662598/David-Davis-009.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"180",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518663644/David-Davis-010.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"228",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518664726/David-Davis-011.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"276",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518665828/David-Davis-012.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"372",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518667039/David-Davis-013.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"1116",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518668771/David-Davis-014.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"1536",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518664726/David-Davis-011.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"276",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said UK needed tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs. Photograph: Richard Saker/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420733650",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382518659477/David-Davis-006.jpg",
+          "typeData":{
+            "source":"Richard Saker / Rex Features",
+            "photographer":"Richard Saker/Rex Features",
+            "altText":"David Davis",
+            "height":"84",
+            "credit":"Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "caption":"David Davis said the UK needed a tougher regulator to address 'crisis of ethics' in the force, which could overrule police chiefs if necessary. Photograph: Richard Saker/Rex Features/Richard Saker / Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/23/plebgate-scotland-yard-police-commissioner-andrew-mitchell",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-23T10:11:05Z",
+      "webTitle":"Plebgate clouding Scotland Yard reputation, Met police commissioner says",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/23/plebgate-scotland-yard-police-commissioner-andrew-mitchell",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/23/plebgate-scotland-yard-police-commissioner-andrew-mitchell",
+      "fields":{
+        "trailText":"Sir Bernard Hogan-Howe says row over accusations former chief whip Andrew Mitchell called officers 'plebs' must be resolved",
+        "headline":"Plebgate clouding Scotland Yard reputation, Met police commissioner says",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn96",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522433747/Metropolitan-Police-Offic-006.jpg",
+        "wordcount":"543",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/police-and-crime-commissioners",
+        "type":"keyword",
+        "webTitle":"Police and crime commissioners",
+        "webUrl":"http://www.theguardian.com/uk/police-and-crime-commissioners",
+        "apiUrl":"http://content.guardianapis.com/uk/police-and-crime-commissioners",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/police",
+        "type":"keyword",
+        "webTitle":"Police",
+        "webUrl":"http://www.theguardian.com/uk/police",
+        "apiUrl":"http://content.guardianapis.com/uk/police",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/andrew-mitchell",
+        "type":"keyword",
+        "webTitle":"Andrew Mitchell",
+        "webUrl":"http://www.theguardian.com/politics/andrew-mitchell",
+        "apiUrl":"http://content.guardianapis.com/politics/andrew-mitchell",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420743803",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522424438/Metropolitan-Police-Offic-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"54",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522426278/Metropolitan-Police-Offic-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"340",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522427935/Metropolitan-Police-Offic-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"130",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522429589/Metropolitan-Police-Offic-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"720",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522431552/Metropolitan-Police-Offic-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"1536",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522433747/Metropolitan-Police-Offic-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522435350/Metropolitan-Police-Offic-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"132",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522436901/Metropolitan-Police-Offic-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"168",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522438595/Metropolitan-Police-Offic-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"180",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522440173/Metropolitan-Police-Offic-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"228",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522441835/Metropolitan-Police-Offic-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522443455/Metropolitan-Police-Offic-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"372",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522445251/Metropolitan-Police-Offic-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"1116",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522447626/Metropolitan-Police-Offic-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"1536",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522441835/Metropolitan-Police-Offic-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Britain's most senior police officer has said the Plebgate row has clouded the force's reputation. Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420743804",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382522433747/Metropolitan-Police-Offic-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Metropolitan Police Officers",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"Metropolitan Police Officers: Britain's most senior police officer has said the Plebgate row has clouded the force's reputation Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

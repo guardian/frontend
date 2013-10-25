@@ -1,7 +1,4 @@
 .collection--container {
-    @include mq($to: desktop) {
-        @include first-row(1);
-    }
     @include mq(tablet) {
         .items {
             overflow: hidden;
@@ -91,10 +88,17 @@
         }
     }
 }
+.collection--sport,
+.collection--culture,
+.collection--commentisfree {
+    @include mq($to: desktop) {
+        @include first-row(1);
+    }
+}
 .collection--news,
 .collection--sport {
     @include mq($to: tablet) {
-        .item:nth-child(1) {
+        .item:first-child {
             @include card-mobile($with-image: true);
         }
         .item:nth-child(3) {
@@ -118,6 +122,11 @@
             .item:nth-child(n+6) {
                 @include card-headline;
             }
+            .item:nth-child(n+7) {
+                .item__link {
+                    border-top: 1px dotted $c-neutral5;
+                }
+            }
         }
         .items--with-sport-stats {
             .item:nth-child(n+3):nth-child(-n+6) {
@@ -136,6 +145,11 @@
             }
             .item:nth-child(n+7) {
                 @include card-headline;
+            }
+            .item:nth-child(n+8) {
+                .item__link {
+                    border-top: 1px dotted $c-neutral5;
+                }
             }
         }
     }
@@ -162,6 +176,11 @@
         .item:nth-child(n+4) {
             @include card-headline;
         }
+        .item:nth-child(n+5) {
+            .item__link {
+                border-top: 1px dotted $c-neutral5;
+            }
+        }
     }
     @include mq(tablet, desktop) {
         .item:nth-child(3) {
@@ -174,9 +193,10 @@
         }
     }
 }
+
 .collection--culture {
     @include mq($to: tablet) {
-        .item:nth-child(1) {
+        .item:first-child {
             @include card-mobile($with-image: true);
         }
         .item:nth-child(2),
@@ -198,6 +218,25 @@
         }
         .item:first-child {
             @include card-mobile-image;
+        }
+        .item:nth-child(n+2):nth-child(-n+3),{
+            .item__title {
+                @include fs-headline(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-headline(3, $size-only: true);
+                }
+                .svg & .i {
+                    width: 26px;
+                    height: 16px;
+                    background-size: 100%;
+                }
+            }
+            .item__byline {
+                @include fs-header(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-header(3, $size-only: true);
+                }
+            }
         }
     }
 }

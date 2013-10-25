@@ -1,0 +1,9 @@
+@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
+
+<meta charset="utf-8" />
+<title>@Html(metaData.webTitle)</title>
+@fragments.metaData(metaData)
+@fragments.commonCssSetup(projectName)
+@fragments.commonJavaScriptSetup(metaData, "app", switches)
+
+@head

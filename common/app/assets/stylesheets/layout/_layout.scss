@@ -7,8 +7,10 @@ $headerHeight: 58px;
     @include gs-container;
     clear: both;
     margin-top: $headerHeight;
+}
 
-    @include mq(tablet) {
+@include mq(tablet) {
+    #header.has-nav + #preloads {
         margin-top: 104px;
     }
 }
@@ -48,17 +50,22 @@ $headerHeight: 58px;
             background-color: $c-brandBlue;
         }
 
-        &:after {
-            top: $headerHeight;
-            height: 40px;
-            background-color: $c-neutral7;
-            border-bottom: 1px solid $c-neutral5;
+        &.has-nav {
+            &:after {
+                top: $headerHeight;
+                height: 40px;
+                background-color: $c-neutral7;
+                border-bottom: 1px solid $c-neutral5;
+            }
+
+            .header__inner {
+                height: 60px;
+            }
         }
     }
 }
     .header__inner {
         background-color: $c-brandBlue;
-        height: 60px;
     }
 
 .guardian-logo-wrapper {
@@ -82,14 +89,15 @@ $headerHeight: 58px;
     padding-left: $gs-gutter / 2;
     padding-right: $gs-gutter / 2;
 
-    .page-head {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
+    }
+
+    .page-header,
+    .page-sub-header {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -117,7 +125,7 @@ $headerHeight: 58px;
 }
 
 .box-indent {
-    padding: 0 $gs-gutter/2 $baseline*1;
+    padding: 0 $gs-gutter/2 $baseline;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -126,7 +134,7 @@ $headerHeight: 58px;
 }
 
 
-.img--inline{
+.img--inline {
     width: $inArticleInlineImgWidth;
     float: left;
     clear: left;
@@ -163,9 +171,9 @@ $headerHeight: 58px;
         width: 100%;
     }
 
-    #preload-0 {left: -100%;}
-    #preload-1 {left:     0;}
-    #preload-2 {left:  100%;}
+    #preload-0 { left: -100%; }
+    #preload-1 { left:     0; }
+    #preload-2 { left:  100%; }
 }
 
 

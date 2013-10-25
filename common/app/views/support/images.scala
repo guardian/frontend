@@ -19,7 +19,7 @@ case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int
 
 
   def captionFor(image: ImageContainer): Option[String] =
-    elementFor(image).flatMap(_.altText)
+    elementFor(image).flatMap(_.caption)
 }
 
 // Configuration of our different image profiles
