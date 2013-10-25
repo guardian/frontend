@@ -29,38 +29,41 @@ object JobsApi extends ExecutionContexts with Logging {
     }
   }
 
-  def getAllJobs(xml: => Future[Elem] = loadXml): Future[Seq[Job]] = {
+  private def getAllJobs(xml: => Future[Elem] = loadXml): Future[Seq[Job]] = {
 
     log.info("Loading job ads...")
 
     val jobs = xml map {
-      jobs =>
-        (jobs \ "Job") map {
-          job =>
-            Job(
-              (job \ "JobID").text.toInt,
-              (job \ "AdType").text,
-              dateFormat.parseDateTime((job \ "StartDateTime").text),
-              dateFormat.parseDateTime((job \ "EndDateTime").text),
-              (job \ "IsPremium").text.toBoolean,
-              (job \ "PositionType").text,
-              (job \ "JobTitle").text,
-              (job \ "ShortJobDescription").text,
-              (job \ "SalaryDescription").text,
-              OptString((job \ "LocationDescription").text),
-              OptString((job \ "RecruiterLogoURL").text),
-              OptString((job \ "EmployerLogoURL").text),
-              (job \ "JobListingURL").text,
-              (job \ "ApplyURL").text,
-              ((job \ "Sector" \ "Description") map (_.text)).distinct,
-              (job \ "Location" \ "Description") map (_.text)
-            )
-        }
+      jobs => (jobs \ "Job") map {
+        job =>
+          Job(
+            (job \ "JobID").text.toInt,
+            (job \ "AdType").text,
+            dateFormat.parseDateTime((job \ "StartDateTime").text),
+            dateFormat.parseDateTime((job \ "EndDateTime").text),
+            (job \ "IsPremium").text.toBoolean,
+            (job \ "PositionType").text,
+            (job \ "JobTitle").text,
+            (job \ "ShortJobDescription").text,
+            (job \ "SalaryDescription").text,
+            OptString((job \ "LocationDescription").text),
+            OptString((job \ "RecruiterLogoURL").text),
+            OptString((job \ "EmployerLogoURL").text),
+            (job \ "JobListingURL").text,
+            (job \ "ApplyURL").text,
+            ((job \ "Sector" \ "Description") map (_.text)).distinct,
+            (job \ "Location" \ "Description") map (_.text)
+          )
+      }
     }
 
     for (loadedJobs <- jobs) log.info(s"Loaded ${loadedJobs.size} job ads")
 
     jobs
+  }
+
+  def getCurrentJobs(xml: => Future[Elem] = loadXml): Future[Seq[Job]] = {
+    getAllJobs(xml) map (_ filter (_.isCurrent))
   }
 
 }

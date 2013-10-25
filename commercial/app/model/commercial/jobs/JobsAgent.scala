@@ -3,7 +3,9 @@ package model.commercial.jobs
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import model.commercial.Keyword
 import conf.ContentApi
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
+import scala.util.Try
 
 object JobsAgent extends ExecutionContexts with Logging {
 
@@ -21,56 +23,48 @@ object JobsAgent extends ExecutionContexts with Logging {
 
   def refresh() {
 
-    // TODO only tag new jobs and don't include expired jobs in all jobs
+    // TODO only tag new jobs
     for {
-      untaggedJobs <- JobsApi.getAllJobs()
-      jobs <- tagWithKeywords(untaggedJobs)
+      untaggedJobs <- JobsApi.getCurrentJobs()
+      jobs = tagWithKeywords(untaggedJobs)
     } yield agent send jobs
   }
 
   def tagWithKeywords(untaggedJobs: Seq[Job],
-                      lookUp: (String) => Future[Seq[Keyword]] = contentApiResponse): Future[Seq[Job]] = {
+                      lookUp: (String) => Future[Seq[Keyword]] = contentApiResponse): Seq[Job] = {
 
-    def lookUpKeywords(jobApiTag: String): Future[Seq[Keyword]] = {
+    def lookUpKeywords(jobApiTag: String): Seq[Keyword] = {
       val query = jobApiTag replace("&", "") replace(",", "")
-      val futureKeywords = lookUp(query)
+      val keywords = Try(Await.result(lookUp(query), atMost = 2.seconds)).getOrElse(Nil)
 
-      for (keywords <- futureKeywords)
-        log.debug(s"Looking up $jobApiTag gave ${keywords.map(_.id).mkString("; ")}")
-
-      futureKeywords
+      log.debug(s"Looking up $jobApiTag gave ${keywords.map(_.id).mkString("; ")}")
+      keywords
     }
 
     val jobApiTags: Set[String] = untaggedJobs.flatMap(job => job.sectorTags).toSet
 
-    val jobApiTagsToKeywords: Map[String, Future[Seq[Keyword]]] = {
-      jobApiTags.foldLeft(Map[String, Future[Seq[Keyword]]]()) {
+    val jobApiTagsToKeywords: Map[String, Seq[Keyword]] = {
+      jobApiTags.foldLeft(Map[String, Seq[Keyword]]()) {
         (acc, tag) => acc + (tag -> lookUpKeywords(tag))
       }
     }
 
-    def keywordsForJobApiTags(jobApiTags: Seq[String]): Future[Set[Keyword]] = {
-      val keywords = jobApiTagsToKeywords.filter {
+    def keywordsForJobApiTags(jobApiTags: Seq[String]): Set[Keyword] = {
+      jobApiTagsToKeywords.filter {
         case (jobApiTag, _) => jobApiTags contains jobApiTag
-      }.values
-      Future.sequence(keywords).map(_.flatten.toSet)
+      }.values.flatten.toSet
     }
 
-    val futureJobs = Future.sequence {
-      untaggedJobs.map {
-        job => keywordsForJobApiTags(job.sectorTags) map {
-          jobKeywords => job.copy(keywords = jobKeywords)
-        }
-      }
-    }
+    val jobs = for {
+      job <- untaggedJobs
+      jobKeywords = keywordsForJobApiTags(job.sectorTags)
+    } yield job.copy(keywords = jobKeywords)
 
-    for (jobs <- futureJobs) {
-      log.info(s"Tagged ${jobs.size} jobs")
-      log.debug(s"First jobs loaded: ${jobs.take(5).mkString("\n")}")
-      log.debug(s"Last jobs loaded: ${jobs.takeRight(5).mkString("\n")}")
-    }
+    log.info(s"Tagged ${jobs.size} jobs")
+    log.debug(s"First jobs loaded: ${jobs.take(5).mkString("\n")}")
+    log.debug(s"Last jobs loaded: ${jobs.takeRight(5).mkString("\n")}")
 
-    futureJobs
+    jobs
   }
 
   def contentApiResponse(query: String): Future[Seq[Keyword]] = {

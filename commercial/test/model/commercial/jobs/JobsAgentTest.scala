@@ -2,8 +2,7 @@ package model.commercial.jobs
 
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
+import scala.concurrent.Future
 import model.commercial.Keyword
 import common.ExecutionContexts
 
@@ -17,10 +16,7 @@ class JobsAgentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     val jobs = JobsAgent.tagWithKeywords(untaggedJobs, lookUp)
 
-    val result = Await.result(jobs, 1.second)
-    result.size should be(Fixtures.jobs.size)
-    result(0).keywords should be(Fixtures.jobs(0).keywords)
-    result should be(Fixtures.jobs)
+    jobs should be(Fixtures.jobs)
   }
 
 }

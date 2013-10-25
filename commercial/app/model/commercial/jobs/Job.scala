@@ -19,4 +19,7 @@ case class Job(id: Int,
                applyUrl: String,
                sectorTags: Seq[String],
                locationTags: Seq[String],
-               keywords: Set[Keyword] = Set())
+               keywords: Set[Keyword] = Set()) {
+
+  def isCurrent = adExpiryDate.isAfterNow
+}

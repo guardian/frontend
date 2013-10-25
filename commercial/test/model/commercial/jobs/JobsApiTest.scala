@@ -9,8 +9,8 @@ import scala.xml.XML
 
 class JobsApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
-  "getAllJobs" should "load all jobs from XML feed" in {
-    val jobs = JobsApi.getAllJobs(Future {
+  "getCurrentJobs" should "load all unexpired jobs from XML feed" in {
+    val jobs = JobsApi.getCurrentJobs(Future {
       XML.loadString(Fixtures.xml)
     })
 
