@@ -1,3 +1,7 @@
+/* ==========================================================================
+   Commercial component styles
+   Note: Only temporarily here, will eventually move out to their own stylesheets
+   ========================================================================== */
 .commercial {
     text-align: left;
     margin-top: $gs-baseline;
@@ -23,7 +27,6 @@
 }
 
 .commercial__foot {
-
     display: none;
 
     label {
@@ -39,81 +42,49 @@
 
 
 
-.commercial--masterclasses {
-
-    ul, li {
-        @include box-sizing(border-box);
-    }
-
-    li p {
-        @include fs-bodyCopy(1);
-        display: none;
-    }
-
-    ul {
-        padding-left: 8px;
-    }
-
-    /*img {
+/* ==========================================================================
+   Travel component
+   ========================================================================== */
+.commercial--travel {
+    .text-input {
+        width: 60%;
         float: left;
-        width: 45%;
-    }*/
-    h3 {
+    }
+
+    .submit-input {
+        width: 30%;
+        float: left;
+        min-width: 0;
+        margin: 0 0 0 8px;
+    }
+
+    .offer {
+        padding-right: 8px;
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
+    }
+
+    .offer__title {
         margin-bottom: 0;
     }
 
-    .tickets-left {
-        @include fs-data(1);
-        color: #cc0000;
-        display: block !important;
+    .offer__image img {
+        width: 100%;
+        display: block;
     }
 
-    .tickets-price {
-        @include fs-bodyHeading(1);
-        display: block !important;
-        margin-bottom: 0;
+    .offer__deal {
+        font-size: 14px;
+        padding: 8px;
+        box-sizing: border-box;
     }
 
-    &.commercial--small {
-        img {
-            width: 100%;
-        }
-
-        li {
-            display: none;
-        }
-
-        li:first-child {
-            display: block;
-        }
+    .offer__link:hover .offer__deal {
+        background-color: #e3e3db;
     }
 
-    &.commercial--medium {
-        img {
-            float: left;
-            width: 45%;
-        }
-
-        ul {
-            float: right;
-            width: 50%;
-        }
-    }
-
-    &.commercial--large {
-        img {
-            float: left;
-        }
-
-        ul {
-            float: right;
-            width: 50%;
-        }
-
-        li {
-            width: 50%;
-            float: left;
-            padding-right: 8px;
-        }
+    &.commercial--small .offer:nth-child(2) {
+        display: none;
     }
 }
