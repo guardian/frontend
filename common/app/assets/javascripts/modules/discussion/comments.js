@@ -59,6 +59,7 @@ Comments.prototype.ready = function() {
         self = this;
 
     if (hasComments) {
+        // Hide excess topLevelComments
         qwery(this.getClass('topLevel'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
                 self.hasHiddenComments = true;
@@ -66,7 +67,14 @@ Comments.prototype.ready = function() {
             }
         });
 
-        if (this.getElem('showMore')) {
+        if (topLevelComments.length > initialShow) {
+            if (!this.getElem('showMore')) {
+                bonzo(this.getElem('comments')).append(
+                    '<a class="js-show-more-comments cta" data-link-name="Show more comments" data-remove="true" href="/discussion'+
+                        this.options.discussionId +'?page=1">'+
+                        'Show more comments'+
+                    '</a>');
+            }
             this.on('click', this.getElem('showMore'), this.showMore);
         }
 
@@ -103,6 +111,10 @@ Comments.prototype.showHiddenComments = function() {
         elem.className += elem.className.replace(' u-h', '');
     });
     this.hasHiddenComments = false;
+
+    if (this.getElem('showMore').getAttribute('data-remove') === 'true') {
+        bonzo(this.getElem('showMore')).remove();
+    }
     this.emit('first-load');
 };
 
