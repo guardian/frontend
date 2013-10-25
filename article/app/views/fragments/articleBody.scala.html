@@ -8,7 +8,7 @@
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner">
                 <header class="article__head">
 
                     @fragments.headline(article.headline)
@@ -23,8 +23,8 @@
 
                 <div class="after-header"></div>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
                     @if(!article.hasVideoAtTop) {
                         @if(article.hasMainVideo) {
@@ -74,8 +74,8 @@
                         @fragments.social(article)
                     </div>
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true">
-                    <div class="article-v2__secondary-column__inner">
+                <div class="article__secondary-column" aria-hidden="true">
+                    <div class="article__secondary-column__inner">
                         <div class="js-sticky-upper" data-id="mpu-ad-slot"></div>
                         <div class="u-table">
                             <div class="u-table__row">
@@ -104,7 +104,7 @@
             </div>
         </article>
 
-        <div class="article-v2__inner">
+        <div class="article__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             }

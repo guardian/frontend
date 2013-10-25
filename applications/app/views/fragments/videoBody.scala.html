@@ -9,15 +9,15 @@
 
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner">
                 <header class="article__head">
                     @fragments.headline(video.headline)
 
                     @fragments.article.dateline(video.webPublicationDate, video.isLive)
                 </header>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
                     <div class="player media-content">
 
@@ -61,13 +61,13 @@
                         @fragments.social(video)
                     </div>
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true">
+                <div class="article__secondary-column" aria-hidden="true">
                     <h2 class="article__meta-heading tone-colour">Share this video</h2>
                     @fragments.social(video, "next to content")
                 </div>
             </div>
         </article>
-        <div class="article-v2__inner">
+        <div class="article__inner">
             @if(page.storyPackage.nonEmpty) {
                 <aside role="complementary">
                     @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)

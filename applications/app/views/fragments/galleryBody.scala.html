@@ -8,14 +8,14 @@
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
-        <div class="article-v2__inner">
+        <div class="article__inner">
             <header class="article__head">
                 @fragments.headline(gallery.headline)
                 @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
             </header>
         </div>
-        <div class="article-v2__columning-wrapper">
-            <div class="article-v2__main-column">
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
 
                 <div class="article__meta-container">
                     @fragments.byline(gallery.byline, gallery)
@@ -73,13 +73,13 @@
                     @fragments.social(gallery)
                 </div>
             </div>
-            <div class="article-v2__secondary-column" aria-hidden="true">
+            <div class="article__secondary-column" aria-hidden="true">
                 <h2 class="article__meta-heading tone-colour">Share this gallery</h2>
                 @fragments.social(gallery, "next to content")
             </div>
         </div>
     </article>
-    <div class="article-v2__inner">
+    <div class="article__inner">
         @if(storyPackage.nonEmpty) {
             <aside role="complementary">
                 @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

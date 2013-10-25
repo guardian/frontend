@@ -195,12 +195,12 @@
 }
 
 .article__container,
-.article-v2__inner,
-.article-v2__main-column {
+.article__inner,
+.article__main-column {
     position: relative;
 }
 
-.article-v2__secondary-column,
+.article__secondary-column,
 .byline--cloned {
     display: none;
 }
@@ -348,7 +348,7 @@ video {
         margin-left: 0 !important;
         margin-right: 0 !important;
     }
-    .article-v2__columning-wrapper {
+    .article__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;
 
         .media-primary {
@@ -382,11 +382,11 @@ video {
         position: relative;
         max-width: none;
     }
-    .article-v2__inner {
+    .article__inner {
         max-width: gs-span(8);
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
-    .article-v2__columning-wrapper {
+    .article__columning-wrapper {
         width: 100%;
         display: table;
         table-layout: fixed;
@@ -397,18 +397,18 @@ video {
             margin-right: 0 !important;
         }
     }
-    .article-v2__main-column {
+    .article__main-column {
         display: table-cell;
         vertical-align: top;
         max-width: gs-span(8);
         padding-right: $gs-gutter;
     }
-    .article-v2__secondary-column {
+    .article__secondary-column {
         position: relative;
         display: table-cell;
         width: $a-rightCol-width;
     }
-    .article-v2__secondary-column__inner {
+    .article__secondary-column__inner {
         top: 0;
         bottom: 0;
         position: absolute;
@@ -419,7 +419,7 @@ video {
     }
 }
 @include mq(gs-span(13)) {
-    .article-v2__main-column {
+    .article__main-column {
         padding-right: gs-span(1) + $gs-gutter * 2;
     }
 }
@@ -429,16 +429,16 @@ video {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
-    .article-v2__inner,
-    .article-v2__main-column {
+    .article__inner,
+    .article__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
 
-    .article-v2__inner {
+    .article__inner {
         padding-right: $a-rightCol-width + $gs-gutter;
     }
 
-    .article-v2__main-column {
+    .article__main-column {
         padding-right: $gs-gutter;
     }
 
@@ -461,14 +461,14 @@ video {
 }
 
 @include mq(wide) {
-    .article-v2__inner,
-    .article-v2__main-column {
+    .article__inner,
+    .article__main-column {
         padding-left: gs-span(3) + $gs-gutter;
     }
-    .article-v2__main-column {
+    .article__main-column {
         padding-right: gs-span(1) + $gs-gutter*2;
     }
-    .article-v2__inner {
+    .article__inner {
         padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 }

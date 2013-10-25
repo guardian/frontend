@@ -9,7 +9,7 @@
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(image)">
         <article id="article" class="article"
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner">
                 <header class="article__head">
 
                     @fragments.headline(image.headline)
@@ -22,8 +22,8 @@
 
                 <div class="after-header"></div>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
                     @fragments.img(image.mainPicture)
 
@@ -38,8 +38,8 @@
                         @fragments.social(image)
                     </div>
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true">
-                    <div class="article-v2__secondary-column__inner">
+                <div class="article__secondary-column" aria-hidden="true">
+                    <div class="article__secondary-column__inner">
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
@@ -53,7 +53,7 @@
             </div>
         </article>
 
-        <div class="article-v2__inner">
+        <div class="article__inner">
             @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
                 <h3 id="comments" class="page-sub-header tone-colour tone-border">Comments</h3>
                 <div class="article__discussion"></div>
