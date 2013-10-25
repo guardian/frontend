@@ -1,41 +1,5 @@
 @(path: String)
 
-<script>
-
-    require(['bonzo','eventbrite-events'], function(bonzo, eventbriteEvents) {
-
-        var relevantEvents = eventbriteEvents.events.filter(function(ev) {
-            var tags = ev.event.tags.replace(/,\ /g,',').split(',');
-            return ev.event.status === 'Live';
-        });
-
-        var bodyHtml = '<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/21/1377101813833/Browse-Masterclasses-001.jpg">' +
-                       '<ul class="unstyled">';
-
-        for (var i=0; i<4; i++) {
-            var rnd = Math.floor((Math.random()*relevantEvents.length)),
-                displayEvent = relevantEvents[rnd].event,
-                ticket = displayEvent.tickets[0].ticket,
-                ticketsLeft = displayEvent.capacity - displayEvent.num_attendee_rows,
-                description = qwery('p', bonzo.create('<div>'+displayEvent.description+'</div>'))[0].innerText;
-
-            bodyHtml += '<li>' +
-                        '<h3><a href="' + displayEvent.url + '">' + displayEvent.title + '</a></h3>' +
-                        '<p>' + description + '</p>' +
-                        '<p class="tickets-price">' + ticket.display_price + ticket.currency + '</p>' +
-                        '<p class="tickets-left">' + ticketsLeft + ' seats left</p>' +
-                        //'<a href="' + displayEvent.url + '" class="submit-input">Find out more</a>' +
-                        '</li>';
-        }
-
-        bodyHtml += '</ul>';
-
-        console.log(bodyHtml);
-
-    });
-
-</script>
-
 <div class="commercial commercial--masterclasses">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian<span>masterclasses</span></h3>
