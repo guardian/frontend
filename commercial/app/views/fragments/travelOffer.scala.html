@@ -1,43 +1,6 @@
 @(offers: Seq[model.commercial.travel.Offer])
 
 <style>
-    /* Common commercial styles */
-    .commercial {
-        text-align: left;
-        margin-top: 12px;
-    }
-
-    .commercial__title {
-        font-family: "EgyptianHeadline", georgia, serif;
-        font-size: 20px;
-        line-height: 24px;
-        padding-top: 4px;
-        border-top: 1px dotted #e3e3db;
-    }
-
-    .commercial__foot {
-        box-sizing: border-box;
-        font-size: 14px;
-        overflow: hidden;
-        background: #f4f4ee;
-        padding: 8px;
-    }
-
-    .commercial__foot label {
-        display: block;
-    }
-
-
-
-
-
-    .commercial__title {
-        color: #085FA6;
-    }
-
-    .commercial__title span {
-        color: #64C5F8;
-    }
 
     .commercial .text-input {
         width: 60%;
@@ -52,11 +15,17 @@
     }
 
     .offer {
-        position: relative;
-        margin-bottom: 8px;
+        padding-right: 8px;
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
     }
 
-    .offer__image {
+    .offer__title {
+        margin-bottom: 0;
+    }
+
+    .offer__image img {
         width: 100%;
         display: block;
     }
@@ -64,16 +33,15 @@
     .offer__deal {
         font-size: 14px;
         padding: 8px;
-        background-color: rgba(0,0,0,0.7);
-        color: #ffffff;
-        position: absolute;
-        bottom: 5px;
-        width: 100%;
         box-sizing: border-box;
     }
 
     .offer__link:hover .offer__deal {
         background-color: #e3e3db;
+    }
+
+    .commercial--travel.commercial--small .offer:nth-child(2) {
+        display: none;
     }
 </style>
 
@@ -83,11 +51,17 @@
     </div>
     <div class="commercial__body">
         <ul class="unstyled">
-            @offers.take(1).map { offer =>
+            @offers.take(2).map { offer =>
                 <li class="offer">
-                    <a href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I" class="offer__link">
-                        <img src="@offer.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" alt="@offer.title" class="offer__image">
-                        <p class="offer__deal">@offer.title - from £@offer.fromPrice</p>
+                        <a href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I" class="offer__image">
+                            <img src="@offer.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" alt="@offer.title">
+                        </a>
+                        <h3 class="offer__title">
+                            <a href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I">
+                                @offer.title
+                            </a>
+                        </h3>
+                        <p class="offer__price">£@offer.fromPrice</p>
                     </a>
                 </li>
             }

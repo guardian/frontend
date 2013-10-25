@@ -44,7 +44,8 @@ define([
 
 
     Commercial.prototype.applyClassnames = function() {
-        var classname = this.options.elCls;
+        var self = this,
+            classname = this.options.elCls;
 
         common.$g('.' + classname, this.options.context).each(function() {
             var $node = bonzo(this),
@@ -52,7 +53,7 @@ define([
 
             $node.removeClass(classname + '--small ' + classname + '--medium');
 
-            if (width >= 300 && width < 600) {
+            if (width > self.config.smallAdWidth) {
                 $node.addClass(classname + '--medium');
             } else {
                 $node.addClass(classname + '--small');

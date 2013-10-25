@@ -57,8 +57,8 @@ define([
     function loadComponents(opts) {
 
         var slotTargets = {
-            ".js-mpu-ad-slot":          "/commercial/travel/offers?" + opts.keywordsParams,
-            ".article-v2__main-column": "/commercial/masterclasses?" + opts.keywordsParams
+            ".article-v2__main-column": "/commercial/travel/offers?" + opts.keywordsParams,
+            ".js-mpu-ad-slot":          "/commercial/masterclasses?" + opts.keywordsParams
         };
 
         Object.keys(slotTargets).forEach(function(selector) {
