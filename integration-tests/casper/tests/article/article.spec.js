@@ -40,9 +40,9 @@ casper.then(function() {
 	casper.test.begin("Related content", function(test) {
 		test.assertVisible('.js-related', 'Related content trailblock visible');
 		test.assertExists('.js-related .related-trails.shut', 'Additional related trails hidden on page load');
-    	casper.click('.js-related button');
-    	test.assertDoesntExist('.js-related .related-trails.shut', 'Button shows more related trails');
-    	test.done();
+		casper.click('.js-related button');
+		test.assertDoesntExist('.js-related .related-trails.shut', 'Button shows more related trails');
+		test.done();
 	});
 });
 
