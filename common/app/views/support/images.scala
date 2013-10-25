@@ -29,11 +29,12 @@ object GalleryLargeTrail extends Profile("glt", Some(480), Some(288), 70) {}
 object GallerySmallTrail extends Profile("gst", Some(280), Some(168), 70) {}
 object FeaturedTrail extends Profile("f", Some(640), None, 70) {}
 object ArticleMainPicture extends Profile("a", Some(640), None, 70) {}
-object FrontItem extends Profile("fi", Some(300), None, 70) {}
-object FrontItemMobile extends Profile("fi-mobile", Some(140), None, 70) {}
-object FrontItemMain extends Profile("fim", Some(620), None, 70) {}
-object FrontItemMainMobile extends Profile("fim-mobile", Some(300), None, 70) {}
 object LargeThumbnail extends Profile("thumb", Some(220), None, 70)
+object Item140 extends Profile("item-140", Some(140), None, 70) {}
+object Item220 extends Profile("item-220", Some(220), None, 70) {}
+object Item300 extends Profile("item-300", Some(300), None, 70) {}
+object Item460 extends Profile("item-460", Some(460), None, 70) {}
+object Item700 extends Profile("item-700", Some(700), None, 70) {}
 
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile("n", None, None, 70) {}
@@ -47,11 +48,12 @@ object Profile {
     FeaturedTrail,
     Naked,
     ArticleMainPicture,
-    FrontItem,
-    FrontItemMobile,
-    FrontItemMain,
-    FrontItemMainMobile,
-    LargeThumbnail
+    LargeThumbnail,
+    Item140,
+    Item220,
+    Item300,
+    Item460,
+    Item700
   )
 }
 
