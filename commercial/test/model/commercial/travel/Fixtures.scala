@@ -1,6 +1,7 @@
 package model.commercial.travel
 
 import org.joda.time.DateTime
+import model.commercial.Keyword
 
 object Fixtures {
 
@@ -57,5 +58,6 @@ object Fixtures {
       List(Keyword("travel/france", "France")),
       List("France"))
   )
+
 
 }

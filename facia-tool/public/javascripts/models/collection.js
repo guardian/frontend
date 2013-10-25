@@ -124,7 +124,7 @@ define([
             self.load();
         })
         .then(function() {
-            self.setLiveMode();
+            self.setMode(common.config.defaultToLiveMode);
         });
 
         this.state.hasDraft(false);
