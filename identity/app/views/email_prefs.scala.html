@@ -1,0 +1,37 @@
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, user: com.gu.identity.model.User, subscriber: com.gu.identity.model.Subscriber)(implicit request: RequestHeader)
+
+@identityMain(page, conf.Switches.all){
+}{
+    <div class="identity-wrapper">
+        <h1>Email preferences</h1>
+
+        <form class="form" novalidate action="@idUrlBuilder.buildUrl("/email-prefs", idRequest)" role="main" method="post">
+            GNM marketing: @user.statusFields.isReceiveGnmMarketing
+            Third party marketing: @user.statusFields.isReceive3rdPartyMarketing
+
+            HTML preference: @subscriber.htmlPreference
+
+            @* @if(signinForm.globalError.isDefined) {*@
+                @*<div class="form__error">@signinForm.globalErrors.map(_.message).mkString(", ")</div>*@
+            @*}*@
+
+            @*<ul class="form-fields">*@
+
+                @* @idInput(Email(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email"))*@
+                @* @idInput(Password(signinForm("password"), '_label -> "Password"))*@
+
+                @*<li>*@
+                    @*<div class="form-field__note">*@
+                        @*<a class="js-forgotten-password" href='@idUrlBuilder.buildUrl("/reset", idRequest)' data-link-name="Forgotten password">Forgotten your password?</a>*@
+                    @*</div>*@
+                    @*<button type="submit" class="submit-input" data-link-name="Sign in">Sign in</button>*@
+
+                    @*<label class="check-label check-label--helper">*@
+                        @* @idCheckbox(signinForm("keepMeSignedIn"))*@
+                        @*Remember me*@
+                    @*</label>*@
+                @*</li>*@
+            @*</ul>*@
+        </form>
+    </div>
+}

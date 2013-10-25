@@ -11,3 +11,4 @@ POST    /reset-password/:resetToken                     @controllers.ResetPasswo
 GET     /requestnewtoken                                @controllers.ResetPasswordController.requestNewToken
 GET     /register                                       @controllers.RegistrationController.renderForm
 POST    /register                                       @controllers.RegistrationController.processForm
+GET     /email-prefs                                    @controllers.EmailController.preferences
