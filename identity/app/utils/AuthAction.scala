@@ -10,9 +10,11 @@ import services.{IdentityUrlBuilder, IdRequestParser}
 import play.mvc.BodyParser.AnyContent
 import scala.language.implicitConversions
 import java.net.URLEncoder
+import client.Auth
+import idapiclient.ScGuU
 
 
-case class AuthRequest[A](request: Request[A], user: User)
+case class AuthRequest[A](request: Request[A], user: User, auth: Auth)
 object AuthRequest {
   implicit def toRequest[A](authRequest: AuthRequest[A]): Request[A] = authRequest.request
 }
@@ -25,11 +27,13 @@ class AuthAction @Inject()(cookieDecoder: FrontendIdentityCookieDecoder,
 
   protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]) = {
     request.cookies.get("SC_GU_U").flatMap { cookie =>
-      cookieDecoder.getUserDataForScGuU(cookie.value)
+      cookieDecoder.getUserDataForScGuU(cookie.value).map { user =>
+        AuthRequest(request, user, new ScGuU(cookie.value))
+      }
     } match {
-      case Some(user) => {
+      case Some(authRequest) => {
         logger.trace("user is logged in")
-        block(AuthRequest(request, user))
+        block(authRequest)
       }
       case None => {
         logger.debug("No user logged in, redirecting to signin")
