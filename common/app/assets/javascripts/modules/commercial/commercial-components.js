@@ -53,7 +53,7 @@ define([
 
             $node.removeClass(classname + '--small ' + classname + '--medium');
 
-            if (width > self.config.smallAdWidth) {
+            if (width > self.options.smallAdWidth) {
                 $node.addClass(classname + '--medium');
             } else {
                 $node.addClass(classname + '--small');
