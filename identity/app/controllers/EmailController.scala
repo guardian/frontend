@@ -10,6 +10,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import model.IdentityPage
 import play.api.data._
+import client.Error
 
 
 @Singleton
@@ -27,20 +28,41 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     Forms.tuple(
       "receive_gnm_marketing" -> Forms.boolean,
       "receive_third_party_marketing" -> Forms.boolean,
-      "email_format" -> Forms.text()
+      "email_format" -> Forms.text().verifying(List("HTML", "Text").contains(_))
     )
   )
 
   def preferences = authAction.async { implicit request =>
     val idRequest = idRequestParser(request)
-    api.join(
+    api.multiple(
       api.user(request.user.getId(), request.auth),
       api.userEmails(request.user, idRequest.trackingData)
-    ).map {
+    ) map {
       case Right((user, subscriber)) => {
-        Ok(views.html.email_prefs(page, idRequest, idUrlBuilder, user, subscriber))
+        val filledForm = emailPrefsForm.fill(user.statusFields.isReceiveGnmMarketing, user.statusFields.isReceive3rdPartyMarketing, subscriber.htmlPreference)
+        Ok(views.html.email_prefs(page, idRequest, idUrlBuilder, filledForm))
       }
-      case Left(errors) => Ok(errors.toString())
+      case Left(errors) => {
+        val formWithErrors = errors.foldLeft(emailPrefsForm) { case (form, Error(message, description, _, context)) =>
+          logger.info(s"Error while fetching user and email prefs: $message")
+          form.withError(context.getOrElse(""), description)
+        }
+        Ok(views.html.email_prefs(page, idRequest, idUrlBuilder, formWithErrors))
+      }
     }
+  }
+
+  def savePreferences = authAction.async { implicit request =>
+    val idRequest = idRequestParser(request)
+    val boundForm = emailPrefsForm.bindFromRequest
+    boundForm.fold({
+      case (formWithErrors) => Ok(views.html.email_prefs(page, idRequest, idUrlBuilder, formWithErrors))
+    }, {
+      case (gnmMarketing, thirdPartyMarketing, format) => {
+        // save subscriber and user
+
+      }
+    })
+    Future.successful(Ok(""))
   }
 }
