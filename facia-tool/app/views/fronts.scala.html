@@ -2,26 +2,30 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="tool-title">Fronts Editor <span data-bind="visible: false">loading...</span></div>
+<div class="tool-title">Fronts Editor <span data-bind="visible: false">loading...</span></div>
+
+<div style="display: none;" data-bind="visible: true">
 
     <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
 
     <div class="list-picker" data-bind="visible: true" style="display: none">
         <span>Editing front:</span>
         <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
-        <a target="preview" class="preview-link" data-bind="
+        
+        Mode:<a class="tool pref-draft" data-bind="
+            click: toggleModeDefault,
+            css: {active: !liveMode, inactive: liveMode}">Draft</a
+        
+        ><a class="tool pref-live" data-bind="
+            click: toggleModeDefault,
+            css: {active: liveMode, inactive: !liveMode}">Live</a>
+
+        <a class="tool logout" href="/logout">Logout</a>
+
+        <a class="tool preview" target="preview" data-bind="
             attr: {href: previewUrl},
             visible: config">Previews</a>
 
-        <span class="btn-group">
-            <button class="btn" data-bind="
-                click: toggleModeDefault,
-                css: {active: liveMode}">Live</button>
-
-            <button class="btn" data-bind="
-                click: toggleModeDefault,
-                css: {active: !liveMode}">Draft</button>
-        </span>
     </div>
 
     <div class="finder">
@@ -224,5 +228,7 @@
         </div>
     </script>
 
-    <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
+</div>
+
+<script src="@routes.Assets.at("javascripts/fronts.js")"></script>
 }

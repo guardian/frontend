@@ -61,9 +61,9 @@
                 }
             </div>
             @if(isAuthed){
-                <ul class="nav pull-right">
+                <!--ul class="nav pull-right">
                     <li><a href="/logout" id="logout-button">Logout</a></li>
-                </ul>
+                </ul-->
             } else {
                 <form action="@routes.Login.loginPost()" method="post" class="pull-right" style="margin:0px;">
                     <input value="Log In" class="btn btn-primary" type="submit" id="login-button">

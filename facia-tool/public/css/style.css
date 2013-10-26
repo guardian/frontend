@@ -513,8 +513,43 @@ iframe {
     text-decoration: underline;
 }
 
-.preview-link {
+.tool {
+    display: inline-block;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    background: #cccccc;
+    color: #ffffff;
+    margin-left: 2px;
+    border-radius: 2px;
+}
+
+.tool:hover {
+    text-decoration: none;
+    color: #ffffff;
+    background: #999999;
+}
+
+.logout,
+.preview {
     float: right;
+}
+
+.pref-live.active {
+    background: #BC250C;
+}
+
+.pref-draft.active {
+    background: #428834;
+}
+
+.pref-live.inactive:hover {
+    background: #BC250C;
+    cursor: pointer;
+}
+
+.pref-draft.inactive:hover {
+    background: #428834;
+    cursor: pointer;
 }
 
 .ophan-legend {
