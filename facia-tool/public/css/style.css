@@ -157,21 +157,6 @@ a.list-header__status__control:visited {
     margin: 0 2px 0 0;
 }
 
-.list-picker {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    float: right;
-    width: 50%;
-    padding: 0 0 0 18px;
-    height: 30px;
-}
-
-.list-picker select {
-    font-weight: bold;
-    font-size: 16px;
-    color: #000000;
-}
-
 .collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -513,13 +498,36 @@ iframe {
     text-decoration: underline;
 }
 
+.toolbar {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: right;
+    width: 50%;
+    padding: 0 0 0 18px;
+    height: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.tool-group {
+    float: left;
+}
+
+.tool-group select {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    margin-right: 15px;
+}
+
 .tool {
+    float: left;
     display: inline-block;
     text-transform: uppercase;
     padding: 2px 5px;
     background: #cccccc;
     color: #ffffff;
-    margin-left: 2px;
+    margin: 2px 1px;
     border-radius: 2px;
 }
 

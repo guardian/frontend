@@ -8,11 +8,14 @@
 
     <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
 
-    <div class="list-picker" data-bind="visible: true" style="display: none">
-        <span>Editing front:</span>
-        <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
+    <div class="toolbar" data-bind="visible: true" style="display: none">
         
-        Mode:<a class="tool pref-draft" data-bind="
+        <span class="tool-group">
+            Editing front:
+            <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
+        </span>
+        
+        <a class="tool pref-draft" data-bind="
             click: toggleModeDefault,
             css: {active: !liveMode, inactive: liveMode}">Draft</a
         
