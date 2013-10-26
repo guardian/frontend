@@ -8,7 +8,7 @@ import test.{TestRequest, Fake}
 
 class CombinerControllerTest extends FlatSpec with Matchers {
   "Combiner" should "404 when there is no content for 2 tags" in Fake {
-    val result = controllers.IndexController.renderCombiner("profile/grant-klopper", "tone/reviews")(TestRequest())
+    val result = controllers.IndexController.renderCombiner("profile/grant-klopper", "tone/reviews")(TestRequest("/foo"))
     status(result) should be(404)
   }
 }

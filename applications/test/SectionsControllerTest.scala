@@ -10,12 +10,12 @@ class SectionsControllerTest extends FlatSpec with Matchers {
   val callbackName = "aFunction"
 
   "Sections Controller" should "200 when content type is sections" in Fake {
-    val result = controllers.SectionsController.renderSections()(TestRequest())
+    val result = controllers.SectionsController.renderSections()(TestRequest("/sections"))
     status(result) should be(200)
   }
 
   it should "return JSONP when callback is supplied" in Fake {
-    val fakeRequest = FakeRequest(GET, s"sections?callback=$callbackName")
+    val fakeRequest = TestRequest(s"sections?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
 
     val result = controllers.SectionsController.renderSections()(fakeRequest)
@@ -25,7 +25,7 @@ class SectionsControllerTest extends FlatSpec with Matchers {
   }
 
   it should "return JSON when .json format is supplied" in Fake {
-    val fakeRequest = FakeRequest(GET, "sections.json")
+    val fakeRequest = TestRequest("/sections.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 

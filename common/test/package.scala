@@ -162,11 +162,7 @@ trait FakeApp extends TestSettings {
 }
 
 object TestRequest {
-  def apply(): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
-    TestRequest("localhost:9000")
-  }
-
-  def apply(host: String): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
-    FakeRequest().withHeaders("host" -> host)
+  def apply(path: String): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
+    FakeRequest("GET", path)
   }
 }

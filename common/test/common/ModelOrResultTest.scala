@@ -13,7 +13,7 @@ private object TestModel
 
 class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
 
-  implicit val request: RequestHeader = TestRequest()
+  implicit val request: RequestHeader = TestRequest("/foo")
 
   val testContent = Content("the/id", None, None, new DateTime(), "the title", "http://www.guardian.co.uk/canonical",
     "http://foo.bar", elements = None)

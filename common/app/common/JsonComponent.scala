@@ -8,6 +8,7 @@ import play.api.mvc.{ RequestHeader, Results, SimpleResult }
 import play.api.templates.Html
 import com.gu.management.Switchable
 import conf.Configuration
+import play.api.Play.current
 
 object JsonComponent extends Results {
 
@@ -51,14 +52,14 @@ object JsonComponent extends Results {
     Json.stringify(toJson(
       (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {
         // compress and take the body if value is Html
-        case (name, html: Html) => (name -> toJson(html.body))
-        case (name, value: String) => (name -> toJson(value))
-        case (name, value: Boolean) => (name -> toJson(value))
-        case (name, value: Int) => (name -> toJson(value))
-        case (name, value: Double) => (name -> toJson(value))
-        case (name, value: Float) => (name -> toJson(value))
-        case (name, value: ListOfString) => (name -> toJson(value))
-        case (name, value: JsValue) => (name -> value)
+        case (name, html: Html) => name -> toJson(html.body)
+        case (name, value: String) => name -> toJson(value)
+        case (name, value: Boolean) => name -> toJson(value)
+        case (name, value: Int) => name -> toJson(value)
+        case (name, value: Double) => name -> toJson(value)
+        case (name, value: Float) => name -> toJson(value)
+        case (name, value: ListOfString) => name -> toJson(value)
+        case (name, value: JsValue) => name -> value
       }
     ))
   }
@@ -86,7 +87,7 @@ object JsonComponent extends Results {
   // http://stackoverflow.com/questions/1653308/access-control-allow-origin-multiple-origin-domains
   private def resolveOrigin(request: RequestHeader) = request.headers.get("Origin").flatMap{ requestOrigin =>
     allowedOrigins match {
-      case Some(allowed) => allowed.find(_ == requestOrigin).map("Access-Control-Allow-Origin" -> _)
+      case Some(allowed) => allowed.find(_ == requestOrigin).map(domain => "Access-Control-Allow-Origin" -> domain)
       case None => Some("Access-Control-Allow-Origin" -> "*") // dev environments
     }
   }
