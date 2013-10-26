@@ -2,10 +2,11 @@
 @import conf.Switches._
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
-    <h2 class="article-zone tone-@VisualTone(image) tone-accent-border">
-        <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
+    <h2 class="article-zone left-col-deport tone-@VisualTone(image) tone-accent-border">
+        <span class="left-col-deport__body">
+            <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
+        </span>
     </h2>
-
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(image)">
         <article id="article" class="article"
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
@@ -25,11 +26,7 @@
             <div class="article-v2__columning-wrapper">
                 <div class="article-v2__main-column">
 
-                    @image.mainPicture.map{ mainPicture =>
-                        @image.mainPicture(width=220).map{ smallCrop =>
-                            @fragments.img(mainPicture, smallCrop)
-                        }
-                    }
+                    @fragments.img(image.mainPicture)
 
                     <div class="article__meta-container">
                         @fragments.byline(image.byline, image)
@@ -59,12 +56,12 @@
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-                <h3 id="comments" class="article__sub-head tone-colour tone-border">Comments</h3>
+                <h3 id="comments" class="page-sub-header tone-colour tone-border">Comments</h3>
                 <div class="article__discussion"></div>
 
                 <div class="d-show-cta-wrapper">
                     <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@image.shortUrlId}"
-                       data-is-ajax data-link-name="View all comments">
+                       data-is-ajax data-link-name="View all comments" rel="nofollow">
                         View all comments
                         <span class="d-commentcount speech-bubble tone-background tone-border">
                             <span class="js-commentcount__number"></span>

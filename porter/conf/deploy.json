@@ -1,7 +1,7 @@
 {
     "packages":{
         "frontend-porter":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::porter" ],
             "data":{
                 "secondsToWait":1200,

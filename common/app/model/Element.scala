@@ -2,44 +2,49 @@ package model
 
 import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
-class Element protected (val delegate: ApiElement) {
-  lazy val index: Int = delegate.galleryIndex.getOrElse(0)
+trait Element {
+  def delegate: ApiElement
+  def index: Int
   lazy val id: String = delegate.id
 }
 
 object Element {
-  def apply(delegate: ApiElement): Element = {
-    delegate.elementType match {
-      case "image" => new ImageElement(delegate)
-      case "video" => new VideoElement(delegate)
-      case _ => new Element(delegate)
+  def apply(theDelegate: ApiElement, elementIndex: Int): Element = {
+    theDelegate.elementType match {
+      case "image" => new ImageElement(theDelegate, elementIndex)
+      case "video" => new VideoElement(theDelegate, elementIndex)
+      case _ => new Element{
+        lazy val delegate = theDelegate
+        lazy val index = elementIndex
+      }
     }
   }
 }
 
-trait ImageContainer {
-  self: Element =>
-  lazy val imageCrops: List[ImageAsset] = delegate.assets.filter(_.assetType == "image").map(ImageAsset(_,index)).
+trait ImageContainer extends Element {
+
+  lazy val imageCrops: Seq[ImageAsset] = delegate.assets.filter(_.assetType == "image").map(ImageAsset(_,index)).
                                            sortBy(-_.width)
 
   // The image crop with the largest width.
   lazy val largestImage: Option[ImageAsset] = imageCrops.headOption
 }
 
-trait VideoContainer {
-  self: Element =>
+object ImageContainer {
+  def apply(crops: Seq[ImageAsset], theDelegate: ApiElement, imageIndex: Int) = new ImageContainer {
+    override def delegate: ApiElement = theDelegate
+    override def index: Int = imageIndex
+    override lazy val imageCrops = crops
+  }
+}
+
+trait VideoContainer extends Element {
+
   lazy val videoAssets: List[VideoAsset] = delegate.assets.filter(_.assetType == "video").map(VideoAsset(_)).
                                             sortBy(-_.width)
 
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 }
 
-class ImageElement(delegate: ApiElement) extends Element(delegate) with ImageContainer
-{
-  // Image elements only contain images.
-}
-
-class VideoElement(delegate: ApiElement) extends Element(delegate) with ImageContainer with VideoContainer
-{
-  // Video elements can have both images and videos.
-}
+class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
+class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer

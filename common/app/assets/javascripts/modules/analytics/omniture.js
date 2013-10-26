@@ -80,10 +80,10 @@ define([
         };
 
         this.trackAdImpression = function(tagStr) {
-            s.linkTrackVars = 'eVar73,events';
+            s.linkTrackVars = 'eVar53,events';
             s.linkTrackEvents = 'event29';
             s.events = 'event29';
-            s.eVar73 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
+            s.eVar53 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
             s.tl(true, 'o', tagStr);
         };
 
@@ -129,7 +129,8 @@ define([
             s.prop19     = platform;
             s.eVar19     = platform;
 
-            s.prop31    = id.getUserFromCookie() ? "Logged in user" : "Guest user";
+            s.prop31    = id.getUserFromCookie() ? "registered user" : "guest user";
+            s.eVar31    = id.getUserFromCookie() ? "registered user" : "guest user";
 
             s.prop47    = config.page.edition || '';
 

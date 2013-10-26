@@ -50,6 +50,7 @@ define(['common',
             // setup fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
             server.respondWith(galleryResponse);
 
             historyStub = sinon.stub(history, 'pushState');
@@ -242,6 +243,12 @@ define(['common',
 
             bean.fire(document.body, 'keydown', { keyCode: 37 });
             expect(document.querySelector('.js-image-index').innerHTML).toBe('3');
+        });
+
+        it("should close the gallery when the ESC button is pressed", function() {
+            expect(document.querySelector('.overlay').style.display).toBe('block');
+            bean.fire(document.body, 'keydown', { keyCode: 27 });
+            expect(document.querySelector('.overlay').style.display).toBe('none');
         });
 
     });

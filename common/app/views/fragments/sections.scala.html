@@ -30,7 +30,12 @@
         <li class="nav__item">
             <ul class="nav @if(isFooter){nav--footer nav--alternate-link-colors}">
                 @Edition.others(request).map{ edition =>
-                    <li class="nav__item nav__item--full"><a class="nav__link edition @if(isFooter){nav__link--faded}" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@LinkTo("/", edition)">@edition.displayName</a></li>
+                    <li class="nav__item nav__item--full">
+                        <a class="nav__link edition @if(isFooter){nav__link--faded}" data-edition="@edition.id"
+                            data-link-name="switch to @edition.id edition"
+                            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">@edition.displayName
+                        </a>
+                    </li>
                 }
                 <li class="nav__item @if(isFooter){hide-in-footer} nav__item--full hide-on-mobile"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
             </ul>

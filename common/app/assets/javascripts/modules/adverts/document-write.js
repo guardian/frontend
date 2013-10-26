@@ -1,3 +1,4 @@
+/*global guardian */
 define([
     'common',
     'ajax',
@@ -22,7 +23,7 @@ define([
 
     function getPageUrl(config) {
         var id = (config.pageId === '') ? '' : config.pageId + '/';
-        return config.oasSiteIdHost + '/' + id + 'oas.html';
+        return guardian.config.page.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
@@ -50,7 +51,8 @@ define([
     function generateUrl(config, slots, userSegments) {
         var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config) + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
 
-        var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
+        var type = 'mjx';
+
         var query = '?';
 
         if (config.keywords) {

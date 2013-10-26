@@ -1,0 +1,2175 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"science/2013/oct/17/skull-homo-erectus-human-evolution",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-17T18:00:00Z",
+      "webTitle":"Skull of Homo erectus throws story of human evolution into disarray",
+      "webUrl":"http://www.theguardian.com/science/2013/oct/17/skull-homo-erectus-human-evolution",
+      "apiUrl":"http://content.guardianapis.com/science/2013/oct/17/skull-homo-erectus-human-evolution",
+      "fields":{
+        "trailText":"<p>A haul of fossils found in Georgia suggests that half a dozen species of early human ancestor were actually all Homo erectus</p>",
+        "headline":"Skull of Homo erectus throws story of human evolution into disarray",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jjcm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382009342991/Homo-erectus-skull-found--004.jpg",
+        "wordcount":"1125",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T18:00:00Z"
+      },
+      "tags":[{
+        "id":"science/anthropology",
+        "type":"keyword",
+        "webTitle":"Anthropology",
+        "webUrl":"http://www.theguardian.com/science/anthropology",
+        "apiUrl":"http://content.guardianapis.com/science/anthropology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/fossils",
+        "type":"keyword",
+        "webTitle":"Fossils",
+        "webUrl":"http://www.theguardian.com/science/fossils",
+        "apiUrl":"http://content.guardianapis.com/science/fossils",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/evolution",
+        "type":"keyword",
+        "webTitle":"Evolution",
+        "webUrl":"http://www.theguardian.com/science/evolution",
+        "apiUrl":"http://content.guardianapis.com/science/evolution",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/iansample",
+        "type":"contributor",
+        "webTitle":"Ian Sample",
+        "webUrl":"http://www.theguardian.com/profile/iansample",
+        "apiUrl":"http://content.guardianapis.com/profile/iansample",
+        "bio":"<p>Ian Sample has been a <a href=\"http://www.guardian.co.uk/science\">science</a> correspondent for the Guardian since 2003. Before that, he was a journalist at New Scientist and worked at the Institute of Physics as a journal editor. He has a PhD in biomedical materials from Queen Mary's, University of London</p>",
+        "rcsId":"GNL006496",
+        "r2ContributorId":"15749",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/ian_sample_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/georgia",
+        "type":"keyword",
+        "webTitle":"Georgia",
+        "webUrl":"http://www.theguardian.com/world/georgia",
+        "apiUrl":"http://content.guardianapis.com/world/georgia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420381894",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382009342991/Homo-erectus-skull-found--004.jpg",
+          "typeData":{
+            "source":"Georgian National Museum",
+            "altText":"Homo erectus skull found in Dmanisi, Georgia",
+            "height":"84",
+            "credit":"Georgian National Museum",
+            "caption":"The Homo erectus skull found in Dmanisi, Georgia, could has forced a rethink of early human evolution in Africa. Photograph: Georgian National Museum",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420381895",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382023451653/Homo-erectus-skull-found--003.jpg",
+          "typeData":{
+            "source":"Georgian National Museum",
+            "photographer":"Guram Bumbiashvili",
+            "altText":"Homo erectus skull found in Georgia",
+            "height":"332",
+            "credit":"Guram Bumbiashvili/Georgian National Museum",
+            "caption":"The most recently unearthed individual had a long face and big teeth, but the smallest braincase of all five H erectus skulls found at the site. Photograph: Georgian National Museum",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-420381896",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382024055212/Five-Homo-erectus-skulls--009.jpg",
+          "typeData":{
+            "source":"Ponce de León, Zollikofer",
+            "photographer":"University of Zurich",
+            "altText":"Five Homo erectus skulls found in Georgia",
+            "height":"276",
+            "credit":"University of Zurich/Ponce de León, Zollikofer",
+            "caption":"The five H erectus skulls found in Dmanisi, Georgia. Photograph: Ponce de León, Zollikofe/University of Zurich",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420381897",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382025135818/Reconstruction-of-Homo-er-009.jpg",
+          "typeData":{
+            "source":"J H Matternes",
+            "altText":"Reconstruction of Homo erectus",
+            "height":"276",
+            "credit":"J H Matternes",
+            "caption":"Reconstruction of the early human ancestor Homo erectus from the latest skull found at Dmanisi in Georgia. Illustration: J H Matternes",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-420188498",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/16/131016Skull-16x9.mp4",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/16/131016Skull_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/16/131016Skull/131016Skull.m3u8",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"science/2013/oct/17/yeti-dna-ancient-polar-bear-scientists",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-18T07:41:00Z",
+      "webTitle":"Yeti DNA: has the mystery really been solved?",
+      "webUrl":"http://www.theguardian.com/science/2013/oct/17/yeti-dna-ancient-polar-bear-scientists",
+      "apiUrl":"http://content.guardianapis.com/science/2013/oct/17/yeti-dna-ancient-polar-bear-scientists",
+      "fields":{
+        "trailText":"<p>A geneticist says samples from suspected yetis match an ancient polar bear, but other scientists are urging caution</p>",
+        "headline":"Yeti DNA: has the mystery really been solved?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jjeg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015340309/Yeti-006.jpg",
+        "wordcount":"1108",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T13:14:49Z"
+      },
+      "tags":[{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alokjha",
+        "type":"contributor",
+        "webTitle":"Alok Jha",
+        "webUrl":"http://www.theguardian.com/profile/alokjha",
+        "apiUrl":"http://content.guardianapis.com/profile/alokjha",
+        "bio":"<p>Alok Jha is a science correspondent at the Guardian. In addition to writing news and comment, he presents the <a href=\"http://www.theguardian.com/science/series/science\">Science Weekly podcast</a>. A physics graduate from Imperial College London, he has been at the Guardian since the launch of the science supplement, Life, in 2003. He is the author of <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780857386120\">The Doomsday Handbook: 50 Ways to the End of the World </a> and <a href=\"http://www.amazon.co.uk/How-Live-Forever-Interesting-Science/dp/1849164827\">How To Live Forever And 34 Other Really Interesting Uses for Science</a>, both published by Quercus. You can find him on Twitter at  <a href=\"https://twitter.com/alokjha\">@alokjha</a> and his personal website is at <a href=\"http://www.alokjha.com\">alokjha.com </a></p>",
+        "rcsId":"GNL006494",
+        "r2ContributorId":"15338",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alok_jha_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420331121",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382015340309/Yeti-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sipa Press",
+            "altText":"Yeti",
+            "height":"84",
+            "credit":"Sipa Press/Rex Features",
+            "caption":"Yetis, also known as abominable snowmen, have haunted the popular imagination since British climber Eric Shipton took a photo of a footprint in 1951.",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-420279414",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/17/ITNP_AF_YETI_USE_17_dv-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/17/ITNP_AF_YETI_USE_17_dv_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/17/ITNP_AF_YETI_USE_17_dv_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/17/ITNP_AF_YETI_USE_17_dv/ITNP_AF_YETI_USE_17_dv.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/2013/oct/17/sleep-cleans-our-brains-say-scientists",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-18T09:11:00Z",
+      "webTitle":"Why do we sleep? To clean our brains, say US scientists",
+      "webUrl":"http://www.theguardian.com/science/2013/oct/17/sleep-cleans-our-brains-say-scientists",
+      "apiUrl":"http://content.guardianapis.com/science/2013/oct/17/sleep-cleans-our-brains-say-scientists",
+      "fields":{
+        "trailText":"Cerebral spinal fluid found to pump around the brain of sleeping mice, flushing out waste products like a biological dishwasher",
+        "headline":"Why do we sleep? To clean our brains, say US scientists",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jkvk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038539153/scientists-say-they-have--004.jpg",
+        "wordcount":"597",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T19:37:53Z"
+      },
+      "tags":[{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"lifeandstyle/sleep",
+        "type":"keyword",
+        "webTitle":"Sleep",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/sleep",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/sleep",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"science/animal-experimentation",
+        "type":"keyword",
+        "webTitle":"Animal experimentation",
+        "webUrl":"http://www.theguardian.com/science/animal-experimentation",
+        "apiUrl":"http://content.guardianapis.com/science/animal-experimentation",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/iansample",
+        "type":"contributor",
+        "webTitle":"Ian Sample",
+        "webUrl":"http://www.theguardian.com/profile/iansample",
+        "apiUrl":"http://content.guardianapis.com/profile/iansample",
+        "bio":"<p>Ian Sample has been a <a href=\"http://www.guardian.co.uk/science\">science</a> correspondent for the Guardian since 2003. Before that, he was a journalist at New Scientist and worked at the Institute of Physics as a journal editor. He has a PhD in biomedical materials from Queen Mary's, University of London</p>",
+        "rcsId":"GNL006496",
+        "r2ContributorId":"15749",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/ian_sample_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420348871",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038535727/scientists-say-they-have--001.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"54",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038537158/scientists-say-they-have--002.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"340",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038538158/scientists-say-they-have--003.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"130",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038539153/scientists-say-they-have--004.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"84",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038540112/scientists-say-they-have--005.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"132",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038541082/scientists-say-they-have--006.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"168",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038542315/scientists-say-they-have--007.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"180",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038543327/scientists-say-they-have--008.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"228",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038544345/scientists-say-they-have--009.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"276",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038545354/scientists-say-they-have--010.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"372",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038544345/scientists-say-they-have--009.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"276",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep. Photograph: Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420348872",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382038539153/scientists-say-they-have--004.jpg",
+          "typeData":{
+            "source":"© Royalty-Free/CORBIS",
+            "altText":"scientists say they have found why we sleep",
+            "height":"84",
+            "credit":"© Royalty-Free/CORBIS",
+            "caption":"Scientists say they may have found the reason why we need to sleep Photograph: © Royalty-Free/CORBIS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/across-the-universe/2013/oct/18/asteroid-2013-tv135-doomsday-again",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-18T11:40:00Z",
+      "webTitle":"Asteroid 2013 TV135: doomsday again (yawn) | Stuart Clark",
+      "webUrl":"http://www.theguardian.com/science/across-the-universe/2013/oct/18/asteroid-2013-tv135-doomsday-again",
+      "apiUrl":"http://content.guardianapis.com/science/across-the-universe/2013/oct/18/asteroid-2013-tv135-doomsday-again",
+      "fields":{
+        "trailText":"<p><strong>Stuart Clark: </strong>Asteroid 2013 TV135 has a 99.998% chance of missing Earth in 2032</p>",
+        "headline":"Asteroid 2013 TV135: doomsday again (yawn)",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jk8z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/2/29/1330535503240/An-asteroid-plunges-towar-003.jpg",
+        "wordcount":"619",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-25T11:40:00Z"
+      },
+      "tags":[{
+        "id":"science/asteroids",
+        "type":"keyword",
+        "webTitle":"Asteroids",
+        "webUrl":"http://www.theguardian.com/science/asteroids",
+        "apiUrl":"http://content.guardianapis.com/science/asteroids",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/across-the-universe",
+        "type":"blog",
+        "webTitle":"Across the universe",
+        "webUrl":"http://www.theguardian.com/science/across-the-universe",
+        "apiUrl":"http://content.guardianapis.com/science/across-the-universe",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/astronomy",
+        "type":"keyword",
+        "webTitle":"Astronomy",
+        "webUrl":"http://www.theguardian.com/science/astronomy",
+        "apiUrl":"http://content.guardianapis.com/science/astronomy",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"profile/dr-stuart-clark",
+        "type":"contributor",
+        "webTitle":"Stuart Clark",
+        "webUrl":"http://www.theguardian.com/profile/dr-stuart-clark",
+        "apiUrl":"http://content.guardianapis.com/profile/dr-stuart-clark",
+        "bio":"<p>Stuart Clark is an astronomy journalist and author of several books about space, both non-fiction and fiction, including <a href=\"http://www.guardian.co.uk/books/data/book/fiction/9781846972157/the-skys-dark-labyrinth\">The Sky's Dark Labyrinth</a> trilogy</p>",
+        "r2ContributorId":"51157",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420356305",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/2/29/1330535508497/An-asteroid-plunges-towar-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"An asteroid plunges towards the Earth … relax. It (probably) won't actually happen.",
+            "height":"276",
+            "credit":"Getty Images",
+            "caption":"An asteroid plunges towards the Earth. Relax. It (probably) won't happen. Illustration: Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420356306",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/2/29/1330535503240/An-asteroid-plunges-towar-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"An asteroid plunges towards the Earth … relax. It (probably) won't actually happen.",
+            "height":"84",
+            "credit":"Getty Images",
+            "caption":"An asteroid plunges towards the Earth … relax. It (probably) won't actually happen. Photograph: Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/18/republicans-antiscience-shutdown-cost",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-18T13:30:00Z",
+      "webTitle":"Are Republicans anti-science? In this case, yes | Richard Schiffman",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/18/republicans-antiscience-shutdown-cost",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/18/republicans-antiscience-shutdown-cost",
+      "fields":{
+        "trailText":"<p><strong>Richard Schiffman:</strong> The government shutdown forced by the GOP cost not only $24bn but incalculable damage to scientific research</p>",
+        "headline":"Are Republicans anti-science? In this case, yes",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jjpa",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/7/21/1311277422501/A-laboratory-mouse-003.jpg",
+        "wordcount":"885",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-21T13:30:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/us-government-shutdown-2013",
+        "type":"keyword",
+        "webTitle":"US government shutdown 2013",
+        "webUrl":"http://www.theguardian.com/world/us-government-shutdown-2013",
+        "apiUrl":"http://content.guardianapis.com/world/us-government-shutdown-2013",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/richard-schiffman",
+        "type":"contributor",
+        "webTitle":"Richard Schiffman",
+        "webUrl":"http://www.theguardian.com/profile/richard-schiffman",
+        "apiUrl":"http://content.guardianapis.com/profile/richard-schiffman",
+        "bio":"<p>Richard Schiffman is an environmental journalist whose work has appeared in the Washington Post, NPR, the New York Times, Reuters and elsewhere. He is also the author of two biographies and a widely published poet whose poetry portal can be found <a href=\"http://multiplex.isdna.org/poetry.htm\">here</a> </p>",
+        "r2ContributorId":"50567",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/4/25/1335360796666/RichardSchiffman_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/medical-research",
+        "type":"keyword",
+        "webTitle":"Medical research",
+        "webUrl":"http://www.theguardian.com/science/medical-research",
+        "apiUrl":"http://content.guardianapis.com/science/medical-research",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/cancer",
+        "type":"keyword",
+        "webTitle":"Cancer",
+        "webUrl":"http://www.theguardian.com/science/cancer",
+        "apiUrl":"http://content.guardianapis.com/science/cancer",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/sequester",
+        "type":"keyword",
+        "webTitle":"The sequester",
+        "webUrl":"http://www.theguardian.com/world/sequester",
+        "apiUrl":"http://content.guardianapis.com/world/sequester",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"science/nasa",
+        "type":"keyword",
+        "webTitle":"Nasa",
+        "webUrl":"http://www.theguardian.com/science/nasa",
+        "apiUrl":"http://content.guardianapis.com/science/nasa",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/hubble-space-telescope",
+        "type":"keyword",
+        "webTitle":"Hubble space telescope",
+        "webUrl":"http://www.theguardian.com/science/hubble-space-telescope",
+        "apiUrl":"http://content.guardianapis.com/science/hubble-space-telescope",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/scienceofclimatechange",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/science/scienceofclimatechange",
+        "apiUrl":"http://content.guardianapis.com/science/scienceofclimatechange",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/congress",
+        "type":"keyword",
+        "webTitle":"US Congress",
+        "webUrl":"http://www.theguardian.com/world/congress",
+        "apiUrl":"http://content.guardianapis.com/world/congress",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/republicans",
+        "type":"keyword",
+        "webTitle":"Republicans",
+        "webUrl":"http://www.theguardian.com/world/republicans",
+        "apiUrl":"http://content.guardianapis.com/world/republicans",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usdomesticpolicy",
+        "type":"keyword",
+        "webTitle":"US domestic policy",
+        "webUrl":"http://www.theguardian.com/world/usdomesticpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usdomesticpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420300629",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/16/1366128719836/A-laboratory-mouse-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Natacha Pisarenko",
+            "altText":"A laboratory mouse",
+            "height":"276",
+            "credit":"Natacha Pisarenko/AP",
+            "caption":"A laboratory mouse: the US government shutdown has led to the euthanasing of animals used in medical research. Photograph: Natacha Pisarenko/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420300630",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/7/21/1311277422501/A-laboratory-mouse-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Natacha Pisarenko",
+            "altText":"A laboratory mouse",
+            "height":"84",
+            "credit":"Natacha Pisarenko/AP",
+            "caption":"A laboratory mouse. Photograph: Natacha Pisarenko/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/video/2009/oct/01/fossil-ardi-human-ancestors-discovery",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2009-10-01T14:30:00Z",
+      "webTitle":"Video: Scientists introduce fossil Ardi",
+      "webUrl":"http://www.theguardian.com/science/video/2009/oct/01/fossil-ardi-human-ancestors-discovery",
+      "apiUrl":"http://content.guardianapis.com/science/video/2009/oct/01/fossil-ardi-human-ancestors-discovery",
+      "fields":{
+        "trailText":"<p>The remains of fossil Ardi fill in a critical period of our evolution shortly after the human line split from that of chimpanzees</p>",
+        "headline":"Scientists introduce Ardi, the 4.4m-year-old female who lived at the dawn of humanity",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/2b8xc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/10/1/1254398640844/Artists-rendition-of-Ardi-005.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2009-10-04T14:56:08Z"
+      },
+      "tags":[{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/anthropology",
+        "type":"keyword",
+        "webTitle":"Anthropology",
+        "webUrl":"http://www.theguardian.com/science/anthropology",
+        "apiUrl":"http://content.guardianapis.com/science/anthropology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/fossils",
+        "type":"keyword",
+        "webTitle":"Fossils",
+        "webUrl":"http://www.theguardian.com/science/fossils",
+        "apiUrl":"http://content.guardianapis.com/science/fossils",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/evolution",
+        "type":"keyword",
+        "webTitle":"Evolution",
+        "webUrl":"http://www.theguardian.com/science/evolution",
+        "apiUrl":"http://content.guardianapis.com/science/evolution",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/ethiopia",
+        "type":"keyword",
+        "webTitle":"Ethiopia",
+        "webUrl":"http://www.theguardian.com/world/ethiopia",
+        "apiUrl":"http://content.guardianapis.com/world/ethiopia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-353686755",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/x-flv",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_42944486001_gdn-sci-20091001-es-ardi-01-16x9.flv",
+          "typeData":{
+            "source":"PR",
+            "embeddable":"false",
+            "blockAds":"false",
+            "height":"360",
+            "durationMinutes":"0",
+            "width":"480",
+            "durationSeconds":"50"
+          }
+        }]
+      },{
+        "id":"gu-image-353695900",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/10/1/1254398640844/Artists-rendition-of-Ardi-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Handout",
+            "altText":"Artist's rendition of Ardi, the oldest human ancestor",
+            "height":"84",
+            "credit":"Handout/PA",
+            "caption":"Artist's rendition of Ardi, the oldest human ancestor",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/17/dmanisi-skull-discovery-fossilised",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-17T22:13:58Z",
+      "webTitle":"In praise of ... the Dmanisi skull | Editorial",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/17/dmanisi-skull-discovery-fossilised",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/17/dmanisi-skull-discovery-fossilised",
+      "fields":{
+        "trailText":"<strong>Editorial: </strong>The discovery of a near-perfect fossilised skull dating from 1.8m years ago means nothing will be quite the same again",
+        "headline":"In praise of ... the Dmanisi skull",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jkxy",
+        "wordcount":"152",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T22:13:58Z"
+      },
+      "tags":[{
+        "id":"commentisfree/series/in-praise-of",
+        "type":"series",
+        "webTitle":"In praise of ...",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/in-praise-of",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/in-praise-of",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"science/anthropology",
+        "type":"keyword",
+        "webTitle":"Anthropology",
+        "webUrl":"http://www.theguardian.com/science/anthropology",
+        "apiUrl":"http://content.guardianapis.com/science/anthropology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/fossils",
+        "type":"keyword",
+        "webTitle":"Fossils",
+        "webUrl":"http://www.theguardian.com/science/fossils",
+        "apiUrl":"http://content.guardianapis.com/science/fossils",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/evolution",
+        "type":"keyword",
+        "webTitle":"Evolution",
+        "webUrl":"http://www.theguardian.com/science/evolution",
+        "apiUrl":"http://content.guardianapis.com/science/evolution",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"tone/editorials",
+        "type":"tone",
+        "webTitle":"Editorials",
+        "webUrl":"http://www.theguardian.com/tone/editorials",
+        "apiUrl":"http://content.guardianapis.com/tone/editorials",
+        "references":[]
+      },{
+        "id":"profile/editorial",
+        "type":"contributor",
+        "webTitle":"Editorial",
+        "webUrl":"http://www.theguardian.com/profile/editorial",
+        "apiUrl":"http://content.guardianapis.com/profile/editorial",
+        "bio":"<p>Editorials from the Guardian. All Guardian and Observer editorials can be found <a href=\"http://www.guardian.co.uk/tone/editorials\">here</a></p>",
+        "r2ContributorId":"56303",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367609515569/guardianlogo_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"science/gallery/2013/oct/17/skull-human-ancestor-georgia-pictures",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-17T18:00:01Z",
+      "webTitle":"Skull of early human ancestor unearthed in Georgia – in pictures",
+      "webUrl":"http://www.theguardian.com/science/gallery/2013/oct/17/skull-human-ancestor-georgia-pictures",
+      "apiUrl":"http://content.guardianapis.com/science/gallery/2013/oct/17/skull-human-ancestor-georgia-pictures",
+      "fields":{
+        "trailText":"<p>Den where carnivores feasted on the carcasses of Homo erectus has yielded vital clues about early human evolution</p>",
+        "headline":"Skull of early human ancestor unearthed in Georgia – in pictures",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jjcy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/10/17/1382008439826/Dmanisi-skull--Early-Homo-001.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T18:00:01Z"
+      },
+      "tags":[{
+        "id":"science/anthropology",
+        "type":"keyword",
+        "webTitle":"Anthropology",
+        "webUrl":"http://www.theguardian.com/science/anthropology",
+        "apiUrl":"http://content.guardianapis.com/science/anthropology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/fossils",
+        "type":"keyword",
+        "webTitle":"Fossils",
+        "webUrl":"http://www.theguardian.com/science/fossils",
+        "apiUrl":"http://content.guardianapis.com/science/fossils",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/evolution",
+        "type":"keyword",
+        "webTitle":"Evolution",
+        "webUrl":"http://www.theguardian.com/science/evolution",
+        "apiUrl":"http://content.guardianapis.com/science/evolution",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420273912",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/10/17/1382008439826/Dmanisi-skull--Early-Homo-001.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy of M. Ponce de Leon and Ch. Zollikofer, University of Zurich",
+            "altText":"Dmanisi skull : Early Homo Skull Suggests a Single Species",
+            "height":"84",
+            "credit":"Courtesy of M. Ponce de Leon and Ch. Zollikofer, University of Zurich/Science",
+            "caption":"Dmanisi Skulls 1-5 (left to right), and a Dmanisi landscape, Georgia. Photograph: Courtesy of M. Ponce de Leon and Ch. Zollikofer, University of Zurich/Science",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420247949",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008191935/Early-Homo-Skull-Suggests-007.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy of M. Ponce de León and Ch. Zollikofer, University of Zurich",
+            "altText":"Dmanisi skull: Early Homo Skull Suggests a Single Species",
+            "height":"480",
+            "credit":"Courtesy of M. Ponce de León and Ch. Zollikofer, University of Zurich/Science",
+            "caption":"Five hominid skulls were found at Dmanisi in Georgia, together with simple stone tools and the remains of long extinct animals. They were dated to 1.8m years ago",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420247937",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008189071/Early-Homo-Skull-Suggests-006.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy F Javier Urquijo",
+            "altText":"Dmanisi skull: Early Homo Skull Suggests a Single Species",
+            "height":"540",
+            "credit":"Courtesy F Javier Urquijo/Science",
+            "caption":"The Dmanisi excavation site (with the remains of a medieval town in the background)",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-420247878",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008169792/Early-Homo-Skull-Suggests-001.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy of Georgian National Museum",
+            "altText":"Dmanisi skull: Early Homo Skull Suggests a Single Species",
+            "height":"480",
+            "credit":"Courtesy of Georgian National Museum/Science",
+            "caption":"The most recently discovered skull before it was completely excavated. All the individuals are thought to have died within a few hundred years of one another",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-420247897",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008180779/Early-Homo-Skull-Suggests-003.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy of Georgian National Museum",
+            "altText":"Dmanisi skull: Early Homo Skull Suggests a Single Species",
+            "height":"480",
+            "credit":"Courtesy of Georgian National Museum/Science",
+            "caption":"The early Homo cranium and a herbivore fossil. In the early Pleistocene the Dmanisi site was a busy watering hole that human ancestors shared with giant extinct cheetahs, sabre-toothed cats and other animals. The remains of the five hominids were found in collapsed dens where carnivores had apparently dragged their carcasses to eat",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-420247895",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008173406/Early-Homo-Skull-Suggests-002.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy of Guram Bumbiashvili, Georgian National Museum",
+            "altText":"Dmanisi skull: Early Homo Skull Suggests a Single Species",
+            "height":"600",
+            "credit":"Courtesy of Guram Bumbiashvili, Georgian National Museum/Science",
+            "caption":"The latest skull belonged to an adult male and was the largest of the five, with a long face and big teeth. But at just under 550 cubic centimetres, it also had the smallest braincase. The five skulls are so different, the researchers theorise that body form was highly variable among Homo erectus – suggesting that the half a dozen proposed species of Homo found in Africa are actually all H erectus ",
+            "width":"397"
+          }
+        }]
+      },{
+        "id":"gu-image-420247899",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008183896/Early-Homo-Skull-Suggests-004.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy illustration by J.H. Matternes",
+            "altText":"Dmanisi skull: Early Homo Skull Suggests a Single Species",
+            "height":"467",
+            "credit":"Courtesy illustration by J.H. Matternes/Science",
+            "caption":"An artist's impression of the hominid's musculature\r\n",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-420247925",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008186048/Early-Homo-Skull-Suggests-005.jpg",
+          "typeData":{
+            "source":"Science",
+            "photographer":"Courtesy illustration by J.H. Matternes",
+            "altText":"Dmanisi skull: Early Homo Skull Suggests a Single Species",
+            "height":"445",
+            "credit":"Courtesy illustration by J.H. Matternes/Science",
+            "caption":"How the creature might have looked",
+            "width":"400"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/video/2013/oct/17/fossil-skull-human-evolution-homo-erectus-video",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-17T18:00:00Z",
+      "webTitle":"Fossil skull challenges understanding of human evolution - video",
+      "webUrl":"http://www.theguardian.com/science/video/2013/oct/17/fossil-skull-human-evolution-homo-erectus-video",
+      "apiUrl":"http://content.guardianapis.com/science/video/2013/oct/17/fossil-skull-human-evolution-homo-erectus-video",
+      "fields":{
+        "trailText":"<p>The discovery of a cache of fossils suggests that the earliest members of the Homo genus – currently split into half a dozen species – were actually a single species</p>",
+        "headline":"Fossil skull challenges understanding of human evolution - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jj4e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949649814/Skull-005.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T18:00:00Z"
+      },
+      "tags":[{
+        "id":"science/anthropology",
+        "type":"keyword",
+        "webTitle":"Anthropology",
+        "webUrl":"http://www.theguardian.com/science/anthropology",
+        "apiUrl":"http://content.guardianapis.com/science/anthropology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/fossils",
+        "type":"keyword",
+        "webTitle":"Fossils",
+        "webUrl":"http://www.theguardian.com/science/fossils",
+        "apiUrl":"http://content.guardianapis.com/science/fossils",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/evolution",
+        "type":"keyword",
+        "webTitle":"Evolution",
+        "webUrl":"http://www.theguardian.com/science/evolution",
+        "apiUrl":"http://content.guardianapis.com/science/evolution",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/georgia",
+        "type":"keyword",
+        "webTitle":"Georgia",
+        "webUrl":"http://www.theguardian.com/world/georgia",
+        "apiUrl":"http://content.guardianapis.com/world/georgia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/iansample",
+        "type":"contributor",
+        "webTitle":"Ian Sample",
+        "webUrl":"http://www.theguardian.com/profile/iansample",
+        "apiUrl":"http://content.guardianapis.com/profile/iansample",
+        "bio":"<p>Ian Sample has been a <a href=\"http://www.guardian.co.uk/science\">science</a> correspondent for the Guardian since 2003. Before that, he was a journalist at New Scientist and worked at the Institute of Physics as a journal editor. He has a PhD in biomedical materials from Queen Mary's, University of London</p>",
+        "rcsId":"GNL006496",
+        "r2ContributorId":"15749",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/ian_sample_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/josh-strauss",
+        "type":"contributor",
+        "webTitle":"Josh Strauss",
+        "webUrl":"http://www.theguardian.com/profile/josh-strauss",
+        "apiUrl":"http://content.guardianapis.com/profile/josh-strauss",
+        "r2ContributorId":"50377",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-420188498",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949645475/Skull-002.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"54",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949646895/Skull-003.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"340",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949648359/Skull-004.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"130",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949649814/Skull-005.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"84",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949651393/Skull-006.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"132",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949652823/Skull-007.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"168",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949654385/Skull-008.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"180",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949655905/Skull-009.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"228",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949657416/Skull-010.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"276",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949658915/Skull-011.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"372",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949660708/Skull-012.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"360",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949662161/Skull-013.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"90",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949663649/Skull-014.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"225",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949665175/Skull-015.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"360",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949666660/Skull-016.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"230",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/16/131016Skull-16x9.mp4",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/16/131016Skull_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/16/131016Skull/131016Skull.m3u8",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        }]
+      },{
+        "id":"gu-image-420302549",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/16/1381949649814/Skull-005.jpg",
+          "typeData":{
+            "source":"AAAS",
+            "photographer":"AAAS",
+            "altText":"Skull",
+            "height":"84",
+            "credit":"AAAS/AAAS",
+            "caption":"Skull Photograph: AAAS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/2013/oct/17/skull-homo-erectus-human-evolution",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-17T18:00:00Z",
+      "webTitle":"Skull of Homo erectus throws story of human evolution into disarray",
+      "webUrl":"http://www.theguardian.com/science/2013/oct/17/skull-homo-erectus-human-evolution",
+      "apiUrl":"http://content.guardianapis.com/science/2013/oct/17/skull-homo-erectus-human-evolution",
+      "fields":{
+        "trailText":"<p>A haul of fossils found in Georgia suggests that half a dozen species of early human ancestor were actually all Homo erectus</p>",
+        "headline":"Skull of Homo erectus throws story of human evolution into disarray",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jjcm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382009342991/Homo-erectus-skull-found--004.jpg",
+        "wordcount":"1125",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T18:00:00Z"
+      },
+      "tags":[{
+        "id":"science/anthropology",
+        "type":"keyword",
+        "webTitle":"Anthropology",
+        "webUrl":"http://www.theguardian.com/science/anthropology",
+        "apiUrl":"http://content.guardianapis.com/science/anthropology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/fossils",
+        "type":"keyword",
+        "webTitle":"Fossils",
+        "webUrl":"http://www.theguardian.com/science/fossils",
+        "apiUrl":"http://content.guardianapis.com/science/fossils",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/evolution",
+        "type":"keyword",
+        "webTitle":"Evolution",
+        "webUrl":"http://www.theguardian.com/science/evolution",
+        "apiUrl":"http://content.guardianapis.com/science/evolution",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/iansample",
+        "type":"contributor",
+        "webTitle":"Ian Sample",
+        "webUrl":"http://www.theguardian.com/profile/iansample",
+        "apiUrl":"http://content.guardianapis.com/profile/iansample",
+        "bio":"<p>Ian Sample has been a <a href=\"http://www.guardian.co.uk/science\">science</a> correspondent for the Guardian since 2003. Before that, he was a journalist at New Scientist and worked at the Institute of Physics as a journal editor. He has a PhD in biomedical materials from Queen Mary's, University of London</p>",
+        "rcsId":"GNL006496",
+        "r2ContributorId":"15749",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/ian_sample_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/georgia",
+        "type":"keyword",
+        "webTitle":"Georgia",
+        "webUrl":"http://www.theguardian.com/world/georgia",
+        "apiUrl":"http://content.guardianapis.com/world/georgia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420381894",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382009342991/Homo-erectus-skull-found--004.jpg",
+          "typeData":{
+            "source":"Georgian National Museum",
+            "altText":"Homo erectus skull found in Dmanisi, Georgia",
+            "height":"84",
+            "credit":"Georgian National Museum",
+            "caption":"The Homo erectus skull found in Dmanisi, Georgia, could has forced a rethink of early human evolution in Africa. Photograph: Georgian National Museum",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420381895",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382023451653/Homo-erectus-skull-found--003.jpg",
+          "typeData":{
+            "source":"Georgian National Museum",
+            "photographer":"Guram Bumbiashvili",
+            "altText":"Homo erectus skull found in Georgia",
+            "height":"332",
+            "credit":"Guram Bumbiashvili/Georgian National Museum",
+            "caption":"The most recently unearthed individual had a long face and big teeth, but the smallest braincase of all five H erectus skulls found at the site. Photograph: Georgian National Museum",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-420381896",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382024055212/Five-Homo-erectus-skulls--009.jpg",
+          "typeData":{
+            "source":"Ponce de León, Zollikofer",
+            "photographer":"University of Zurich",
+            "altText":"Five Homo erectus skulls found in Georgia",
+            "height":"276",
+            "credit":"University of Zurich/Ponce de León, Zollikofer",
+            "caption":"The five H erectus skulls found in Dmanisi, Georgia. Photograph: Ponce de León, Zollikofe/University of Zurich",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420381897",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382025135818/Reconstruction-of-Homo-er-009.jpg",
+          "typeData":{
+            "source":"J H Matternes",
+            "altText":"Reconstruction of Homo erectus",
+            "height":"276",
+            "credit":"J H Matternes",
+            "caption":"Reconstruction of the early human ancestor Homo erectus from the latest skull found at Dmanisi in Georgia. Illustration: J H Matternes",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-420188498",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/16/131016Skull-16x9.mp4",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/16/131016Skull_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/16/131016Skull/131016Skull.m3u8",
+          "typeData":{
+            "source":"AAAS",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/16/131016Skull_8205104.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/16/131016Skull_8205104.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

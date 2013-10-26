@@ -63,13 +63,13 @@ define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
         this.clearFont = function(name) {
             storage.clearByPrefix(storagePrefix + name);
         };
-        
+
         this.clearAllFontsFromStorage = function() {
             storage.clearByPrefix(storagePrefix);
         };
 
         function getNameAndCacheKey(style) {
-            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/);
+            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.js$/);
             nameAndCacheKey.shift();
             return nameAndCacheKey;
         }

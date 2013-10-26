@@ -14,6 +14,7 @@ define(['common', 'ajax', 'modules/related', 'helpers/fixtures'], function(commo
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
             fixtures.render({
                 id: 'related-fixtures',
                 fixtures: ['<div class="js-related"></div>']

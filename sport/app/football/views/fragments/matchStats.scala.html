@@ -72,31 +72,32 @@
   }
 
   <h3 class="section-divider">Teams</h3>
-  <div class="u-cf">
-      <h5 class="team-list-name type-5">@homeTeam.name</h5>
-      <h5 class="team-list-name type-5">@awayTeam.name</h5>
+  <div class="component u-cf">
+      <div class="u-cf">
+          <h5 class="team-list-name type-5">@homeTeam.name</h5>
+          <h5 class="team-list-name type-5">@awayTeam.name</h5>
+      </div>
+
+      @if(!page.hasLineUp){
+        <p>Team lineups will be available once announced.</p>
+      } else {
+        <div class="u-cf">
+            <div class="lineup">
+                @team(page.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
+            </div>
+            <div class="lineup">
+                @team(page.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
+            </div>
+        </div>
+        <h3 class="type-5 item-divider">Unused substitutes</h3>
+        <div class="u-cf">
+            <div class="lineup">
+                @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
+            </div>
+            <div class="lineup">
+                @team(page.lineUp.awayTeam.players.filter{_.isUnusedSub})
+            </div>
+        </div>
+      }
   </div>
-
-  @if(!page.hasLineUp){
-    <p class="type-7 place-holder">Team lineups will be available once announced.</p>
-
-  } else {
-    <div class="u-cf">
-        <div class="lineup">
-            @team(page.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
-        </div>
-        <div class="lineup">
-            @team(page.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
-        </div>
-    </div>
-    <h3 class="type-5 item-divider">Unused substitutes</h3>
-    <div class="u-cf">
-        <div class="lineup">
-            @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
-        </div>
-        <div class="lineup">
-            @team(page.lineUp.awayTeam.players.filter{_.isUnusedSub})
-        </div>
-    </div>
-  }
 }

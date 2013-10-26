@@ -19,29 +19,20 @@ module.exports = function (grunt) {
 
         sass: {
             compile: {
-                files: {
-                    // head css must go where Play can find it from resources at runtime,
-                    // Everything else goes into frontend-static bundling.
-                    'common/conf/assets/head.min.css': 'common/app/assets/stylesheets/head.scss',
-                    'common/conf/assets/head.facia.min.css': 'common/app/assets/stylesheets/head.facia.scss',
-                    'common/conf/assets/head.identity.min.css': 'common/app/assets/stylesheets/head.identity.scss',
-                    'static/target/compiled/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
-                    'static/target/compiled/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
-                    'static/target/compiled/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
-                    'static/target/compiled/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
-                    'static/target/compiled/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
-                    'static/target/compiled/stylesheets/old-ie.head.identity.min.css': 'common/app/assets/stylesheets/old-ie.head.identity.scss',
-                    'static/target/compiled/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
-                    'static/target/compiled/stylesheets/webfonts.min.css': 'common/app/assets/stylesheets/webfonts.scss'
-                },
-
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/stylesheets',
+                    src: ['*.scss', '!_*'],
+                    dest: 'static/target/compiled/stylesheets/',
+                    rename: function(dest, src) {
+                        return dest + src.replace('scss', 'css');
+                    }
+                }],
                 options: {
-                    check: false,
-                    quiet: true,
+                    style: 'compressed',
+                    sourcemap: false,
                     noCache: (isDev) ? false : true,
-                    debugInfo: (isDev) ? true : false,
-                    style: (isDev) ? 'nested' : 'compressed',
-                    sourcemap: (isDev) ? true : false,
+                    quiet: (isDev) ? false : true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
@@ -119,14 +110,14 @@ module.exports = function (grunt) {
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-weight": "700",
-                            "file": "resources/fonts/EgyptianText-Medium.woff",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.woff",
                             "format": "woff"
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-style": "italic",
-                            "file": "resources/fonts/EgyptianText-RegularItalic.woff",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.woff",
                             "format": "woff"
                         },
                         {
@@ -169,14 +160,14 @@ module.exports = function (grunt) {
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-weight": "700",
-                            "file": "resources/fonts/EgyptianText-Medium.ttf",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
                             "format": "ttf"
                         },
                         {
                             "font-family": "EgyptianText",
-                            "font-style": "italic",
-                            "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.ttf",
                             "format": "ttf"
                         },
                         {
@@ -276,6 +267,19 @@ module.exports = function (grunt) {
                     cwd: 'common/app/public/',
                     src: ['**/*'],
                     dest: 'static/target/compiled/'
+                },{
+                    expand: true,
+                    cwd: 'common/app/assets/flash',
+                    src: ['**/*.swf'],
+                    dest: 'static/target/compiled/flash'
+                }]
+            },
+            headCss: {
+                files: [{
+                    expand: true,
+                    cwd: 'static/target/compiled/stylesheets',
+                    src: ['**/*.css'],
+                    dest: 'common/conf/assets'
                 }]
             }
         },
@@ -288,7 +292,7 @@ module.exports = function (grunt) {
                 srcBasePath: 'static/target/compiled',
                 destBasePath: 'static/target/hashed',
                 flatten: false,
-                hashLength: 32
+                hashLength: (isDev) ? 0 : 32
             },
 
             files: {
@@ -296,7 +300,11 @@ module.exports = function (grunt) {
                 cwd: 'static/target/compiled/',
                 src: '**/*',
                 filter: 'isFile',
-                dest: 'static/target/hashed/'
+                dest: 'static/target/hashed/',
+                rename: function(dest, src) {
+                    // remove .. when hash length is 0
+                    return dest + src.split('/').slice(0, -1).join('/');
+                }
             }
         },
 
@@ -308,60 +316,71 @@ module.exports = function (grunt) {
         jasmine: {
             options: {
                 template: require('grunt-template-jasmine-requirejs'),
-                keepRunner: true
+                keepRunner: true,
+                vendor: [
+                    'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
+                    'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
+                    'common/test/assets/javascripts/components/seedrandom/index.js'
+                ],
+                helpers: 'common/test/assets/javascripts/setup.js',
+                outfile: 'common-spec-runner.html',
+                templateOptions: {
+                    requireConfig: {
+                        baseUrl: 'common/app/assets/javascripts/',
+                        paths: {
+                            common:       'common',
+                            analytics:    'modules/analytics',
+                            bonzo:        'components/bonzo/src/bonzo',
+                            qwery:        'components/qwery/mobile/qwery-mobile',
+                            bean:         'components/bean/bean',
+                            reqwest:      'components/reqwest/src/reqwest',
+                            domwrite:     'components/dom-write/dom-write',
+                            EventEmitter: 'components/eventEmitter/EventEmitter',
+                            swipe:        'components/swipe/swipe',
+                            swipeview:    'components/swipeview/src/swipeview',
+                            moment:       'components/moment/moment',
+                            omniture:     '../../../app/public/javascripts/vendor/omniture',
+                            fixtures:     '../../../test/assets/javascripts/fixtures',
+                            helpers:      '../../../test/assets/javascripts/helpers'
+                        }
+                    }
+                }
             },
             common: {
                 options: {
                     specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/*.spec.js',[
-                        '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
-                        '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
-                        '!common/test/assets/javascripts/spec/Fonts.spec.js',
-                        '!common/test/assets/javascripts/spec/FootballFixtures.spec.js',
-                        '!common/test/assets/javascripts/spec/FootballTables.spec.js',
-                        '!common/test/assets/javascripts/spec/Gallery.spec.js',
-                        '!common/test/assets/javascripts/spec/GallerySwipe.spec.js',
-                        '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
-                        '!common/test/assets/javascripts/spec/MatchNav.spec.js',
-                        '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
-                        '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
-                        '!common/test/assets/javascripts/spec/Popular.spec.js',
-                        '!common/test/assets/javascripts/spec/ProfileNav.spec.js',
-                        '!common/test/assets/javascripts/spec/Related.spec.js',
-                        '!common/test/assets/javascripts/spec/TopStories.spec.js',
-                        '!common/test/assets/javascripts/spec/TrailblockShowMore.spec.js'
-                        ]),
-                    vendor: [
-                        'common/test/assets/javascripts/components/sinon/lib/sinon.js',
-                        'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
-                        'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
-                        'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
-                        'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
-                        'common/test/assets/javascripts/components/seedrandom/index.js'
-                    ],
-                    helpers: 'common/test/assets/javascripts/setup.js',
-                    outfile: 'common-spec-runner.html',
-                    templateOptions: {
-                        requireConfig: {
-                            baseUrl: 'common/app/assets/javascripts/',
-                            paths: {
-                                common:       'common',
-                                analytics:    'modules/analytics',
-                                bonzo:        'components/bonzo/src/bonzo',
-                                qwery:        'components/qwery/mobile/qwery-mobile',
-                                bean:         'components/bean/bean',
-                                reqwest:      'components/reqwest/src/reqwest',
-                                domwrite:     'components/dom-write/dom-write',
-                                EventEmitter: 'components/eventEmitter/EventEmitter',
-                                swipe:        'components/swipe/swipe',
-                                swipeview:    'components/swipeview/src/swipeview',
-                                moment:       'components/moment/moment',
-                                omniture:     '../../../app/public/javascripts/vendor/omniture',
-                                fixtures:     '../../../test/assets/javascripts/fixtures',
-                                helpers:      '../../../test/assets/javascripts/helpers'
-                            }
-                        }
-                    }
+                         'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js', [
+                            // works, but slow
+                            '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
+                            '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
+                            '!common/test/assets/javascripts/spec/Fonts.spec.js',
+                            // needs fixture data
+                            '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
+                            '!common/test/assets/javascripts/spec/MatchNav.spec.js',
+                            '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
+                            '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
+                            '!common/test/assets/javascripts/spec/ProfileNav.spec.js'
+                        ]
+                    )
+                }
+            },
+            facia: {
+                options: {
+                    specs: [
+                        'common/test/assets/javascripts/spec/facia/' + jasmineSpec + '.spec.js'
+                    ]
+                }
+            },
+            discussion: {
+                options: {
+                    specs: grunt.file.expand(
+                        'common/test/assets/javascripts/spec/discussion/' + jasmineSpec + '.spec.js', [
+                            '!common/test/assets/javascripts/spec/discussion/CommentBox.spec.js'
+                        ]
+                    )
                 }
             },
             admin: {
@@ -444,15 +463,14 @@ module.exports = function (grunt) {
             discussion: {
                 src: ['integration-tests/casper/tests/discussion/*.spec.js']
             },
+            gallery: {
+                src: ['integration-tests/casper/tests/gallery/*.spec.js']
+            },
             article: {
-                src: [
-
-                ]
+                src: []
             },
             applications: {
-                src: [
-                    'integration-tests/casper/tests/applications/*.spec.js'
-                ]
+                src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
@@ -527,14 +545,14 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: ['common/**/*.scss'],
-                tasks: ['sass:compile', 'hash'],
+                tasks: ['sass:compile', 'copy:headCss', 'hash'],
                 options: {
                     spawn: false
                 }
             },
             icons: {
                 files: ['common/app/assets/images/**/*'],
-                tasks: ['imagemin:compile', 'copy:compile', 'hash']
+                tasks: ['shell:icons', 'imagemin:compile', 'copy:compile', 'hash']
             }
         }
     });
@@ -569,6 +587,7 @@ module.exports = function (grunt) {
         'shell:icons',
         'imagemin:compile',
         'copy:compile',
+        'copy:headCss',
         'hash'
     ]);
 
@@ -578,11 +597,14 @@ module.exports = function (grunt) {
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-    grunt.registerTask('test', ['compile', 'jshint:common', 'jasmine', 'test:integration']);
+    grunt.registerTask('test:unit', function(app) {
+        grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
+    });
+    grunt.registerTask('test', ['compile', 'jshint:common', 'test:unit', 'test:integration']);
 
     // Analyse tasks
     grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
-    grunt.registerTask('analyse:common:css', ['sass:compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:css:common', ['sass:compile', 'cssmetrics:common']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);

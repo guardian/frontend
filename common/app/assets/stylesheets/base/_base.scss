@@ -21,8 +21,12 @@ body:after {
 }
 
 .dateline {
-    @include fs-data(2);
     color: $c-neutral2;
+    @include fs-data(2);
+
+    @include mq(tablet) {
+        @include fs-data(3, true);
+    }
 
     i {
         vertical-align: baseline;

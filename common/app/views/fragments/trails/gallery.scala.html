@@ -1,22 +1,22 @@
-@(trail: Gallery, rowNum: Int, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
+@(gallery: Gallery, rowNum: Int, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
 <@element class="trail trail--gallery t@rowNum" data-link-name="gallery trail">
 
     <h@headingLevel class="trail__headline type-5">
         <span class="trail__headline-kicker">Gallery:</span>
-        <a href="@LinkTo{@trail.url}" data-link-name="@rowNum | text">
-            @RemoveOuterParaHtml(trail.headline)
+        <a href="@LinkTo{@gallery.url}" data-link-name="@rowNum | text">
+            @RemoveOuterParaHtml(gallery.headline)
         </a>
     </h@headingLevel>
 
-    @fragments.galleryThumbs(trail)
+    @fragments.galleryThumbs(gallery)
 
-    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+    @fragments.relativeDate(gallery.webPublicationDate, gallery.isLive, isFront=true)
 
     <span class="trail__count trail__count--imagecount">
-        <a href="@trail.url" data-link-name="Gallery image count">
+        <a href="@gallery.url" data-link-name="Gallery image count">
             <i class="i i-gallery"></i>
-            @trail.images.length <span class="u-h">images</span>
+            @gallery.largestCrops.length <span class="u-h">images</span>
         </a>
     </span>
 

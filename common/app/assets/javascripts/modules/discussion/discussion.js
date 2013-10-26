@@ -73,7 +73,7 @@ define([
                         }
 
                         self.getCommentCount(function(commentCount) {
-                            if (commentCount > 0) {
+                            if (!(commentCount === 0 && self.discussionClosed)) {
                                 // Remove non-JS links
                                 common.$g('.js-show-discussion, .js-show-discussion a').attr('href', '#comments');
 
@@ -156,7 +156,7 @@ define([
                             }
                         }
 
-                        RecommendComments.init(context, { apiRoot: apiRoot });
+                        RecommendComments.init(context);
                         commentsHaveLoaded = true;
                     },
                     error: function() {

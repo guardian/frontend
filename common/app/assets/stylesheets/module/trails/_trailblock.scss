@@ -23,10 +23,6 @@
 
     > ul {
         margin-bottom: 0;
-
-        + ul {
-            border-top: 1px solid $c-neutral6;
-        }
     }
 }
 
@@ -96,4 +92,18 @@
     color: #ffffff;
     padding: 14px 0 0 6px;
     text-align: left;
+}
+
+/* more on this story trailblock
+   ========================================================================== */
+@include mq(rightCol) {
+    .more-on-this-story {
+        .t1 {
+            display: none;
+        }
+    }
+
+    .more-on-this-story--one-item {
+        display: none;
+    }
 }

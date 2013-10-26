@@ -2,8 +2,10 @@
    ========================================================================== */
 
 .furniture {
+    background-color: #ffffff;
     display: none;
 }
+
 .furniture--left {
     float: left;
     clear: left;
@@ -82,7 +84,8 @@
         }
     }
     .trail__count {
-        position: static;
+        position: relative;
+        top: -1px;
         float: left;
         color: $c-neutral2;
         margin-left: 4px;

@@ -2,8 +2,10 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
-    <h2 class="article-zone tone-@VisualTone(article) tone-accent-border">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+    <h2 class="article-zone left-col-deport tone-@VisualTone(article) tone-accent-border">
+        <span class="left-col-deport__body">
+            <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+        </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live}"
@@ -34,11 +36,7 @@
                 <div class="article-v2__main-column">
 
                     @if(!article.isLive && !article.hasVideoAtTop) {
-                        @article.mainPicture.map{ mainPicture =>
-                            @article.mainPicture(width=220).map{ smallCrop =>
-                                @fragments.img(mainPicture, smallCrop)
-                            }
-                        }
+                        @fragments.img(article.mainPicture)
                     }
                     <div class="article__meta-container">
                         @fragments.byline(article.byline, article)

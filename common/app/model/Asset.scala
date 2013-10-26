@@ -4,7 +4,7 @@ import com.gu.openplatform.contentapi.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
 
-case class ImageAsset(private val delegate: Asset, val index: Int) {
+case class ImageAsset(private val delegate: Asset, index: Int) {
 
   private lazy val fields: Map[String,String] = delegate.typeData
   private lazy val aspectRatio: Fraction = {

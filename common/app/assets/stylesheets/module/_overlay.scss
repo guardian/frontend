@@ -7,7 +7,6 @@
 
     .is-updating {
         margin-top: $baseline * 20;
-        background-image: url(../images/auto-update-activity-dark.614abf55ccbb65d1bb691aa8bf64fd7f.gif);
     }
 
     .preload-msg {
@@ -32,7 +31,8 @@
 
     #header,
     #preloads,
-    .footer {
+    .footer,
+    .site-message {
         display: none;
     }
 }

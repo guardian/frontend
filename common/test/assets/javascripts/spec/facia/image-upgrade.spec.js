@@ -52,10 +52,8 @@ define(['modules/facia/image-upgrade', 'bonzo', 'common'], function(ImageUpgrade
         });
 
         it('should not upgrade if connection speed is "low"', function() {
-            navigator = {
-                connection: {
-                    type: 3
-                }
+            navigator.connection = {
+                type: 3
             };
             imageUpgrade.upgrade();
             expect($item.hasClass('item--no-image')).toBeTruthy();

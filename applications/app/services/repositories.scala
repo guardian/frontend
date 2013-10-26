@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.{SwitchingContentApi, ContentApi}
+import conf.{ElasticSearchContentApi, ContentApi}
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.ItemResponse
@@ -95,7 +95,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = SwitchingContentApi().item(path, edition)
+    val response = ElasticSearchContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response.map { response =>

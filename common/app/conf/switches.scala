@@ -46,6 +46,11 @@ object Switches extends Collections {
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
     safeState = Off)
 
+  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
+    "If this switch is on, then extra logging will be done for edition redirects.",
+    safeState = Off
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -148,23 +153,23 @@ object Switches extends Collections {
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-  safeState = Off)
+    safeState = Off)
 
   val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
-  "If this switch is on, external links are turned into cards in body content on wide viewports.",
-  safeState = Off)
+    "If this switch is on, external links are turned into cards in body content on wide viewports.",
+    safeState = Off)
 
   val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
-  "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
-  safeState = Off)
+    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
+    safeState = Off)
 
   val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
-  "If this is switched on then unsupported embeds will be included in article bodies.",
-  safeState = Off)
+    "If this is switched on then unsupported embeds will be included in article bodies.",
+    safeState = Off)
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
-  "If this is switched on then keywords will be shown at the end of articles.",
-  safeState = Off)
+    "If this is switched on then keywords will be shown at the end of articles.",
+    safeState = Off)
 
   val FollowItemRedirectsFromApiSwitch = Switch("Feature Switches", "follow-item-redirects",
     "If this switch is on then content api redirects on items will be sent back to the end user.",
@@ -173,59 +178,58 @@ object Switches extends Collections {
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
-  "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
-  safeState = Off)
+    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
+    safeState = Off)
 
   val ABParagraphSpacingSwitch = Switch("A/B Tests", "ab-paragraph-spacing",
-  "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
-  safeState = Off)
+    "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
+    safeState = Off)
 
   val ABInlineLinkCardSwitch = Switch("A/B Tests", "ab-inline-link-card",
-  "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
-  safeState = Off)
+    "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
+    safeState = Off)
 
   val ABAa = Switch("A/B Tests", "ab-aa",
-  "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
-  safeState = Off)
+    "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
+    safeState = Off)
 
   val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
-  "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
-  safeState = Off)
+    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
+    safeState = Off)
 
   val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
-  "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
-  safeState = Off)
+    "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
+    safeState = Off)
 
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
-  "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-  safeState = Off)
+    "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
+    safeState = Off)
 
   // Dummy Switch
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
-  "Switch that is only used while running tests. You never need to change this switch.",
-  safeState = Off)
+    "Switch that is only used while running tests. You never need to change this switch.",
+    safeState = Off)
 
   val FaciaSwitch = Switch("Facia", "facia",
-  "Switch to redirect to facia if request has X-Gu-Facia=true",
-  safeState = Off  )
+    "Switch to redirect to facia if request has X-Gu-Facia=true",
+    safeState = Off  )
 
   // Image Switch
 
   val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
-  "If this is switched on the Image server will use the webp format when requested.",
-  safeState = Off)
+    "If this is switched on the Image server will use the webp format when requested.",
+    safeState = Off)
 
   val AddVaryAcceptHeader = Switch("Image Server", "add-vary-accept-header",
-  "If this is switched on the Image server will add vary-accept to responses.",
-  safeState = Off)
+    "If this is switched on the Image server will add vary-accept to responses.",
+    safeState = Off)
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
-  "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
-  safeState = Off)
-
+    "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
+    safeState = Off)
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -271,7 +275,8 @@ object Switches extends Collections {
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
-    FollowItemRedirectsFromApiSwitch
+    FollowItemRedirectsFromApiSwitch,
+    EditionRedirectLoggingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -7,14 +7,14 @@ define(["bean",
         bonzo) {
 
     function Overlay(content) {
-        this.loadingHtml = '<div class="preload-msg"><div class="is-updating"></div></div>';
+        this.loadingHtml = '<div class="preload-msg"><div class="is-updating is-updating--dark"></div></div>';
         content = content || this.loadingHtml;
 
         var self     = this,
             template = '<div class="overlay">' +
                        '  <div class="overlay__header u-cf">' +
                        '    <div class="overlay__toolbar u-cf"></div>' +
-                       '    <button class="overlay__cta overlay__cta--close  js-overlay-close" data-link-name="Close overlay">' +
+                       '    <button class="overlay__cta overlay__cta--close js-overlay-close" data-link-name="Close overlay">' +
                        '      <i class="i i-close-icon"></i>' +
                        '    </button>' +
                        '  </div>' +
@@ -22,7 +22,7 @@ define(["bean",
                        '</div>';
 
         bonzo(document.body).append(template);
-
+    
         this._savedPos   = 0,
         this.node        = document.body.querySelector('.overlay');
         this.headerNode  = this.node.querySelector('.overlay__header');

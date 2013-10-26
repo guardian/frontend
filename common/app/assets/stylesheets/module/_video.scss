@@ -1,4 +1,5 @@
-video {
+video,
+object {
     max-width: 100%;
     height: auto;
     @include user-select;
@@ -12,7 +13,7 @@ video {
         margin-right: $gs-gutter * -1;
     }
     margin-bottom: $gs-column-height;
-    background: #000;
+    background: #000000;
     text-align: center; // prevents poster from loading to left then centering
 }
 
@@ -22,4 +23,18 @@ video {
 
 .gallery-byline {
     margin-top: $baseline*4;
+}
+
+.media-proportional-container {
+    @include fix-aspect-ratio(5, 3);
+
+    object,
+    iframe,
+    video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
 }
