@@ -88,7 +88,7 @@ define([
                             isAfter = true;
                         // or if there arent't any other articles, after those in the first preceding group that contains articles.
                         } else if (targetList.collection) {
-                            var groups = targetList.collection.list; 
+                            var groups = targetList.collection.groups; 
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
                                 targetItem = _.last(groups[i].articles());
                                 if (targetItem) {

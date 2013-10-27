@@ -147,11 +147,11 @@
 
             <div data-bind="
                 css: {'pending': state.loadIsPending},
-                template: {name: 'template_zones', foreach: list}"></div>
+                template: {name: 'template_groups', foreach: groups}"></div>
         </div>
     </script>
 
-    <script type="text/html" id="template_zones">
+    <script type="text/html" id="template_groups">
         <!-- ko if: !_.isUndefined(name) -->
         <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->

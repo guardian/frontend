@@ -22,7 +22,7 @@ define([
         
         this.id = opts.id;
         this.response = null;
-        this.list = this.createGroups(opts.groups);
+        this.groups = this.createGroups(opts.groups);
         
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
@@ -164,7 +164,7 @@ define([
     Collection.prototype.importList = function(source) {
         var self = this;
 
-        _.each(this.list, function(group) {
+        _.each(this.groups, function(group) {
             group.articles.removeAll();
         });
 
@@ -174,13 +174,13 @@ define([
 
             groupInt = parseInt((item.meta || {}).group, 10) || 0;
 
-            group = _.find(self.list, function(g){ return g.group === groupInt; }) || self.list[0];
+            group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
             group.articles.push(new Article(item));
         });
     }
 
     Collection.prototype.decorate = function() {
-        _.each(this.list, function(group) {
+        _.each(this.groups, function(group) {
             contentApi.decorateItems(group.articles());
             ophanApi.decorateItems(group.articles());
         });
