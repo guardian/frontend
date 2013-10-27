@@ -124,9 +124,7 @@
                 </div>
 
                 <div class="collection-config" data-bind="visible: state.editingConfig">
-                    <div>
-                        <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
-                    </div>
+                    <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
                     <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
                     <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
                 </div>
@@ -212,7 +210,6 @@
 
             <div class="trail__meta">
                 <span data-bind="html: humanDate"></span>
-                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
             </div>
 
         </div>

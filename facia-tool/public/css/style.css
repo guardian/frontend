@@ -175,23 +175,12 @@ h1 span {
     opacity: 0.2;
 }
 
-.trail.ui-sortable-placeholder {
-    height: 5px !important;
-    background-color: #47ae38 !important;
-    visibility: visible !important;
-}
-
 .trail img {
     float: left;
     width: 75px;
     height: 45px;
     margin: 3px 0 0 0;
     background-color: #EEEEEE;
-}
-
-.trail p {
-    margin: 0;
-    padding: 0;
 }
 
 .trail .webTitle {
@@ -212,14 +201,6 @@ h1 span {
     color: #f89406;
 }
 
-.trail .trailText {
-    color: #666666;
-    font-family: EgyptianText, georgia, serif;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 18px;
-}
-
 .trail .trail__meta {
     position: absolute;
     top: 36px;
@@ -228,18 +209,6 @@ h1 span {
     font-size: 10px;
     line-height: 14px;
     margin: 0 0 0 80px;
-}
-
-.trail .trail__meta a {
-    display: none;
-}
-
-.trail:hover .trail__meta a {
-    display: inline-block;
-    color: #666666;
-    border-left: 1px #dddddd solid;
-    padding-left: 4px;
-    cursor: pointer;
 }
 
 .trail .trail__remove {
@@ -325,19 +294,6 @@ button {
     background-color: #eee;
 }
 
-.collection-config a {
-    color: #666666;
-    cursor: pointer;
-}
-
-.collection-config input {
-}
-
-.collection-config input.tiny {
-    width: 40px;
-    text-align: right;
-}
-
 .trail_stats {
     position: absolute;
     top: 6px;
@@ -370,30 +326,6 @@ button {
     line-height: 12px;
     color: #999999;
     text-transform: uppercase;
-}
-
-.frames {
-    position: relative;
-    float: left;
-    clear: both;
-    display: block;
-    width: 100%;
-    padding: 5px 0 0 0;
-}
-
-.frame {
-    padding: 0 0 20px 0;
-    position: absolute;
-    -webkit-transition:left 0.4s;
-       -moz-transition:left 0.4s;
-            transition:left 0.4s;
-}
-
-iframe {
-    margin: 10px 0 0 0;
-    border: 1px solid #999999;
-    border-radius: 5px;
-    box-shadow: 1px 1px 7px #666666;
 }
 
 .underDrag {
