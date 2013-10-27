@@ -50,20 +50,20 @@ define([
             };
 
         if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
-            model.liveMode(true);
+            model.liveMode(window.localStorage.getItem(prefKeyDefaultMode) === '1');
         }
 
         model.setModeLive = function() {
             model.liveMode(true);
-            if (window.localStorage && !window.localStorage.getItem(prefKeyDefaultMode)) {
-                window.localStorage.setItem(prefKeyDefaultMode, 1);
+            if (window.localStorage) { 
+                window.localStorage.setItem(prefKeyDefaultMode, '1');
             }
         }
 
         model.setModeDraft = function() {
             model.liveMode(false);
-            if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
-                window.localStorage.removeItem(prefKeyDefaultMode);
+            if (window.localStorage) { 
+                window.localStorage.setItem(prefKeyDefaultMode, '0');
             }
         }
 
@@ -180,7 +180,7 @@ define([
         function updateLayout() {
             var height = $(window).height();
             $('.scrollable').each(function() {
-                $(this).height(Math.max(100, height - $(this).offset().top) - 1)
+                $(this).height(Math.max(100, height - $(this).offset().top) - 3)
             });
         };
 

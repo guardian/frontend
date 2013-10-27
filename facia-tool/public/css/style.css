@@ -52,6 +52,11 @@ input[type=text] {
     text-transform: uppercase;
 }
 
+.login-form {
+    display: inline-table;
+    margin: 0 0 0 10px;
+}
+
 h1 {
     float: left;
     font-size: 26px;
@@ -66,6 +71,21 @@ h1 {
 h1 span {
     color: #CCCCCC;
     font-weight: normal;
+}
+
+.message {
+    float: left;
+    font-size: 26px;
+    font-style: italic;
+    height: 30px;
+    color: #CCCCCC;
+    letter-spacing: -1px;
+    line-height: 30px;
+    margin: 0 0 0 10px;
+}
+
+.message--important {
+    color: #d61d00;
 }
 
 .title {
@@ -98,7 +118,7 @@ h1 span {
 
 .list-header__saving  {
     float: right;
-    color: #d61d00;
+    color: #CCCCCC;
     font-size: 12px;
 }
 
@@ -119,6 +139,8 @@ h1 span {
 }
 
 .collections__inner {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     padding: 0 10px 0 0;
     border-top: 2px solid #CCCCCC;
 }
@@ -468,12 +490,19 @@ iframe {
 .tool {
     float: left;
     display: inline-block;
-    padding: 4px 8px;
-    background: #DDDDDD;
+    padding: 4px 10px;
+    background: #CCCCCC;
     color: #FFFFFF;
     margin: 1px 0;
-    border-radius: 4px;
+    border-radius: 3px;
+    border: 0;
     cursor: pointer;
+}
+
+.tool:hover {
+    text-decoration: none;
+    color: #ffffff;
+    background: #AAAAAA;
 }
 
 .tool-label {
@@ -483,40 +512,33 @@ iframe {
     color: #999999;
 }
 
-.tool-label.active {
-    color: #46c430;
-}
-
 .draft-toolbar {
     color: #46c430;
-    margin-left: 4px;
+    margin: 0 0 10px 4px;
     height: 22px;
 }
 
-.tool.draft-publish {
-    background: #46c430;
-    padding: 0 6px;
+.draft-toolbar .tool {
+    padding: 0 8px;
     font-size: 12px;
+    line-height: 20px;
 }
 
-.tool.draft-publish:hover {
-    background: #47AE38;
+.draft-toolbar .tool.draft-warning {
+    font-weight: bold;
+    margin-right: 4px;
 }
 
-.tool.draft-discard {
-    padding: 0 6px;
-    font-size: 12px;
+.draft-toolbar .tool.draft-publish {
+    background: #0088cc;
+}
+
+.draft-toolbar .tool.draft-publish:hover {
+    background: #0077BB;
+}
+
+.draft-toolbar .tool.draft-discard {
     margin-left: 2px;
-}
-
-.draft-warning {
-    color: #46c430;
-}
-
-.tool:hover {
-    text-decoration: none;
-    color: #ffffff;
-    background: #CCCCCC;
 }
 
 .logout,
@@ -525,25 +547,27 @@ iframe {
     margin-left: 2px;
 }
 
-.pref-live {
+.pref-draft {
+    font-weight: bold;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.pref-draft {
+.pref-live {
+    font-weight: bold;
     margin-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
+.pref-draft.active {
+    cursor: default;
+    background: #0088cc;
+}
+
 .pref-live.active {
     cursor: default;
     background: #46c430;
-}
-
-.pref-draft.active {
-    cursor: default;
-    background: #999999;
 }
 
 .ophan-legend {
