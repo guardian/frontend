@@ -142,7 +142,7 @@ h1 span {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0 10px 0 0;
-    border-top: 2px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
 }
 
 .collection {
@@ -180,6 +180,7 @@ h1 span {
     height: 45px;
     margin: 3px 0 0 0;
     background-color: #EEEEEE;
+    border-radius: 3px;
 }
 
 .trail .webTitle {
@@ -263,7 +264,7 @@ button {
 }
 
 .clipboard__title {
-    border-top: 2px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
 }
 
 .clipboard__wrapper {
@@ -275,6 +276,7 @@ button {
     position: absolute;
     z-index: -1;
     border: 1px dashed #cccccc;
+    border-radius: 3px;
     width: 100%;
     padding: 4px 5px;
     color: #999999;

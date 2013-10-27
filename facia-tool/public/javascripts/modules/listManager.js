@@ -180,7 +180,7 @@ define([
         function updateLayout() {
             var height = $(window).height();
             $('.scrollable').each(function() {
-                $(this).height(Math.max(100, height - $(this).offset().top) - 3)
+                $(this).height(Math.max(100, height - $(this).offset().top) - 2)
             });
         };
 
