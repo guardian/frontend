@@ -151,7 +151,7 @@ h1 span {
     width: 100%;
     float: left;
     position: relative;
-    border-bottom: 2px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .trail {
@@ -164,7 +164,6 @@ h1 span {
     -webkit-transition: background-color 100ms;
        -moz-transition: background-color 100ms;
             transition: background-color 100ms;
-    border-bottom: 1px dotted #cccccc;
 }
 
 .trail:last-child {
