@@ -88,7 +88,7 @@ define([
                             isAfter = true;
                         // or if there arent't any other articles, after those in the first preceding group that contains articles.
                         } else if (targetList.collection) {
-                            var groups = targetList.collection.currentGroups(); 
+                            var groups = targetList.collection.list; 
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
                                 targetItem = _.last(groups[i].articles());
                                 if (targetItem) {
@@ -150,8 +150,8 @@ define([
                                 item:     item,
                                 position: position,
                                 after:    isAfter,
-                                live:     targetList.collection.state.liveMode(),
-                                draft:   !targetList.collection.state.liveMode(),
+                                live:     common.state.liveMode(),
+                                draft:   !common.state.liveMode(),
                                 itemMeta: {
                                     group: targetList.group + ''
                                 }
@@ -177,8 +177,8 @@ define([
                             fromList.collection,
                             {
                                 item:   item,
-                                live:   fromList.collection.state.liveMode(),
-                                draft: !fromList.collection.state.liveMode()
+                                live:   common.state.liveMode(),
+                                draft: !common.state.liveMode()
                             }
                         )
                     });

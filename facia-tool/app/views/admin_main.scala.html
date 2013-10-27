@@ -52,14 +52,14 @@
     </head>
     <body>
 
-    <div class="navbar">
+    <!--div class="navbar">
         <div class="navbar-inner">
             <div id="environment">
                 <span class="label label-warning">Environment: @env.toLowerCase</span>
                 @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
                     <span class="label label-important">Editing @Configuration.facia.stage.toUpperCase!</span>
                 }
-            </div>
+            </div-->
             @if(isAuthed){
                 <!--ul class="nav pull-right">
                     <li><a href="/logout" id="logout-button">Logout</a></li>
@@ -69,8 +69,8 @@
                     <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
                 </form>
             }
-        </div>
-    </div>
+        <!--/div>
+    </div-->
 
     @content
 

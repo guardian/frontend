@@ -45,23 +45,26 @@ define([
                     },
                     keepCopy:  true
                 },
+
+                liveMode: common.state.liveMode
             };
 
         if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
-            model.liveMode = true;
-        } else {
-            model.liveMode = common.config.defaultToLiveMode;
+            model.liveMode(true);
         }
 
-        model.toggleModeDefault = function() {
-            if (!window.localStorage) { return; }
-
-            if (window.localStorage.getItem(prefKeyDefaultMode)) {
-                window.localStorage.removeItem(prefKeyDefaultMode);
-            } else {
+        model.setModeLive = function() {
+            model.liveMode(true);
+            if (window.localStorage && !window.localStorage.getItem(prefKeyDefaultMode)) {
                 window.localStorage.setItem(prefKeyDefaultMode, 1);
             }
-            window.location.href = window.location.href;
+        }
+
+        model.setModeDraft = function() {
+            model.liveMode(false);
+            if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
+                window.localStorage.removeItem(prefKeyDefaultMode);
+            }
         }
 
         model.previewUrl = ko.computed(function() {
@@ -168,6 +171,12 @@ define([
             setConfig(next);
         });
 
+        model.liveMode.subscribe(function() {
+            _.each(model.collections(), function(collection) {
+                collection.populateLists();
+            });
+        });
+        
         function updateLayout() {
             var height = $(window).height();
             $('.scrollable').each(function() {

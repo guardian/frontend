@@ -52,19 +52,20 @@ input[type=text] {
     text-transform: uppercase;
 }
 
-.tool-title {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+h1 {
     float: left;
-    padding: 5px 0 0 0;
-    font-size: 18px;
-    text-transform: uppercase;
+    font-size: 26px;
     height: 30px;
+    color: #999999;
+    font-weight: bold;
+    letter-spacing: -1px;
+    margin: 0;
+    line-height: 30px;
 }
 
-.tool-title span {
-    color: #999999;
-    text-transform: lowercase;
+h1 span {
+    color: #CCCCCC;
+    font-weight: normal;
 }
 
 .title {
@@ -95,66 +96,17 @@ input[type=text] {
     overflow: hidden;
 }
 
-.list-header a {
-    color: #005580;
-}
-
-.list-header__saving  { color: #d61d00; font-weight: bold; }
-
-.list-header__role {
-    font-style: italic;
-    text-transform: lowercase;
-    color: #666666;
+.list-header__saving  {
+    float: right;
+    color: #d61d00;
+    font-size: 12px;
 }
 
 .list-header__timings {
+    font-weight: normal;
     font-size: 10px;
     color: #999999;
     padding: 0 0 0 4px;
-}
-
-.list-header__status a {
-    display: inline-block;
-    font-size: 10px;
-    line-height: 20px;
-    padding: 0 5px 0 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
-    border-right: 1px solid #EEEEEE;
-    border-bottom: 1px solid #EEEEEE;
-    color: #999999;
-}
-
-a.list-header__status__draft.active,
-a.list-header__status__live.active {
-    color: #333333;
-}
-
-a.list-header__status__draft.active,
-a.list-header__status__live.active {
-    background: #EEEEEE;
-}
-
-a.list-header__status__draft.has-draft {
-    color: #438835;
-}
-
-a.list-header__status__control,
-a.list-header__status__control:hover,
-a.list-header__status__control:visited {
-    color: #0088cc;
-}
-
-.list-header__showSettings {
-    float: right;
-    margin: 0 2px 0 0;
-}
-
-.list-header__hide {
-    float: right;
-    font-size: 9px;
-    margin: 0 2px 0 0;
 }
 
 .collections {
@@ -195,11 +147,6 @@ a.list-header__status__control:visited {
 
 .trail:last-child {
     border-bottom: 0;
-}
-
-.live-groups,
-.live-groups .trail {
-    background-color: #EEEEEE;
 }
 
 .trail.redundant {
@@ -509,62 +456,97 @@ iframe {
     overflow: hidden;
 }
 
-.tool-group {
+.tool-select {
     float: left;
-}
-
-.tool-group select {
     font-weight: bold;
     font-size: 16px;
     color: #000000;
     margin-right: 15px;
+    width: 150px;
 }
 
 .tool {
     float: left;
     display: inline-block;
-    text-transform: uppercase;
-    padding: 2px 5px;
-    background: #cccccc;
-    color: #ffffff;
-    margin: 2px 1px;
-    border-radius: 2px;
+    padding: 4px 8px;
+    background: #DDDDDD;
+    color: #FFFFFF;
+    margin: 1px 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.tool-label {
+    float: left;
+    display: inline-block;
+    padding: 5px 5px 0 2px;
+    color: #999999;
+}
+
+.tool-label.active {
+    color: #46c430;
+}
+
+.draft-toolbar {
+    color: #46c430;
+    margin-left: 4px;
+    height: 22px;
+}
+
+.tool.draft-publish {
+    background: #46c430;
+    padding: 0 6px;
+    font-size: 12px;
+}
+
+.tool.draft-publish:hover {
+    background: #47AE38;
+}
+
+.tool.draft-discard {
+    padding: 0 6px;
+    font-size: 12px;
+    margin-left: 2px;
+}
+
+.draft-warning {
+    color: #46c430;
 }
 
 .tool:hover {
     text-decoration: none;
     color: #ffffff;
-    background: #999999;
+    background: #CCCCCC;
 }
 
 .logout,
 .preview {
     float: right;
+    margin-left: 2px;
+}
+
+.pref-live {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.pref-draft {
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .pref-live.active {
-    background: #BC250C;
+    cursor: default;
+    background: #46c430;
 }
 
 .pref-draft.active {
-    background: #428834;
-}
-
-.pref-live.inactive:hover {
-    background: #BC250C;
-    cursor: pointer;
-}
-
-.pref-draft.inactive:hover {
-    background: #428834;
-    cursor: pointer;
+    cursor: default;
+    background: #999999;
 }
 
 .ophan-legend {
     position: absolute;
     right: 51%;
-}
-
-.active {
-    font-weight: bold;
 }

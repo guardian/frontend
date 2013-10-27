@@ -17,13 +17,13 @@ define([
 ) {
     function Collection(opts) {
         var self = this;
-
+            
         if (!opts || !opts.id) { return; }
+        
         this.id = opts.id;
-
-        this.live  = this.createGroups(opts.groups);
-        this.draft = this.createGroups(opts.groups);
-
+        this.response = null;
+        this.list = this.createGroups(opts.groups);
+        
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
             'displayName',
@@ -41,17 +41,10 @@ define([
             'updatedEmail']);
 
         this.state  = common.util.asObservableProps([
-            'liveMode',
             'hasDraft',
             'loadIsPending',
             'editingConfig',
             'timeAgo']);
-
-        if (window.localStorage.getItem('gu.frontsTool.defaultToLiveMode')) {
-            this.state.liveMode(true);
-        } else {
-            this.state.liveMode(common.config.defaultToLiveMode);
-        }
 
         this.saveItemConfig = function(item) {
             item.saveConfig(self.id);
@@ -81,10 +74,6 @@ define([
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
-    Collection.prototype.currentGroups = function() {
-        return this.state.liveMode() ? this.live : this.draft;
-    };
-
     Collection.prototype.toggleEditingConfig = function() {
         this.state.editingConfig(!this.state.editingConfig());
     };
@@ -92,19 +81,6 @@ define([
     Collection.prototype.cancelEditingConfig = function() {
         this.state.editingConfig(false);
         this.load();
-    };
-
-    Collection.prototype.setMode = function(isLiveMode) {
-        this.state.liveMode(isLiveMode);
-        this.decorate();
-    };
-
-    Collection.prototype.setLiveMode = function() {
-        this.setMode(true);
-    };
-
-    Collection.prototype.setDraftMode = function() {
-        this.setMode(false);
     };
 
     Collection.prototype.publishDraft = function() {
@@ -128,9 +104,6 @@ define([
         .then(function() {
             self.load();
         })
-        .then(function() {
-            self.setMode(common.config.defaultToLiveMode);
-        });
 
         this.state.hasDraft(false);
     };
@@ -145,8 +118,8 @@ define([
             url: common.config.apiBase + '/collection/' + self.id,
             data: JSON.stringify({
                 item: item.meta.id(),
-                live:   self.state.liveMode(),
-                draft: !self.state.liveMode()
+                live:   common.state.liveMode(),
+                draft: !common.state.liveMode()
             }),
         }).then(function() {
             self.load();
@@ -160,34 +133,38 @@ define([
         return authedAjax({
             url: common.config.apiBase + '/collection/' + this.id
         }).then(function(resp) {
+            self.response = resp;
             self.state.loadIsPending(false);
-            self.state.hasDraft(_.isArray(resp.draft));
+            self.state.hasDraft(_.isArray(self.response.draft));
 
-            if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
+            if (opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated())) {
                 // noop
             } else {
-                self.populateLists(resp);
+                self.populateLists();
             }
 
             if (!self.state.editingConfig()) {
-                common.util.populateObservables(self.collectionMeta, resp)
-                self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
+                common.util.populateObservables(self.collectionMeta, self.response)
+                self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
             }
-
-            self.decorate();
         });
     };
 
-    Collection.prototype.populateLists = function(opts) {
-        if (common.state.uiBusy) { return; }
-        this.importList(opts.live, this.live);
-        this.importList(opts.draft || opts.live, this.draft);
+    Collection.prototype.populateLists = function() {
+        if (!this.response) { return; }
+
+        if (common.state.liveMode()) {
+            this.importList(this.response.live);
+        } else {
+            this.importList(this.response.draft || this.response.live); // No draft yet? Base it on live.
+        }
+        this.decorate();
     };
 
-    Collection.prototype.importList = function(source, groups) {
+    Collection.prototype.importList = function(source) {
         var self = this;
 
-        _.each(groups, function(group) {
+        _.each(this.list, function(group) {
             group.articles.removeAll();
         });
 
@@ -197,13 +174,13 @@ define([
 
             groupInt = parseInt((item.meta || {}).group, 10) || 0;
 
-            group = _.find(groups, function(g){ return g.group === groupInt; }) || groups[0];
+            group = _.find(self.list, function(g){ return g.group === groupInt; }) || self.list[0];
             group.articles.push(new Article(item));
         });
     }
 
     Collection.prototype.decorate = function() {
-        _.each(this[this.state.liveMode() ? 'live' : 'draft'], function(group) {
+        _.each(this.list, function(group) {
             contentApi.decorateItems(group.articles());
             ophanApi.decorateItems(group.articles());
         });
