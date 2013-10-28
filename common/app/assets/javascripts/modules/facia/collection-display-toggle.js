@@ -43,7 +43,8 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
         this.addToggle =  function () {
             // append toggle button
             _$collection
-                .prepend(_$button);
+                .prepend(_$button)
+                .removeClass('js-collection--display-toggle');
             // listen to event
             bean.on(_$button[0], 'click', function(e) {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';

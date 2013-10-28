@@ -22,7 +22,7 @@ define([
 
         beforeEach(function(){
             collection = bonzo.create(
-                '<section class="collection" data-id="' + collectionId + '">' +
+                '<section class="collection js-collection--display-toggle" data-id="' + collectionId + '">' +
                     '<h2>A collection</h2>' +
                 '</section>'
             )[0];
@@ -36,6 +36,11 @@ define([
         it('should be able to initialise', function() {
             var collectionDisplayToggle = new CollectionDisplayToggle(collection);
             expect(collectionDisplayToggle).toBeDefined();
+        });
+
+        it('should remove "js-collection--display-toggle" class from container', function() {
+            new CollectionDisplayToggle(collection).addToggle();
+            expect($collection.hasClass('js-collection--display-toggle')).toBeFalsy();
         });
 
         it('should delete old storage key', function() {
