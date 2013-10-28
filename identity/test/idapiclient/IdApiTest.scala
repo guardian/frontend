@@ -438,7 +438,11 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
   def toFuture(response: Response[HttpResponse]) = Promise.successful(response).future
 
-  case class TestAuth(parameters: Parameters, headers: Parameters) extends Auth
+  case class TestAuth(p: Parameters, h: Parameters) extends Auth {
+    override def parameters: Parameters = p
+    override def headers: Parameters = h
+  }
+
   object ParamAuth extends TestAuth(Iterable(("testParam", "value")), Iterable.empty)
   object HeaderAuth extends TestAuth(Iterable.empty, Iterable(("testHeader", "value")))
 

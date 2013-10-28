@@ -1,5 +1,5 @@
 # For dev machines
-GET         /assets/*path                               dev.DevAssetsController.at(path)
+GET     /assets/*path                                   dev.DevAssetsController.at(path)
 
 GET     /signin                                         @controllers.SigninController.renderForm
 POST    /signin                                         @controllers.SigninController.processForm
@@ -13,3 +13,4 @@ GET     /register                                       @controllers.Registratio
 POST    /register                                       @controllers.RegistrationController.processForm
 GET     /email-prefs                                    @controllers.EmailController.preferences
 GET     /profile/public                                 @controllers.PubilcProfileController.displayForm
+POST    /profile/public                                 @controllers.PubilcProfileController.submitForm

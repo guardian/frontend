@@ -19,7 +19,7 @@ class UserFromApiActionBuilder @Inject()(apiUserDataActionHandler:UserApiDataReq
       .flatMap { userResponse =>
         userResponse.fold (
           { Future.successful(_) },
-          { user => block(UserFromApiRequest(user, idRequestParser(request), request)) }
+          { user => block(UserFromApiRequest(user, idRequestParser(request), request, UserCookie(request.cookies("SC_GU_U").value))) }
       )
     }
   }
@@ -41,4 +41,4 @@ class UserApiDataRequestHandler @Inject()(identityApiClient: IdApiClient) {
 }
 
 
-case class UserFromApiRequest[A] (user:User, identityRequest: IdentityRequest, request: Request[A]) extends WrappedRequest[A](request)
+case class UserFromApiRequest[A] (user:User, identityRequest: IdentityRequest, request: Request[A], userAuth: UserCookie) extends WrappedRequest[A](request)

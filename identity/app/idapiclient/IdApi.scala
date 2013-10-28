@@ -55,6 +55,14 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map jsonBodyParser.extract(jsonField("user"))
   }
 
+  def saveUser(userId: String, user: UserUpdate, auth: Auth): Future[Response[User]] = {
+    val apiPath = urlJoin("user", userId)
+    val params = buildParams(Some(auth))
+    val headers = buildHeaders(Some(auth))
+    val response = http.POST(apiUrl(apiPath), Some(write(user)), params, headers)
+    response map jsonBodyParser.extract(jsonField("user"))
+  }
+
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val params = buildParams(Some(auth))

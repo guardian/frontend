@@ -7,10 +7,12 @@ import com.google.inject.{Inject, Singleton}
 import utils.{UserFromApiActionBuilder, SafeLogging}
 import model.IdentityPage
 import play.api.data.{Forms, Form}
+import idapiclient.{UserCookie, IdApiClient, UserUpdate}
+import com.gu.identity.model.{PrivateFields, PublicFields, User}
 
 
 @Singleton
-class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder, userFromApiAction: UserFromApiActionBuilder)
+class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder, userFromApiAction: UserFromApiActionBuilder, identityApiClient: IdApiClient )
   extends Controller with ExecutionContexts with SafeLogging {
 
   val form = Form(
@@ -26,16 +28,47 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder, userFr
   val page = IdentityPage("/profile/public", "Public profile", "public profile")
 
   def displayForm = userFromApiAction.apply { implicit request =>
-    val populatedForm = form.bind(
-     List(
-       request.user.publicFields.location.map("publicFields.location" -> _),
-       request.user.privateFields.gender.map("privateFields.gender" -> _),
-       request.user.publicFields.aboutMe.map("publicFields.aboutMe" -> _),
-       request.user.publicFields.interests.map("publicFields.interests" -> _),
-       request.user.publicFields.webPage.map("publicFields.webPage" -> _)
-     ).flatten.toMap
+    Ok(views.html.public_profile(page.tracking(request.identityRequest), request.identityRequest, idUrlBuilder, bindFormFromUser(request.user)))
+  }
+
+  def bindFormFromUser(user: User): Form[(Option[String], Option[String], Option[String], Option[String], Option[String])] = {
+    form.bind(
+      List(
+        user.publicFields.location.map("publicFields.location" -> _),
+        user.privateFields.gender.map("privateFields.gender" -> _),
+        user.publicFields.aboutMe.map("publicFields.aboutMe" -> _),
+        user.publicFields.interests.map("publicFields.interests" -> _),
+        user.publicFields.webPage.map("publicFields.webPage" -> _)
+      ).flatten.toMap
+    )
+  }
+
+  def submitForm = userFromApiAction.async { implicit request =>
+    val formData = form.bindFromRequest();
+
+    val userUpdate = UserUpdate(
+      publicFields = Some(PublicFields(
+        location = formData("publicFields.location").value,
+        aboutMe = formData("publicFields.aboutMe").value,
+        interests = formData("publicFields.interests").value,
+        webPage = formData("publicFields.webPage").value
+      )),
+      privateFields = Some(PrivateFields(
+        gender = formData("privateFields.gender").value
+      ))
     )
 
-    Ok(views.html.public_profile(page.registrationStart(request.identityRequest), request.identityRequest, idUrlBuilder, populatedForm))
+    identityApiClient.saveUser( request.user.id, userUpdate, request.userAuth )
+      .map { _.fold(
+        { errors =>
+          val formDataWithErrors = errors.foldLeft(formData) { (formWithErrors,error) =>
+            formWithErrors.withError(error.context.getOrElse(""), error.description)
+          }
+          Ok(views.html.public_profile(page.tracking(request.identityRequest), request.identityRequest, idUrlBuilder, formDataWithErrors))
+        },
+        { user =>
+          Ok(views.html.public_profile(page.accountEdited(request.identityRequest), request.identityRequest, idUrlBuilder, bindFormFromUser(user)))
+        })
+      }
   }
 }
