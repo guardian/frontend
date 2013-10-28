@@ -5,8 +5,8 @@ define([
     'qwery',
     'modules/detect',
     'modules/relativedates',
-    'modules/facia/image-upgrade'
-], function (common, bonzo, bean, qwery, detect, relativeDates, ImageUpgrade) {
+    'modules/facia/images'
+], function (common, bonzo, bean, qwery, detect, relativeDates, faciaImages) {
 
     return function(items) {
 
@@ -104,9 +104,10 @@ define([
             bonzo(extraItems.splice(0, initalShowSize - qwery('.item', items).length))
                 .appendTo($items)
                 .each(function(item) {
-                    new ImageUpgrade(item).upgrade();
                     relativeDates.init(item);
                 });
+
+            faciaImages.upgrade($items[0]);
 
             // add toggle button, if they are extra items left to show
             if (extraItems.length) {

@@ -286,6 +286,13 @@ module.exports = function (grunt) {
             }
         },
 
+        concat: {
+            imager: {
+                src: ['common/app/assets/javascripts/components/imager.js/src/**/*.js'],
+                dest: staticTargetDir + 'javascripts/vendor/imager.js'
+            }
+        },
+
 
         /***********************************************************************
          * Test
@@ -568,6 +575,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
@@ -575,7 +583,7 @@ module.exports = function (grunt) {
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
-    grunt.registerTask('compile:js', ['clean:js', 'copy:js', 'requirejs:compile']);
+    grunt.registerTask('compile:js', ['clean:js', 'copy:js', 'concat:imager', 'requirejs:compile']);
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', [
