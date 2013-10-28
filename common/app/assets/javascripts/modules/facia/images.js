@@ -1,3 +1,4 @@
+/*global Imager:true */
 define(['common', 'bonzo'], function (common, bonzo) {
 
     return {
