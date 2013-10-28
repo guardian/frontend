@@ -74,6 +74,8 @@
 .facia-container {
     @include mq(tablet) {
         width: gs-span(8);
+        padding-left: 0;
+        padding-right: 0;
     }
     @include mq(desktop) {
         width: gs-span(12);
