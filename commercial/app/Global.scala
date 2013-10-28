@@ -38,7 +38,7 @@ trait MasterClassesLifecycle extends GlobalSettings {
 
     // fire every 15 mins
     Jobs.schedule("MasterClassRefreshJob", "0 4/15 * * * ?", CommercialMetrics.MasterClassesLoadTimingMetric) {
-      OffersAgent.refresh()
+      MasterClassAgent.refresh()
     }
   }
 
