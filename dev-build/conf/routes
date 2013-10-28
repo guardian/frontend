@@ -31,7 +31,7 @@ GET         /recent/card.json                                                   
 GET         /preference/platform/:platform                                                                   controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                     controllers.ChangeEditionController.render(edition)
 
-GET         /cards/opengraph/*path                                                                           controllers.CardController.opengraph(path)
+GET         /cards/opengraph/*path.json                                                                      controllers.CardController.opengraph(path)
 
 # Sport
 GET         /sport/cricket/match/:matchId.json                                                               controllers.CricketMatchController.renderMatchIdJson(matchId)

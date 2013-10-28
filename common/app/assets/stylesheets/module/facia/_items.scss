@@ -89,23 +89,19 @@ $c-live: #e81818;
 }
 .item__image-container {
     display: none;
-    .item--image-upgraded & {
-        margin-top: 2px;
-        overflow: hidden;
-        @include mq(tablet) {
-            height: gs-height(4);
-        }
+    position: relative;
+    overflow: hidden;
+    .connection--not-low & {
+        padding-bottom: 60%;
     }
 }
-.item__image {
-    display: block;
-    margin: 0 auto;
-    @include mq($to: tablet) {
-        width: 100%;
-    }
-    @include mq(tablet) {
-        height: 100%;
-    }
+.responsive-img {
+    margin-top: 2px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .item__live-indicator {
     color: #ffffff;

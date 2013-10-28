@@ -1,3 +1,4 @@
+/*global Imager:true */
 define([
     //Commmon libraries
     'common',
@@ -35,8 +36,7 @@ define([
     "modules/lightbox-gallery",
     "modules/swipe/ears",
     "modules/swipe/bar",
-    "modules/facia/image-upgrade",
-    "modules/commercial/commercial-components"
+    "modules/facia/images"
 ], function (
     common,
     ajax,
@@ -74,25 +74,17 @@ define([
     LightboxGallery,
     ears,
     SwipeBar,
-    ImageUpgrade,
-    CommercialComponents
+    faciaImages
 ) {
 
     var modules = {
 
         upgradeImages: function () {
+            faciaImages.upgrade();
+
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
-
-                // upgrade facia images
-                // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
-                common.$g('.collection', context).each(function(collection) {
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, collection.getAttribute('data-type') && index === 0)
-                            .upgrade();
-                    });
-                });
             });
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
