@@ -98,9 +98,29 @@
                 }
             }
         }
+        function isConnectionLow() {
+            var connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
+            if (connection.type === 3
+                || connection.type === 4
+                || /^[23]g$/.test(connection.type)
+            ) {
+                return true;
+            }
+            var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+            if (perf && perf.timing) {
+                var start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart,
+                    end_time = perf.timing.responseEnd;
+                if (start_time && end_time) {
+                    return (end_time - start_time) > 3000;
+                }
+            }
+            return false;
+        }
 
         @* we want this to happen ASAP to avoid FOUC *@
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
+        var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
+        document.documentElement.className += connectionClass;
 
         guardian.platformsGettingHintedFonts = /Windows/;
 

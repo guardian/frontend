@@ -5,7 +5,8 @@
             border-top-style: none;
         }
         .item__image-container,
-        &.item--no-image .item__title {
+        .connection--low & .item__title,
+        &.item--has-no-image .item__title {
             margin-top: 0;
         }
     }
@@ -40,7 +41,8 @@
 @mixin card-image {
     min-height: gs-height(8);
     .item__image-container,
-    &.item--no-image .item__standfirst {
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
         display: block;
     }
 }
@@ -57,7 +59,8 @@
             @include fs-headline(2, $size-only: true);
         }
     }
-    &.item--no-image .item__title {
+    .connection--low & .item__title,
+    &.item--has-no-image .item__title {
         margin-top: 2px;
     }
     .item__meta {
@@ -69,7 +72,8 @@
 }
 @mixin card-mobile-image {
     .item__image-container,
-    &.item--no-image .item__standfirst {
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
         display: block;
     }
 }
@@ -120,7 +124,8 @@
     }
 }
 @mixin card-half-width-image {
-    &.item--no-image .item__title {
+    .connection--low & .item__title,
+    &.item--has-no-image .item__title {
         min-height: 186px
     }
     .item__image-container {
@@ -135,11 +140,12 @@
         @include fs-headline(7, $size-only: true);
     }
     .item__image-container,
-    &.item--no-image .item__standfirst {
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
         display: block;
     }
-    &.item--image-upgraded .item__image-container{
-        height: gs-height(8);
+    .item__image-container{
+        width: gs-height(8);
     }
     .item__live-indicator {
         @include fs-data(6, true);
