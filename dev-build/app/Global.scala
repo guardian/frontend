@@ -30,4 +30,8 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
 }
 
 object Global extends WithFilters(DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*)
-  with CoreNavigationLifecycle with FrontLifecycle with TravelOffersLifecycle with DevParametersLifecycle
+  with CoreNavigationLifecycle
+  with FrontLifecycle
+  with TravelOffersLifecycle
+  with MasterClassesLifecycle
+  with DevParametersLifecycle

@@ -119,6 +119,7 @@ GET         /troubleshoot/football                                              
 
 # Commercial
 GET         /commercial/travel/offers                                                                        controllers.commercial.TravelOffers.listOffers
+GET         /commercial/masterclasses                                                                        controllers.commercial.MasterClasses.all
 # To trigger travel offers data refresh on dev machine
 GET         /commercial/travel/devload                                                                       controllers.commercial.TravelOffers.refresh
 
