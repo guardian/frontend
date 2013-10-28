@@ -78,17 +78,19 @@ define([
     var modules = {
 
         upgradeImages: function () {
-            require(['js!imager'], function() {
-                var images = common.toArray(document.querySelectorAll('.item__image-container')).filter(function(img) {
-                        return bonzo(img).css('display') !== 'none';
-                    }),
-                    options = {
-                        availableWidths: [ 140, 220, 300, 460, 700 ],
-                        strategy: 'container',
-                        replacementDelay: 200
-                    };
-                Imager.init(images, options);
-            });
+            if (common.$g('html').hasClass('connection--not-low')) {
+                require(['js!imager'], function() {
+                    var images = common.toArray(document.querySelectorAll('.item__image-container')).filter(function(img) {
+                            return bonzo(img).css('display') !== 'none';
+                        }),
+                        options = {
+                            availableWidths: [ 140, 220, 300, 460, 700 ],
+                            strategy: 'container',
+                            replacementDelay: 200
+                        };
+                    Imager.init(images, options);
+                });
+            }
 
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
