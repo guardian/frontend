@@ -119,11 +119,9 @@ GET         /troubleshoot/football                                              
 
 # Commercial
 GET         /commercial/travel/offers                                                                        controllers.commercial.TravelOffers.listOffers
-# To trigger travel offers data refresh on dev machine
 GET         /commercial/travel/devload                                                                       controllers.commercial.TravelOffers.refresh
-# Simple advert tests
-GET         /commercial/$advert<(soulmates|masterclasses)>                                                   controllers.commercial.SimpleAdvert.render(advert)
 GET         /commercial/jobs                                                                                 controllers.commercial.JobAds.jobs
+GET         /commercial/$advert<(soulmates|masterclasses)>                                                   controllers.commercial.SimpleAdvert.render(advert)
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")
