@@ -122,7 +122,7 @@
         var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
         document.documentElement.className += connectionClass;
 
-        guardian.platformsGettingHintedFonts = /Windows/;
+        guardian.platformsGettingHintedFonts = /W(indows(?!( Phone|PDesktop)))/;
 
         if (guardian.platformsGettingHintedFonts.test(navigator.userAgent)) {
             loadFontsAsynchronously();
