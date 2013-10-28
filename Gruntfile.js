@@ -523,7 +523,7 @@ module.exports = function (grunt) {
         // Recompile on change
         watch: {
             js: {
-                files: ['common/app/{assets, public}/javascript/**/*.js'],
+                files: ['common/app/{assets, public}/javascripts/**/*.js'],
                 tasks: ['compile:js'],
                 options: {
                     spawn: false
