@@ -6,15 +6,16 @@ import play.api.libs.json.JsValue
 import scala.concurrent.Future
 import conf.CommercialConfiguration
 
-object MasterclassesApi extends ExecutionContexts {
+object MasterClassesApi extends ExecutionContexts {
   val apiId = CommercialConfiguration.masterclasses.apiId
   val apiKey = CommercialConfiguration.masterclasses.apiKey
 
-  def getAll = getMasterClassJson map {
-    eventBriteJson =>
-      val events = eventBriteJson \\ "events"
-      events map (MasterClass(_))
 
+  def getAll: Future[Seq[MasterClass]] = {getMasterClassJson map {
+      eventBriteJson =>
+        val events = eventBriteJson \\ "event"
+        events map (MasterClass(_))
+    }
   }
 
   def getMasterClassJson: Future[JsValue] = {
@@ -22,8 +23,6 @@ object MasterclassesApi extends ExecutionContexts {
       .withHeaders(("Cache-Control", "public, max-age=1"))
       .withRequestTimeout(20000)
       .get()
-      .map {
-      response => response.json
-    }
+      .map {response => response.json}
   }
 }

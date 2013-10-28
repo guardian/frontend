@@ -1,6 +1,7 @@
 import common.{CommercialMetrics, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
+import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.travel.OffersAgent
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
@@ -26,8 +27,30 @@ trait TravelOffersLifecycle extends GlobalSettings {
   }
 }
 
+trait MasterClassesLifecycle extends GlobalSettings {
+
+  override def onStart(app: PlayApp) {
+    super.onStart(app)
+
+    Jobs.deschedule("MasterClassRefreshJob")
+
+    MasterClassAgent.refresh()
+
+    // fire every 15 mins
+    Jobs.schedule("MasterClassRefreshJob", "0 4/15 * * * ?", CommercialMetrics.MasterClassesLoadTimingMetric) {
+      OffersAgent.refresh()
+    }
+  }
+
+  override def onStop(app: PlayApp) {
+    Jobs.deschedule("MasterClassRefreshJob")
+    super.onStop(app)
+  }
+}
+
 
 object Global
   extends WithFilters(RequestMeasurementMetrics.asFilters: _*)
   with TravelOffersLifecycle
+  with MasterClassesLifecycle
   with DevParametersLifecycle

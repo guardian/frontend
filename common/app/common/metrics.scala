@@ -310,7 +310,16 @@ object CommercialMetrics {
     None
   ) with TimingMetricLogging
 
-  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric)
+  object MasterClassesLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-masterclasses-load",
+    "Commercial MasterClasses load timing",
+    "Time spent running MasterClasses load jobs",
+    None
+  ) with TimingMetricLogging
+
+
+  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, MasterClassesLoadTimingMetric)
 }
 
 

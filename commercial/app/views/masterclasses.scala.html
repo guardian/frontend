@@ -1,0 +1,10 @@
+@(events: List[model.commercial.masterclasses.MasterClass])
+
+<div>
+    <h1>Available MasterClasses</h1>
+    <ul>
+        @for(event <- events) {
+        <li>@event.name (@event.startDate)</li>
+        }
+    </ul>
+</div>
