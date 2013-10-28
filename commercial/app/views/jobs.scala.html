@@ -8,8 +8,8 @@
         <table>
             @for(job <- jobs) {
                 <tr>
-                    <td>@if(job.recruiterLogoUrl.isDefined){<img src="@job.recruiterLogoUrl" />}</td>
-                    <td>@if(job.employerLogoUrl.isDefined){<img src="@job.employerLogoUrl" />}</td>
+                    <td>@job.recruiterLogoUrl.map{ url => <img src="@url" />}</td>
+                    <td>@job.employerLogoUrl.map{ url => <img src="@url" />}</td>
                     <td>@job.id</td>
                     <td><a href="@job.listingUrl">@job.title</a></td>
                     <td>@job.salary</td>
