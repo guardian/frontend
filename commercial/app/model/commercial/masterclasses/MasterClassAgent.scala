@@ -13,7 +13,8 @@ object MasterClassAgent extends Logging with ExecutionContexts {
   def refresh(){
     MasterClassesApi.getAll onSuccess{
       case results => {
-        agent send results.toList.filter(event => (new DateTime(event.startDate)).isAfterNow)
+        val upcomingEvents: List[MasterClass] = results.toList.filter(event => (event.startDate.isAfterNow))
+        agent send upcomingEvents
       }
     }
   }

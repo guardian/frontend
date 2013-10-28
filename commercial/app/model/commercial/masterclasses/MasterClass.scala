@@ -2,7 +2,6 @@ package model.commercial.masterclasses
 
 import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import org.joda.time.DateTime
-import java.util.Date
 import play.api.libs.json.JsValue
 
 object MasterClass {
@@ -13,9 +12,9 @@ object MasterClass {
     val literalDate = (block \ "start_date").as[String]
     val startDate: DateTime = datePattern.parseDateTime(literalDate)
 
-    new MasterClass(title, startDate.toDate)
+    new MasterClass(title, startDate)
   }
 }
 
-case class MasterClass(name: String, startDate: Date)
+case class MasterClass(name: String, startDate: DateTime)
 
