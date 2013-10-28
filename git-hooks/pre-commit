@@ -21,7 +21,7 @@ jsCommonResult=$?
 SRC_PATTERN=".scss"
 git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
-    grunt analyse:css:common
+    grunt analyse:css
 fi
 cssAnalysisResult=$?
 
