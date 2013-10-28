@@ -12,7 +12,7 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
         beforeEach(function() {
             collection = bonzo.create(
                 '<section>' +
-                    '<ul>' +
+                    '<ul class="js-items--show-more">' +
                         '<script type="text/x-template" class="collection--template"></script>' +
                     '</ul>' +
                 '</section>'
@@ -39,6 +39,11 @@ define(['modules/facia/items-show-more', 'bonzo', 'common', 'bean'], function(It
 
         it('should be able to initialise', function() {
             expect(itemsShowMore).toBeDefined();
+        });
+
+        it('should remove "js-items--show-more" class from collection', function() {
+            itemsShowMore.addShowMore();
+            expect(bonzo(items).hasClass('js-items--show-more')).toBeFalsy();
         });
 
         it('should append button after items', function() {

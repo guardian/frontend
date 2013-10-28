@@ -86,7 +86,7 @@ define([
             };
 
         this.addShowMore = function() {
-            var $items = bonzo(items),
+            var $items = bonzo(items).removeClass('js-items--show-more'),
                 extraItems = bonzo.create(
                     common.$g('.collection--template', items).html()
                 ),
