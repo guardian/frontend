@@ -4,6 +4,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import conf.Switches
 
 class ArticleControllerTest extends FlatSpec with Matchers {
   
@@ -17,14 +18,28 @@ class ArticleControllerTest extends FlatSpec with Matchers {
     status(result) should be(200)
   }
 
-  "Article Controller" should "200 when content type is live blog" in Fake {
+  it should "200 when content type is live blog" in Fake {
     val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     status(result) should be(200)
   }
 
-  "Article Controller" should "200 when content type is sudoku" in Fake {
+  it should "200 when content type is sudoku" in Fake {
     val result = controllers.ArticleController.renderArticle(sudokuUrl)(TestRequest(sudokuUrl))
     status(result) should be(200)
+  }
+
+  it should "redirect for short urls" in Fake {
+    Switches.FollowItemRedirectsFromApiSwitch.switchOn()
+    val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
+    status(result) should be (302)
+    header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
+  }
+
+  it should "redirect for short urls with Twitter suffix" in Fake {
+    Switches.FollowItemRedirectsFromApiSwitch.switchOn()
+    val result = controllers.ArticleController.renderArticle("p/39heg/tw")(TestRequest("/p/39heg/tw"))
+    status(result) should be (302)
+    header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
 
   it should "return JSONP when callback is supplied" in Fake {

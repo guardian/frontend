@@ -162,7 +162,8 @@ trait FakeApp extends TestSettings {
 }
 
 object TestRequest {
-  def apply(path: String): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
-    FakeRequest("GET", path)
+  // MOST of the time we do not care what path is set on the request - only need to override where we do
+  def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
+    FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
 }
