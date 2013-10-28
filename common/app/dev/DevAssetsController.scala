@@ -14,7 +14,7 @@ object DevAssetsController extends Controller with ExecutionContexts {
       if (MimeTypes.isText(mime)) s"${mime}; charset=utf-8" else mime
     }
 
-    val resolved = new File(s"static/target/hashed/$path").toURI.toURL
+    val resolved = new File(s"static/target/$path").toURI.toURL
 
     SimpleResult(
       ResponseHeader(OK, Map(CONTENT_TYPE -> contentType.getOrElse(BINARY))),

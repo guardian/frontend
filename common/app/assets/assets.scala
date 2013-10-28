@@ -16,8 +16,8 @@ case class Asset(path: String) {
 
 class AssetMap(base: String, assetMap: String) {
   def apply(path: String): Asset = {
-    // Reload asset maps on every access in DEV
-    if (Play.current.mode == Mode.Dev) assets()(path) else memoizedAssets(path)
+    // Don't use hashed files in DEV
+    if (Play.current.mode == Mode.Dev) Asset(base + path) else memoizedAssets(path)
   }
 
   private def assets(): Map[String, Asset] = {

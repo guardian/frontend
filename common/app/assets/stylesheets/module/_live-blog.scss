@@ -68,7 +68,13 @@
             @include fs-data(5, true);
         }
     }
-
+    // Temporary fix to issue #1674
+    .from-content-api blockquote.tweet {
+       display: block;
+       margin-left: 0;
+       width: auto;
+    }
+    // End temporary fix
     .tweet:before,
     .tweet:after,
     .live-blog .tweet:before,
