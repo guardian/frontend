@@ -48,16 +48,17 @@
                         @fragments.article.dateline(video.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
                     </div>
-
-                    <div class="video-standfirst">
-                        @fragments.standfirst(video)
-                    </div>
-
-                    @if(ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="video keywords">
-                            @fragments.keywordList(video.keywords)
+                    <div class="article__container">
+                        <div class="video-standfirst">
+                            @fragments.standfirst(video)
                         </div>
-                    }
+
+                        @if(ArticleKeywordsSwitch.isSwitchedOn){
+                            <div class="article__keywords" data-link-name="video keywords">
+                                @fragments.keywordList(video.keywords)
+                            </div>
+                        }
+                    </div>
 
                     <div class="social-wrapper">
                         @fragments.social(video)

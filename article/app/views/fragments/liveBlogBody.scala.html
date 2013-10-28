@@ -63,7 +63,7 @@
                             </div>
                         }
 
-                        <div class="article-body from-content-api @if(article.isLive) {live-blog} js-live-blog"
+                        <div class="article-body u-cf from-content-api @if(article.isLive) {live-blog} js-live-blog"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 
                             @if(article.groupedBlocks.nonEmpty) {
@@ -80,13 +80,13 @@
                             }
 
                         </div>
-                    </div>
 
-                    @if(ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="live blog keywords">
-                            @fragments.keywordList(article.keywords)
-                        </div>
-                    }
+                        @if(ArticleKeywordsSwitch.isSwitchedOn){
+                            <div class="article__keywords" data-link-name="live blog keywords">
+                                @fragments.keywordList(article.keywords)
+                            </div>
+                        }
+                    </div>
 
                     <div class="social-wrapper">
                         @fragments.social(article)

@@ -61,14 +61,15 @@
                         }
                     </div>
                 </div>
+                <div class="article__container">
+                    @fragments.standfirst(gallery)
 
-                @fragments.standfirst(gallery)
-
-                @if(ArticleKeywordsSwitch.isSwitchedOn){
-                    <div class="article__keywords" data-link-name="gallery keywords">
-                        @fragments.keywordList(gallery.keywords)
-                    </div>
-                }
+                    @if(ArticleKeywordsSwitch.isSwitchedOn){
+                        <div class="article__keywords" data-link-name="gallery keywords">
+                            @fragments.keywordList(gallery.keywords)
+                        </div>
+                    }
+                </div>
 
                 <div class="social-wrapper">
                     @fragments.social(gallery)

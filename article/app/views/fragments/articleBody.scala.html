@@ -60,17 +60,17 @@
                     </div>
 
                     <div class="js-article__container article__container u-cf">
-                        <div class="article-body from-content-api"
+                        <div class="article-body u-cf from-content-api"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
                         </div>
-                    </div>
 
-                    @if(ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="article keywords">
-                            @fragments.keywordList(article.keywords)
-                        </div>
-                    }
+                        @if(ArticleKeywordsSwitch.isSwitchedOn){
+                            <div class="article__keywords" data-link-name="article keywords">
+                                @fragments.keywordList(article.keywords)
+                            </div>
+                        }
+                    </div>
 
                     <div class="social-wrapper">
                         @fragments.social(article)
