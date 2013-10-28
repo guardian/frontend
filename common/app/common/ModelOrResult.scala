@@ -7,6 +7,10 @@ import conf.Switches.FollowItemRedirectsFromApiSwitch
 import implicits.ItemResponses
 import java.net.URI
 
+// TODO 'Convention dictates that Left is used for failure and Right is used for success.'
+// We got this the other way around, it not an error, but we should fix it.
+// Assuming that 'I can serve this to the user' is the least error state.
+
 // http://wiki.nginx.org/X-accel
 object ModelOrResult extends Results with ItemResponses with Logging {
   def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, SimpleResult] =
