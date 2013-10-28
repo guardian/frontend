@@ -24,7 +24,7 @@ define([
                     '<a href="@trail.url" class="item__link tone-accent-border"><h2 class="item__title">@trail.headline</h2></a>' +
                     '<div class="item__standfirst"><p>@trail.trailText</p></div>' +
                     '<div class="item__meta item__meta--grey">' +
-                        '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
+                        '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix" data-relativeformat="short">' +
                             '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
                         '</time>' +
                     '</div>' +

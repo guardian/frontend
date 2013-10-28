@@ -15,7 +15,6 @@ define([
             // helper assertion method
             assertState = function($collection, state) {
                 var $button = common.$g('button', $collection[0]);
-                expect($collection.attr('data-toggle-state')).toBe(state === 'open' ? 'displayed' : 'hidden');
                 expect($collection.hasClass('collection--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
                 expect($button.text()).toBe(state === 'open' ? 'Hide' : 'Show');
                 expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');

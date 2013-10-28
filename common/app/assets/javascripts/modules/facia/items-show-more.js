@@ -40,7 +40,7 @@ define([
                         sport: 5,
                         commentisfree: 3,
                         culture: 3,
-                        popular: 3
+                        popular: 5
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
