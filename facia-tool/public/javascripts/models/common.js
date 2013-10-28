@@ -32,7 +32,7 @@ define([
             collectionsPollMs:     10000, // 10 seconds
             latestArticlesPollMs:  30000, // 10 seconds
             cacheExpiryMs:         60000, // 1 min
-            defaultToLiveMode:     true,
+            defaultToLiveMode:     false,
 
             apiBase:               '',
             apiSearchBase:         '/api/proxy'

@@ -50,4 +50,4 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 object Global extends WithFilters(
   DevJsonExtensionFilter :: DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*
-) with CoreNavigationLifecycle with FrontLifecycle with TravelOffersLifecycle with DevParametersLifecycle
+) with CoreNavigationLifecycle with CommercialLifecycle with FrontLifecycle with DevParametersLifecycle

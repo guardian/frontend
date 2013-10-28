@@ -1,7 +1,7 @@
 package model
 
 import common.ManifestData
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import conf.Configuration
 
 trait MetaData {
@@ -76,7 +76,7 @@ trait Elements {
   def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPicture.flatMap{ main =>
     val correctCrop = main.imageCrops.find(image => image.aspectRatioWidth == aspectWidth && image.aspectRatioHeight == aspectHeight)
     correctCrop.map{ crop =>
-      ImageContainer(Seq(crop), main.delegate)
+      ImageContainer(Seq(crop), main.delegate, crop.index)
     }
   }
 
@@ -103,7 +103,7 @@ trait Elements {
     // Example relations are gallery, thumbnail, main, body
     delegate.elements.map(_.filter(_.elementType == elementType)
       .groupBy(_.relation)
-      .mapValues(_.map(element => Element(element)).toList)
+      .mapValues(_.zipWithIndex.collect{case (element:ApiElement, index:Int) => Element(element, index)})
     ).getOrElse(Map.empty).withDefaultValue(Nil)
   }
 
