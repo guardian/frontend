@@ -20,7 +20,7 @@ define([
 
         this.id = 'CommercialComponents';
         this.expiry = '2013-11-30';
-        this.audience = 0.01;
+        this.audience = 0; // Disabled for the initial trials
         this.description = 'Test new commercial components';
         this.canRun = function(config) {
             _config = config;
