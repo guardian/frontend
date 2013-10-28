@@ -6,7 +6,7 @@ import com.google.inject.Inject
 import utils.RemoteAddress
 
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
-  def apply(request: Request[AnyContent]) = {
+  def apply[A](request: Request[A]) = {
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
     val ip = clientIp(request)
     IdentityRequest(
