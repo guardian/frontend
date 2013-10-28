@@ -122,9 +122,11 @@
         var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
         document.documentElement.className += connectionClass;
 
-        guardian.platformsGettingHintedFonts = /W(indows(?!( Phone|PDesktop)))/;
+        guardian.platformsGettingHintedFonts = /Windows/;
+        guardian.platformsNotGettingHintedFonts = /W(indows Phone|PDesktop)/; // exceptions
 
-        if (guardian.platformsGettingHintedFonts.test(navigator.userAgent)) {
+        if (guardian.platformsGettingHintedFonts.test(navigator.userAgent) &&
+            !! guardian.platformsNotGettingHintedFonts.test(navigator.userAgent)) {
             loadFontsAsynchronously();
         } else {
             loadFontsFromStorage();
