@@ -23,4 +23,4 @@ GET        /preference/platform/:platform        controllers.ChangeViewControlle
 GET        /preference/edition/:edition          controllers.ChangeEditionController.render(edition)
 
 # Experimental
-GET        /cards/opengraph/*path                controllers.CardController.opengraph(path)
+GET        /cards/opengraph/*path.json           controllers.CardController.opengraph(path)

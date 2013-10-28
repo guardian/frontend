@@ -11,7 +11,6 @@ define([
 
         var self = this,
             nParagraphs = '10',
-            alphaOasUrl = 'www.theguardian-alpha.com',
             inlineTmp = '<div class="ad-slot ad-slot--inline"><div class="ad-container"></div></div>',
             mpuTemp = '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-median="Middle1" data-extended="Middle1"><div class="ad-container"></div></div>',
             supportsSticky = detect.hasCSSSupport('position', 'sticky'),
@@ -23,7 +22,6 @@ define([
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article') {
-                guardian.config.oasSiteIdHost = alphaOasUrl;
                 return true;
             } else {
                 return false;
@@ -33,6 +31,7 @@ define([
             {
                 id: 'Inline', //Article A
                 test: function(context, isBoth) {
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
                     var article = document.getElementsByClassName('js-article__container')[0];
                     bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function(el, i) {
                         var cls = (i % 2 === 0) ? 'is-odd' : 'is-even',
@@ -52,6 +51,7 @@ define([
             {
                 id: 'Adhesive', //Article B
                 test: function(context, isBoth) {
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
                     var viewport = detect.getLayoutMode(),
                         inviewName,
                         s;
@@ -89,12 +89,16 @@ define([
                             variant.test.call(self, {}, true);
                         }
                     });
+
+                    // This needs to be last as the previous calls set their own variant hosts
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     return true;
                 }
             },
             {
                 id: 'control', //Article D
                 test: function() {
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
                     return true;
                 }
             }

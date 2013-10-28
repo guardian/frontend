@@ -1,19 +1,17 @@
 @(trail: Trail, index: Int, mainItem: Boolean = false)(implicit request: RequestHeader)
 
 @defining(VisualTone(trail)) { tone =>
-    <li class="item item--no-image tone-@tone" data-link-name="trail | @{index + 1}"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }>
+    <li class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no"}}-image tone-@tone" data-link-name="trail | @{index + 1}"
+        @trail.discussionId.map{ id => data-discussion-id="@id" }
+        data-discussion-closed="@trail.isClosedForComments">
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
 
-            @trail.trailPicture(5,3).map{ mainPicture =>
-                <div class="item__image-container">
-                    <img class="item__image" alt=""
-                        data-src="@FrontItem.bestFor(mainPicture)"
-                        data-src-main="@FrontItemMain.bestFor(mainPicture)"
-                        data-src-mobile="@FrontItemMobile.bestFor(mainPicture)"
-                        data-src-main-mobile="@FrontItemMainMobile.bestFor(mainPicture)"
-                    />
-                </div>
+            @trail.trailPicture(5,3).map{ trailPictures =>
+                @trailPictures.largestImage.map { largestImage =>
+                    @largestImage.url.map { url =>
+                        <div class="item__image-container" data-src="@ImgSrc(url, Profile("item-{width}"))"></div>
+                    }
+                }
             }
             <h@if(mainItem){1}else{2} class="item__title">
                 @if(trail.isLive){

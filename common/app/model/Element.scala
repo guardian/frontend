@@ -4,17 +4,18 @@ import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
 trait Element {
   def delegate: ApiElement
-  lazy val index: Int = delegate.galleryIndex.getOrElse(0)
+  def index: Int
   lazy val id: String = delegate.id
 }
 
 object Element {
-  def apply(theDelegate: ApiElement): Element = {
+  def apply(theDelegate: ApiElement, elementIndex: Int): Element = {
     theDelegate.elementType match {
-      case "image" => new ImageElement(theDelegate)
-      case "video" => new VideoElement(theDelegate)
+      case "image" => new ImageElement(theDelegate, elementIndex)
+      case "video" => new VideoElement(theDelegate, elementIndex)
       case _ => new Element{
         lazy val delegate = theDelegate
+        lazy val index = elementIndex
       }
     }
   }
@@ -30,8 +31,9 @@ trait ImageContainer extends Element {
 }
 
 object ImageContainer {
-  def apply(crops: Seq[ImageAsset], theDelegate: ApiElement) = new ImageContainer {
-    def delegate: ApiElement = theDelegate
+  def apply(crops: Seq[ImageAsset], theDelegate: ApiElement, imageIndex: Int) = new ImageContainer {
+    override def delegate: ApiElement = theDelegate
+    override def index: Int = imageIndex
     override lazy val imageCrops = crops
   }
 }
@@ -44,5 +46,5 @@ trait VideoContainer extends Element {
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 }
 
-class ImageElement(val delegate: ApiElement) extends Element with ImageContainer
-class VideoElement(val delegate: ApiElement) extends Element with ImageContainer with VideoContainer
+class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
+class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer

@@ -2,22 +2,24 @@
 @import conf.Switches._
 
 @defining(page.video){ video =>
-    <h2 class="article-zone tone-@VisualTone(video) tone-accent-border">
-        <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+    <h2 class="article-zone left-col-deport tone-@VisualTone(video) tone-accent-border">
+        <span class="left-col-deport__body">
+            <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+        </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(video)">
 
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner">
                 <header class="article__head">
                     @fragments.headline(video.headline)
 
                     @fragments.article.dateline(video.webPublicationDate, video.isLive)
                 </header>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
                     <div class="player media-content">
 
@@ -46,28 +48,29 @@
                         @fragments.article.dateline(video.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
                     </div>
-
-                    <div class="video-standfirst">
-                        @fragments.standfirst(video)
-                    </div>
-
-                    @if(ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="video keywords">
-                            @fragments.keywordList(video.keywords)
+                    <div class="article__container">
+                        <div class="video-standfirst">
+                            @fragments.standfirst(video)
                         </div>
-                    }
+
+                        @if(ArticleKeywordsSwitch.isSwitchedOn){
+                            <div class="article__keywords" data-link-name="video keywords">
+                                @fragments.keywordList(video.keywords)
+                            </div>
+                        }
+                    </div>
 
                     <div class="social-wrapper">
                         @fragments.social(video)
                     </div>
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true">
+                <div class="article__secondary-column" aria-hidden="true">
                     <h2 class="article__meta-heading tone-colour">Share this video</h2>
                     @fragments.social(video, "next to content")
                 </div>
             </div>
         </article>
-        <div class="article-v2__inner">
+        <div class="article__inner">
             @if(page.storyPackage.nonEmpty) {
                 <aside role="complementary">
                     @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)

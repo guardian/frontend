@@ -6,6 +6,12 @@
         margin-top: 156px;
     }
 
+    .parts__head {
+        @include mq(tablet) {
+            padding-top: $baseline*12;
+        }
+    }
+
     .parts__body {
         @include mq(tablet) {
             margin-top: 0;
@@ -40,7 +46,7 @@
 /* Local navigation popup
    ========================================================================== */
 .nav-popup-localnav {
-    top: 160px;
+    top: 171px;
     border-color: $c-neutral5;
 
     .nav__link {

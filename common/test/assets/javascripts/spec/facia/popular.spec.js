@@ -80,7 +80,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
         });
 
-        it('first three items should have an image', function() {
+        it('dates should be relativised', function() {
             popular.render({});
 
             waitsFor(function() {
@@ -88,49 +88,11 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
 
             runs(function() {
-                expect(common.$g('.item.item--image-upgraded').length).toEqual(3);
-            });
-        });
-
-        it('first image should be main', function() {
-            popular.render({});
-
-            waitsFor(function() {
-                return common.$g('.collection--popular').length;
-            }, 'popular collection to be rendered', 100);
-
-            runs(function() {
-                expect(common.$g('.item:first-child .item__image').attr('src')).toEqual('item-main-mobile.jpg');
-            });
-        });
-
-        it('second and third images should be normal', function() {
-            popular.render({});
-
-            waitsFor(function() {
-                return common.$g('.collection--popular').length;
-            }, 'popular collection to be rendered', 100);
-
-            runs(function() {
-                common.$g('.item:nth-child(n+2):nth-child(-n+3) .item__image').each(function(item, index) {
-                    expect(bonzo(item).attr('src')).toEqual('item-mobile.jpg');
+                common.$g('.timestamp__text').each(function(item) {
+                    expect(bonzo(item).text()).toEqual('1 Jan 1970');
                 });
             });
         });
-
-       it('dates should be relativised', function() {
-           popular.render({});
-
-           waitsFor(function() {
-               return common.$g('.collection--popular').length;
-           }, 'popular collection to be rendered', 100);
-
-           runs(function() {
-               common.$g('.timestamp__text').each(function(item) {
-                   expect(bonzo(item).text()).toEqual('1 Jan 1970');
-               });
-           });
-       });
 
     });
 
