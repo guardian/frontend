@@ -46,15 +46,6 @@ define([
             'editingConfig',
             'timeAgo']);
 
-        this.saveItemConfig = function(item) {
-            item.saveConfig(self.id);
-            self.load();
-        }
-
-        this.forceRefresh = function() {
-            self.load();
-        }
-
         this.load();
     }
 
@@ -96,7 +87,7 @@ define([
 
         this.state.loadIsPending(true);
 
-        authedAjax({
+        authedAjax.request({
             type: 'post',
             url: common.config.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
@@ -113,11 +104,11 @@ define([
 
         self.state.loadIsPending(true);
 
-        authedAjax({
+        authedAjax.request({
             type: 'delete',
             url: common.config.apiBase + '/collection/' + self.id,
             data: JSON.stringify({
-                item: item.meta.id(),
+                item: item.props.id(),
                 live:   common.state.liveMode(),
                 draft: !common.state.liveMode()
             }),
@@ -130,7 +121,7 @@ define([
         var self = this;
         opts = opts || {};
 
-        return authedAjax({
+        return authedAjax.request({
             url: common.config.apiBase + '/collection/' + this.id
         }).then(function(resp) {
             self.response = resp;
@@ -175,7 +166,7 @@ define([
             groupInt = parseInt((item.meta || {}).group, 10) || 0;
 
             group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
-            group.articles.push(new Article(item));
+            group.articles.push(new Article(item, self));
         });
     }
 
@@ -199,7 +190,7 @@ define([
         this.state.editingConfig(false);
         this.state.loadIsPending(true);
 
-        authedAjax({
+        authedAjax.request({
             url: common.config.apiBase + '/collection/' + this.id,
             type: 'post',
             data: JSON.stringify({

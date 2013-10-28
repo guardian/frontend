@@ -99,7 +99,7 @@ define([
                         }
                     }
 
-                    position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
+                    position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
 
                     _.each(common.util.parseQueryParams(item), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
@@ -143,7 +143,7 @@ define([
                             return;
                         }
 
-                        saveChanges(
+                        authedAjax.updateCollection(
                             'post',
                             targetList.collection,
                             {
@@ -172,7 +172,7 @@ define([
                             return article.meta.id() === item;
                         })
 
-                        saveChanges(
+                        authedAjax.updateCollection(
                             'delete',
                             fromList.collection,
                             {
@@ -190,18 +190,6 @@ define([
     function alertBadContent() {
         window.alert('Sorry, that isn\'t a Guardian article!')
     }
-
-    function saveChanges(method, collection, data) {
-        authedAjax({
-            url: common.config.apiBase + '/collection/' + collection.id,
-            type: method,
-            data: JSON.stringify(data)
-        }).fail(function(xhr) {
-            window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
-        }).always(function() {
-            collection.load();
-        });
-    };
 
     return {
         init: init

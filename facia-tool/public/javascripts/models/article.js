@@ -12,10 +12,12 @@ function (
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
-    function Article(opts) {
+    function Article(opts, collection) {
         var opts = opts || {};
 
-        this.meta = common.util.asObservableProps([
+        this.collection = collection;
+
+        this.props = common.util.asObservableProps([
             'id',
             'webTitle',
             'webPublicationDate']);
@@ -25,12 +27,13 @@ function (
             'trailText',
             'shortId']);
 
-        this.config = common.util.asObservableProps([
+        this.meta = common.util.asObservableProps([
+            'group',
             'webTitle']);
 
         this.state = common.util.asObservableProps([
             'underDrag',
-            'editingConfig',
+            'editingTitle',
             'shares',
             'comments',
             'totalHits',
@@ -38,46 +41,91 @@ function (
 
         // Computeds
         this.humanDate = ko.computed(function(){
-            return this.meta.webPublicationDate() ? humanizedTimeSpan(this.meta.webPublicationDate()) : '&nbsp;';
+            return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '&nbsp;';
         }, this);
+        
         this.totalHitsFormatted = ko.computed(function(){
             return common.util.numberWithCommas(this.state.totalHits());
         }, this);
 
+        this.webTitleInput = ko.computed({
+            read: function() {
+                return this.meta.webTitle() || this.props.webTitle();
+            },
+            write: function(value) {
+                this.meta.webTitle(value);
+            },
+            owner: this
+         });
+
         this.populate(opts);
     };
 
+    Article.prototype.forceRefresh = function() {
+        self.load();
+    };
+
     Article.prototype.populate = function(opts) {
-        common.util.populateObservables(this.meta, opts)
-        common.util.populateObservables(this.fields, opts.fields)
-    }
+        common.util.populateObservables(this.props, opts);
+        common.util.populateObservables(this.meta, opts.meta);
+        common.util.populateObservables(this.fields, opts.fields);
+    };
 
-    Article.prototype.toggleEditingConfig = function() {
-        this.state.editingConfig(!this.state.editingConfig());
-    }
+    Article.prototype.startTitleEdit = function() {
+        if (!this.collection) { return; }
 
-    Article.prototype.stopEditingConfig = function() {
-        this.state.editingConfig(false);
-    }
+        this.provisionalWebTitle = this.meta.webTitle();
+        this.state.editingTitle(true);
+    };
 
-    Article.prototype.saveConfig = function(listId) {
+    Article.prototype.saveTitleEdit = function() {
+        if(this.meta.webTitle()) {
+            this.save();
+        };
+        this.state.editingTitle(false);
+    };
+
+    Article.prototype.cancelTitleEdit = function() {
+        this.meta.webTitle(this.provisionalWebTitle);
+        this.state.editingTitle(false);
+    };
+
+    Article.prototype.revertTitleEdit = function() {
+        this.meta.webTitle(undefined);
+        this.state.editingTitle(false);
+        this.save();
+    };
+
+    Article.prototype.getMeta = function() {
         var self = this;
-        // If a config property (a) is set and (b) differs from the meta value, include it in post.
-        authedAjax({
-            url: common.config.apiBase + '/collection/' + listId + '/' + this.meta.id(),
-            type: 'post',
-            data: JSON.stringify({
-                config: _.chain(this.config)
-                    .pairs()
-                    .filter(function(p){ return p[1]() && p[1]() !== self.meta[p[0]](); })
-                    .map(function(p){ return [p[0], p[1]()]; })
-                    .object()
-                    .value()
-            })
-        }).then(function(){
-            self.stopEditingConfig();
-        });
-    }
+
+        return _.chain(this.meta)
+            .pairs()
+            // is the meta property a non-whitespace-only string ?
+            .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
+            // does it actually differs from the props value (if any) that it's overwriting ?
+            .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
+            .map(function(p){ return [p[0], p[1]()]; })
+            .object()
+            .value();
+    };
+
+    Article.prototype.save = function() {
+        if (!this.collection) { return; }
+
+        authedAjax.updateCollection(
+            'post',
+            this.collection,
+            {
+                item:     this.props.id(),
+                position: this.props.id(),
+                itemMeta: this.getMeta(),
+                live:     common.state.liveMode(),
+                draft:   !common.state.liveMode(),
+            }
+        );
+        this.collection.state.loadIsPending(true)
+    };
 
     return Article;
 });
