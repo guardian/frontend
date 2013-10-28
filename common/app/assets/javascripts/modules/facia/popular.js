@@ -3,9 +3,8 @@ define([
     'ajax',
     'bonzo',
     'modules/relativedates',
-    'modules/facia/items-show-more',
-    'modules/facia/image-upgrade'
-], function (common, ajax, bonzo, relativeDates, ItemsShowMore, ImageUpgrade) {
+    'modules/facia/items-show-more'
+], function (common, ajax, bonzo, relativeDates, ItemsShowMore) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -34,9 +33,7 @@ define([
         },
         imageTmpl = function(trail) {
             return updateTmpl(
-                '<div class="item__image-container">' +
-                    '<img class="item__image" alt="" data-src="@trail.mainPicture.item"  data-src-main="@trail.mainPicture.itemMain" data-src-mobile="@trail.mainPicture.itemMobile"  data-src-main-mobile="@trail.mainPicture.itemMainMobile" />' +
-                '</div>',
+                '<div class="item__image-container" data-src="@trail.itemPicture"></div>',
                 trail
             );
         };
@@ -60,13 +57,11 @@ define([
                             itemTmpl(trail)
                         ));
 
-                        // only show images for the first 3 items
-                        if (index < 3 && trail.mainPicture) {
+                        if (trail.itemPicture) {
                             common.$g('.item__link', $item).prepend(imageTmpl(trail));
-                            if (index < 3) {
-                                new ImageUpgrade($item[0], index === 0)
-                                    .upgrade();
-                            }
+                            $item.addClass('item--has-image');
+                        } else {
+                            $item.addClass('item--has-no-image');
                         }
 
                         // add item to the items
@@ -81,6 +76,18 @@ define([
                         .addShowMore();
                     // relativise timestamps
                     relativeDates.init($items[0]);
+                    // upgrade image
+                    require(['js!imager'], function() {
+                        var images = common.toArray(document.querySelectorAll('.item__image-container'), $items[0]).filter(function(img) {
+                                return bonzo(img).css('display') !== 'none';
+                            }),
+                            options = {
+                                availableWidths: [ 140, 220, 300, 460, 620, 700 ],
+                                strategy: 'container',
+                                replacementDelay: 200
+                            };
+                        Imager.init(images, options);
+                    });
                 },
                 function(req) {
                     common.mediator.emit(

@@ -143,9 +143,6 @@
     &.item--has-no-image .item__standfirst {
         display: block;
     }
-    .item__image-container{
-        width: gs-height(8);
-    }
     .item__live-indicator {
         @include fs-data(6, true);
         top: -3px;

@@ -84,7 +84,7 @@ define([
                             return bonzo(img).css('display') !== 'none';
                         }),
                         options = {
-                            availableWidths: [ 140, 220, 300, 460, 700 ],
+                            availableWidths: [ 140, 220, 300, 460, 620, 700 ],
                             strategy: 'container',
                             replacementDelay: 200
                         };
