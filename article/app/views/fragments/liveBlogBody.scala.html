@@ -132,7 +132,7 @@
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
             }
 
-            <div class="js-popular article__popular" role="complementary"></div>
+            @fragments.mostPopularPlaceholder(article.section)
         </div>
     </div>
     }
