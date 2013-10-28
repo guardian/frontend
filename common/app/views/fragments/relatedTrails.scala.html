@@ -1,7 +1,7 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int = 5)(implicit request: RequestHeader)
 
 @defining(trails.length){ numTrails =>
-    <h3 id="related-content-head" class="page-sub-header tone-colour tone-border">@Html(heading)</h3>
+    <h2 id="related-content-head" class="page-sub-header tone-colour">@Html(heading)</h2>
     <div class="related-trails trailblock"
         data-count="@{trails.length - visibleTrails}"
         data-link-name="Related @heading"

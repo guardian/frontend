@@ -374,10 +374,10 @@ video {
     }
     .article__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;
-
-        .media-primary {
-            margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
-        }
+    }
+    .article__head,
+    .article__columning-wrapper .media-primary {
+        margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
     }
 
     .article__head .commentcount {
@@ -416,10 +416,10 @@ video {
         table-layout: fixed;
         padding-right: 0;
         position: relative;
-
-        .media-primary {
-            margin-right: 0 !important;
-        }
+    }
+    .article__head,
+    .article__columning-wrapper .media-primary {
+        margin-right: 0 !important;
     }
     .article__main-column {
         display: table-cell;
