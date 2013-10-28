@@ -25,9 +25,8 @@ var Component = function() {};
  * @type {Object.<string.*>}
  */
 Component.CONFIG = {
-    templateName: 'component',
-    componentClass: 'component',
-    containerClass: 'component-container',
+    templateName: '{{ TEMPLATE_NAME }}',
+    componentClass: '{{ COMPONENT_CLASS }}',
     classes: {},
     elements: {}
 };

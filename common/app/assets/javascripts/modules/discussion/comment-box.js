@@ -26,7 +26,6 @@ Component.define(CommentBox);
 CommentBox.CONFIG = {
     templateName: 'comment-box',
     componentClass: 'js-comment-box',
-    containerClass: 'discussion__comment-box',
     classes: {
         show: 'js-show-comment-box',
         body: 'd-comment-box__body',
