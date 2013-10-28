@@ -79,12 +79,12 @@ define([
 
         upgradeImages: function () {
             require(['js!imager'], function() {
-                var images = common.toArray(document.querySelectorAll('.item__image')).filter(function(img) {
+                var images = common.toArray(document.querySelectorAll('.item__image-container')).filter(function(img) {
                         return bonzo(img).css('display') === 'block';
                     }),
                     options = {
                         availableWidths: [ 140, 220, 300, 460, 700 ],
-                        strategy: 'replacer',
+                        strategy: 'container',
                         replacementDelay: 200
                     };
                 Imager.init(images, options);

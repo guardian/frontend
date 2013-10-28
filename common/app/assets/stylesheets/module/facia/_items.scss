@@ -87,12 +87,18 @@ $c-live: #e81818;
     display: block;
     border-top: 2px solid $c-newsAccent;
 }
-.item__image {
+.item__image-container {
     display: none;
+    position: relative;
+    padding-bottom: 60%;
 }
 .responsive-img {
     margin-top: 2px;
     width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .item__live-indicator {
     color: #ffffff;

@@ -4,7 +4,7 @@
         .item__link {
             border-top-style: none;
         }
-        .item__image,
+        .item__image-container,
         &.item--no-image .item__title {
             margin-top: 0;
         }
@@ -39,7 +39,7 @@
 }
 @mixin card-image {
     min-height: gs-height(8);
-    .item__image,
+    .item__image-container,
     &.item--no-image .item__standfirst {
         display: block;
     }
@@ -68,7 +68,7 @@
     }
 }
 @mixin card-mobile-image {
-    .item__image,
+    .item__image-container,
     &.item--no-image .item__standfirst {
         display: block;
     }
@@ -123,7 +123,7 @@
     &.item--no-image .item__title {
         min-height: 186px
     }
-    .item__image {
+    .item__image-container {
         display: block;
     }
 }
@@ -134,7 +134,7 @@
     .item__title {
         @include fs-headline(7, $size-only: true);
     }
-    .item__image,
+    .item__image-container,
     &.item--no-image .item__standfirst {
         display: block;
     }
@@ -158,7 +158,7 @@
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
-    .item__image,
+    .item__image-container,
     .item__standfirst {
         display: block;
     }
