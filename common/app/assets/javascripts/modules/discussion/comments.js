@@ -63,7 +63,7 @@ Comments.prototype.ready = function() {
         qwery(this.getClass('topLevel'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
                 self.hasHiddenComments = true;
-                elem.className += elem.className +' u-h';
+                bonzo(elem).addClass('u-h');
             }
         });
 
@@ -108,7 +108,7 @@ Comments.prototype.showMore = function(e) {
 
 Comments.prototype.showHiddenComments = function() {
     qwery(this.getClass('topLevel'), this.elem).forEach(function(elem, i) {
-        elem.className += elem.className.replace(' u-h', '');
+        bonzo(elem).removeClass('u-h');
     });
     this.hasHiddenComments = false;
 
