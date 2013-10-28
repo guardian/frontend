@@ -1,9 +1,9 @@
 .collection--popular {
     @include mq($to: tablet) {
+        counter-reset: popular;
         .item__link {
             border-top: 1px dotted $c-neutral5;
         }
-        counter-reset: popular;
         .item > * {
             padding-left: 24px;
         }
