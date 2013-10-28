@@ -18,7 +18,7 @@
 
     @include mq(tablet) {
         min-height: 0;
-        padding: $baseline*3 0 $baseline*3;
+        padding: $baseline*3 0;
         border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 
         max-width: gs-span(8);
@@ -320,7 +320,7 @@ video {
         top: 0;
         width: $gs-column-width - 1px;
         height: $gs-column-height - 1px;
-        padding: $baseline 0 0 $baseline;
+        padding: $baseline 0 0 $gutter/4;
         border-left: 1px dotted $c-neutral5;
     }
 }
@@ -503,7 +503,6 @@ video {
 
 
 .article__popular {
-
     .article-zone {
         border-color: $c-newsAccent; // Acts as a default
     }
