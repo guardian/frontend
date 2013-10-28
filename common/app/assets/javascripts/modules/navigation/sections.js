@@ -72,9 +72,11 @@ define([
                 contexts[id] = true;
 
                 var sectionsHeader = context.querySelector('.nav-popup-sections'),
-                    sectionsNav    = context.querySelector('.nav--global'),
-                    subSectionsNav = context.querySelector('.nav--local'),
-                    $sectionsHeader = bonzo(sectionsHeader);
+                    sectionsNav    = context.querySelector('.nav--global');
+
+                if (!sectionsHeader || !sectionsNav) {
+                    return;
+                }
 
                 bean.on(window, 'resize', common.debounce(function(e){
                     hasCrossedBreakpoint(function(layoutMode) {
