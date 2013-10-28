@@ -153,7 +153,8 @@
     min-height: gs-height(8);
     float: left;
     border-left: none;
-    &.item--image-upgraded {
+    padding-left: 0;
+    .connection--not-low &.item--has-image {
         width: gs-span(4);
         padding-left: gs-span(8) + $gs-gutter;
     }
@@ -164,12 +165,12 @@
     .item__standfirst {
         display: block;
     }
-    &.item--image-upgraded .item__image-container {
-        height: 100%;
+    .connection--not-low & .item__image-container {
         width: gs-span(8);
+        height: gs-height(8);
         position: absolute;
         top: 0;
         left: 0;
-        margin: 0 auto;
+        padding-bottom: 0;
     }
 }
