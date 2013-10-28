@@ -1,15 +1,15 @@
 # For dev machines
-GET         /assets/*path                       dev.DevAssetsController.at(path)
+GET         /assets/*path                               dev.DevAssetsController.at(path)
 
-GET         /signin        @controllers.SigninController.renderForm
-POST        /signin        @controllers.SigninController.processForm
-GET         /signout        @controllers.SignoutController.signout
-GET         /reset        @controllers.ResetPasswordController.renderPasswordResetRequestForm
-POST        /reset        @controllers.ResetPasswordController.processPasswordResetRequestForm
-GET         /c/:resetToken        @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
-POST        /reset-password/:resetToken        @controllers.ResetPasswordController.resetPassword( resetToken : String )
-GET         /requestnewtoken        @controllers.ResetPasswordController.requestNewToken
-GET         /register        @controllers.RegistrationController.renderForm
-POST        /register        @controllers.RegistrationController.processForm
-GET         /profile/public  @controllers.PubilcProfileController.displayForm
-
+GET     /signin                                         @controllers.SigninController.renderForm
+POST    /signin                                         @controllers.SigninController.processForm
+GET     /signout                                        @controllers.SignoutController.signout
+GET     /reset                                          @controllers.ResetPasswordController.renderPasswordResetRequestForm
+POST    /reset                                          @controllers.ResetPasswordController.processPasswordResetRequestForm
+GET     /c/:resetToken                                  @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
+POST    /reset-password/:resetToken                     @controllers.ResetPasswordController.resetPassword( resetToken : String )
+GET     /requestnewtoken                                @controllers.ResetPasswordController.requestNewToken
+GET     /register                                       @controllers.RegistrationController.renderForm
+POST    /register                                       @controllers.RegistrationController.processForm
+GET     /email-prefs                                    @controllers.EmailController.preferences
+GET     /profile/public                                 @controllers.PubilcProfileController.displayForm

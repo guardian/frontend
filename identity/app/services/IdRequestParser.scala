@@ -1,12 +1,13 @@
 package services
 
 import idapiclient.TrackingData
-import play.api.mvc.{AnyContent, Request}
-import com.google.inject.Inject
+import play.api.mvc.RequestHeader
+import com.google.inject.{Inject, Singleton}
 import utils.RemoteAddress
 
+@Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
-  def apply[A](request: Request[A]) = {
+  def apply(request: RequestHeader) = {
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
     val ip = clientIp(request)
     IdentityRequest(

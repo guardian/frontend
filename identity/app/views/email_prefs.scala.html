@@ -1,0 +1,49 @@
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, emailPrefsForm: Form[(Boolean, Boolean, String)])(implicit request: RequestHeader)
+
+@import views.html.fragments.form.idCheckbox
+
+@identityMain(page, conf.Switches.all){
+}{
+    <div class="identity-wrapper">
+        <h1>Email preferences</h1>
+
+        <form class="form" novalidate action="@idUrlBuilder.buildUrl("/email-prefs", idRequest)" role="main" method="post">
+            @if(emailPrefsForm.globalError.isDefined) {
+              <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
+            }
+
+            <ul class="form-fields">
+                <li>
+                    <h2 class="type-2">How do you like to receive your emails?</h2>
+                    <p>
+                        HTML emails contain formatting and are generally prettier, and will contain images.
+                        Text emails are quicker to download, but don't contain images or formatting. We recommend HTML emails.
+                    </p>
+                    <label class="check-label check-label--helper">
+                        @idCheckbox(emailPrefsForm("receive_gnm_marketing"))
+                        Receive email from Guardian News & Media Ltd.?
+                    </label>
+                </li>
+
+                <li>
+                    <h2 class="type-2">Would you like to receive information from the Guardian and their partners?</h2>
+                    <p>The guardian and their partners would like to occasionally send you information about their products, services and events.</p>
+
+
+                    <label class="check-label check-label--helper">
+                        @idCheckbox(emailPrefsForm("receive_gnm_marketing"))
+                        Receive email from Guardian News & Media Ltd.?
+                    </label>
+                    <label class="check-label check-label--helper">
+                        @idCheckbox(emailPrefsForm("receive_third_party_marketing"))
+                        Receive email from other organisations?
+                    </label>
+                </li>
+                <li>
+                    <button type="submit" class="submit-input" data-link-name="Sign in">Sign in</button>
+                </li>
+
+            </ul>
+        </form>
+    </div>
+}
