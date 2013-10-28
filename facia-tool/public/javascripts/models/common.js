@@ -32,13 +32,14 @@ define([
             collectionsPollMs:     10000, // 10 seconds
             latestArticlesPollMs:  30000, // 10 seconds
             cacheExpiryMs:         60000, // 1 min
-            defaultToLiveMode:     false,
 
             apiBase:               '',
             apiSearchBase:         '/api/proxy'
         },
 
-        state: {},
+        state: {
+            liveMode: ko.observable(true) // default to live mode?
+        },
 
         util: {
             mediator: new EventEmitter(),
