@@ -351,11 +351,12 @@ video {
 /* Layout changes across devices
    ========================================================================== */
 
-.article__container {
+.article__container,
+.article__meta-container,
+.article__inner {
     max-width: gs-span(7);
-}
-@include mq(tablet) {
-    .article__container {
+
+    @include mq(rightCol) {
         max-width: none;
     }
 }
