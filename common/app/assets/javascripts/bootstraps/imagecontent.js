@@ -1,9 +1,7 @@
 define([
-    "common",
-    "modules/discussion/discussion"
+    "common"
 ], function(
-    common,
-    Discussion
+    common
 ) {
     var modules = {
 
@@ -23,7 +21,10 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.initDiscussion();
+            requirejs(['discussion'], function (D) {
+                console.log('*** discussion has loaded via a requirejs call (image content)', D);
+                //modules.initDiscussion();
+                });
         }
         common.mediator.emit("page:imagecontent:ready", config, context);
     };

@@ -5,7 +5,6 @@ define([
     "modules/live-summary",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/discussion/discussion",
     "modules/cricket",
     "modules/experiments/live-blog-show-more",
     "modules/notification-counter",
@@ -18,7 +17,6 @@ define([
     LiveSummary,
     MatchNav,
     Reading,
-    Discussion,
     Cricket,
     LiveShowMore,
     NotificationCounter,
@@ -81,15 +79,20 @@ define([
         },
 
         initDiscussion: function() {
-
+            console.log('attaching discussion event listener');
             common.mediator.on('page:article:ready', function(config, context) {
-                if (config.page.commentable) {
-                    var discussionArticle = new Discussion({
+                console.log('firing discussion event listener');
+                console.log(config.page.commentable);
+                //require(['discussion'], function (D) {
+                //    console.log('*** discussion has loaded via a requirejs call (article)', D);
+                //})
+                /*  if (config.page.commentable) {
+                      var discussionArticle = new Discussion({
                         id: config.page.shortUrl,
                         context: context,
                         config: config
                     }).init();
-                }
+                }*/
             });
         },
 

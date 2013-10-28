@@ -9,7 +9,6 @@ define('bootstraps/app', [
     'modules/fonts',
     'modules/debug',
     "modules/router",
-    'modules/discussion/api',
     "bootstraps/common",
     "bootstraps/facia",
     "bootstraps/football",
@@ -24,7 +23,8 @@ define('bootstraps/app', [
     "bootstraps/section",
     "bootstraps/imagecontent",
     "modules/id",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "modules/discussion/api"
 ], function (
     qwery,
     common,
@@ -35,7 +35,6 @@ define('bootstraps/app', [
     Fonts,
     Debug,
     Router,
-    DiscussionApi,
     bootstrapCommon,
     Facia,
     Football,
@@ -50,7 +49,8 @@ define('bootstraps/app', [
     Section,
     ImageContent,
     Id,
-    UserAdTargeting
+    UserAdTargeting,
+    DiscussionApi
 ) {
 
     var modules = {

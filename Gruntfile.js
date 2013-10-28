@@ -46,8 +46,30 @@ module.exports = function (grunt) {
             compile: {
                 options: {
                     baseUrl: "common/app/assets/javascripts",
-                    name: "bootstraps/app",
-                    out: "static/target/compiled/javascripts/bootstraps/app.js",
+                    dir: "static/target/compiled/javascripts/",
+                    modules: [
+                        {
+                            name: "bootstraps/app"
+                        },
+                        {
+                            name: "modules/discussion/discussion",
+                            exclude: [  'common',
+                                        'bonzo',
+                                        'qwery',
+                                        'bean',
+                                        'ajax',
+                                        'modules/userPrefs',
+                                        'modules/analytics/clickstream',
+                                        'modules/inview',
+                                        'modules/detect',
+                                        'modules/id'
+                            ]
+                        }
+                    ],
+                    wrap : {
+                        "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
+                        "endFile": "common/app/assets/javascripts/bootstraps/go.js"
+                    },
                     paths: {
                         "bean": "components/bean/bean",
                         "bonzo": "components/bonzo/src/bonzo",
@@ -58,10 +80,6 @@ module.exports = function (grunt) {
                         "domwrite": "components/dom-write/dom-write",
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview"
-                    },
-                    "wrap" : {
-                        "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
-                        "endFile": "common/app/assets/javascripts/bootstraps/go.js"
                     },
                     optimize: (isDev) ? 'none' : 'uglify2',
                     useSourceUrl: (isDev) ? true : false,
