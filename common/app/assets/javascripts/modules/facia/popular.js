@@ -3,8 +3,9 @@ define([
     'ajax',
     'bonzo',
     'modules/relativedates',
-    'modules/facia/items-show-more'
-], function (common, ajax, bonzo, relativeDates, ItemsShowMore) {
+    'modules/facia/items-show-more',
+    'modules/facia/images'
+], function (common, ajax, bonzo, relativeDates, ItemsShowMore, faciaImages) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -77,17 +78,7 @@ define([
                     // relativise timestamps
                     relativeDates.init($items[0]);
                     // upgrade image
-                    require(['js!imager'], function() {
-                        var images = common.toArray(document.querySelectorAll('.item__image-container'), $items[0]).filter(function(img) {
-                                return bonzo(img).css('display') !== 'none';
-                            }),
-                            options = {
-                                availableWidths: [ 140, 220, 300, 460, 620, 700 ],
-                                strategy: 'container',
-                                replacementDelay: 200
-                            };
-                        Imager.init(images, options);
-                    });
+                    faciaImages.upgrade($items[0]);
                 },
                 function(req) {
                     common.mediator.emit(

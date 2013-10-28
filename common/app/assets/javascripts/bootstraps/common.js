@@ -35,7 +35,8 @@ define([
     "modules/discussion/commentCount",
     "modules/lightbox-gallery",
     "modules/swipe/ears",
-    "modules/swipe/bar"
+    "modules/swipe/bar",
+    "modules/facia/images"
 ], function (
     common,
     ajax,
@@ -72,25 +73,14 @@ define([
     CommentCount,
     LightboxGallery,
     ears,
-    SwipeBar
+    SwipeBar,
+    faciaImages
 ) {
 
     var modules = {
 
         upgradeImages: function () {
-            if (common.$g('html').hasClass('connection--not-low')) {
-                require(['js!imager'], function() {
-                    var images = common.toArray(document.querySelectorAll('.item__image-container')).filter(function(img) {
-                            return bonzo(img).css('display') !== 'none';
-                        }),
-                        options = {
-                            availableWidths: [ 140, 220, 300, 460, 620, 700 ],
-                            strategy: 'container',
-                            replacementDelay: 200
-                        };
-                    Imager.init(images, options);
-                });
-            }
+            faciaImages.upgrade();
 
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
