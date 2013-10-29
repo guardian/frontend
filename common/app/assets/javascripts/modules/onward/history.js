@@ -29,7 +29,7 @@ define([
     };
 
     history.contains = function(id) {
-        return history.get().indexOf(id);
+        return history.get().indexOf(id) !== -1;
     };
 
     history.store = function(id) {
@@ -53,7 +53,11 @@ define([
     };
 
     history.log = function(id) {
-        if(history.contains(id) !== -1) {
+        if(!/\/p\/\w*/g.test(id)) {
+            throw new Error("Article id did not match short URL");
+        }
+
+        if(history.contains(id)) {
             history.shift(id);
         } else {
             history.store(id);

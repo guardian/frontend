@@ -16,7 +16,7 @@ define([
         return newArr;
     };
 
-    var id = 'p/3jp8n';
+    var id = '/p/3jp8n';
 
     describe('History', function() {
 
@@ -55,9 +55,9 @@ define([
         it('should not duplicate entries', function() {
 
             setStorageItem(contains);
-            history.log("p/3jqf9");
+            history.log("/p/3jqf9");
 
-            expect(history.get()).toEqual(["p/3jqf9", "p/3jqha", "p/3jqg5", "p/3jqgy"]);
+            expect(history.get()).toEqual(["/p/3jqf9", "/p/3jqha", "/p/3jqg5", "/p/3jqgy"]);
         });
 
     });
