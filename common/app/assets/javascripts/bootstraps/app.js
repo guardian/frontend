@@ -50,9 +50,9 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
-    ImageContent,
     Facebook,
     Section,
+    ImageContent,
     Id,
     UserAdTargeting
 ) {

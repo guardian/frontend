@@ -127,7 +127,7 @@
         guardian.platformsNotGettingHintedFonts = /W(indows Phone|PDesktop)/; // exceptions
 
         if (guardian.platformsGettingHintedFonts.test(navigator.userAgent) &&
-            !! guardian.platformsNotGettingHintedFonts.test(navigator.userAgent)) {
+            !guardian.platformsNotGettingHintedFonts.test(navigator.userAgent)) {
             loadFontsAsynchronously();
         } else {
             loadFontsFromStorage();

@@ -46,8 +46,9 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
                 userFromCookieCache = null;
             }
         }
+
         return userFromCookieCache;
-    },
+    };
 
     /**
      * @return {string}
