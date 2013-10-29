@@ -1,67 +1,49 @@
-/** MIT License (c) copyright B Cavalier & J Hann */
+/** MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
 
 /**
  * curl CommonJS Modules/1.1 loader
  *
- * Licensed under the MIT License at:
- * 		http://www.opensource.org/licenses/mit-license.php
+ * This loader loads modules that conform to the CommonJS Modules/1.1 spec.
+ * The loader also accommodates node.js, which  adds features beyond the
+ * spec, such as `module.exports` and `this === exports`.
+ *
+ * CommonJS modules can't run in browser environments without help. This
+ * loader wraps the modules in AMD and injects the CommonJS "free vars":
+ *
+ * define(function (require, exports, module) {
+ *     // CommonJS code goes here.
+ * });
+ *
+ * Config options:
+ *
+ * `injectSourceUrl` {boolean} If truthy (default), a //@sourceURL is injected
+ * into the script so that debuggers may display a meaningful name in the
+ * list of scripts. Setting this to false may save a few bytes.
+ *
+ * `injectScript` {boolean} If truthy, a <script> element will be inserted,
+ * rather than using a global `eval()` to execute the module.  You typically
+ * won't need to use this option.
+ *
+ * `dontAddFileExt` {RegExp|string} An expression that determines when *not*
+ * to add a '.js' extension onto a url when fetching a module from a server.
  */
 
-/**
- * @experimental
- */
 (function (global, document, globalEval) {
 
-define(/*=='curl/loader/cjsm11',==*/ function () {
+define(/*=='curl/loader/cjsm11',==*/ ['../plugin/_fetchText', 'curl/_privileged'], function (fetchText, priv) {
 
-	var head, insertBeforeEl /*, findRequiresRx, myId*/;
-
-//	findRequiresRx = /require\s*\(\s*['"](\w+)['"]\s*\)/,
-
-//	function nextId (index) {
-//		var varname = '', part;
-//		do {
-//			part = index % 26;
-//			varname += String.fromCharCode(part + 65);
-//			index -= part;
-//		}
-//		while (index > 0);
-//		return 'curl$' + varname;
-//	}
-
-//	/**
-//	 * @description Finds the require() instances in the source text of a cjs
-//	 * 	 module and collects them. If removeRequires is true, it also replaces
-//	 * 	 them with a unique variable name. All unique require()'d module ids
-//	 * 	 are assigned a unique variable name to be used in the define(deps)
-//	 * 	 that will be constructed to wrap the cjs module.
-//	 * @param source - source code of cjs module
-//	 * @param moduleIds - hashMap (object) to receive pairs of moduleId /
-//	 *   unique variable name
-//	 * @param removeRequires - if truthy, replaces all require() instances with
-//	 *   a unique variable
-//	 * @return - source code of cjs module, possibly with require()s replaced
-//	 */
-//	function parseDepModuleIds (source, moduleIds, removeRequires) {
-//		var index = 0;
-//		// fast parse
-//		source = source.replace(findRequiresRx, function (match, id) {
-//			if (!moduleIds[id]) {
-//				moduleIds[id] = nextId(index++);
-//				moduleIds.push(id);
-//			}
-//			return removeRequires ? moduleIds[id] : match;
-//		});
-//		return source;
-//	}
+	var head, insertBeforeEl, extractCjsDeps, checkToAddJsExt;
 
 	head = document && (document['head'] || document.getElementsByTagName('head')[0]);
 	// to keep IE from crying, we need to put scripts before any
 	// <base> elements, but after any <meta>. this should do it:
 	insertBeforeEl = head && head.getElementsByTagName('base')[0] || null;
 
+	extractCjsDeps = priv['core'].extractCjsDeps;
+	checkToAddJsExt = priv['core'].checkToAddJsExt;
+
 	function wrapSource (source, resourceId, fullUrl) {
-		var sourceUrl = fullUrl ? '////@ sourceURL=' + fullUrl.replace(/\s/g, '%20') + '.js' : '';
+		var sourceUrl = fullUrl ? '/*\n////@ sourceURL=' + fullUrl.replace(/\s/g, '%20') + '.js\n*/' : '';
 		return "define('" + resourceId + "'," +
 			"['require','exports','module'],function(require,exports,module){" +
 			source + "\n});\n" + sourceUrl + "\n";
@@ -82,38 +64,44 @@ define(/*=='curl/loader/cjsm11',==*/ function () {
 		head.insertBefore(el, insertBeforeEl);
 	}
 
-	return {
-		'load': function (resourceId, require, callback, config) {
-			// TODO: extract xhr from text! plugin and use that instead (after we upgrade to cram.js)
-			require(['text!' + resourceId + '.js', 'curl/_privileged'], function (source, priv) {
-				var moduleMap;
+	wrapSource['load'] = function (resourceId, require, callback, config) {
+		var errback, url, sourceUrl;
 
-				// find (and replace?) dependencies
-				moduleMap = priv['core'].extractCjsDeps(source);
-				//source = parseDepModuleIds(source, moduleMap, config.replaceRequires);
+		errback = callback['error'] || function (ex) { throw ex; };
+		url = checkToAddJsExt(require.toUrl(resourceId), config);
+		sourceUrl = config['injectSourceUrl'] !== false && url;
 
-				// get deps
-				require(moduleMap, function () {
+		fetchText(url, function (source) {
+			var moduleMap;
 
-					// wrap source in a define
-					source = wrapSource(source, resourceId, config['injectSourceUrl'] !== false && require.toUrl(resourceId));
+			// find (and replace?) dependencies
+			moduleMap = extractCjsDeps(source);
 
-					if (config['injectScript']) {
-						injectScript(source);
-					}
-					else {
-						//eval(source);
-						globalEval(source);
-					}
+			// get deps
+			require(moduleMap, function () {
 
-					// call callback now that the module is defined
-					callback(require(resourceId));
 
-				}, callback['error'] || function (ex) { throw ex; });
+				// wrap source in a define
+				source = wrapSource(source, resourceId, sourceUrl);
 
-			});
-		}
+				if (config['injectScript']) {
+					injectScript(source);
+				}
+				else {
+					//eval(source);
+					globalEval(source);
+				}
+
+				// call callback now that the module is defined
+				callback(require(resourceId));
+
+			}, errback);
+		}, errback);
 	};
+
+	wrapSource['cramPlugin'] = '../cram/cjsm11';
+
+	return wrapSource;
 
 });
 

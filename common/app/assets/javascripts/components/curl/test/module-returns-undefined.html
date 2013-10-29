@@ -33,6 +33,8 @@
 
 			function countdown () {
 				if (--count == 0) {
+					write((spy.calledMany(howMany || 0) ? 'SUCCESS' : 'FAILED') + ': should load ' + moduleId + ' exactly once');
+					priv.core.loadScript = origLoadScript;
 					promise.resolve();
 				}
 			}
@@ -50,15 +52,6 @@
 					write('FAILED: on ' + moduleId + ' exception:' + ex);
 				}
 			);
-
-			if (spy.calledMany(howMany || 0)) {
-				write('SUCCESS: loaded ' + moduleId + ' exactly once');
-			}
-			else {
-				write('FAILED: loaded ' + moduleId + ' more than once');
-			}
-
-			priv.core.loadScript = origLoadScript;
 
 			return promise;
 
@@ -80,6 +73,6 @@
 <body>
 
 <button onclick="runTest(window.module1);">press this button to load the local module again</button>
-<button onclick="curl('curl/_privileged',console.log);">dump cache to console</button>
+<button onclick="curl('curl/_privileged',console.log.bind(console));">dump cache to console</button>
 </body>
 </html>

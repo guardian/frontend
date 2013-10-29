@@ -1,4 +1,4 @@
-define(['text!./template', 'css!./css'], function (template, css) {
+define(['text!./template.html', 'css!./css.css'], function (template, css) {
 	return {
 		render: function (node) {
 			try {
