@@ -5,4 +5,4 @@
 # For dev machines
 GET        /assets/*path                         dev.DevAssetsController.at(path)
 
-GET        /ophan-next.json                      controllers.MostPopularOnwardController.render(path = "")
+GET        /ophan-next/*path.json                controllers.MostPopularOnwardController.render(path)

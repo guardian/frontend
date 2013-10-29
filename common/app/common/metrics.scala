@@ -320,6 +320,18 @@ object CommercialMetrics {
   val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric)
 }
 
+object OnwardMetrics {
+  object OnwardLoadTimingMetric extends TimingMetric(
+    "onward",
+    "onward-most-popular-load",
+    "Onward Journey load timing",
+    "Time spent running onward journey data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(OnwardLoadTimingMetric)
+}
+
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
 

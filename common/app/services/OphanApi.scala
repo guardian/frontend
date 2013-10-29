@@ -39,4 +39,7 @@ object OphanApi extends ExecutionContexts with Logging {
     getBodyAsJson(s"mostread?referrer=$referrer&hours=$hours")
   }
 
+  def getMostRead(hours: Int): Future[JsValue] = {
+    getBodyAsJson(s"mostread?hours=$hours")
+  }
 }
