@@ -12,7 +12,7 @@ define(['common', 'modules/id'], function(common, Id) {
             'prop4', 'prop6', 'prop8', 'prop10', 'prop13',
             'prop19', 'prop31', 'prop51', 'prop75',
             'eVar7', 'eVar8',  'eVar19', 'eVar31',
-            'eVar51', 'eVar66', 'eVar67'];
+            'eVar51', 'eVar66'];
 
         return linkTrackVars.concat(extras).join(',');
     };
@@ -31,7 +31,7 @@ define(['common', 'modules/id'], function(common, Id) {
         s.eVar65 = 'recommendation';
         s.eVar66 = Id.getUserFromCookie().id;
         s.eVar67 = e.userId;
-        s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
+        s.linkTrackVars = this.getLinkTrackVars(['eVar65', 'eVar67']);
         s.linkTrackEvents = 'event72';
         s.tl(true, 'o', 'Recommend a comment');
     };
