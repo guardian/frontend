@@ -17,15 +17,13 @@ class UserFromApiActionBuilder @Inject()(apiUserDataActionHandler:UserApiDataReq
     val authResult = authService.handleAuthenticatedRequest(request);
     val idRequest = idRequestParser(request)
 
-    authResult.fold[Future[SimpleResult]](
+    authResult.fold(
       { error =>
           Future.successful(error)},
       { auth =>
         apiUserDataActionHandler.handleRequest(request, auth).flatMap {
-          _.fold[Future[SimpleResult]](
-            { error => Future.successful(error) },
-            { user => block(UserFromApiRequest(user, idRequest, request, auth.auth)) }
-          )
+          case Left(error) => Future.successful(error)
+          case Right(user) => block(UserFromApiRequest(user, idRequest, request, auth.auth))
         }
       }
     )
