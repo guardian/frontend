@@ -61,10 +61,6 @@ function (
         this.populate(opts);
     };
 
-    Article.prototype.forceRefresh = function() {
-        self.load();
-    };
-
     Article.prototype.populate = function(opts) {
         common.util.populateObservables(this.props, opts);
         common.util.populateObservables(this.meta, opts.meta);
@@ -101,9 +97,9 @@ function (
 
         return _.chain(this.meta)
             .pairs()
-            // is the meta property a non-whitespace-only string ?
+            // is the meta property a not a whitespace-only string ?
             .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
-            // does it actually differs from the props value (if any) that it's overwriting ?
+            // does it actually differ from the props value (if any) that it's overwriting ?
             .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
             .map(function(p){ return [p[0], p[1]()]; })
             .object()
