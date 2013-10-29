@@ -94,7 +94,7 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
      */
     Id.decodeBase64 = function(str) {
         return decodeURIComponent(escape(common.atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
-    },
+    };
 
     Id._hasUserSignedOutInTheLast24Hours = function() {
         var cookieData = Cookies.get(Id.signOutCookieName);
@@ -103,7 +103,7 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
           return((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
         }
         return false;
-    },
+    };
 
     /**
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hous

@@ -170,14 +170,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
     lazy val config: Map[String, String] = Map(
-      "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
-      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
-      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
-      "idApiUrl" -> id.apiRoot,
-      "idFacebookAppId" -> id.facebookAppId,
-      "idWebAppUrl" -> id.webappUrl,
-      "discussionApiRoot" -> discussion.apiRoot,
-      "discussionApiClientHeader" -> discussion.apiClientHeader
+      ("ophanUrl" , "http://s.ophan.co.uk/js/ophan.min"),
+      ("googleSearchUrl", "http://www.google.co.uk/cse/cse.js"),
+      ("interactiveUrl", "http://interactive.guim.co.uk/next-gen/"),
+      ("idApiUrl", id.apiRoot),
+      ("idFacebookAppId", id.facebookAppId),
+      ("idWebAppUrl", id.webappUrl),
+      ("discussionApiRoot", discussion.apiRoot),
+      ("discussionApiClientHeader", discussion.apiClientHeader)
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
