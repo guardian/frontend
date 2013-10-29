@@ -3,8 +3,10 @@
  Description: Gets and sets users reading history
  */
 define([
+    'common',
     'modules/storage'
 ], function(
+    common,
     storage
     ) {
 
@@ -57,7 +59,7 @@ define([
 
     history.log = function(id) {
         if(!/\/p\/\w*/g.test(id)) {
-            throw new Error("Article id did not match short URL");
+            common.mediator.emit("error", "Article id did not match short URL", "modules/history.js");
         }
 
         if(history.contains(id)) {
