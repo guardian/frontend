@@ -1,6 +1,8 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<@element class="trail trail--headline t@rowNum" data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+<@element class="trail trail--headline t@rowNum" data-link-name="trail"
+    @trail.discussionId.map{ id => data-discussion-id="@id" }
+    data-discussion-closed="@trail.isClosedForComments">
 
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 

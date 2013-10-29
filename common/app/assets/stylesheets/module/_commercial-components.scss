@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Commercial component styles
+   Note: Only temporarily here, will eventually move out to their own stylesheets
+   ========================================================================== */
+.commercial {
+    text-align: left;
+    margin-top: $gs-baseline;
+    color: $c-neutral1;
+    overflow: hidden;
+}
+
+.commercial__title {
+    @include fs-headline(2);
+    padding-top: $baseline;
+    border-top: 1px dotted $c-neutral5;
+    color: #085FA6;
+
+    span {
+        color: #64C5F8;
+    }
+}
+
+.commercial__foot {
+    @include box-sizing(border-box);
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.commercial__foot {
+    display: none;
+
+    label {
+        display: block;
+    }
+
+    .submit-input {
+        padding: 12px;
+        margin-left: 0;
+        display: block;
+    }
+}
+
+
+
+/* ==========================================================================
+   Travel component
+   ========================================================================== */
+.commercial--travel {
+
+    .offer {
+        padding-right: $gutter/2;
+        float: left;
+        width: 50%;
+        @include box-sizing(border-box);
+    }
+
+    .offer__title {
+        margin-bottom: 0;
+    }
+
+    .offer__image img {
+        width: 100%;
+        display: block;
+    }
+
+    .offer__deal {
+        font-size: 14px;
+        padding: $gutter;
+        @include box-sizing(border-box);
+    }
+
+    .offer__link:hover .offer__deal {
+        background-color: $c-neutral5;
+    }
+
+    &.commercial--small .offer:nth-child(2) {
+        display: none;
+    }
+}

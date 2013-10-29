@@ -1,0 +1,1210 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"society/2013/oct/23/benefit-cap-failing-achieve-aims",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-10-23T05:00:00Z",
+      "webTitle":"Benefit cap is failing to achieve its aims, study concludes",
+      "webUrl":"http://www.theguardian.com/society/2013/oct/23/benefit-cap-failing-achieve-aims",
+      "apiUrl":"http://content.guardianapis.com/society/2013/oct/23/benefit-cap-failing-achieve-aims",
+      "fields":{
+        "trailText":"<p>The cap is neither forcing unemployed people to take a job nor saving taxpayers' money, according to the first in-depth study</p>",
+        "headline":"Benefit cap is failing to achieve its aims, study concludes",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn33",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475351652/March-in-Tottenham-agains-004.jpg",
+        "wordcount":"776",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"money/statebenefits",
+        "type":"keyword",
+        "webTitle":"State benefits",
+        "webUrl":"http://www.theguardian.com/money/statebenefits",
+        "apiUrl":"http://content.guardianapis.com/money/statebenefits",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/patrickbutler",
+        "type":"contributor",
+        "webTitle":"Patrick Butler",
+        "webUrl":"http://www.theguardian.com/profile/patrickbutler",
+        "apiUrl":"http://content.guardianapis.com/profile/patrickbutler",
+        "bio":"<p>Patrick Butler is editor of society, health and education policy for the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a>. He was previously editor of <a href=\"http://www.guardian.co.uk/society\">SocietyGuardian.co.uk</a></p>",
+        "rcsId":"GNL004730",
+        "r2ContributorId":"16223",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/patrick_butler_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420725447",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475346941/March-in-Tottenham-agains-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"340",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475348968/March-in-Tottenham-agains-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"54",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475350321/March-in-Tottenham-agains-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"130",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475351652/March-in-Tottenham-agains-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"84",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475353080/March-in-Tottenham-agains-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"132",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475354500/March-in-Tottenham-agains-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"168",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475355819/March-in-Tottenham-agains-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"180",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475357154/March-in-Tottenham-agains-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"228",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475358465/March-in-Tottenham-agains-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"276",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475359819/March-in-Tottenham-agains-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"372",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475358465/March-in-Tottenham-agains-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"276",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against the introduction of benefit caps. Photograph: Patricia Phillips/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420725448",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475351652/March-in-Tottenham-agains-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"84",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"society/2013/oct/20/protests-grow-over-benefit-cuts",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-10-20T20:00:01Z",
+      "webTitle":"Letters: Protests grow over benefit cuts",
+      "webUrl":"http://www.theguardian.com/society/2013/oct/20/protests-grow-over-benefit-cuts",
+      "apiUrl":"http://content.guardianapis.com/society/2013/oct/20/protests-grow-over-benefit-cuts",
+      "fields":{
+        "trailText":"<strong>Letters:</strong> The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax <br />",
+        "headline":"Protests grow over benefit cuts",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jya3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293138160/Protest-outside-Camberwel-004.jpg",
+        "wordcount":"733",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/welfare",
+        "type":"keyword",
+        "webTitle":"Welfare",
+        "webUrl":"http://www.theguardian.com/politics/welfare",
+        "apiUrl":"http://content.guardianapis.com/politics/welfare",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"tone/letters",
+        "type":"tone",
+        "webTitle":"Letters",
+        "webUrl":"http://www.theguardian.com/tone/letters",
+        "apiUrl":"http://content.guardianapis.com/tone/letters",
+        "references":[]
+      },{
+        "id":"money/counciltax",
+        "type":"keyword",
+        "webTitle":"Council tax",
+        "webUrl":"http://www.theguardian.com/money/counciltax",
+        "apiUrl":"http://content.guardianapis.com/money/counciltax",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"politics/labour",
+        "type":"keyword",
+        "webTitle":"Labour",
+        "webUrl":"http://www.theguardian.com/politics/labour",
+        "apiUrl":"http://content.guardianapis.com/politics/labour",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"society/food-banks",
+        "type":"keyword",
+        "webTitle":"Food banks",
+        "webUrl":"http://www.theguardian.com/society/food-banks",
+        "apiUrl":"http://content.guardianapis.com/society/food-banks",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/disability",
+        "type":"keyword",
+        "webTitle":"Disability",
+        "webUrl":"http://www.theguardian.com/society/disability",
+        "apiUrl":"http://content.guardianapis.com/society/disability",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/bedroom-tax",
+        "type":"keyword",
+        "webTitle":"Bedroom tax",
+        "webUrl":"http://www.theguardian.com/society/bedroom-tax",
+        "apiUrl":"http://content.guardianapis.com/society/bedroom-tax",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"uk/wales",
+        "type":"keyword",
+        "webTitle":"Wales",
+        "webUrl":"http://www.theguardian.com/uk/wales",
+        "apiUrl":"http://content.guardianapis.com/uk/wales",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420479373",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293132658/Protest-outside-Camberwel-001.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"54",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293134759/Protest-outside-Camberwel-002.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"340",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293136461/Protest-outside-Camberwel-003.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"130",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293138160/Protest-outside-Camberwel-004.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"84",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293139838/Protest-outside-Camberwel-005.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"132",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293141453/Protest-outside-Camberwel-006.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"168",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293143129/Protest-outside-Camberwel-007.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"180",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293144889/Protest-outside-Camberwel-008.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"228",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293146663/Protest-outside-Camberwel-009.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"276",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293148605/Protest-outside-Camberwel-010.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"372",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293146663/Protest-outside-Camberwel-009.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"276",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420479374",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/20/1382293138160/Protest-outside-Camberwel-004.jpg",
+          "typeData":{
+            "source":"Martin Godwin",
+            "photographer":"Martin Godwin",
+            "altText":"Protest outside Camberwell magistrates court, October 2013",
+            "height":"84",
+            "credit":"Martin Godwin/Martin Godwin",
+            "caption":"'The benefit justice campaign intends to do for the bedroom tax what we did for the poll tax.' Protest against outside Camberwell magistrates court, October 2013. Photograph: Martin Godwin",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"society/2013/oct/23/benefit-cap-failing-achieve-aims",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-10-23T05:00:00Z",
+      "webTitle":"Benefit cap is failing to achieve its aims, study concludes",
+      "webUrl":"http://www.theguardian.com/society/2013/oct/23/benefit-cap-failing-achieve-aims",
+      "apiUrl":"http://content.guardianapis.com/society/2013/oct/23/benefit-cap-failing-achieve-aims",
+      "fields":{
+        "trailText":"<p>The cap is neither forcing unemployed people to take a job nor saving taxpayers' money, according to the first in-depth study</p>",
+        "headline":"Benefit cap is failing to achieve its aims, study concludes",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jn33",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475351652/March-in-Tottenham-agains-004.jpg",
+        "wordcount":"776",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"money/statebenefits",
+        "type":"keyword",
+        "webTitle":"State benefits",
+        "webUrl":"http://www.theguardian.com/money/statebenefits",
+        "apiUrl":"http://content.guardianapis.com/money/statebenefits",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/patrickbutler",
+        "type":"contributor",
+        "webTitle":"Patrick Butler",
+        "webUrl":"http://www.theguardian.com/profile/patrickbutler",
+        "apiUrl":"http://content.guardianapis.com/profile/patrickbutler",
+        "bio":"<p>Patrick Butler is editor of society, health and education policy for the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a>. He was previously editor of <a href=\"http://www.guardian.co.uk/society\">SocietyGuardian.co.uk</a></p>",
+        "rcsId":"GNL004730",
+        "r2ContributorId":"16223",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/patrick_butler_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420725447",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475346941/March-in-Tottenham-agains-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"340",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475348968/March-in-Tottenham-agains-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"54",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475350321/March-in-Tottenham-agains-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"130",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475351652/March-in-Tottenham-agains-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"84",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475353080/March-in-Tottenham-agains-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"132",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475354500/March-in-Tottenham-agains-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"168",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475355819/March-in-Tottenham-agains-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"180",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475357154/March-in-Tottenham-agains-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"228",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475358465/March-in-Tottenham-agains-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"276",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475359819/March-in-Tottenham-agains-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"372",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475358465/March-in-Tottenham-agains-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"276",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against the introduction of benefit caps. Photograph: Patricia Phillips/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420725448",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382475351652/March-in-Tottenham-agains-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips / Alamy",
+            "altText":"March in Tottenham against welfare cuts",
+            "height":"84",
+            "credit":"Patricia Phillips / Alamy/Alamy",
+            "caption":"The Thousand Mother's march parades through Haringey in protest against welfare cuts including the introduction of benefit caps. Photograph: Patricia Phillips / Alamy/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"society/2013/oct/23/benefits-cap-welfare-costs-to-councils",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-10-23T06:00:02Z",
+      "webTitle":"The benefit cap just shunts welfare cost on to councils | Claire Kober",
+      "webUrl":"http://www.theguardian.com/society/2013/oct/23/benefits-cap-welfare-costs-to-councils",
+      "apiUrl":"http://content.guardianapis.com/society/2013/oct/23/benefits-cap-welfare-costs-to-councils",
+      "fields":{
+        "trailText":"My fears are confirmed: the benefit cap fails to address the real problems of a lack of jobs, training and affordable housing and childcare, says Claire Kober, the leader of Haringey council",
+        "headline":"The benefit cap just shunts welfare costs on to councils",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jyhf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352683717/The-1000-mothers-demonstr-004.jpg",
+        "wordcount":"549",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"society/series/secondthoughts",
+        "type":"series",
+        "webTitle":"Second thoughts",
+        "webUrl":"http://www.theguardian.com/society/series/secondthoughts",
+        "apiUrl":"http://content.guardianapis.com/society/series/secondthoughts",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/housing-benefit",
+        "type":"keyword",
+        "webTitle":"Housing benefit",
+        "webUrl":"http://www.theguardian.com/society/housing-benefit",
+        "apiUrl":"http://content.guardianapis.com/society/housing-benefit",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/localgovernment",
+        "type":"keyword",
+        "webTitle":"Local government",
+        "webUrl":"http://www.theguardian.com/society/localgovernment",
+        "apiUrl":"http://content.guardianapis.com/society/localgovernment",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/social-housing",
+        "type":"keyword",
+        "webTitle":"Social housing",
+        "webUrl":"http://www.theguardian.com/society/social-housing",
+        "apiUrl":"http://content.guardianapis.com/society/social-housing",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/housing",
+        "type":"keyword",
+        "webTitle":"Housing",
+        "webUrl":"http://www.theguardian.com/society/housing",
+        "apiUrl":"http://content.guardianapis.com/society/housing",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/communities",
+        "type":"keyword",
+        "webTitle":"Communities",
+        "webUrl":"http://www.theguardian.com/society/communities",
+        "apiUrl":"http://content.guardianapis.com/society/communities",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/welfare",
+        "type":"keyword",
+        "webTitle":"Welfare",
+        "webUrl":"http://www.theguardian.com/politics/welfare",
+        "apiUrl":"http://content.guardianapis.com/politics/welfare",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/claire-kober",
+        "type":"contributor",
+        "webTitle":"Claire Kober",
+        "webUrl":"http://www.theguardian.com/profile/claire-kober",
+        "apiUrl":"http://content.guardianapis.com/profile/claire-kober",
+        "bio":"<p>Claire Kober is the Labour leader of Haringey Council. She tweets at <a href=\"https://twitter.com/ClaireKober\">@ClaireKober</a> </p>",
+        "r2ContributorId":"55989",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/15/1366034804474/Claire-Kober.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/society",
+        "type":"newspaper-book-section",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/society",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420524578",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352678667/The-1000-mothers-demonstr-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"54",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352680729/The-1000-mothers-demonstr-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"340",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352682224/The-1000-mothers-demonstr-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"130",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352683717/The-1000-mothers-demonstr-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"84",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352685036/The-1000-mothers-demonstr-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"132",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352686258/The-1000-mothers-demonstr-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"168",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352687482/The-1000-mothers-demonstr-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"180",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352688748/The-1000-mothers-demonstr-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"228",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352690227/The-1000-mothers-demonstr-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"276",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352691610/The-1000-mothers-demonstr-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"372",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352690227/The-1000-mothers-demonstr-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"276",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration, in April, against welfare cuts and the announcement of the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420524579",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Society/Pix/pictures/2013/10/21/1382352683717/The-1000-mothers-demonstr-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Patricia Phillips",
+            "altText":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme in Haringey. ",
+            "height":"84",
+            "credit":"Patricia Phillips/Alamy",
+            "caption":"The '1,000 mothers' demonstration in April, against welfare cuts and the pilot scheme of benefit caps in Haringey.  Photograph: Patricia Phillips/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

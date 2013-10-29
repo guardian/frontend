@@ -31,6 +31,8 @@
         @include fs-headline(4, true);
         margin-bottom: $baseline*8 - 3px;
     }
+
+    > a { display: block; }
 }
 .trail__headline a,
 .trail__headline a:hover,

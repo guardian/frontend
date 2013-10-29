@@ -12,8 +12,7 @@
         margin-right: $gs-gutter;
     }
 
-    .article-v2__inner &,
-    .article__main-column & {
+    .article__inner & {
         margin-left: 0;
         margin-right: 0;
     }
@@ -92,4 +91,18 @@
     color: #ffffff;
     padding: 14px 0 0 6px;
     text-align: left;
+}
+
+/* more on this story trailblock
+   ========================================================================== */
+@include mq(rightCol) {
+    .more-on-this-story {
+        .t1 {
+            display: none;
+        }
+    }
+
+    .more-on-this-story--one-item {
+        display: none;
+    }
 }

@@ -32,7 +32,6 @@ define([
                 id: 'Inline', //Article A
                 test: function(context, isBoth) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
-
                     var article = document.getElementsByClassName('js-article__container')[0];
                     bonzo(qwery('p:nth-of-type('+ nParagraphs +'n)'), article).each(function(el, i) {
                         var cls = (i % 2 === 0) ? 'is-odd' : 'is-even',
@@ -53,7 +52,6 @@ define([
                 id: 'Adhesive', //Article B
                 test: function(context, isBoth) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
-
                     var viewport = detect.getLayoutMode(),
                         inviewName,
                         s;
@@ -92,6 +90,9 @@ define([
                             variant.test.call(self, {}, true);
                         }
                     });
+
+                    // This needs to be last as the previous calls set their own variant hosts
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     return true;
                 }
             },

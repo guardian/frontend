@@ -23,7 +23,7 @@ define([
 
     function getPageUrl(config) {
         var id = (config.pageId === '') ? '' : config.pageId + '/';
-        return guardian.config.oasSiteIdHost + '/' + id + 'oas.html';
+        return guardian.config.page.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
@@ -116,7 +116,8 @@ define([
 
     return {
         load: load,
-        generateUrl: generateUrl
+        generateUrl: generateUrl,
+        getKeywords: getKeywords
     };
 
 });
