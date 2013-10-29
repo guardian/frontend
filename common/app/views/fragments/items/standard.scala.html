@@ -5,7 +5,6 @@
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
-
             @trail.trailPicture(5,3).map{ trailPictures =>
                 @trailPictures.largestImage.map { largestImage =>
                     @largestImage.url.map { url =>
