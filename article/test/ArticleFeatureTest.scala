@@ -401,7 +401,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("I should see the main ARIA roles described")
         findFirst(".related-trails").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
-        findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
@@ -430,6 +429,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
 
 
+    }
+
+    scenario("Link to most popular") {
+      Given("I'm on an article and JavaScript turned off")
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("I should see link to most popular in the article section")
+        $(".js-popular a") should have size (1)
+      }
     }
 
     scenario("Show keywords in an article"){

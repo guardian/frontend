@@ -83,13 +83,15 @@ define([
             {
                 id: 'Both',  //Article C
                 test: function() {
-                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
                             variant.test.call(self, {}, true);
                         }
                     });
+
+                    // This needs to be last as the previous calls set their own variant hosts
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     return true;
                 }
             },

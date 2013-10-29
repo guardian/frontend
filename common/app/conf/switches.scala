@@ -205,6 +205,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
 
+  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
+    "If this is switched on an AB test runs to test the new commercial components",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -281,6 +285,7 @@ object Switches extends Collections {
     ArticleKeywordsSwitch,
     ABAlphaAdvertsData,
     FollowItemRedirectsFromApiSwitch,
+    ABCommercialComponents,
     EditionRedirectLoggingSwitch
   )
 

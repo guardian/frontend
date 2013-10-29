@@ -45,7 +45,7 @@ $a-leftColWide-width: gs-span(3); // Grows to 3 columns on wide viewports
 
 $mq-breakpoints: (
     (mobile  gs-span(4)  + $gs-gutter)   // 320px
-    (tablet  gs-span(8)  + $gs-gutter*2) // 660px
+    (tablet  gs-span(9)  + $gs-gutter*2) // 740px
     (desktop gs-span(12) + $gs-gutter*2) // 980px
     (wide    gs-span(16) + $gs-gutter*2) // 1300px
 

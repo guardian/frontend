@@ -2,16 +2,35 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="tool-title">Fronts Editor <span data-bind="visible: false">loading...</span></div>
+<div style="display: none;" data-bind="visible: true">
 
     <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
 
-    <div class="list-picker" data-bind="visible: true" style="display: none">
-        <span>Editing front:</span>
-        <select data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
-        <a target="preview" class="preview-link" data-bind="
+    <div class="toolbar" data-bind="visible: true" style="display: none">
+        
+        <span class="tool-label">
+            Editing front
+        </span>
+        <select class="tool-select" data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
+       
+        <span class="tool-label">
+            Edit Mode
+        </span>
+        
+        <a class="tool pref-draft" data-bind="
+            click: setModeDraft,
+            css: {active: !liveMode()}">Draft</a>
+        
+        <a class="tool pref-live" data-bind="
+            click: setModeLive,
+            css: {active: liveMode}">Live</a>
+
+        <a class="tool logout" href="/logout">Logout</a>
+
+        <a class="tool preview" target="preview" data-bind="
             attr: {href: previewUrl},
-            visible: config">View Previews</a>
+            visible: config">Previews</a>
+
     </div>
 
     <div class="finder">
@@ -92,38 +111,6 @@
                     <span class="list-header__display" data-bind="
                         visible: configMeta.displayName() === '',
                         text: configMeta.roleName"></span>
-                </div>
-
-                <div class="collection-config" data-bind="visible: state.editingConfig">
-                    <div>
-                        <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
-                    </div>
-                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
-                    <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
-                </div>
-
-                <div class="list-header__status">
-                    <a class="list-header__status__live" data-bind="
-                        click: setLiveMode,
-                        css: {
-                            active: state.liveMode()
-                        }">LIVE
-                    </a><a class="list-header__status__draft" data-bind="
-                        click: setDraftMode,
-                        css: {
-                            'active':   !state.liveMode(),
-                            'has-draft': state.hasDraft()
-                        }">DRAFT
-
-                    </a><a class="list-header__status__control" data-bind="
-                        visible: state.hasDraft(),
-                        click: publishDraft">publish
-
-                    </a><a class="list-header__status__control" data-bind="
-                        visible: state.hasDraft(),
-                        click: discardDraft">discard
-
-                    </a>
 
                     <span class="list-header__timings">
                         <!-- ko if: state.timeAgo -->
@@ -135,21 +122,36 @@
                         <!-- /ko -->
                     </span>
                 </div>
+
+                <div class="collection-config" data-bind="visible: state.editingConfig">
+                    <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
+                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
+                    <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
+                </div>
+
+                <div class="draft-toolbar" data-bind="visible: state.hasDraft">
+                    <a class="draft-warning" data-bind="
+                        click: $root.setModeDraft,
+                        visible: $root.liveMode">
+                        <span class="tool draft-publish draft-warning">!</span> Show Unpublished Draft</a>
+
+                    <div data-bind="visible: !$root.liveMode()">
+                        <a class="tool draft-publish" data-bind="
+                            click: publishDraft">Publish this Draft</a>
+                            
+                        <a class="tool draft-discard" data-bind="
+                            click: discardDraft">Discard it</a>
+                    </div>
+                </div>
             </div>
 
-            <div data-bind="css: {'pending': state.loadIsPending}">
-                <div class="live-groups" data-bind="
-                    visible: state.liveMode,
-                    template: {name: 'template_zones', foreach: live}"></div>
-
-                <div class="draft-groups" data-bind="
-                    visible: !state.liveMode(),
-                    template: {name: 'template_zones', foreach: draft}"></div>
-            </div>
+            <div data-bind="
+                css: {'pending': state.loadIsPending},
+                template: {name: 'template_groups', foreach: groups}"></div>
         </div>
     </script>
 
-    <script type="text/html" id="template_zones">
+    <script type="text/html" id="template_groups">
         <!-- ko if: !_.isUndefined(name) -->
         <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
@@ -208,11 +210,12 @@
 
             <div class="trail__meta">
                 <span data-bind="html: humanDate"></span>
-                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
             </div>
 
         </div>
     </script>
 
-    <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
+</div>
+
+<script src="@routes.Assets.at("javascripts/fronts.js")"></script>
 }
