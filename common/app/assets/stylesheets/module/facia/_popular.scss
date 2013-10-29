@@ -17,9 +17,6 @@
         @include first-row(1);
         .item:nth-child(-n+5) {
             @include card-mobile;
-            .item__meta {
-                margin-top: $gs-baseline;
-            }
         }
         .item:nth-child(n+2):nth-child(-n+5),{
             .item__title {
@@ -52,9 +49,6 @@
     }
     @include mq(wide) {
         @include first-row(2);
-        .items {
-            overflow: hidden;
-        }
         // stylings for begining and end of rows
         .item:nth-child(4n+4) {
             @include row-start;

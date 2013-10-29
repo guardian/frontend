@@ -73,7 +73,6 @@ $c-live: #e81818;
     }
     .collection--rolled-up & i {
         @include transform(rotate(0));
-
     }
 }
 
@@ -82,16 +81,17 @@ $c-live: #e81818;
     overflow: hidden;
 }
 .item {
-    @include box-sizing(border-box);
     position: relative;
     margin-top: $gs-baseline;
+    @include mq($to: tablet) {
+        @include box-sizing(border-box);
+    }
     @include mq(tablet) {
         display: inline-block;
         vertical-align: top;
         padding-left: $gs-gutter/2 - 1;
         padding-right: $gs-gutter/2;
         border-left: 1px dotted $c-neutral5;
-        @include box-sizing(content-box);
     }
 }
 .item__link {
