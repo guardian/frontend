@@ -67,6 +67,11 @@ case class Container(val containerType: String = "news", val tone: String = "new
   val className = "container"
 }
 
+case class News(val showMore: Boolean = false) extends Style {
+  val className = "news"
+  val tone: String = "news"
+}
+
 
 object MetadataJson {
 

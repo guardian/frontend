@@ -98,7 +98,7 @@ define([
             this.initialised = true;
             modules.showItemsShowMore();
             modules.showCollectionDisplayToggle();
-            modules.showFootballFixtures();
+//            modules.showFootballFixtures();
             modules.showPopular();
         }
         common.mediator.emit("page:front:ready", config, context);

@@ -83,7 +83,6 @@
         @include first-row(1);
     }
 }
-.collection--news,
 .collection--sport {
     @include mq($to: tablet) {
         .item:first-child {
