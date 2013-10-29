@@ -8,6 +8,7 @@ define('bootstraps/app', [
     'modules/fonts',
     'modules/debug',
     "modules/router",
+    "modules/detect",
     "bootstraps/common",
     "bootstraps/front",
     "bootstraps/facia",
@@ -32,6 +33,7 @@ define('bootstraps/app', [
     Fonts,
     Debug,
     Router,
+    Detect,
     bootstrapCommon,
     Front,
     Facia,
@@ -151,7 +153,10 @@ define('bootstraps/app', [
                     ImageContent.init(config, context);
                 }
 
-                Facebook.init(config, context);
+                if ( Detect.getLayoutMode() !== 'mobile') {
+                    Facebook.init(config, context);
+                }
+
                 //Kick it all off
                 r.init();
             };
