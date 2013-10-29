@@ -5,7 +5,7 @@
 
     <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
 
-    <table class="table-football type-6a" data-link-name="Table component">
+    <table class="table-football type-6" data-link-name="Table component">
         @if(!table.multiGroup) {
             <thead class="table-football-header">
                 @tableColumnHeaders()
@@ -30,5 +30,5 @@
         }
     </table>
 
-    <a href="@LinkTo{@{table.competition.url + "/table"}}" data-link-name="full table" class="cta-small cta-small-border type-8 zone-color front-competition-link">View full table <i class="i i-sport-arrow i-sport-arrow--small"></i></a>
+    <a href="@LinkTo{@{table.competition.url + "/table"}}" data-link-name="full table" class="cta-small cta-small-border type-8 zone-color front-competition-link">View full table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
 </li>

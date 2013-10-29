@@ -13,7 +13,7 @@ jsLintResult=$?
 
 git diff --cached --name-only | if grep "common/app/assets/javascripts/.*$SRC_PATTERN"
 then
-    grunt jasmine:common
+    grunt test:unit
 fi
 jsCommonResult=$?
 
@@ -21,7 +21,7 @@ jsCommonResult=$?
 SRC_PATTERN=".scss"
 git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
-    grunt analyse:common:css
+    grunt analyse:css
 fi
 cssAnalysisResult=$?
 

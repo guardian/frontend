@@ -1,3 +1,4 @@
+/*global Imager:true */
 define([
     //Commmon libraries
     'common',
@@ -18,7 +19,6 @@ define([
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/toggles',
     'modules/relativedates',
@@ -36,7 +36,7 @@ define([
     "modules/lightbox-gallery",
     "modules/swipe/ears",
     "modules/swipe/bar",
-    "modules/facia/image-upgrade"
+    "modules/facia/images"
 ], function (
     common,
     ajax,
@@ -57,7 +57,6 @@ define([
     Sections,
     Search,
 
-    EditionSwitch,
     Tabs,
     Toggles,
     RelativeDates,
@@ -75,24 +74,17 @@ define([
     LightboxGallery,
     ears,
     SwipeBar,
-    ImageUpgrade
+    faciaImages
 ) {
 
     var modules = {
 
         upgradeImages: function () {
+            faciaImages.upgrade();
+
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
-
-                // upgrade facia images
-                // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
-                common.$g('.collection', context).each(function(collection) {
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, collection.getAttribute('data-collection-type') === 'container' && index === 0)
-                            .upgrade();
-                    });
-                });
             });
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
@@ -106,12 +98,10 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var toggles = new Toggles(),
-                topStories = new TopStories(),
+             var topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                editions = new EditionSwitch(),
-                header = document.body,
+                header = document.getElementById('header'),
                 profile;
 
             if (config.switches.idProfileNavigation) {
@@ -121,14 +111,9 @@ define([
                 profile.init();
             }
 
-            sections.init(header);
-            toggles.init(header);
+            sections.init(document);
             topStories.load(config, header);
             search.init(header);
-
-            common.mediator.on('page:common:ready', function(){
-                toggles.reset();
-            });
         },
 
         transcludeRelated: function () {
@@ -152,8 +137,9 @@ define([
 
         showToggles: function() {
             var toggles = new Toggles();
+            toggles.init(document);
             common.mediator.on('page:common:ready', function(config, context) {
-                toggles.init(context);
+                toggles.reset();
             });
         },
 
@@ -382,12 +368,12 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
-            modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             if (config.switches.analyticsOnDomReady) {

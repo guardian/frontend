@@ -1,0 +1,28 @@
+@(page: MetaData)(implicit request: RequestHeader)
+@import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
+
+<header id="header" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
+    <div class="header__inner gs-container u-cf">
+        <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
+        <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
+            <span class="h">The Guardian</span>
+            <i class="i i-guardian-logo"></i>
+        </a>
+
+        <span class="release">Alpha</span>
+
+        @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+        <div class="js-profile-nav js-hidden">
+            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup-profile"
+               class="control control--profile control--profile-right">
+                <span class="js-profile-info control__info">Sign in</span>
+                <i class="i i-profile"></i>
+            </a>
+        </div>
+        }
+
+        @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+        <div class="nav-popup-profile js-profile-nav-popup nav-popup nav-popup--box is-off"></div>
+        }
+    </div>
+ </header>

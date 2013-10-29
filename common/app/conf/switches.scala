@@ -46,6 +46,11 @@ object Switches extends Collections {
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
     safeState = Off)
 
+  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
+    "If this switch is on, then extra logging will be done for edition redirects.",
+    safeState = Off
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -143,12 +148,12 @@ object Switches extends Collections {
     safeState = Off)
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
-    "If this switch is on, gallery trails are opened in a lightbox.",
+    "If this switch is on, galleries open in a lightbox.",
     safeState = Off)
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-    safeState = Off)
+    safeState = On)
 
   val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
@@ -164,6 +169,10 @@ object Switches extends Collections {
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
+    safeState = Off)
+
+  val FollowItemRedirectsFromApiSwitch = Switch("Feature Switches", "follow-item-redirects",
+    "If this switch is on then content api redirects on items will be sent back to the end user.",
     safeState = Off)
 
   // A/B Test Switches
@@ -190,6 +199,14 @@ object Switches extends Collections {
 
   val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
     "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
+    safeState = Off)
+
+  val ABAlphaAdvertsData = Switch("A/B Tests", "ab-alpha-adverts-data",
+    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+
+  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
+    "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
   // Sport Switch
@@ -265,7 +282,11 @@ object Switches extends Collections {
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
-    ArticleKeywordsSwitch
+    ArticleKeywordsSwitch,
+    ABAlphaAdvertsData,
+    FollowItemRedirectsFromApiSwitch,
+    ABCommercialComponents,
+    EditionRedirectLoggingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -21,15 +21,16 @@
         ),
         css: {
             loaded: false,
-            football: '@Static("stylesheets/football.min.css")',
-            gallery: '@Static("stylesheets/gallery.min.css")',
-            video: '@Static("stylesheets/video.min.css")'
+            football: '@Static("stylesheets/football.css")',
+            gallery: '@Static("stylesheets/gallery.css")',
+            video: '@Static("stylesheets/video.css")'
         }
     },
     curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
         apiName: 'require',
         paths: {
+            imager: '@Static("javascripts/vendor/imager.js")',
             omniture: '@Static("javascripts/vendor/omniture.js")',
             swipe: '@Static("javascripts/vendor/swipe.js")',
             zxcvbn: '@Static("javascripts/vendor/zxcvbn.js")'
@@ -41,7 +42,7 @@
 
         @if(CssFromStorageSwitch.isSwitchedOn) {
             function loadCssFromStorage() {
-                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.min.css").md5Key'), s, sc;
+                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, sc;
                 if(c) {
                     s = document.createElement('style');
                     sc = document.getElementsByTagName('script')[0];
@@ -58,7 +59,7 @@
             x = document.getElementById('gu');
             f = document.createElement('link');
             f.rel = 'stylesheet';
-            f.href = '@Static("stylesheets/webfonts.min.css")';
+            f.href = '@Static("stylesheets/webfonts.css")';
             window.setTimeout(function() {
                 x.parentNode.insertBefore(f, x);
             }, 0);
@@ -83,7 +84,7 @@
                 var styleNodes = document.querySelectorAll('[data-cache-name]');
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     var style = styleNodes[i],
-                        nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
+                        nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.js$/),
                         cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
                         @* try to parse it (should really use the storage module) *@
                         try {
@@ -97,13 +98,35 @@
                 }
             }
         }
+        function isConnectionLow() {
+            var connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
+            if (connection.type === 3
+                || connection.type === 4
+                || /^[23]g$/.test(connection.type)
+            ) {
+                return true;
+            }
+            var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+            if (perf && perf.timing) {
+                var start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart,
+                    end_time = perf.timing.responseEnd;
+                if (start_time && end_time) {
+                    return (end_time - start_time) > 3000;
+                }
+            }
+            return false;
+        }
 
         @* we want this to happen ASAP to avoid FOUC *@
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
+        var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
+        document.documentElement.className += connectionClass;
 
         guardian.platformsGettingHintedFonts = /Windows/;
+        guardian.platformsNotGettingHintedFonts = /W(indows Phone|PDesktop)/; // exceptions
 
-        if (guardian.platformsGettingHintedFonts.test(navigator.userAgent)) {
+        if (guardian.platformsGettingHintedFonts.test(navigator.userAgent) &&
+            !guardian.platformsNotGettingHintedFonts.test(navigator.userAgent)) {
             loadFontsAsynchronously();
         } else {
             loadFontsFromStorage();

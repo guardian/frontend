@@ -17,6 +17,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   protected def GET(url: String, headers: (String, String)*): Future[Response]
   protected val apiRoot: String
+  protected val clientHeaderValue: String
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
     def onError(response: Response) =
@@ -80,7 +81,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*):Future[JsValue] = {
     val start = currentTimeMillis()
-    GET(url, headers:_*) map {
+    val allHeaders = headers :+ guClientHeader
+    GET(url, allHeaders:_*) map {
       response =>
         DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
 
@@ -94,6 +96,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
         }
     }
   }
+
+  private def guClientHeader = ("GU-Client", clientHeaderValue)
 }
 
 object AuthHeaders {

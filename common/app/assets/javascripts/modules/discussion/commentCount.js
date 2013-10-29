@@ -12,7 +12,7 @@ define([
         countUrl = "/discussion/comment-counts.json?shortUrls=",
         tpl = '<span class="trail__count trail__count--commentcount">';
         tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-light-grey"></i>[COUNT]';
-        tpl += '<span class="u-h"> comments</span></a></span>';
+        tpl += '<span class="u-h"> [LABEL]</span></a></span>';
 
     function getContentIds(context) {
         var nodes = context.querySelectorAll("[" + attributeName + "]"),
@@ -28,15 +28,20 @@ define([
     }
 
     function getContentUrl(node) {
-        return node.querySelector('a').pathname + '#comments';
+        return node.getElementsByTagName('a')[0].pathname + '#comments';
     }
 
     function renderCounts(counts, context) {
         counts.forEach(function(c){
             var node = context.querySelector('[data-discussion-id="' + c.id +'"]');
-            if(node) {
+            if (node) {
+                if (node.getAttribute('data-discussion-closed') === 'true' && c.count === 0) {
+                    return; // Discussion is closed and had no comments, we don't want to show a comment count
+                }
                 var url = getContentUrl(node),
                     data = tpl.replace("[URL]", url);
+
+                data = data.replace("[LABEL]", (c.count === 1 ? "comment" : "comments"));
 
                 // put in trail__meta, if exists
                 var meta = node.querySelector('.item__meta, .card__meta'),

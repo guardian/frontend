@@ -1,10 +1,10 @@
 @(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
-@import views.html.fragments.form.{idInputEmail, idInputPassword, idCheckbox}
+@import views.html.fragments.form.{idInput, idCheckbox}
 @import views.html.fragments.socialSignin
 
-@main(page, conf.Switches.all){
+@identityMain(page, conf.Switches.all){
 }{
 <div class="identity-wrapper">
     <h1>Sign in to the Guardian</h1>
@@ -24,8 +24,8 @@
 
             <ul class="form-fields">
 
-                @idInputEmail(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email")
-                @idInputPassword(signinForm("password"), '_label -> "Password")
+                @idInput(Email(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email"))
+                @idInput(Password(signinForm("password"), '_label -> "Password"))
 
                 <li>
                     <div class="form-field__note">

@@ -7,21 +7,21 @@
 
         <div class="card__body u-text-hyphenate">
             <h3 class="card__headline">
-                <a href="@trail.url" data-link-name="@linkName">@trail.headline</a>
+                <a href="@trail.url" data-link-name="@linkName">@Html(trail.headline)</a>
             </h3>
         </div>
 
-        <div class="card__meta">
-            @fragments.relativeDate(trail.webPublicationDate, trail.isLive)
+        <div class="card__meta dateline">
+            <div class="dateline"><i class="i i-clock-grey relative-timestamp__icon"></i><time datetime="@trail.webPublicationDate" class="js-timestamp"></time></div>
         </div>
 
         @trail.thumbnailPath.map{ thumbnailPath =>
-            @trail.mainPicture(width=220).map { largeCrop =>
+            @trail.trailPicture.map { mainPicture =>
                 <a href="@trail.url" data-link-name="@linkName">
                     <img class="card__media" src="@thumbnailPath"
                     data-thumb-width="140"
-                    data-fullsrc="@largeCrop.path"
-                    data-full-width="@largeCrop.width"
+                    data-fullsrc="@LargeThumbnail.bestFor(mainPicture)"
+                    @LargeThumbnail.width.map{ w => data-full-width="@w" }
                     alt=""
                     itemprop="contentURL"
                     />

@@ -206,15 +206,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         When("the page is rendered")
 
         Then("the ad slot placeholder is rendered")
-        val adPlaceholder = $(".ad-slot-top-banner-ad").first()
+        val adPlaceholder = $(".ad-slot--top-banner-ad").first()
 
         And("the placeholder has the correct slot names")
         adPlaceholder.getAttribute("data-base") should be("Top2")
         adPlaceholder.getAttribute("data-median") should be("Top")
-        adPlaceholder.getAttribute("data-extended") should be("x54")
+        adPlaceholder.getAttribute("data-extended") should be("Top")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot-top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
@@ -252,8 +252,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be(30)
+        $("[itemprop=relatedLink]").size() should be > 0
       }
+
     }
 
     scenario("Story package ordered by date published") {
@@ -400,7 +401,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("I should see the main ARIA roles described")
         findFirst(".related-trails").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
-        findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
@@ -429,6 +429,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
 
 
+    }
+
+    scenario("Link to most popular") {
+      Given("I'm on an article and JavaScript turned off")
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("I should see link to most popular in the article section")
+        $(".js-popular a") should have size (1)
+      }
     }
 
     scenario("Show keywords in an article"){

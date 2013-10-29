@@ -21,7 +21,7 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures', 'helpers/fixtures
             fixtures.render(fixuresConf);
             prependTo = qwery('ul > li', '#football-fixtures')[0];
             competitions = [500, 510, 100];
-            
+
             renderCall = sinon.spy(function(){});
             expandCall = sinon.spy(function(){});
 
@@ -31,6 +31,7 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures', 'helpers/fixtures
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
+            server.autoRespondAfter = 20;
         });
 
         afterEach(function() {
@@ -80,7 +81,7 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures', 'helpers/fixtures
                     competitions: competitions
                 }).init();
             });
- 
+
             runs(function() {
                 expect(renderCall).not.toHaveBeenCalled();
             });
@@ -98,11 +99,11 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures', 'helpers/fixtures
             waitsFor(function () {
                 return expandCall.called === true
             }, "football fixtures callback never called", 500);
-            
+
             runs(function() {
                 expect(expandCall).toHaveBeenCalled();
             });
         });
-    
+
     });
 });

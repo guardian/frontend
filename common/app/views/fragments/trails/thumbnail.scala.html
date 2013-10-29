@@ -1,7 +1,8 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<@element class="trail trail--thumbnail t@rowNum  @if(trail.mainPicture(width=220).nonEmpty) { trail--has-image}" data-link-name="trail"
+<@element class="trail trail--thumbnail t@rowNum  @if(trail.hasMainPicture) { trail--has-image}" data-link-name="trail"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
+    data-discussion-closed="@trail.isClosedForComments"
     @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
 
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
@@ -17,9 +18,9 @@
             <a href="@LinkTo{@trail.url}" class="trail__img" data-link-name="@rowNum | image" aria-hidden="true">
                 <img class="maxed" data-lowsrc="@thumbnailPath"
                     data-thumb-width="140"
-                    @trail.mainPicture(width=220).map { largeCrop =>
-                        data-fullsrc="@largeCrop.path"
-                        data-full-width="@largeCrop.width"
+                    @trail.trailPicture.map { largeCrop =>
+                        data-fullsrc="@LargeThumbnail.bestFor(largeCrop)"
+                        @LargeThumbnail.width.map{ w => data-full-width="@w" }
                         alt=""
                     }
                     itemprop="contentURL"

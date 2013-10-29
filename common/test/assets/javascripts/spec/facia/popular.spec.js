@@ -4,8 +4,8 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
 
         var server,
             response = JSON.stringify({
-                fullTrails: [
-                    {
+                fullTrails: [1, 2, 3, 4].map(function(itemNum) {
+                    return {
                         headline: 'A Headline',
                         trailText: 'Some trailtext',
                         published: {
@@ -17,21 +17,8 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
                             itemMobile: 'item-mobile.jpg',
                             itemMainMobile: 'item-main-mobile.jpg'
                         }
-                    },
-                    {
-                        headline: 'Another Headline',
-                        trailText: 'Some other trailtext',
-                        published: {
-                            unix: '1'
-                        },
-                        mainPicture: {
-                            item: 'item-2.jpg',
-                            itemMain: 'item-main-2.jpg',
-                            itemMobile: 'item-mobile-2.jpg',
-                            itemMainMobile: 'item-main-mobile-2.jpg'
-                        }
                     }
-                ]
+                })
             });
 
         ajax.init({
@@ -48,7 +35,10 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             });
             // set up fake server
             server = sinon.fakeServer.create();
+            server.respondWith([200, {}, response]);
             server.autoRespond = true;
+            // seem to need this, or sinon gets ahead of itself
+            server.autoRespondAfter = 20;
         });
 
         afterEach(function() {
@@ -57,12 +47,34 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
         });
 
         it('should render component', function() {
-            server.respondWith([200, {}, response]);
             popular.render({});
 
             waitsFor(function() {
                 return common.$g('.collection--popular').length;
             }, 'popular collection to be rendered', 100);
+        });
+
+        it('should have data-link-name attribute equal to "block | popular"', function() {
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'popular collection to be rendered', 100);
+            runs(function() {
+                expect(common.$g('.collection--popular').attr('data-link-name')).toEqual('block | popular');
+            });
+        });
+
+        it('should have a "data-type" attribute of value "popular"', function() {
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'popular collection to be rendered', 100);
+
+            runs(function() {
+                expect(common.$g('.collection--popular').attr('data-type')).toEqual('popular');
+            });
         });
 
         it('should call correct most-read endpoint', function() {
@@ -79,8 +91,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
         });
 
-        it('first three items should have an image', function() {
-            server.respondWith([200, {}, response]);
+        it('dates should be relativised', function() {
             popular.render({});
 
             waitsFor(function() {
@@ -88,26 +99,12 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
 
             runs(function() {
-                common.$g('.item:nth-child(-n+3)').each(function(item) {
-                    expect(bonzo(item).hasClass('item--image-upgraded')).toBeTruthy();
+                common.$g('.timestamp__text').each(function(item) {
+                    expect(bonzo(item).text()).toEqual('1 Jan 1970');
                 });
             });
         });
 
-       it('dates should be relativised', function() {
-           server.respondWith([200, {}, response]);
-           popular.render({});
-
-           waitsFor(function() {
-               return common.$g('.collection--popular').length;
-           }, 'popular collection to be rendered', 100);
-
-           runs(function() {
-               common.$g('.timestamp__text').each(function(item) {
-                   expect(bonzo(item).text()).toEqual('1 Jan 1970');
-               });
-           });
-       });
     });
 
 });

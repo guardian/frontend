@@ -161,9 +161,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object discussion {
-    lazy val apiRoot = configuration.getStringProperty("guardian.page.discussionApiRoot").getOrElse{
-          throw new IllegalStateException("no value for key guardian.page.discussionApiRoot")
-    }
+    lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
   }
 
   object javascript {
@@ -173,7 +172,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
-      "idApiUrl" -> id.apiRoot
+      "idApiUrl" -> id.apiRoot,
+      "discussionApiRoot" -> discussion.apiRoot,
+      "discussionApiClientHeader" -> discussion.apiClientHeader
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))

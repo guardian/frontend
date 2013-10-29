@@ -21,6 +21,8 @@ define([
     contentApi,
     ophanApi
 ) {
+    var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
+
     return function(selector) {
 
         var self = this,
@@ -42,11 +44,31 @@ define([
                         updateLayout();
                     },
                     keepCopy:  true
-                }
+                },
+
+                liveMode: common.state.liveMode
             };
 
+        if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
+            model.liveMode(window.localStorage.getItem(prefKeyDefaultMode) === '1');
+        }
+
+        model.setModeLive = function() {
+            model.liveMode(true);
+            if (window.localStorage) { 
+                window.localStorage.setItem(prefKeyDefaultMode, '1');
+            }
+        }
+
+        model.setModeDraft = function() {
+            model.liveMode(false);
+            if (window.localStorage) { 
+                window.localStorage.setItem(prefKeyDefaultMode, '0');
+            }
+        }
+
         model.previewUrl = ko.computed(function() {
-            return common.config.previewUrls[Config.env] + '/responsive-viewer#/' + model.config();
+            return common.config.previewUrlBase[Config.env] + '/' + model.config() + '?view=mobile';
         })
 
         function fetchConfigsList() {
@@ -147,14 +169,18 @@ define([
             }
 
             setConfig(next);
-            section = (getConfig() || '').split('/')[1]; // assumes ids are formed "edition/section/.."
-            model.latestArticles.setSection(common.config.sectionSearches[section || 'default'] || section);
         });
 
+        model.liveMode.subscribe(function() {
+            _.each(model.collections(), function(collection) {
+                collection.populateLists();
+            });
+        });
+        
         function updateLayout() {
             var height = $(window).height();
             $('.scrollable').each(function() {
-                $(this).height(Math.max(100, height - $(this).offset().top) - 1)
+                $(this).height(Math.max(100, height - $(this).offset().top) - 2)
             });
         };
 

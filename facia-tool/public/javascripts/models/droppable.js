@@ -88,7 +88,7 @@ define([
                             isAfter = true;
                         // or if there arent't any other articles, after those in the first preceding group that contains articles.
                         } else if (targetList.collection) {
-                            var groups = targetList.collection.currentGroups(); 
+                            var groups = targetList.collection.groups; 
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
                                 targetItem = _.last(groups[i].articles());
                                 if (targetItem) {
@@ -101,10 +101,11 @@ define([
 
                     position = targetItem && targetItem.meta ? targetItem.meta.id() : undefined;
 
-                    // parse url query param if present, e.g. http://google.com/?url=...
-                    if (common.util.parseQueryParams(item).url) {
-                        item = decodeURIComponent(common.util.parseQueryParams(item).url);
-                    }
+                    _.each(common.util.parseQueryParams(item), function(url){
+                        if (url && url.match(/^http:\/\/www.theguardian.com/)) {
+                            item = url;
+                        }
+                    });
 
                     item = common.util.urlAbsPath(item);
 
@@ -149,10 +150,10 @@ define([
                                 item:     item,
                                 position: position,
                                 after:    isAfter,
-                                live:     targetList.collection.state.liveMode(),
-                                draft:   !targetList.collection.state.liveMode(),
+                                live:     common.state.liveMode(),
+                                draft:   !common.state.liveMode(),
                                 itemMeta: {
-                                    group: targetList.group
+                                    group: targetList.group + ''
                                 }
                             }
                         )
@@ -176,8 +177,8 @@ define([
                             fromList.collection,
                             {
                                 item:   item,
-                                live:   fromList.collection.state.liveMode(),
-                                draft: !fromList.collection.state.liveMode()
+                                live:   common.state.liveMode(),
+                                draft: !common.state.liveMode()
                             }
                         )
                     });

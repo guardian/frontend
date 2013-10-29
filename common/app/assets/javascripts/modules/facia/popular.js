@@ -4,8 +4,8 @@ define([
     'bonzo',
     'modules/relativedates',
     'modules/facia/items-show-more',
-    'modules/facia/image-upgrade'
-], function (common, ajax, bonzo, relativeDates, ItemsShowMore, ImageUpgrade) {
+    'modules/facia/images'
+], function (common, ajax, bonzo, relativeDates, ItemsShowMore, faciaImages) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -15,7 +15,7 @@ define([
             });
         },
         collectionTmpl =
-            '<section class="collection collection--popular tone-news" data-collection-type="container" data-section="popular">' +
+            '<section class="collection collection--popular tone-news" data-link-name="block | popular" data-type="popular">' +
                 '<h2 class="collection__title tone-background tone-accent-border">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
@@ -24,7 +24,7 @@ define([
                     '<a href="@trail.url" class="item__link tone-accent-border"><h2 class="item__title">@trail.headline</h2></a>' +
                     '<div class="item__standfirst"><p>@trail.trailText</p></div>' +
                     '<div class="item__meta item__meta--grey">' +
-                        '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
+                        '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix" data-relativeformat="short">' +
                             '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
                         '</time>' +
                     '</div>' +
@@ -34,9 +34,7 @@ define([
         },
         imageTmpl = function(trail) {
             return updateTmpl(
-                '<div class="item__image-container">' +
-                    '<img class="item__image" alt="" data-src="@trail.mainPicture.item"  data-src-main="@trail.mainPicture.itemMain" data-src-mobile="@trail.mainPicture.itemMobile"  data-src-main-mobile="@trail.mainPicture.itemMainMobile" />' +
-                '</div>',
+                '<div class="item__image-container" data-src="@trail.itemPicture"></div>',
                 trail
             );
         };
@@ -60,13 +58,11 @@ define([
                             itemTmpl(trail)
                         ));
 
-                        // only show images for the first 3 items
-                        if (index < 3 && trail.mainPicture) {
+                        if (trail.itemPicture) {
                             common.$g('.item__link', $item).prepend(imageTmpl(trail));
-                            if (index < 3) {
-                                new ImageUpgrade($item[0], index === 0)
-                                    .upgrade();
-                            }
+                            $item.addClass('item--has-image');
+                        } else {
+                            $item.addClass('item--has-no-image');
                         }
 
                         // add item to the items
@@ -81,6 +77,8 @@ define([
                         .addShowMore();
                     // relativise timestamps
                     relativeDates.init($items[0]);
+                    // upgrade image
+                    faciaImages.upgrade($items[0]);
                 },
                 function(req) {
                     common.mediator.emit(

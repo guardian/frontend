@@ -1,16 +1,16 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int = 5)(implicit request: RequestHeader)
 
 @defining(trails.length){ numTrails =>
-    <h3 id="related-content-head" class="article__sub-head tone-colour tone-border">@Html(heading)</h3>
+    <h2 id="related-content-head" class="page-sub-header tone-colour">@Html(heading)</h2>
     <div class="related-trails trailblock"
         data-count="@{trails.length - visibleTrails}"
         data-link-name="Related @heading"
         role="complementary"
         aria-labelledby="related-content-head">
         @* order the related trails by date *@
-        @fragments.trailblocks.thumbnail(trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = visibleTrails, related = true, headingLevel = 3, expandable = false)
+        @fragments.trailblocks.thumbnail(trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = visibleTrails, related = true, headingLevel = 3)
         @if(trails.size > visibleTrails) {
-            @fragments.trailblocks.headline(trails.sortBy(-_.webPublicationDate.getMillis).drop(visibleTrails), numItemsVisible = trails.size - visibleTrails, related = true, isPanel = true, headingLevel = 3, expandable = false)
+            @fragments.trailblocks.headline(trails.sortBy(-_.webPublicationDate.getMillis).drop(visibleTrails), numItemsVisible = trails.size - visibleTrails, related = true, isPanel = true, headingLevel = 3)
         }
     </div>
 }

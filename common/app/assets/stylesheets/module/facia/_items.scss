@@ -1,3 +1,5 @@
+$c-live: #e81818;
+
 .collection {
     position: relative;
 }
@@ -12,7 +14,7 @@
     @include f-header;
 }
 .collection__title {
-    margin-top: 30px;
+    margin-top: $gs-baseline;
     @include fs-header(5, $size-only: true);
     min-height: gs-height(1) - $gs-baseline*(2/3);
     padding: $gs-baseline/3 $gs-gutter/5;
@@ -70,7 +72,7 @@
 .item {
     @include box-sizing(border-box);
     position: relative;
-    margin-top: $gs-baseline*(3/2);
+    margin-top: $gs-baseline;
     @include mq(tablet) {
         display: inline-block;
         vertical-align: top;
@@ -87,36 +89,34 @@
 }
 .item__image-container {
     display: none;
-    .item--image-upgraded & {
-        margin-top: 2px;
-        overflow: hidden;
-        @include mq(tablet) {
-            height: gs-height(4);
-        }
+    position: relative;
+    overflow: hidden;
+    .connection--not-low & {
+        padding-bottom: 60%;
     }
 }
-.item__image {
-    display: block;
-    margin: 0 auto;
-    @include mq($to: tablet) {
-        width: 100%;
-    }
-    @include mq(tablet) {
-        height: 100%;
-    }
+.responsive-img {
+    margin-top: 2px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .item__live-indicator {
     color: #ffffff;
-    background-color: #d23e55;
+    background-color: $c-live;
     @include fs-data(5, $size-only: true);
     display: inline-block;
     padding: 0 3px;
     position: relative;
     top: -4px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 .item--sport-stats .competition-table h3,
-.item__title {
+.item__title,
+.item__standfirst {
     @include f-headline;
 }
 .item__title {
@@ -140,7 +140,7 @@
 .item__standfirst {
     display: none;
     margin: 20px 0 0;
-    @include fs-bodyHeading(1);
+    @include fs-headline(1, $size-only: true);
 }
 .item__meta {
     overflow: hidden;
@@ -148,17 +148,16 @@
     .trail__count {
         position: relative;
         float: left;
-        padding-top: 1px;
         i {
             margin: 0;
             position: absolute;
-            top: 0;
+            top: 2px;
         }
     }
     .item__timestamp {
         min-width: gs-span(1) - 16;
         padding-right: $gs-gutter/2;
-        padding-left: 16px;
+        padding-left: 13px;
         i {
             left: 0;
         }
@@ -175,27 +174,25 @@
         }
     }
 }
+
 .items__show-more {
-    background-color: #f1f1f1;
     border-style: none;
-    min-width: gs-span(2);
-    min-height: gs-height(1);
-    color: #666666;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #ffffff;
     @include fs-data(4, $size-only: true);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;
-    margin-left: -(gs-span(1) + $gs-gutter/2);
-}
-
-.tone-comment {
-    .item__title {
-        position: relative;
-        padding-top: $gs-baseline*2 + 2;
-        .i {
-            position: absolute;
-            left: 0;
-            top: 2px;
-        }
+    margin-left: -15px;
+    padding: 0;
+    .i {
+        position: absolute;
+        text-indent: -9999px;
+        top: 50%;
+        left: 50%;
+        margin-top: -5px;
+        margin-left: -12px;
     }
 }

@@ -303,14 +303,22 @@ object FaciaToolMetrics {
 object CommercialMetrics {
 
   object TravelOffersLoadTimingMetric extends TimingMetric(
-    "commcercial",
+    "commercial",
     "commercial-travel-offers-load",
     "Commercial Travel Offers load timing",
     "Time spent running travel offers data load jobs",
     None
   ) with TimingMetricLogging
 
-  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric)
+  object JobsLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-jobs-load",
+    "Commercial Jobs load timing",
+    "Time spent running job ad data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric)
 }
 
 

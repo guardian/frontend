@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.{SwitchingContentApi, ContentApi}
+import conf.{ElasticSearchContentApi, ContentApi}
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.ItemResponse
@@ -10,7 +10,7 @@ import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import controllers.ImageContentPage
 import scala.concurrent.Future
-import play.api.mvc.SimpleResult
+import play.api.mvc.{RequestHeader, SimpleResult}
 
 case class IndexPage(page: MetaData, trails: Seq[Trail])
 
@@ -52,7 +52,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }.recover(suppressApiNotFound)
   }
 
-  def index(edition: Edition, path: String) = {
+  def index(edition: Edition, path: String)(implicit request: RequestHeader) = {
     ContentApi.item(path, edition)
       .pageSize(20)
       .showEditorsPicks(true)
@@ -95,7 +95,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = SwitchingContentApi().item(path, edition)
+    val response = ElasticSearchContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response.map { response =>

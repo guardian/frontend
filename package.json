@@ -21,10 +21,11 @@
     "moment": "~2.1.0",
     "grunt-mkdir": "~0.1.1",
     "grunt-contrib-imagemin": "git://github.com/guardian/grunt-contrib-imagemin#master",
-    "grunt-hash": "~0.4.1",
+    "grunt-hash": "git://github.com/guardian/grunt-hash.git#master",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
-    "mkdirp": "~0.3.5"
+    "mkdirp": "~0.3.5",
+    "grunt-contrib-concat": "~0.3.0"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
