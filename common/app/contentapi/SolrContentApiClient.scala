@@ -38,6 +38,19 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
         (editorsPicks ++ leadContent ++ results).distinctBy(_.id)
       }
   }
+
+  object FaciaDefaults {
+    val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
+    val editorsPicks = "show-editors-picks=true"
+    val showInlineFields = s"show-fields=$trailFields"
+    val showElements = "show-elements=all"
+
+    val all = Seq(tag, editorsPicks, showInlineFields, showElements)
+
+    def generateContentApiQuery(id: String): String =
+      "%s?&%s"
+        .format(id, all.mkString("", "&", ""))
+  }
 }
 
 
