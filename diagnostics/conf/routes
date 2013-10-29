@@ -3,4 +3,6 @@
 # ~~~~
 
 # For dev machines
-GET     /   controllers.Application.front
+GET     /           controllers.Application.front
+
+GET     /error      controllers.ErrorController.report

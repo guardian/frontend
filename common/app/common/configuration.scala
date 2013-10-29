@@ -216,6 +216,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val password  = configuration.getMandatoryStringProperty("pingdom.password")
     lazy val apiKey = configuration.getMandatoryStringProperty("pingdom.apikey")
   }
+  
+  object airbrake {
+    lazy val url = configuration.getMandatoryStringProperty("airbrake.url")
+    lazy val user = configuration.getMandatoryStringProperty("airbrake.user")
+    lazy val apiKey = configuration.getMandatoryStringProperty("airbrake.apikey")
+  }
 
   object riffraff {
     lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
