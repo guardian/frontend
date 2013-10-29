@@ -54,6 +54,17 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
         });
 
+        it('should have data-link-name attribute equal to "block | popular"', function() {
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'popular collection to be rendered', 100);
+            runs(function() {
+                expect(common.$g('.collection--popular').attr('data-link-name')).toEqual('block | popular');
+            });
+        });
+
         it('should have a "data-type" attribute of value "popular"', function() {
             popular.render({});
 

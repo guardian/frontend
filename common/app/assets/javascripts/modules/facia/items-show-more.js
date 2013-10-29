@@ -40,7 +40,7 @@ define([
                         sport: 5,
                         commentisfree: 3,
                         culture: 3,
-                        popular: 3
+                        popular: 5
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
@@ -86,7 +86,7 @@ define([
             };
 
         this.addShowMore = function() {
-            var $items = bonzo(items),
+            var $items = bonzo(items).removeClass('js-items--show-more'),
                 extraItems = bonzo.create(
                     common.$g('.collection--template', items).html()
                 ),
