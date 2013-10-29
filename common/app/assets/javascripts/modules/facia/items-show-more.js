@@ -72,7 +72,10 @@ define([
                     $button.attr('data-link-name', newDataAttr);
 
                     // show x more, depending on current breakpoint
-                    bonzo(extraItems.splice(0, _getShowMoreSize())).appendTo($items);
+                    bonzo(extraItems.splice(0, _getShowMoreSize())).each(function(extraItem) {
+                            relativeDates.init(extraItem);
+                            $items.append(extraItem);
+                        });
 
                     if (extraItems.length === 0) {
                         // listen to the clickstream, as happens later, before removing
@@ -94,6 +97,8 @@ define([
 
             // remove extras from dom
             common.$g('.collection--template', items).remove();
+            // relativise dates
+            extraItems
 
             // if we are showing more items than necessary, store them
             var excess = qwery('.item:nth-child(n+' + (initalShowSize + 1) + ')', items);
@@ -102,10 +107,7 @@ define([
 
             // if we are showing less items than necessary, show more
             bonzo(extraItems.splice(0, initalShowSize - qwery('.item', items).length))
-                .appendTo($items)
-                .each(function(item) {
-                    relativeDates.init(item);
-                });
+                .appendTo($items);
 
             faciaImages.upgrade($items[0]);
 
