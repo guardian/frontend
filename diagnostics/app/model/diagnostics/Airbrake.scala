@@ -14,7 +14,7 @@ object AirBrake extends Logging {
     val url = Configuration.airbrake.url 
     val user = Configuration.airbrake.user
     val apiKey = Configuration.airbrake.apiKey
-    val body = """{{ "notifier": { "name":    "gu.diagnostics", "version": "0.1", "url":     "http://theguardian.com" }, "errors": [ { "type":      "error1", "message":   "message1", "backtrace": [ { "file": "backtrace file", "line": 10, "function": "backtrace function" } ] } ] }}""" 
+    val body = """{ "notifier": { "name": "gu.diagnostics", "version": "0.1", "url": "http://theguardian.com" }, "errors": [ { "type":      "error1", "message":   "message1", "backtrace": [ { "file": "backtrace file", "line": 10, "function": "backtrace function" } ] } ] }""" 
     
     log info s"Calling: ${url} with ${apiKey}" 
 
