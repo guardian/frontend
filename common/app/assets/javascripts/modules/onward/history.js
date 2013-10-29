@@ -32,12 +32,15 @@ define([
         return history.get().indexOf(id) !== -1;
     };
 
-    history.store = function(id) {
-        var hist = history.get();
+    history.capToSize = function(hist, desiredSize) {
+        var size = hist.length,
+            overflow = -Math.abs(desiredSize - size);
 
-        if(history.getSize() >= history.CONFIG.maxSize) {
-            hist.pop();
-        }
+        return (size > desiredSize) ? hist.slice(0, overflow) : hist;
+    };
+
+    history.store = function(id) {
+        var hist = history.capToSize(history.get(), history.CONFIG.maxSize - 1);
 
         hist.unshift(id);
         history.set(hist);

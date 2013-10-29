@@ -43,7 +43,7 @@ define([
         it('should only store 100 latest entries', function() {
             var assert = clone(max);
 
-            assert.pop();
+            assert = assert.slice(0, -4);
             assert.unshift(id);
 
             setStorageItem(max);
