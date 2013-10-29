@@ -62,11 +62,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           .map { _ =>
             FaciaToolMetrics.DraftPublishCount.increment()
             FaciaApi.publishBlock(id, identity)
+            notifyContentApi(id)
             Ok
           }
           .orElse {
           blockAction.discard.filter {_ == true}.map { _ =>
             FaciaApi.discardBlock(id, identity)
+            notifyContentApi(id)
             Ok
           }
         } getOrElse NotFound("Invalid JSON")
@@ -74,6 +76,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       case updateTrailblock: UpdateTrailblockJson => {
         val identity = Identity(request).get
         UpdateActions.updateTrailblockJson(id, updateTrailblock, identity)
+        notifyContentApi(id)
         Ok
       }
       case _ => NotFound
@@ -92,6 +95,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionFilter(id, update, identity)
+        notifyContentApi(id)
         Ok
       }
       case _ => NotFound
