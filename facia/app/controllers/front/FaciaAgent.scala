@@ -23,9 +23,14 @@ object Seg {
 }
 
 trait ParseConfig extends ExecutionContexts with Logging {
-  def getConfigMap(id: String): Future[Seq[JsValue]] = {
+
+  def requestConfig(id: String): Future[Response] = {
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/config/$id/config.json"
-    WS.url(configUrl).withRequestTimeout(2000).get map { r =>
+    WS.url(configUrl).withRequestTimeout(2000).get()
+  }
+
+  def getConfigMap(id: String): Future[Seq[JsValue]] = {
+     requestConfig(id) map { r =>
       try {
         val json = parse(r.body)
         json.asOpt[Seq[JsValue]] getOrElse Nil
@@ -38,6 +43,7 @@ trait ParseConfig extends ExecutionContexts with Logging {
       }
     }
   }
+
   def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { configMap =>
     configMap.map(parseConfig)
   }
@@ -52,18 +58,30 @@ trait ParseConfig extends ExecutionContexts with Logging {
 }
 
 trait ParseCollection extends ExecutionContexts with Logging {
-  private lazy val defaultMax = 15
 
-  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
-    // get the running order from the apiwith
+  def requestCollection(id: String): Future[Response] = {
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
-    val response: Future[Response] = WS.url(collectionUrl).withRequestTimeout(2000).get()
+    WS.url(collectionUrl).withRequestTimeout(2000).get()
+  }
+
+  def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
+    // get the running order from the apiwith
+    val response = requestCollection(id)
     for {
-      collectionList <- parseResponse(response, edition, id)
+      collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
     } yield Collection(collectionList ++ contentApiList, displayName)
+  }
+
+  def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
+    val curatedList: Future[List[Content]] = parseResponse(response, edition, id)
+    //Potential to fail the chain if we are warmed up
+    if (isWarmedUp)
+      curatedList
+    else
+      curatedList fallbackTo { Future.successful(Nil) }
   }
 
   private def parseDisplayName(response: Future[Response]): Future[Option[String]] = response.map {r =>
@@ -90,7 +108,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
               throw e
             }
           }
-
+        case (httpResponseCode: Int) if httpResponseCode >= 500 =>
+          Future.failed(throw new Exception("S3 returned a 5xx"))
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
           // NOTE: better way of handling fallback
@@ -148,11 +167,16 @@ trait ParseCollection extends ExecutionContexts with Logging {
 }
 
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
-  private lazy val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](None)
+  val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](Option(List(FaciaDefaults.configTuple(id))))
 
   def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
-    val futureConfig = getConfig(id) map {config =>
-      config map {c => c -> getCollection(c.id, c, edition)}
+    val futureConfig = getConfig(id) fallbackTo {
+      log.warn("Error getting config from S3: %s".format(id))
+      val result: List[Config] = queryAgent().map(_.map(_._1)).getOrElse(Nil)
+      Future.successful(result.toSeq)
+    } map {config =>
+      val isWarmedUp = items.isDefined
+      config map {c => c -> getCollection(c.id, c, edition, isWarmedUp)}
     }
 
     futureConfig.map(_.toVector).flatMap{ configMapping =>
@@ -165,19 +189,17 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
     }
   }
 
-  def refresh() =
+  def refresh(): Unit =
     getItems map { newConfigList =>
       queryAgent.send { oldConfigList =>
         lazy val oldConfigMap = oldConfigList.map{_.map{case (config, collection) => (config.id, collection)}.toMap}
         Option {
-          newConfigList flatMap { collectionConfig =>
-            collectionConfig match {
-              case (config, Left(exception)) => {
-                log.warn("Updating ID %s failed".format(config.id))
-                oldConfigMap.flatMap{_.get(config.id).map(oldCollection => (config, oldCollection))}
-              }
-              case (config, Right(newCollection)) => Some((config, newCollection))
+          newConfigList flatMap {
+            case (config, Left(exception)) => {
+              log.warn("Updating ID %s failed".format(config.id))
+              oldConfigMap.flatMap{_.get(config.id).map(oldCollection => (config, oldCollection))}
             }
+            case (config, Right(newCollection)) => Some((config, newCollection))
           }
         }
       }
@@ -186,7 +208,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
 
   def close() = queryAgent.close()
 
-  def items = queryAgent()
+  def items = queryAgent().filter(_.exists(_._2.items.nonEmpty))
 }
 
 object Query {
