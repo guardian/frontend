@@ -149,7 +149,8 @@ $c-live: #e81818;
     @include fs-headline(1, $size-only: true);
 }
 .item__meta {
-    overflow: hidden;
+    position: absolute;
+    bottom: 0;
     .item__timestamp,
     .trail__count {
         position: relative;
