@@ -43,7 +43,7 @@ define([
         history.set(hist);
     };
 
-    history.shift = function(id) {
+    history.queueJump = function(id) {
         var hist = history.get(),
             index = hist.indexOf(id);
 
@@ -58,7 +58,7 @@ define([
         }
 
         if(history.contains(id)) {
-            history.shift(id);
+            history.queueJump(id);
         } else {
             history.store(id);
         }
