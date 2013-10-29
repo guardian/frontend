@@ -225,7 +225,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/public/javascripts',
-                    src: ['**/*'],
+                    src: ['**/*.js'],
                     dest: staticTargetDir + 'javascripts'
                 }]
             },
@@ -598,20 +598,21 @@ module.exports = function (grunt) {
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
-    grunt.registerTask('compile:js', ['clean:js', 'copy:js', 'concat:imager', 'uglify:vendor', 'requirejs:compile']);
+    grunt.registerTask('compile:js', function() {
+        grunt.task.run(['clean:js', 'copy:js', 'concat:imager']);
+        if (!isDev) {
+            grunt.task.run('uglify:vendor');
+        }
+        grunt.task.run('requirejs:compile');
+    });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
-    grunt.registerTask('compile', [
-        'compile:images',
-        'compile:css',
-        'compile:js',
-        'compile:fonts',
-        'compile:flash',
-        // TODO - below should not run in dev
-        'clean:assets',
-        'copy:headCss',
-        'hash'
-    ]);
+    grunt.registerTask('compile', function() {
+        grunt.task.run(['compile:images', 'compile:css', 'compile:js', 'compile:fonts', 'compile:flash']);
+        if (!isDev) {
+            grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
+        }
+    });
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
