@@ -32,7 +32,10 @@
         @include row-end;
     }
 }
+
+$mobileMetaSpace: 14px;
 @mixin card-mobile($with-image: false) {
+    padding-bottom: $mobileMetaSpace;
     .item__title {
         margin-top: $gs-baseline*(2/3);
         @include fs-headline(3, $size-only: true);
@@ -51,9 +54,6 @@
             margin-top: 2px;
         }
     }
-    .item__meta {
-        margin-top: $gs-baseline*(7/3);
-     }
     @if $with-image {
         @include card-mobile-image;
     }
@@ -84,23 +84,22 @@
 }
 @mixin card-half-width($with-image: false) {
     width: 50%;
+    min-height: gs-height(3) - $mobileMetaSpace;
     padding-left: $gs-gutter/2 - 1;
     padding-right: $gs-gutter/2;
+    padding-bottom: $mobileMetaSpace;
     border-left: 1px dotted $c-neutral5;
     float: left;
     .item__title {
         @include fs-headline(1, $size-only: true);
+        @include mq(mobileLandscape) {
+            @include fs-headline(2, $size-only: true);
+        }
     }
     .item__byline {
         @include fs-header(1, $size-only: true);
         @include mq(mobileLandscape) {
             @include fs-header(2, $size-only: true);
-        }
-    }
-    .item__title {
-        min-height: 100px;
-        @include mq(mobileLandscape) {
-            @include fs-headline(2, $size-only: true);
         }
     }
     .item__live-indicator {
@@ -112,35 +111,31 @@
     }
 }
 @mixin card-half-width-image {
-     .connection--not-low &.item--has-no-image .item__title {
-        min-height: 186px
+    .connection--not-low & {
+        min-height: gs-height(5) - $mobileMetaSpace;
     }
     .item__image-container {
         display: block;
     }
 }
 
-$metaSpace: 20px;
+$tabletMetaSpace: 20px;
 @mixin card($with-image: false) {
-    @include mq($to: wide) {
-        width: gs-span(3);
-        min-height: gs-height(3) - $metaSpace;
-    }
+    width: gs-span(3);
+    min-height: gs-height(3) - $tabletMetaSpace;
     @include mq(wide) {
         width: gs-span(4);
-        min-height: gs-height(4) - $metaSpace;
+        min-height: gs-height(4) - $tabletMetaSpace;
     }
-    padding-bottom: $metaSpace;
+    padding-bottom: $tabletMetaSpace;
     @if $with-image {
         @include card-mobile;
     }
 }
 @mixin card-image {
-    @include mq($to: wide) {
-        min-height: gs-height(6) - $metaSpace;
-    }
+    min-height: gs-height(6) - $tabletMetaSpace;
     @include mq(wide) {
-        min-height: gs-height(8) - $metaSpace;
+        min-height: gs-height(8) - $tabletMetaSpace;
     }
     .item__image-container,
     .connection--low & .item__standfirst,
@@ -150,10 +145,8 @@ $metaSpace: 20px;
 }
 @mixin card-double-width {
     float: left;
-    @include mq($to: wide) {
-        width: gs-span(6);
-        min-height: gs-height(9);
-    }
+    width: gs-span(6);
+    min-height: gs-height(9);
     @include mq(wide) {
         width: gs-span(8);
         min-height: gs-height(12);
