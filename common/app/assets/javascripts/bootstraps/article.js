@@ -143,7 +143,7 @@ define([
 
         logReadingHistory : function() {
             common.mediator.on('page:article:ready', function(config) {
-                history.log(config.page.shortUrl.replace('http://gu.com/', ''));
+                history.log(config.page.shortUrl.replace('http://gu.com', ''));
             });
         }
     };
