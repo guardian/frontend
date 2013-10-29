@@ -6,6 +6,7 @@ import model._
 import conf._
 import play.api.mvc._
 import play.api.libs.json.Json
+import Switches.EditionRedirectLoggingSwitch
 
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
@@ -48,8 +49,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Money",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -62,8 +62,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Comment is free",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -76,8 +75,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Business",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -90,8 +88,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -104,8 +101,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Film",
         "content-type" -> "Section",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     },
 
@@ -118,8 +114,7 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
-        "is-front" -> true,
-        "is-facia" -> true
+        "is-front" -> true
       )
     }
   )
@@ -139,12 +134,34 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
+
+  def editionRedirect(path: String) = Action{ implicit request =>
+
+    val edition = Edition(request)
+    val editionBase = s"/${edition.id.toLowerCase}"
+    
+    val redirectPath = path match {
+      case "" => editionBase
+      case sectionFront => s"$editionBase/$sectionFront"
+    }
+
+    if (EditionRedirectLoggingSwitch.isSwitchedOn) {
+      val country = request.headers.get("X-GU-GeoLocation").getOrElse("not set")
+      val editionCookie = request.headers.get("X-GU-Edition-From-Cookie").getOrElse("false")
+
+      log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
+    }
+  
+    NoCache(Redirect(redirectPath))
+  }
+
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
   def renderEditionSectionFrontJson(path: String) = renderFront(path)
   def renderEditionSectionFront(path: String) = renderFront(path)
   def renderFrontJson(path: String) = renderFront(path)
+
   def renderFront(path: String) = Action { implicit request =>
       val editionalisedPath = editionPath(path, Edition(request))
 
@@ -153,9 +170,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         // get the trailblocks
         val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
         faciaPageOption map { faciaPage =>
-          if (path != editionalisedPath) {
-            LinkTo.redirectWithParameters(request, editionalisedPath)
-          } else {
+          Cached(frontPage) {
             if (request.isJson) {
               val html = views.html.fragments.frontBody(frontPage, faciaPage)
               JsonComponent(
@@ -171,23 +186,10 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
 
-  def renderTrailsJson(path: String) = renderTrails(path)
-  def renderTrails(path: String) = Action { implicit request =>
-    val editionalisedPath = editionPath(path, Edition(request))
-
-    FrontPage(editionalisedPath).map{ frontPage =>
-
-      // get the first trailblock
-      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.filter(_._2.items.nonEmpty).headOption)
-
-      if (path != editionalisedPath) {
-        Redirect(editionalisedPath)
-      } else {
-        val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
-        val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
-        renderFormat(response, response, frontPage)
-      }
-    }.getOrElse(NotFound)
+  def renderResponsiveViewer() = Action {
+    Cached(60) {
+      Ok(views.html.fragments.responsiveViewer())
+    }
   }
 
 }

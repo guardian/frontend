@@ -8,13 +8,13 @@ import discussion.AuthHeaders._
 import controllers.CommentBoxController
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.mvc.Headers
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.libs.ws.Response
 
-class CommentBoxControllerTest extends FlatSpec with ShouldMatchers {
+class CommentBoxControllerTest extends FlatSpec with Matchers {
 
   "CommentBoxController" should "render normal comment box for user who can comment (by Cookie)" in{
     val fakeRequest = FakeRequest(GET, "/discussion/comment-box.json").withHeaders(cookie -> "Tom")
@@ -113,6 +113,7 @@ class CommentBoxControllerTest extends FlatSpec with ShouldMatchers {
   object FakeApi extends DiscussionApi {
     protected def GET(url: String, headers: (String, String)*): Future[Response] = null
     protected val apiRoot: String = ""
+    protected val clientHeaderValue: String = ""
 
     override def myProfile(headers: Headers): Future[Profile] = Future {
       val header = headers get cookie orElse {headers get guIdToken} getOrElse {throw new RuntimeException }

@@ -36,7 +36,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
 
     // these params are only whitelisted on dev machines, they will not make it through the CDN
     "view",
-    "_edition" //allows us to spoof edition in tests
+    "_edition", //allows us to spoof edition in tests
+    "k" // keywords in ad requests
   )
 
   override def onRouteRequest(request: RequestHeader) = {

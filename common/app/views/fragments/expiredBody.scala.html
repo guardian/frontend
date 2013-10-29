@@ -1,32 +1,41 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-<div class="article-wrapper monocolumn-wrapper">
-    <h2 class="article-zone type-1">
-        <a class="zone-color" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName)</a>
-    </h2>
+<h2 class="article-zone left-col-deport tone-@VisualTone(content) tone-accent-border">
+    <span class="left-col-deport__body">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+    </span>
+</h2>
+<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(content)">
+    <article id="article" class="article" itemprop="mainContentOfPage" role="main">
+        <div class="article__inner">
+            <header class="article__head">
+                @fragments.headline(content.headline)
+                @fragments.standfirst(content)
+                @fragments.article.dateline(content.webPublicationDate)
+            </header>
 
-    <article id="article" class="article" itemprop="mainContentOfPage" itemscope itemtype="@content.schemaType" role="main">
+            <div class="after-header"></div>
+        </div>
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
+                <div class="article__meta-container">
+                    @fragments.byline(content.byline, content)
 
-        <header class="article__head">
-            @fragments.dateline(content.webPublicationDate, false)
-            @fragments.headline(content.headline)
-        </header>
-
-        <div class="after-header"></div>
-
-        <div class="article__main-column">
-            <div class="article__container">
-                <div class="article-body"
-                    itemprop="articleBody">
-                    <div class="from-content-api">
-                        <p>This content has been removed as our copyright has expired.</p>
+                    @fragments.article.dateline(content.webPublicationDate, secondary=true)
+                    <div class="js-comment-count"></div>
+                </div>
+                <div class="js-article__container article__container u-cf">
+                    <div class="article-body from-content-api" itemprop="articleBody">
+                        <div class="from-content-api">
+                            <p>This content has been removed as our copyright has expired.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="article__secondary-column" aria-hidden="true"></div>
         </div>
     </article>
+    <div class="article__inner">
+        @fragments.mostPopularPlaceholder(content.section)
+    </div>
 </div>
-
-<div id="js-related"></div>
-
-<div class="js-popular article__popular"></div>

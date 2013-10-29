@@ -1,7 +1,5 @@
 @(trail: Trail, info: RowInfo)(implicit request: RequestHeader)
 
-<p class="type-7">
-    <a href="@LinkTo{@trail.url}" data-link-name="@info.rowNum | text">
-        @RemoveOuterParaHtml(trail.linkText)
-    </a>
-</p>
+<a href="@LinkTo{@trail.url}" data-link-name="@info.rowNum | text">
+    @RemoveOuterParaHtml(trail.linkText)
+</a>

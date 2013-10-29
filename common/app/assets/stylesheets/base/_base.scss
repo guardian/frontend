@@ -21,10 +21,16 @@ body:after {
 }
 
 .dateline {
-    font-family: $sans-serif;
-    margin: 0 0 $baseline*2;
     color: $c-neutral2;
-    @extend %type-11;
+    @include fs-data(2);
+
+    @include mq(tablet) {
+        @include fs-data(3, true);
+    }
+
+    i {
+        vertical-align: baseline;
+    }
 }
 
 .relative-timestamp {

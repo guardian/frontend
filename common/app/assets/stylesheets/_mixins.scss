@@ -92,6 +92,13 @@
     }
 }
 
+@mixin sticky {
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: sticky;
+}
+
 @mixin box-sizing($box) {
     -webkit-box-sizing: $box;
     -moz-box-sizing: $box;

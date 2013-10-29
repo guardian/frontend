@@ -1,6 +1,6 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ Informer, GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 import collection.JavaConverters._
@@ -9,7 +9,7 @@ import org.fluentlenium.core.filter.FilterConstructor._
 
 import conf.Configuration
 
-class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -41,7 +41,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
 
         val editionLink = findFirst("[data-link-name='switch to US edition']")
 
-        editionLink.getAttribute("href") should be("http://localhost:9000/us")
+        editionLink.getAttribute("href") should be("http://localhost:9000/preference/edition/us")
       }
     }
 
@@ -54,7 +54,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
 
         val editionLink = findFirst("[data-link-name='switch to UK edition']")
 
-        editionLink.getAttribute("href") should be("http://localhost:9000/uk")
+        editionLink.getAttribute("href") should be("http://localhost:9000/preference/edition/uk")
       }
     }
 

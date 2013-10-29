@@ -7,17 +7,16 @@
     overflow: hidden;
     margin: 0;
     padding: $baseline 0 $baseline*6;
+    border-top: 1px solid $c-neutral5;
 
     .relative-timestamp {
         display: inline-block;
-    }
-    & + & {
-        border-top: 1px solid $c-neutral5;
     }
 }
 
 .trail--gallery,
 .trail + .trail--gallery,
+.matches + .trail,
 .trail--gallery + .trail {
     border-top: none;
     padding-top: $baseline*3;
@@ -32,6 +31,8 @@
         @include fs-headline(4, true);
         margin-bottom: $baseline*8 - 3px;
     }
+
+    > a { display: block; }
 }
 .trail__headline a,
 .trail__headline a:hover,
@@ -205,16 +206,4 @@
             width: 61%;
         }
     }
-}
-
-/**
- * @todo: Clean these up into proper modifiers
- */
-
-.matches-container .trail__text {
-    display: none;
-}
-.competition .trail {
-    margin-top: $baseline*3;
-    border-bottom: none;
 }

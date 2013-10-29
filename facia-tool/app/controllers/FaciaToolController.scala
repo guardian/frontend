@@ -4,7 +4,7 @@ import frontsapi.model._
 import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
-import common.{ExecutionContexts, Logging}
+import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
@@ -21,20 +21,24 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def listCollections = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
     Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
   def listConfigs = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
     Ok(Json.toJson(S3FrontsApi.listConfigsIds))
   }
 
   def readBlock(id: String) = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
     S3FrontsApi.getBlock(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
   def getConfig(id: String) = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
     S3FrontsApi.getConfig(id) map {json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
@@ -42,8 +46,8 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
 
   def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
     request.body.asJson flatMap JsonExtract.build map {
-      case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionList(id, update, identity)
@@ -54,6 +58,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         val identity = Identity(request).get
         blockAction.publish.filter {_ == true}
           .map { _ =>
+            FaciaToolMetrics.DraftPublishCount.increment()
             FaciaApi.publishBlock(id, identity)
             Ok
           }
@@ -80,6 +85,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get

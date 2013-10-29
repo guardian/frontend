@@ -61,6 +61,9 @@
         @include box-sizing(border-box);
         padding-right: $gs-gutter/2;
 
+        &:nth-child(odd) {
+            clear: left;
+        }
         &:nth-child(even) {
             padding-right: 0;
             padding-left: $gs-gutter/2;
@@ -79,9 +82,10 @@
 }
 
 .nav--columns-football {
-    padding: $baseline*2 0 $baseline;
+    @extend .nav--no-horizontal-spacing;
+    padding-top: $baseline*2;
+    padding-bottom: $baseline;
 }
-
 
 .nav--top-border-off > .nav__item:nth-child(-n+2) .nav__link {
     border-top: none;
@@ -229,7 +233,6 @@
     padding: 0;
     background-color: #ffffff;
 
-
     @include mq(tablet) { display: block; }
 
     .nav__item {
@@ -302,6 +305,11 @@
     margin: 0 $gs-gutter/2;
     border-bottom: 1px solid $c-neutral6;
     border-bottom-color: $c-neutral6 !important;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
 }
 
 .localnav__title {
@@ -349,4 +357,13 @@
 
 .nav .nav__item .nav__link--faded {
     color: #9DBBD4;
+}
+
+
+/* No left-right spacing
+   ========================================================================== */
+
+.nav--no-horizontal-spacing {
+    padding-left: 0;
+    padding-right: 0;
 }

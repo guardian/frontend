@@ -7,7 +7,6 @@
 .competitions-date {
     background-color: $c-sportMid;
     color: #ffffff;
-    margin-top: $baseline*2;
     margin-bottom: $baseline;
     padding: 9px $gutter/2;
 }
@@ -20,7 +19,7 @@
 
 .football-table-link,
 .football-table-link.cta {
-    color: #333;
+    color: $c-neutral1;
     display: block;
     text-decoration: none;
     text-align: left;
@@ -66,7 +65,7 @@ a.competition-title {
 
         &:active {
             background: $c-neutral5;
-            color: #fff !important;
+            color: #ffffff !important;
             text-decoration: none;
         }
     }
@@ -77,7 +76,7 @@ a.competition-title {
 .match-desc {
     display: table;
     width:  90%;
-    color: #333;
+    color: $c-neutral1;
     margin-bottom: 0;
     border: none;
     overflow: hidden;
@@ -91,12 +90,14 @@ a.competition-title {
 
     .match-desc__team--home {
         text-align: right;
+
         @include mq($to: tablet) {
             padding-right: $gutter/4;
         }
     }
     .match-desc__team--away {
         text-align: left;
+
         @include mq($to: tablet) {
             padding-left: $gutter/4;
         }
@@ -117,7 +118,7 @@ a.competition-title {
     position: absolute;
     right: $gutter/2;
     top: 10px;
-    color: #777;
+    color: $c-neutral2;
 }
 
 .match-status abbr {
@@ -135,7 +136,7 @@ a.competition-title {
 }
 
 .match-live {
-    color: #777;
+    color: $c-neutral2;
 }
 
 .match-FT,
@@ -144,15 +145,8 @@ a.competition-title {
     background-color: $c-sportBright;
 }
 
-.matches,
-.competitions {
+.matches {
     margin-bottom: $baseline;
-}
-
-// this overrides components when places on a front (to avoid gaps)
-.trailblock .matches,
-.trailblock .competitions {
-    margin-bottom: 0;
 }
 
 .matches {
@@ -188,10 +182,6 @@ a.competition-title {
             text-decoration: none;
         }
     }
-}
-
-.sport-header {
-    margin-bottom: $baseline*2;
 }
 
 .league-table {
@@ -240,101 +230,74 @@ a.competition-title {
 
 .football-nav {
     clear: left;
-    padding: 0 0 16px;
-    margin: 0;
-    color: #064951;
-
-    a {
-        color: #333333;
-    }
-
-    .nav {
-        padding: $baseline*2 0;
-    }
-
-    .nav--stacked > li > a {
-        border-color: #a1c391;
-    }
+    padding-bottom: $baseline*4;
 }
 
 // football-filters is the dropdown list
 
 .football-filters {
-    margin-bottom: $baseline*2;
+    margin-bottom: $baseline*4;
+
+    .football-filter + & {
+        margin-top: $baseline*-4;
+    }
 
     > li {
         background: $c-sportMid;
         padding: 0 12px;
     }
-
     h2 {
         font-weight: bold;
         font-family: $sans-serif;
         font-size: 14px;
-        color: #fff;
+        font-size: 1.4rem;
+        color: #ffffff;
         padding-bottom: $baseline;
         margin-top: 10px;
     }
-
     li:first-child h2 {
         margin-top: 30px;
     }
-
-    .sections li a {
-        color: #fff;
+    a {
+        color: #ffffff;
+    }
+    .nav__link {
         border-top-color: $c-sportBright;
         line-height: 21px;
+        line-height: 2.1rem;
     }
-}
-
-.team-list li span {
-    padding: $baseline*2 0;
-    border-top: 1px solid $c-neutral7;
-    display: block;
-    height: auto;
-    color: #999;
-}
-
-.nav--columns.nav--top-border-off > li:nth-child(-n+2) span,
-.nav--stacked.nav--top-border-off > li:nth-child(1) span {
-    border-top: none;
-    padding-top: 0;
-}
-
-.football-filters .cta {
-    background: $c-sportDark;
-    color: #fff;
-    margin-bottom: $baseline*2;
-    margin-top: $baseline*4;
-    padding: 15px 0;
+    .cta {
+        background: $c-sportDark;
+        margin-bottom: $baseline*2;
+        margin-top: $baseline*4;
+        padding: 15px 0;
+    }
 }
 
 // football-filter is the dropdown link item
 
 .football-filter {
+    display: block;
     background: $c-sportBright;
-    margin: 0 $gs-gutter/2;
-    padding: $baseline*3 32px $baseline*1.5 8px;
+    margin-bottom: $baseline*4;
+    padding: $baseline*3 48px 10px 8px;
+    @include user-select;
 
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
-    color: #fff;
-    border-bottom: none;
-
-    > a,
-    > a:hover {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
         color: $c-neutral1;
-        @include fs-bodyCopy(1);
-    }
-
-    > span {
-        display: block;
+        text-decoration: none;
     }
 }
+.football-filter__label {
+    @include fs-bodyCopy(1);
+    margin: 0;
+}
 
-.football-filter-arrow {
+.football-filter__trigger {
+    display: block;
     background: $c-sportMid;
     height: 100%;
     width: 48px;
@@ -349,11 +312,6 @@ a.competition-title {
     padding-bottom: $baseline*3;
 
     .has-localnav & {
-        padding-top: 12px;
+        padding-top: $baseline*3;
     }
-}
-
-.competitions {
-    margin: $baseline*2 0;
-    list-style: none;
 }

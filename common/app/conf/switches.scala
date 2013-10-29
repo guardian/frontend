@@ -46,6 +46,11 @@ object Switches extends Collections {
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
     safeState = Off)
 
+  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
+    "If this switch is on, then extra logging will be done for edition redirects.",
+    safeState = Off
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -143,12 +148,12 @@ object Switches extends Collections {
     safeState = Off)
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
-    "If this switch is on, gallery trails are opened in a lightbox.",
+    "If this switch is on, galleries open in a lightbox.",
     safeState = Off)
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-    safeState = Off)
+    safeState = On)
 
   val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
@@ -164,6 +169,10 @@ object Switches extends Collections {
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
+    safeState = Off)
+
+  val FollowItemRedirectsFromApiSwitch = Switch("Feature Switches", "follow-item-redirects",
+    "If this switch is on then content api redirects on items will be sent back to the end user.",
     safeState = Off)
 
   // A/B Test Switches
@@ -184,36 +193,20 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
-    "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
-    safeState = Off)
-
-  val ABGalleryCta = Switch("A/B Tests", "ab-gallery-cta",
-    "If this is switched on an AB test runs to test different styles of CTAs to launch a gallery",
-    safeState = Off)
-
-  val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
-    "If this is switched on an AB test runs to trial the new swipe call to actions ",
-    safeState = Off)
-
-  val ABExpandableMostPopular = Switch("A/B Tests", "ab-expandable-most-popular",
-    "If this is switched on an AB test runs to trial the impact of having expandable content in most popular trails",
-    safeState = Off)
-
-  val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
-    "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
-    safeState = Off)
-
   val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
-  val ABMostPopularFromFacebook = Switch("A/B Tests", "ab-most-popular-from-facebook",
-    "If this is switched on an AB test runs to trial presenting visitors from Facebook with Most Popular from Facebook",
-    safeState = Off)
-
   val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
     "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
+    safeState = Off)
+
+  val ABAlphaAdvertsData = Switch("A/B Tests", "ab-alpha-adverts-data",
+    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+
+  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
+    "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
   // Sport Switch
@@ -231,10 +224,6 @@ object Switches extends Collections {
   val FaciaSwitch = Switch("Facia", "facia",
     "Switch to redirect to facia if request has X-Gu-Facia=true",
     safeState = Off  )
-
-  val FaciaLoadTestSwitch = Switch("Facia", "facia-load-test",
-    "Switch to make an xhr request from all fronts to Facia, just to load-test it",
-    safeState = Off )
 
   // Image Switch
 
@@ -285,22 +274,19 @@ object Switches extends Collections {
     LiveSummarySwitch,
     LiveCricketSwitch,
     FaciaSwitch,
-    FaciaLoadTestSwitch,
     AdSlotImpressionStatsSwitch,
-    ABGalleryStyle,
-    ABGalleryCta,
-    ABSwipeCtas,
-    ABExpandableMostPopular,
-    ABRightHandCard,
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
-    ABMostPopularFromFacebook,
     ABUltimateParagraphSpacing,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
-    ArticleKeywordsSwitch
+    ArticleKeywordsSwitch,
+    ABAlphaAdvertsData,
+    FollowItemRedirectsFromApiSwitch,
+    ABCommercialComponents,
+    EditionRedirectLoggingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

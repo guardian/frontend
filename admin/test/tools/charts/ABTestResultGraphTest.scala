@@ -1,10 +1,10 @@
 package tools.charts
 
 import org.scalatest.FeatureSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import tools.DataPoint
 
-class ABTestResultGraphTest extends FeatureSpec with ShouldMatchers {
+class ABTestResultGraphTest extends FeatureSpec with Matchers {
 
   feature("ABTestResultGraph") {
 

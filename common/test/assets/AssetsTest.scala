@@ -1,11 +1,11 @@
-package assets
+package common.Assets
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.test.FakeApplication
 import play.api.test.Helpers._
 
-class AssetsTest extends FlatSpec with ShouldMatchers {
+class AssetsTest extends FlatSpec with Matchers {
   "Static" should "collect asset maps" in {
     running(FakeApplication()) {
       val static = new Assets("simon says", "assets/testassets.map")

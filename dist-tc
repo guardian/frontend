@@ -11,7 +11,7 @@ set -o errexit
 #
 ################################################################################
 
-./grunt-tc clean compile jshint:common jasmine
+./grunt-tc clean compile jshint:common test:unit
 ./sbt-tc "project $1" compile test assembly
 
 
@@ -34,7 +34,7 @@ mkdir -p "$1/target/dist/packages/frontend-$1"
 # Copy packages to dist directory
 cp "$1/conf/deploy.json" "$1/target/dist"
 cp "$1/target/scala-2.10/frontend-$1.jar" "$1/target/dist/packages/frontend-$1"
-cp -r "static/target/hashed" "$1/target/dist/packages/frontend-static"
+cp -r "static/target" "$1/target/dist/packages/frontend-static"
 
 
 # And zip up the packet

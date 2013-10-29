@@ -1,38 +1,39 @@
 .collection--section-zone {
     @include mq($to: tablet) {
+        @include row(2);
         .item:nth-child(-n+2) {
             @include card-half-width($with-image: true);
         }
-        @include row(2);
         .item:nth-child(n+3) {
             @include card-headline;
+        }
+        .item:nth-child(n+4) {
+            .item__link {
+                border-top: 1px dotted $c-neutral5;
+            }
+        }
+    }
+    @include mq(tablet) {
+        .item {
+            @include card;
         }
     }
     @include mq(tablet, desktop) {
         @include row(2);
         .item:nth-child(-n+2) {
-            @include card($with-image: true);
-        }
-        .item:nth-child(n+3) {
-            @include card;
+            @include card-image;
         }
     }
     @include mq(desktop, wide) {
         @include row(3);
         .item:nth-child(-n+3) {
-            @include card($with-image: true);
-        }
-        .item:nth-child(n+4) {
-            @include card;
+            @include card-image;
         }
     }
     @include mq(wide) {
         @include row(4);
         .item:nth-child(-n+4) {
-            @include card($with-image: true);
-        }
-        .item:nth-child(n+5) {
-            @include card;
+            @include card-image;
         }
     }
 }

@@ -1,9 +1,9 @@
 @(trails: Seq[Trail], numItemsVisible: Int = 5)(implicit request: RequestHeader)
 
 <ul class="unstyled">
-     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-         <li>
+    @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
+        <li class="headline-list__item">
             @fragments.trails.link(trail, info.rowNum)
-         </li>
-     }
+        </li>
+    }
 </ul>

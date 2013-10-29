@@ -11,6 +11,7 @@ frontend-video.properties
 frontend-applications.properties
 
 *.min.css
+*.min.css.map
 *.csv
 *.iml
 *.box
@@ -37,7 +38,7 @@ local.sbt
 
 node_modules
 
-common/conf/assets/assets.map
+common/conf/assets
 
 dev/gems
 dev/casperjs

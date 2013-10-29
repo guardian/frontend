@@ -1,7 +1,7 @@
 {
     "packages":{
         "frontend-router":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::router" ],
             "data":{
                 "secondsToWait":1200,

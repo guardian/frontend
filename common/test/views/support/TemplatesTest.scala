@@ -2,13 +2,13 @@ package views.support
 
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import xml.XML
 import common.editions.Uk
 import com.gu.openplatform.contentapi.model.Asset
 
-class TemplatesTest extends FlatSpec with ShouldMatchers {
+class TemplatesTest extends FlatSpec with Matchers {
 
   "RemoveOuterPara" should "remove outer paragraph tags" in {
     RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be(" foo <b>bar</b> ")
@@ -216,11 +216,11 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   }
 
   val bodyImages: List[ImageElement] = List(
-    new ImageElement(ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100)))),
-    new ImageElement(ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100)))),
-    new ImageElement(ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100)))),
-    new ImageElement(ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100)))),
-    new ImageElement(ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700))))
+    new ImageElement(ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100))),0),
+    new ImageElement(ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100))),0),
+    new ImageElement(ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100))),0),
+    new ImageElement(ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100))),0),
+    new ImageElement(ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700))),0)
   )
 
   val bodyTextWithLinks = """

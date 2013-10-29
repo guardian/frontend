@@ -13,19 +13,16 @@ define([
                 { width:  768,  height: 1024, name: "Tablet portrait" },
                 { width:  1024, height: 768,  name: "Tablet landscape" }
             ],
-            previewUrls: {
-                prod: 'http://www.theguardian.com',
-                code: 'http://m.code.dev-theguardian.com'
+            previewUrlBase: {
+                dev:  'http://localhost:9000/responsive-viewer#',
+                code: 'http://code.preview.guardianapps.co.uk/responsive-viewer#http://m.code.dev-theguardian.com',
+                prod: 'http://preview.guardianapps.co.uk/responsive-viewer#http://www.theguardian.com'
             },
             filterTypes: {
-                section: { display: 'in section:', param: "section", path: "sections", placeholder: "section, e.g. news" },
-                tag:     { display: 'with tag:',     param: "tag",     path: "tags",     placeholder: "tag, e.g. sport/triathlon" }
+                section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },
+                tag:     { display: 'with tag:',   param: "tag",     path: "tags",     placeholder: "e.g. sport/triathlon" }
             },
             searchPageSize:        50,
-            sectionSearches: {
-                "default": "news|uk|uk-news|world",
-                "culture": "culture|film|music|books|artanddesign|tv-and-radio|stage"
-            },
 
             pvmHot:                50,    // pageviews-per-min to qualify as 'hot'
             pvmWarm:               25,    // pageviews-per-min to qualify as 'warm'
@@ -35,13 +32,14 @@ define([
             collectionsPollMs:     10000, // 10 seconds
             latestArticlesPollMs:  30000, // 10 seconds
             cacheExpiryMs:         60000, // 1 min
-            defaultToLiveMode:     true,
 
             apiBase:               '',
             apiSearchBase:         '/api/proxy'
         },
 
-        state: {},
+        state: {
+            liveMode: ko.observable(true) // default to live mode?
+        },
 
         util: {
             mediator: new EventEmitter(),

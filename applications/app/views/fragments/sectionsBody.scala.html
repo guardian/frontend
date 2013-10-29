@@ -1,31 +1,30 @@
 @(page: Page)(implicit request: RequestHeader)
 
-@Edition(request).zones.map{ zone =>
-
-    <section class="sections zone-@zone.name.zone" data-link-name="@zone.name.linkName">
-
-        @if(zone.name.title == "News") {
-            <h1 class="article-zone">All sections</h1>
-        } 
-
-        @if(zone.name.title != "News") {
-        	<h1 class="article-zone type-2">
-                <a href="@LinkTo(zone.name.href)" data-link-name="zone:text" class="zone-color">
-                    @HtmlFormat.raw(zone.name.title)
-                </a>
-            </h1>
-        }
-
-        <ul class="nav nav--columns nav--top-border-off sections u-cf">
-
-            @zone.sections.map{ section =>
-                <li class="nav__item">
-                    <a class="nav__link" href="@LinkTo(section.href)" data-link-name="@section.linkName:text">
-                        @HtmlFormat.raw(section.title)
-                    </a>
-                </li>
+<main itemprop="mainContentOfPage" role="main">
+    @Edition(request).zones.map{ zone =>
+        <div class="monocolumn-wrapper">
+            @if(zone.name.title == "News") {
+                <h1 class="article-zone article-zone--bleed-out tone-news tone-border">All sections</h1>
             }
-        </ul>
+            @if(zone.name.title != "News") {
+                <h2 class="page-sub-header">
+                    <a href="@LinkTo(zone.name.href)" class="c-neutral1" data-link-name="zone:text">
+                        @HtmlFormat.raw(zone.name.title)
+                    </a>
+                </h2>
+            }
 
-    </section>
-}
+            <section class="component zone-@zone.name.zone" data-link-name="@zone.name.linkName">
+                <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">
+                    @zone.sections.map{ section =>
+                        <li class="nav__item">
+                            <a class="nav__link c-neutral1" href="@LinkTo(section.href)" data-link-name="@section.linkName:text">
+                                @HtmlFormat.raw(section.title)
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </section>
+        </div>
+    }
+</main>

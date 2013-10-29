@@ -1,74 +1,22 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<h2 class="article-zone tone-@VisualTone(gallery) tone-accent-border">
-    <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+<h2 class="article-zone left-col-deport tone-@VisualTone(gallery) tone-accent-border">
+    <span class="left-col-deport__body">
+        <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+    </span>
 </h2>
-
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
-        <div class="article-v2__inner">
+        <div class="article__inner">
             <header class="article__head">
                 @fragments.headline(gallery.headline)
-
                 @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
             </header>
         </div>
-        <div class="article-v2__columning-wrapper">
-            <div class="article-v2__main-column">
-
-                <div class="ab-gallerytest--control media-content">
-                    <p class="js-gallery-nav gallery-nav type-11">
-
-                        @if(index > 1) {
-                            <a class="js-gallery-prev gallery-prev control tone-colour" data-link-name="Gallery Previous" data-is-ajax="true"
-                            href="?index=@(index - 1)">Previous</a>
-                        } else {
-                            <a class="js-gallery-prev gallery-prev is-off control tone-colour" data-link-name="Gallery Previous" data-is-ajax="true"
-                            href="javascript://">Previous</a>
-                        }
-
-                        Image <span class="js-gallery-index">@index</span> of @gallery.size
-
-                        <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible is-off">
-                            Fullscreen <i class="i i-fullscreen-toggle"></i>
-                        </span>
-
-                        @if(index < gallery.size) {
-                            <a class="gallery-next js-gallery-next control tone-colour" data-link-name="Gallery Next" data-is-ajax="true"
-                            href="?index=@(index + 1)">Next</a>
-                        } else {
-                            <a class="js-gallery-next gallery-next control tone-colour" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
-                            href="?trail=true">Next</a>
-                        }
-                    </p>
-
-                    <div class="js-gallery-holder gallery-container">
-                        <ul class="unstyled">
-                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            @if(row.rowNum == index) {
-                                <li class="js-gallery-item-@row.rowNum js-current-gallery-slide" data-image="true"
-                                data-index="@row.rowNum" data-total="@gallery.size">
-                                    <img class="js-gallery-img maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                    src="@image.path" data-width="@image.width" data-height="@image.height" />
-                                    } else {
-                                <li class="js-gallery-item-@row.rowNum is-off" data-image="false" data-index="@row.rowNum"
-                                data-total="@gallery.size" data-src="@image.path" data-fullsrc='@image.path'
-
-                                data-orientation="@if(image.width >= image.height){landscape} else {portrait}"
-                                data-width="@image.width" data-height="@image.height">
-                                }
-
-                                <div class="gallery-caption">
-                                    <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
-                                    <p class="caption-credit type-12">@image.credit</p>
-                                </div>
-                            </li>
-                        }
-                        </ul>
-                    </div>
-                </div>
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
 
                 <div class="article__meta-container">
                     @fragments.byline(gallery.byline, gallery)
@@ -76,29 +24,64 @@
                     <div class="js-comment-count"></div>
                 </div>
 
-                <div class="ab-gallerytest--newstyle" data-link-name="Gallery thumbnail sheet">
-                    @fragments.galleryThumbs(gallery)
-                </div>
 
-                @fragments.standfirst(gallery)
-
-                @if(gallery.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
-                    <div class="article__keywords" data-link-name="gallery keywords">
-                        @fragments.keywordList(gallery.keywords)
-                    </div>
+                <!-- Lightbox JS Gallery -->
+                @if(LightboxGalleriesSwitch.isSwitchedOn) {
+                    @fragments.galleryThumbs(gallery, showCta=true)
                 }
+
+                <!-- Non-JS Gallery / LightboxSwitch off mode -->
+                <div class="@if(LightboxGalleriesSwitch.isSwitchedOn) { js-hidden }">
+                    <p class="gallery-nav">
+
+                        @if(index > 1) {
+                            <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
+                        }
+
+                        Image @index of @gallery.size
+
+                        @if(index < gallery.size) {
+                            <a class="gallery-next control tone-colour" href="?index=@(index + 1)">Next</a>
+                        } else {
+                            <a class="gallery-next control tone-colour" href="?index=1">Next</a>
+                        }
+                    </p>
+
+                    <div class="gallery-container">
+                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
+                            @if(row.rowNum == index) {
+                                <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
+                                src="@image.path" />
+
+                                <div class="gallery-caption">
+                                    <p class="caption">@Html(image.caption.getOrElse(""))</p>
+                                    <p class="caption-credit">@image.credit</p>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="article__container">
+                    @fragments.standfirst(gallery)
+
+                    @if(ArticleKeywordsSwitch.isSwitchedOn){
+                        <div class="article__keywords" data-link-name="gallery keywords">
+                            @fragments.keywordList(gallery.keywords)
+                        </div>
+                    }
+                </div>
 
                 <div class="social-wrapper">
                     @fragments.social(gallery)
                 </div>
             </div>
-            <div class="article-v2__secondary-column" aria-hidden="true">
+            <div class="article__secondary-column" aria-hidden="true">
                 <h2 class="article__meta-heading tone-colour">Share this gallery</h2>
                 @fragments.social(gallery, "next to content")
             </div>
         </div>
     </article>
-    <div class="article-v2__inner">
+    <div class="article__inner">
         @if(storyPackage.nonEmpty) {
             <aside role="complementary">
                 @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

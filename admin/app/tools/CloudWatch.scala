@@ -7,14 +7,22 @@ import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
 import common.Logging
 
-
 trait CloudWatch {
 
-  val loadBalancers = Map(
-    "frontend-RouterLo-1HHMP4C9L33QJ" -> "Router",
-    "frontend-ArticleL-T0BUR121RZIG" -> "Article",
-    "frontend-FrontLoa-L86HJF9PG40T" -> "Front",
-    "frontend-Applicat-V36EHVHAEI15" -> "Applications"
+  val primaryLoadBalancers = Map(
+    ("frontend-RouterLo-1HHMP4C9L33QJ", "Router"),
+    ("frontend-ArticleL-T0BUR121RZIG", "Article"),
+    ("frontend-FaciaLoa-I92TZ7OEAX7W", "Front"),
+    ("frontend-Applicat-V36EHVHAEI15", "Applications")
+  )
+
+  val secondaryLoadBalancers = Map(
+    ("frontend-CoreNavi-19L03IVT6RTL5", "CoreNav"),
+    ("frontend-Discussi-KC65SADEVHIE", "Discussion"),
+    ("frontend-Identity-1ITBJ706CLQIC", "Identity"),
+    ("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image"),
+    ("frontend-SportLoa-GLJK02HUD48W", "Sport"),
+    ("frontend-Commerci-12ZQ79RIOLIYE", "Commercial")
   )
 
   private val fastlyMetrics = List(
@@ -33,34 +41,44 @@ trait CloudWatch {
     c
   }
 
-  def latency = loadBalancers.map{ case (loadBalancer, name) =>
-    new LatencyGraph(name ,
-      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusHours(2).toDate)
-        .withEndTime(new DateTime().toDate)
-        .withPeriod(60)
-        .withUnit(StandardUnit.Seconds)
-        .withStatistics("Average")
-        .withNamespace("AWS/ELB")
-        .withMetricName("Latency")
-        .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer)),
-        asyncHandler)
-    )
-  }.toSeq
+  def latencyShortStack = latency(primaryLoadBalancers)
+  def latencyFullStack = latencyShortStack ++ latency(secondaryLoadBalancers)
 
-  def requestOkCount = loadBalancers.map{ case (loadBalancer, name) =>
-    new Request2xxGraph(name,
-      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusHours(2).toDate)
-        .withEndTime(new DateTime().toDate)
-        .withPeriod(60)
-        .withStatistics("Sum")
-        .withNamespace("AWS/ELB")
-        .withMetricName("HTTPCode_Backend_2XX")
-        .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer)),
-        asyncHandler)
-    )
-  }.toSeq
+  private def latency(loadBalancers: Map[String,String]): Seq[LatencyGraph] = {
+    loadBalancers.map{ case (loadBalancer, name) =>
+      new LatencyGraph(name ,
+        cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+          .withStartTime(new DateTime().minusHours(2).toDate)
+          .withEndTime(new DateTime().toDate)
+          .withPeriod(60)
+          .withUnit(StandardUnit.Seconds)
+          .withStatistics("Average")
+          .withNamespace("AWS/ELB")
+          .withMetricName("Latency")
+          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer)),
+          asyncHandler)
+      )
+    }.toSeq
+  }
+
+  def requestOkShortStack = requestOkCount(primaryLoadBalancers)
+  def requestOkFullStack = requestOkShortStack ++ requestOkCount(secondaryLoadBalancers)
+
+  private def requestOkCount(loadBalancers: Map[String,String]): Seq[Request2xxGraph] = {
+    loadBalancers.map{ case (loadBalancer, name) =>
+      new Request2xxGraph(name,
+        cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+          .withStartTime(new DateTime().minusHours(2).toDate)
+          .withEndTime(new DateTime().toDate)
+          .withPeriod(60)
+          .withStatistics("Sum")
+          .withNamespace("AWS/ELB")
+          .withMetricName("HTTPCode_Backend_2XX")
+          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer)),
+          asyncHandler)
+      )
+    }.toSeq
+  }
 
   def fastlyStatistics = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
     new FastlyMetricGraph( graphTitle, metric,

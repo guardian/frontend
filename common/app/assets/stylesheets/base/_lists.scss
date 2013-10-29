@@ -20,15 +20,14 @@ nav ol {
 // Some list helpers
 
 // Remove margin and bullets from lists.
-ol.unstyled,
-ul.unstyled {
+.unstyled {
     margin: 0;
     list-style: none;
 }
 
 // List of inline items
 .inline-list {
-    @extend ul.unstyled;
+    @extend .unstyled;
 }
 .inline-list__item {
     display: inline-block; // Prevent linebreak within an item

@@ -2,30 +2,45 @@
 @import conf.Switches._
 
 @defining(page.video){ video =>
-    <h2 class="article-zone tone-@VisualTone(video) tone-accent-border">
-        <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+    <h2 class="article-zone left-col-deport tone-@VisualTone(video) tone-accent-border">
+        <span class="left-col-deport__body">
+            <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
+        </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(video)">
 
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner">
                 <header class="article__head">
                     @fragments.headline(video.headline)
 
                     @fragments.article.dateline(video.webPublicationDate, video.isLive)
                 </header>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
                     <div class="player media-content">
-                        <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
-                            @video.encodings.map{ encoding =>
-                                <source src="@encoding.url" />
-                            }
-                            Your browser does not support the video tag.
-                        </video>
+
+                        <div class="media-proportional-container">
+                            <video controls="controls" @video.mainPicture.map{ img =>  poster="@ArticleMainPicture.bestFor(img)" }>
+                                @video.encodings.map{ encoding =>
+                                    <source src="@encoding.url" />
+                                }
+
+                                @video.encodings.find(_.format == "video/mp4").map{ encoding =>
+                                    <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                        <param name="allowFullScreen" value="true" />
+                                        <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                        <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
+                                        <img @video.mainPicture.map{ img =>  src="@ArticleMainPicture.bestFor(img)" } alt="" width="620" height="350" />
+                                        Sorry, your browser is unable to play this video.
+                                    </object>
+                                }
+                            </video>
+                        </div>
+
                     </div>
 
                     <div class="article__meta-container">
@@ -33,28 +48,29 @@
                         @fragments.article.dateline(video.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
                     </div>
-
-                    <div class="video-standfirst">
-                        @fragments.standfirst(video)
-                    </div>
-
-                    @if(video.keywords.nonEmpty && ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="video keywords">
-                            @fragments.keywordList(video.keywords)
+                    <div class="article__container">
+                        <div class="video-standfirst">
+                            @fragments.standfirst(video)
                         </div>
-                    }
+
+                        @if(ArticleKeywordsSwitch.isSwitchedOn){
+                            <div class="article__keywords" data-link-name="video keywords">
+                                @fragments.keywordList(video.keywords)
+                            </div>
+                        }
+                    </div>
 
                     <div class="social-wrapper">
                         @fragments.social(video)
                     </div>
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true">
+                <div class="article__secondary-column" aria-hidden="true">
                     <h2 class="article__meta-heading tone-colour">Share this video</h2>
                     @fragments.social(video, "next to content")
                 </div>
             </div>
         </article>
-        <div class="article-v2__inner">
+        <div class="article__inner">
             @if(page.storyPackage.nonEmpty) {
                 <aside role="complementary">
                     @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)

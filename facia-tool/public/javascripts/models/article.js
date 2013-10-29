@@ -29,6 +29,7 @@ function (
             'webTitle']);
 
         this.state = common.util.asObservableProps([
+            'underDrag',
             'editingConfig',
             'shares',
             'comments',

@@ -1,11 +1,11 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import scala.collection.JavaConversions._
 import conf.Switches
 
-class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Most popular") {
 

@@ -249,9 +249,76 @@ object FootballMetrics {
   )
 }
 
+object FaciaMetrics {
+
+  object JsonParsingErrorCount extends CountMetric(
+    "facia-front",
+    "facia-json-error",
+    "Facia JSON parsing errors",
+    "Number of errors whilst parsing JSON out of S3"
+  )
+
+  val all: Seq[Metric] = Seq(
+    JsonParsingErrorCount
+  )
+}
+
 object FaciaToolMetrics {
 
-  val all: Seq[Metric] = Nil
+  object ApiUsageCount extends CountMetric(
+    "facia-api",
+    "facia-api-usage",
+    "Facia API usage count",
+    "Number of requests to the Facia API from clients (The tool)"
+  )
+
+  object ProxyCount extends CountMetric(
+    "facia-api",
+    "facia-proxy-usage",
+    "Facia proxy usage count",
+    "Number of requests to the Facia proxy endpoints (Ophan and Content API) from clients"
+  )
+
+  object ExpiredRequestCount extends CountMetric(
+    "facia-api",
+    "facia-auth-expired",
+    "Facia auth endpoints expired requests",
+    "Number of expired requests coming into an endpoint using ExpiringAuthAction"
+  )
+
+  object DraftPublishCount extends CountMetric(
+    "facia-api",
+    "facia-draft-publish",
+    "Facia draft publish count",
+    "Number of drafts that have been published"
+  )
+
+  val all: Seq[Metric] = Seq(
+    ApiUsageCount, ProxyCount, ExpiredRequestCount,
+    DraftPublishCount
+  )
+}
+
+
+object CommercialMetrics {
+
+  object TravelOffersLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-travel-offers-load",
+    "Commercial Travel Offers load timing",
+    "Time spent running travel offers data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object JobsLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-jobs-load",
+    "Commercial Jobs load timing",
+    "Time spent running job ad data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric)
 }
 
 
@@ -263,9 +330,11 @@ object Metrics {
 
   lazy val discussion = DiscussionMetrics.all
   lazy val admin = AdminMetrics.all
+  lazy val facia = FaciaMetrics.all
   lazy val faciaTool = FaciaToolMetrics.all
   lazy val porter = PorterMetrics.all
   lazy val coreNavigation = CoreNavivationMetrics.all
   lazy val front = FrontMetrics.all
   lazy val football = FootballMetrics.all
+  lazy val commercial = CommercialMetrics.all
 }

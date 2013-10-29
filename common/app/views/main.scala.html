@@ -1,16 +1,14 @@
-@(metaData: MetaData, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+
+@*<!--
+Identity pages use identityMain.scala.html, most of which is shared fragments,
+be sure to apply any necessary changes to non-shared code there too.
+-->*@
 
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">
 <head>
-    <meta charset="utf-8" />
-    <title>@Html(metaData.webTitle)</title>
-    @fragments.metaData(metaData)
-    @fragments.commonCssSetup()
-    @fragments.commonJavaScriptSetup(metaData, "app", switches)
-
-    @head
-
+    @fragments.head(metaData, switches, projectName, head)
 </head>
 <body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
 
@@ -22,22 +20,28 @@
             <div id="preload-1" class="preload">
                 <div class="parts">
                     <div class="parts__head">
-                        @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
+                        <div class="js-sticky-upper" data-id="Top2"></div>
+                        <div class="top-banner-ad-container">
+                            @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
+                        </div>
                     </div>
                     <div class="parts__body">
                         @body
                     </div>
                     <div class="parts__foot">
-                        @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
+                        @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="Bottom")
                     </div>
                 </div>
             </div>
             <div id="preload-2" class="preload"><div class="parts"></div></div>
             <div id="preload-0" class="preload"><div class="parts"></div></div>
+            @fragments.adSlot(id="bottom-sticky-banner-ad", baseSlot="x09", medianSlot="", extendedSlot="")
         </div>
     </div>
 
     @fragments.footer(metaData)
+
+    <div class="js-sticky-lower" data-id="Top2"></div>
 
     @fragments.loadCss()
 

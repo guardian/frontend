@@ -2,11 +2,11 @@ package test
 
 import conf.Configuration
 import conf.Switches._
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -206,15 +206,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         When("the page is rendered")
 
         Then("the ad slot placeholder is rendered")
-        val adPlaceholder = $(".ad-slot-top-banner-ad").first()
+        val adPlaceholder = $(".ad-slot--top-banner-ad").first()
 
         And("the placeholder has the correct slot names")
         adPlaceholder.getAttribute("data-base") should be("Top2")
         adPlaceholder.getAttribute("data-median") should be("Top")
-        adPlaceholder.getAttribute("data-extended") should be("x54")
+        adPlaceholder.getAttribute("data-extended") should be("Top")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot-top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
@@ -252,8 +252,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be(30)
+        $("[itemprop=relatedLink]").size() should be > 0
       }
+
     }
 
     scenario("Story package ordered by date published") {
@@ -303,8 +304,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size (0)
 
-        And("the embedded video should have a poster")
-        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/mainwebsite/poster/2013/3/26/130326HuntReform_7409761.jpg")
+        And("the embedded video should not show a poster when there are no images in the video element")
+        findFirst("video").getAttribute("poster") should be("")
       }
     }
 
@@ -316,8 +317,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         Then("the main picture should be shown")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
 
-        And("the embedded video should have a poster")
-        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/bc/281851582/281851582_1019162777001_110624Glastothreewords-4863219.jpg?pubId=281851582")
+        And("the embedded video should not have a poster when there are no images in the video element")
+        findFirst("video").getAttribute("poster") should be("")
       }
     }
 
@@ -400,7 +401,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         Then("I should see the main ARIA roles described")
         findFirst(".related-trails").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
-        findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
@@ -431,6 +431,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     }
 
+    scenario("Link to most popular") {
+      Given("I'm on an article and JavaScript turned off")
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("I should see link to most popular in the article section")
+        $(".js-popular a") should have size (1)
+      }
+    }
+
     scenario("Show keywords in an article"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
 
@@ -441,6 +451,19 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         Then("I should see links to keywords")
         $(".article__keywords a").size should be (5)
+      }
+    }
+
+    scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords"){
+      Given("I am on an article entitled 'Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick'")
+
+      ArticleKeywordsSwitch.switchOn
+
+      HtmlUnit("/info/2013/aug/26/2"){ browser =>
+        import browser._
+
+        Then("I should not see a keywords list")
+        $(".article__keywords *").size should be (0)
       }
     }
     

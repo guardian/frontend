@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.ContentApi
+import conf.{ElasticSearchContentApi, ContentApi}
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.ItemResponse
@@ -10,15 +10,16 @@ import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import controllers.ImageContentPage
 import scala.concurrent.Future
-import play.api.mvc.SimpleResult
+import play.api.mvc.{RequestHeader, SimpleResult}
 
 case class IndexPage(page: MetaData, trails: Seq[Trail])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
-  private val SinglePart = """([\w\d\.-]+)""".r
 
   def index(edition: Edition, leftSide: String, rightSide: String) = {
+
+    val section = leftSide.split('/').head
 
     // if the first tag is just one part then change it to a section tag...
     val firstTag = leftSide match {
@@ -28,7 +29,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     // if the second tag is just one part then it is in the same section as the first tag...
     val secondTag = rightSide match {
-      case SinglePart(wordsForUrl) => s"${firstTag.split("/")(0)}/$wordsForUrl"
+      case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
+      case SeriesInSameSection(series) => s"$section/$series"
       case other => other
     }
 
@@ -50,7 +52,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }.recover(suppressApiNotFound)
   }
 
-  def index(edition: Edition, path: String) = {
+  def index(edition: Edition, path: String)(implicit request: RequestHeader) = {
     ContentApi.item(path, edition)
       .pageSize(20)
       .showEditorsPicks(true)
@@ -82,13 +84,18 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id).take(20)
     tag map { IndexPage(_, allTrails) }
   }
+
+  // for some reason and for the life of me I cannot figure it out, this does not compile if these
+  // are at the top of the file :(
+  val SinglePart = """([\w\d\.-]+)""".r
+  val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
 }
 
 trait ImageQuery extends ConciergeRepository with QueryDefaults {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = ContentApi.item(path, edition)
+    val response = ElasticSearchContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response.map { response =>

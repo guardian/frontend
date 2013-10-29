@@ -25,12 +25,16 @@ object Frontend extends Build with Prototypes {
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
-      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
+      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
+
+      "org.apache.commons" % "commons-math3" % "3.2"
     )
   )
-  val commonWithTests = common % "test->test;compile->compile"
 
-  val front = application("front").dependsOn(commonWithTests).aggregate(common)
+  def withTests(project: Project) = project % "test->test;compile->compile"
+
+  val commonWithTests = withTests(common)
+
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
@@ -47,7 +51,6 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "org.imgscalr" % "imgscalr-lib" % "4.2",
       "org.im4java" % "im4java" % "1.4.0",
-      "commons-io" % "commons-io" % "2.0.1",
       "commons-lang" % "commons-lang" % "2.5"
     )
   )
@@ -89,6 +92,8 @@ object Frontend extends Build with Prototypes {
     )
   )
 
+  val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+
   val endtoend = application("fronts-endtoend-tests").settings(
     libraryDependencies ++= Seq(
       "org.slf4j" % "slf4j-api" % "1.7.5",
@@ -117,35 +122,24 @@ object Frontend extends Build with Prototypes {
     unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "test" / "resources")
   )
 
-  val dev = application("dev-build").dependsOn(
-    front,
-    facia,
-    article,
-    applications,
-    sport,
-    coreNavigation,
-    discussion,
-    router,
-    diagnostics,
-    identity,
-    admin)
-
-  val faciaDev = application("facia-dev-build").dependsOn(
-    facia,
-    article,
-    applications,
-    sport,
-    coreNavigation,
-    image,
-    discussion,
-    router,
-    diagnostics,
-    identity
-  )
+  val dev = application("dev-build")
+    .dependsOn(
+      withTests(article)
+    ).dependsOn(
+      facia,
+      applications,
+      sport,
+      coreNavigation,
+      discussion,
+      router,
+      diagnostics,
+      identity,
+      admin,
+      commercial
+    )
 
   val main = root().aggregate(
     common,
-    front,
     facia,
     article,
     applications,
@@ -157,6 +151,7 @@ object Frontend extends Build with Prototypes {
     diagnostics,
     admin,
     porter,
-    identity
+    identity,
+    commercial
   )
 }

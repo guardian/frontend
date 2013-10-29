@@ -13,7 +13,7 @@ define(['modules/detect', 'bonzo'], function(detect, bonzo) {
 
             expect(detect.getLayoutMode(100)).toBe('mobile');
 
-            expect(detect.getLayoutMode(732)).toBe('tablet');
+            expect(detect.getLayoutMode(768)).toBe('tablet');
 
             expect(detect.getLayoutMode(2000)).toBe('extended');
         });
@@ -99,6 +99,15 @@ define(['modules/detect', 'bonzo'], function(detect, bonzo) {
 
         it("should determine SVG support", function() {
             expect(detect.hasSvgSupport()).toBe(true);
+        });
+
+    });
+
+    describe("CSS support", function() {
+
+        it("should determine CSS support for any property", function() {
+            expect(detect.hasCSSSupport('position', 'relative', true)).toBe(true);
+            expect(detect.hasCSSSupport('position', 'sixtynine')).toBe(false);
         });
 
     });

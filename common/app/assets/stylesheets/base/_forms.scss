@@ -1,15 +1,6 @@
 /* Base form styles
    ========================================================================== */
 
-[type=checkbox] {
-    height: 13px;
-    margin-left: $baseline;
-    position: relative;
-    top: -2px;
-    vertical-align: bottom;
-    width: 13px;
-}
-
 .form {
     margin-top: $baseline*6;
     margin-bottom: $baseline*6;
@@ -21,10 +12,12 @@
     margin-right: 0;
 }
 
-.form__note {
+.form__note,
+.form-field__note {
     font-family: $sans-serif;
-    font-size: 12px;
-    font-size: 1.2rem;
+    font-size: 13px;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
 }
 
 .form-fields {
@@ -64,13 +57,6 @@
     margin-top: 6px;
 }
 
-.form-field__note {
-    font-family: $sans-serif;
-    font-size: 12px;
-    font-size: 1.2rem;
-    margin-bottom: 12px;
-}
-
 .form-field__note--below {
     margin-bottom: 0;
     margin-top: 6px;
@@ -82,7 +68,7 @@
 
 .form-field__note--right {
     float: right;
-    margin-left: $gutter;
+    margin-left: $gs-gutter;
 }
 
 .label {
@@ -94,22 +80,29 @@
     margin-bottom: 6px;
 }
 
-.text-input {
+.text-input,
+.textarea {
     border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
     color: #545454;
     display: inline-block;
     font-family: $sans-serif;
-    font-size: 14px;
-    font-size: 1.4rem;
+    font-size: 16px;
+    font-size: 1.6rem;
     line-height: 1.4;
     padding: 8px 8px 7px;
     @include rounded-corners(0);
     width: 100%;
+    -webkit-appearance: none;
 
     &:focus {
         border-color: $c-neutral2;
+    }
+
+    @include mq(tablet) {
+        font-size: 14px;
+        font-size: 1.4rem;
     }
 }
 
@@ -120,7 +113,7 @@
     cursor: pointer;
     font-size: 14px;
     font-size: 1.4rem;
-    margin: 0 $gutter 0 0;
+    margin: 0 $gs-gutter 0 0;
     min-width: gs-span(2);
     padding: 11px 0;
 
@@ -143,9 +136,18 @@
     font-family: $sans-serif;
     font-size: 13px;
     font-size: 1.3rem;
+    margin-bottom: $baseline;
+    padding-left: $gs-gutter;
 }
 
 .check-label--helper {
-    position: relative;
-    top: $baseline;
+    vertical-align: middle;
+}
+
+[type=checkbox] {
+    float: left;
+    height: 13px;
+    margin-left: -$gs-gutter;
+    margin-top: 3px;
+    width: 13px;
 }

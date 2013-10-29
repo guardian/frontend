@@ -3,42 +3,27 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/gallery-style',
-    'modules/experiments/tests/gallery-cta',
-    'modules/experiments/tests/swipe-ctas',
-    'modules/experiments/tests/expandable-mostpopular',
-    'modules/experiments/tests/right-hand-card',
     'modules/experiments/tests/live-blog-show-more',
-    'modules/experiments/tests/most-popular-from-facebook',
+    'modules/experiments/tests/alpha-adverts-data',
+    'modules/experiments/tests/commercial-components',
     'modules/experiments/tests/ultimate-paragraph-spacing'
 ], function (
     common,
     store,
 
-    ExperimentInlineLinkCard,
     Aa,
-    GalleryStyle,
-    GalleryCta,
-    SwipeCtas,
-    ExperimentExpandableMostPopular,
-    RightHandCard,
     LiveBlogShowMore,
-    MostPopularFromFacebook,
+    AlphaAdvertsData,
+    CommercialComponentsTest,
     UltimateParagraphSpacing
     ) {
 
     var TESTS = [
-            new ExperimentInlineLinkCard(),
             new Aa(),
-            new GalleryStyle(),
-            new GalleryCta(),
-            new SwipeCtas(),
-            new ExperimentExpandableMostPopular(),
-            new RightHandCard(),
             new LiveBlogShowMore(),
-            new MostPopularFromFacebook(),
+            new AlphaAdvertsData(),
+            new CommercialComponentsTest(),
             new UltimateParagraphSpacing()
         ],
         participationsKey = 'gu.ab.participations';

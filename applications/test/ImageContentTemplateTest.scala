@@ -1,10 +1,11 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import scala.collection.JavaConversions._
+import common.UsesElasticSearch
 
-class ImageContentTemplateTest extends FlatSpec with ShouldMatchers {
+class ImageContentTemplateTest extends FlatSpec with Matchers with UsesElasticSearch {
 
   it should "render a cartoon" in HtmlUnit("/commentisfree/cartoon/2013/jul/15/iain-duncan-smith-benefits-cap") {
     browser =>
@@ -19,13 +20,4 @@ class ImageContentTemplateTest extends FlatSpec with ShouldMatchers {
       $("h1").first.getText should be("Early erotica - a picture from the past")
       $("#article img").first.getAttribute("src") should endWith ("1381235669888/French-Nude-in-Body-Stock-010.jpg")
   }
-
-  ignore should "show the twitter card meta-data" in HtmlUnit("/artanddesign/picture/2013/oct/10/photography-chicago-fire") {
-    browser =>
-      import browser._
-      
-      $("meta[property='twitter:card']").getAttributes("content").head should be ("photo")
-      $("meta[property='twitter:image.src']").getAttributes("content").head should endWith ("1373927091862/Steve-Bell-cartoon-16.07.-001.jpg")
-  }
-  
 }

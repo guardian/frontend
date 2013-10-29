@@ -70,8 +70,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ophanApi {
-    lazy val key = configuration.getMandatoryStringProperty("ophan.api.key")
-    lazy val host = configuration.getMandatoryStringProperty("ophan.api.host")
+    lazy val key = configuration.getStringProperty("ophan.api.key")
+    lazy val host = configuration.getStringProperty("ophan.api.host")
     lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
@@ -162,9 +162,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object discussion {
-    lazy val apiRoot = configuration.getStringProperty("guardian.page.discussionApiRoot").getOrElse{
-          throw new IllegalStateException("no value for key guardian.page.discussionApiRoot")
-    }
+    lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
   }
 
   object javascript {
@@ -176,7 +175,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
       "idApiUrl" -> id.apiRoot,
       "idFacebookAppId" -> id.facebookAppId,
-      "idWebAppUrl" -> id.webappUrl
+      "idWebAppUrl" -> id.webappUrl,
+      "discussionApiRoot" -> discussion.apiRoot,
+      "discussionApiClientHeader" -> discussion.apiClientHeader
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))

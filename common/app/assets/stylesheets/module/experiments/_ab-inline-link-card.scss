@@ -2,8 +2,10 @@
    ========================================================================== */
 
 .furniture {
+    background-color: #ffffff;
     display: none;
 }
+
 .furniture--left {
     float: left;
     clear: left;
@@ -68,28 +70,22 @@
 }
 .card__meta {
     min-height: gs-height(1);
-    @include fs-data(2);
-    @include box-sizing(border-box);
 
     .dateline {
-        margin-bottom: 0;
-    }
-
-    .relative-timestamp {
         float: left;
-        color: $c-neutral2;
         position: relative;
-        padding: 0 $gs-gutter/2 0 16px;
+        padding: 0 $gs-gutter/2 0 18px;
         min-width: gs-span(1) - 16;
 
         i {
             position: absolute;
-            top: 0;
+            top: -1px;
             left: 0;
         }
     }
     .trail__count {
-        position: static;
+        position: relative;
+        top: -1px;
         float: left;
         color: $c-neutral2;
         margin-left: 4px;

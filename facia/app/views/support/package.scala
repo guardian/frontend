@@ -21,6 +21,7 @@ object FindStyle {
   val specificStyles: Map[String, Map[String, Style]] = Map(
     ("au", Map(
       ("au/news/regular-stories", Container(showMore = true)),
+      ("au/sport/australia-sport/regular-stories", Container(containerType = "sport", showMore = true)),
       ("au/sport/regular-stories", Container(containerType = "sport", showMore = true)),
       ("au/commentisfree/regular-stories", Container(containerType = "commentisfree", tone = "comment", showMore = true)),
       ("au/culture/regular-stories", Container(containerType = "culture", tone = "feature", showMore = true)),

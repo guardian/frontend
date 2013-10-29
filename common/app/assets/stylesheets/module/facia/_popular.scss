@@ -1,33 +1,53 @@
 .collection--popular {
     @include mq($to: tablet) {
+        counter-reset: popular;
+        .item__link {
+            border-top: 1px dotted $c-neutral5;
+        }
+        .item > * {
+            padding-left: 24px;
+        }
+        .item__title:before {
+            content: counter(popular) ".";
+            counter-increment: popular;
+            position: absolute;
+            left: 0;
+            color: $c-neutral2;
+        }
         @include first-row(1);
-        .item:first-child {
-            @include card($with-image: true);
+        .item:nth-child(-n+5) {
+            @include card-mobile;
+            .item__meta {
+                margin-top: $gs-baseline;
+            }
         }
-        .item:nth-child(2),
-        .item:nth-child(3) {
-            @include card;
+        .item:nth-child(n+2):nth-child(-n+5),{
+            .item__title {
+                @include fs-headline(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-headline(3, $size-only: true);
+                }
+            }
         }
-        .item:nth-child(n + 4) {
+        .item:nth-child(n+6) {
             @include card-headline;
+        }
+    }
+    @include mq(tablet, wide) {
+        .item {
+            @include card;
         }
     }
     @include mq(tablet, desktop) {
         @include row(2);
         .item:nth-child(-n+2) {
-            @include card($with-image: true);
-        }
-        .item:nth-child(n+3) {
-            @include card;
+            @include card-image;
         }
     }
     @include mq(desktop, wide) {
         @include row(3);
         .item:nth-child(-n+3) {
-            @include card($with-image: true);
-        }
-        .item:nth-child(n+4) {
-            @include card;
+            @include card-image;
         }
     }
     @include mq(wide) {
@@ -35,8 +55,7 @@
         .items {
             overflow: hidden;
         }
-        // stylings for beggining and end of rows
-        .item:first-child,
+        // stylings for begining and end of rows
         .item:nth-child(4n+4) {
             @include row-start;
         }
@@ -47,7 +66,6 @@
         }
         .item:first-child {
             @include card-triple-width;
-            float: left;
         }
         .item:nth-child(n+2) {
             @include card;

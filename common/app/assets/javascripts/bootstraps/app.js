@@ -1,3 +1,4 @@
+/*global guardian:true */
 define('bootstraps/app', [
     "qwery",
     "common",
@@ -9,8 +10,8 @@ define('bootstraps/app', [
     'modules/debug',
     "modules/router",
     "modules/detect",
+    'modules/discussion/api',
     "bootstraps/common",
-    "bootstraps/front",
     "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
@@ -21,8 +22,11 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
+    "bootstraps/facebook",
+    "bootstraps/section",
     "bootstraps/imagecontent",
-    "bootstraps/facebook"
+    "modules/id",
+    "modules/adverts/userAdTargeting"
 ], function (
     qwery,
     common,
@@ -34,8 +38,8 @@ define('bootstraps/app', [
     Debug,
     Router,
     Detect,
+    DiscussionApi,
     bootstrapCommon,
-    Front,
     Facia,
     Football,
     Article,
@@ -47,13 +51,21 @@ define('bootstraps/app', [
     pageConfig,
     Tag,
     ImageContent,
-    Facebook
+    Facebook,
+    Section,
+    ImageContent,
+    Id,
+    UserAdTargeting
 ) {
 
     var modules = {
 
         initialiseAjax: function(config) {
             ajax.init(config);
+        },
+
+        initialiseDiscussionApi: function(config) {
+            DiscussionApi.init(config);
         },
 
         attachGlobalErrorHandler: function (config) {
@@ -78,7 +90,7 @@ define('bootstraps/app', [
         },
 
         loadFonts: function(config, ua) {
-            if(config.switches.webFonts) {
+            if (config.switches.webFonts && !guardian.platformsGettingHintedFonts.test(ua)) {
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 var f = new Fonts(fontStyleNodes, fileFormat);
@@ -88,6 +100,14 @@ define('bootstraps/app', [
 
         showDebug: function () {
             new Debug().show();
+        },
+
+        initId : function (config) {
+            Id.init(config);
+        },
+
+        initUserAdTargeting : function () {
+            UserAdTargeting.requestUserSegmentsFromId();
         }
     };
 
@@ -99,10 +119,13 @@ define('bootstraps/app', [
                 contextHtml = context.cloneNode(false).innerHTML;
 
             modules.initialiseAjax(config);
+            modules.initialiseDiscussionApi(config);
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
+            modules.initId(config);
+            modules.initUserAdTargeting();
 
             var pageRoute = function(config, context, contextHtml) {
 
@@ -111,11 +134,9 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context, contextHtml);
 
-                // Fronts
-                if (qwery('.facia-container').length) {
+                // Front
+                if (config.page.isFront) {
                     Facia.init(config, context);
-                } else if (config.page.isFront){
-                    Front.init(config, context);
                 }
 
                 //Football
@@ -143,6 +164,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Tag") {
                     Tag.init(config, context);
+                }
+
+                if (config.page.contentType === "Section" && !config.page.isFront) {
+                    Section.init(config, context);
                 }
 
                 if (config.page.section === "identity") {

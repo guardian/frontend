@@ -1,3 +1,4 @@
+/*global Imager:true */
 define([
     //Commmon libraries
     'common',
@@ -18,7 +19,6 @@ define([
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/toggles',
     'modules/relativedates',
@@ -35,7 +35,8 @@ define([
     "modules/discussion/commentCount",
     "modules/lightbox-gallery",
     "modules/swipe/ears",
-    "modules/swipe/bar"
+    "modules/swipe/bar",
+    "modules/facia/images"
 ], function (
     common,
     ajax,
@@ -56,7 +57,6 @@ define([
     Sections,
     Search,
 
-    EditionSwitch,
     Tabs,
     Toggles,
     RelativeDates,
@@ -73,12 +73,15 @@ define([
     CommentCount,
     LightboxGallery,
     ears,
-    SwipeBar
+    SwipeBar,
+    faciaImages
 ) {
 
     var modules = {
 
         upgradeImages: function () {
+            faciaImages.upgrade();
+
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
@@ -95,12 +98,10 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var toggles = new Toggles(),
-                topStories = new TopStories(),
+             var topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                editions = new EditionSwitch(),
-                header = document.body,
+                header = document.getElementById('header'),
                 profile;
 
             if (config.switches.idProfileNavigation) {
@@ -110,14 +111,9 @@ define([
                 profile.init();
             }
 
-            sections.init(header);
-            toggles.init(header);
+            sections.init(document);
             topStories.load(config, header);
             search.init(header);
-
-            common.mediator.on('page:common:ready', function(){
-                toggles.reset();
-            });
         },
 
         transcludeRelated: function () {
@@ -128,9 +124,7 @@ define([
 
         transcludePopular: function () {
             common.mediator.on('page:common:ready', function(config, context) {
-                if('abExpandableMostPopular' in config.switches && !config.switches.abExpandableMostPopular) {
-                    popular(config, context);
-                }
+                popular(config, context);
             });
         },
 
@@ -143,8 +137,9 @@ define([
 
         showToggles: function() {
             var toggles = new Toggles();
+            toggles.init(document);
             common.mediator.on('page:common:ready', function(config, context) {
-                toggles.init(context);
+                toggles.reset();
             });
         },
 
@@ -243,16 +238,6 @@ define([
                             viewData.experiments_json = JSON.stringify(testData);
                         }
 
-                        // nb, only needed while running both facia and old fronts
-                        // add extra data if 'facia'
-                        if (config.page.isFront === true) {
-                            viewData.platformVariant = ((config.page.isFacia === true) ? 'Facia' : 'Fronts') + '-application';
-                        }
-                        // also check if facia styled section or tag page
-                        else if (['Section', 'Tag'].indexOf(config.page.contentType) !== -1) {
-                            viewData.platformVariant = ((context.querySelector('.facia-container')) ? 'Facia' : 'Fronts') + '-application';
-                        }
-
                         return viewData;
                     });
 
@@ -295,7 +280,7 @@ define([
         },
 
         cleanupCookies: function() {
-            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid", 'GU_ABFACIA', 'GU_FACIA']);
         },
 
         // opt-in to the responsive alpha
@@ -303,21 +288,6 @@ define([
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
                 Cookies.add("GU_VIEW", "mobile", 365);
-                Cookies.add("GU_ABFACIA", 'true', 5);
-            }
-        },
-
-        // toggle in/out of facia
-        faciaToggle: function () {
-            var faciaToggle = /#facia-opt-(.*)/.exec(window.location.hash);
-            if (faciaToggle) {
-                var cookieName = 'GU_ABFACIA';
-                var expiryDays = 5;
-                if (faciaToggle[1] === 'in') {
-                    Cookies.add(cookieName, 'true', expiryDays);
-                } else {
-                    Cookies.add(cookieName, 'false', expiryDays);
-                }
             }
         },
 
@@ -398,12 +368,12 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
-            modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             if (config.switches.analyticsOnDomReady) {
@@ -413,7 +383,6 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
-            modules.faciaToggle();
             modules.displayReleaseMessage(config);
         }
         common.mediator.emit("page:common:ready", config, context);
