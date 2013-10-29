@@ -288,8 +288,22 @@ module.exports = function (grunt) {
 
         concat: {
             imager: {
-                src: ['common/app/assets/javascripts/components/imager.js/src/**/*.js'],
+                src: [
+                    'common/app/assets/javascripts/components/imager.js/src/imager.js',
+                    'common/app/assets/javascripts/components/imager.js/src/strategies/container.js'
+                ],
                 dest: staticTargetDir + 'javascripts/vendor/imager.js'
+            }
+        },
+
+        uglify: {
+            vendor: {
+                files: [{
+                    expand: true,
+                    cwd: staticTargetDir + 'javascripts/vendor/',
+                    src: '**/*.js',
+                    dest: staticTargetDir + 'javascripts/vendor/'
+                }]
             }
         },
 
@@ -576,6 +590,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
@@ -583,7 +598,7 @@ module.exports = function (grunt) {
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
-    grunt.registerTask('compile:js', ['clean:js', 'copy:js', 'concat:imager', 'requirejs:compile']);
+    grunt.registerTask('compile:js', ['clean:js', 'copy:js', 'concat:imager', 'uglify:vendor', 'requirejs:compile']);
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', [
