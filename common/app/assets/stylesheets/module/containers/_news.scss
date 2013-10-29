@@ -1,5 +1,6 @@
 .collection--news {
     @include mq($to: tablet) {
+        @include first-row(1);
         .item:first-child {
             @include card-mobile($with-image: true);
         }

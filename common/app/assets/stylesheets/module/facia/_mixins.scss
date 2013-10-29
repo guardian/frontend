@@ -4,11 +4,6 @@
         .item__link {
             border-top-style: none;
         }
-        .responsive-img,
-        .connection--low & .item__title,
-        &.item--has-no-image .item__title {
-            margin-top: 0;
-        }
     }
 }
 @mixin row-start {
@@ -37,7 +32,6 @@ $mobileMetaSpace: 14px;
 @mixin card-mobile($with-image: false) {
     padding-bottom: $mobileMetaSpace;
     .item__title {
-        margin-top: $gs-baseline*(2/3);
         @include fs-headline(3, $size-only: true);
     }
     @include mq(mobileLandscape) {
@@ -46,12 +40,6 @@ $mobileMetaSpace: 14px;
         }
         .item__standfirst {
             @include fs-headline(2, $size-only: true);
-        }
-    }
-    .connection--low &,
-    &.item--has-no-image {
-        .item__title {
-            margin-top: 2px;
         }
     }
     @if $with-image {
@@ -63,6 +51,9 @@ $mobileMetaSpace: 14px;
     .connection--low & .item__standfirst,
     &.item--has-no-image .item__standfirst {
         display: block;
+    }
+    .connection--not-low & .item__title {
+        margin-top: $gs-baseline*(2/3);
     }
 }
 @mixin card-headline {
