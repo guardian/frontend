@@ -171,6 +171,10 @@ object Switches extends Collections {
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = Off)
 
+  val FollowItemRedirectsFromApiSwitch = Switch("Feature Switches", "follow-item-redirects",
+    "If this switch is on then content api redirects on items will be sent back to the end user.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -280,6 +284,7 @@ object Switches extends Collections {
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
     ABAlphaAdvertsData,
+    FollowItemRedirectsFromApiSwitch,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch
   )
