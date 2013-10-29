@@ -71,7 +71,7 @@ Component.prototype.attachTo = function(elem) {
 Component.prototype.render = function(parent) {
     var conf = this.conf(),
         template = bonzo.create(document.getElementById('tmpl-'+ conf.templateName).innerHTML)[0],
-        container = parent || document;
+        container = parent || document.body;
 
     this.elems = {};
     bonzo(container).append(template);
