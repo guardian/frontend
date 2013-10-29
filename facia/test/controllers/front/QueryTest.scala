@@ -11,6 +11,7 @@ import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import play.api.libs.ws.Response
+import conf.ContentApi
 
 class CustomException(message: String) extends Exception(message)
 
@@ -51,7 +52,7 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
 
   "Query" should "start with minimal contents depending on id" in Fake {
     def defaultTuple(id: String): (Config, Collection) =
-      (Config("%s/%s".format(id, "regular-stories"), Some(FaciaDefaults.generateContentApiQuery(id)), None), Collection(Nil))
+      (Config("%s/%s".format(id, "regular-stories"), Some(ContentApi.FaciaDefaults.generateContentApiQuery(id)), None), Collection(Nil))
 
     val query = new FailingConfigQuery("uk")
     query.queryAgent() should be (Some(List(defaultTuple("uk"))))
