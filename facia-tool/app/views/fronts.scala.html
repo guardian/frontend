@@ -172,45 +172,53 @@
 
     <script type="text/html" id="template_article">
         <div class="trail u-cf" data-bind="
-            attr: {'data-url': meta.id},
+            attr: {'data-url': props.id},
             css: {
                 underDrag: state.underDrag,
                 redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false
             }">
 
-            <div class="trail_tweaks u-cf" data-bind="visible: state.editingConfig">
-                <div>
-                    Headline override:
-                    <input type="text" data-bind="value: config.webTitle"/>
-                </div>
-                <input type="submit" class="btn" value="Save" data-bind="click: $parent.saveItemConfig"/>
-                <button class="btn" value="Cancel" data-bind="click: $parent.forceRefresh">Cancel</button>
-            </div>
-
-            <a target="article" data-bind="attr: {href: 'http://www.theguardian.com/' + meta.id()}">
+            <a target="article" data-bind="attr: {href: 'http://www.theguardian.com/' + props.id()}">
                 <img data-bind="attr: {src: fields.thumbnail}" draggable="false" />
             </a>
 
-            <div class="trail__remove" data-bind="click: $parent.dropItem">
-                <i class="icon-trash icon-white"></i>
+            <div data-bind="visible: !state.editingTitle()">
+                <div class="trail__remove" data-bind="click: $parent.dropItem">
+                    <i class="icon-trash icon-white"></i>
+                </div>
+
+                <a class="trail_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
+                    <div class="pageviews" data-bind="if: totalHitsFormatted(), text: totalHitsFormatted"></div>
+                    <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
+                </a>
+
+                <div class="trail__meta">
+                    <span data-bind="html: humanDate"></span>
+                </div>
             </div>
 
-            <a class="trail_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">
-                <div class="pageviews" data-bind="if: totalHitsFormatted(), text: totalHitsFormatted"></div>
-                <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
-            </a>
-
-            <!-- ko if: (config.webTitle() && (meta.webTitle() !== config.webTitle())) -->
-            <span class="webTitle webTitle--override" data-bind="html: config.webTitle"></span>
+            <!-- ko if: state.editingTitle -->
+            <div class="trail_tweaks u-cf">
+                <input type="text" data-bind="
+                    value: webTitleInput,
+                    attr: {placeholder: props.webTitle}"/>
+                <div>
+                    <a data-bind="click: saveTitleEdit">Save Title</a>
+                    <a data-bind="click: cancelTitleEdit">Cancel</a>
+                    <a data-bind="
+                        click: revertTitleEdit,
+                        attr: {title: props.webTitle},
+                        visible: meta.webTitle">Revert</a>
+                </div>
+            </div>
             <!-- /ko -->
 
             <a class="webTitle" target="article" data-bind="
-                html: meta.webTitle,
-                attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
-
-            <div class="trail__meta">
-                <span data-bind="html: humanDate"></span>
-            </div>
+                attr: {href: 'http://www.theguardian.com/' + props.id()},
+                html: meta.webTitle() || props.webTitle(),
+                css: {'webTitle--override': meta.webTitle},
+                click: startTitleEdit,
+                visible: !state.editingTitle()"></a>
 
         </div>
     </script>

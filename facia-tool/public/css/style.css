@@ -13,6 +13,10 @@ body {
               user-select: none;
 }
 
+a {
+    cursor: pointer;
+}
+
 fieldset,
 input[type=text] {
     -moz-box-sizing: border-box;
@@ -118,7 +122,7 @@ h1 span {
 
 .list-header__saving  {
     float: right;
-    color: #CCCCCC;
+    color: #d61d00;
     font-size: 12px;
 }
 
@@ -198,7 +202,7 @@ h1 span {
 }
 
 .trail .webTitle--override {
-    color: #f89406;
+    color: #0088cc;
 }
 
 .trail .trail__meta {
@@ -234,13 +238,35 @@ h1 span {
 }
 
 .trail_tweaks {
-    clear: both;
-    margin: 0 0 10px 0;
+    margin: 0 0 0 80px;
+    color: #CCCCCC;
+}
+
+.trail_tweaks input {
+    z-index: 99;
+    background: #eeeeee;
+    width: 100%;
+
+}
+
+.trail_tweaks a {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 13px;
+    padding: 0 1px 0 6px;
+    border-left: 1px solid #CCCCCC;
+}
+
+.trail_tweaks a:first-child {
+    font-weight: bold;
+    border-left: none;
 }
 
 input[type="text"] {
-    margin: 2px 0;
+    margin: 2px 0 0 0;
+    padding: 1px 5px;
     background: #ffffff;
+    color: #000000;
 }
 
 select {
