@@ -130,7 +130,6 @@ $c-live: #e81818;
     @include f-headline;
 }
 .item__title {
-    @include box-sizing(border-box);
     margin-top: 2px;
     @include fs-headline(2, $size-only: true);
 }
