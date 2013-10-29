@@ -53,7 +53,6 @@ define('bootstraps/app', [
     ImageContent,
     Facebook,
     Section,
-    ImageContent,
     Id,
     UserAdTargeting
 ) {
