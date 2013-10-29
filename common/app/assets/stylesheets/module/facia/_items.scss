@@ -101,7 +101,6 @@ $c-live: #e81818;
 .item__image-container {
     display: none;
     position: relative;
-    overflow: hidden;
     .connection--not-low & {
         padding-bottom: 60%;
     }

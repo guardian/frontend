@@ -14,7 +14,7 @@ define([
                 var breakpointOptions = {
                     wide: {
                         default: 4,
-                        news: 9,
+                        news: 5,
                         sport: 9,
                         commentisfree: 5,
                         culture: 5,
@@ -22,7 +22,7 @@ define([
                     },
                     desktop: {
                         default: 3,
-                        news: 6,
+                        news: 5,
                         sport: 6,
                         commentisfree: 3,
                         culture: 3
@@ -48,7 +48,7 @@ define([
             _getShowMoreSize = function() {
                 return {
                     wide: 8,
-                    desktop: 6,
+                    desktop: 8,
                     tablet: 6,
                     mobile: 5
                 }[detect.getBreakpoint()];

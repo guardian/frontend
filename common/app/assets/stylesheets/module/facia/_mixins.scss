@@ -32,23 +32,6 @@
         @include row-end;
     }
 }
-$metaSpace: 20px;
-@mixin card($with-image: false) {
-    width: gs-span(3);
-    min-height: gs-height(3) - $metaSpace;
-    padding-bottom: $metaSpace;
-    @if $with-image {
-        @include card-mobile;
-    }
-}
-@mixin card-image {
-    min-height: gs-height(6) - $metaSpace;
-    .item__image-container,
-    .connection--low & .item__standfirst,
-    &.item--has-no-image .item__standfirst {
-        display: block;
-    }
-}
 @mixin card-mobile($with-image: false) {
     .item__title {
         margin-top: $gs-baseline*(2/3);
@@ -136,16 +119,50 @@ $metaSpace: 20px;
         display: block;
     }
 }
+
+$metaSpace: 20px;
+@mixin card($with-image: false) {
+    @include mq($to: wide) {
+        width: gs-span(3);
+        min-height: gs-height(3) - $metaSpace;
+    }
+    @include mq(wide) {
+        width: gs-span(4);
+        min-height: gs-height(4) - $metaSpace;
+    }
+    padding-bottom: $metaSpace;
+    @if $with-image {
+        @include card-mobile;
+    }
+}
+@mixin card-image {
+    @include mq($to: wide) {
+        min-height: gs-height(6) - $metaSpace;
+    }
+    @include mq(wide) {
+        min-height: gs-height(8) - $metaSpace;
+    }
+    .item__image-container,
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
+        display: block;
+    }
+}
 @mixin card-double-width {
-    width: gs-span(6);
-    min-height: gs-height(9);
     float: left;
+    @include mq($to: wide) {
+        width: gs-span(6);
+        min-height: gs-height(9);
+    }
+    @include mq(wide) {
+        width: gs-span(8);
+        min-height: gs-height(12);
+    }
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
-    &.item--image-upgraded .item__title {
+    .connection--not-low &.item--has-image .item__title {
         margin-top: $gs-baseline;
-        min-height: 118px;
     }
     .item__image-container,
     .connection--low & .item__standfirst,

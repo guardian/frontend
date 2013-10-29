@@ -9,6 +9,7 @@
                         case Masthead           => { @collections.masthead(block._1, dedupe(4, block._2), Masthead, index) }
                         case style: Container   => { @collections.container(front, block._1,  dedupe(block._2), style, index) }
                         case style: SectionZone => { @collections.sectionZone(block._1,  dedupe(block._2), style, index) }
+                        case style: News        => { @collections.news(block._1,  dedupe(block._2), style, index) }
                         case style              => { @collections.masthead(block._1,  dedupe(block._2), style, index) }
                     }
                 }
