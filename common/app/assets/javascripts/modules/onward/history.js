@@ -47,10 +47,9 @@ define([
     };
 
     History.prototype.capToSize = function(desiredSize) {
-        var size = this.getSize(),
-            overflow = -Math.abs(desiredSize - size);
-
-        return (size > desiredSize) ? this.get().slice(0, overflow) : this.get();
+        var arr = this.get();
+        if (arr.length > desiredSize) { arr.length = desiredSize; }
+        return arr;
     };
 
     History.prototype.log = function(item) {
