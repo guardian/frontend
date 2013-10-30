@@ -10,68 +10,57 @@ define([
     storage
     ) {
 
-    var history = {};
+    var HistoryItem = function(item) {
+        this.id = item.id;
+        this.timestamp = Date.now();
+        common.extend(this, item.meta);
+        return this;
+    };
 
-    history.CONFIG = {
+    var History = function(config) {
+        this.config = common.extend(this.DEFAULTS, config);
+        return this;
+    };
+
+    History.prototype.DEFAULTS = {
         storageKey: 'gu.history',
         maxSize: 100
     };
 
-    history.set = function(data) {
-        return storage.set(history.CONFIG.storageKey, data);
+    History.prototype.set = function(data) {
+        return storage.set(this.config.storageKey, data);
     };
 
-    history.get = function() {
-        var hist = storage.get(history.CONFIG.storageKey);
+    History.prototype.get = function() {
+        var hist = storage.get(this.config.storageKey);
         return (hist === null) ? [] : hist;
     };
 
-    history.getSize = function() {
-        return history.get().length;
+    History.prototype.getSize = function() {
+        return this.get().length;
     };
 
-    history.contains = function(id) {
-        return history.get().indexOf(id) !== -1;
+    History.prototype.contains = function(id) {
+        return this.get().some(function(el) {
+            return el.id === id;
+        });
     };
 
-    history.capToSize = function(hist, desiredSize) {
-        var size = hist.length,
+    History.prototype.capToSize = function(desiredSize) {
+        var size = this.getSize(),
             overflow = -Math.abs(desiredSize - size);
 
-        return (size > desiredSize) ? hist.slice(0, overflow) : hist;
+        return (size > desiredSize) ? this.get().slice(0, overflow) : this.get();
     };
 
-    history.store = function(id) {
-        var hist = history.capToSize(history.get(), history.CONFIG.maxSize - 1);
+    History.prototype.log = function(item) {
+        var hist = this.capToSize(this.config.maxSize -1),
+            newItem = new HistoryItem(item);
 
-        hist.unshift(id);
-        history.set(hist);
+        hist.unshift(newItem);
+        this.set(hist);
     };
 
-    history.queueJump = function(id) {
-        var hist = history.get(),
-            index = hist.indexOf(id);
-
-        hist.splice(index, 1);
-        hist.unshift(id);
-        history.set(hist);
-    };
-
-    history.log = function(id) {
-        if(!/\/p\/\w*/g.test(id)) {
-            common.mediator.emit("error", "Article id did not match short URL", "modules/history.js");
-        }
-
-        if(history.contains(id)) {
-            history.queueJump(id);
-        } else {
-            history.store(id);
-        }
-    };
-
-    return {
-        get: history.get,
-        log: history.log
-    };
+    return History;
 
 });
