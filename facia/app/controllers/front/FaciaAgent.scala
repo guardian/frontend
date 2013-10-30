@@ -96,8 +96,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
             val bodyJson = parse(r.body)
 
             // extract the articles
-            val articles: Seq[String] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              (trail \ "id").as[String]
+            val articles: Seq[(String, Option[String])] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
+              ((trail \ "id").as[String], (trail \ "meta" \ "webTitle").asOpt[String])
             }
 
             getArticles(articles, edition)
@@ -118,19 +118,21 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
   }
 
-  def getArticles(articles: Seq[String], edition: Edition): Future[List[Content]] = {
-    if (articles.isEmpty) {
+  def getArticles(idAndWebTitle: Seq[(String, Option[String])], edition: Edition): Future[List[Content]] = {
+    if (idAndWebTitle.isEmpty) {
       Future(Nil)
     }
     else {
-      val results = articles.foldLeft(Future[List[Content]](Nil)){(foldList, id) =>
+      val results = idAndWebTitle.foldLeft(Future[List[Content]](Nil)){(foldList, tuple) =>
+        val id = tuple._1
+        val webTitle = tuple._2
         val response = ContentApi.item(id, edition).showFields("all").response
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
         for {l <- foldList; itemResponse <- response} yield {
-          itemResponse.content.map(Content(_)).map(_ +: l).getOrElse(l)
+          itemResponse.content.map(Content(_, webTitle)).map(_ +: l).getOrElse(l)
         }
       }
-      val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
+      val sorted = results map { _.sortBy(t => idAndWebTitle.indexWhere(_._1 == t.id))}
       sorted
     }
   }
