@@ -202,11 +202,21 @@ module.exports = function (grunt) {
                     'cd tools/sprites/',
                     'node spricon.js global-icon-config.json'
                 ].join('&&'),
-
                 options: {
                     stdout: true,
                     stderr: true,
                     failOnError: true
+                }
+            },
+            /**
+             * Using this task to copy hooks, as Grunt's own copy task doesn't preserve permissions
+             */
+            copyHooks: {
+                command: 'cp git-hooks/pre-commit .git/hooks/',
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: false
                 }
             }
         },
@@ -253,6 +263,10 @@ module.exports = function (grunt) {
                     dest: 'common/conf/assets'
                 }]
             },
+            /**
+             * NOTE: not using this as doesn't preserve file permissions (using shell:copyHooks instead)
+             * Waiting for Grunt 0.4.3 - https://github.com/gruntjs/grunt/issues/615
+             */
             hooks: {
                 files: [{
                     expand: true,
@@ -318,6 +332,7 @@ module.exports = function (grunt) {
                 keepRunner: true,
                 vendor: [
                     'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/call.js',
                     'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
                     'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
                     'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
@@ -630,6 +645,6 @@ module.exports = function (grunt) {
     grunt.registerTask('analyse', ['analyse:css']);
 
     // Miscellaneous task
-    grunt.registerTask('hookmeup', ['clean:hooks', 'copy:hooks']);
+    grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:upload']);
 };

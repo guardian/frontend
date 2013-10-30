@@ -36,7 +36,7 @@ trait CloudWatch {
     ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
-  lazy val cloudClient = {
+  private lazy val cloudClient = {
     val c = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
     c.setEndpoint("monitoring.eu-west-1.amazonaws.com")
     c
@@ -96,6 +96,17 @@ trait CloudWatch {
     )
   }.toSeq
 
+  // charges are only available from the 'default' region
+  private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+  def cost = new CostMetric(defaultCloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+    .withNamespace("AWS/Billing")
+    .withMetricName("EstimatedCharges")
+    .withStartTime(new DateTime().toLocalDate.toDate)
+    .withEndTime(new DateTime().toDate)
+    .withStatistics("Maximum")
+    .withPeriod(60 * 60 * 24)
+    .withDimensions(new Dimension().withName("Currency").withValue("USD")), asyncHandler))
+
   def fastlyHitMissStatistics = fastlyHitMissMetrics.map{ case (graphTitle, region, service) =>
     new FastlyHitMissGraph( graphTitle,
 
@@ -132,6 +143,11 @@ trait CloudWatch {
     def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult )
     {
     }
+  }
+
+  def shutdown() {
+    cloudClient.shutdown()
+    defaultCloudClient.shutdown()
   }
 }
 

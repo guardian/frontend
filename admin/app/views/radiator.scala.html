@@ -1,4 +1,5 @@
-@(charts: Seq[tools.Chart], hitMissCharts: Seq[tools.Chart], env: String)
+@(charts: Seq[tools.Chart], hitMissCharts: Seq[tools.Chart], cost: tools.CostMetric, env: String)
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,9 +11,10 @@
         <script src="https://www.google.com/jsapi"></script>
   </head>
   <body>
-  
+
         <header>
             <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
+            <div class="cost"><strong>$@cost.cost</strong> this month</div>
         </header>
 
         <div class="pingdom-wrapper">
