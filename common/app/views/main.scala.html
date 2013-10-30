@@ -1,5 +1,10 @@
 @(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 
+@*<!--
+Identity pages use identityMain.scala.html, most of which is shared fragments,
+be sure to apply any necessary changes to non-shared code there too.
+-->*@
+
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">
 <head>

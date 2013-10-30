@@ -1,0 +1,31 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Imager.js</title>
+        <link rel="stylesheet" href="Assets/Styles/base.css">
+    </head>
+    <body>
+        <h1>Imager.js</h1>
+        <p>Here we're using Grunt to generate a list of image sizes for us.</p>
+        <p>We then pass those sizes into Imager</p>
+
+        <div class="delayed-image-load" data-src="Assets/Images/Generated/A-{width}.jpg" data-width="1024"></div>
+        <div class="delayed-image-load" data-src="Assets/Images/Generated/B-{width}.jpg" data-width="1024"></div>
+        <div class="delayed-image-load" data-src="Assets/Images/Generated/C-{width}.jpg" data-width="1024"></div>
+
+        <script src="../src/imager.js"></script>
+        <script src="../src/strategies/replacer.js"></script>
+        <script>
+            var elements = document.querySelectorAll('.delayed-image-load'),
+                imager = Imager.init(elements, {
+                    availableWidths: [320, 640, 1024]
+                }),
+                replace = (function(imgr){ return function(){ imgr.process(); }; })(imager);
+
+            window.addEventListener('resize', replace);
+            window.addEventListener('orientationchange', replace);
+        </script>
+    </body>
+</html>

@@ -18,7 +18,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
   val imageAsset = ImageAsset(asset, 1)
 
-  val image = ImageContainer(Seq(imageAsset), null) // yep null, sorry but the tests don't need it
+  val image = ImageContainer(Seq(imageAsset), null, imageAsset.index) // yep null, sorry but the tests don't need it
 
   "ImgSrc" should "convert the URL of the image to the resizing endpoint" in {
 
@@ -40,7 +40,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
     ImageServerSwitch.switchOn()
 
-    val gifImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), null)
+    val gifImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), null, 0)
     GalleryLargeTrail.bestFor(gifImage) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
 
   }
@@ -49,7 +49,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
     ImageServerSwitch.switchOn()
 
-    val someoneElsesImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), null)
+    val someoneElsesImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), null, 0)
     GalleryLargeTrail.bestFor(someoneElsesImage) should be (Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
 
   }

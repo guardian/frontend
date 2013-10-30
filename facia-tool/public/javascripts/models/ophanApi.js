@@ -12,7 +12,7 @@ function (
 ){
     function decorateItems(items) {
         items.slice(0, 50).forEach(function(item, index){
-            var id = item.meta.id(),
+            var id = item.props.id(),
                 data;
 
             if (!id) { return; }
@@ -87,7 +87,7 @@ function (
     }
 
     function fetchData(id) {
-        return authedAjax({
+        return authedAjax.request({
             url: '/ophan/pageviews/' + id
         }).then(function (resp) {
             _.each(resp.seriesData, function(s){

@@ -5,8 +5,8 @@ define([
     'qwery',
     'modules/detect',
     'modules/relativedates',
-    'modules/facia/image-upgrade'
-], function (common, bonzo, bean, qwery, detect, relativeDates, ImageUpgrade) {
+    'modules/facia/images'
+], function (common, bonzo, bean, qwery, detect, relativeDates, faciaImages) {
 
     return function(items) {
 
@@ -40,7 +40,7 @@ define([
                         sport: 5,
                         commentisfree: 3,
                         culture: 3,
-                        popular: 3
+                        popular: 5
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
@@ -86,7 +86,7 @@ define([
             };
 
         this.addShowMore = function() {
-            var $items = bonzo(items),
+            var $items = bonzo(items).removeClass('js-items--show-more'),
                 extraItems = bonzo.create(
                     common.$g('.collection--template', items).html()
                 ),
@@ -104,9 +104,10 @@ define([
             bonzo(extraItems.splice(0, initalShowSize - qwery('.item', items).length))
                 .appendTo($items)
                 .each(function(item) {
-                    new ImageUpgrade(item).upgrade();
                     relativeDates.init(item);
                 });
+
+            faciaImages.upgrade($items[0]);
 
             // add toggle button, if they are extra items left to show
             if (extraItems.length) {

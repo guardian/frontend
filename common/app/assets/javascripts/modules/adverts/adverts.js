@@ -3,6 +3,7 @@ define([
     'domwrite',
     'qwery',
     'bonzo',
+    'ajax',
 
     'modules/userPrefs',
     'modules/detect',
@@ -19,6 +20,7 @@ function (
     domwrite,
     qwery,
     bonzo,
+    ajax,
 
     userPrefs,
     detect,
@@ -86,7 +88,6 @@ function (
     }
 
     function loadAds() {
-
         domwrite.capture();
 
         //Run through adslots and check if they are on screen. Load if so.

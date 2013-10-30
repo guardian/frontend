@@ -4,8 +4,9 @@
         .item__link {
             border-top-style: none;
         }
-        .item__image-container,
-        &.item--no-image .item__title {
+        .responsive-img,
+        .connection--low & .item__title,
+        &.item--has-no-image .item__title {
             margin-top: 0;
         }
     }
@@ -40,7 +41,8 @@
 @mixin card-image {
     min-height: gs-height(8);
     .item__image-container,
-    &.item--no-image .item__standfirst {
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
         display: block;
     }
 }
@@ -57,7 +59,8 @@
             @include fs-headline(2, $size-only: true);
         }
     }
-    &.item--no-image .item__title {
+    .connection--low & .item__title,
+    &.item--has-no-image .item__title {
         margin-top: 2px;
     }
     .item__meta {
@@ -69,7 +72,8 @@
 }
 @mixin card-mobile-image {
     .item__image-container,
-    &.item--no-image .item__standfirst {
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
         display: block;
     }
 }
@@ -120,7 +124,7 @@
     }
 }
 @mixin card-half-width-image {
-    &.item--no-image .item__title {
+     .connection--not-low &.item--has-no-image .item__title {
         min-height: 186px
     }
     .item__image-container {
@@ -135,11 +139,9 @@
         @include fs-headline(7, $size-only: true);
     }
     .item__image-container,
-    &.item--no-image .item__standfirst {
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
         display: block;
-    }
-    &.item--image-upgraded .item__image-container{
-        height: gs-height(8);
     }
     .item__live-indicator {
         @include fs-data(6, true);
@@ -151,7 +153,8 @@
     min-height: gs-height(8);
     float: left;
     border-left: none;
-    &.item--image-upgraded {
+    padding-left: 0;
+    .connection--not-low &.item--has-image {
         width: gs-span(4);
         padding-left: gs-span(8) + $gs-gutter;
     }
@@ -162,12 +165,12 @@
     .item__standfirst {
         display: block;
     }
-    &.item--image-upgraded .item__image-container {
-        height: 100%;
+    .connection--not-low & .item__image-container {
         width: gs-span(8);
+        height: gs-height(8);
         position: absolute;
         top: 0;
         left: 0;
-        margin: 0 auto;
+        padding-bottom: 0;
     }
 }

@@ -20,11 +20,11 @@
 "use strict";
 
 	// local css file
-	curl(['css!stuff/base.css', 'domReady!']).then(
+	curl(['css!stuff/base.css']).then(
 		function () {
+			var testEl = document.getElementById('test-rules-applied');
 			write('SUCCESS! loaded local css file.');
-			// TODO: we need a better test than this:
-			if (document.body.offsetHeight - document.body.clientHeight > 0) {
+			if (testEl.offsetHeight == 273) {
 				write('SUCCESS! applied rules from css file.');
 			}
 			else {
@@ -111,5 +111,6 @@
 <div id="test-cascade-parent">
 	<p id="test-cascade">test element</p>
 </div>
+<div id="test-rules-applied"></div>
 </body>
 </html>

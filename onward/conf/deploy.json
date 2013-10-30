@@ -1,0 +1,28 @@
+{
+    "packages":{
+        "frontend-onward":{
+            "type":"autoscaling",
+            "apps":[ "frontend::onward" ],
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        }
+    },
+    "recipes":{
+        "default":{
+            "depends" : ["artifactUpload", "deploy"]
+        },
+        "deploy":{
+            "actionsBeforeApp": ["frontend-onward.deploy"]
+        },
+        "artifactUpload":{
+            "actionsBeforeApp": ["frontend-onward.uploadArtifacts"]
+        }
+    }
+}

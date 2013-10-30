@@ -14,8 +14,7 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
                 hidden: 'Show',
                 displayed: 'Hide'
             },
-            _initialState = 'displayed',
-            _dataAttr = 'data-toggle-state',
+            _state = 'displayed',
             _updatePref = function($collection, state) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName),
@@ -44,18 +43,17 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
         this.addToggle =  function () {
             // append toggle button
             _$collection
-                .attr(_dataAttr, _initialState)
-                .prepend(_$button);
+                .prepend(_$button)
+                .removeClass('js-collection--display-toggle');
             // listen to event
             bean.on(_$button[0], 'click', function(e) {
-                var newState = (_$collection.attr(_dataAttr) === 'displayed') ? 'hidden' : 'displayed';
-                _$collection
-                    [newState === 'displayed' ? 'removeClass' : 'addClass']('collection--rolled-up')
-                    .attr(_dataAttr, newState);
+                _state = (_state === 'displayed') ? 'hidden' : 'displayed';
+                // add/remove rolled class
+                _$collection[_state === 'displayed' ? 'removeClass' : 'addClass']('collection--rolled-up');
                 // data-link-name is inverted, as happens before clickstream
-                _$button.attr('data-link-name', _toggleText[newState === 'displayed' ? 'hidden' : 'displayed']);
-                common.$g('.collection__display-toggle__text', _$button[0]).text(_toggleText[newState]);
-                _updatePref(_$collection, newState);
+                _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
+                common.$g('.collection__display-toggle__text', _$button[0]).text(_toggleText[_state]);
+                _updatePref(_$collection, _state);
             });
             _readPrefs(_$collection);
         };

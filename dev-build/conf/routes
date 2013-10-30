@@ -31,7 +31,7 @@ GET         /recent/card.json                                                   
 GET         /preference/platform/:platform                                                                   controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                     controllers.ChangeEditionController.render(edition)
 
-GET         /cards/opengraph/*path                                                                           controllers.CardController.opengraph(path)
+GET         /cards/opengraph/*path.json                                                                      controllers.CardController.opengraph(path)
 
 # Sport
 GET         /sport/cricket/match/:matchId.json                                                               controllers.CricketMatchController.renderMatchIdJson(matchId)
@@ -119,10 +119,14 @@ GET         /troubleshoot/football                                              
 
 # Commercial
 GET         /commercial/travel/offers                                                                        controllers.commercial.TravelOffers.listOffers
+<<<<<<< HEAD
 GET         /commercial/masterclasses                                                                        controllers.commercial.MasterClasses.all
 # To trigger travel offers data refresh on dev machine
+=======
+>>>>>>> master
 GET         /commercial/travel/devload                                                                       controllers.commercial.TravelOffers.refresh
-
+GET         /commercial/jobs                                                                                 controllers.commercial.JobAds.jobs
+GET         /commercial/$advert<(soulmates|masterclasses)>                                                   controllers.commercial.SimpleAdvert.render(advert)
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")
