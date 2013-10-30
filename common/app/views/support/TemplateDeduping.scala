@@ -5,7 +5,6 @@ import scala.collection.mutable
 
 class TemplateDeduping extends implicits.Collections {
   private val alreadyUsed: mutable.HashSet[String] = new mutable.HashSet[String]()
-  private val defaultTake: Int = 20
 
   def take(numberWanted: Int, items: Seq[Trail]): Seq[Trail] = {
     val thisRound = items filterNot (t => alreadyUsed.contains(t.url)) take numberWanted
@@ -18,7 +17,7 @@ class TemplateDeduping extends implicits.Collections {
     collection.copy(items = take(numberWanted, collection.items))
 
   def apply(numberWanted: Int, collection: Collection): Collection = take(numberWanted, collection)
-  def apply(collection: Collection): Collection = take(defaultTake, collection)
+  def apply(collection: Collection): Collection = take(collection.items.length, collection)
 }
 
 object TemplateDeduping {
