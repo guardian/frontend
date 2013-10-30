@@ -35,6 +35,9 @@
         .item:first-child {
             @include card-double-width;
         }
+        &:nth-of-type(even) .item:first-child {
+            float: right;
+        }
         .item:nth-child(n+2) {
             @include card;
         }
@@ -45,12 +48,25 @@
             @include card-image;
         }
         @include first-row(2);
-        .item:nth-child(3n+1) {
-            @include row-start;
+        &:nth-of-type(odd) {
+            .item:nth-child(3n+1) {
+                @include row-start;
+            }
+            .item:nth-child(2),
+            .item:nth-child(3n+3) {
+                @include row-end;
+            }
         }
-        .item:nth-child(2),
-        .item:nth-child(3n+3) {
-            @include row-end;
+        &:nth-of-type(even) {
+            .item:nth-child(2),
+            .item:nth-child(3),
+            .item:nth-child(3n+1) {
+                @include row-start;
+            }
+            .item:first-child,
+            .item:nth-child(3n+6) {
+                @include row-end;
+            }
         }
     }
     @include mq(desktop) {
@@ -59,13 +75,26 @@
             @include card-image;
         }
         @include first-row(3);
-        .item:nth-child(4n+6) {
-            @include row-start;
+        &:nth-of-type(odd) {
+            .item:nth-child(4n+6) {
+                @include row-start;
+            }
+            .item:nth-child(3),
+            .item:nth-child(5),
+            .item:nth-child(4n+9) {
+                @include row-end;
+            }
         }
-        .item:nth-child(3),
-        .item:nth-child(5),
-        .item:nth-child(4n+9) {
-            @include row-end;
+        &:nth-of-type(even) {
+            .item:nth-child(2),
+            .item:nth-child(4),
+            .item:nth-child(3n+6) {
+                @include row-start;
+            }
+            .item:first-child,
+            .item:nth-child(4n+9) {
+                @include row-end;
+            }
         }
     }
 }
