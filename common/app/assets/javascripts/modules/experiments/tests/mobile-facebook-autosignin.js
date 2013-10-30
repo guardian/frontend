@@ -7,11 +7,15 @@ define([
  ){
      var MobileFacebookAutosigninTest = function() {
 
+         var _config;
          this.id = 'MobileFacebookAutosignin';
          this.expiry = '2013-11-30';
          this.audience = 0.2;
          this.description = 'Performs an facebook autosignin on mobile where the user has alreadyg accepted the guardian facebook app';
-         this.canRun = function(config) { return config.page ? true : false};
+         this.canRun = function(config) {
+             _config = config;
+             return config.page ? true : false;
+         };
          this.variants = [
              {
                  id: 'control',
@@ -23,7 +27,7 @@ define([
                  id: 'mobile-auto-facebook-signin',
                  test: function() {
                     if (Detect.getLayoutMode() === 'mobile') {
-                       new AutoSignin(guardian.config).init();
+                       new AutoSignin(_config).init();
                     }
                  }
              }
