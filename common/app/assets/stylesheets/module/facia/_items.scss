@@ -94,6 +94,11 @@ $c-live: #e81818;
         border-left: 1px dotted $c-neutral5;
     }
 }
+.item:first-child {
+    padding-left: 0;
+    border-left-style: none;
+    clear: left;
+}
 .item__link {
     display: block;
     border-top: 2px solid $c-newsAccent;
