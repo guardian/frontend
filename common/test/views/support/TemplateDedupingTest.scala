@@ -82,12 +82,10 @@ class TemplateDedupingTest extends FlatSpec with Matchers with BeforeAndAfter {
     newTrailsOne.items should be (Seq(trailOne, trailTwo, trailThree, trailFour))
 
     val newTrailsTwo = dedupe.take(1, Collection(trails))
-    println("BeforeTestOne: " + newTrailsTwo.items.map(_.url).mkString(","))
     newTrailsTwo.items.length should be (3)
     newTrailsTwo.items should be (Seq(trailTwo, trailThree, trailFour))
 
     val newTrailsThree = dedupe.take(1, Collection(trails))
-    println("BeforeTestTwo: " + newTrailsThree.items.map(_.url).mkString(","))
     newTrailsThree.items.length should be (2)
     newTrailsThree.items should be (Seq(trailThree, trailFour))
 
