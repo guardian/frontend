@@ -147,7 +147,11 @@
     background-color: $c-neutral7;
     border-bottom: 1px solid $c-neutral5;
 
-    @include mq(tablet) { display: block; }
+    @include mq(tablet) {
+        display: block;
+        position: absolute;
+        top: $headerHeight;
+    }
 }
 
 .nav--global {
@@ -181,16 +185,16 @@
 
     .nav__link {
         color: $c-neutral1; // This is here because the below selectors are too specific for zone-color to work
+        display: block;
+        margin: 10px 0 $baseline*3;
+        padding: 2px 9px 0 9px;
+        @include font-size(14, 19);
     }
 
     .nav__link,
     .nav__link:active,
     .nav__link:focus,
     .nav__link:hover {
-        display: block;
-        margin: 10px 0 $baseline*3;
-        padding: 2px 9px 0 9px;
-        @include font-size(14, 19);
         text-decoration: none;
     }
 
@@ -241,17 +245,19 @@
 
     .nav__link {
         color: #333333; // This is here because the below selectors are too specific for zone-color to work
+        display: block;
+        margin: $baseline*4 0 $baseline*3 0;
+        padding: 2px 9px 0;
+        font-family: $serif !important;
+        font-size: 14px;
+        font-size: 1.4rem;
+        font-weight: bold;
     }
 
     .nav__link,
+    .nav__link:focus,
     .nav__link:active,
     .nav__link:hover {
-        display: block;
-        margin: 16px 0 $baseline*3 0;
-        padding: 2px 9px 0 9px;
-        font-family: $serif !important;
-        font-size: 14px;
-        font-weight: bold;
         text-decoration: none;
     }
 
