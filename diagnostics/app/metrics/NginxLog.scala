@@ -1,6 +1,8 @@
 package metrics
 
 import java.io.File
+import java.util.Random
+
 import au.com.bytecode.opencsv.CSVParser
 import com.gu.management.{ CountMetric, Metric }
 import net.sf.uadetector.service.UADetectorServiceFactory
@@ -21,6 +23,20 @@ object NginxLog extends Logging {
 
   def isMetric(path: String): Boolean = {
     path startsWith "/px.gif"
+  }
+
+  object airbrake {
+  
+    def apply(namespace:Option[String], queryString:Map[String, String]) {
+      try {
+        val lineno = if (queryString("lineno") matches """\d+""") queryString("lineno").toInt else 0
+        AirBrake.send(namespace.getOrElse("unknown"), queryString("js/message"), queryString("filename"), lineno).map { response =>
+            log info s"Airbrake response: ${response.body}"
+          }
+      } catch {
+        case _: Throwable => return
+      }
+    }
   }
 
   // all errors
@@ -111,21 +127,12 @@ object NginxLog extends Logging {
 
         // log all errors
         entry()
-        
+     
         // handle individual errors
         namespace.getOrElse("unknown") match {
           case "js" => {
             js(userAgent)
-
-            try {
-              val lineno = if (queryString("lineno") matches """\d+""") queryString("lineno").toInt else 0
-              AirBrake.send(namespace.getOrElse("unknown"), queryString("js/message"), queryString("filename"), lineno).map { response =>
-                  log info s"Airbrake response: ${response.body}"
-                }
-            } catch {
-              case _: Throwable => return
-            }
-
+            airbrake(namespace, queryString)
           }
           case "ads" => ads()
           case _ => null
