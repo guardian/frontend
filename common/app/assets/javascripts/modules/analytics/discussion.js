@@ -6,7 +6,7 @@ define(['common', 'modules/id'], function(common, Id) {
      * @return {string}
      */
     Track.prototype.getLinkTrackVars = function(extras) {
-        extra = extras || [];
+        extras = extras || [];
         var linkTrackVars = [
             'events',
             'prop4', 'prop6', 'prop8', 'prop10', 'prop13',
