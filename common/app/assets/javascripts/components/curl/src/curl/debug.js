@@ -1,4 +1,4 @@
-/** MIT License (c) copyright B Cavalier & J Hann */
+/** MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
 
 /**
  * curl debug plugin
@@ -20,7 +20,7 @@
  * TODO: only add logging to some of the useful core functions
  *
  */
-define(['require', 'curl/_privileged'], function (require, priv) {
+define(/*=='curl/debug',==*/ ['require', 'curl/_privileged'], function (require, priv) {
 "use strict";
 
 	var cache, totalWaiting, prevTotal, origDefine;

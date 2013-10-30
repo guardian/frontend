@@ -8,8 +8,9 @@ curl = {
 			baseUrl: '',
 			paths: {
 				'curl': '../src/curl',
-				'jquery': 'http://code.jquery.com/jquery-1.7.2'
-			}
+				'jquery': 'http://code.jquery.com/jquery-1.7.2.min'
+			},
+			preloads: ['jquery']
 		};
 </script>
 <script src="../src/curl.js" type="text/javascript"></script>
@@ -19,8 +20,8 @@ curl = {
 	var $readyWorked, $docReadyWorked, $Worked;
 
 	curl(
-		['jquery'],
-		function ($) {
+		['curl/domReady'],
+		function () {
 			$().ready(function () {
 				write('SUCCESS: jquery $().ready(callback) worked');
 				$readyWorked = true;
