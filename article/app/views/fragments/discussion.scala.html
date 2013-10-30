@@ -1,12 +1,15 @@
-@(discussionClosed: Boolean, shortUrl: String)(implicit request: RequestHeader)
-<h2 id="comments" class="page-sub-header tone-colour">Comments</h2>
-<div class="article__discussion"
-     data-discussion-closed="@discussionClosed"></div>
+@(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+<div class="discussion"
+    data-discussion-key="@discussionId"
+    data-discussion-closed="@discussionClosed">
+    <h2 id="comments" class="page-sub-header tone-colour">Comments</h2>
 
-<div class="d-show-cta-wrapper">
-    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@shortUrl}"
-       data-is-ajax data-link-name="View all comments" rel="nofollow">
-        View all comments
+    <div class="discussion__comment-box discussion__comment-box--top"></div>
+    <div class="discussion__comments"></div>
+    <div class="discussion__comment-box discussion__comment-box--bottom"></div>
+    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@discussionId}"
+        data-is-ajax data-link-name="View all comments" rel="nofollow">
+        Join the discussion…
         <span class="d-commentcount speech-bubble tone-background tone-border">
             <span class="js-commentcount__number"></span>
         </span>
