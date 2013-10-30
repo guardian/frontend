@@ -354,7 +354,7 @@ define([
                         id: config.page.shortUrl.replace('http://gu.com', ''),
                         meta: {
                             section: config.page.section,
-                            keywords: config.page.keywordIds.split(',')
+                            keywords: config.page.keywordIds.split(',').slice(0, 5)
                         }
                     });
                 }
