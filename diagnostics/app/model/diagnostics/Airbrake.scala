@@ -20,14 +20,12 @@ object AirBrake extends Logging {
     
     log info s"Calling: ${url} with ${body}" 
 
-    val futureResponse: Future[String] = WS.url(url)
+    val futureResponse: Future[Response] = WS.url(url)
       .withHeaders("Content-Type" -> "application/json")
       .withQueryString("key" -> apiKey)
       .withRequestTimeout(1000)
       .post(body).map { response =>
-        val r = response.body
-        log info s"Airbrake response: ${r}"
-        "ok"
+        response
       }
 
       futureResponse

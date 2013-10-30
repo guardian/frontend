@@ -8,8 +8,9 @@ import org.apache.commons.io.input.{ TailerListenerAdapter, Tailer }
 import model.diagnostics._
 import play.api.libs.concurrent.Execution.Implicits._
 import java.net._
+import common._
 
-object NginxLog {
+object NginxLog extends Logging {
 
   val csv = new CSVParser()
   val agent = UADetectorServiceFactory.getResourceModuleParser()
@@ -30,25 +31,6 @@ object NginxLog {
 
     def apply() {
       total.recordCount(1)
-    }
-  }
-
-  // handle feature healthchecks
-  object canary {
-    
-    val navigation = new CountMetric("diagnostics", "canary_navigation", "Interactions with navigation bar", "")
-    val other = new CountMetric("diagnostics", "canary_other", "Uncaught interactions", "")
-    
-    val metrics: Seq[Metric] = Seq(navigation)
-
-    def apply(path: Option[String]) {
-      
-      val measure = path.getOrElse("").split("[?\\/]").toList.drop(3).headOption
-      
-      measure.getOrElse("unknown") match {
-        case "navigation" => navigation.recordCount(1)  
-        case _ => other.recordCount(1) 
-      }
     }
   }
 
@@ -101,7 +83,7 @@ object NginxLog {
   }
 
   // combine all the metrics
-  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics ++ canary.metrics
+  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics
 
   Tailer.create(new File("/var/log/nginx/access.log"), new TailerListenerAdapter() {
 
@@ -134,13 +116,18 @@ object NginxLog {
         namespace.getOrElse("unknown") match {
           case "js" => {
             js(userAgent)
-            val lineno = if (queryString("lineno") matches """\d+""") queryString("lineno").toInt else 0
-            AirBrake.send(namespace.getOrElse("unknown"), queryString("js/message"), queryString("filename"), lineno).map {
-              response => println("ok!")
-              }
+
+            try {
+              val lineno = if (queryString("lineno") matches """\d+""") queryString("lineno").toInt else 0
+              AirBrake.send(namespace.getOrElse("unknown"), queryString("js/message"), queryString("filename"), lineno).map { response =>
+                  log info s"Airbrake response: ${response.body}"
+                }
+            } catch {
+              case _: Throwable => return
+            }
+
           }
           case "ads" => ads()
-          case "canary" => canary(path)
           case _ => null
         }
 
