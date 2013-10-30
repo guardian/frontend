@@ -124,6 +124,13 @@ object Content {
       case _ => new Content(delegate)
     }
   }
+
+  def apply(delegate: ApiContent, webTitle: Option[String]): Content = {
+    webTitle match {
+      case Some(title) => new ContentWithHeadline(delegate, title)
+      case _ => apply(delegate)
+    }
+  }
 }
 
 class Article(content: ApiContent) extends Content(content) {
@@ -247,4 +254,8 @@ class ImageContent(content: ApiContent) extends Content(content) {
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "photo"
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
+}
+
+class ContentWithHeadline(content: ApiContent, title: String) extends Content(content) {
+  override lazy val headline: String = title
 }
