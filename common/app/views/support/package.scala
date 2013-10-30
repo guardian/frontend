@@ -54,30 +54,30 @@ object SectionFront extends Style {
 /**
  * New 'collection' templates
  */
-object Masthead extends Style {
-  val className = "masthead"
-  val showMore = false
+sealed trait Container {
+  val containerType: String
+  val showMore: Boolean
+  val tone: String
 }
 
-case class SectionZone(val tone: String = "news", val showMore: Boolean = false) extends Style {
-  val className = "section-zone"
+case class MastheadContainer(val showMore: Boolean = false) extends Container {
+  val containerType = "masthead"
+  val tone = "news"
 }
-
-case class Container(val containerType: String = "news", val tone: String = "news", val showMore: Boolean = false) extends Style {
-  val className = "container"
+case class NewsContainer(val showMore: Boolean = true) extends Container {
+  val containerType = "news"
+  val tone = "news"
 }
-
-case class NewsContainer(val showMore: Boolean = false) extends Style {
-  val className = "news"
-  val tone: String = "news"
+case class CommentContainer(val showMore: Boolean = true) extends Container {
+  val containerType = "comment"
+  val tone = "comment"
 }
-case class CommentContainer(val showMore: Boolean = false) extends Style {
-  val className = "comment"
-  val tone: String = "comment"
-}
-case class FeaturesContainer(val showMore: Boolean = false) extends Style {
-  val className = "features"
+case class FeaturesContainer(val showMore: Boolean = true) extends Container {
+  val containerType = "features"
   val tone: String = "feature"
+}
+case class SectionContainer(val showMore: Boolean = true, val tone: String = "news") extends Container {
+  val containerType = "section"
 }
 
 

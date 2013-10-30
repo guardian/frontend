@@ -7,134 +7,89 @@ object FindStyle {
   /**
    * Mapping of collection 'type' to Style - in general, this should suffice
    */
-  val generalStyles: Map[String, Style] = Map(
-    "epic-story" -> Masthead,
-    "major-story" -> Masthead,
-    "regular-stories" -> Container(),
-    "feature-stories" -> SectionZone(tone = "feature", showMore = true),
-    "special-story" -> SectionZone()
+  val generalStyles: Map[String, Container] = Map(
+    "epic-story" -> MastheadContainer(),
+    "major-story" -> MastheadContainer(),
+    "regular-stories" -> SectionContainer(),
+    "feature-stories" -> SectionContainer(tone = "feature"),
+    "special-story" -> NewsContainer()
   )
 
   /**
    * Allows use of different styles on specific fronts for specific collection
    */
-  val specificStyles: Map[String, Map[String, Style]] = Map(
+  val specificStyles: Map[String, Map[String, Container]] = Map(
     ("au", Map(
-      ("au/news/regular-stories", Container(showMore = true)),
-      ("au/sport/australia-sport/regular-stories", Container(containerType = "sport", showMore = true)),
-      ("au/sport/regular-stories", Container(containerType = "sport", showMore = true)),
-      ("au/commentisfree/regular-stories", Container(containerType = "commentisfree", tone = "comment", showMore = true)),
-      ("au/culture/regular-stories", Container(containerType = "culture", tone = "feature", showMore = true)),
-      ("au/business/regular-stories", SectionZone(showMore = true)),
-      ("au/lifeandstyle/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("au/technology/regular-stories", SectionZone(showMore = true)),
-      ("au/money/regular-stories", SectionZone(showMore = true)),
-      ("au/travel/regular-stories", SectionZone(tone = "feature", showMore = true))
+      ("au/news/regular-stories", NewsContainer()),
+      ("au/sport/regular-stories", NewsContainer()),
+      ("au/commentisfree/regular-stories", CommentContainer()),
+      ("au/culture/regular-stories", FeaturesContainer())
     )),
     ("au/commentisfree", Map(
-      ("au/commentisfree/regular-stories", Container(tone = "comment"))
+      ("au/commentisfree/regular-stories", CommentContainer())
     )),
     ("au/culture", Map(
-      ("au/culture/regular-stories", Container(tone = "feature", showMore = true)),
-      ("au/film/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("au/music/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("au/books/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("au/technology/games/regular-stories", SectionZone(showMore = true))
+      ("au/culture/regular-stories", FeaturesContainer()),
+      ("au/film/regular-stories", SectionContainer(tone = "feature")),
+      ("au/music/regular-stories", SectionContainer(tone = "feature")),
+      ("au/books/regular-stories", SectionContainer(tone = "feature"))
     )),
     ("au/sport", Map(
-      ("au/sport/regular-stories", Container(showMore = true)),
-      ("au/football/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/cricket/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/afl/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/nrl/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/tennis/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/golf/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/motorsports/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/cycling/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/us-sport/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/boxing/regular-stories", SectionZone(showMore = true)),
-      ("au/football/a-league/regular-stories", SectionZone(showMore = true)),
-      ("au/sport/rugbyleague/regular-stories", SectionZone(showMore = true))
+      ("au/sport/regular-stories", NewsContainer())
     )),
     ("uk", Map(
-      ("uk/news/regular-stories", NewsContainer(showMore = true)),
-      ("uk/sport/regular-stories", NewsContainer(showMore = true)),
-      ("uk/commentisfree/regular-stories", CommentContainer(showMore = true)),
-      ("uk/culture/regular-stories", FeaturesContainer(showMore = true)),
-      ("uk/business/regular-stories", SectionZone(showMore = true)),
-      ("uk/lifeandstyle/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("uk/technology/regular-stories", SectionZone(showMore = true)),
-      ("uk/money/regular-stories", SectionZone(showMore = true)),
-      ("uk/travel/regular-stories", SectionZone(tone = "feature", showMore = true))
+      ("uk/news/regular-stories", NewsContainer()),
+      ("uk/sport/regular-stories", NewsContainer()),
+      ("uk/commentisfree/regular-stories", CommentContainer()),
+      ("uk/culture/regular-stories", FeaturesContainer()),
+      ("uk/lifeandstyle/regular-stories", SectionContainer(tone = "feature")),
+      ("uk/travel/regular-stories", SectionContainer(tone = "feature"))
     )),
     ("uk/commentisfree", Map(
-      ("uk/commentisfree/regular-stories", Container(tone = "comment"))
+      ("uk/commentisfree/regular-stories", CommentContainer())
     )),
     ("uk/culture", Map(
-      ("uk/culture/regular-stories", Container(tone = "feature", showMore = true)),
-      ("uk/tv-and-radio/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("uk/film/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("uk/music/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("uk/stage/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("uk/books/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("uk/artanddesign/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("uk/technology/games/regular-stories", SectionZone(showMore = true))
+      ("uk/culture/regular-stories", FeaturesContainer()),
+      ("uk/tv-and-radio/regular-stories", SectionContainer(tone = "feature")),
+      ("uk/film/regular-stories", SectionContainer(tone = "feature")),
+      ("uk/music/regular-stories", SectionContainer(tone = "feature")),
+      ("uk/stage/regular-stories", SectionContainer(tone = "feature")),
+      ("uk/books/regular-stories", SectionContainer(tone = "feature")),
+      ("uk/artanddesign/regular-stories", SectionContainer(tone = "feature"))
     )),
     ("uk/sport", Map(
-      ("uk/sport/regular-stories", Container(showMore = true)),
-      ("uk/football/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/cricket/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/rugby-union/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/motorsports/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/tennis/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/golf/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/horse-racing/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/rugbyleague/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/us-sport/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/boxing/regular-stories", SectionZone(showMore = true)),
-      ("uk/sport/cycling/regular-stories", SectionZone(showMore = true))
+      ("uk/sport/regular-stories", NewsContainer())
     )),
     ("us", Map(
-      ("us/news/regular-stories", Container(showMore = true)),
-      ("us/sport/regular-stories", Container(containerType = "sport", showMore = true)),
-      ("us/commentisfree/regular-stories", Container(containerType = "commentisfree", tone = "comment", showMore = true)),
-      ("us/culture/regular-stories", Container(containerType = "culture", tone = "feature", showMore = true)),
-      ("us/business/regular-stories", SectionZone(showMore = true)),
-      ("us/lifeandstyle/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("us/technology/regular-stories", SectionZone(showMore = true)),
-      ("us/money/regular-stories", SectionZone(showMore = true)),
-      ("us/travel/regular-stories", SectionZone(tone = "feature", showMore = true))
+      ("us/news/regular-stories", NewsContainer()),
+      ("us/sport/regular-stories", NewsContainer()),
+      ("us/commentisfree/regular-stories", CommentContainer()),
+      ("us/culture/regular-stories", FeaturesContainer())
     )),
     ("us/commentisfree", Map(
-      ("us/commentisfree/regular-stories", Container(tone = "comment"))
+      ("us/commentisfree/regular-stories", CommentContainer())
     )),
     ("us/culture", Map(
-      ("us/culture/regular-stories", Container(tone = "feature", showMore = true)),
-      ("us/film/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("us/music/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("us/stage/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("us/books/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("us/artanddesign/regular-stories", SectionZone(tone = "feature", showMore = true)),
-      ("us/technology/games/regular-stories", SectionZone(showMore = true)),
-      ("us/tv-and-radio/regular-stories", SectionZone(tone = "feature", showMore = true))
+      ("us/culture/regular-stories", FeaturesContainer()),
+      ("us/film/regular-stories", SectionContainer(tone = "feature")),
+      ("us/music/regular-stories", SectionContainer(tone = "feature")),
+      ("us/stage/regular-stories", SectionContainer(tone = "feature")),
+      ("us/books/regular-stories", SectionContainer(tone = "feature")),
+      ("us/artanddesign/regular-stories", SectionContainer(tone = "feature")),
+      ("us/tv-and-radio/regular-stories", SectionContainer(tone = "feature"))
     )),
     ("us/sport", Map(
-      ("us/sport/regular-stories", Container( showMore = true)),
-      ("us/sport/nfl/regular-stories", SectionZone(showMore = true)),
-      ("us/sport/mlb/regular-stories", SectionZone(showMore = true)),
-      ("us/sport/nba/regular-stories", SectionZone(showMore = true)),
-      ("us/sport/mls/regular-stories", SectionZone(showMore = true)),
-      ("us/sport/nhl/regular-stories", SectionZone(showMore = true))
+      ("us/sport/regular-stories", NewsContainer())
     ))
   )
 
-  def apply(path: String, config: Config): Style = {
+  def apply(path: String, config: Config): Container = {
     // first check if we have a specific style
     specificStyles.get(path).flatMap { frontStyles =>
       frontStyles.get(config.id)
     }.getOrElse {
       // else use general, defaulting to Highlights
-      generalStyles.get(config.id.split("/").last).getOrElse(SectionZone())
+      generalStyles.get(config.id.split("/").last).getOrElse(SectionContainer())
     }
   }
 

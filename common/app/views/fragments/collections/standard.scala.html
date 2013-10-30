@@ -1,4 +1,4 @@
-@(collection: Collection, style: Style, containerIndex: Int)(implicit request: RequestHeader)
+@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 @if(style.showMore) {
     <ul class="unstyled items @if(style.showMore){js-items--show-more} items--without-sport-stats">
