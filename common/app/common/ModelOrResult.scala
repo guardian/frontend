@@ -38,12 +38,14 @@ private object ItemOrRedirect extends ItemResponses with Logging{
 // this might have ended up at the wrong server if it has a 'funny' url
 private object InternalRedirect{
 
-  def apply(response: ItemResponse) = contentTypes(response)
+  lazy val ShortUrl = """^(/p/.*)$""".r
+
+  def apply(response: ItemResponse)(implicit request: RequestHeader) = contentTypes(response)
     .orElse(response.tag.map(t => internalRedirect("type/tag", t.id)))
     .orElse(response.section.map(s => internalRedirect("type/section", s.id)))
 
 
-  def contentTypes(response: ItemResponse): Option[Right[Nothing, SimpleResult]] = {
+  def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Right[Nothing, SimpleResult]] = {
     response.content.map {
       case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
       case v if v.isVideo => internalRedirect("type/video", v.id)
@@ -52,6 +54,9 @@ private object InternalRedirect{
     }
   }
 
-  private def internalRedirect(base: String, id: String) =
-    Right(Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id"))
+  private def internalRedirect(base: String, id: String)(implicit request: RequestHeader) = request.path match {
+    case ShortUrl(_) => Right(Found(s"/$id"))
+    case _ => Right(Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id"))
+  }
+
 }

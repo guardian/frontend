@@ -3,7 +3,7 @@ import conf.RequestMeasurementMetrics
 import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
 import implicits.Requests
-import model.CoreNavigationLifecycle
+import model.MostPopularLifecycle
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
 // obviously this is only for devbuild and should never end up in one of our
@@ -50,4 +50,4 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 object Global extends WithFilters(
   DevJsonExtensionFilter :: DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*
-) with CoreNavigationLifecycle with CommercialLifecycle with FrontLifecycle with DevParametersLifecycle
+) with MostPopularLifecycle with CommercialLifecycle with FrontLifecycle with DevParametersLifecycle
