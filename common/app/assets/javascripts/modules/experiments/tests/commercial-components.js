@@ -40,6 +40,8 @@ define([
                         context: context
                     });
 
+                    common.$g('.ad-slot--mpu-banner-ad', context).hide();
+
                     return true;
                 }
             },
