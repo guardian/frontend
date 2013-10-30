@@ -1,7 +1,7 @@
 package controllers
 
 import org.scalatest.path
-import org.scalatest.Matchers
+import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
@@ -23,7 +23,7 @@ import services.IdentityRequest
 import idapiclient.responses.CookiesResponse
 
 
-class SigninControllerTest extends path.FreeSpec with Matchers with MockitoSugar {
+class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
