@@ -6,7 +6,7 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
             _$button = bonzo(bonzo.create(
                 '<button class="container__toggle" data-link-name="Show">'
                     + '<i class="i i-arrow-white-large"></i>'
-                    + '<span class="container__display-toggle__text u-h">Hide</span>'
+                    + '<span class="container__toggle__text u-h">Hide</span>'
                 +'</button>'
             )),
             _prefName = 'container-states',
@@ -52,7 +52,7 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                common.$g('.container__display-toggle__text', _$button[0]).text(_toggleText[_state]);
+                common.$g('.container__toggle__text', _$button[0]).text(_toggleText[_state]);
                 _updatePref(_$container, _state);
             });
             _readPrefs(_$container);

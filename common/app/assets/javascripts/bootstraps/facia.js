@@ -15,7 +15,7 @@ define([
     detect,
     popular,
     CollectionShowMore,
-    CollectionToggle,
+    ContainerToggle,
     FootballFixtures,
     cricket
     ) {
@@ -24,17 +24,17 @@ define([
 
         showCollectionShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.js-collection--show-more', context).each(function(items) {
-                    new CollectionShowMore(items)
+                common.$g('.js-collection--show-more', context).each(function(collection) {
+                    new CollectionShowMore(collection)
                         .addShowMore();
                 });
             });
         },
 
-        showCollectionToggle: function () {
+        showContainerToggle: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.js-collection--toggle', context).each(function(collection) {
-                    new CollectionToggle(collection)
+                common.$g('.js-container--toggle', context).each(function(container) {
+                    new ContainerToggle(container)
                         .addToggle();
                 });
             });
@@ -97,7 +97,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.showCollectionShowMore();
-            modules.showCollectionToggle();
+            modules.showContainerToggle();
 //            modules.showFootballFixtures();
             modules.showPopular();
         }
