@@ -316,7 +316,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
          verify(http).POST(Matchers.eq("http://example.com/pwd-reset/reset-pwd-for-user"), Matchers.eq(Option(requestJson)), Matchers.eq(clientAuthHeaders), Matchers.eq(Nil))
       }
 
-      "returns a successful #it response" in {
+      "returns a successful unit response" in {
          api.resetPassword(token, newPassword).map( _ match {
             case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
             case Right(_: Unit) => {
