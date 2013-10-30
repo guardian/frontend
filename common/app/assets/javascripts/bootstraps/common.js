@@ -349,7 +349,7 @@ define([
 
         logReadingHistory : function() {
             common.mediator.on('page:common:ready', function(config) {
-                 if(/Article|Video|Gallery/.test(config.page.contentType)) {
+                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
                     return new History().log({
                         id: config.page.shortUrl.replace('http://gu.com', ''),
                         meta: {
