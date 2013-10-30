@@ -34,7 +34,7 @@
     float: left;
     height: 28px;
     width: 1px;
-    margin-right: 8px;
+    margin-right: 5px;
     background-color: #274C98;
     border-left: 1px solid #122853;
 }
@@ -137,7 +137,7 @@ span.control__menu.i-menu {
         border-color: transparent;
     }
     .i-top-stories {
-        margin: 2px $gutter 0 $gutter/2;
+        margin: 2px 12px 0 $gutter/2;
 
         @include mq(tablet) {
             margin-left: 0;
@@ -154,10 +154,15 @@ span.control__menu.i-menu {
    ========================================================================== */
 
 .control--search {
+    padding-right: 14px;
+
+    @include mq(tablet) {
+        padding-right: 16px;
+    }
+
     .i-search {
         margin-top: 5px;
-        margin-left: 6px;
-        margin-right: 2px;
+        margin-left: 7px;
     }
 }
 

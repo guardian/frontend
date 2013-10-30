@@ -223,7 +223,12 @@
     background-color: #ffffff;
     border-bottom: 1px solid $c-neutral6;
 
-    @include mq(tablet) { display: block; }
+    @include mq(tablet) {
+        display: block;
+        top: 99px;
+        position: absolute;
+        left: 0; right: 0;
+    }
 }
 
 .nav--local {
