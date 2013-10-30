@@ -56,7 +56,7 @@ module.exports = function (grunt) {
                         "EventEmitter": "components/eventEmitter/EventEmitter",
                         "qwery": "components/qwery/mobile/qwery-mobile",
                         "reqwest": "components/reqwest/src/reqwest",
-                        "domwrite": "components/dom-write/dom-write",
+                        "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview"
                     },
