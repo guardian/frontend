@@ -24,13 +24,7 @@
             @include card-image;
         }
     }
-    @include mq(desktop, wide) {
-        @include row(3);
-        .item:nth-child(-n+3) {
-            @include card-image;
-        }
-    }
-    @include mq(wide) {
+    @include mq(desktop) {
         @include row(4);
         .item:nth-child(-n+4) {
             @include card-image;

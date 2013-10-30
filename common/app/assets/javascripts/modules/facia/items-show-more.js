@@ -15,31 +15,26 @@ define([
                     wide: {
                         default: 4,
                         news: 5,
-                        sport: 9,
-                        commentisfree: 5,
-                        culture: 5,
-                        popular: 3
+                        comment: 5,
+                        features: 3
                     },
                     desktop: {
-                        default: 3,
+                        default: 4,
                         news: 5,
-                        sport: 6,
-                        commentisfree: 3,
-                        culture: 3
+                        comment: 5,
+                        features: 3
                     },
                     tablet: {
                         default: 3,
                         news: 6,
-                        sport: 6,
-                        commentisfree: 4,
-                        culture: 4
+                        comment: 4,
+                        features: 4
                     },
                     mobile: {
                         default: 2,
                         news: 5,
-                        sport: 5,
-                        commentisfree: 3,
-                        culture: 3,
+                        comment: 3,
+                        features: 3,
                         popular: 5
                     }
                 }[detect.getBreakpoint()];
@@ -97,8 +92,6 @@ define([
 
             // remove extras from dom
             common.$g('.collection--template', items).remove();
-            // relativise dates
-            extraItems
 
             // if we are showing more items than necessary, store them
             var excess = qwery('.item:nth-child(n+' + (initalShowSize + 1) + ')', items);

@@ -101,12 +101,12 @@ $c-live: #e81818;
 .item__image-container {
     display: none;
     position: relative;
+    margin-top: 2px;
     .connection--not-low & {
         padding-bottom: 60%;
     }
 }
 .responsive-img {
-    margin-top: 2px;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -135,7 +135,7 @@ $c-live: #e81818;
 }
 .item__byline {
     margin: $gs-baseline/3 0 0;
-    @include fs-header(4, $size-only: true);
+    @include fs-header(2, $size-only: true);
 }
 .item__standfirst,
 .item__meta {

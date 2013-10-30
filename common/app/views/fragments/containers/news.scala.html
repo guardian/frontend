@@ -1,0 +1,20 @@
+@(config: Config, collection: Collection, style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader)
+
+@if(collection.items.nonEmpty) {
+    <section class="collection collection--@style.className tone-@style.tone"
+             data-link-name="block | @config.id"
+             data-id="@config.id"
+             data-type="news">
+
+        @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
+            @if(title.nonEmpty) {
+                <h2 class="collection__title tone-colour tone-background tone-accent-border">
+                    <a data-link-name="section heading" href="@LinkTo{/@if(!config.section.equals("news")){@config.section}}">@Html(title)</a>
+                </h2>
+            }
+        }
+
+        @fragments.collections.standard(collection, style, containerIndex)
+
+    </section>
+}

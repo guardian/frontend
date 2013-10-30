@@ -158,6 +158,33 @@ $tabletMetaSpace: 20px;
         top: -3px;
     }
 }
+@mixin card-full-width {
+    width: gs-span(9);
+    min-height: gs-height(6);
+    border-left: none;
+    padding-left: 0;
+    .connection--not-low &.item--has-image {
+        width: gs-span(3);
+        padding-left: gs-span(6) + $gs-gutter;
+    }
+    .item__link {
+        border-top-style: none;
+    }
+    .item__title {
+        @include fs-headline(5, $size-only: true);
+    }
+    .item__image-container {
+        display: block;
+    }
+    .connection--not-low & .item__image-container {
+        width: gs-span(6);
+        height: gs-height(6);
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding-bottom: 0;
+    }
+}
 @mixin card-triple-width {
     width: gs-span(12);
     min-height: gs-height(8);

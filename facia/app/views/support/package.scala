@@ -57,10 +57,10 @@ object FindStyle {
       ("au/sport/rugbyleague/regular-stories", SectionZone(showMore = true))
     )),
     ("uk", Map(
-      ("uk/news/regular-stories", News(showMore = true)),
-      ("uk/sport/regular-stories", News(showMore = true)),
-      ("uk/commentisfree/regular-stories", Container(containerType = "commentisfree", tone = "comment", showMore = true)),
-      ("uk/culture/regular-stories", Container(containerType = "culture", tone = "feature", showMore = true)),
+      ("uk/news/regular-stories", NewsContainer(showMore = true)),
+      ("uk/sport/regular-stories", NewsContainer(showMore = true)),
+      ("uk/commentisfree/regular-stories", CommentContainer(showMore = true)),
+      ("uk/culture/regular-stories", FeaturesContainer(showMore = true)),
       ("uk/business/regular-stories", SectionZone(showMore = true)),
       ("uk/lifeandstyle/regular-stories", SectionZone(tone = "feature", showMore = true)),
       ("uk/technology/regular-stories", SectionZone(showMore = true)),
