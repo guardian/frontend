@@ -1,11 +1,11 @@
 package tools
 
-import collection.JavaConversions._
 import collection.immutable.LongMap
 import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
 import java.util.concurrent.Future
 import java.util.{UUID, Date}
 import org.joda.time.DateTime
+import scala.collection.JavaConversions._
 
 case class DataPoint(name: String, values: Seq[Double]) {
 
@@ -246,6 +246,10 @@ case class FastlyMetricGraph(
   override lazy val dataset = datapoints.map(d => DataPoint(
     new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
   )
+}
+
+case class CostMetric(costMetric: Future[GetMetricStatisticsResult]) {
+  lazy val cost = costMetric.get().getDatapoints.headOption.map(_.getMaximum.toInt).getOrElse(0)
 }
 
 case class FastlyHitMissGraph(

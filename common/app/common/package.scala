@@ -4,7 +4,7 @@ import com.gu.openplatform.contentapi.ApiError
 import play.api.Logger
 import play.api.mvc.{ SimpleResult, Result, RequestHeader }
 import play.api.templates.Html
-import model.Cached
+import model.{NoCache, Cached}
 import com.gu.management.Switchable
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
@@ -23,7 +23,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def suppressApiNotFound[T](implicit log: Logger): PartialFunction[Throwable, Either[T, SimpleResult]] = {
     case ApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
-      Right(NotFound)
+      Right(NoCache(NotFound))
   }
 
   def suppressApi404[T](block: => Either[T, Result])(implicit log: Logger): Either[T, Result] = {
@@ -32,7 +32,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     } catch {
       case ApiError(404, message) =>
         log.info(s"Got a 404 while calling content api: $message")
-        Right(NotFound)
+        Right(NoCache(NotFound))
     }
   }
 

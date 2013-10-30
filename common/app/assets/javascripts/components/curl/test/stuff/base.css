@@ -2,3 +2,12 @@ body {
 	color: #00f;
 	border: 1px solid #000;
 }
+
+#test-rules-applied {
+	position: absolute;
+	padding: 0;
+	border: 0;
+	margin: 0;
+	height: 273px;
+	width: 1px;
+}
