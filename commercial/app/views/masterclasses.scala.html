@@ -5,9 +5,15 @@
         <h3 class="commercial__title">guardian<span>masterclasses</span></h3>
     </div>
     <div class="commercial__body">
+        <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/21/1377101813833/Browse-Masterclasses-001.jpg">
         <ul class="unstyled">
             @for(event <- events) {
-                <li>@event.name (@event.startDate)</li>
+                <li>@event.name (@event.startDate)
+                    <h3><a href="@event.url">@event.url</a></h3>
+                    <p>@event.description</p>
+                    <p class="tickets-price">@event.price</p>
+                    <p class="tickets-left">@event.spaces seats left</p>
+                </li>
             }
         </ul>
     </div>
