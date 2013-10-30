@@ -7,15 +7,12 @@ class TemplateDeduping extends implicits.Collections {
   private val alreadyUsed: mutable.HashSet[String] = new mutable.HashSet[String]()
   private val defaultTake: Int = 20
 
-  def take(numberWanted: Int, items: Seq[Trail]): Seq[Trail] =
-    items
-      .distinctBy{_.url}
-      .filterNot(t => alreadyUsed.contains(t.url))
-      .take(numberWanted)
-      .map {trail =>
-        alreadyUsed += trail.url
-        trail
-      }
+  def take(numberWanted: Int, items: Seq[Trail]): Seq[Trail] = {
+    val thisRound = items filterNot (t => alreadyUsed.contains(t.url)) take numberWanted
+    val returnList = thisRound ++ {thisRound.lastOption.map(t => items.dropWhile(_ != t).drop(1)).getOrElse(Nil)}
+    thisRound foreach (alreadyUsed += _.url)
+    returnList.distinctBy(_.url)
+  }
 
   def take(numberWanted: Int, collection: Collection): Collection =
     collection.copy(items = take(numberWanted, collection.items))
