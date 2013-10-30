@@ -36,7 +36,7 @@ class TemplateDedupingTest extends FlatSpec with Matchers with BeforeAndAfter {
     newTrails(3) shouldEqual trailFour
   }
 
-  it should "not remove duplicates if it was not within what was asked" in {
+  it should "correctly dedupe items not already deduped" in {
     val newTrailsOne = dedupe.take(2, trails)
     newTrailsOne.length should be (4)
     newTrailsOne should be (trails)
