@@ -1,4 +1,4 @@
-.collection--section-zone {
+.collection--section {
     @include mq($to: tablet) {
         @include row(2);
         .item:nth-child(-n+2) {
