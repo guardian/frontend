@@ -1,12 +1,18 @@
 package metrics
 
 import java.io.File
+import java.util.Random
+
 import au.com.bytecode.opencsv.CSVParser
 import com.gu.management.{ CountMetric, Metric }
 import net.sf.uadetector.service.UADetectorServiceFactory
 import org.apache.commons.io.input.{ TailerListenerAdapter, Tailer }
+import model.diagnostics._
+import play.api.libs.concurrent.Execution.Implicits._
+import java.net._
+import common._
 
-object NginxLog {
+object NginxLog extends Logging {
 
   val csv = new CSVParser()
   val agent = UADetectorServiceFactory.getResourceModuleParser()
@@ -19,6 +25,20 @@ object NginxLog {
     path startsWith "/px.gif"
   }
 
+  object airbrake {
+  
+    def apply(namespace:Option[String], queryString:Map[String, String]) {
+      try {
+        val lineno = if (queryString("lineno") matches """\d+""") queryString("lineno").toInt else 0
+        AirBrake.send(namespace.getOrElse("unknown"), queryString("js/message"), queryString("filename"), lineno).map { response =>
+            log info s"Airbrake response: ${response.body}"
+          }
+      } catch {
+        case _: Throwable => return
+      }
+    }
+  }
+
   // all errors
   object entry {
 
@@ -27,25 +47,6 @@ object NginxLog {
 
     def apply() {
       total.recordCount(1)
-    }
-  }
-
-  // handle feature healthchecks
-  object canary {
-    
-    val navigation = new CountMetric("diagnostics", "canary_navigation", "Interactions with navigation bar", "")
-    val other = new CountMetric("diagnostics", "canary_other", "Uncaught interactions", "")
-    
-    val metrics: Seq[Metric] = Seq(navigation)
-
-    def apply(path: Option[String]) {
-      
-      val measure = path.getOrElse("").split("[?\\/]").toList.drop(3).headOption
-      
-      measure.getOrElse("unknown") match {
-        case "navigation" => navigation.recordCount(1)  
-        case _ => other.recordCount(1) 
-      }
     }
   }
 
@@ -98,34 +99,42 @@ object NginxLog {
   }
 
   // combine all the metrics
-  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics ++ canary.metrics
+  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics
 
   Tailer.create(new File("/var/log/nginx/access.log"), new TailerListenerAdapter() {
+
     override def handle(line: String) {
       var fields = Array("")
       var path = Option("")
       var userAgent = ""
+      var queryString: Map[String, String] = Map()
 
       try {
         fields = csv.parseLine(line)
         path = fields(2).trim.split(" ").toList.drop(1).headOption
         userAgent = fields(6)
+        queryString = fields(2).trim.split(" ").toList(1).split("\\?").toList.last.split("&").map { str => 
+            val pair = str.split('=')
+            (pair(0) -> URLDecoder.decode(pair(1), "UTF-8"))
+          }.toMap
       } catch {
         case _: Throwable => return
       }
-
+      
       path filter { path => isMetric(path) && (!isHealthCheck(userAgent)) } foreach { _ =>
 
         val namespace = path.getOrElse("").split("[?\\/]").toList.drop(2).headOption
 
         // log all errors
         entry()
-        
+     
         // handle individual errors
         namespace.getOrElse("unknown") match {
-          case "js" => js(userAgent)
+          case "js" => {
+            js(userAgent)
+            airbrake(namespace, queryString)
+          }
           case "ads" => ads()
-          case "canary" => canary(path)
           case _ => null
         }
 
