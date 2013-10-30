@@ -49,10 +49,10 @@
         .item:nth-child(3) {
             min-height: gs-height(6) - $metaHeight;
             .item__title {
-                @include fs-headline(4, $size-only: true);
+                @include fs-headline(3, $size-only: true);
             }
             .item__byline {
-                @include fs-header(5, $size-only: true);
+                @include fs-header(4, $size-only: true);
             }
         }
         .item:nth-child(3n+2) {
