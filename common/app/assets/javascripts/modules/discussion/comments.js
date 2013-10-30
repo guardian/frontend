@@ -102,6 +102,9 @@ Comments.prototype.showMore = function(e) {
         showMoreButton.setAttribute('data-disabled', 'disabled');
         ajax({
             url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.currentPage+1),
+            type: 'json',
+            method: 'get',
+            crossOrigin: true
         }).then(this.commentsLoaded.bind(this));
     }
 };
