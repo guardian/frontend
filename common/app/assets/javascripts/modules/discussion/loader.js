@@ -73,8 +73,8 @@ Loader.prototype.ready = function() {
     var id = this.getDiscussionId(),
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
 
-    // TODO (jamesgorrie): Move this into the Comments module
     this.getElem('comments').appendChild(loadingElem);
+    
     this.comments = new Comments(this.context, this.mediator, {
         initialShow: 2,
         discussionId: this.getDiscussionId()
