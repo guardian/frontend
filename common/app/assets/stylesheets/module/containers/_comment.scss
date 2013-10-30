@@ -1,4 +1,4 @@
-.collection--comment {
+.container--comment {
     @include mq($to: tablet) {
         @include first-row(1);
         .item:first-child {

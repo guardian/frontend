@@ -8,7 +8,7 @@ define([
     'modules/facia/images'
 ], function (common, bonzo, bean, qwery, detect, relativeDates, faciaImages) {
 
-    return function(items) {
+    return function(collection) {
 
         var _getInitialShowSize = function (collectionType) {
                 var breakpointOptions = {
@@ -48,16 +48,16 @@ define([
                     mobile: 5
                 }[detect.getBreakpoint()];
             },
-            _renderToggle = function($items, extraItems) {
+            _renderToggle = function($collection, extraItems) {
                 var buttonText = 'Show more',
                     $button = bonzo(bonzo.create(
-                                        '<button class="items__show-more tone-background" data-link-name="' + buttonText + ' | 0">' +
+                                        '<button class="collection__show-more tone-background" data-link-name="' + buttonText + ' | 0">' +
                                             '<span class="i i-arrow-white-large">' +
                                                 buttonText +
                                             '</span>' +
                                         '</button>'
                                     ))
-                                  .insertAfter($items);
+                                  .insertAfter($collection);
                 bean.on($button[0], 'click', function(e) {
                     // increment button counter
                     var newDataAttr = $button.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
@@ -69,7 +69,7 @@ define([
                     // show x more, depending on current breakpoint
                     bonzo(extraItems.splice(0, _getShowMoreSize())).each(function(extraItem) {
                             relativeDates.init(extraItem);
-                            $items.append(extraItem);
+                            $collection.append(extraItem);
                         });
 
                     if (extraItems.length === 0) {
@@ -84,29 +84,29 @@ define([
             };
 
         this.addShowMore = function() {
-            var $items = bonzo(items).removeClass('js-items--show-more'),
+            var $collection = bonzo(collection).removeClass('js-collection--show-more'),
                 extraItems = bonzo.create(
-                    common.$g('.collection--template', items).html()
+                    common.$g('.collection--template', collection).html()
                 ),
-                initalShowSize = _getInitialShowSize($items.parent().attr('data-type'));
+                initalShowSize = _getInitialShowSize($collection.parent().attr('data-type'));
 
             // remove extras from dom
-            common.$g('.collection--template', items).remove();
+            common.$g('.collection--template', collection).remove();
 
             // if we are showing more items than necessary, store them
-            var excess = qwery('.item:nth-child(n+' + (initalShowSize + 1) + ')', items);
+            var excess = qwery('.item:nth-child(n+' + (initalShowSize + 1) + ')', collection);
             extraItems = excess.concat(extraItems);
             bonzo(excess).remove();
 
             // if we are showing less items than necessary, show more
-            bonzo(extraItems.splice(0, initalShowSize - qwery('.item', items).length))
-                .appendTo($items);
+            bonzo(extraItems.splice(0, initalShowSize - qwery('.item', collection).length))
+                .appendTo($collection);
 
-            faciaImages.upgrade($items[0]);
+            faciaImages.upgrade($collection[0]);
 
             // add toggle button, if they are extra items left to show
             if (extraItems.length) {
-                _renderToggle($items, extraItems);
+                _renderToggle($collection, extraItems);
             }
         };
 
