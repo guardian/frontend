@@ -71,10 +71,11 @@ Loader.prototype.canComment = false;
 /** @override */
 Loader.prototype.ready = function() {
     var id = this.getDiscussionId(),
-        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        self = this;
 
     this.getElem('comments').appendChild(loadingElem);
-    
+
     this.comments = new Comments(this.context, this.mediator, {
         initialShow: 2,
         discussionId: this.getDiscussionId()
@@ -83,29 +84,13 @@ Loader.prototype.ready = function() {
         .fetch(this.getElem('comments'))
         .then(function killLoadingMessage() {
             bonzo(loadingElem).remove();
+            self.renderCommentBar();
         });
 
 
     bonzo(this.getElem('show')).remove();
     DiscussionAnalytics.init();
     this.renderCommentCount();
-};
-
-/**
- * @param {Object} resp
- */
-Loader.prototype.renderDiscussion = function(resp) {
-    var commentsElem = this.getElem('comments');
-
-    // comments
-    commentsElem.innerHTML = resp.html;
-    this.comments = new Comments(this.context, this.mediator, {
-        initialShow: 2,
-        discussionId: this.getDiscussionId()
-    });
-    this.comments.attachTo(commentsElem);
-
-    this.renderCommentBar();
 };
 
 /**
