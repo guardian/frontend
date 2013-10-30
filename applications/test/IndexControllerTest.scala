@@ -50,8 +50,6 @@ class IndexControllerTest extends FlatSpec with Matchers {
 
   it should "redirect when content api says it is on the wrong web url" in Fake {
 
-    Switches.FollowItemRedirectsFromApiSwitch.switchOn()
-
     val result = controllers.IndexController.render("type/video")(FakeRequest(GET, "/type/video"))
 
     status(result) should be (302)

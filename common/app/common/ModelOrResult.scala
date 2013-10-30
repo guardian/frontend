@@ -3,7 +3,6 @@ package common
 import com.gu.openplatform.contentapi.model.ItemResponse
 import play.api.mvc.{ SimpleResult, RequestHeader, Results }
 import model._
-import conf.Switches.FollowItemRedirectsFromApiSwitch
 import implicits.ItemResponses
 import java.net.URI
 
@@ -21,19 +20,11 @@ object ModelOrResult extends Results with Logging {
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
 private object ItemOrRedirect extends ItemResponses with Logging{
 
-  // TODO this simplifies a lot once we know it works properly and can remove the switch
-  // switch is just here for safety (unforeseen consequences)
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
     def itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
-    if (FollowItemRedirectsFromApiSwitch.isSwitchedOn) itemPath match {
+    itemPath match {
       case Some(itemPath) if needsRedirect(itemPath) => Right(Found(itemPath))
       case _ => Left(item)
-    } else {
-      itemPath match {
-        case Some(itemPath) if needsRedirect(itemPath) => log.info(s"would have redirected ${request.path} -> $itemPath")
-        case _ => Unit
-      }
-      Left(item)
     }
   }
 
