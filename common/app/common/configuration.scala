@@ -223,7 +223,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   
   object airbrake {
     lazy val url = configuration.getMandatoryStringProperty("airbrake.url")
-    lazy val user = configuration.getMandatoryStringProperty("airbrake.user")
     lazy val apiKey = configuration.getMandatoryStringProperty("airbrake.apikey")
   }
 

@@ -12,7 +12,6 @@ object AirBrake extends Logging {
   def send(category: String, message: String, file: String = "undefined", lineno: Integer = 0, backtrace: String = "undefined") = {
 
     val url = Configuration.airbrake.url 
-    val user = Configuration.airbrake.user
     val apiKey = Configuration.airbrake.apiKey
 
     val body = s"""{ "notifier": { "name": "gu.diagnostics", "version": "0.1", "url": "http://theguardian.com" },
