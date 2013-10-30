@@ -67,9 +67,17 @@ case class Container(val containerType: String = "news", val tone: String = "new
   val className = "container"
 }
 
-case class News(val showMore: Boolean = false) extends Style {
+case class NewsContainer(val showMore: Boolean = false) extends Style {
   val className = "news"
   val tone: String = "news"
+}
+case class CommentContainer(val showMore: Boolean = false) extends Style {
+  val className = "comment"
+  val tone: String = "comment"
+}
+case class FeaturesContainer(val showMore: Boolean = false) extends Style {
+  val className = "features"
+  val tone: String = "feature"
 }
 
 
