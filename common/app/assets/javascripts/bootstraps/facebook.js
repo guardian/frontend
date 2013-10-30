@@ -19,4 +19,5 @@ define(["common", "modules/identity/autosignin"], function(common, AutoSignin) {
     return {
         init: ready
     };
+    // move to id bs
 });
