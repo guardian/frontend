@@ -27,6 +27,7 @@ var Component = function() {};
 Component.CONFIG = {
     templateName: '{{ TEMPLATE_NAME }}',
     componentClass: '{{ COMPONENT_CLASS }}',
+    endpoint: '{{ endpoint }}',
     classes: {},
     elements: {}
 };
@@ -77,6 +78,18 @@ Component.prototype.render = function(parent) {
     bonzo(container).append(template);
     this.elem = template;
     this.ready();
+};
+
+/**
+ *
+ */
+Component.prototype.load = function(parent) {
+    var endpoint = this.conf().endpoint,
+        opt;
+
+    for (opt in this.options) {
+        endpoint = endpoint.replace(':'+ opt, this.options[opt]);
+    }
 };
 
 /**
