@@ -1,0 +1,2387 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":129506,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":12951,
+    "orderBy":"newest",
+    "edition":{
+      "id":"football",
+      "webTitle":"Football",
+      "webUrl":"http://www.theguardian.com/football",
+      "apiUrl":"http://content.guardianapis.com/football",
+      "code":"default"
+    },
+    "section":{
+      "id":"football",
+      "webTitle":"Football",
+      "webUrl":"http://www.theguardian.com/football",
+      "apiUrl":"http://content.guardianapis.com/football",
+      "editions":[{
+        "id":"football",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football",
+        "apiUrl":"http://content.guardianapis.com/football",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"football/2013/oct/23/cska-moscow-manchester-city-live-mbm",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T17:13:29Z",
+      "webTitle":"CSKA Moscow v Manchester City – live! | Tom Bryant",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/cska-moscow-manchester-city-live-mbm",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/cska-moscow-manchester-city-live-mbm",
+      "fields":{
+        "trailText":"<strong>Minute-by-minute report:</strong> Can Manchester City overcome CSKA Moscow's dodgy pitch? Find out with Tom Bryant",
+        "headline":"CSKA Moscow v Manchester City – live!",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnhd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546991788/e5d83330-d78a-4935-9a1a-ac41e1002470-140x84.jpeg",
+        "wordcount":"1",
+        "liveBloggingNow":"true",
+        "commentCloseDate":"2013-10-26T15:01:10Z"
+      },
+      "tags":[{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/cskamoscow",
+        "type":"keyword",
+        "webTitle":"CSKA Moscow",
+        "webUrl":"http://www.theguardian.com/football/cskamoscow",
+        "apiUrl":"http://content.guardianapis.com/football/cskamoscow",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/27018"
+        }]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.theguardian.com/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.theguardian.com/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/tombryant",
+        "type":"contributor",
+        "webTitle":"Tom Bryant",
+        "webUrl":"http://www.theguardian.com/profile/tombryant",
+        "apiUrl":"http://content.guardianapis.com/profile/tombryant",
+        "r2ContributorId":"22836",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546990935/e5d83330-d78a-4935-9a1a-ac41e1002470-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546990935/e5d83330-d78a-4935-9a1a-ac41e1002470-2060x1236.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"1236",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546991666/e5d83330-d78a-4935-9a1a-ac41e1002470-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546991666/e5d83330-d78a-4935-9a1a-ac41e1002470-220x132.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"132",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546991788/e5d83330-d78a-4935-9a1a-ac41e1002470-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546991788/e5d83330-d78a-4935-9a1a-ac41e1002470-140x84.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"84",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546991886/e5d83330-d78a-4935-9a1a-ac41e1002470-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546991886/e5d83330-d78a-4935-9a1a-ac41e1002470-300x180.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"180",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546992010/e5d83330-d78a-4935-9a1a-ac41e1002470-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546992010/e5d83330-d78a-4935-9a1a-ac41e1002470-380x228.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"228",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546992705/e5d83330-d78a-4935-9a1a-ac41e1002470-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546992705/e5d83330-d78a-4935-9a1a-ac41e1002470-2048x1536.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"1536",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546993683/e5d83330-d78a-4935-9a1a-ac41e1002470-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546993683/e5d83330-d78a-4935-9a1a-ac41e1002470-620x372.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"372",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546993873/e5d83330-d78a-4935-9a1a-ac41e1002470-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546993873/e5d83330-d78a-4935-9a1a-ac41e1002470-540x324.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"324",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546994182/e5d83330-d78a-4935-9a1a-ac41e1002470-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546994182/e5d83330-d78a-4935-9a1a-ac41e1002470-1024x768.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"768",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546994470/e5d83330-d78a-4935-9a1a-ac41e1002470-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546994470/e5d83330-d78a-4935-9a1a-ac41e1002470-460x276.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"276",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546994698/e5d83330-d78a-4935-9a1a-ac41e1002470-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546994698/e5d83330-d78a-4935-9a1a-ac41e1002470-1020x612.jpeg",
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates after scoring City's opener.",
+            "height":"612",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates after scoring City's opener. Photograph: Ivan Sekretarev/AP",
+            "mediaId":"gu-fc-7a0ce736-fc1b-454c-bf16-f4b9ea2918c9",
+            "width":"1020"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/27018"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/11"
+      }]
+    },{
+      "id":"football/gallery/2013/oct/23/manchester-city-cska-moscow-gallery",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T17:02:50Z",
+      "webTitle":"Manchester City's Moscow adventure – in pictures",
+      "webUrl":"http://www.theguardian.com/football/gallery/2013/oct/23/manchester-city-cska-moscow-gallery",
+      "apiUrl":"http://content.guardianapis.com/football/gallery/2013/oct/23/manchester-city-cska-moscow-gallery",
+      "fields":{
+        "trailText":"<p>The best images from Russia where Manuel Pellegrini's men are attempting to overcome a threadbare but green pitch and CSKA Moscow</p>",
+        "headline":"Manchester City's Moscow adventure – in pictures",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jzvz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382547187500/Manchester-Citys-Sergio-A-003.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T17:02:50Z"
+      },
+      "tags":[{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/cskamoscow",
+        "type":"keyword",
+        "webTitle":"CSKA Moscow",
+        "webUrl":"http://www.theguardian.com/football/cskamoscow",
+        "apiUrl":"http://content.guardianapis.com/football/cskamoscow",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/27018"
+        }]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.theguardian.com/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/steven-bloor",
+        "type":"contributor",
+        "webTitle":"Steven Bloor",
+        "webUrl":"http://www.theguardian.com/profile/steven-bloor",
+        "apiUrl":"http://content.guardianapis.com/profile/steven-bloor",
+        "r2ContributorId":"46598",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420788858",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382547187500/Manchester-Citys-Sergio-A-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"Manchester City's Sergio Aguero celebrates ",
+            "height":"84",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Manchester City's Sergio Aguero celebrates  Photograph: Ivan Sekretarev/AP",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420788211",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546891453/Manchester-City-subs-wear-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"citah: Manchester City subs wear scarves",
+            "height":"480",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"With temperatures in Moscow a chilly 4 degrees C, it's no wonder the Manchester City subs are wrapped up as snug as a bug in a rug",
+            "width":"639"
+          }
+        }]
+      },{
+        "id":"gu-image-420788214",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382547252334/Manuel-Pellegrini-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"citah: Manuel Pellegrini",
+            "height":"480",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"However manager Manuel Pellegrini, right, and his assistant Ruben Cousillas are made of sterner stuff",
+            "width":"665"
+          }
+        }]
+      },{
+        "id":"gu-image-420788202",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546897856/Georgi-Milanov-and-Jesus--002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"citah: Georgi Milanov and Jesus Navas battle for the ball",
+            "height":"480",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"It's honours even for the first half an hour, as demonstrated by Georgi Milanov and Jesús Navas' battle for the ball, and then the home side take the lead. Keisuke Honda wins a header against Javi García after a clearance from Igor Akinfeev and nods it into the area. Joe Hart comes out to grab it, gets nowhere near and Zoran Tosic chips it over him",
+            "width":"673"
+          }
+        }]
+      },{
+        "id":"gu-image-420788186",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546901488/David-Silva-crosses-the-b-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"citah: David Silva crosses the ball",
+            "height":"480",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Almost immediately City go on the attack. Aleksander Kolorov finds David Silva, who runs into the left hand side of the box. He crosses to Sergio Agüero on the penalty spot and he scrambles it home",
+            "width":"695"
+          }
+        }]
+      },{
+        "id":"gu-image-420788222",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382546905975/Sergio-Aguero-celebrates--004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ivan Sekretarev",
+            "altText":"citah: Sergio Aguero celebrates after scoring",
+            "height":"566",
+            "credit":"Ivan Sekretarev/AP",
+            "caption":"Three minutes before half-time that man Agüero pops up again to give City the lead. Navas wins a throw-in on the right hand side of the pitch, deep in CSKA's half. The ball is worked to Alvaro Negredo and he chips the ball up in the air and across the box. Agüero simply nods it home from six yards.<em> Half-time: CSKA Moscow 1-2 Manchester City</em>",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-420788258",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382547324434/More_pics_shortly.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"More pics shortly",
+            "height":"480",
+            "credit":"Guardian",
+            "width":"739"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/27018"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/11"
+      }]
+    },{
+      "id":"football/2013/oct/23/mark-bosnich-alex-ferguson-manchester-united",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T16:31:00Z",
+      "webTitle":"Mark Bosnich vows to confront Sir Alex Ferguson over comments in book",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/mark-bosnich-alex-ferguson-manchester-united",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/mark-bosnich-alex-ferguson-manchester-united",
+      "fields":{
+        "trailText":"The former Manchester United goalkeeper Mark Bosnich has vowed to confront Sir Alex Ferguson over comments about him in My Autobiography",
+        "headline":"Mark Bosnich vows to confront Sir Alex Ferguson over comments in book",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnz7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544277562/Mark-Bosnich-was-heir-to--006.jpg",
+        "wordcount":"265",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T16:27:53Z"
+      },
+      "tags":[{
+        "id":"football/manchester-united",
+        "type":"keyword",
+        "webTitle":"Manchester United",
+        "webUrl":"http://www.theguardian.com/football/manchester-united",
+        "apiUrl":"http://content.guardianapis.com/football/manchester-united",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/12"
+        }]
+      },{
+        "id":"football/sir-alex-ferguson",
+        "type":"keyword",
+        "webTitle":"Sir Alex Ferguson",
+        "webUrl":"http://www.theguardian.com/football/sir-alex-ferguson",
+        "apiUrl":"http://content.guardianapis.com/football/sir-alex-ferguson",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420786513",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544269648/Mark-Bosnich-was-heir-to--001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"54",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544271441/Mark-Bosnich-was-heir-to--002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"340",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544272659/Mark-Bosnich-was-heir-to--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"130",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544273954/Mark-Bosnich-was-heir-to--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"720",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544275586/Mark-Bosnich-was-heir-to--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"1536",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544277562/Mark-Bosnich-was-heir-to--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"84",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544278764/Mark-Bosnich-was-heir-to--007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"132",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544279942/Mark-Bosnich-was-heir-to--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"168",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544281224/Mark-Bosnich-was-heir-to--009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"180",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544282457/Mark-Bosnich-was-heir-to--010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"228",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544283679/Mark-Bosnich-was-heir-to--011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"276",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544284898/Mark-Bosnich-was-heir-to--012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"372",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544286374/Mark-Bosnich-was-heir-to--013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"1116",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544288316/Mark-Bosnich-was-heir-to--014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"1536",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544283679/Mark-Bosnich-was-heir-to--011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"276",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his time as Manchester United's No1 was brief. Photograph: David Jones/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420786514",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382544277562/Mark-Bosnich-was-heir-to--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Jones   David Jones",
+            "altText":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief.",
+            "height":"84",
+            "credit":"Jones   David Jones/PA",
+            "caption":"Mark Bosnich was heir to Peter Schmeichel but his tiome as Manchester United's No1 was brief. Photograph: Jones   David Jones/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/12"
+      }]
+    },{
+      "id":"football/2013/oct/23/ian-holloway-leaves-crystal-palace-mutual-consent",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T15:37:40Z",
+      "webTitle":"Ian Holloway leaves Crystal Palace by mutual consent after just a year",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/ian-holloway-leaves-crystal-palace-mutual-consent",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/ian-holloway-leaves-crystal-palace-mutual-consent",
+      "fields":{
+        "trailText":"Ian Holloway has left Crystal Palace by mutual consent after just under a year in charge of the club",
+        "headline":"Ian Holloway leaves Crystal Palace by mutual consent after just a year",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnzc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542565746/Ian-Holloway-003.jpg",
+        "wordcount":"434",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T15:37:40Z"
+      },
+      "tags":[{
+        "id":"football/ian-holloway",
+        "type":"keyword",
+        "webTitle":"Ian Holloway",
+        "webUrl":"http://www.theguardian.com/football/ian-holloway",
+        "apiUrl":"http://content.guardianapis.com/football/ian-holloway",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/crystalpalace",
+        "type":"keyword",
+        "webTitle":"Crystal Palace",
+        "webUrl":"http://www.theguardian.com/football/crystalpalace",
+        "apiUrl":"http://content.guardianapis.com/football/crystalpalace",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/5"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/sachinnakrani",
+        "type":"contributor",
+        "webTitle":"Sachin Nakrani",
+        "webUrl":"http://www.theguardian.com/profile/sachinnakrani",
+        "apiUrl":"http://content.guardianapis.com/profile/sachinnakrani",
+        "bio":"<p>Sachin Nakrani is a sports journalist for the Guardian specialising in football. He also writes about boxing and cricket</p>",
+        "r2ContributorId":"22725",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/19/1376894358476/Sachin-Nakrani-003.jpg",
+        "references":[]
+      },{
+        "id":"profile/dominicfifield",
+        "type":"contributor",
+        "webTitle":"Dominic Fifield",
+        "webUrl":"http://www.theguardian.com/profile/dominicfifield",
+        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
+        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
+        "rcsId":"GNL004637",
+        "r2ContributorId":"15597",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/10/1381399399489/Dominic-Fifield-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420781758",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542560286/Ian-Holloway-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"54",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542563453/Ian-Holloway-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"130",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542565746/Ian-Holloway-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"84",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542568413/Ian-Holloway-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"132",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542573162/Ian-Holloway-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"168",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542575827/Ian-Holloway-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"180",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542578072/Ian-Holloway-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"228",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542580558/Ian-Holloway-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"276",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542580558/Ian-Holloway-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"276",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420781759",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382542565746/Ian-Holloway-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Julian Finney",
+            "altText":"Ian Holloway",
+            "height":"84",
+            "credit":"Julian Finney/Getty Images",
+            "caption":"The shock of the 4–1 defeat to Fulham shows in Ian Holloway's face, a prelude to his parting of the ways with Crystal Palace. Photograph: Julian Finney/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/5"
+      }]
+    },{
+      "id":"football/2013/oct/23/sports-minister-fa-commission-female-helen-grant",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T14:49:55Z",
+      "webTitle":"Sports minister backs FA commission and calls for female member",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/sports-minister-fa-commission-female-helen-grant",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/sports-minister-fa-commission-female-helen-grant",
+      "fields":{
+        "trailText":"Helen Grant, the new sports minister, suggested the FA's controversial commission into the future of the England team should comprise a female member",
+        "headline":"Sports minister backs FA commission and calls for female member",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnma",
+        "wordcount":"730",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T14:49:55Z"
+      },
+      "tags":[{
+        "id":"football/fa",
+        "type":"keyword",
+        "webTitle":"The FA",
+        "webUrl":"http://www.theguardian.com/football/fa",
+        "apiUrl":"http://content.guardianapis.com/football/fa",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"media/greg-dyke",
+        "type":"keyword",
+        "webTitle":"Greg Dyke",
+        "webUrl":"http://www.theguardian.com/media/greg-dyke",
+        "apiUrl":"http://content.guardianapis.com/media/greg-dyke",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport-politics",
+        "type":"keyword",
+        "webTitle":"Sport politics",
+        "webUrl":"http://www.theguardian.com/sport/sport-politics",
+        "apiUrl":"http://content.guardianapis.com/sport/sport-politics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/owengibson",
+        "type":"contributor",
+        "webTitle":"Owen Gibson",
+        "webUrl":"http://www.theguardian.com/profile/owengibson",
+        "apiUrl":"http://content.guardianapis.com/profile/owengibson",
+        "bio":"<p>Owen Gibson is the Guardian's chief sports correspondent. From 2010 to 2012 he was Olympics editor, covering the build up to the London Games and writing on a range of other sporting issues. Prior to that, he was the Guardian's sports news correspondent and, before that, media correspondent for four years. He joined the Guardian in 2001 as new media editor and previously worked for trade title Media Week</p>",
+        "rcsId":"GNL481697",
+        "r2ContributorId":"16214",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/owen_gibson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420776329",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539528794/Premier-League-And-The-FA-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"168",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the Premier League and FA Facilities Fund launch. Photograph: Jan Kruger/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539530918/Premier-League-And-The-FA-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"180",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the Premier League and FA Facilities Fund launch. Photograph: Jan Kruger/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539532582/Premier-League-And-The-FA-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"228",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the Premier League and FA Facilities Fund launch. Photograph: Jan Kruger/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539534198/Premier-League-And-The-FA-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"276",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the Premier League and FA Facilities Fund launch. Photograph: Jan Kruger/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539535911/Premier-League-And-The-FA-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"372",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the Premier League and FA Facilities Fund launch. Photograph: Jan Kruger/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539537643/Premier-League-And-The-FA-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"1116",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the Premier League and FA Facilities Fund launch. Photograph: Jan Kruger/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539539967/Premier-League-And-The-FA-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"1536",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the Premier League and FA Facilities Fund launch. Photograph: Jan Kruger/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382539534198/Premier-League-And-The-FA-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jan Kruger",
+            "altText":"Premier League And The FA Facilities Fund Launch",
+            "height":"276",
+            "credit":"Jan Kruger/Getty Images",
+            "caption":"The Premier League chief executive Richard Scudamore, left, and sports minister Helen Grant at the launch of the Premier League and FA Facilities Fund. Photograph: Jan Kruger/Getty Images",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/2013/oct/23/the-fiver-arsenal-champioons-league",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T14:39:19Z",
+      "webTitle":"The Fiver | Normal service has been resumed",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/the-fiver-arsenal-champioons-league",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/the-fiver-arsenal-champioons-league",
+      "fields":{
+        "trailText":"<strong>In today's Fiver:</strong> Arsenal return to losing ways, Professionalism's Mark Bosnich and Homer Simpson at the World Cup",
+        "headline":"Normal service has been resumed",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnyp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538939120/Jack-Wilshere-003.jpg",
+        "wordcount":"1375",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T14:39:19Z"
+      },
+      "tags":[{
+        "id":"football/series/thefiver",
+        "type":"series",
+        "webTitle":"The Fiver",
+        "webUrl":"http://www.theguardian.com/football/series/thefiver",
+        "apiUrl":"http://content.guardianapis.com/football/series/thefiver",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/jacob-steinberg",
+        "type":"contributor",
+        "webTitle":"Jacob Steinberg",
+        "webUrl":"http://www.theguardian.com/profile/jacob-steinberg",
+        "apiUrl":"http://content.guardianapis.com/profile/jacob-steinberg",
+        "bio":"<p>Jacob is a football and tennis writer for the Guardian</p>",
+        "r2ContributorId":"33875",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/6/1357492202523/Jacob-Steinberg-byline-002.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420775120",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538935211/Jack-Wilshere-001.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"54",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538937628/Jack-Wilshere-002.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"130",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538939120/Jack-Wilshere-003.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"84",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538940588/Jack-Wilshere-004.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"132",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538942843/Jack-Wilshere-005.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"168",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538944444/Jack-Wilshere-006.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"180",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538946223/Jack-Wilshere-007.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"228",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538948071/Jack-Wilshere-008.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"276",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538948071/Jack-Wilshere-008.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"276",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Random thought: why don't footballers get sponsors' names tattooed on their arms, if they're so content to sport both? Photograph: Xinhua/Landov/Barcroft Media",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420775121",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/23/1382538939120/Jack-Wilshere-003.jpg",
+          "typeData":{
+            "source":"Xinhua /Landov / Barcroft Media",
+            "photographer":"Xinhua /Landov / Barcroft Media",
+            "altText":"Jack Wilshere",
+            "height":"84",
+            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
+            "caption":"Jack Wilshere of Arsenal. Photograph: Xinhua /Landov / Barcroft Media",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/2013/oct/23/cska-moscow-spray-pitch-manchester-city",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T14:26:32Z",
+      "webTitle":"CSKA Moscow come up with remedy for a dodgy pitch – paint it green",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/cska-moscow-spray-pitch-manchester-city",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/cska-moscow-spray-pitch-manchester-city",
+      "fields":{
+        "trailText":"CSKA Moscow have answered criticism of their pitch by taking the only logical way out – painting it green",
+        "headline":"CSKA Moscow come up with remedy for a dodgy pitch – paint it green",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnkq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538215046/Manuel-Pellegrini-003.jpg",
+        "wordcount":"148",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T14:26:32Z"
+      },
+      "tags":[{
+        "id":"football/cskamoscow",
+        "type":"keyword",
+        "webTitle":"CSKA Moscow",
+        "webUrl":"http://www.theguardian.com/football/cskamoscow",
+        "apiUrl":"http://content.guardianapis.com/football/cskamoscow",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/27018"
+        }]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.theguardian.com/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/europeanfootball",
+        "type":"keyword",
+        "webTitle":"European club football",
+        "webUrl":"http://www.theguardian.com/football/europeanfootball",
+        "apiUrl":"http://content.guardianapis.com/football/europeanfootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420773661",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538210140/Manuel-Pellegrini-001.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"54",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538213293/Manuel-Pellegrini-002.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"130",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538215046/Manuel-Pellegrini-003.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"84",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538217282/Manuel-Pellegrini-004.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"132",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538218880/Manuel-Pellegrini-005.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"168",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538220637/Manuel-Pellegrini-006.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"180",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538222503/Manuel-Pellegrini-007.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"228",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538224262/Manuel-Pellegrini-008.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"276",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538224262/Manuel-Pellegrini-008.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"276",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420773662",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382538215046/Manuel-Pellegrini-003.jpg",
+          "typeData":{
+            "source":"ZUMA/REX",
+            "photographer":"ZUMA/REX",
+            "altText":"Manuel Pellegrini",
+            "height":"84",
+            "credit":"ZUMA/REX/ZUMA/REX",
+            "caption":"The Manchester City manager Manuel Pellegrini has been highly critical of the CSKA pitch. Photograph: ZUMA/REX",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/11"
+      }]
+    },{
+      "id":"football/video/2013/oct/23/real-sociedad-manchester-united-champions-league-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T14:01:13Z",
+      "webTitle":"Real Sociedad hope Manchester United's poor form continues into Champions League – video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/oct/23/real-sociedad-manchester-united-champions-league-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/oct/23/real-sociedad-manchester-united-champions-league-video",
+      "fields":{
+        "trailText":"<p>Real Sociedad manager Jagoba Arrasate tells reporters that, although he hopes Manchester United's poor start to the season continues in the Champions League, he expects that United are capable of returning to their best form at any time</p>",
+        "headline":"Real Sociedad hope Manchester United's poor form continues into Champions League – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnfm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530437068/Real-Sociedad-players-gat-005.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T14:01:13Z"
+      },
+      "tags":[{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/realsociedad",
+        "type":"keyword",
+        "webTitle":"Real Sociedad",
+        "webUrl":"http://www.theguardian.com/football/realsociedad",
+        "apiUrl":"http://content.guardianapis.com/football/realsociedad",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26308"
+        }]
+      },{
+        "id":"football/manchester-united",
+        "type":"keyword",
+        "webTitle":"Manchester United",
+        "webUrl":"http://www.theguardian.com/football/manchester-united",
+        "apiUrl":"http://content.guardianapis.com/football/manchester-united",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/12"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-420760517",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530433104/Real-Sociedad-players-gat-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"54",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530434471/Real-Sociedad-players-gat-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"340",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530435786/Real-Sociedad-players-gat-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"130",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530437068/Real-Sociedad-players-gat-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"84",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530438670/Real-Sociedad-players-gat-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"132",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530440137/Real-Sociedad-players-gat-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"168",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530441504/Real-Sociedad-players-gat-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"180",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530442828/Real-Sociedad-players-gat-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"228",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530444159/Real-Sociedad-players-gat-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"276",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530445550/Real-Sociedad-players-gat-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"372",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530446881/Real-Sociedad-players-gat-012.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"90",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530448203/Real-Sociedad-players-gat-013.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"225",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530449577/Real-Sociedad-players-gat-014.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"360",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530451016/Real-Sociedad-players-gat-015.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"360",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530452439/Real-Sociedad-players-gat-016.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"230",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/23/131023Sociedad-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/23/131023Sociedad_8230685.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/23/131023Sociedad_8230685.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/23/131023Sociedad_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/23/131023Sociedad_8230685.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/23/131023Sociedad_8230685.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/23/131023Sociedad_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/23/131023Sociedad_8230685.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/23/131023Sociedad_8230685.jpg",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        }]
+      },{
+        "id":"gu-image-420770682",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/23/1382530437068/Real-Sociedad-players-gat-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jon Super",
+            "altText":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium",
+            "height":"84",
+            "credit":"Jon Super/AP",
+            "caption":"Real Sociedad players gather on the pitch to train at Manchester United's Old Trafford Stadium, Manchester, England, Tuesday, Oct. 22, 2013. Real Sociedad will play  Manchester United  in a Champion's League Group A soccer match on Wednesday. (AP Photo/Jon Super) Photograph: Jon Super/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/12"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26308"
+      }]
+    },{
+      "id":"football/2013/oct/23/barcelona-real-madrid-el-clasico",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T13:54:33Z",
+      "webTitle":"Barcelona are ready to perform against Real Madrid, says Gerardo Martino",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/barcelona-real-madrid-el-clasico",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/barcelona-real-madrid-el-clasico",
+      "fields":{
+        "trailText":"The Barcelona manager, Gerardo Martino has dismissed any concerns over his side's form ahead of Saturday's meeting with Real Madrid, insisting the La Liga champions go into ther first <em>el clásico</em> of the season in good shape",
+        "headline":"Barcelona are ready to perform against Real Madrid, says Gerardo Martino",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jnja",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382536414491/Lionel-Messi-and-Andres-I-006.jpg",
+        "wordcount":"252",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T13:54:33Z"
+      },
+      "tags":[{
+        "id":"football/barcelona",
+        "type":"keyword",
+        "webTitle":"Barcelona",
+        "webUrl":"http://www.theguardian.com/football/barcelona",
+        "apiUrl":"http://content.guardianapis.com/football/barcelona",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26300"
+        }]
+      },{
+        "id":"football/realmadrid",
+        "type":"keyword",
+        "webTitle":"Real Madrid",
+        "webUrl":"http://www.theguardian.com/football/realmadrid",
+        "apiUrl":"http://content.guardianapis.com/football/realmadrid",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26303"
+        }]
+      },{
+        "id":"football/laligafootball",
+        "type":"keyword",
+        "webTitle":"La Liga",
+        "webUrl":"http://www.theguardian.com/football/laligafootball",
+        "apiUrl":"http://content.guardianapis.com/football/laligafootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/650"
+        }]
+      },{
+        "id":"football/europeanfootball",
+        "type":"keyword",
+        "webTitle":"European club football",
+        "webUrl":"http://www.theguardian.com/football/europeanfootball",
+        "apiUrl":"http://content.guardianapis.com/football/europeanfootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420775103",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382536420617/Lionel-Messi-and-Andres-I-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Giuseppe Cacace",
+            "altText":"Lionel Messi and Andres Iniesta embrace after combining for Barcelona's equaliser against Milan",
+            "height":"276",
+            "credit":"Giuseppe Cacace/AFP/Getty Images",
+            "caption":"Lionel Messi and Andrés Iniesta embrace after combining for Barcelona's equaliser against Milan on Tuesday. Photograph: Giuseppe Cacace/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420775104",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/23/1382536414491/Lionel-Messi-and-Andres-I-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Giuseppe Cacace",
+            "altText":"Lionel Messi and Andres Iniesta embrace after combining for Barcelona's equaliser against Milan",
+            "height":"84",
+            "credit":"Giuseppe Cacace/AFP/Getty Images",
+            "caption":"Lionel Messi and Andres Iniesta embrace after combining for Barcelona's equaliser against Milan on Tuesday. Photograph: Giuseppe Cacace/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26300"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26303"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/650"
+      }]
+    },{
+      "id":"football/2013/oct/23/caleb-porter-portland-timbers-interview-mls-playoffs",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-23T13:00:00Z",
+      "webTitle":"Caleb Porter: polishing the Portland Timbers' playoff ambitions | Graham Parker",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/23/caleb-porter-portland-timbers-interview-mls-playoffs",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/23/caleb-porter-portland-timbers-interview-mls-playoffs",
+      "fields":{
+        "trailText":"<p><strong>Interview</strong>: As Portland Timbers go into the final round of MLS games top of the Western Conference, head coach Caleb Porter talks about how he has turned the club around</p>",
+        "headline":"Caleb Porter: polishing the Portland Timbers' playoff ambitions",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jm8c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/26/1377489000820/4634a207-0446-4545-b36c-2813aa7bbc13-140x84.jpeg",
+        "wordcount":"3341",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T13:00:01Z"
+      },
+      "tags":[{
+        "id":"sport/portland-timbers",
+        "type":"keyword",
+        "webTitle":"Portland Timbers",
+        "webUrl":"http://www.theguardian.com/sport/portland-timbers",
+        "apiUrl":"http://content.guardianapis.com/sport/portland-timbers",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/mls",
+        "type":"keyword",
+        "webTitle":"MLS",
+        "webUrl":"http://www.theguardian.com/football/mls",
+        "apiUrl":"http://content.guardianapis.com/football/mls",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/graham-parker",
+        "type":"contributor",
+        "webTitle":"Graham Parker",
+        "webUrl":"http://www.theguardian.com/profile/graham-parker",
+        "apiUrl":"http://content.guardianapis.com/profile/graham-parker",
+        "bio":"<p>Graham Parker is a writer based in Brooklyn, New York. He is also a widely exhibited artist and author of the book <em>Fair Use (notes from spam)</em>.<br />On Twitter he is @KidWeil</p>",
+        "r2ContributorId":"48198",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/1/9/1326131325698/Graham-Parker-profile-pic-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"sport/ncaa",
+        "type":"keyword",
+        "webTitle":"NCAA",
+        "webUrl":"http://www.theguardian.com/sport/ncaa",
+        "apiUrl":"http://content.guardianapis.com/sport/ncaa",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420709832",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/26/1377489002923/4634a207-0446-4545-b36c-2813aa7bbc13-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ted S. Warren",
+            "altText":"Caleb Porter Portland Timbers",
+            "height":"276",
+            "credit":"Ted S. Warren/AP",
+            "caption":"The Portland Timbers have been transformed in 2013 under the stewardship of head coach Caleb Porter. Photograph: Ted S. Warren/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420709833",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/26/1377489000820/4634a207-0446-4545-b36c-2813aa7bbc13-140x84.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Ted S. Warren",
+            "altText":"Caleb Porter Portland Timbers",
+            "height":"84",
+            "credit":"Ted S. Warren/AP",
+            "caption":"The Portland Timbers bench and head coach Caleb Porter, center left, react to a play against the Seattle Sounders in the first half of a MLS soccer match, Sunday, Aug. 25, 2013, in Seattle. (AP Photo/Ted S. Warren) Photograph: Ted S. Warren/AP",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420709834",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382483404104/1c58a957-4102-4614-8760-81001b57b9de-460x276.jpeg",
+          "typeData":{
+            "source":"  Ken Hawkins/ZUMA Press/Corbis",
+            "photographer":"Ken Hawkins",
+            "altText":"Seattle Sounders' Clint Dempsey is tackled by Portland Timbers' Diego Chara",
+            "height":"276",
+            "credit":"Ken Hawkins/  Ken Hawkins/ZUMA Press/Corbis",
+            "caption":"Seattle Sounders' Clint Dempsey is tackled by Portland Timbers' Diego Chara at JELD-WEN Field. Photograph: Ken Hawkins/ZUMA Press/Corbis",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

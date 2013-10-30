@@ -2,14 +2,15 @@
 @import conf.Switches._
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
-    <h2 class="article-zone tone-@VisualTone(image) tone-accent-border">
-        <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
+    <h2 class="article-zone left-col-deport tone-@VisualTone(image) tone-accent-border">
+        <span class="left-col-deport__body">
+            <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
+        </span>
     </h2>
-
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(image)">
         <article id="article" class="article"
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner">
                 <header class="article__head">
 
                     @fragments.headline(image.headline)
@@ -22,8 +23,8 @@
 
                 <div class="after-header"></div>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
                     @fragments.img(image.mainPicture)
 
@@ -38,8 +39,8 @@
                         @fragments.social(image)
                     </div>
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true">
-                    <div class="article-v2__secondary-column__inner">
+                <div class="article__secondary-column" aria-hidden="true">
+                    <div class="article__secondary-column__inner">
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
@@ -53,9 +54,9 @@
             </div>
         </article>
 
-        <div class="article-v2__inner">
+        <div class="article__inner">
             @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-                <h3 id="comments" class="page-sub-header tone-colour tone-border">Comments</h3>
+                <h2 id="comments" class="page-sub-header tone-colour">Comments</h2>
                 <div class="article__discussion"></div>
 
                 <div class="d-show-cta-wrapper">
@@ -77,7 +78,7 @@
                 <aside class="js-related" role="complementary" data-link-context="related@image.url"></aside>
             }
 
-            <div class="js-popular article__popular" role="complementary"></div>
+            @fragments.mostPopularPlaceholder(image.section)
         </div>
     </div>
 }

@@ -1,11 +1,27 @@
 define(['common', 'modules/id'], function(common, Id) {
     function Track() {}
 
+    /**
+     * @param {Array.<string>}
+     * @return {string}
+     */
+    Track.prototype.getLinkTrackVars = function(extras) {
+        extra = extras || [];
+        var linkTrackVars = [
+            'events',
+            'prop4', 'prop6', 'prop8', 'prop10', 'prop13',
+            'prop19', 'prop31', 'prop51', 'prop75',
+            'eVar7', 'eVar8',  'eVar19', 'eVar31',
+            'eVar51', 'eVar66'];
+
+        return linkTrackVars.concat(extras).join(',');
+    };
+
     Track.prototype.comment = function() {
         s.events = 'event51';
         s.eVar66 = Id.getUserFromCookie().id;
         s.eVar68 = 'comment';
-        s.linkTrackVars = 'events,prop51,eVar51,eVar7,eVar66,eVar67,eVar68,prop19';
+        s.linkTrackVars = this.getLinkTrackVars(['eVar68']);
         s.linkTrackEvents = 'event51';
         s.tl(true, 'o', 'comment');
     };
@@ -15,7 +31,7 @@ define(['common', 'modules/id'], function(common, Id) {
         s.eVar65 = 'recommendation';
         s.eVar66 = Id.getUserFromCookie().id;
         s.eVar67 = e.userId;
-        s.linkTrackVars = 'events,prop51,eVar51,eVar7,eVar65,eVar66,eVar67,prop19';
+        s.linkTrackVars = this.getLinkTrackVars(['eVar65', 'eVar67']);
         s.linkTrackEvents = 'event72';
         s.tl(true, 'o', 'Recommend a comment');
     };
@@ -23,8 +39,8 @@ define(['common', 'modules/id'], function(common, Id) {
 
     var init = function() {
         var track = new Track();
-        common.mediator.on('discussion:commentbox:post:success', track.comment);
-        common.mediator.on('discussion:comment:recommend:success', track.recommend);
+        common.mediator.on('discussion:commentbox:post:success', track.comment.bind(track));
+        common.mediator.on('discussion:comment:recommend:success', track.recommend.bind(track));
     };
 
     return { init: init };

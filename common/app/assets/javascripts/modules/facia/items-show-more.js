@@ -5,8 +5,8 @@ define([
     'qwery',
     'modules/detect',
     'modules/relativedates',
-    'modules/facia/image-upgrade'
-], function (common, bonzo, bean, qwery, detect, relativeDates, ImageUpgrade) {
+    'modules/facia/images'
+], function (common, bonzo, bean, qwery, detect, relativeDates, faciaImages) {
 
     return function(items) {
 
@@ -40,7 +40,7 @@ define([
                         sport: 5,
                         commentisfree: 3,
                         culture: 3,
-                        popular: 3
+                        popular: 5
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
@@ -55,7 +55,13 @@ define([
             },
             _renderToggle = function($items, extraItems) {
                 var buttonText = 'Show more',
-                    $button = bonzo(bonzo.create('<button class="items__show-more" data-link-name="' + buttonText + ' | 0">' + buttonText + '</button>'))
+                    $button = bonzo(bonzo.create(
+                                        '<button class="items__show-more tone-background" data-link-name="' + buttonText + ' | 0">' +
+                                            '<span class="i i-arrow-white-large">' +
+                                                buttonText +
+                                            '</span>' +
+                                        '</button>'
+                                    ))
                                   .insertAfter($items);
                 bean.on($button[0], 'click', function(e) {
                     // increment button counter
@@ -80,7 +86,7 @@ define([
             };
 
         this.addShowMore = function() {
-            var $items = bonzo(items),
+            var $items = bonzo(items).removeClass('js-items--show-more'),
                 extraItems = bonzo.create(
                     common.$g('.collection--template', items).html()
                 ),
@@ -98,9 +104,10 @@ define([
             bonzo(extraItems.splice(0, initalShowSize - qwery('.item', items).length))
                 .appendTo($items)
                 .each(function(item) {
-                    new ImageUpgrade(item).upgrade();
                     relativeDates.init(item);
                 });
+
+            faciaImages.upgrade($items[0]);
 
             // add toggle button, if they are extra items left to show
             if (extraItems.length) {

@@ -22,7 +22,6 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
-  lazy val isClosedForComments: Boolean = fields.get("commentCloseDate").filter(_.parseISODateTimeNoMillis.isAfterNow).isEmpty
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
@@ -47,6 +46,7 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
+  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTimeNoMillis.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
     val souped = body flatMap { body =>
@@ -200,8 +200,8 @@ class Gallery(content: ApiContent) extends Content(content) {
 
   lazy val size = galleryImages.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = galleryImages.sortBy(_.index).flatMap(_.imageCrops).filter(i => i.width > i.height)
-  lazy val portraits = galleryImages.sortBy(_.index).flatMap(_.imageCrops).filter(i => i.width < i.height)
+  lazy val landscapes = largestCrops.sortBy(_.index).filter(i => i.width > i.height)
+  lazy val portraits = largestCrops.sortBy(_.index).filter(i => i.width < i.height)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
@@ -218,13 +218,13 @@ class Gallery(content: ApiContent) extends Content(content) {
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
-  lazy val galleryImages: List[ImageElement] = imageMap("gallery")
+  private lazy val galleryImages: List[ImageElement] = imageMap("gallery")
   lazy val largestCrops: List[ImageAsset] = galleryImages.flatMap(_.largestImage)
   
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
-  ) ++ galleryImages.sortBy(_.index).flatMap(_.imageCrops).take(5).zipWithIndex.map{ case(image, index) =>
+  ) ++ largestCrops.sortBy(_.index).take(5).zipWithIndex.map{ case(image, index) =>
     s"twitter:image$index:src" -> image.path
   }
 }

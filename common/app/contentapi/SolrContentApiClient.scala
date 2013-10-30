@@ -12,7 +12,7 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   //NOTE - do NOT add body to this list
-  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl"
+  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,commentCloseDate"
 
   val references = "pa-football-competition,pa-football-team,witness-assignment,esa-cricket-match"
 
@@ -37,6 +37,19 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
         (editorsPicks ++ leadContent ++ results).distinctBy(_.id)
       }
+  }
+
+  object FaciaDefaults {
+    val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
+    val editorsPicks = "show-editors-picks=true"
+    val showInlineFields = s"show-fields=$trailFields"
+    val showElements = "show-elements=all"
+
+    val all = Seq(tag, editorsPicks, showInlineFields, showElements)
+
+    def generateContentApiQuery(id: String): String =
+      "%s?&%s"
+        .format(id, all.mkString("", "&", ""))
   }
 }
 

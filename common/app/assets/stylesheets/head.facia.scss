@@ -12,7 +12,7 @@
    ========================================================================== */
 
 @import "_vars";
-@import "_mixins";//Variables and mixins
+@import "_mixins";
 
 
 /* ==========================================================================
@@ -74,6 +74,8 @@
 .facia-container {
     @include mq(tablet) {
         width: gs-span(8);
+        padding-left: 0;
+        padding-right: 0;
     }
     @include mq(desktop) {
         width: gs-span(12);

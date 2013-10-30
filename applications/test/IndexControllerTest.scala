@@ -4,24 +4,20 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import conf.Switches
 
 class IndexControllerTest extends FlatSpec with Matchers {
 
   val section = "books"
   val callbackName = "aFunction"
 
-  "Section Controller" should "200 when content type is front" in Fake {
-    val result = controllers.IndexController.render(section)(TestRequest())
-    status(result) should be(200)
-  }
-
-  it should "200 when it gets an editionalised path" in Fake {
-    val result = controllers.IndexController.render("commentisfree/uk-edition")(TestRequest())
+  "Index Controller" should "200 when content type is front" in Fake {
+    val result = controllers.IndexController.render(section)(TestRequest(s"/$section"))
     status(result) should be(200)
   }
 
   it should "return JSONP when callback is supplied to front" in Fake {
-    val fakeRequest = FakeRequest(GET, s"${section}?callback=$callbackName")
+    val fakeRequest = TestRequest(s"/${section}?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
 
     val result = controllers.IndexController.render(section)(fakeRequest)
@@ -31,7 +27,7 @@ class IndexControllerTest extends FlatSpec with Matchers {
   }
 
   it should "return JSON when .json format is supplied to front" in Fake {
-    val fakeRequest = FakeRequest(GET, s"${section}.json")
+    val fakeRequest = TestRequest(s"/${section}.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
@@ -42,14 +38,24 @@ class IndexControllerTest extends FlatSpec with Matchers {
   }
 
   it should "internal redirect when content type is not front" in Fake {
-    val result = controllers.IndexController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest())
+    val result = controllers.IndexController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("/world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
 
   it should "200 when content type is front trails" in Fake {
-    val result = controllers.IndexController.renderTrails(section)(TestRequest())
+    val result = controllers.IndexController.renderTrails(section)(TestRequest(s"/$section"))
     status(result) should be(200)
+  }
+
+  it should "redirect when content api says it is on the wrong web url" in Fake {
+
+    Switches.FollowItemRedirectsFromApiSwitch.switchOn()
+
+    val result = controllers.IndexController.render("type/video")(FakeRequest(GET, "/type/video"))
+
+    status(result) should be (302)
+    header("Location", result).get should be ("/video")
   }
 
   it should "return JSONP when callback is supplied to front trails" in Fake {

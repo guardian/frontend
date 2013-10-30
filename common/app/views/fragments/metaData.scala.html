@@ -18,6 +18,8 @@
     <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
     <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
 
+    <link rel="dns-prefetch" href="@Configuration.images.path" />
+
     <meta name="application-name" content="The Guardian" />
     <meta name="msapplication-TileColor" content="#004983" />
     <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
@@ -29,11 +31,11 @@
     @item.openGraph.map{ case (key, value) =>
     <meta property="@key" content="@value" />
     }
-    
+
     @item.cards.map{ case (key, value) =>
     <meta property="@key" content="@value" />
     }
-    
+
     @if(Switches.iPhoneAppSwitch.isSwitchedOn){
         @defining(if(Edition(request).id == "US") conf.Configuration.ios.usAppId else conf.Configuration.ios.ukAppId) { id =>
     <meta name="apple-itunes-app" content="app-id=@id, app-argument=@item.id" />

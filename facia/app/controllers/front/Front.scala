@@ -18,7 +18,7 @@ class Front extends Logging {
     id.toLowerCase -> new PageFront(id.toLowerCase, e)
   }.toMap
 
-  val pageFrontAgent = AkkaAgent[Map[String, PageFront]](Map.empty)
+  val pageFrontAgent = AkkaAgent[Map[String, PageFront]](FaciaDefaults.getDefaultPageFront)
 
   def refreshPageFrontAgent() = {
     val newFronts = faciaFronts

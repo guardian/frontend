@@ -171,6 +171,10 @@ object Switches extends Collections {
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = Off)
 
+  val FollowItemRedirectsFromApiSwitch = Switch("Feature Switches", "follow-item-redirects",
+    "If this switch is on then content api redirects on items will be sent back to the end user.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -199,6 +203,10 @@ object Switches extends Collections {
 
   val ABAlphaAdvertsData = Switch("A/B Tests", "ab-alpha-adverts-data",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+
+  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
+    "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
   // Sport Switch
@@ -276,6 +284,8 @@ object Switches extends Collections {
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
     ABAlphaAdvertsData,
+    FollowItemRedirectsFromApiSwitch,
+    ABCommercialComponents,
     EditionRedirectLoggingSwitch
   )
 

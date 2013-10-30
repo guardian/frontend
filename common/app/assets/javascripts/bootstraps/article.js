@@ -10,7 +10,8 @@ define([
     "modules/experiments/live-blog-show-more",
     "modules/notification-counter",
     "modules/detect",
-    "modules/experiments/left-hand-card"
+    "modules/experiments/left-hand-card",
+    "modules/onward/history"
 ], function (
     common,
     AutoUpdate,
@@ -23,7 +24,8 @@ define([
     LiveShowMore,
     NotificationCounter,
     detect,
-    LeftHandCard
+    LeftHandCard,
+    history
 ) {
 
     var modules = {
@@ -134,6 +136,12 @@ define([
                     });
                 }
             });
+        },
+
+        logReadingHistory : function() {
+            common.mediator.on('page:article:ready', function(config) {
+                history.log(config.page.shortUrl.replace('http://gu.com', ''));
+            });
         }
     };
 
@@ -146,6 +154,7 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
+            modules.logReadingHistory();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
