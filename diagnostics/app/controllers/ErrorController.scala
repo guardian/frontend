@@ -9,10 +9,16 @@ import play.api.libs.concurrent.Execution.Implicits._
 import model.diagnostics._ 
 
 object ErrorController extends Controller with Logging {
+ 
+  // this just compiles the application and attached the tailer to the nginx log
+  def test = Action { implicit request =>
+    Ok("ok")
+  } 
 
+  // sends a sample message to Airbrake 
   def report = Action.async { implicit request =>
-    AirBrake.lg.map {
-      response => Ok("hello") // TODO: send back a gif?
+    AirBrake.send("test", "test message").map {
+      response => Ok("hello") 
     }
   } 
 
