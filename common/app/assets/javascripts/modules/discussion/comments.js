@@ -51,6 +51,9 @@ Comments.prototype.hasHiddenComments = false;
 /** @type {number} */
 Comments.prototype.currentPage = 1;
 
+/** @type {NodeList=} */
+Comments.prototype.comments = null;
+
 /** @override */
 Comments.prototype.ready = function() {
     var initialShow = this.options.initialShow,
@@ -82,6 +85,10 @@ Comments.prototype.ready = function() {
         this.hideExcessReplies();
         RecommendComments.init(this.context);
     }
+};
+
+Comments.prototype.bindCommentEvents = function() {
+
 };
 
 /**
