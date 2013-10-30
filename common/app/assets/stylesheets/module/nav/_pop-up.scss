@@ -4,7 +4,7 @@
 
 .nav-popup {
     position: absolute;
-    top: 58px;
+    top: $headerHeight;
     clear: both;
     z-index: 100;
     padding: $baseline*2 0;
