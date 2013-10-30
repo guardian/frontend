@@ -159,22 +159,44 @@ $metaHeight: 14px;
         top: -3px;
     }
 }
-@mixin card-full-width {
+@mixin card-triple-width {
     width: gs-span(9);
-    min-height: gs-height(6);
-    border-left: none;
-    padding-left: 0;
-    .connection--not-low &.item--has-image {
-        width: gs-span(3);
-        padding-left: gs-span(6) + $gs-gutter;
+    min-height: gs-height(12) - $metaHeight;
+    @include mq(wide) {
+        width: gs-span(12);
+        min-height: gs-height(16) - $metaHeight;
     }
-    .item__link {
-        border-top-style: none;
+    float: left;
+    padding-bottom: $metaHeight;
+    .item__image-container,
+    .connection--not-low &.item--has-no-image .item__standfirst,
+    .connection--low & .item__standfirst {
+        display: block;
     }
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
-    .item__image-container {
+    .connection--not-low & .item__title {
+        margin-top: $gs-baseline*(2/3);
+    }
+}
+@mixin card-full-width {
+    width: 100%;
+    padding-bottom: $metaHeight;
+    .connection--not-low &.item--has-image {
+        width: gs-span(3);
+        min-height: gs-height(6) - $metaHeight;
+        padding-left: gs-span(6) + $gs-gutter;
+    }
+    .item__title {
+        @include fs-headline(4, $size-only: true);
+    }
+    .item__byline {
+        @include fs-header(5, $size-only: true);
+    }
+    .item__image-container,
+    .connection--not-low &.item--has-no-image .item__standfirst,
+    .connection--low & .item__standfirst {
         display: block;
     }
     .connection--not-low & .item__image-container {
@@ -196,27 +218,6 @@ $metaHeight: 14px;
     }
     .item__title {
         @include fs-headline(4, $size-only: true);
-    }
-    .connection--not-low & .item__title {
-        margin-top: $gs-baseline*(2/3);
-    }
-}
-@mixin card-triple-width {
-    width: gs-span(9);
-    min-height: gs-height(12) - $metaHeight;
-    @include mq(wide) {
-        width: gs-span(12);
-        min-height: gs-height(16) - $metaHeight;
-    }
-    float: left;
-    padding-bottom: $metaHeight;
-    .item__image-container,
-    .connection--not-low &.item--has-no-image .item__standfirst,
-    .connection--low & .item__standfirst {
-        display: block;
-    }
-    .item__title {
-        @include fs-headline(5, $size-only: true);
     }
     .connection--not-low & .item__title {
         margin-top: $gs-baseline*(2/3);
