@@ -14,7 +14,7 @@ casper.start(host + 'help/insideguardian/2012/feb/29/threaded-comments?view=mobi
  *     When I choose to view the comments
  *     Then the main image has a toggle class applied to it
  *     Then I can see 10 top level comments
- *     And the first comment is authored by "tenacity"
+ *     And the first comment is authored by "helenf888"
  **/
 // Check the correct login/out buttons are present
 casper.test.begin('Read top level comments', function(test) {
@@ -38,7 +38,7 @@ casper.test.begin('Read top level comments', function(test) {
     },function timeout(){
         test.fail('Comments failed to load');
     });
-
+    test.done();
 });
 
 /**

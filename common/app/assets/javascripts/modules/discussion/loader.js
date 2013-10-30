@@ -75,7 +75,10 @@ Loader.prototype.ready = function() {
     // TODO (jamesgorrie): Move this into the Comments module
     this.getElem('comments').innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
     ajax({
-        url: '/discussion'+ id +'.json'
+        url: '/discussion'+ id +'.json',
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
     }).then(this.renderDiscussion.bind(this), this.loadingError.bind(this));
     bonzo(this.getElem('show')).remove();
     DiscussionAnalytics.init();
