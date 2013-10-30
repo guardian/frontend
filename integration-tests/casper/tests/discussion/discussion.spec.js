@@ -50,6 +50,7 @@ casper.test.begin('Read top level comments', function(test) {
 casper.test.begin('Show more comments', function(test) {
 
     casper.click('.js-show-more-comments');
+    casper.click('.js-show-more-comments');
 
     casper.waitFor(function check() {
         return casper.evaluate(function(){
