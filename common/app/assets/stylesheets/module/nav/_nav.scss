@@ -215,13 +215,13 @@
     @include box-sizing(border-box);
     display: none;
     overflow: auto;
+    background-color: #ffffff;
+    border-bottom: 1px solid $c-neutral6;
     margin: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
     }
-    background-color: #ffffff;
-    border-bottom: 1px solid $c-neutral6;
 
     @include mq(tablet) {
         display: block;

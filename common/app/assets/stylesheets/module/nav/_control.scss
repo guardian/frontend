@@ -37,15 +37,15 @@
     margin-right: 5px;
     background-color: #274C98;
     border-left: 1px solid #122853;
+
+    .is-active & {
+        border-color: #ffffff;
+        background-color: #ffffff;
+    }
 }
 
-.is-active .i-nav-divider {
-    border-color: #ffffff;
-    background-color: #ffffff;
-}
 
-
-/* Sections control - (Hamburger icon )
+/* Sections control - (Hamburger icon)
    ========================================================================== */
 
 .control--sections {
@@ -71,15 +71,11 @@
         }
     }
 }
-
-
-
 .control__menu.i {
     float: right;
     margin-top: 7px;
     text-indent: -1000em;
 }
-
 span.control__menu.i-menu {
     display: inline-block;
     margin-left: 6px;
@@ -88,7 +84,6 @@ span.control__menu.i-menu {
         display: none;
     }
 }
-
 .control--sections .i-menu-active {
     display: none;
 
@@ -97,7 +92,6 @@ span.control__menu.i-menu {
         display: inline-block;
     }
 }
-
 .control--sections .i-nav-divider {
     @include mq(tablet) {
         top: 6px;
@@ -113,6 +107,7 @@ span.control__menu.i-menu {
         height: 41px;
     }
 }
+
 
 /* Top stories control
    ========================================================================== */
@@ -149,7 +144,6 @@ span.control__menu.i-menu {
 }
 
 
-
 /* Search control
    ========================================================================== */
 
@@ -182,9 +176,7 @@ span.control__menu.i-menu {
             margin-left: 0;
         }
     }
-    
 }
-
 .control__info {
     display: none;
     height: 28px;
