@@ -30,14 +30,6 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
   }
 }
 
-<<<<<<< HEAD
-object Global extends WithFilters(DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*)
-  with CoreNavigationLifecycle
-  with FrontLifecycle
-  with TravelOffersLifecycle
-  with MasterClassesLifecycle
-  with DevParametersLifecycle
-=======
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
 object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts with Requests {
@@ -59,4 +51,3 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 object Global extends WithFilters(
   DevJsonExtensionFilter :: DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*
 ) with MostPopularLifecycle with CommercialLifecycle with FrontLifecycle with DevParametersLifecycle with AdminLifecycle
->>>>>>> master
