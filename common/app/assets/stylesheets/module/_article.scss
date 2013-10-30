@@ -385,23 +385,7 @@ video {
     }
 }
 
-@mixin hide-discussion-tabs {
-
-}
-@mixin comments-below-article {
-    .article__container,
-    .article__discussion {
-        display: block !important;
-    }
-    .d-actions .top {
-        display: none;
-    }
-}
-
 @include mq(rightCol) {
-
-    @include comments-below-article;
-
     .article-wrapper {
         position: relative;
         max-width: none;
