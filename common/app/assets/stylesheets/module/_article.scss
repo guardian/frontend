@@ -371,6 +371,9 @@ video {
     max-width: gs-span(7);
 
     @include mq(tablet) {
+        max-width: gs-span(7);
+    }
+    @include mq(rightCol) {
         max-width: none;
     }
 }
