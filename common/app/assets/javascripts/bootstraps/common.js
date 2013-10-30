@@ -36,7 +36,8 @@ define([
     "modules/lightbox-gallery",
     "modules/swipe/ears",
     "modules/swipe/bar",
-    "modules/facia/images"
+    "modules/facia/images",
+    "modules/onward/history"
 ], function (
     common,
     ajax,
@@ -74,7 +75,8 @@ define([
     LightboxGallery,
     ears,
     SwipeBar,
-    faciaImages
+    faciaImages,
+    History
 ) {
 
     var modules = {
@@ -343,6 +345,20 @@ define([
                     }
                 });
             }
+        },
+
+        logReadingHistory : function() {
+            common.mediator.on('page:common:ready', function(config) {
+                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                    return new History().log({
+                        id: config.page.shortUrl.replace('http://gu.com', ''),
+                        meta: {
+                            section: config.page.section,
+                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                        }
+                    });
+                }
+            });
         }
     };
 
@@ -384,6 +400,7 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage(config);
+            modules.logReadingHistory();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

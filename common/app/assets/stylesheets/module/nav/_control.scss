@@ -6,19 +6,26 @@
    ========================================================================== */
 
 .control {
+    float: right;
+    width: auto;
+    height: 28px;
+    padding: 16px $gutter 15px 0;
+    background-color: transparent;
+    vertical-align: top;
+    font-family: $serif;
+    font-size: 13px;
+    font-size: 1.3rem;
+
     &,
     &:active,
     &:focus,
     &:hover {
-        font-family: $serif !important;
-        font-size: 13px;
-        background-color: transparent;
-        vertical-align: top;
-        text-decoration: none !important;
+        text-decoration: none;
+        color: #ffffff;
     }
 
     &.is-active {
-        background-color: #fff !important;
+        background-color: #ffffff;
         color: $c-brandBlue;
     }
 }
@@ -33,47 +40,39 @@
 }
 
 .is-active .i-nav-divider {
-    border-color: #fff;
-    background-color: #fff;
+    border-color: #ffffff;
+    background-color: #ffffff;
 }
 
 
 /* Sections control - (Hamburger icon )
    ========================================================================== */
 
-.control--sections,
-.control--sections:active,
-.control--sections:focus,
-.control--sections:hover {
-    float: right;
-    width: auto;
-    height: 28px;
-    padding: 16px $gutter 15px 0;
-
+.control--sections {
     @include mq(tablet) {
-        position: absolute;
-        right: 0;
-        top: 58px;
         padding: 0 $gutter 13px 0;
         background-color: transparent;
-        color: #444;
-        font-size: 14px;
+        color: #444444;
+        position: absolute;
+        right: 0;
+        top: $headerHeight;
+    }
+    &.is-active {
+        @include mq(desktop) {
+            background-color: transparent;
+        }
+        @include mq(1157px, 1299px) {
+            border-right: 1px solid $c-neutral5;
+            padding-right: $gutter - 1;
+        }
+        @include mq(1316px) { // When the layout starts to be centered
+            border-right: 1px solid $c-neutral5;
+            padding-right: $gutter - 1;
+        }
     }
 }
 
-.control--sections.is-active {
-    @include mq(desktop) {
-        background-color: transparent !important;
-    }
-    @include mq(1157px, 1299px) {
-        border-right: 1px solid $c-neutral5;
-        padding-right: $gutter - 1;
-    }
-    @include mq(1316px) { // When the layout starts to be centered
-        border-right: 1px solid $c-neutral5;
-        padding-right: $gutter - 1;
-    }
-}
+
 
 .control__menu.i {
     float: right;
@@ -104,7 +103,7 @@ span.control__menu.i-menu {
         top: 6px;
         position: relative;
         margin-right: $gutter - 3;
-        border-color: #BBBBBB;
+        border-color: #bbbbbb;
         background-color: $c-neutral5;
     }
 }
@@ -119,62 +118,34 @@ span.control__menu.i-menu {
    ========================================================================== */
 
 .control--topstories {
-    &,
-    &:active,
-    &:hover,
-    &:focus {
-        float: right;
-        height: 28px;
-        margin: 0;
-        padding: 18px 0 13px 0;
-        color: #fff;
+    padding: 18px 0 13px 0;
 
-        &.is-active {
-            color: $c-brandBlue;
+    span {
+        display: none;
+        height: 28px;
+        vertical-align: top;
+        line-height: 28px;
+        margin-right: $gutter/2;
+        margin-left: $gutter/2;
+
+        @include mq(544px) {
+            display: inline-block;
         }
+    }
+    &.is-active span {
+        background: none;
+        border-color: transparent;
+    }
+    .i-top-stories {
+        margin: 2px $gutter 0 $gutter/2;
 
         @include mq(tablet) {
-            position: absolute;
-            top: 0;
-            right: 48px;
-
-            &.control--right {
-                right: 0;
-            }
-
+            margin-left: 0;
         }
     }
-}
-
-
-.control--topstories span {
-    display: none;
-    height: 28px;
-    vertical-align: top;
-    line-height: 28px;
-    margin-right: $gutter/2;
-    margin-left: $gutter/2;
-
-    @include mq(544px) {
-        display: inline-block;
+    .i-nav-divider {
+        margin-top: -2px;
     }
-}
-
-    .control--topstories.is-active span {
-        background: none !important;
-        border-color: transparent !important;
-    }
-
-.control--topstories .i-top-stories {
-    margin: 2px $gutter 0 $gutter/2;
-
-    @include mq(tablet) {
-        margin-left: 0;
-    }
-}
-
-.control--topstories .i-nav-divider {
-    margin-top: -2px;
 }
 
 
@@ -183,59 +154,30 @@ span.control__menu.i-menu {
    ========================================================================== */
 
 .control--search {
-    float:right;
-    height: 28px;
-    padding: 16px $gutter 15px 0;
-    border: none;
-
-    @include mq(tablet) {
-        position: absolute;
-        top: 0;
-        right: 0;
+    .i-search {
+        margin-top: 5px;
+        margin-left: 6px;
+        margin-right: 2px;
     }
 }
-
-.control--search .i-search {
-    margin-top: 5px;
-    margin-left: 6px;
-    margin-right: 2px;
-}
-
-
 
 
 /* Profile control
    ========================================================================== */
+
 .control--profile {
-    float: right;
-    height: 28px;
     padding: 18px 0 13px;
     width: auto;
+    white-space: nowrap;
 
-    &,
-    &:active,
-    &:hover,
-    &:focus     { color: #fff; }
-    &.is-active { color: $c-brandBlue; }
+    .i-profile {
+        margin: 2px 12px 0 10px;
 
-    @include mq(tablet) {
-        position: absolute;
-        top: 0;
-        right: 178px;
-        white-space: nowrap;
-
-        &.control--profile-right {
-            right: 0;
+        @include mq(tablet) {
+            margin-left: 0;
         }
     }
-}
-
-.control--profile .i-profile {
-    margin: 2px 12px 0 10px;
-
-    @include mq(tablet) {
-        margin-left: 0;
-    }
+    
 }
 
 .control__info {
