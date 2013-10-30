@@ -1,4 +1,4 @@
-.collection--popular {
+.container--popular {
     @include mq($to: tablet) {
         counter-reset: popular;
         .item__link {

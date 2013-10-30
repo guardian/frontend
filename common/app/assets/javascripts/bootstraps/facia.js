@@ -5,8 +5,8 @@ define([
     // Modules
     'modules/detect',
     'modules/facia/popular',
-    'modules/facia/items-show-more',
-    'modules/facia/collection-display-toggle',
+    'modules/facia/collection-show-more',
+    'modules/facia/container-toggle',
     'modules/footballfixtures',
     'modules/cricket'
 ], function (
@@ -14,27 +14,27 @@ define([
     bonzo,
     detect,
     popular,
-    ItemsShowMore,
-    CollectionDisplayToggle,
+    CollectionShowMore,
+    CollectionToggle,
     FootballFixtures,
     cricket
     ) {
 
     var modules = {
 
-        showItemsShowMore: function () {
+        showCollectionShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.js-items--show-more', context).each(function(items) {
-                    new ItemsShowMore(items)
+                common.$g('.js-collection--show-more', context).each(function(items) {
+                    new CollectionShowMore(items)
                         .addShowMore();
                 });
             });
         },
 
-        showCollectionDisplayToggle: function () {
+        showCollectionToggle: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.js-collection--display-toggle', context).each(function(collection) {
-                    new CollectionDisplayToggle(collection)
+                common.$g('.js-collection--toggle', context).each(function(collection) {
+                    new CollectionToggle(collection)
                         .addToggle();
                 });
             });
@@ -96,8 +96,8 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.showItemsShowMore();
-            modules.showCollectionDisplayToggle();
+            modules.showCollectionShowMore();
+            modules.showCollectionToggle();
 //            modules.showFootballFixtures();
             modules.showPopular();
         }

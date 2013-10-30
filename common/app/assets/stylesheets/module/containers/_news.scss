@@ -1,4 +1,4 @@
-.collection--news {
+.container--news {
     @include mq($to: tablet) {
         @include first-row(1);
         .item:first-child {
