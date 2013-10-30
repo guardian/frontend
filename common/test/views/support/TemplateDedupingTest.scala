@@ -96,6 +96,14 @@ class TemplateDedupingTest extends FlatSpec with Matchers with BeforeAndAfter {
     val newTrailsFive = dedupe.take(1, Collection(trails))
     newTrailsFive.items.length should be (0)
   }
+
+  it should "preserve order" in {
+    val newTrailsOne = dedupe.take(1, Seq(trailThree))
+    newTrailsOne.length should be (1)
+
+    val newTrailsTwo = dedupe.take(3, Seq(trailOne, trailThree, trailFour))
+    newTrailsTwo should be (Seq(trailOne, trailFour))
+  }
 }
 
 case class TestTrail(url: String) extends Trail {
