@@ -46,9 +46,9 @@ define([
                         }).addClass(cls).insertAfter(this);
                     });
 
-                    // Don't setup the listener here when the 'Both' variant is running
+                    // The listener for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        common.mediator.on('module:analytics:omniture:pageview:sent', function(config, context) {
+                        common.mediator.on('module:analytics:omniture:pageview:sent', function() {
                             inview(document);
                         });
                     }
@@ -85,9 +85,9 @@ define([
                         }
                     }
 
-                    // Don't setup the listener here when the 'Both' variant is running
+                    // The listener for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        common.mediator.on('module:analytics:omniture:pageview:sent', function(config, context) {
+                        common.mediator.on('module:analytics:omniture:pageview:sent', function() {
                             inview(document);
                         });
                     }
@@ -105,7 +105,7 @@ define([
                         }
                     });
 
-                    common.mediator.on('module:analytics:omniture:pageview:sent', function(config, context) {
+                    common.mediator.on('module:analytics:omniture:pageview:sent', function() {
                         inview(document);
                     });
 
