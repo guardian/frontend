@@ -82,6 +82,7 @@ Comments.prototype.ready = function() {
         this.hideExcessReplies();
         RecommendComments.init(this.context);
     }
+    this.emit('ready');
 };
 
 /**
