@@ -12,9 +12,11 @@ object MasterClass {
     val literalDate = (block \ "start_date").as[String]
     val startDate: DateTime = datePattern.parseDateTime(literalDate)
 
-    new MasterClass(title, startDate)
+    val isOpen = ((block \ "status").as[String]).equals("Live")
+
+    new MasterClass(title, startDate, isOpen)
   }
 }
 
-case class MasterClass(name: String, startDate: DateTime)
+case class MasterClass(name: String, startDate: DateTime, isOpen: Boolean)
 
