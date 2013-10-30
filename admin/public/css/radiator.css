@@ -68,7 +68,7 @@ li.Not.running {
     background-color: lightgrey;
 }
 
-h2 {
+h2, .cost {
     font-family: Georgia, serif;
     color: #999;
     clear: both;
@@ -78,6 +78,13 @@ h2 {
 }
 h2 small {
     font-size: 14px;
+}
+
+.cost {
+    float: right;
+    display: inline;
+    padding-top: 0px;
+    font-size: 24px;
 }
 
 #logo .white {
