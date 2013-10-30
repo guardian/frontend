@@ -1,28 +1,23 @@
 @(page: CommentPage)(implicit request: RequestHeader)
 
-
 @main(page, Switches.all){ }{
     <div class="article-wrapper monocolumn-wrapper">
         <main itemprop="mainContentOfPage" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner">
                 <header class="article__head">
                     <h1 class="article__headline">
                         <a href="@LinkTo{@page.contentUrl}">@Html(page.title)</a>
                     </h1>
                 </header>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
                     <div class="article__meta-container"></div>
 
-                    <h2 class="page-sub-header tone-colour tone-border">Comments</h2>
+                    <h2 class="page-sub-header tone-colour">Comments</h2>
                     @fragments.commentsBody(page)
-
-                    @if(page.currentPage + 1 <= page.pages){
-                        <a href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Next page</a>
-                    }
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true"></div>
+                <div class="article__secondary-column" aria-hidden="true"></div>
             </div>
         </div>
     </div>

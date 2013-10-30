@@ -13,6 +13,10 @@ body {
               user-select: none;
 }
 
+a {
+    cursor: pointer;
+}
+
 fieldset,
 input[type=text] {
     -moz-box-sizing: border-box;
@@ -52,19 +56,40 @@ input[type=text] {
     text-transform: uppercase;
 }
 
-.tool-title {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    float: left;
-    padding: 5px 0 0 0;
-    font-size: 18px;
-    text-transform: uppercase;
-    height: 30px;
+.login-form {
+    display: inline-table;
+    margin: 0 0 0 10px;
 }
 
-.tool-title span {
+h1 {
+    float: left;
+    font-size: 26px;
+    height: 30px;
     color: #999999;
-    text-transform: lowercase;
+    font-weight: bold;
+    letter-spacing: -1px;
+    margin: 0;
+    line-height: 30px;
+}
+
+h1 span {
+    color: #CCCCCC;
+    font-weight: normal;
+}
+
+.message {
+    float: left;
+    font-size: 26px;
+    font-style: italic;
+    height: 30px;
+    color: #CCCCCC;
+    letter-spacing: -1px;
+    line-height: 30px;
+    margin: 0 0 0 10px;
+}
+
+.message--important {
+    color: #d61d00;
 }
 
 .title {
@@ -95,80 +120,17 @@ input[type=text] {
     overflow: hidden;
 }
 
-.list-header a {
-    color: #005580;
-}
-
-.list-header__saving  { color: #d61d00; font-weight: bold; }
-
-.list-header__role {
-    font-style: italic;
-    text-transform: lowercase;
-    color: #666666;
+.list-header__saving  {
+    float: right;
+    color: #d61d00;
+    font-size: 12px;
 }
 
 .list-header__timings {
+    font-weight: normal;
     font-size: 10px;
     color: #999999;
     padding: 0 0 0 4px;
-}
-
-.list-header__status a {
-    display: inline-block;
-    font-size: 10px;
-    line-height: 20px;
-    padding: 0 5px 0 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
-    border-right: 1px solid #EEEEEE;
-    color: #999999;
-}
-
-a.list-header__status__draft.active,
-a.list-header__status__live.active {
-    color: #333333;
-}
-
-a.list-header__status__draft.active,
-a.list-header__status__live.active {
-    background: #EEEEEE;
-}
-
-a.list-header__status__draft.has-draft {
-    color: #438835;
-}
-
-a.list-header__status__control,
-a.list-header__status__control:hover,
-a.list-header__status__control:visited {
-    color: #0088cc;
-}
-
-.list-header__showSettings {
-    float: right;
-    margin: 0 2px 0 0;
-}
-
-.list-header__hide {
-    float: right;
-    font-size: 9px;
-    margin: 0 2px 0 0;
-}
-
-.list-picker {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    float: right;
-    width: 50%;
-    padding: 0 0 0 18px;
-    height: 30px;
-}
-
-.list-picker select {
-    font-weight: bold;
-    font-size: 16px;
-    color: #000000;
 }
 
 .collections {
@@ -181,8 +143,10 @@ a.list-header__status__control:visited {
 }
 
 .collections__inner {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     padding: 0 10px 0 0;
-    border-top: 2px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
 }
 
 .collection {
@@ -191,7 +155,7 @@ a.list-header__status__control:visited {
     width: 100%;
     float: left;
     position: relative;
-    border-bottom: 2px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .trail {
@@ -204,26 +168,14 @@ a.list-header__status__control:visited {
     -webkit-transition: background-color 100ms;
        -moz-transition: background-color 100ms;
             transition: background-color 100ms;
-    border-bottom: 1px dotted #cccccc;
 }
 
 .trail:last-child {
     border-bottom: 0;
 }
 
-.live-groups,
-.live-groups .trail {
-    background-color: #EEEEEE;
-}
-
 .trail.redundant {
     opacity: 0.2;
-}
-
-.trail.ui-sortable-placeholder {
-    height: 5px !important;
-    background-color: #47ae38 !important;
-    visibility: visible !important;
 }
 
 .trail img {
@@ -232,11 +184,7 @@ a.list-header__status__control:visited {
     height: 45px;
     margin: 3px 0 0 0;
     background-color: #EEEEEE;
-}
-
-.trail p {
-    margin: 0;
-    padding: 0;
+    border-radius: 3px;
 }
 
 .trail .webTitle {
@@ -254,15 +202,7 @@ a.list-header__status__control:visited {
 }
 
 .trail .webTitle--override {
-    color: #f89406;
-}
-
-.trail .trailText {
-    color: #666666;
-    font-family: EgyptianText, georgia, serif;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 18px;
+    color: #0088cc;
 }
 
 .trail .trail__meta {
@@ -273,18 +213,6 @@ a.list-header__status__control:visited {
     font-size: 10px;
     line-height: 14px;
     margin: 0 0 0 80px;
-}
-
-.trail .trail__meta a {
-    display: none;
-}
-
-.trail:hover .trail__meta a {
-    display: inline-block;
-    color: #666666;
-    border-left: 1px #dddddd solid;
-    padding-left: 4px;
-    cursor: pointer;
 }
 
 .trail .trail__remove {
@@ -310,13 +238,35 @@ a.list-header__status__control:visited {
 }
 
 .trail_tweaks {
-    clear: both;
-    margin: 0 0 10px 0;
+    margin: 0 0 0 80px;
+    color: #CCCCCC;
+}
+
+.trail_tweaks input {
+    z-index: 99;
+    background: #eeeeee;
+    width: 100%;
+
+}
+
+.trail_tweaks a {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 13px;
+    padding: 0 1px 0 6px;
+    border-left: 1px solid #CCCCCC;
+}
+
+.trail_tweaks a:first-child {
+    font-weight: bold;
+    border-left: none;
 }
 
 input[type="text"] {
-    margin: 2px 0;
+    margin: 2px 0 0 0;
+    padding: 1px 5px;
     background: #ffffff;
+    color: #000000;
 }
 
 select {
@@ -340,7 +290,7 @@ button {
 }
 
 .clipboard__title {
-    border-top: 2px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
 }
 
 .clipboard__wrapper {
@@ -352,6 +302,7 @@ button {
     position: absolute;
     z-index: -1;
     border: 1px dashed #cccccc;
+    border-radius: 3px;
     width: 100%;
     padding: 4px 5px;
     color: #999999;
@@ -368,19 +319,6 @@ button {
 
 .collection-config.editable {
     background-color: #eee;
-}
-
-.collection-config a {
-    color: #666666;
-    cursor: pointer;
-}
-
-.collection-config input {
-}
-
-.collection-config input.tiny {
-    width: 40px;
-    text-align: right;
 }
 
 .trail_stats {
@@ -415,30 +353,6 @@ button {
     line-height: 12px;
     color: #999999;
     text-transform: uppercase;
-}
-
-.frames {
-    position: relative;
-    float: left;
-    clear: both;
-    display: block;
-    width: 100%;
-    padding: 5px 0 0 0;
-}
-
-.frame {
-    padding: 0 0 20px 0;
-    position: absolute;
-    -webkit-transition:left 0.4s;
-       -moz-transition:left 0.4s;
-            transition:left 0.4s;
-}
-
-iframe {
-    margin: 10px 0 0 0;
-    border: 1px solid #999999;
-    border-radius: 5px;
-    box-shadow: 1px 1px 7px #666666;
 }
 
 .underDrag {
@@ -512,8 +426,107 @@ iframe {
     text-decoration: underline;
 }
 
-.preview-link {
+.toolbar {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: right;
+    width: 50%;
+    padding: 0 0 0 18px;
+    height: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.tool-select {
+    float: left;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    margin-right: 15px;
+    width: 150px;
+}
+
+.tool {
+    float: left;
+    display: inline-block;
+    padding: 4px 10px;
+    background: #CCCCCC;
+    color: #FFFFFF;
+    margin: 1px 0;
+    border-radius: 3px;
+    border: 0;
+    cursor: pointer;
+}
+
+.tool:hover {
+    text-decoration: none;
+    color: #ffffff;
+    background: #AAAAAA;
+}
+
+.tool-label {
+    float: left;
+    display: inline-block;
+    padding: 5px 5px 0 2px;
+    color: #999999;
+}
+
+.draft-toolbar {
+    color: #46c430;
+    margin: 0 0 10px 4px;
+    height: 22px;
+}
+
+.draft-toolbar .tool {
+    padding: 0 8px;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.draft-toolbar .tool.draft-warning {
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.draft-toolbar .tool.draft-publish {
+    background: #0088cc;
+}
+
+.draft-toolbar .tool.draft-publish:hover {
+    background: #0077BB;
+}
+
+.draft-toolbar .tool.draft-discard {
+    margin-left: 2px;
+}
+
+.logout,
+.preview {
+    float: right;
+    margin-left: 2px;
+}
+
+.pref-draft {
+    font-weight: bold;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.pref-live {
+    font-weight: bold;
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.pref-draft.active {
+    cursor: default;
+    background: #0088cc;
+}
+
+.pref-live.active {
+    cursor: default;
+    background: #46c430;
 }
 
 .ophan-legend {

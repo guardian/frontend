@@ -10,7 +10,7 @@ import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import controllers.ImageContentPage
 import scala.concurrent.Future
-import play.api.mvc.SimpleResult
+import play.api.mvc.{RequestHeader, SimpleResult}
 
 case class IndexPage(page: MetaData, trails: Seq[Trail])
 
@@ -52,7 +52,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }.recover(suppressApiNotFound)
   }
 
-  def index(edition: Edition, path: String) = {
+  def index(edition: Edition, path: String)(implicit request: RequestHeader) = {
     ContentApi.item(path, edition)
       .pageSize(20)
       .showEditorsPicks(true)

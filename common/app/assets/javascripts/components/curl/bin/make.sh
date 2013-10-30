@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # get optional optimization instruction
 opt=$1
 if [ "${opt:0:2}" = "--" ]; then
@@ -27,7 +29,7 @@ if [ "$opt" = "NONE" ]; then
 	cat "$tmpfile" > "$out"
 else
 	# compile files to the output file
-	./compile.sh "$tmpfile" "$opt" > "$out"
+	"$DIR"/compile.sh "$tmpfile" "$opt" > "$out"
 fi
 
 # remove the temporary concatenated file

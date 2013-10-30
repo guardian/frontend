@@ -1,6 +1,6 @@
 package model
 
-import common.{ CoreNavivationMetrics, Jobs }
+import common.{ CoreNavigationMetrics, Jobs }
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import feed.{MostPopularExpandableAgent, MostPopularAgent}
@@ -19,7 +19,7 @@ trait MostPopularLifecycle extends GlobalSettings {
     Jobs.deschedule("MostPopularAgentRefreshJob")
 
     // fire every min
-    Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?", CoreNavivationMetrics.MostPopularLoadTimingMetric) {
+    Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?", CoreNavigationMetrics.MostPopularLoadTimingMetric) {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
     }
@@ -34,7 +34,3 @@ trait MostPopularLifecycle extends GlobalSettings {
     super.onStop(app)
   }
 }
-
-trait CoreNavigationLifecycle extends MostPopularLifecycle
-
-object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with CoreNavigationLifecycle with DevParametersLifecycle

@@ -3,7 +3,7 @@
 @if(Switches.SocialSwitch.isSwitchedOn) {
 
 @defining(s"http://${request.host}${request.path}"){ url =>
-    <ul class="social unstyled" data-link-name="@position">
+    <ul class="social unstyled u-cf" data-link-name="@position">
         <li class="social__item">
             <a  class="social__action social__action--email"
                 data-link-name="social-mail"
@@ -30,7 +30,7 @@
         </li>
         <li class="social__item">
             <a  class="social__action social__action--gplus"
-                data-link-name="social-gplus" 
+                data-link-name="social-gplus"
                 href="https://plus.google.com/share?url=@helper.urlEncode(url)&amp;hl=en-GB&amp;wwc=1">
                 <span class="u-h">Share on Google+</span>
                 <i class="i-share-gplus i"></i>

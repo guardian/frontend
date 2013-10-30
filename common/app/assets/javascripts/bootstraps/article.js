@@ -5,12 +5,13 @@ define([
     "modules/live-summary",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/discussion/discussion",
+    "modules/discussion/loader",
     "modules/cricket",
     "modules/experiments/live-blog-show-more",
     "modules/notification-counter",
     "modules/detect",
-    "modules/experiments/left-hand-card"
+    "modules/experiments/left-hand-card",
+    "modules/onward/history"
 ], function (
     common,
     AutoUpdate,
@@ -18,12 +19,13 @@ define([
     LiveSummary,
     MatchNav,
     Reading,
-    Discussion,
+    DiscussionLoader,
     Cricket,
     LiveShowMore,
     NotificationCounter,
     detect,
-    LeftHandCard
+    LeftHandCard,
+    history
 ) {
 
     var modules = {
@@ -84,11 +86,8 @@ define([
 
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable) {
-                    var discussionArticle = new Discussion({
-                        id: config.page.shortUrl,
-                        context: context,
-                        config: config
-                    }).init();
+                    var discussionLoader = new DiscussionLoader(context, common.mediator);
+                    discussionLoader.attachTo();
                 }
             });
         },
@@ -127,7 +126,7 @@ define([
                 }
             });
         },
-        
+
         externalLinksCards: function () {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches && config.switches.externalLinksCards) {
@@ -136,6 +135,12 @@ define([
                             context: context
                     });
                 }
+            });
+        },
+
+        logReadingHistory : function() {
+            common.mediator.on('page:article:ready', function(config) {
+                history.log(config.page.shortUrl.replace('http://gu.com', ''));
             });
         }
     };
@@ -149,6 +154,7 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
+            modules.logReadingHistory();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

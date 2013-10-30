@@ -1,3 +1,15 @@
+/**
+ * Dependency inject Images
+ *
+ * TODO: need to clean up after
+ */
+var imagesUpgradeStub = sinon.stub();
+define('modules/facia/images', [], function(){
+    return {
+        upgrade: imagesUpgradeStub
+    }
+});
+
 define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 'ajax'], function(popular, bonzo, common, bean, fixtures, ajax) {
 
     describe('Popular', function() {
@@ -54,13 +66,23 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
         });
 
+        it('should have data-link-name attribute equal to "block | popular"', function() {
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.collection--popular').length;
+            }, 'popular collection to be rendered', 100);
+            runs(function() {
+                expect(common.$g('.collection--popular').attr('data-link-name')).toEqual('block | popular');
+            });
+        });
+
         it('should have a "data-type" attribute of value "popular"', function() {
             popular.render({});
 
             waitsFor(function() {
                 return common.$g('.collection--popular').length;
             }, 'popular collection to be rendered', 100);
-
             runs(function() {
                 expect(common.$g('.collection--popular').attr('data-type')).toEqual('popular');
             });
@@ -80,57 +102,29 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             }, 'popular collection to be rendered', 100);
         });
 
-        it('first three items should have an image', function() {
+        it('should upgrade images', function() {
             popular.render({});
 
             waitsFor(function() {
                 return common.$g('.collection--popular').length;
             }, 'popular collection to be rendered', 100);
-
             runs(function() {
-                expect(common.$g('.item.item--image-upgraded').length).toEqual(3);
+                expect(imagesUpgradeStub).toHaveBeenCalledWith(document.querySelector('.collection--popular .items'));
             });
         });
 
-        it('first image should be main', function() {
+        it('dates should be relativised', function() {
             popular.render({});
 
             waitsFor(function() {
                 return common.$g('.collection--popular').length;
             }, 'popular collection to be rendered', 100);
-
             runs(function() {
-                expect(common.$g('.item:first-child .item__image').attr('src')).toEqual('item-main-mobile.jpg');
-            });
-        });
-
-        it('second and third images should be normal', function() {
-            popular.render({});
-
-            waitsFor(function() {
-                return common.$g('.collection--popular').length;
-            }, 'popular collection to be rendered', 100);
-
-            runs(function() {
-                common.$g('.item:nth-child(n+2):nth-child(-n+3) .item__image').each(function(item, index) {
-                    expect(bonzo(item).attr('src')).toEqual('item-mobile.jpg');
+                common.$g('.timestamp__text').each(function(item) {
+                    expect(bonzo(item).text()).toEqual('1 Jan 1970');
                 });
             });
         });
-
-       it('dates should be relativised', function() {
-           popular.render({});
-
-           waitsFor(function() {
-               return common.$g('.collection--popular').length;
-           }, 'popular collection to be rendered', 100);
-
-           runs(function() {
-               common.$g('.timestamp__text').each(function(item) {
-                   expect(bonzo(item).text()).toEqual('1 Jan 1970');
-               });
-           });
-       });
 
     });
 

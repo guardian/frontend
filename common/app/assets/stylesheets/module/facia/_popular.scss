@@ -1,33 +1,36 @@
 .collection--popular {
     @include mq($to: tablet) {
+        counter-reset: popular;
+        .item__link {
+            border-top: 1px dotted $c-neutral5;
+        }
+        .item > * {
+            padding-left: 24px;
+        }
+        .item__title:before {
+            content: counter(popular) ".";
+            counter-increment: popular;
+            position: absolute;
+            left: 0;
+            color: $c-neutral2;
+        }
         @include first-row(1);
-        .item:nth-child(-n+3) {
+        .item:nth-child(-n+5) {
             @include card-mobile;
+            .item__meta {
+                margin-top: $gs-baseline;
+            }
         }
-        .item:first-child {
-            @include card-mobile-image;
-        }
-        .item:nth-child(n+2):nth-child(-n+3),{
+        .item:nth-child(n+2):nth-child(-n+5),{
             .item__title {
                 @include fs-headline(2, $size-only: true);
                 @include mq(mobileLandscape) {
                     @include fs-headline(3, $size-only: true);
                 }
             }
-            .item__byline {
-                @include fs-header(2, $size-only: true);
-                @include mq(mobileLandscape) {
-                    @include fs-header(3, $size-only: true);
-                }
-            }
         }
-        .item:nth-child(n+4) {
+        .item:nth-child(n+6) {
             @include card-headline;
-        }
-        .item:nth-child(n+5) {
-            .item__link {
-                border-top: 1px dotted $c-neutral5;
-            }
         }
     }
     @include mq(tablet, wide) {

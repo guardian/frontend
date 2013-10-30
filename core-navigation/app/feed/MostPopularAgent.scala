@@ -4,9 +4,6 @@ import conf.ContentApi
 import common._
 import model.Content
 import scala.concurrent.duration._
-import scala.concurrent.Await
-import services.OphanApi
-import scala.util.Try
 import akka.util.Timeout
 
 

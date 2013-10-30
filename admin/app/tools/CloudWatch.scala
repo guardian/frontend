@@ -22,7 +22,8 @@ trait CloudWatch {
     ("frontend-Identity-1ITBJ706CLQIC", "Identity"),
     ("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image"),
     ("frontend-SportLoa-GLJK02HUD48W", "Sport"),
-    ("frontend-Commerci-12ZQ79RIOLIYE", "Commercial")
+    ("frontend-Commerci-12ZQ79RIOLIYE", "Commercial"),
+    ("frontend-OnwardLo-14YIUHL6HIW63", "Onward")
   )
 
   private val fastlyMetrics = List(
