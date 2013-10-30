@@ -70,21 +70,20 @@ Loader.prototype.canComment = false;
 
 /** @override */
 Loader.prototype.ready = function() {
-    var id = this.getDiscussionId();
+    var id = this.getDiscussionId(),
+        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
 
     // TODO (jamesgorrie): Move this into the Comments module
-    this.getElem('comments').innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
+    this.getElem('comments').appendChild(loadingElem);
     this.comments = new Comments(this.context, this.mediator, {
         initialShow: 2,
         discussionId: this.getDiscussionId()
     });
-    this.comments.load(this.getElem('comments'));
-    // ajax({
-    //     url: '/discussion'+ id +'.json',
-    //     type: 'json',
-    //     method: 'get',
-    //     crossOrigin: true
-    // }).then(this.renderDiscussion.bind(this), this.loadingError.bind(this));
+    this.comments
+        .fetch(this.getElem('comments'))
+        .then(function killLoadingMessage() {
+            bonzo(loadingElem).remove();
+        });
 
 
     bonzo(this.getElem('show')).remove();

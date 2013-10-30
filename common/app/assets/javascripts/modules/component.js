@@ -1,11 +1,13 @@
 define([
     'bean',
     'qwery',
-    'bonzo'
+    'bonzo',
+    'ajax'
 ], function(
     bean,
     qwery,
-    bonzo
+    bonzo,
+    ajax
 ) {
 
 /**
@@ -27,7 +29,7 @@ var Component = function() {};
 Component.CONFIG = {
     templateName: '{{ TEMPLATE_NAME }}',
     componentClass: '{{ COMPONENT_CLASS }}',
-    endpoint: '{{ endpoint }}',
+    endpoint: '{{ ENDPOINT }}',
     classes: {},
     elements: {}
 };
@@ -81,15 +83,30 @@ Component.prototype.render = function(parent) {
 };
 
 /**
- *
+ * @param {Element} elem
  */
-Component.prototype.load = function(parent) {
-    var endpoint = this.conf().endpoint,
+Component.prototype.fetch = function(elem) {
+    var self = this,
+        endpoint = this.conf().endpoint,
         opt;
+
+    this.elem = elem;
 
     for (opt in this.options) {
         endpoint = endpoint.replace(':'+ opt, this.options[opt]);
     }
+
+    return ajax({
+        url: endpoint,
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(function render(resp) {
+        var innards = bonzo.create(resp.html);
+        bonzo(this.elem).append(innards);
+        this.elems = {};
+        this.ready();
+    }.bind(this));
 };
 
 /**

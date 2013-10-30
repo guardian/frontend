@@ -30,7 +30,7 @@ Component.define(Comments);
 
 /** @type {Object.<string.*>} */
 Comments.CONFIG = {
-    endpoint: '/discussion/:discussionId.json',
+    endpoint: '/discussion:discussionId.json',
     classes: {
         comments: 'd-thread--top-level',
         topLevel: 'd-comment--top-level',
