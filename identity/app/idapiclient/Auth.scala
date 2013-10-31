@@ -27,7 +27,7 @@ case class FacebookToken(accessToken: String) extends SocialAccessToken("faceboo
 case class GoogleToken(accessToken: String) extends SocialAccessToken("google-access-token", accessToken)
 
 case class ClientAuth(clientAccessToken: String) extends Auth {
-  override def parameters: Parameters = List(("accessToken", clientAccessToken))
+  override def headers: Parameters = List("X-GU-ID-Client-Access-Token" -> s"Bearer $clientAccessToken")
 }
 
 class ScGuU(scGuUValue: String) extends Auth {
