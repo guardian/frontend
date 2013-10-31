@@ -3,12 +3,14 @@ define([
     'bonzo',
     'qwery',
     'modules/component',
+    'modules/id',
     'modules/discussion/recommend-comments'
 ], function(
     ajax,
     bonzo,
     qwery,
     Component,
+    Id,
     RecommendComments
 ) {
 
@@ -43,7 +45,8 @@ Comments.CONFIG = {
 Comments.prototype.defaultOptions = {
     discussionId: null,
     initialShow: 10,
-    showRepliesCount: 3
+    showRepliesCount: 3,
+    user: null
 };
 
 /** @type {Boolean} */
@@ -55,12 +58,18 @@ Comments.prototype.currentPage = 1;
 /** @type {NodeList=} */
 Comments.prototype.comments = null;
 
+/** @type {Object=} */
+Comments.prototype.user = null;
+
 /** @override */
 Comments.prototype.ready = function() {
     var initialShow = this.options.initialShow,
         topLevelComments = qwery(this.getClass('topLevel'), this.elem),
         hasComments = topLevelComments.length > 0,
         self = this;
+
+    // Ease of use
+    this.user = this.options.user;
 
     if (hasComments) {
         // Hide excess topLevelComments
@@ -83,14 +92,23 @@ Comments.prototype.ready = function() {
         }
 
         this.on('click', '.js-show-more-replies', this.showMoreReplies);
+
         this.hideExcessReplies();
-        RecommendComments.init(this.context);
+        this.bindCommentEvents();
     }
     this.emit('ready');
 };
 
 Comments.prototype.bindCommentEvents = function() {
+    RecommendComments.init(this.context);
 
+    if (this.user && this.user.privateFields.canPostComment) {
+        this.renderReplyButtons();
+    }
+};
+
+Comments.prototype.renderReplyButtons = function() {
+    
 };
 
 /**

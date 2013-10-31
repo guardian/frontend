@@ -83,14 +83,12 @@ Component.prototype.render = function(parent) {
 };
 
 /**
- * @param {Element} elem
+ * @param {Element} parent
  */
-Component.prototype.fetch = function(elem) {
+Component.prototype.fetch = function(parent) {
     var self = this,
         endpoint = this.conf().endpoint,
         opt;
-
-    this.elem = elem;
 
     for (opt in this.options) {
         endpoint = endpoint.replace(':'+ opt, this.options[opt]);
@@ -102,11 +100,11 @@ Component.prototype.fetch = function(elem) {
         method: 'get',
         crossOrigin: true
     }).then(function render(resp) {
-        var innards = bonzo.create(resp.html);
-        bonzo(this.elem).append(innards);
-        this.elems = {};
-        this.ready();
-    }.bind(this));
+        self.elem = bonzo.create(resp.html);
+        bonzo(parent).append(self.elem);
+        self.elems = {};
+        self.ready();
+    });
 };
 
 /**
