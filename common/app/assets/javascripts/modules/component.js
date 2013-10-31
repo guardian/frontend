@@ -1,15 +1,16 @@
 define([
     'bean',
-    'qwery'
+    'qwery',
+    'bonzo'
 ], function(
     bean,
-    qwery
+    qwery,
+    bonzo
 ) {
 
 /**
  * TODO (jamesgorrie):
  * * ERROR HANDLING!
- * * Remove bean dependency (make it an arg (DI?))
  * * Find a way to run the Component constructor manually,
  *   Perhaps in the create method somewhere.
  * @constructor
@@ -24,8 +25,9 @@ var Component = function() {};
  * @type {Object.<string.*>}
  */
 Component.CONFIG = {
-    // These are CSS classes for DOM elements in this component
-    classes: { component: 'component' },
+    templateName: '{{ TEMPLATE_NAME }}',
+    componentClass: '{{ COMPONENT_CLASS }}',
+    classes: {},
     elements: {}
 };
 
@@ -48,18 +50,32 @@ Component.prototype.options = null;
 Component.prototype.defaultOptions = {};
 
 /**
- * Uses the CONFIG.classes.component
+ * Uses the CONFIG.componentClass
  * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
  * @param {Element|string=} elem (optional)
  */
 Component.prototype.attachTo = function(elem) {
-    var selector = this.getClass('component');
     this.elems = {};
 
-    elem = (elem && elem.nodeType === 1) ? [elem] : qwery(selector, this.context);
+    elem = (elem && elem.nodeType === 1) ? [elem] : qwery('.'+ this.conf().componentClass, this.context);
 
-    if (elem.length === 0) { throw new ComponentError('No element of type "'+ selector +'" to attach to.'); }
+    if (elem.length === 0) { throw new ComponentError('No element of type "'+ '.'+ this.conf().componentClass +'" to attach to.'); }
     this.elem = elem[0];
+    this.ready();
+};
+
+/**
+ * Uses the CONFIG.templateName
+ * @param {Element=} parent (optional)
+ */
+Component.prototype.render = function(parent) {
+    var conf = this.conf(),
+        template = bonzo.create(document.getElementById('tmpl-'+ conf.templateName).innerHTML)[0],
+        container = parent || document.body;
+
+    this.elems = {};
+    bonzo(container).append(template);
+    this.elem = template;
     this.ready();
 };
 
@@ -77,11 +93,17 @@ Component.prototype.dispose = function() {};
 
 /**
  * @param {string} eventName
+ * @param {Element|Function} elem if ommited which is also handler
  * @param {Function} handler
- * @param {*} args
  */
-Component.prototype.on = function(eventName, handler, data) {
-    bean.on(this.elem, eventName, handler.bind(this), data);
+Component.prototype.on = function(eventName, elem, handler) {
+    if (typeof elem === 'function') {
+        handler = elem;
+        bean.on(this.elem, eventName, handler.bind(this));
+    } else {
+        elem = !elem.length ? [elem] : elem;
+        bean.on(this.elem, eventName, elem, handler.bind(this));
+    }
 };
 
 /**
@@ -93,6 +115,7 @@ Component.prototype.emit = function(eventName, args) {
 };
 
 /**
+ * TODO: After working on comments, wondering if this should support NodeLists
  * @param {string} elemName this corresponds to CONFIG.classes
  */
 Component.prototype.getElem = function(elemName) {
@@ -133,7 +156,7 @@ Component.prototype.setOptions = function(options) {
 /**
  * @param {Function} child
  */
-Component.create = function(child) {
+Component.define = function(child) {
     function Tmp() {}
     Tmp.prototype = Component.prototype;
     child.prototype = new Tmp();

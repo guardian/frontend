@@ -78,6 +78,7 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = { super.metaData ++ Map(
     ("keywords", keywords.map { _.name }.mkString(",")),
+    ("keywordIds", keywords.map { _.id }.mkString(",")),
     ("publication", publication),
     ("headline", headline),
     ("web-publication-date", webPublicationDate),

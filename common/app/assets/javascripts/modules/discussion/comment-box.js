@@ -1,7 +1,7 @@
 define([
     'bean',
     'modules/discussion/api',
-    'modules/component',
+    'modules/component'
 ], function(
     bean,
     DiscussionApi,
@@ -20,12 +20,13 @@ function CommentBox(context, mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
 }
-Component.create(CommentBox);
+Component.define(CommentBox);
 
 /** @type {Object.<string.*>} */
 CommentBox.CONFIG = {
+    templateName: 'comment-box',
+    componentClass: 'js-comment-box',
     classes: {
-        component: 'js-comment-box',
         show: 'js-show-comment-box',
         body: 'd-comment-box__body',
         bodyExpanded: 'd-comment-box__body--expanded',
@@ -61,7 +62,7 @@ CommentBox.prototype.errors = [];
 /** @override */
 CommentBox.prototype.ready = function() {
     if (this.getDiscussionId() === null) {
-        throw new Error('CommentBox: You need to set the "data-discussion-id" on your element');
+        throw new Error('CommentBox: You need to set the "data-discussion-key" on your element');
     }
 
     var commentBody = this.getElem('body'),
@@ -127,6 +128,7 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} resp
  */
 CommentBox.prototype.success = function(comment, resp) {
+    comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
     this.setFormState();
     this.emit('post:success', comment);
@@ -161,7 +163,7 @@ CommentBox.prototype.fail = function(xhr) {
  * @return {string}
  */
 CommentBox.prototype.getDiscussionId = function() {
-    return this.options.discussionId || this.elem.getAttribute('data-discussion-id').replace('discussion', '');
+    return this.options.discussionId || this.elem.getAttribute('data-discussion-key').replace('discussion', '');
 };
 
 /**

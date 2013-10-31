@@ -14,7 +14,7 @@ object ModelOrResult extends Results with Logging {
   def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, SimpleResult] =
     item.map(i => ItemOrRedirect(i, response))
     .orElse(InternalRedirect(response))
-    .getOrElse(Right(NotFound))
+    .getOrElse(Right(NoCache(NotFound)))
 }
 
 // Content API owns the URL space, if they say this belongs on a different URL then we follow

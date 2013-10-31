@@ -179,7 +179,7 @@ $c-live: #e81818;
     border-style: none;
     width: 30px;
     height: 30px;
-    border-radius: 50%;
+    @include rounded-corners(50%);
     color: #ffffff;
     @include fs-data(4, $size-only: true);
     position: relative;

@@ -28,6 +28,12 @@ class ArticleControllerTest extends FlatSpec with Matchers {
     status(result) should be(200)
   }
 
+  it should "not cache 404s" in Fake {
+    val result = controllers.ArticleController.renderArticle("/oops")(TestRequest())
+    status(result) should be(404)
+    header("Cache-Control", result).head should be ("no-cache")
+  }
+
   it should "redirect for short urls" in Fake {
     val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
     status(result) should be (302)
