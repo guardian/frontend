@@ -119,7 +119,7 @@ Comments.prototype.renderReplyButtons = function() {
 
     this.comments.forEach(function(elem, i) {
         actions = qwery(self.getClass('commentActions'), elem);
-        bonzo(actions).append('<div type="button" class="a d-comment__action d-comment__action--reply">Reply</div>');
+        bonzo(actions).append('<div type="button" class="a d-comment__action d-comment__action--reply" role="link">Reply</div>');
     });
 };
 
