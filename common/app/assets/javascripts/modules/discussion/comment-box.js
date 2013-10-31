@@ -33,7 +33,6 @@ CommentBox.CONFIG = {
         submitButton: 'd-comment-box__submit',
         messages: 'd-comment-box__messages',
         error: 'd-comment-box__error',
-        condensed: 'd-comment-box--condensed',
         premod: 'd-comment-box__premod'
     },
     errors: {
@@ -51,7 +50,6 @@ CommentBox.CONFIG = {
 CommentBox.prototype.defaultOptions = {
     discussionId: null,
     apiRoot: null,
-    condensed: false,
     maxLength: 5000,
     premod: false,
     state: 'top-level'
@@ -85,10 +83,6 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
 
-    if (this.options.condensed) {
-        this.elem.className = this.elem.className +' '+ this.getClass('condensed', true);
-        bean.on(this.context, 'click', [this.getElem('show')], this.showCommentBox.bind(this));
-    }
     this.setState(this.options.state);
 };
 
@@ -191,18 +185,6 @@ CommentBox.prototype.setFormState = function(disabled) {
         submitButton.setAttribute('disabled', 'disabled');
     } else {
         submitButton.removeAttribute('disabled');
-    }
-};
-
-/**
- * @param {Event=} e (optional)
- */
-CommentBox.prototype.showCommentBox = function(e) {
-    var condensedClass = this.getClass('condensed', true);
-
-    if (this.elem.className.match(condensedClass)) {
-        this.elem.className = this.elem.className.replace(condensedClass, '');
-        this.getElem('body').focus();
     }
 };
 
