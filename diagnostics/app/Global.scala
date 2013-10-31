@@ -1,12 +1,12 @@
 
-import common.{PorterMetrics, Jobs}
+import common.{DiagnosticsMetrics, Jobs}
 import play.api.GlobalSettings
 import model.diagnostics._
 
 object Global extends GlobalSettings {
 
   def scheduleJobs() {
-    Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?", PorterMetrics.AnalyticsLoadTimingMetric) {
+    Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?", DiagnosticsMetrics.DiagnosticsLoadTimingMetric) {
       DiagnosticsLoadJob.run()
     }
   }
