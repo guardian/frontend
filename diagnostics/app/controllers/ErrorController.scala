@@ -15,4 +15,10 @@ object ErrorController extends Controller with Logging {
     Ok("ok")
   } 
 
+  def push = Action { implicit request =>
+    CloudWatch.put("diagnostics", Metric.count("foo").toDouble)
+    //Metric.reset("js")
+    Ok("ok")
+  } 
+
 }

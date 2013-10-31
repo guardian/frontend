@@ -6,3 +6,5 @@
 GET     /   controllers.Application.front
 
 GET     /px.gif         controllers.ErrorController.px
+
+GET     /push           controllers.ErrorController.push

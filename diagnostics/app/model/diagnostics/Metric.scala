@@ -14,11 +14,11 @@ object Metric extends Logging {
     i
   }
 
-  def get(key: String) = {
+  def count(prefix: String) = {
     i
   }
 
-  def reset(key: String) = {
+  def reset(prefix: String) = {
     i = 0
   }
 
