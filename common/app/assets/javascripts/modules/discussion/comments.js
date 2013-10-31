@@ -35,9 +35,12 @@ Comments.CONFIG = {
     endpoint: '/discussion:discussionId.json',
     classes: {
         comments: 'd-thread--top-level',
-        topLevel: 'd-comment--top-level',
+        topLevelComment: 'd-comment--top-level',
         showMore: 'js-show-more-comments',
-        reply: 'd-comment--response'
+        reply: 'd-comment--response',
+
+        comment: 'd-comment',
+        commentActions: 'd-comment__actions__main'
     }
 };
 
@@ -58,20 +61,23 @@ Comments.prototype.currentPage = 1;
 /** @type {NodeList=} */
 Comments.prototype.comments = null;
 
+/** @type {NodeList=} */
+Comments.prototype.topLevelComments = null;
+
 /** @type {Object=} */
 Comments.prototype.user = null;
 
 /** @override */
 Comments.prototype.ready = function() {
     var initialShow = this.options.initialShow,
-        topLevelComments = qwery(this.getClass('topLevel'), this.elem),
-        hasComments = topLevelComments.length > 0,
         self = this;
 
     // Ease of use
     this.user = this.options.user;
+    this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
+    this.comments = qwery(this.getClass('comment'), this.elem);
 
-    if (hasComments) {
+    if (this.topLevelComments.length > 0) {
         // Hide excess topLevelComments
         qwery(this.getClass('topLevel'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
@@ -80,7 +86,7 @@ Comments.prototype.ready = function() {
             }
         });
 
-        if (topLevelComments.length > initialShow) {
+        if (this.topLevelComments.length > initialShow) {
             if (!this.getElem('showMore')) {
                 bonzo(this.getElem('comments')).append(
                     '<a class="js-show-more-comments cta" data-link-name="Show more comments" data-remove="true" href="/discussion'+
@@ -108,7 +114,13 @@ Comments.prototype.bindCommentEvents = function() {
 };
 
 Comments.prototype.renderReplyButtons = function() {
-    
+    var actions,
+        self = this;
+
+    this.comments.forEach(function(elem, i) {
+        actions = qwery(self.getClass('commentActions'), elem);
+        bonzo(actions).append('<div type="button" class="a d-comment__action d-comment__action--reply">Reply</div>');
+    });
 };
 
 /**

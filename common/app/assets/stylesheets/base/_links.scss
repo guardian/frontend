@@ -1,4 +1,5 @@
-a {
+a,
+.a {
     color: $c-newsDefault;
     text-decoration: none;
 
@@ -11,6 +12,7 @@ a {
     }
 }
 
-a.u-underline {
+a.u-underline,
+.a.u-underline {
     text-decoration: underline;
 }
