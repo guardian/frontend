@@ -6,20 +6,20 @@ import play.cache._
 
 object Metric extends Logging {
 
-  var i = 0
-
+  val metrics = collection.mutable.Map[String, Int]().withDefaultValue(0)
+  
   def increment(prefix: String) = {
-    i = i + 1
-    log.info(s"${i}")
-    i
+    metrics.update(prefix, metrics(prefix) + 1)
+    log.info(s"${prefix} - ${metrics(prefix)}")
+    metrics(prefix)
   }
 
   def count(prefix: String) = {
-    i
+    metrics(prefix)
   }
 
-  def reset(prefix: String) = {
-    i = 0
+  def reset = {
+    metrics.drop(100) // FIXME clear the Map nicely
   }
 
 }

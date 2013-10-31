@@ -25,11 +25,11 @@ trait CloudWatch extends Logging {
     def onSuccess(request: PutMetricDataRequest, result: Void )
     {
       log.info("CloudWatch PutMetricDataRequest - sucess")
-      Metric.reset("")
+      Metric.reset // TODO shouldn't be here
     }
   }
 
-  def put(namespace: String, metric: Double) {
+  def put(namespace: String, name: String, metric: Double) {
 
       log.info(s"${namespace} - ${metric}")
 
@@ -37,7 +37,7 @@ trait CloudWatch extends Logging {
         withNamespace(namespace).
         withMetricData(new MetricDatum()
           .withValue(metric)
-          .withMetricName("js")
+          .withMetricName(name)
           .withUnit("Count")
           )
 

@@ -11,14 +11,8 @@ import model.diagnostics._
 object ErrorController extends Controller with Logging {
   
   def px = Action { implicit request =>
-    Error.report(request.queryString, request.headers.get("user-agent").get)
-    Ok("ok")
-  } 
-
-  def push = Action { implicit request =>
-    CloudWatch.put("diagnostics", Metric.count("foo").toDouble)
-    //Metric.reset("js")
-    Ok("ok")
+    Error.report(request.queryString, request.headers.get("user-agent").getOrElse("UNKNOWN USER AGENT"))
+    Ok("ok") // TODO send a GIF
   } 
 
 }
