@@ -60,8 +60,9 @@ object Frontend extends Build with Prototypes {
 
   val router = application("router")
 
-  val diagnostics = application("diagnostics").settings(
+  val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
+      cache,
       "net.sf.uadetector" % "uadetector-resources" % "2013.04",
       "net.sf.opencsv" % "opencsv" % "2.3"
     )
