@@ -236,6 +236,7 @@ Comments.prototype.replyToComment = function(e) {
         $replyToComment = bonzo(replyToComment),
         commentForm = new CommentBox(this.context, this.mediator, {
             discussionId: this.options.discussionId,
+            premod: this.user.privateFields.isPremoderated,
             state: 'response'
         });
 
