@@ -14,7 +14,7 @@
             }
 
             <ul class="form-fields">
-                <li>
+                <li class="form-fields@if(emailPrefsForm("email_format").errors.nonEmpty) {--error}">
                     <h2 class="type-2">How do you like to receive your emails?</h2>
                     <p>
                         HTML emails contain formatting and are generally prettier, and will contain images.
@@ -27,7 +27,7 @@
                     @idRadio(emailPrefsForm("email_format"), "Text", "Text")
                 </li>
 
-                <li class="form-field">
+                <li class="form-field@if(emailPrefsForm("receive_gnm_marketing").errors.nonEmpty) {--error}">
                     <h2 class="type-2">Would you like to receive information from the Guardian and their partners?</h2>
                     <p>The guardian and their partners would like to occasionally send you information about their products, services and events.</p>
 
@@ -39,7 +39,7 @@
                         Receive email from Guardian News & Media Ltd.?
                     </label>
                 </li>
-                <li class="form-field">
+                <li class="form-field@if(emailPrefsForm("receive_third_party_marketing").errors.nonEmpty) {--error}">
                     @if(emailPrefsForm("receive_third_party_marketing").errors.nonEmpty) {
                         <div class="form-field__error form-field__note">@emailPrefsForm("receive_third_party_marketing").errors.map(_.message).mkString(", ")</div>
                     }

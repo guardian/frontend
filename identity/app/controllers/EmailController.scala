@@ -72,8 +72,8 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
           api.updateUserEmails(request.user.getId(), subscriber, request.auth, idRequest.trackingData)
         ) map {
           case Left(errors) => {
+            logger.warn(s"Error while saving user email prefs: ${errors.map(_.message)}")
             val formWithErrors = errors.foldLeft(emailPrefsForm) { case (form, Error(message, description, _, context)) =>
-              logger.warn(s"Error while saving user email prefs: $message")
               form.withError(context.getOrElse(""), description)
             }
             Ok(views.html.profile.email_prefs(page, idRequest, idUrlBuilder, formWithErrors))
