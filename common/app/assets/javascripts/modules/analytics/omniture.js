@@ -1,3 +1,4 @@
+/*global s_i_guardian:true */
 define([
     'common',
     'modules/detect',
@@ -225,6 +226,9 @@ define([
             // Can be used as a way to prevent other events to fire earlier than the pageview
             var self = this;
             var checkForPageViewInterval = setInterval(function() {
+                // s_i_guardian is a globally defined Image() object created by Omniture
+                // It does not sit in the DOM tree, and seems to be the only surefire way
+                // to check if the intial beacon has been successfully sent
                 if (typeof(s_i_guardian) !== 'undefined' &&
                     (s_i_guardian.complete === true || s_i_guardian.width + s_i_guardian.height > 0)) {
                     clearInterval(checkForPageViewInterval);
