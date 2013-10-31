@@ -1,5 +1,5 @@
 a,
-.a {
+.u-fauxlink {
     color: $c-newsDefault;
     cursor: pointer;
     text-decoration: none;
@@ -14,6 +14,6 @@ a,
 }
 
 a.u-underline,
-.a.u-underline {
+.u-fauxlink.u-underline {
     text-decoration: underline;
 }

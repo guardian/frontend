@@ -4,6 +4,7 @@ define([
     'qwery',
     'modules/component',
     'modules/id',
+    'modules/discussion/comment-box',
     'modules/discussion/recommend-comments'
 ], function(
     ajax,
@@ -11,6 +12,7 @@ define([
     qwery,
     Component,
     Id,
+    CommentBox,
     RecommendComments
 ) {
 
@@ -40,7 +42,8 @@ Comments.CONFIG = {
         reply: 'd-comment--response',
 
         comment: 'd-comment',
-        commentActions: 'd-comment__actions__main'
+        commentActions: 'd-comment__actions__main',
+        commentReply: 'd-comment__action--reply'
     }
 };
 
@@ -79,7 +82,7 @@ Comments.prototype.ready = function() {
 
     if (this.topLevelComments.length > 0) {
         // Hide excess topLevelComments
-        qwery(this.getClass('topLevel'), this.elem).forEach(function(elem, i) {
+        qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
                 self.hasHiddenComments = true;
                 bonzo(elem).addClass('u-h');
@@ -97,10 +100,9 @@ Comments.prototype.ready = function() {
             this.on('click', this.getElem('showMore'), this.showMore);
         }
 
-        this.on('click', '.js-show-more-replies', this.showMoreReplies);
-
         this.hideExcessReplies();
         this.bindCommentEvents();
+        this.on('click', '.js-show-more-replies', this.showMoreReplies);
     }
     this.emit('ready');
 };
@@ -110,16 +112,21 @@ Comments.prototype.bindCommentEvents = function() {
 
     if (this.user && this.user.privateFields.canPostComment) {
         this.renderReplyButtons();
+        this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
 };
 
-Comments.prototype.renderReplyButtons = function() {
+Comments.prototype.renderReplyButtons = function(comments) {
     var actions,
         self = this;
 
-    this.comments.forEach(function(elem, i) {
-        actions = qwery(self.getClass('commentActions'), elem);
-        bonzo(actions).append('<div type="button" class="a d-comment__action d-comment__action--reply" role="link">Reply</div>');
+    comments = comments || this.comments;
+
+    comments.forEach(function(elem, i) {
+        actions = qwery(self.getClass('commentActions'), elem)[0];
+        bonzo(actions).append(
+            '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
+            'role="button" comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
     });
 };
 
@@ -149,7 +156,7 @@ Comments.prototype.showMore = function(e) {
 };
 
 Comments.prototype.showHiddenComments = function() {
-    qwery(this.getClass('topLevel'), this.elem).forEach(function(elem, i) {
+    qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
         bonzo(elem).removeClass('u-h');
     });
     this.hasHiddenComments = false;
@@ -175,7 +182,7 @@ Comments.prototype.hideExcessReplies = function(comments) {
     var replies, repliesToHide,
         self = this;
 
-    comments = comments || qwery(this.getClass('topLevel'), this.elem);
+    comments = comments || this.topLevelComments;
     comments.forEach(function(elem, i) {
         replies = qwery(self.getClass('reply'), elem);
 
@@ -196,24 +203,46 @@ Comments.prototype.hideExcessReplies = function(comments) {
  * @param {Object} resp
  */
 Comments.prototype.commentsLoaded = function(resp) {
-    var comments = qwery(this.getClass('topLevel'), bonzo.create(resp.html)),
+    var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
         showMoreButton = this.getElem('showMore');
 
     this.currentPage++;
     if (!resp.hasMore) {
         this.removeShowMoreButton();
     }
+
+    this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
     bonzo(this.getElem('comments')).append(comments);
 
     showMoreButton.innerHTML = 'Show more';
     showMoreButton.removeAttribute('data-disabled');
+
     this.hideExcessReplies(comments);
+
     RecommendComments.init(this.context);
     this.emit('loaded');
 };
 
 Comments.prototype.removeShowMoreButton = function() {
     bonzo(this.getElem('showMore')).remove();
+};
+
+/** @param {Event} e */
+Comments.prototype.replyToComment = function(e) {
+    var parentCommentEl,
+        replyLink = e.currentTarget,
+        replyToId = replyLink.getAttribute('comment-id'),
+        replyToComment = qwery('#comment-'+ replyToId)[0],
+        $replyToComment = bonzo(replyToComment),
+        commentForm = new CommentBox(this.context, this.mediator, {
+            discussionId: this.options.discussionId,
+            state: 'response'
+        });
+
+    // this is a bit toffee, but we don't have .parents() in bonzo
+    parentCommentEl = $replyToComment.hasClass(this.getClass('topLevelComment', true)) ? $replyToComment[0] : $replyToComment.parent().parent()[0];
+    
+    commentForm.render(parentCommentEl);
 };
 
 return Comments;

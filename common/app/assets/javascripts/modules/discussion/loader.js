@@ -177,12 +177,10 @@ Loader.prototype.renderCommentBox = function() {
         this.renderUserBanned();
     } else {
         this.commentBox = new CommentBox(this.context, this.mediator, {
-            discussionId: this.getDiscussionId()
+            discussionId: this.getDiscussionId(),
+            premod: this.user.privateFields.isPremoderated
         });
         this.commentBox.render(this.getElem('commentBox'));
-        if (!this.user.privateFields.isPremoderated) {
-            bonzo(qwery('.d-comment-box__premod'), this.commentBox.elem).remove();
-        }
         this.commentBox.on('post:success', this.addComment.bind(this));
         this.canComment = true;
     }
@@ -193,13 +191,11 @@ Loader.prototype.renderCommentBox = function() {
  * When you load more comments
  */
 Loader.prototype.renderBottomCommentBox = function() {
-    var commentBoxElem = bonzo(this.commentBox.elem).clone()[0];
-    bonzo(this.getElem('commentBoxBottom')).append(commentBoxElem);
-
     this.bottomCommentBox = new CommentBox(this.context, this.mediator, {
-        discussionId: this.getDiscussionId()
+        discussionId: this.getDiscussionId(),
+        premod: this.user.privateFields.isPremoderated
     });
-    this.bottomCommentBox.attachTo(commentBoxElem);
+    this.bottomCommentBox.render(this.getElem('commentBoxBottom'));
     this.bottomCommentBox.on('post:success', this.addComment.bind(this, true));
 };
 

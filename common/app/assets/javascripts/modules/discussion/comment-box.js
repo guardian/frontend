@@ -25,7 +25,7 @@ Component.define(CommentBox);
 /** @type {Object.<string.*>} */
 CommentBox.CONFIG = {
     templateName: 'comment-box',
-    componentClass: 'js-comment-box',
+    componentClass: 'd-comment-box',
     classes: {
         show: 'js-show-comment-box',
         body: 'd-comment-box__body',
@@ -33,7 +33,8 @@ CommentBox.CONFIG = {
         submitButton: 'd-comment-box__submit',
         messages: 'd-comment-box__messages',
         error: 'd-comment-box__error',
-        condensed: 'd-comment-box--condensed'
+        condensed: 'd-comment-box--condensed',
+        premod: 'd-comment-box__premod'
     },
     errors: {
         EMPTY_COMMENT_BODY: 'Please write a comment.',
@@ -51,13 +52,22 @@ CommentBox.prototype.defaultOptions = {
     discussionId: null,
     apiRoot: null,
     condensed: false,
-    maxLength: 5000
+    maxLength: 5000,
+    premod: false,
+    state: 'top-level'
 };
 
 /**
  * @type {Array.<string>}
  */
 CommentBox.prototype.errors = [];
+
+/** @oevrride */
+CommentBox.prototype.prerender = function() {
+    if (!this.options.premod) {
+        this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
+    }
+};
 
 /** @override */
 CommentBox.prototype.ready = function() {
@@ -79,6 +89,7 @@ CommentBox.prototype.ready = function() {
         this.elem.className = this.elem.className +' '+ this.getClass('condensed', true);
         bean.on(this.context, 'click', [this.getElem('show')], this.showCommentBox.bind(this));
     }
+    this.setState(this.options.state);
 };
 
 /**

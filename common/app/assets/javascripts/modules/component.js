@@ -77,8 +77,9 @@ Component.prototype.render = function(parent) {
         container = parent || document.body;
 
     this.elems = {};
-    bonzo(container).append(template);
     this.elem = template;
+    this.prerender();
+    bonzo(container).append(template);
     this.ready();
 };
 
@@ -99,13 +100,23 @@ Component.prototype.fetch = function(parent) {
         type: 'json',
         method: 'get',
         crossOrigin: true
-    }).then(function render(resp) {
-        self.elem = bonzo.create(resp.html);
-        bonzo(parent).append(self.elem);
-        self.elems = {};
-        self.ready();
-    });
+    }).then(
+        function render(resp) {
+            self.elem = bonzo.create(resp.html)[0];
+            bonzo(parent).append(self.elem);
+            self.elems = {};
+            self.prerender();
+            self.ready();
+        }
+    );
 };
+
+/**
+ * This is user to edit this.elem before it's rendered
+ * This will help with the rendering performance that
+ * we would lose if rendered then manipulated
+ */
+Component.prototype.prerender = function() {};
 
 /**
  * Once the render / decorate methods have been called
@@ -179,6 +190,13 @@ Component.prototype.setOptions = function(options) {
     for (var prop in this.defaultOptions) {
         this.options[prop] = options[prop] || this.defaultOptions[prop];
     }
+};
+
+/**
+ * @param {string} state
+ */
+Component.prototype.setState = function(state) {
+    bonzo(this.elem).addClass(this.conf().componentClass +'--'+ state);
 };
 
 /**
