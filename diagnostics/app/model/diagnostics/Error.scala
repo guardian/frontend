@@ -34,10 +34,12 @@ object Error extends Logging {
   def report(queryString: Map[String, Seq[String]], userAgent: String) {
       val qs = queryString.map { case (k,v) => k -> v.mkString }
       val osFamily = getOperatingSystem(userAgent).toString
-      qs.get("type").get.toString match {
-        case "js" => Metric.increment(s"js.${osFamily}") 
-        case "ads" => Metric.increment(s"ads.${osFamily}") 
-        case _ => {}
+      if (qs.contains("type")) {
+        qs.get("type").get.toString match {
+          case "js" => Metric.increment(s"js.${osFamily}") 
+          case "ads" => Metric.increment(s"ads.${osFamily}") 
+          case _ => {}
+        }
       }
     }
 } 
