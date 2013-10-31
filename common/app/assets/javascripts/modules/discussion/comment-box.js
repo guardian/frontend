@@ -52,6 +52,7 @@ CommentBox.prototype.defaultOptions = {
     apiRoot: null,
     maxLength: 5000,
     premod: false,
+    focus: false,
     state: 'top-level'
 };
 
@@ -64,6 +65,10 @@ CommentBox.prototype.errors = [];
 CommentBox.prototype.prerender = function() {
     if (!this.options.premod) {
         this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
+    }
+
+    if (this.options.state === 'response') {
+        this.getElem('submitButton').innerHTML = 'Post reply';
     }
 };
 
@@ -84,6 +89,10 @@ CommentBox.prototype.ready = function() {
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
 
     this.setState(this.options.state);
+
+    if (this.options.focus) {
+        this.getElem('body').focus();
+    }
 };
 
 /**

@@ -90,7 +90,7 @@ Loader.prototype.ready = function() {
         this.comments = new Comments(this.context, this.mediator, {
             initialShow: 2,
             discussionId: this.getDiscussionId(),
-            user: user
+            user: this.user
         });
 
         // Doing this makes sure there is only one redraw
@@ -112,15 +112,20 @@ Loader.prototype.ready = function() {
     DiscussionAnalytics.init();
 };
 
-/** @return {Reqwest} */
+/** @return {Reqwest|null} */
 Loader.prototype.getUser = function() {
     var self = this;
-    return DiscussionApi
-        .getUser()
-        .then(function(resp) {
-            self.user = resp.userProfile;
-            self.emit('user:loaded', resp.userProfile);
-        });
+
+    if (Id.getUserFromCookie()) {
+        return DiscussionApi
+            .getUser()
+            .then(function(resp) {
+                self.user = resp.userProfile;
+                self.emit('user:loaded', resp.userProfile);
+            });
+    } else {
+        self.emit('user:loaded');
+    }
 };
 
 /**

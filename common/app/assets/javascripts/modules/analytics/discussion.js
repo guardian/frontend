@@ -19,7 +19,7 @@ define(['common', 'modules/id'], function(common, Id) {
 
     Track.prototype.comment = function() {
         s.events = 'event51';
-        s.eVar66 = Id.getUserFromCookie().id;
+        s.eVar66 = Id.getUserFromCookie().id || null;
         s.eVar68 = 'comment';
         s.linkTrackVars = this.getLinkTrackVars(['eVar68']);
         s.linkTrackEvents = 'event51';
@@ -29,7 +29,7 @@ define(['common', 'modules/id'], function(common, Id) {
     Track.prototype.recommend = function(e) {
         s.events = 'event72';
         s.eVar65 = 'recommendation';
-        s.eVar66 = Id.getUserFromCookie().id;
+        s.eVar66 = Id.getUserFromCookie().id || null;
         s.eVar67 = e.userId;
         s.linkTrackVars = this.getLinkTrackVars(['eVar65', 'eVar67']);
         s.linkTrackEvents = 'event72';

@@ -14,7 +14,8 @@
     list-style: none;
     margin: 0 0 1em;
 }
-.d-thread .d-thread {
+.d-thread .d-thread,
+.d-comment-box--response {
     padding-left: 28px; /* aligns with top level comment's body */
     border-left: $gutter/2 solid $c-neutral5;
 
@@ -331,11 +332,6 @@
 }
 
 .d-comment-box {}
-
-.d-comment-box--response {
-    border-left: $gutter/2 solid $c-neutral5;
-    padding-left: 28px; /* aligns with top level comment's body */
-}
 
 .d-comment-box__body {
     @include box-sizing(border-box);

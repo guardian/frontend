@@ -237,12 +237,12 @@ Comments.prototype.replyToComment = function(e) {
         commentForm = new CommentBox(this.context, this.mediator, {
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
-            state: 'response'
+            state: 'response',
+            focus: true
         });
 
     // this is a bit toffee, but we don't have .parents() in bonzo
     parentCommentEl = $replyToComment.hasClass(this.getClass('topLevelComment', true)) ? $replyToComment[0] : $replyToComment.parent().parent()[0];
-    
     commentForm.render(parentCommentEl);
 };
 
