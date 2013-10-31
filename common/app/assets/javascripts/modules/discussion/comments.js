@@ -40,6 +40,7 @@ Comments.CONFIG = {
         topLevelComment: 'd-comment--top-level',
         showMore: 'js-show-more-comments',
         reply: 'd-comment--response',
+        showReplies: 'js-show-more-replies',
 
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
@@ -102,7 +103,7 @@ Comments.prototype.ready = function() {
 
         this.hideExcessReplies();
         this.bindCommentEvents();
-        this.on('click', '.js-show-more-replies', this.showMoreReplies);
+        this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     }
     this.emit('ready');
 };
@@ -192,7 +193,7 @@ Comments.prototype.hideExcessReplies = function(comments) {
             // TODO: Don't like using d-thread,
             // perhaps enhance to d-thread--replies
             bonzo(qwery('.d-thread', elem)).append(
-                '<li class="js-show-more-replies cta" data-link-name="Show more replies" data-is-ajax>Show '+
+                '<li class="'+ self.getClass('showReplies', true) +' cta" data-link-name="Show more replies" data-is-ajax>Show '+
                     repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
                 '</li>');
         }
@@ -229,7 +230,7 @@ Comments.prototype.removeShowMoreButton = function() {
 
 /** @param {Event} e */
 Comments.prototype.replyToComment = function(e) {
-    var parentCommentEl,
+    var parentCommentEl, showRepliesElem,
         replyLink = e.currentTarget,
         replyToId = replyLink.getAttribute('comment-id'),
         replyToComment = qwery('#comment-'+ replyToId)[0],
@@ -243,6 +244,12 @@ Comments.prototype.replyToComment = function(e) {
 
     // this is a bit toffee, but we don't have .parents() in bonzo
     parentCommentEl = $replyToComment.hasClass(this.getClass('topLevelComment', true)) ? $replyToComment[0] : $replyToComment.parent().parent()[0];
+    
+    // I don't like this, but UX says go
+    showRepliesElem = qwery(this.getClass('showReplies'), parentCommentEl);
+    if (showRepliesElem.length > 0) {
+        showRepliesElem[0].click();
+    }
     commentForm.render(parentCommentEl);
 };
 
