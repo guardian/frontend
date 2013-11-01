@@ -50,7 +50,7 @@
    ========================================================================== */
 
 .nav--columns {
-    padding: $baseline $gs-gutter/2;
+    padding: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
@@ -91,44 +91,6 @@
     border-top: none;
     padding-top: 0;
 }
-
-
-/* Section divider
-   ========================================================================== */
-
-.nav-popup--small .nav--section-divider {
-    margin: 0;
-    background-color: $c-neutral7;
-    padding: 0 $gs-gutter/2 $baseline*2;
-
-    .nav .nav__item + .nav__item {
-        .nav__link {
-            border-bottom: 0;
-            border-top: 1px solid $c-neutral5;
-        }
-    }
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-    @include mq(tablet) {
-        margin-top: -5px !important;
-        border-top: $baseline*3 solid #ffffff;
-
-        .nav__item { margin: 0; }
-    }
-    @include mq(desktop) {
-        border-top: none;
-        margin-top: -13px !important;
-    }
-}
-
-    .control--sections .i-nav-divider {
-        @include mq(tablet) {
-            border-left: 0;
-        }
-    }
 
 
 /* Global navigation
@@ -367,6 +329,9 @@
    ========================================================================== */
 
 .nav .nav__item .nav__link--faded {
+    color: $c-neutral2;
+}
+.nav .nav__item .nav__link--faded-footer {
     color: #9DBBD4;
 }
 

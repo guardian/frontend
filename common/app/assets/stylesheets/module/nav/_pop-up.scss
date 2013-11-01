@@ -11,7 +11,7 @@
     list-style: none;
     margin-bottom: -4px;
     border-bottom: $baseline solid $c-brandBlue;
-    background: #fff;
+    background: #ffffff;
     width: 100%;
     @include transform(translateZ(0)); // Hotfix to make popups stay on top
                                        // of .preload elements in Chrome Android
@@ -22,7 +22,7 @@
    ========================================================================== */
 
 .nav-popup--small {
-    padding-bottom: 0;
+    padding-top: $baseline*4;
 
     @include mq(tablet) {
         position: absolute;
@@ -31,7 +31,7 @@
         width: auto;
         padding: 0;
         min-width: 160px;
-        background-color: #fff;
+        background-color: #ffffff;
         border-bottom: 1px solid $c-neutral5;
         border-left: 1px solid $c-neutral5;
     }

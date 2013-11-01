@@ -47,11 +47,14 @@
 }
 .footer__banner {
     background-color: darken($c-brandBlue, 5%);
-    margin-bottom: $baseline;
+    margin-bottom: $baseline*2;
 
     @include mq(tablet) {
         background-color: $c-brandBlue;
     }
+}
+.footer__navigation-wrapper {
+    padding-bottom: $baseline*2;
 }
 @include mq(tablet) {
     .js-on .footer__navigation-wrapper {
