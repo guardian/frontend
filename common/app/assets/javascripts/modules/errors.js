@@ -20,7 +20,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             },
             makeUrl = function(properties, isAd) {
                 var query = [];
-                properties['type'] = (isAd === true) ? 'ads' : 'js' 
+                properties.type = (isAd === true) ? 'ads' : 'js';
                 for (var name in properties) {
                     query.push(name + '=' + encodeURIComponent(properties[name]));
                 }
