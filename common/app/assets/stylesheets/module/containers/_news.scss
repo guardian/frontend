@@ -4,31 +4,56 @@
         .item:first-child {
             @include card-mobile($with-image: true);
         }
-        .item:nth-child(3) {
-            @include card-half-width-image;
-        }
-        .item:nth-child(n+2):nth-child(-n+5) {
-            @include card-half-width;
-        }
-        .item:nth-child(2),
-        .item:nth-child(3){
-            @include card-half-width-image;
-        }
-        .item:nth-child(n+6) {
-            @include card-headline;
-        }
-        .item:nth-child(n+7) {
-            .item__link {
-                border-top: 1px dotted $c-neutral5;
+        .collection--without-sport-stats {
+            .item:nth-child(n+2):nth-child(-n+5) {
+                @include card-half-width;
+            }
+            .item:nth-child(2),
+            .item:nth-child(3){
+                @include card-half-width-image;
+            }
+            .item:nth-child(n+6) {
+                @include card-headline;
+            }
+            .item:nth-child(n+7) {
+                .item__link {
+                    border-top: 1px dotted $c-neutral5;
+                }
+            }
+            .item:nth-child(2),
+            .item:nth-child(4) {
+                @include row-start;
+            }
+            .item:nth-child(3),
+            .item:nth-child(5) {
+                @include row-end;
             }
         }
-        .item:nth-child(2),
-        .item:nth-child(4) {
-            @include row-start;
-        }
-        .item:nth-child(3),
-        .item:nth-child(5) {
-            @include row-end;
+        .collection--with-sport-stats {
+            .item:nth-child(n+3):nth-child(-n+6) {
+                @include card-half-width;
+            }
+            .item:nth-child(3),
+            .item:nth-child(4){
+                @include card-half-width-image;
+            }
+            .item:nth-child(n+7) {
+                @include card-headline;
+            }
+            .item:nth-child(n+8) {
+                .item__link {
+                    border-top: 1px dotted $c-neutral5;
+                }
+            }
+            .item:nth-child(3),
+            .item:nth-child(5) {
+                @include row-start;
+            }
+            .item:nth-child(4),
+            .item:nth-child(6) {
+                @include row-end;
+            }
+
         }
     }
     @include mq(tablet) {
@@ -160,7 +185,11 @@
 
     .item--sport-stats {
         padding-bottom: 0 !important;
-        float: left;
+        @include mq($to: tablet) {
+            width: 100% !important;
+            padding-left: 0 !important;
+            border-left-style: none !important;
+        }
         .competition-table {
             padding-top: 0;
             border-style: none;
@@ -177,6 +206,7 @@
     }
     @include mq(tablet) {
         .item--sport-stats-tall {
+            float: left;
             min-height: gs-height(9) !important;
         }
     }
