@@ -38,7 +38,7 @@ define([
 
         showFrontFixtures: function(context) {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo.create('<li class="item item--sport-stats"></li>');
+            var prependTo = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>');
             common.mediator.on('modules:footballfixtures:render', function() {
                 var collection = common.$g('.container--news .collection', context);
                 common.$g('.item:first-child', collection)
@@ -63,7 +63,7 @@ define([
 
         showCompetitionData: function(competition, context) {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo.create('<li class="item item--sport-stats"></li>');
+            var prependTo = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>');
             common.mediator.on('modules:footballfixtures:render', function() {
                 var collection = common.$g('.container--news .collection', context);
                 common.$g('.item:first-child', collection)
