@@ -83,11 +83,12 @@ define([
                 });
             };
 
+        this.extraItems = bonzo.create(
+            common.$g('.collection--template', collection).html()
+        );
+
         this.addShowMore = function() {
             var $collection = bonzo(collection).removeClass('js-collection--show-more'),
-                extraItems = bonzo.create(
-                    common.$g('.collection--template', collection).html()
-                ),
                 initalShowSize = _getInitialShowSize($collection.parent().attr('data-type'));
 
             // remove extras from dom
@@ -95,18 +96,18 @@ define([
 
             // if we are showing more items than necessary, store them
             var excess = qwery('.item:nth-child(n+' + (initalShowSize + 1) + ')', collection);
-            extraItems = excess.concat(extraItems);
+            this.extraItems = excess.concat(this.extraItems);
             bonzo(excess).remove();
 
             // if we are showing less items than necessary, show more
-            bonzo(extraItems.splice(0, initalShowSize - qwery('.item', collection).length))
+            bonzo(this.extraItems.splice(0, initalShowSize - qwery('.item', collection).length))
                 .appendTo($collection);
 
             faciaImages.upgrade($collection[0]);
 
             // add toggle button, if they are extra items left to show
-            if (extraItems.length) {
-                _renderToggle($collection, extraItems);
+            if (this.extraItems.length) {
+                _renderToggle($collection, this.extraItems);
             }
         };
 
