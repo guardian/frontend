@@ -20,10 +20,11 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             },
             makeUrl = function(properties, isAd) {
                 var query = [];
+                properties['type'] = (isAd === true) ? 'ads' : 'js' 
                 for (var name in properties) {
                     query.push(name + '=' + encodeURIComponent(properties[name]));
                 }
-                return url + path + '?' + ((isAd === true) ? 'ads' : 'js') + '/' + query.join('&');
+                return url + path + '?' + query.join('&');
             },
             log = function(message, filename, lineno, isUncaught) {
                 // error events are thrown by script elements
