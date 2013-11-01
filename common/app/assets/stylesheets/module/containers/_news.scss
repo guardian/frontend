@@ -43,11 +43,11 @@
         }
     }
     @include mq(tablet, desktop) {
+        @include first-row(2);
         .item:nth-child(2),
         .item:nth-child(n+4):nth-child(-n+6) {
             @include card-image;
         }
-        @include first-row(2);
         &:nth-of-type(odd) {
             .item:nth-child(3n+1) {
                 @include row-start;
@@ -96,5 +96,22 @@
                 @include row-end;
             }
         }
+    }
+
+    .item--sport-stats {
+        padding-bottom: 0 !important;
+        .competition-table {
+            padding-top: 0;
+            border-style: none;
+        }
+        .match-desc__result {
+            width: 20%;
+        }
+        .cta-small {
+            padding-bottom: 0;
+        }
+    }
+    .item--sport-stats-tall {
+        min-height: gs-height(9) !important;
     }
 }

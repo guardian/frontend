@@ -44,36 +44,20 @@ define([
             common.mediator.on('page:front:ready', function(config, context) {
                 if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport")) {
                     // wrap the return sports stats component in an 'item'
-                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
-                        section = config.page.pageId === "" ? 'sport' : 'news',
-                        numVisible = config.page.pageId === "" ? 3 : 5;
+                    var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
                     common.mediator.on('modules:footballfixtures:render', function() {
-                        var container = common.$g('.collection--' + section, context)
-                            .first()[0];
-                        if (container) {
-                            // toggle class
-                            common.$g('.items', container)
-                                .removeClass('items--without-sport-stats')
-                                .addClass('items--with-sport-stats');
-                            // add it after the first item
-                            common.$g('.item:first-child', container)
-                                .after($statsItem);
-                            // now hide one of the shown ones (but not on mobile)
-                            if (detect.getBreakpoint() !== 'mobile') {
-                                common.$g('.item.u-h', container)
-                                    .first()
-                                    .previous()
-                                    .addClass('u-h');
-                            }
-                        }
+                        common.$g('.container--news[data-id$="/sport/regular-stories"] .collection .item:first-child', context)
+                            // add empty item
+                            .after('<li class="item u-h"></li>')
+                            .after(prependTo);
                     });
                     new FootballFixtures({
-                        prependTo: $statsItem,
+                        prependTo: prependTo,
                         attachMethod: 'append',
                         competitions: ['500', '510', '100', '400'],
                         contextual: false,
                         expandable: true,
-                        numVisible: numVisible
+                        numVisible: config.page.pageId === "" ? 3 : 5
                     }).init();
                 }
             });
@@ -98,7 +82,7 @@ define([
             this.initialised = true;
             modules.showCollectionShowMore();
             modules.showContainerToggle();
-//            modules.showFootballFixtures();
+            modules.showFootballFixtures();
             modules.showPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
