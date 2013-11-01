@@ -15,7 +15,7 @@ trait CloudWatch extends Logging {
     client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
     client
   }
-
+  
   object asyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
   {
     def onError(exception: Exception)
@@ -25,11 +25,12 @@ trait CloudWatch extends Logging {
     def onSuccess(request: PutMetricDataRequest, result: Void )
     {
       log.info("CloudWatch PutMetricDataRequest - sucess")
-      Metric.reset // TODO shouldn't be here
     }
   }
 
-  def put(namespace: String, metrics: scala.collection.mutable.Map[String, Int]) {
+
+
+  def put(namespace: String, metrics: scala.collection.mutable.Map[String, Int]) = {
 
       val request = new PutMetricDataRequest().
         withNamespace(namespace).
