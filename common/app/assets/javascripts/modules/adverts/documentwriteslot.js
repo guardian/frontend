@@ -1,4 +1,4 @@
-/*global OAS_RICH:true postscribe:true  */
+/*global OAS_RICH:true */
 define([
     'common',
     'bonzo',
