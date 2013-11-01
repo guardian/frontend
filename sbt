@@ -14,7 +14,6 @@ if [ $NPM_EXIT == "1" ]; then
 fi
 
 # do an initial grunt compile - mute output and background it.
-grunt clean
 grunt compile > /dev/null &
 
 if [ -f "~/.sbtconfig" ]; then
@@ -34,10 +33,10 @@ fi
 BUILD_PARAMS=""
 if [ -n "$BUILD_NUMBER" ]; then
   BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.number=\"$BUILD_NUMBER\""
-fi 
+fi
 if [ -n "$BUILD_VCS_NUMBER" ]; then
   BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.vcs.number=\"$BUILD_VCS_NUMBER\""
-fi 
+fi
 
 
 # Ivy configuration params and debug option
