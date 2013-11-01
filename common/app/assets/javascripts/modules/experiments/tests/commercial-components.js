@@ -58,10 +58,29 @@ define([
 
     function loadComponents(opts) {
 
+        var endpoints = [
+            "/commercial/travel/offers?" + opts.keywordsParams,
+            "/commercial/masterclasses?" + opts.keywordsParams,
+            "/commercial/jobs?k=Engineering"
+        ];
+
+        var slots = [
+            ".article__main-column",
+            ".js-mpu-ad-slot"
+        ];
+
+        var slotTargets = {};
+        slots.forEach(function(slot, i) {
+            var rnd = Math.floor(Math.random() * (endpoints.length));
+
+            slotTargets[slots[i]] = endpoints[rnd];
+        });
+
+        /*
         var slotTargets = {
             ".article__main-column": "/commercial/travel/offers?" + opts.keywordsParams,
             ".js-mpu-ad-slot":       "/commercial/masterclasses?" + opts.keywordsParams
-        };
+        };*/
 
         Object.keys(slotTargets).forEach(function(selector) {
             var $slot   = common.$g(selector, opts.context),
