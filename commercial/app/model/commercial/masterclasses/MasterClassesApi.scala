@@ -10,11 +10,11 @@ object MasterClassesApi extends ExecutionContexts {
   val apiId = CommercialConfiguration.masterclasses.apiId
   val apiKey = CommercialConfiguration.masterclasses.apiKey
 
+  def extractEventsFromFeed(jsValue: JsValue) = jsValue \\ "event"
 
   def getAll: Future[Seq[MasterClass]] = {getMasterClassJson map {
       eventBriteJson =>
-        val events = eventBriteJson \\ "event"
-        events map (MasterClass(_))
+        extractEventsFromFeed(eventBriteJson) map (MasterClass(_))
     }
   }
 
