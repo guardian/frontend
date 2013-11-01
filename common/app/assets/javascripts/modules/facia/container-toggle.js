@@ -6,7 +6,7 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
             _$button = bonzo(bonzo.create(
                 '<button class="container__toggle" data-link-name="Show">'
                     + '<i class="i i-arrow-white-large"></i>'
-                    + '<span class="container__toggle__text u-h">Hide</span>'
+                    + '<span class="container__toggle__text">Hide</span>'
                 +'</button>'
             )),
             _prefName = 'container-states',
