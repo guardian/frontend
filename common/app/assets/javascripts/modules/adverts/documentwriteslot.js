@@ -6,7 +6,7 @@ define([
 ], function (
     common,
     bonzo,
-    postscribePlaceholder
+    postscribe
 ) {
 
     var DocWriteAdSlot = function(name, el) {

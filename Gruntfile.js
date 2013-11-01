@@ -60,7 +60,12 @@ module.exports = function (grunt) {
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview"
                     },
-                    "wrap" : {
+                    shim: {
+                        "postscribe": {
+                            exports: "postscribe"
+                        }
+                    },
+                    wrap: {
                         "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         "endFile": "common/app/assets/javascripts/bootstraps/go.js"
                     },
