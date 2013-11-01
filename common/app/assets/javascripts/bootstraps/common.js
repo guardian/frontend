@@ -37,7 +37,8 @@ define([
     "modules/swipe/ears",
     "modules/swipe/bar",
     "modules/facia/images",
-    "modules/onward/history"
+    "modules/onward/history",
+    "modules/onward/sequence"
 ], function (
     common,
     ajax,
@@ -76,7 +77,8 @@ define([
     ears,
     SwipeBar,
     faciaImages,
-    History
+    History,
+    sequence
 ) {
 
     var modules = {
@@ -358,6 +360,7 @@ define([
                         }
                     });
                 }
+                sequence.init();
             });
         }
     };

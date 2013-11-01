@@ -4,7 +4,7 @@ define([
     'bean',
     'ajax',
     'modules/storage',
-    'modules/onwards/history'
+    'modules/onward/history'
 ], function(
     common,
     bean,
@@ -34,20 +34,20 @@ define([
     function getSequence() { return get('sequence'); }
     function getContext() { return get('context'); }
 
-    function bindListeners() {
-        common.mediator.on('module:clickstream:click', function(clickSpec){
-            if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContext) {
-                set('context', clickSpec.linkContext);
-            }
+    function cleanSequence(sequence) {
+        return sequence.map(function(el) {
+            el.replace('http://gu.com', '');
         });
     }
 
     function dedupeSequence(sequence, callback) {
         var hist = new History().get();
 
-
-
-        callback(sequence);
+        callback(sequence.filter(function(seqItem) {
+            return !!hist.some(function(histItem) {
+                 return seqItem !== histItem.id;
+            });
+        }));
     }
 
     function loadSequence(context) {
@@ -56,12 +56,23 @@ define([
             crossOrigin: true
         }).then(function (json) {
             if(json && 'trails' in json) {
-                dedupeSequence(json.trails, function(sequence) {
+                dedupeSequence(cleanSequence(json.trails), function(sequence) {
                     set('sequence', sequence);
+                    //console.log('Original sequence : ' + json.trails);
+                    //console.log('New sequence : ' + getSequence());
                 });
             }
         }).fail(function(req) {
             common.mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
+        });
+    }
+
+    function bindListeners() {
+        common.mediator.on('module:clickstream:click', function(clickSpec){
+            if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContext) {
+                set('context', clickSpec.linkContext);
+                //console.log('New context : ' + clickSpec.linkContext);
+            }
         });
     }
 
@@ -71,6 +82,7 @@ define([
             loadSequence(context);
         }
         bindListeners();
+        //console.log('sequence init called');
     }
 
     return {
