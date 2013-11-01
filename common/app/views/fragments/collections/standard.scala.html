@@ -1,7 +1,7 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 @if(style.showMore) {
-    <ul class="unstyled collection @if(style.showMore){js-collection--show-more}">
+    <ul class="unstyled collection collection--without-sport-stats @if(style.showMore){js-collection--show-more}">
         @collection.items.take(5).zipWithIndex.map{ case (trail, index) =>
             @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0)
         }
@@ -14,7 +14,7 @@
         }
     </ul>
 }else{
-    <ul class="unstyled collection @if(style.showMore){js-collection--show-more}">
+    <ul class="unstyled collection collection--without-sport-stats @if(style.showMore){js-collection--show-more}">
         @collection.items.zipWithIndex.map{ case (trail, index) =>
             @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0)
         }
