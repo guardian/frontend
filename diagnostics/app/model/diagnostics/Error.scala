@@ -22,11 +22,10 @@ object Error extends Logging {
     val ua = agent.parse(userAgent)
     ua.getOperatingSystem().getFamily.toString match {
       case "OS_X"       => "osx"
+      case "IOS"        => "ios"
       case "ANDROID"    => "android"
       case "WINDOWS"    => "windows"
       case "RIMOS"      => "rimos"
-      case "LINUX"      => "linux"
-      case "SYMBIANOS"  => "symbian"
       case _            => "unknown"
     }
   }
@@ -37,7 +36,7 @@ object Error extends Logging {
       if (qs.contains("type")) {
         qs.get("type").get.toString match {
           case "js" => Metric.increment(s"js.${osFamily}") 
-          case "ads" => Metric.increment(s"ads.${osFamily}") 
+          case "ads" => Metric.increment("ads") 
           case _ => {}
         }
       }
