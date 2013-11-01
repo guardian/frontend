@@ -33,6 +33,7 @@
             </ul>
             <div class="footer__misc">
                 <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
+                @if(SwipeNav.isSwitchedOn) {
                 <div class="footer__user-actions">
                     <span class="swipe-switches">
                         Swipe:
@@ -40,6 +41,7 @@
                         <button class="swipe-switches__button swipe-switches__button--off" data-link-name="switch-swipe-off">Turn OFF</button>
                     </span>
                 </div>
+                }
             </div>
         </div>
     </div>
