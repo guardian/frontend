@@ -170,6 +170,10 @@ object Switches extends Collections {
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = Off)
+  
+  val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
+    "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
+    safeState = Off)
 
   // A/B Test Switches
 
@@ -262,6 +266,7 @@ object Switches extends Collections {
     ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
+    ClientSideErrorSwitch,
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
