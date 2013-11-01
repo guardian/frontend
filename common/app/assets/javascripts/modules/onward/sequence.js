@@ -1,164 +1,81 @@
 /*jshint multistr: true */
-
 define([
     'common',
-    'modules/storage',
-    'modules/userPrefs',
-    'modules/pageconfig',
     'bean',
-    'bonzo',
-    'ajax'
+    'ajax',
+    'modules/storage',
+    'modules/onwards/history'
 ], function(
     common,
-    storage,
-    userPrefs,
-    pageConfig,
     bean,
-    bonzo,
-    ajax
+    ajax,
+    storage,
+    History
     ){
-    var initialUrl,
-        linkContext,
-        referrer,
-        referrerPageName,
-        sequencePos = -1,
+
+    var context,
         sequence = [],
-        sequenceCache,
-        sequenceLen = 0,
-        storePrefix = 'gu.swipe.';
+        prefixes = {
+            context: 'gu.context',
+            sequence: 'gu.sequence'
+        },
+        expiry = 10000;
 
-    function urlAbsPath(url) {
-        var a = document.createElement('a');
-        a.href = url;
-        a = a.pathname + a.search + a.hash;
-        a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
-        return a;
+    function set(type, item) {
+        storage.set(prefixes[type], item, {
+            expires: expiry + (new Date()).getTime()
+        });
     }
 
-    function setSequencePos(url) {
-        sequencePos = getSequencePos(url);
+    function get(type) {
+        return storage.get(prefixes[type]);
     }
 
-    function getSequencePos(url) {
-        return sequence.indexOf(url);
-    }
+    function getSequence() { return get('sequence'); }
+    function getContext() { return get('context'); }
 
-    function getSequenceUrl(pos) {
-        return pos > -1 && pos < sequenceLen ? sequence[pos] : sequence[0];
-    }
-
-    function loadSequence(config, callback) {
-        var sequenceUrl = linkContext;
-
-        if (sequenceUrl) {
-            // data-link-context was from a click within this app
-            linkContext = undefined;
-        } else {
-            sequenceUrl = storage.get(storePrefix + 'linkContext');
-            if (sequenceUrl) {
-                // data-link-context was set by a click on a previous page
-                storage.remove(storePrefix + 'linkContext');
-            } else {
-                // No data-link-context, so infer the section/tag component from the url,
-                if("page" in config) {
-                    sequenceUrl = (config.page.section ? config.page.section : config.page.edition.toLowerCase());
-                } else {
-                    sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
-                    sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
-                }
+    function bindListeners() {
+        common.mediator.on('module:clickstream:click', function(clickSpec){
+            if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContext) {
+                set('context', clickSpec.linkContext);
             }
-        }
+        });
+    }
 
-        // Strip trailing slash
-        sequenceUrl = sequenceUrl.replace(/\/$/, "");
+    function dedupeSequence(sequence, callback) {
+        var hist = new History().get();
 
+
+
+        callback(sequence);
+    }
+
+    function loadSequence(context) {
         ajax({
-            url: '/' + sequenceUrl + '.json',
+            url: '/' + context + '.json',
             crossOrigin: true
         }).then(function (json) {
-                var trails = json.trails,
-                    len = trails ? trails.length : 0,
-                    url = window.location.pathname,
-                    s,
-                    i;
-
-                if (len >= 3) {
-
-                    trails.unshift(url);
-                    len += 1;
-
-                    sequence = [];
-                    sequenceLen = 0;
-                    sequenceCache = {};
-
-                    for (i = 0; i < len; i += 1) {
-                        s = trails[i];
-                        // dedupe, while also creating a lookup obj
-                        if(!sequenceCache[s]) {
-                            sequenceCache[s] = {};
-                            sequence.push(s);
-                            sequenceLen += 1;
-                        }
-                    }
-
-                    setSequencePos(window.location.pathname);
-                    callback();
-                } else {
-                    loadSequenceRetry (sequenceUrl, callback);
-                }
-            }).fail(function () {
-                loadSequenceRetry (sequenceUrl, callback);
-            });
-    }
-
-
-    function getAdjacentUrl(dir) {
-        // dir = 1   => the right pane
-        // dir = -1  => the left pane
-
-        return getSequenceUrl(1, sequenceLen);
-    }
-
-    function start() {
-
-        common.mediator.on('module:clickstream:click', function(clickSpec){
-            var url;
-
-            if (clickSpec.sameHost && !clickSpec.samePage) {
-                if (clickSpec.linkContext) {
-                    storage.set(storePrefix + 'linkContext', clickSpec.linkContext, {
-                        expires: 10000 + (new Date()).getTime()
-                    });
-                }
+            if(json && 'trails' in json) {
+                dedupeSequence(json.trails, function(sequence) {
+                    set('sequence', sequence);
+                });
             }
+        }).fail(function(req) {
+            common.mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
         });
-
     }
 
-    var init = function(config, contextHtml) {
-        loadSequence(config, function(){
-            var loc = window.location.href;
+    function init(config) {
+        var context = getContext();
+        if(context !== null && getSequence() === null) {
+            loadSequence(context);
+        }
+        bindListeners();
+    }
 
-            initialUrl       = urlAbsPath(loc);
-            referrer         = loc;
-            referrerPageName = config.page.analyticsName;
-
-            url = context.url;
-            setSequencePos(url);
-
-            referrer = window.location.href;
-            referrerPageName = config.page.analyticsName;
-
-            if (sequenceCache[initialUrl]) {
-                sequenceCache[initialUrl].config = config;
-                sequenceCache[initialUrl].html = contextHtml;
-            }
-
-            start();
-        });
-
-        return api;
+    return {
+        getSequence : getSequence,
+        getContext : getContext,
+        init: init
     };
-
-    return initialise;
 });
