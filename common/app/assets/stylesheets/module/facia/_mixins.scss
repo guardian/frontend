@@ -4,6 +4,9 @@
         .item__link {
             border-top-style: none;
         }
+        .competition-table {
+            border-top-style: none !important;
+        }
     }
 }
 @mixin row-start {
