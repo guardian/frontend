@@ -134,6 +134,10 @@ CommentBox.prototype.postComment = function(e) {
         this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
     }
 
+    if (this.options.replyTo) {
+        comment.replyTo = this.elem.replyToId.value;
+    }
+
     if (this.errors.length === 0) {
         this.setFormState(true);
         DiscussionApi
