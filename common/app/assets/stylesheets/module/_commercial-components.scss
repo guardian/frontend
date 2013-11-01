@@ -73,7 +73,140 @@
         background-color: $c-neutral5;
     }
 
-    &.commercial--small .offer:nth-child(2) {
+    &.commercial--small {
+
+        .offer {
+            width: 100%;
+        }
+
+        .offer:nth-child(2) {
+            display: none;
+        }
+    }
+}
+
+
+
+/* ==========================================================================
+   Masterclass component
+   ========================================================================== */
+.commercial--masterclasses {
+
+    ul, li {
+        @include box-sizing(border-box);
+    }
+
+    li p {
+        @include fs-bodyCopy(1);
         display: none;
+    }
+
+    ul {
+        padding-left: 8px;
+    }
+
+    h3 {
+        margin-bottom: 0;
+    }
+
+    .tickets-left {
+        @include fs-data(1);
+        color: #cc0000;
+        display: block !important;
+    }
+
+    .tickets-price {
+        @include fs-bodyHeading(1);
+        display: block !important;
+        margin-bottom: 0;
+    }
+
+    &.commercial--small {
+        img {
+            width: 100%;
+        }
+
+        li {
+            display: none;
+        }
+
+        li:first-child {
+            display: block;
+        }
+    }
+
+    &.commercial--medium {
+        img {
+            float: left;
+            width: 45%;
+        }
+
+        ul {
+            float: right;
+            width: 50%;
+        }
+    }
+
+    &.commercial--large {
+        img {
+            float: left;
+        }
+
+        ul {
+            float: right;
+            width: 50%;
+        }
+
+        li {
+            width: 50%;
+            float: left;
+            padding-right: 8px;
+        }
+    }
+}
+
+
+/* ==========================================================================
+   Jobs component
+   ========================================================================== */
+
+.commercial--jobs {
+
+    ul, li {
+        @include box-sizing(border-box);
+    }
+
+    .title {
+        @include fs-bodyHeading(1);
+        margin-bottom: 0;
+    }
+
+    .description {
+        @include fs-bodyCopy(1);
+    }
+
+    &.commercial--small {
+        li {
+            width: 100%;
+        }
+
+        li:nth-child(2),
+        li:nth-child(3),
+        li:nth-child(4) {
+            display: none;
+        }
+    }
+
+
+    &.commercial--medium {
+        li {
+            width: 33%;
+            float: left;
+            padding-right: $gutter;
+        }
+
+        li:nth-child(4) {
+            display: none;
+        }
     }
 }
