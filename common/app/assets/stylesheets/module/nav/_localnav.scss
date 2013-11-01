@@ -31,8 +31,7 @@
     h2.article-zone:only-child,
     .parts__body > .article-zone,
     .hide-on-mobile-if-localnav,
-    .section-head,
-    .front-section:first-child .sub-section-head {
+    .section-head {
         display: none;
 
         @include mq(tablet) {

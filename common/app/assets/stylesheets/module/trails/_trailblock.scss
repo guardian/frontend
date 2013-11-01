@@ -29,14 +29,6 @@
     border-top: none;
 }
 
-.front-section {
-    &:not(:first-child) {
-        .trailblock {
-            margin-top: $baseline;
-        }
-    }
-}
-
 
 /* Trailblock expandables
    ========================================================================== */
