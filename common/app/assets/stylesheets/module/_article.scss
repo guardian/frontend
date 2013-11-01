@@ -360,6 +360,23 @@ video {
         max-width: none;
     }
 }
+.article__inner--head {
+    max-width: none;
+
+    @include mq(tablet) {
+        max-width: gs-span(7);
+    }
+}
+.main-caption {
+    max-width: gs-span(7);
+
+    @include mq(tablet) {
+        max-width: gs-span(7);
+    }
+    @include mq(rightCol) {
+        max-width: none;
+    }
+}
 
 @include mq(tablet) {
     .article__head,
@@ -385,23 +402,7 @@ video {
     }
 }
 
-@mixin hide-discussion-tabs {
-
-}
-@mixin comments-below-article {
-    .article__container,
-    .article__discussion {
-        display: block !important;
-    }
-    .d-actions .top {
-        display: none;
-    }
-}
-
 @include mq(rightCol) {
-
-    @include comments-below-article;
-
     .article-wrapper {
         position: relative;
         max-width: none;
