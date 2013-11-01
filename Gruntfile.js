@@ -150,11 +150,6 @@ module.exports = function (grunt) {
                     "callback": "guFont",
                     "fonts": [
                         {
-                            "font-family": "AgateSans",
-                            "file": "resources/fonts/AgateSans-Regular.ttf",
-                            "format": "ttf"
-                        },
-                        {
                             "font-family": "EgyptianText",
                             "file": "resources/fonts/EgyptianText-Regular.ttf",
                             "format": "ttf"
@@ -545,6 +540,7 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
+            staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts'],
             css: [staticTargetDir + 'stylesheets'],
             images: [staticTargetDir + 'images'],
@@ -623,7 +619,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', function() {
-        grunt.task.run(['compile:images', 'compile:css', 'compile:js', 'compile:fonts', 'compile:flash']);
+        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js', 'compile:fonts', 'compile:flash']);
         if (!isDev) {
             grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
         }
