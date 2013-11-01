@@ -22,7 +22,7 @@ object RelatedController extends Controller with Related with Logging with Execu
     if (request.isJson)
       JsonComponent(
         "html" -> html,
-        "trails" -> trails.map(_.url)
+        "trails" -> trails.map(_.shortUrlId)
       )
     else
       Ok(html)

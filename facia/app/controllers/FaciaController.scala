@@ -175,7 +175,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
               val html = views.html.fragments.frontBody(frontPage, faciaPage)
               JsonComponent(
                 "html" -> html,
-                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
+                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.shortUrlId)).toList,
                 "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
               )
             }

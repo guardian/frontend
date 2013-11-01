@@ -39,7 +39,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
       if (request.isJson)
         JsonComponent(
           "html" -> views.html.fragments.indexBody(model),
-          "trails" -> model.trails.map(_.url),
+          "trails" -> model.trails.map(_.shortUrlId),
           "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.page, Switches.all).body)
         )
       else
