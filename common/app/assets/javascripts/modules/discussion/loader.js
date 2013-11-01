@@ -191,6 +191,10 @@ Loader.prototype.renderCommentBox = function() {
     }
 };
 
+Loader.prototype.renderUserBanned = function() {
+    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
+};
+
 /**
  * This comment box is only rendered
  * When you load more comments

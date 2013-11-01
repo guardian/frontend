@@ -244,7 +244,7 @@ Comments.prototype.replyToComment = function(e) {
 
     // this is a bit toffee, but we don't have .parents() in bonzo
     parentCommentEl = $replyToComment.hasClass(this.getClass('topLevelComment', true)) ? $replyToComment[0] : $replyToComment.parent().parent()[0];
-    
+
     // I don't like this, but UX says go
     showRepliesElem = qwery(this.getClass('showReplies'), parentCommentEl);
     if (showRepliesElem.length > 0) {
