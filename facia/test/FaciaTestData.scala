@@ -11,6 +11,7 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 
 case class TestTrail(url: String) extends Trail {
   def webPublicationDate: DateTime = DateTime.now
+  def shortUrl: String = ""
   def linkText: String = ""
   def headline: String = ""
   def trailText: Option[String] = None

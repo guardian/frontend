@@ -93,6 +93,7 @@ trait Football extends Collections {
     override lazy val thumbnail: Option[ImageElement] = None
     override lazy val mainPicture = None
     override lazy val url: String = MatchUrl(m)
+    override lazy val shortUrl: String = ""
     override lazy val section: String = "football"
     override lazy val webPublicationDate: DateTime = m.date
     override lazy val sectionName: String = "Football"
