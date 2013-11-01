@@ -1,9 +1,11 @@
 define([
     'bean',
+    'bonzo',
     'modules/discussion/api',
     'modules/component'
 ], function(
     bean,
+    bonzo,
     DiscussionApi,
     Component
 ) {
@@ -53,7 +55,8 @@ CommentBox.prototype.defaultOptions = {
     maxLength: 5000,
     premod: false,
     focus: false,
-    state: 'top-level'
+    state: 'top-level',
+    replyTo: null
 };
 
 /**
@@ -69,6 +72,21 @@ CommentBox.prototype.prerender = function() {
 
     if (this.options.state === 'response') {
         this.getElem('submitButton').innerHTML = 'Post reply';
+    }
+
+    if (this.options.replyTo) {
+        var elem = document.createElement('input');
+        elem.type = 'hidden';
+        elem.name = 'replyToId';
+        elem.value = this.options.replyTo.id;
+        this.elem.appendChild(elem);
+
+        elem = document.createElement('label');
+        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.id);
+        elem.className = 'label d-comment-box__reply-to';
+        elem.innerHTML = 'to @'+ this.options.replyTo.author;
+        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.id;
+        bonzo(elem).insertAfter(this.getElem('submitButton'));
     }
 };
 

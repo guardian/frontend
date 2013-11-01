@@ -356,3 +356,14 @@
 .d-comment-box__add-comment {
     display: none;
 }
+
+.d-comment-box__submit {
+    display: inline-block;
+    margin-right: $gutter;
+}
+
+.d-comment-box__reply-to {
+    @include fs-data(2);
+    color: $c-neutral1;
+    display: inline-block;
+}
