@@ -40,11 +40,10 @@ define([
             // wrap the return sports stats component in an 'item'
             var prependTo = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>');
             common.mediator.on('modules:footballfixtures:render', function() {
-                var collection = common.$g('.container--news .collection', context);
-                common.$g('.item:first-child', collection)
-                    // add empty item
+                var $collection = common.$g('.container--news .collection', context);
+                common.$g('.item:first-child', $collection[0])
                     .after(prependTo);
-                collection.removeClass('collection--without-sport-stats')
+                $collection.removeClass('collection--without-sport-stats')
                     .addClass('collection--with-sport-stats');
             });
             new FootballFixtures({
@@ -63,24 +62,26 @@ define([
 
         showCompetitionData: function(competition, context) {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>');
+            var fixtures = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'),
+                table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
             common.mediator.on('modules:footballfixtures:render', function() {
-                var collection = common.$g('.container--news .collection', context);
-                common.$g('.item:first-child', collection)
-                    // add empty item
-                    .after(prependTo);
-                collection.removeClass('collection--without-sport-stats')
-                    .addClass('collection--with-sport-stats');
+                var $collection = common.$g('.container--news .collection', context);
+                common.$g('.item:first-child', $collection[0])
+                    .after(fixtures);
+                $collection.removeClass('collection--without-sport-stats')
+                    .addClass('collection--with-sport-stats')
+                    .append(table);
             });
             new FootballFixtures({
-                prependTo: prependTo,
+                prependTo: fixtures,
                 attachMethod: 'append',
                 competitions: [competition],
                 contextual: true,
                 expandable: false
             }).init();
             new FootballTable({
-                prependTo: context.querySelector('.t3'),
+                prependTo: table,
+                attachMethod: 'append',
                 competition: competition
             }).init();
         },
@@ -88,9 +89,10 @@ define([
         showTeamData: function(team, context) {
             // wrap the return sports stats component in an 'item'
             var fixtures = bonzo.create('<div></div>'),
-                table = bonzo.create('<li></li>');
+                table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
             common.mediator.on('modules:footballfixtures:render', function() {
-                var $thirdItem = common.$g('.container--news .collection .item:nth-child(3)', context);
+                var $collection = common.$g('.container--news .collection', context),
+                    $thirdItem = common.$g('.item:nth-child(3)', $collection[0]);
                 // pull fixtures out into two items
                 bonzo(bonzo.create('<li class="item item--sport-stats"></li>'))
                     .append(common.$g('.team-fixtures, a:nth-child(2)', fixtures))
@@ -98,8 +100,7 @@ define([
                 bonzo(bonzo.create('<li class="item item--sport-stats"></li>'))
                     .append(common.$g('.team-results, a:nth-child(4)', fixtures))
                     .insertAfter($thirdItem);
-//                common.$g('.container--news .collection .item:nth-child(6)', context)
-//                    .after(table);
+                $collection.append(table);
             });
             new FootballFixtures({
                 prependTo: fixtures,
