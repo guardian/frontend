@@ -14,7 +14,7 @@ object DiagnosticsLoadJob extends Logging {
     Configuration.environment.stage.toUpperCase match {
       case "DEV" => {
         val cwFuture = CloudWatch.put("Diagnostics", Metric.all)
-        val f: scala.concurrent.Future[java.util.concurrent.Future[Void]] = {
+        val f: scala.concurrent.Future[java.util.concurrent.Future[Void]] = future {
           Metric.reset
           cwFuture
         }
