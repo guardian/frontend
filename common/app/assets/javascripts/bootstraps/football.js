@@ -38,30 +38,20 @@ define([
 
         showFrontFixtures: function(context) {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>')),
-                table;
+            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
             common.mediator.on('modules:footballfixtures:render', function() {
-                var container = common.$g('.collection--news', context)
-                    .first()[0];
-                // toggle class
-                common.$g('.items', container)
-                    .removeClass('items--without-sport-stats')
-                    .addClass('items--with-sport-stats');
-                // add it after the first item
-                common.$g('.item:first-child', container)
+                common.$g('.container--news .collection .item:first-child', context)
+                    // add empty item
+                    .after('<li class="item u-h"></li>')
                     .after(prependTo);
             });
-
-            if(!bonzo(prependTo).hasClass('footballfixtures-loaded')) {
-                bonzo(prependTo).addClass('footballfixtures-loaded');
-                table = new FootballFixtures({
-                    prependTo: prependTo,
-                    attachMethod: 'append',
-                    contextual: false,
-                    expandable: true,
-                    numVisible: 10
-                }).init();
-            }
+            new FootballFixtures({
+                prependTo: prependTo,
+                attachMethod: 'append',
+                contextual: false,
+                expandable: false,
+                numVisible: 10
+            }).init();
         },
 
         showMoreMatches: function(context) {
@@ -70,34 +60,22 @@ define([
         },
 
         showCompetitionData: function(competition, context) {
-            common.mediator.on('modules:footballfixtures:render', function(){
-                var title = context.querySelector('.football-table-link');
-                if(title) { title.className = "js-hidden"; }
-            });
-
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
             common.mediator.on('modules:footballfixtures:render', function() {
-                var container = common.$g('.collection--news', context)
-                    .first()[0];
-                // toggle class
-                common.$g('.items', container)
-                    .removeClass('items--without-sport-stats')
-                    .addClass('items--with-sport-stats');
-                // add it after the first item
-                common.$g('.item:first-child', container)
+                common.$g('.container--news .collection .item:first-child', context)
+                    // add empty item
+                    .after('<li class="item u-h"></li>')
                     .after(prependTo);
             });
-
-            var todaysFixtures = new FootballFixtures({
+            new FootballFixtures({
                 prependTo: prependTo,
                 attachMethod: 'append',
                 competitions: [competition],
                 contextual: true,
                 expandable: false
             }).init();
-
-            var table = new FootballTable({
+            new FootballTable({
                 prependTo: context.querySelector('.t3'),
                 competition: competition
             }).init();
@@ -105,27 +83,26 @@ define([
 
         showTeamData: function(team, context) {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+            var fixtures = bonzo.create('<div></div>'),
+                table = bonzo.create('<li class="item item--sport-stats"></li>');
             common.mediator.on('modules:footballfixtures:render', function() {
-                var container = common.$g('.collection--news', context)
-                    .first()[0];
-                // toggle class
-                common.$g('.items', container)
-                    .removeClass('items--without-sport-stats')
-                    .addClass('items--with-sport-stats');
-                // add it after the first item
-                common.$g('.item:first-child', container)
-                    .after(prependTo);
+                var $thirdItem = common.$g('.container--news .collection .item:nth-child(3)', context);
+                // pull fixtures out into two items
+                bonzo(bonzo.create('<li class="item item--sport-stats"></li>'))
+                    .append(common.$g('.team-fixtures, a:nth-child(2)', fixtures))
+                    .insertAfter($thirdItem);
+                bonzo(bonzo.create('<li class="item item--sport-stats"></li>'))
+                    .append(common.$g('.team-results, a:nth-child(4)', fixtures))
+                    .insertAfter($thirdItem);
             });
-            var fixtures = new FootballFixtures({
-                prependTo: prependTo,
+            new FootballFixtures({
+                prependTo: fixtures,
                 attachMethod: 'append',
                 path: '/football/api/teamfixtures/' + team + '.json',
                 expandable: false
             }).init();
-
-            var table = new FootballTable({
-                prependTo: prependTo,
+            new FootballTable({
+                prependTo: table,
                 attachMethod: 'append',
                 path: '/football/api/teamtable/' + team + '.json'
             }).init();
