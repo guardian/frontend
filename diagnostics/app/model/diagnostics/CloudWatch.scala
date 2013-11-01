@@ -29,17 +29,16 @@ trait CloudWatch extends Logging {
     }
   }
 
-  def put(namespace: String, name: String, metric: Double) {
-
-      log.info(s"${namespace} - ${metric}")
+  def put(namespace: String, metrics: scala.collection.mutable.Map[String, Int]) {
 
       val request = new PutMetricDataRequest().
         withNamespace(namespace).
-        withMetricData(new MetricDatum()
-          .withValue(metric)
-          .withMetricName(name)
-          .withUnit("Count")
-          )
+        withMetricData(metrics.map{ case (name, count) => 
+          new MetricDatum()
+            .withValue(count.toDouble)
+            .withMetricName(name)
+            .withUnit("Count")
+        })
 
       cloudwatch.putMetricDataAsync(request, asyncHandler)
   }

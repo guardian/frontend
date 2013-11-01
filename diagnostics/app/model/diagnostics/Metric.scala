@@ -16,6 +16,10 @@ object Metric extends Logging {
   def count(prefix: String) = {
     metrics(prefix)
   }
+  
+  def all = {
+    metrics
+  }
 
   def reset = {
     metrics.foreach(m => metrics.remove(m._1))
