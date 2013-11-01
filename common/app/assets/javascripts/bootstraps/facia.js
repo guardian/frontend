@@ -20,13 +20,18 @@ define([
     cricket
     ) {
 
-    var modules = {
+    var hiddenCollections = {},
+        modules = {
+
 
         showCollectionShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.js-collection--show-more', context).each(function(collection) {
-                    new CollectionShowMore(collection)
-                        .addShowMore();
+                common.$g('.container', context).each(function(container) {
+                    common.$g('.js-collection--show-more', container).each(function(collection) {
+                        var collectionShowMore = new CollectionShowMore(collection);
+                        hiddenCollections[container.getAttribute('data-id')] = collectionShowMore;
+                        collectionShowMore.addShowMore();
+                    });
                 });
             });
         },
@@ -46,12 +51,20 @@ define([
                     // wrap the return sports stats component in an 'item'
                     var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
                     common.mediator.on('modules:footballfixtures:render', function() {
-                        var collection = common.$g('.container--news[data-id$="/sport/regular-stories"] .collection', context);
-                        common.$g('.item:first-child', collection)
+                        var $container = common.$g('.container--news[data-id$="/sport/regular-stories"]', context),
+                            $collection = common.$g('.collection', $container[0]);
+                        common.$g('.item:first-child', $collection[0])
                             // add empty item
                             .after(prependTo);
-                        collection.removeClass('collection--without-sport-stats')
+                        $collection.removeClass('collection--without-sport-stats')
                             .addClass('collection--with-sport-stats');
+                        // remove the last two items
+                        var hiddenCollection = hiddenCollections[$container.attr('data-id')];
+                        if (hiddenCollection) {
+                            var $items = common.$g('.item:nth-last-child(-n+2)', $collection[0])
+                                            .remove();
+                            hiddenCollection.extraItems.unshift($items[0], $items[1]);
+                        }
                     });
                     new FootballFixtures({
                         prependTo: prependTo,
