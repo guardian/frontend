@@ -46,10 +46,12 @@ define([
                     // wrap the return sports stats component in an 'item'
                     var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
                     common.mediator.on('modules:footballfixtures:render', function() {
-                        common.$g('.container--news[data-id$="/sport/regular-stories"] .collection .item:first-child', context)
+                        var collection = common.$g('.container--news[data-id$="/sport/regular-stories"] .collection', context);
+                        common.$g('.item:first-child', collection)
                             // add empty item
-                            .after('<li class="item u-h"></li>')
                             .after(prependTo);
+                        collection.removeClass('collection--without-sport-stats')
+                            .addClass('collection--with-sport-stats');
                     });
                     new FootballFixtures({
                         prependTo: prependTo,

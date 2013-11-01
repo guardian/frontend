@@ -44,62 +44,123 @@
     }
     @include mq(tablet, desktop) {
         @include first-row(2);
-        .item:nth-child(2),
-        .item:nth-child(n+4):nth-child(-n+6) {
-            @include card-image;
+        .collection--without-sport-stats {
+            .item:nth-child(2),
+            .item:nth-child(n+4):nth-child(-n+6) {
+                @include card-image;
+            }
+        }
+        .collection--with-sport-stats {
+            .item:nth-child(n+3):nth-child(-n+5) {
+                @include card-image;
+            }
         }
         &:nth-of-type(odd) {
-            .item:nth-child(3n+1) {
-                @include row-start;
+            .collection--without-sport-stats {
+                .item:nth-child(3n+1) {
+                    @include row-start;
+                }
+                .item:nth-child(2),
+                .item:nth-child(3n+3) {
+                    @include row-end;
+                }
             }
-            .item:nth-child(2),
-            .item:nth-child(3n+3) {
-                @include row-end;
+            .collection--with-sport-stats {
+                .item:nth-child(3n+3) {
+                    @include row-start;
+                }
+                .item:nth-child(2),
+                .item:nth-child(3n+5) {
+                    @include row-end;
+                }
             }
         }
         &:nth-of-type(even) {
-            .item:nth-child(2),
-            .item:nth-child(3),
-            .item:nth-child(3n+1) {
-                @include row-start;
+            .collection--without-sport-stats {
+                .item:nth-child(2),
+                .item:nth-child(3),
+                .item:nth-child(3n+1) {
+                    @include row-start;
+                }
+                .item:first-child,
+                .item:nth-child(3n+6) {
+                    @include row-end;
+                }
             }
-            .item:first-child,
-            .item:nth-child(3n+6) {
-                @include row-end;
+            .collection--with-sport-stats {
+                .item:nth-child(2),
+                .item:nth-child(3n+3) {
+                    @include row-start;
+                }
+                .item:first-child,
+                .item:nth-child(3n+5) {
+                    @include row-end;
+                }
             }
         }
     }
     @include mq(desktop) {
-        .item:nth-child(2),
-        .item:nth-child(3) {
-            @include card-image;
-        }
         @include first-row(3);
-        &:nth-of-type(odd) {
-            .item:nth-child(4n+6) {
-                @include row-start;
+        .collection--without-sport-stats {
+            .item:nth-child(2),
+            .item:nth-child(3) {
+                @include card-image;
             }
-            .item:nth-child(3),
-            .item:nth-child(5),
-            .item:nth-child(4n+9) {
-                @include row-end;
+        }
+        .collection--with-sport-stats {
+            .item:nth-child(3) {
+                @include card-image;
+            }
+        }
+        &:nth-of-type(odd) {
+            .collection--without-sport-stats {
+                .item:nth-child(4n+6) {
+                    @include row-start;
+                }
+                .item:nth-child(3),
+                .item:nth-child(5),
+                .item:nth-child(4n+9) {
+                    @include row-end;
+                }
+            }
+            .collection--with-sport-stats {
+                .item:nth-child(4n+5) {
+                    @include row-start;
+                }
+                .item:nth-child(3),
+                .item:nth-child(4n+4) {
+                    @include row-end;
+                }
             }
         }
         &:nth-of-type(even) {
-            .item:nth-child(2),
-            .item:nth-child(4),
-            .item:nth-child(3n+6) {
-                @include row-start;
+            .collection--without-sport-stats {
+                .item:nth-child(2),
+                .item:nth-child(4),
+                .item:nth-child(4n+6) {
+                    @include row-start;
+                }
+                .item:first-child,
+                .item:nth-child(4n+9) {
+                    @include row-end;
+                }
             }
-            .item:first-child,
-            .item:nth-child(4n+9) {
-                @include row-end;
+            .collection--with-sport-stats {
+                .item:nth-child(2),
+                .item:nth-child(4n+5) {
+                    @include row-start;
+                }
+                .item:first-child,
+                .item:nth-child(4n+8) {
+                    @include row-end;
+                }
             }
         }
     }
 
     .item--sport-stats {
         padding-bottom: 0 !important;
+        float: left;
         .competition-table {
             padding-top: 0;
             border-style: none;
@@ -111,7 +172,12 @@
             padding-bottom: 0;
         }
     }
-    .item--sport-stats-tall {
-        min-height: gs-height(9) !important;
+    .front-competition-table {
+        border-style: none;
+    }
+    @include mq(tablet) {
+        .item--sport-stats-tall {
+            min-height: gs-height(9) !important;
+        }
     }
 }
