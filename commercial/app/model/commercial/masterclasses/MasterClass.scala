@@ -11,10 +11,13 @@ object MasterClass {
     val title = (block \ "title").as[String]
     val literalDate = (block \ "start_date").as[String]
     val startDate: DateTime = datePattern.parseDateTime(literalDate)
-    val url = "test url"
-    val description = "test description"
-    val price = "test price"
-    val spaces = 10
+    val url = (block \ "url").as[String]
+    val description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat molestie lectus id placerat. Sed rutrum, dui vitae tempus mollis, sem metus ultrices est."
+    val price = "£400"
+
+    //val capacity: Int = (block \ "capacity").as[Int]
+    //val attendees: Int = (block \ "num_attendee_rows").as[Int]
+    val spaces = 8 //capacity - attendees
 
     val isOpen = ((block \ "status").as[String]).equals("Live")
 
