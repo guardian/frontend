@@ -36,7 +36,7 @@
 
 .footer {
    padding: 0 0 $baseline*4;
-   background-color: $c-neutral7;
+   background: $c-neutral7;
 
    .hide-in-footer {
        display: none !important;
@@ -52,9 +52,6 @@
     @include mq(tablet) {
         background-color: $c-brandBlue;
     }
-}
-.footer__navigation-wrapper {
-    padding-bottom: $baseline*2;
 }
 @include mq(tablet) {
     .js-on .footer__navigation-wrapper {

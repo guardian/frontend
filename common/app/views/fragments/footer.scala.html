@@ -23,7 +23,6 @@
     <div class="footer__secondary gs-container" role="contentinfo">
         <div class="box-indent">
             <ul class="colophon u-cf">
-                <li class="colophon__item">@fragments.mainSiteLink(page)</li>
                 <li class="colophon__item"><a data-link-name="about" href="@LinkTo("/help/insideguardian/2012/nov/26/guardian-launches-new-mobile-site")">About this site</a></li>
                 <li class="colophon__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">Help</a></li>
                 <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">Contact us</a></li>
@@ -31,6 +30,7 @@
                 <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
                 <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
                 <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
+                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page)</li>
             </ul>
             <div class="footer__misc">
                 <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>

@@ -34,18 +34,6 @@
    Nav Modifiers
    ========================================================================== */
 
-/* Stacked
-   ========================================================================== */
-
-.nav--stacked > li {
-    display: list-item;
-
-    a {
-        display: block;
-    }
-}
-
-
 /* Columns
    ========================================================================== */
 
@@ -342,4 +330,27 @@
 .nav--no-horizontal-spacing {
     padding-left: 0;
     padding-right: 0;
+}
+
+
+/* Overrides for the top right menu
+   ========================================================================== */
+
+@include mq(tablet) {
+    .nav--additional-sections {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+
+        > .nav__item {
+            clear: none !important;
+            padding-left: $gs-gutter/2 !important;
+            padding-right: $gs-gutter/2 !important;
+        }
+    }
+    .nav--guardian-services {
+         .nav__link {
+             position: relative;
+             top: -1px;
+         }
+    }
 }
