@@ -134,13 +134,21 @@
                 text-indent: 40px;
 
                 @include mq(tablet) {
-                    text-indent: 42px;
+                    text-indent: 44px;
                 }
             }
 
             @include mq(tablet) {
                 @include fs-headline(2, true);
                 line-height: inherit;
+            }
+        }
+        > ul:first-child {
+            // Fix list and quote icon overlap - #2026
+            margin-left: 40px;
+
+            @include mq(tablet) {
+                margin-left: 44px;
             }
         }
     }
