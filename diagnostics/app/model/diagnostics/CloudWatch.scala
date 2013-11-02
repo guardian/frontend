@@ -30,13 +30,13 @@ trait CloudWatch extends Logging {
 
 
 
-  def put(namespace: String, metrics: scala.collection.mutable.Map[String, Int]) = {
+  def put(namespace: String, metrics: scala.collection.mutable.Map[String, Double]) = {
 
       val request = new PutMetricDataRequest().
         withNamespace(namespace).
         withMetricData(metrics.map{ case (name, count) => 
           new MetricDatum()
-            .withValue(count.toDouble)
+            .withValue(count)
             .withMetricName(name)
             .withUnit("Count")
         })
