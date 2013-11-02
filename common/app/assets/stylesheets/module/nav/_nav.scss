@@ -302,7 +302,6 @@
         &:last-child { border-right: none; }
         &.is-active { text-decoration: underline; }
     }
-
     .nav__link,
     .nav__link:active,
     .nav__link:focus,
@@ -333,7 +332,7 @@
 }
 
 
-/* Overrides for the top right menu
+/* Overrides for the sections menu
    ========================================================================== */
 
 @include mq(tablet) {
