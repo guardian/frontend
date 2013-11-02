@@ -35,7 +35,7 @@ object Error extends Logging {
         // temporary log to the application logs until we find a decent log
         // analysis tool to send this output
 
-        log.error(s"${osFamily}\t${qs}\t${userAgent}")
+        log.error(s"""${osFamily}\t${qs.values.mkString("\t")}\t${userAgent}""")
         
         qs.get("type").get.toString match {
           case "js" => Metric.increment(s"js.${osFamily}") 
