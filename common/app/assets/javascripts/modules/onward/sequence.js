@@ -25,6 +25,7 @@ define([
         storage.set(prefixes[type], item, {
             expires: expiry + (new Date()).getTime()
         });
+        common.mediator.emit('modules:sequence:'+ type +':loaded', item);
     }
 
     function get(type) {
@@ -36,16 +37,16 @@ define([
 
     function cleanSequence(sequence) {
         return sequence.map(function(el) {
-            el.replace('http://gu.com', '');
+            return el.replace('http://gu.com', '');
         });
     }
 
     function dedupeSequence(sequence, callback) {
-        var hist = new History().get();
+        var hist = new History({}).get();
 
         callback(sequence.filter(function(seqItem) {
-            return !!hist.some(function(histItem) {
-                 return seqItem !== histItem.id;
+            return !hist.some(function(histItem) {
+                return seqItem === histItem.id;
             });
         }));
     }
@@ -58,8 +59,6 @@ define([
             if(json && 'trails' in json) {
                 dedupeSequence(cleanSequence(json.trails), function(sequence) {
                     set('sequence', sequence);
-                    //console.log('Original sequence : ' + json.trails);
-                    //console.log('New sequence : ' + getSequence());
                 });
             }
         }).fail(function(req) {
@@ -71,7 +70,6 @@ define([
         common.mediator.on('module:clickstream:click', function(clickSpec){
             if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContext) {
                 set('context', clickSpec.linkContext);
-                //console.log('New context : ' + clickSpec.linkContext);
             }
         });
     }
@@ -82,7 +80,6 @@ define([
             loadSequence(context);
         }
         bindListeners();
-        //console.log('sequence init called');
     }
 
     return {
