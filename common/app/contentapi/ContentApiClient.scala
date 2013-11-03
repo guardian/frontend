@@ -69,7 +69,6 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showElements("all")
                 .showReferences(references)
                 .showStoryPackage(true)
-    query.response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
     query
   }
 
@@ -82,7 +81,6 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showReferences(references)
                 .showFields(trailFields)
                 .showElements("all")
-    query.response.onFailure{case t: Throwable => log.warn("%s".format(t.toString))}
     query
   }
 }
