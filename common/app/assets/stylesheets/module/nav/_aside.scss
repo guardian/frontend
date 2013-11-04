@@ -26,6 +26,14 @@
         border-top: 1px solid $c-neutral5;
     }
 }
+.navigation-aside--footer {
+    border-top: 0;
+
+    .switcher {
+        border-top: 0;
+        border-bottom: 1px solid $c-neutral5;
+    }
+}
 .switcher__label,
 .switcher__options,
 .switcher__option {
@@ -33,18 +41,14 @@
 }
 .switcher__label {
     margin: 0;
-    color: $c-neutral2;
+    color: darken($c-neutral2, 3%);
     @include fs-data(4);
-    -webkit-font-smoothing: antialiased;
-}
-.switcher__options {
-    white-space: nowrap;
-}
-.switcher__label {
+    font-weight: normal;
     width: 25%;
     margin: 0;
 }
 .switcher__options {
+    white-space: nowrap;
     width: 75%;
 }
 .switcher__option {
