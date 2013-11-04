@@ -22,9 +22,7 @@ define([
         expiry = 10000;
 
     function set(type, item) {
-        storage.set(prefixes[type], item, {
-            expires: expiry + (new Date()).getTime()
-        });
+        storage.set(prefixes[type], item);
         common.mediator.emit('modules:sequence:'+ type +':loaded', item);
     }
 
@@ -34,6 +32,7 @@ define([
 
     function getSequence() { return get('sequence'); }
     function getContext() { return get('context'); }
+    function removeContext() { return storage.remove(prefixes.context); }
 
     function cleanSequence(sequence) {
         return sequence.map(function(el) {
@@ -60,6 +59,7 @@ define([
                 dedupeSequence(cleanSequence(json.trails), function(sequence) {
                     set('sequence', sequence);
                 });
+                removeContext();
             }
         }).fail(function(req) {
             common.mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
@@ -76,7 +76,7 @@ define([
 
     function init(config) {
         var context = getContext();
-        if(context !== null && getSequence() === null) {
+        if(context !== null) {
             loadSequence(context);
         }
         bindListeners();
