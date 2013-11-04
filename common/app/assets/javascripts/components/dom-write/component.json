@@ -1,9 +1,0 @@
-{
-  "name": "dom-write",
-  "version": "0.0.0",
-  "commit": "83da22992316f7fa64995263c60a12a470f85cdc",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/guardian/dom-write"
-  }
-}

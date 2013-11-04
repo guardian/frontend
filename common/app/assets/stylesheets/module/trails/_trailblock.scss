@@ -62,18 +62,6 @@
 }
 
 
-/* Trailblock topstories
-   ========================================================================== */
-
-.trailblock-topstories .trail__headline {
-    @extend %type-3;
-}
-
-.trailblock-topstories li:first-child .b2 {
-    border-top: none;
-}
-
-
 /* Toggle trailblock
    ========================================================================== */
 
@@ -93,8 +81,10 @@
     text-align: left;
 }
 
-/* more on this story trailblock
+
+/* More on this story trailblock
    ========================================================================== */
+
 @include mq(rightCol) {
     .more-on-this-story {
         .t1 {
