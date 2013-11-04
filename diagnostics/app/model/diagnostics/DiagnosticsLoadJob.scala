@@ -13,11 +13,8 @@ object DiagnosticsLoadJob extends Logging {
     log.info("Loading diagnostics data in to CloudWatch")
     Configuration.environment.stage.toUpperCase match {
       case "PROD" => {
-        val cwFuture = CloudWatch.put("Diagnostics", Metric.all)
-        val f: scala.concurrent.Future[java.util.concurrent.Future[Void]] = future {
-          Metric.reset
-          cwFuture
-        }
+        CloudWatch.put("Diagnostics", Metric.averages)
+        Metric.reset()
       }
       case _ => log.info("DISABLED: Metrics uploaded in PROD only to limit duplication.")
     }

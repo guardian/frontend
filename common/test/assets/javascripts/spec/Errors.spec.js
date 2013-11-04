@@ -8,7 +8,7 @@ define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
             fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' };
         
         beforeEach(function() {
-            e = new Errors({window: w, beaconUrl: 'beacon.gu.com' });
+            e = new Errors({window: w, beaconUrl: 'beacon.gu.com', buildNumber: 643});
             e.init();
         });
         
@@ -20,9 +20,9 @@ define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
             expect(w.onerror).toBeDefined();
         });
 
-        it("should log javascript errors with the error message, line number and file", function(){
+        it("should log javascript errors with the error message, line number, build number, and file", function(){
             expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeTruthy();
-            expect(document.getElementById('js-err').getAttribute('src')).toContain('beacon.gu.com/px.gif?message=foo&filename=foo.js&lineno=1&type=js');
+            expect(document.getElementById('js-err').getAttribute('src')).toContain('beacon.gu.com/px.gif?message=foo&filename=foo.js&lineno=1&type=js&build=643');
         });
 
         it("after logging, should let browser handle error if user pref switch 'showErrors is on", function(){
