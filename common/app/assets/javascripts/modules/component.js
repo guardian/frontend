@@ -159,8 +159,10 @@ Component.prototype.emit = function(eventName, args) {
  */
 Component.prototype.getElem = function(elemName) {
     if (this.elems[elemName]) { return this.elems[elemName]; }
+
     var elem = qwery(this.getClass(elemName), this.elem)[0];
     this.elems[elemName] = elem;
+
     return elem;
 };
 
@@ -170,8 +172,29 @@ Component.prototype.getElem = function(elemName) {
  * @return {string}
  */
 Component.prototype.getClass = function(elemName, sansDot) {
-    var config = this.conf();
-    return (sansDot ? '' : '.') + config.classes[elemName] || null;
+    var config = this.conf(),
+        className = this.conf().useBem ? this.conf().componentClass +'__'+ elemName : config.classes[elemName];
+
+    return (sansDot ? '' : '.') + className;
+};
+
+/**
+ * @param {string} state
+ * @param {string|null} elemName
+ */
+Component.prototype.setState = function(state, elemName) {
+    var elem = elemName ? this.getElem(elemName) : this.elem;
+    bonzo(elem).addClass(this.conf().componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+};
+
+/**
+ * @param {string|null} state
+ * @param {string|null} elemName
+ * return {Boolean}
+ */
+Component.prototype.hasState = function(state, elemName) {
+    var elem = elemName ? this.getElem(elemName) : this.elem;
+    return bonzo(elem).hasClass(this.conf().componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
 };
 
 /**
@@ -190,13 +213,6 @@ Component.prototype.setOptions = function(options) {
     for (var prop in this.defaultOptions) {
         this.options[prop] = options[prop] || this.defaultOptions[prop];
     }
-};
-
-/**
- * @param {string} state
- */
-Component.prototype.setState = function(state) {
-    bonzo(this.elem).addClass(this.conf().componentClass +'--'+ state);
 };
 
 /**

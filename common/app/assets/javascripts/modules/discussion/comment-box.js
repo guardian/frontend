@@ -29,14 +29,9 @@ CommentBox.CONFIG = {
     templateName: 'comment-box',
     componentClass: 'd-comment-box',
     classes: {
-        show: 'js-show-comment-box',
-        body: 'd-comment-box__body',
-        bodyExpanded: 'd-comment-box__body--expanded',
-        submitButton: 'd-comment-box__submit',
-        messages: 'd-comment-box__messages',
-        error: 'd-comment-box__error',
-        premod: 'd-comment-box__premod'
+        bodyExpanded: 'd-comment-box__body--expanded'
     },
+    useBem: true,
     errors: {
         EMPTY_COMMENT_BODY: 'Please write a comment.',
         COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
@@ -71,7 +66,7 @@ CommentBox.prototype.prerender = function() {
     }
 
     if (this.options.state === 'response') {
-        this.getElem('submitButton').innerHTML = 'Post reply';
+        this.getElem('submit').innerHTML = 'Post reply';
     }
 
     if (this.options.replyTo) {
@@ -86,7 +81,7 @@ CommentBox.prototype.prerender = function() {
         elem.className = 'label d-comment-box__reply-to';
         elem.innerHTML = 'to @'+ this.options.replyTo.author;
         this.getElem('body').id = 'reply-to-'+ this.options.replyTo.id;
-        bonzo(elem).insertAfter(this.getElem('submitButton'));
+        bonzo(elem).insertAfter(this.getElem('submit'));
     }
 };
 
@@ -97,7 +92,7 @@ CommentBox.prototype.ready = function() {
     }
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submitButton');
+        submitButton = this.getElem('submit');
 
     this.setFormState();
 
@@ -210,7 +205,7 @@ CommentBox.prototype.setFormState = function(disabled) {
     disabled = typeof disabled === 'boolean' ? disabled : false;
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submitButton');
+        submitButton = this.getElem('submit');
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
@@ -223,12 +218,7 @@ CommentBox.prototype.setFormState = function(disabled) {
  * @param {Event=} e (optional)
  */
 CommentBox.prototype.setExpanded = function(e) {
-    var commentBody = this.getElem('body'),
-        expandedClass = this.getClass('bodyExpanded', true);
-
-    if (!commentBody.className.match(expandedClass)) {
-        commentBody.className = commentBody.className +' '+ expandedClass;
-    }
+    this.setState('expanded', 'body');
 };
 
 
