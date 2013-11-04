@@ -56,11 +56,16 @@ module.exports = function (grunt) {
                         "EventEmitter": "components/eventEmitter/EventEmitter",
                         "qwery": "components/qwery/mobile/qwery-mobile",
                         "reqwest": "components/reqwest/src/reqwest",
-                        "domwrite": "components/dom-write/dom-write",
+                        "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview"
                     },
-                    "wrap" : {
+                    shim: {
+                        "postscribe": {
+                            exports: "postscribe"
+                        }
+                    },
+                    wrap: {
                         "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         "endFile": "common/app/assets/javascripts/bootstraps/go.js"
                     },
