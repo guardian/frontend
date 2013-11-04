@@ -48,20 +48,13 @@
         }
     }
     > ul > li {
-        text-indent: 20px;
+        @include faux-bullet-point;
     }
-    > ul > li:before {
-        font-size: 48px;
-        content: "\2022";
-        color: $c-neutral5;
-        position: absolute;
-        left: -22px;
-        top: 1px;
-    }
+
     > ol > li,
     > ul > li {
         position: relative;
-        margin-bottom: 0.8em;
+        margin-bottom: .8em;
     }
     h2 {
         @include fs-header(2);
@@ -93,9 +86,6 @@
             margin-top: $baseline*3;
         }
     }
-}
-.no-indent {
-    text-indent: 0 !important;
 }
 
 .from-content-api--small {
@@ -151,6 +141,24 @@
                 margin-left: 44px;
             }
         }
+    }
+}
+
+
+/* Bullet points
+   ========================================================================== */
+
+.no-indent {
+    text-indent: 0 !important;
+}
+.bullet {
+    font-size: 13px;
+    display: inline-block;
+    color: $c-neutral3;
+    margin: $baseline/2 4px $baseline/-2 0;
+
+    &:first-of-type {
+        margin-top: $baseline;
     }
 }
 
