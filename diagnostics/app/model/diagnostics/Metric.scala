@@ -10,16 +10,10 @@ object Metric extends Logging {
   private lazy val metrics  = Wrappers.JConcurrentMapWrapper(new ConcurrentHashMap[String, AtomicDouble]())
 
   def increment(prefix: String) = {
-    if (!metrics.contains(prefix)) {
-      metrics.put(prefix, new AtomicDouble(0))
-    }
-    metrics(prefix).getAndAdd(1)
-  } 
-
-  def count(prefix: String) {
-    metrics(prefix).doubleValue()
+    metrics.putIfAbsent(prefix, new AtomicDouble(0.0))
+    metrics(prefix).addAndGet(1.0)
   }
-  
+
   // For the purpose of creating alarms we are more interested in increases in the average
   // number of errors over a minute.
   def averages = {
@@ -27,6 +21,6 @@ object Metric extends Logging {
     val total = snapshot.values.map(_.doubleValue()).sum
     snapshot.map(m => m._1 -> m._2.doubleValue() / total)
   }
-  
+
   def reset() = metrics.clear()
 }
