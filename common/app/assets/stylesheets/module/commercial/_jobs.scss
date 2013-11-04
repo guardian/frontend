@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Jobs component
+   ========================================================================== */
+
+.commercial--jobs {
+
+    ul, li {
+        @include box-sizing(border-box);
+    }
+
+    .title {
+        @include fs-bodyHeading(1);
+        margin-bottom: 0;
+    }
+
+    .description {
+        @include fs-bodyCopy(1);
+    }
+
+    &.commercial--small {
+        li {
+            width: 100%;
+        }
+
+        li:nth-child(2),
+        li:nth-child(3),
+        li:nth-child(4) {
+            display: none;
+        }
+    }
+
+
+    &.commercial--medium {
+        li {
+            width: 33%;
+            float: left;
+            padding-right: $gutter;
+        }
+
+        li:nth-child(4) {
+            display: none;
+        }
+    }
+}

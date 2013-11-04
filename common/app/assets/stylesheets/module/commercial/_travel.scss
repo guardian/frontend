@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Travel component
+   ========================================================================== */
+.commercial--travel {
+
+    .offer {
+        padding-right: $gutter/2;
+        float: left;
+        width: 50%;
+        @include box-sizing(border-box);
+    }
+
+    .offer__title {
+        margin-bottom: 0;
+    }
+
+    .offer__image img {
+        width: 100%;
+        display: block;
+    }
+
+    .offer__deal {
+        font-size: 14px;
+        padding: $gutter;
+        @include box-sizing(border-box);
+    }
+
+    .offer__link:hover .offer__deal {
+        background-color: $c-neutral5;
+    }
+
+    &.commercial--small {
+
+        .offer {
+            width: 100%;
+        }
+
+        .offer:nth-child(2) {
+            display: none;
+        }
+    }
+}
