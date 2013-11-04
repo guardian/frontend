@@ -7,7 +7,7 @@
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
     </h2>
-    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) paragraph-spacing--indents">
         <article id="article" class="article @if(article.isLive){is-live}"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__inner article__inner--head">
