@@ -1,4 +1,4 @@
-@(item: MetaData, Label: String = "Desktop version")(implicit request: RequestHeader)
+@(item: MetaData, label: String = "Desktop version")(implicit request: RequestHeader)
 @import common._
 @import model.MetaData
 @import java.net.URLEncoder.encode
@@ -7,5 +7,5 @@
 <a class="js-main-site-link" rel="nofollow"
     href="@DesktopLink(item)"
     data-link-name="desktop version @Edition(request).id - bottom of page">
-    @Label
+    @label
 </a>
