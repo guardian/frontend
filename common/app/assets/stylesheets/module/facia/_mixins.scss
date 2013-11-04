@@ -10,12 +10,8 @@
     }
 }
 @mixin row-start {
-    padding-left: 0 !important;
     border-left-style: none !important;
     clear: left;
-}
-@mixin row-end {
-    padding-right: 0 !important;
 }
 @mixin row($row-size, $first-row-size: $row-size) {
     // styling for first row
@@ -24,10 +20,6 @@
     .item:first-child,
     .item:nth-child(#{$row-size}n+#{$first-row-size + 1}) {
         @include row-start;
-    }
-    .item:nth-child(#{$row-size}n+#{$first-row-size}),
-    .item:nth-child(#{$row-size}n+#{$first-row-size + $row-size}) {
-        @include row-end;
     }
 }
 
@@ -80,9 +72,7 @@ $metaHeight: 14px;
 }
 @mixin card-half-width($with-image: false) {
     width: 50%;
-    min-height: gs-height(3) - $metaHeight;
-    padding-left: $gs-gutter/2 - 1;
-    padding-right: $gs-gutter/2;
+    min-height: gs-height(3);
     padding-bottom: $metaHeight;
     border-left: 1px dotted $c-neutral5;
     float: left;
@@ -108,7 +98,7 @@ $metaHeight: 14px;
 }
 @mixin card-half-width-image {
     .connection--not-low & {
-        min-height: gs-height(5) - $metaHeight;
+        min-height: gs-height(5);
     }
     .item__image-container {
         display: block;
@@ -116,21 +106,22 @@ $metaHeight: 14px;
 }
 
 @mixin card($with-image: false) {
-    width: gs-span(3);
-    min-height: gs-height(3) - $metaHeight;
-    @include mq(wide) {
-        width: gs-span(4);
-        min-height: gs-height(4) - $metaHeight;
-    }
+    width: gs-span(3) + $gs-gutter;
+    min-height: gs-height(3);
     padding-bottom: $metaHeight;
+
+    @include mq(wide) {
+        width: gs-span(4) + $gs-gutter;
+        min-height: gs-height(4);
+    }
     @if $with-image {
         @include card-mobile;
     }
 }
 @mixin card-image {
-    min-height: gs-height(6) - $metaHeight;
+    min-height: gs-height(6);
     @include mq(wide) {
-        min-height: gs-height(8) - $metaHeight;
+        min-height: gs-height(8);
     }
     .item__image-container,
     .connection--low & .item__standfirst,
@@ -140,10 +131,10 @@ $metaHeight: 14px;
 }
 @mixin card-double-width {
     float: left;
-    width: gs-span(6);
+    width: gs-span(6) + $gs-gutter;
     min-height: gs-height(9);
     @include mq(wide) {
-        width: gs-span(8);
+        width: gs-span(8) + $gs-gutter;
         min-height: gs-height(12);
     }
     .item__title {
@@ -163,14 +154,15 @@ $metaHeight: 14px;
     }
 }
 @mixin card-triple-width {
-    width: gs-span(9);
-    min-height: gs-height(12) - $metaHeight;
-    @include mq(wide) {
-        width: gs-span(12);
-        min-height: gs-height(16) - $metaHeight;
-    }
     float: left;
     padding-bottom: $metaHeight;
+    width: gs-span(9) + $gs-gutter;
+    min-height: gs-height(12);
+
+    @include mq(wide) {
+        width: gs-span(12) + $gs-gutter;
+        min-height: gs-height(16);
+    }
     .item__image-container,
     .connection--not-low &.item--has-no-image .item__standfirst,
     .connection--low & .item__standfirst {
@@ -187,8 +179,8 @@ $metaHeight: 14px;
     width: 100%;
     padding-bottom: $metaHeight;
     .connection--not-low &.item--has-image {
-        width: gs-span(3);
-        min-height: gs-height(6) - $metaHeight;
+        width: gs-span(3) + $gs-gutter;
+        min-height: gs-height(6);
         padding-left: gs-span(6) + $gs-gutter;
     }
     .item__title {
@@ -203,7 +195,7 @@ $metaHeight: 14px;
         display: block;
     }
     .connection--not-low & .item__image-container {
-        width: gs-span(6);
+        width: gs-span(6) + $gs-gutter;
         height: gs-height(6);
         position: absolute;
         top: 0;
