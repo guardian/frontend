@@ -9,6 +9,7 @@
         <h1>Email preferences</h1>
 
         <form class="form" novalidate action="@idUrlBuilder.buildUrl("/email-prefs", idRequest)" role="main" method="post">
+            @views.html.helper.CSRF.formField
             @if(emailPrefsForm.globalError.isDefined) {
               <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
             }

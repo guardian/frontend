@@ -79,6 +79,7 @@ object Frontend extends Build with Prototypes {
   val identityLibVersion = "3.21"
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
+      filters,
       "com.gu.identity" %% "identity-model" % identityLibVersion,
       "com.gu.identity" %% "identity-request" % identityLibVersion,
       "com.gu.identity" %% "identity-cookie" % identityLibVersion,
