@@ -314,3 +314,45 @@ p + video {
     }
 }
 
+
+/* Paragraph spacing
+   ========================================================================== */
+
+.paragraph-spacing--indents {
+    .from-content-api,
+    .from-content-api .block-elements {
+        > p {
+            margin-bottom: 0;
+
+            + a + p, // Inline link cards are inserted between paragraphs
+            + .inline-image + p,
+            + p {
+                // Indent consecutive paragraphs
+                // by the value of the line-height
+                text-indent: 24px;
+                text-indent: 2.4rem;
+
+                @include mq(tablet) {
+                    text-indent: 28px;
+                    text-indent: 2.8rem;
+                }
+            }
+        }
+    }
+    .from-content-api blockquote.quoted {
+        text-indent: 0;
+
+        @include mq(tablet) {
+            text-indent: 0;
+        }
+
+        p {
+            margin-bottom: 0;
+            text-indent: 40px;
+
+            @include mq(tablet) {
+                text-indent: 42px;
+            }
+        }
+    }
+}

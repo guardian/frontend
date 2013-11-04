@@ -7,6 +7,6 @@ Impact of macro typographic settings for paragraphs on user engagement.
 - Control: Normal space between paragraph (50%)
 - Variant: (New Design) No space between paragraph, consecutive paragraphs are indented (50%)
 
-## Predictions
+## Findings
 
-
+Paragraph spacing has no statistically relevant incidence on user engagement over time.
