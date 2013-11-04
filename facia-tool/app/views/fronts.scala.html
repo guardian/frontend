@@ -213,12 +213,18 @@
             </div>
             <!-- /ko -->
 
-            <a class="webTitle" target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + props.id()},
-                text: meta.webTitle() || props.webTitle(),
-                css: {'webTitle--override': meta.webTitle},
-                click: startTitleEdit,
-                visible: !state.editingTitle()"></a>
+            <div class="web-title" data-bind="
+                    visible: !state.editingTitle()">
+
+                <a target="article" data-bind="
+                    click: function() { return false; },
+                    attr: {href: 'http://www.theguardian.com/' + props.id()},
+                    text: meta.webTitle() || props.webTitle()"></a>
+
+                <i class="web-title--editable icon-pencil" data-bind="
+                    click: startTitleEdit,
+                    css: {'web-title--editor': !meta.webTitle(), 'web-title--edited': meta.webTitle}"></i>
+            </div>
 
         </div>
     </script>

@@ -68,8 +68,6 @@ function (
     };
 
     Article.prototype.startTitleEdit = function() {
-        if (!this.collection) { return; }
-
         this.provisionalWebTitle = this.meta.webTitle();
         this.state.editingTitle(true);
     };
