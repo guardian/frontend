@@ -58,9 +58,6 @@
         top: $headerHeight;
     }
     &.is-active {
-        @include mq(desktop) {
-            background-color: transparent;
-        }
         @include mq(1157px, 1299px) {
             border-right: 1px solid $c-neutral5;
             padding-right: $gutter - 1;
@@ -97,12 +94,12 @@ span.control__menu.i-menu {
         top: 6px;
         position: relative;
         margin-right: $gutter - 3;
-        border-color: #bbbbbb;
+        border: none;
         background-color: $c-neutral5;
     }
 }
 .control--sections.is-active .i-nav-divider {
-    @include mq(tablet, desktop) {
+    @include mq(tablet) {
         top: 0;
         height: 41px;
     }

@@ -6,7 +6,7 @@
 <nav role="navigation" aria-label="Guardian sections"
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
-    <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} u-cf">
+    <ul class="nav nav--columns u-cf nav--additional-sections nav--top-border-off @if(isFooter){nav--footer}">
         @* <!-- TODO delete site after switch to single domain --> *@
             @Edition(request).navigation(page).map{ section =>
                 <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
@@ -18,27 +18,40 @@
                     </a>
                 </li>
             }
-        <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
+        <li class="nav__item"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
     </ul>
-    <ul class="nav nav--columns nav--section-divider u-cf">
-        <li class="nav__item">
-            <ul class="nav @if(isFooter){nav--footer nav--alternate-link-colors}">
-                <li class="nav__item nav__item--full"><a class="nav__link" href="https://soulmates.theguardian.com/" target="_blank" data-link-name="Soulmates">Soulmates</a></li>
-                <li class="nav__item nav__item--full"><a class="nav__link" href="http://jobs.theguardian.com/" target="_blank" data-link-name="Jobs">Jobs</a></li>
-            </ul>
-        </li>
-        <li class="nav__item">
-            <ul class="nav @if(isFooter){nav--footer nav--alternate-link-colors}">
+    <ul class="nav nav--columns nav--guardian-services u-cf @if(isFooter){nav--footer}">
+        <li class="nav__item"><a class="nav__link nav__link--faded@if(isFooter){-footer}" href="https://soulmates.theguardian.com/" target="_blank" data-link-name="Soulmates">Soulmates</a></li>
+        <li class="nav__item"><a class="nav__link nav__link--faded@if(isFooter){-footer}" href="http://jobs.theguardian.com/" target="_blank" data-link-name="Jobs">Jobs</a></li>
+    </ul>
+    <div class="navigation-aside@if(isFooter){ navigation-aside--footer}">
+        <div class="switcher u-cf @if(isFooter){switcher--columns }switcher--edition">
+            <h2 class="switcher__label">Edition:</h2>
+            <ul class="unstyled switcher__options">
+                <li class="switcher__option switcher__option--active">
+                    @Edition(request).id
+                </li>
                 @Edition.others(request).map{ edition =>
-                    <li class="nav__item nav__item--full">
-                        <a class="nav__link edition @if(isFooter){nav__link--faded}" data-edition="@edition.id"
+                    <li class="switcher__option">
+                        <a class="edition" data-edition="@edition.id"
                             data-link-name="switch to @edition.id edition"
-                            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">@edition.displayName
+                            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                            @edition.id <span class="u-h">edition</span>
                         </a>
                     </li>
                 }
-                <li class="nav__item @if(isFooter){hide-in-footer} nav__item--full hide-on-mobile"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
             </ul>
-        </li>
-    </ul>
+        </div>
+        <div class="switcher u-cf @if(isFooter){switcher--columns }switcher--version">
+            <h2 class="switcher__label">View:</h2>
+            <ul class="unstyled switcher__options">
+                <li class="switcher__option switcher__option--active">
+                    Mobile
+                </li>
+                <li class="switcher__option">
+                    @fragments.mainSiteLink(page, "Desktop")
+                </li>
+            </div>
+        </div>
+    </div>
 </nav>
