@@ -3,8 +3,6 @@ package controllers
 import conf.Configuration
 import common.ExecutionContexts
 import play.api.mvc._
-import play.api.libs.openid.OpenID
-import scala.concurrent.Future
 import scala.concurrent.duration._
 import play.api.mvc.Results._
 import play.api.mvc.SimpleResult
