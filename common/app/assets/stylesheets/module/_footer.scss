@@ -67,7 +67,7 @@
         padding-top: $baseline*2;
     }
     a {
-        color: darken($c-neutral2, 3%);
+        color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
     }
 }
 .colophon {

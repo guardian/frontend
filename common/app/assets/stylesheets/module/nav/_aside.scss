@@ -41,11 +41,10 @@
 }
 .switcher__label {
     margin: 0;
-    color: darken($c-neutral2, 3%);
+    width: 25%;
+    color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
     @include fs-data(4);
     font-weight: normal;
-    width: 25%;
-    margin: 0;
 }
 .switcher__options {
     white-space: nowrap;
