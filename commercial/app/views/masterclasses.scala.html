@@ -1,5 +1,7 @@
 @(events: List[model.commercial.masterclasses.MasterClass])
 
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
 <div class="commercial commercial--masterclasses">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian<span>masterclasses</span></h3>
@@ -11,8 +13,8 @@
                 <li>
                     <h3><a href="@event.url">@event.name</a></h3>
                     <p>@event.description</p>
-                    <p class="tickets-price">@event.price</p>
-                    <p class="tickets-left">@event.spaces seats left</p>
+                    <p class="tickets-price">@event.displayPrice</p>
+                    <p class="tickets-left">X seats left</p>
                 </li>
             }
         </ul>
