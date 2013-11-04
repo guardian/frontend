@@ -12,7 +12,7 @@ object ErrorController extends Controller with Logging {
  
   import org.apache.commons.codec.binary.Base64
   
-  private def gif = {
+  lazy val gif = {
     val data = "R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="
     Base64.decodeBase64(data.getBytes("utf-8")).toArray
   }
