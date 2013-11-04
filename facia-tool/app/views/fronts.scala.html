@@ -193,7 +193,7 @@
                 </a>
 
                 <div class="trail__meta">
-                    <span data-bind="html: humanDate"></span>
+                    <span data-bind="text: humanDate"></span>
                 </div>
             </div>
 
@@ -215,7 +215,7 @@
 
             <a class="webTitle" target="article" data-bind="
                 attr: {href: 'http://www.theguardian.com/' + props.id()},
-                html: meta.webTitle() || props.webTitle(),
+                text: meta.webTitle() || props.webTitle(),
                 css: {'webTitle--override': meta.webTitle},
                 click: startTitleEdit,
                 visible: !state.editingTitle()"></a>
