@@ -232,8 +232,15 @@ Comments.prototype.removeShowMoreButton = function() {
 Comments.prototype.replyToComment = function(e) {
     var parentCommentEl, showRepliesElem,
         replyLink = e.currentTarget,
-        replyToId = replyLink.getAttribute('data-comment-id'),
-        replyToComment = qwery('#comment-'+ replyToId)[0],
+        replyToId = replyLink.getAttribute('data-comment-id');
+
+    // There is already a comment box for this on the page
+    if (document.getElementById('reply-to-'+ replyToId)) {
+        document.getElementById('reply-to-'+ replyToId).focus();
+        return;
+    }
+
+    var replyToComment = qwery('#comment-'+ replyToId)[0],
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
         $replyToComment = bonzo(replyToComment),
         commentForm = new CommentBox(this.context, this.mediator, {
