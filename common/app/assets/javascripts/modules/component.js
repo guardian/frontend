@@ -216,7 +216,7 @@ Component.prototype.setOptions = function(options) {
 };
 
 /**
- * Removes all event listeners and removes the elem
+ * Removes all event listeners and removes the DOM elem
  */
 Component.prototype.destroy = function() {
     bean.off(this.elem);
