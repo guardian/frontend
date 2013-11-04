@@ -4,3 +4,8 @@ error.passwordsMustMatch=The passwords don''t match, please try again.
 error.login=That email address/password combination doesn''t match our records. Please try again.
 error.passwordReset=We could not reset your password please request another password reset email
 error.usernameLength=Please enter a username between 6 and 20 characters
+
+# default errors for edge cases
+error.required=This field is required
+error.boolean=Invalid selection
+error.unknown=Invalid input

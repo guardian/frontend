@@ -1,9 +1,0 @@
-@(field: play.api.data.Field, value: String, label: String, args: (Symbol,Any)*)
-
-@import play.api.templates.PlayMagic.toHtmlArgs
-
-<label class="check-label">
-    <input type="radio" name="@field.name" id="@field.id-@value" value="@value"
-        @if(field.value.map(_ == value).getOrElse(false)){ checked } @toHtmlArgs(args.toMap) />
-    @label
-</label>
