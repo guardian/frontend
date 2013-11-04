@@ -14,9 +14,9 @@
         itemprop="contentURL"
         @ArticleMainPicture.captionFor(picture).map{ caption =>
             alt="@Html(caption)"
-            title="@StripHtmlTagsAndUnescapeEntities(caption)" />
+            title="@StripHtmlTagsAndUnescapeEntities(caption)"
         }
-
+        />
         @LargeThumbnail.captionFor(picture).map{ caption =>
             <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
         }

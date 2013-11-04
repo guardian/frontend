@@ -1,11 +1,12 @@
 /*global guardian */
 define([
+    'common',
     'qwery',
     'bonzo',
     'modules/detect',
     'modules/analytics/adverts',
     'modules/adverts/sticky'
-], function (qwery, bonzo, detect, inview, Sticky) {
+], function (common, qwery, bonzo, detect, inview, Sticky) {
 
     var AlphaAdvertsData = function () {
 
@@ -44,7 +45,14 @@ define([
                             'data-extended' : 'Middle'
                         }).addClass(cls).insertAfter(this);
                     });
-                    inview(document);
+
+                    // The listener for the 'Both' variant is setup only once in the variant itself
+                    if (!isBoth) {
+                        common.mediator.on('module:analytics:omniture:pageview:sent', function() {
+                            inview(document);
+                        });
+                    }
+
                     return true;
                 }
             },
@@ -76,7 +84,14 @@ define([
                             });
                         }
                     }
-                    inview(document);
+
+                    // The listener for the 'Both' variant is setup only once in the variant itself
+                    if (!isBoth) {
+                        common.mediator.on('module:analytics:omniture:pageview:sent', function() {
+                            inview(document);
+                        });
+                    }
+
                     return true;
                 }
             },
@@ -88,6 +103,10 @@ define([
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
                             variant.test.call(self, {}, true);
                         }
+                    });
+
+                    common.mediator.on('module:analytics:omniture:pageview:sent', function() {
+                        inview(document);
                     });
 
                     // This needs to be last as the previous calls set their own variant hosts

@@ -6,7 +6,7 @@
     "bonzo": "1.3",
     "curl": "0.8",
     "domready": "*",
-    "dom-write": "git://github.com/guardian/dom-write",
+    "postscribe": "git@github.com:krux/postscribe.git",
     "eventEmitter": "4.2",
     "qwery": "3.4",
     "reqwest": "git@github.com:ironsidevsquincy/reqwest.git",

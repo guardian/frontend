@@ -35,14 +35,12 @@ class ArticleControllerTest extends FlatSpec with Matchers {
   }
 
   it should "redirect for short urls" in Fake {
-    Switches.FollowItemRedirectsFromApiSwitch.switchOn()
     val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
     status(result) should be (302)
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
 
   it should "redirect for short urls with Twitter suffix" in Fake {
-    Switches.FollowItemRedirectsFromApiSwitch.switchOn()
     val result = controllers.ArticleController.renderArticle("p/39heg/tw")(TestRequest("/p/39heg/tw"))
     status(result) should be (302)
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")

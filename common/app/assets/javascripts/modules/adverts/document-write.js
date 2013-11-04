@@ -2,14 +2,12 @@
 define([
     'common',
     'ajax',
-    'domwrite',
 
     'modules/detect',
     'modules/adverts/audience-science'
 ], function (
     common,
     ajax,
-    domwrite,
 
     detect,
     audienceScience

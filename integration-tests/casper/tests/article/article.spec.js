@@ -9,7 +9,9 @@
 
 casper.start(host + "business/2010/feb/08/fsa-european-directive-hedge-funds?view=mobile");
 
-casper.then(function() {
+casper.options.waitTimeout = 10000;
+
+casper.waitUntilVisible('.js-related.lazyloaded', function() {
 	casper.test.begin("Related content", function(test) {
 		test.assertVisible('.js-related', 'Related content trailblock visible');
 		test.assertExists('.js-related .related-trails.shut', 'Additional related trails hidden on page load');

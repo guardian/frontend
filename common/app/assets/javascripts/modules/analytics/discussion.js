@@ -29,7 +29,7 @@ define(['common', 'modules/id'], function(common, Id) {
     Track.prototype.recommend = function(e) {
         s.events = 'event72';
         s.eVar65 = 'recommendation';
-        s.eVar66 = Id.getUserFromCookie().id;
+        s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
         s.eVar67 = e.userId;
         s.linkTrackVars = this.getLinkTrackVars(['eVar65', 'eVar67']);
         s.linkTrackEvents = 'event72';
