@@ -6,7 +6,6 @@ import conf.Configuration
 import com.amazonaws.services.cloudwatch.model._
 import scala.collection.JavaConversions._
 import common.Logging
-import model.diagnostics._
 
 trait CloudWatch extends Logging {
 
@@ -28,10 +27,7 @@ trait CloudWatch extends Logging {
     }
   }
 
-
-
-  def put(namespace: String, metrics: scala.collection.mutable.Map[String, Double]) = {
-
+  def put(namespace: String, metrics: Map[String, Double]) = {
       val request = new PutMetricDataRequest().
         withNamespace(namespace).
         withMetricData(metrics.map{ case (name, count) => 
@@ -40,7 +36,6 @@ trait CloudWatch extends Logging {
             .withMetricName(name)
             .withUnit("Count")
         })
-
       cloudwatch.putMetricDataAsync(request, asyncHandler)
   }
 }
