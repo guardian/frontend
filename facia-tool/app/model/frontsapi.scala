@@ -5,6 +5,7 @@ import tools.FaciaApi
 import controllers.Identity
 import org.joda.time.DateTime
 import play.api.templates.HtmlFormat
+import common.InputValidation
 
 trait JsonShape
 
@@ -150,7 +151,8 @@ trait UpdateActions {
       trail <- trailList
       metaMap <- trail.meta.orElse(Option(Map.empty[String, String]))
     } yield {
-      if (id == trail.id) trail.copy(meta = Some(metaMap ++ newMetaMap)) else trail
+      val validatedMetaMap = (metaMap ++ newMetaMap).mapValues(s => InputValidation.sanitize(s))
+      if (id == trail.id) trail.copy(meta = Some(validatedMetaMap)) else trail
     }
   }
 
