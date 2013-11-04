@@ -115,6 +115,7 @@ $c-live: #e81818;
 .item__link {
     display: block;
     border-top: 2px solid $c-newsAccent;
+    color: $c-neutral1;
     .item:first-child & {
         border-top-style: none;
     }
