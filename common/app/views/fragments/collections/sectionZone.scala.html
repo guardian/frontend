@@ -3,7 +3,9 @@
 @if(collection.items.nonEmpty) {
     <section class="collection collection--@style.className js-collection--display-toggle tone-@style.tone"
              data-link-name="block | @config.id"
-             data-id="@config.id">
+             data-id="@config.id"
+             data-link-context="@config.section"
+    >
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
             @if(title.nonEmpty) {
