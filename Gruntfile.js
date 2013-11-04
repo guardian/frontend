@@ -80,7 +80,7 @@ module.exports = function (grunt) {
         webfontjson: {
             WebAgateSansWoff: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebAgateSans.woff.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -93,7 +93,7 @@ module.exports = function (grunt) {
             },
             WebAgateSansTtf: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebAgateSans.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.ttf.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -106,7 +106,7 @@ module.exports = function (grunt) {
             },
             WebEgyptianWoff: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebEgyptian.woff.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -151,7 +151,7 @@ module.exports = function (grunt) {
             },
             WebEgyptianTtf: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebEgyptian.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.ttf.json",
                     "callback": "guFont",
                     "fonts": [
                         {
