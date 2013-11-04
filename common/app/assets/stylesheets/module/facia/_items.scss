@@ -41,7 +41,7 @@ $c-live: #e81818;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .container--news .container__title {
+    .has-localnav .container:first-child .container__title {
         display: none;
     }
 }

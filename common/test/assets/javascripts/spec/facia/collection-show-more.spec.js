@@ -1,6 +1,6 @@
 define(['modules/facia/collection-show-more', 'bonzo', 'common', 'bean'], function(CollectionShowMore, bonzo, common, bean) {
 
-    describe('container Show More', function() {
+    describe('Collection Show More', function() {
 
         var collectionShowMore,
             container,
@@ -53,6 +53,8 @@ define(['modules/facia/collection-show-more', 'bonzo', 'common', 'bean'], functi
 
         it('should not append button if displaying all collection', function() {
             common.$g('.item:nth-child(n+2)', container).remove();
+            // create again, after culling fixture data
+            var collectionShowMore = new CollectionShowMore(collection);
             collectionShowMore.addShowMore();
             expect(common.$g('button', container).length).toEqual(0);
         });
