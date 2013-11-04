@@ -124,10 +124,11 @@ define([
             },
 
             getCurrentSection: function() {
+                var pageSection = config.page.pageId.split('/')[0];
                 for(var i=0; i < sections.length; i++) {
                     var zones = Object.keys(sections[i].zones);
 
-                    if (zones.indexOf('/' + config.page.pageId) !== -1) {
+                    if (zones.indexOf('/' + pageSection) !== -1) {
                         return sections[i];
                     }
                 }
