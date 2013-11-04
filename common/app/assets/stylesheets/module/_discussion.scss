@@ -335,7 +335,7 @@
 
 .d-comment-box__body {
     @include box-sizing(border-box);
-    
+
     border: 1px solid $c-neutral3;
     height: 50px;
     margin: $baseline*2 0;
@@ -362,8 +362,15 @@
     margin-right: $gutter;
 }
 
-.d-comment-box__reply-to {
+.d-comment-box__reply-to,
+.d-comment-box__cancel {
     @include fs-data(2);
     color: $c-neutral1;
     display: inline-block;
+}
+
+.d-comment-box__cancel {
+    color: $c-neutral2;
+    float: right;
+    margin-top: $baseline*3;
 }

@@ -216,6 +216,14 @@ Component.prototype.setOptions = function(options) {
 };
 
 /**
+ * Removes all event listeners and removes the elem
+ */
+Component.prototype.destroy = function() {
+    bean.off(this.elem);
+    bonzo(this.elem).remove();
+};
+
+/**
  * @param {Function} child
  */
 Component.define = function(child) {

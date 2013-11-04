@@ -51,7 +51,8 @@ CommentBox.prototype.defaultOptions = {
     premod: false,
     focus: false,
     state: 'top-level',
-    replyTo: null
+    replyTo: null,
+    cancelable: false
 };
 
 /**
@@ -78,10 +79,15 @@ CommentBox.prototype.prerender = function() {
 
         elem = document.createElement('label');
         elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.id);
-        elem.className = 'label d-comment-box__reply-to';
+        elem.className = 'label '+ this.getClass('reply-to', true);
         elem.innerHTML = 'to @'+ this.options.replyTo.author;
         this.getElem('body').id = 'reply-to-'+ this.options.replyTo.id;
         bonzo(elem).insertAfter(this.getElem('submit'));
+    }
+
+    if (this.options.cancelable) {
+        var beforeElem = this.getElem('reply-to') ? this.getElem('reply-to') : this.getElem('submit');
+        bonzo(bonzo.create('<div class="u-fauxlink '+ this.getClass('cancel', true) +'" role="button">Cancel</div>')).insertAfter(beforeElem);
     }
 };
 
@@ -100,6 +106,7 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+    this.on('click', this.getClass('cancel'), this.destroy);
 
     this.setState(this.options.state);
 
