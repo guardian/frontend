@@ -62,7 +62,11 @@ $c-live: #e81818;
     border: none;
     background-color: transparent;
     padding: 0;
-    @include fs-data(5, $size-only: true);
+    @include fs-data(4, $size-only: true);
+    .container__toggle__text {
+        position: relative;
+        top: -6px;
+    }
     @include mq($to: tablet) {
         border-left: 1px solid #ffffff;
         color: #ffffff;
@@ -77,6 +81,7 @@ $c-live: #e81818;
         }
     }
     @include mq(tablet) {
+        text-align: right;
         color: $c-neutral2;
         i {
             display: none;
@@ -148,6 +153,7 @@ $c-live: #e81818;
 .item__title {
     margin-top: 2px;
     @include fs-headline(2, $size-only: true);
+    word-wrap: break-word;
 }
 .item__byline {
     margin: $gs-baseline/3 0 0;
