@@ -200,15 +200,15 @@
             <!-- ko if: state.editingTitle -->
             <div class="trail_tweaks u-cf">
                 <input type="text" data-bind="
-                    value: webTitleInput,
-                    attr: {placeholder: props.webTitle}"/>
+                    value: headlineInput,
+                    attr: {placeholder: fields.headline}"/>
                 <div>
                     <a data-bind="click: saveTitleEdit">Save Title</a>
                     <a data-bind="click: cancelTitleEdit">Cancel</a>
                     <a data-bind="
                         click: revertTitleEdit,
-                        attr: {title: props.webTitle},
-                        visible: meta.webTitle">Revert</a>
+                        attr: {title: fields.headline},
+                        visible: meta.headline">Revert</a>
                 </div>
             </div>
             <!-- /ko -->
@@ -219,11 +219,11 @@
                 <a target="article" data-bind="
                     click: function() { return false; },
                     attr: {href: 'http://www.theguardian.com/' + props.id()},
-                    text: meta.webTitle() || props.webTitle()"></a>
+                    text: meta.headline() || fields.headline()"></a>
 
                 <i class="web-title--editable icon-pencil" data-bind="
                     click: startTitleEdit,
-                    css: {'web-title--editor': !meta.webTitle(), 'web-title--edited': meta.webTitle}"></i>
+                    css: {'web-title--editor': !meta.headline(), 'web-title--edited': meta.headline}"></i>
             </div>
 
         </div>

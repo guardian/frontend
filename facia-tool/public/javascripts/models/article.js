@@ -19,17 +19,17 @@ function (
 
         this.props = common.util.asObservableProps([
             'id',
-            'webTitle',
             'webPublicationDate']);
 
         this.fields = common.util.asObservableProps([
+            'headline',
             'thumbnail',
             'trailText',
             'shortId']);
 
         this.meta = common.util.asObservableProps([
-            'group',
-            'webTitle']);
+            'headline',
+            'group']);
 
         this.state = common.util.asObservableProps([
             'underDrag',
@@ -48,15 +48,17 @@ function (
             return common.util.numberWithCommas(this.state.totalHits());
         }, this);
 
-        this.webTitleInput = ko.computed({
+        this.headlineInput = ko.computed({
             read: function() {
-                return this.meta.webTitle() || this.props.webTitle();
+                return this.meta.headline() || this.fields.headline();
             },
             write: function(value) {
-                this.meta.webTitle(value);
+                this.meta.headline(value);
             },
             owner: this
-         });
+        });
+
+        this.provisionalHeadline = null;
 
         this.populate(opts);
     };
@@ -68,24 +70,24 @@ function (
     };
 
     Article.prototype.startTitleEdit = function() {
-        this.provisionalWebTitle = this.meta.webTitle();
+        this.provisionalHeadline = this.meta.headline();
         this.state.editingTitle(true);
     };
 
     Article.prototype.saveTitleEdit = function() {
-        if(this.meta.webTitle()) {
+        if(this.meta.headline()) {
             this.save();
         };
         this.state.editingTitle(false);
     };
 
     Article.prototype.cancelTitleEdit = function() {
-        this.meta.webTitle(this.provisionalWebTitle);
+        this.meta.headline(this.provisionalHeadline);
         this.state.editingTitle(false);
     };
 
     Article.prototype.revertTitleEdit = function() {
-        this.meta.webTitle(undefined);
+        this.meta.headline(undefined);
         this.state.editingTitle(false);
         this.save();
     };
