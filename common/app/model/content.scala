@@ -115,11 +115,11 @@ object Content {
 
   def apply(delegate: ApiContent): Content = {
     delegate match {
-      // article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
+      // liveblog / article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
+      case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
       case gallery if delegate.isGallery => new Gallery(delegate)
       case video if delegate.isVideo => new Video(delegate)
-      case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case picture if delegate.isImageContent => new ImageContent(delegate)
       case _ => new Content(delegate)
     }

@@ -5,9 +5,9 @@
     <main itemprop="mainContentOfPage" role="main" class="monocolumn-wrapper">
         <h1 class="u-h">Most read</h1>
     @popular.zipWithRowInfo.map{ case (section, info) =>
-        <section class="front-section zone-@section.section">
-            <h2 class="section-head zone-color">Most read: @Html(section.heading)</h2>
-            <div class="headline-list box-indent"
+        <section class="zone-@section.section">
+            <h2 class="article-zone article-zone--bleed-out tone-border">Most read: @Html(section.heading)</h2>
+            <div class="headline-list"
                  data-link-name="@section.heading">
                 <ul class="unstyled">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>

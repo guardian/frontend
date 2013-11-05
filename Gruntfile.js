@@ -58,7 +58,8 @@ module.exports = function (grunt) {
                         "reqwest": "components/reqwest/src/reqwest",
                         "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
-                        "swipeview": "components/swipeview/src/swipeview"
+                        "swipeview": "components/swipeview/src/swipeview",
+                        "lodash": "components/lodash-amd/modern"
                     },
                     shim: {
                         "postscribe": {
@@ -356,6 +357,7 @@ module.exports = function (grunt) {
                             swipe:        'components/swipe/swipe',
                             swipeview:    'components/swipeview/src/swipeview',
                             moment:       'components/moment/moment',
+                            lodash:       'components/lodash-amd/modern',
                             omniture:     '../../../app/public/javascripts/vendor/omniture',
                             fixtures:     '../../../test/assets/javascripts/fixtures',
                             helpers:      '../../../test/assets/javascripts/helpers'
