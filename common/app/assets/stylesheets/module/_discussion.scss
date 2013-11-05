@@ -14,7 +14,8 @@
     list-style: none;
     margin: 0 0 1em;
 }
-.d-thread .d-thread,
+
+.d-thread--responses,
 .d-comment-box--response {
     padding-left: 28px; /* aligns with top level comment's body */
     border-left: $gutter/2 solid $c-neutral5;
@@ -161,10 +162,11 @@
 
 .d-comment__action {
     color: $c-neutral2;
+    display: inline-block;
     font-size: .85714285714em;
 }
 
-.d-comment__action--reply {
+.d-comment__action--report {
     float: right;
 }
 

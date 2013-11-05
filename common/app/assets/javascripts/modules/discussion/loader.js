@@ -87,6 +87,7 @@ Loader.prototype.ready = function() {
 
     this.on('user:loaded', function(user) {
         var self = this;
+
         this.comments = new Comments(this.context, this.mediator, {
             initialShow: 2,
             discussionId: this.getDiscussionId(),
@@ -186,7 +187,7 @@ Loader.prototype.renderCommentBox = function() {
             premod: this.user.privateFields.isPremoderated
         });
         this.commentBox.render(this.getElem('commentBox'));
-        this.commentBox.on('post:success', this.addComment.bind(this));
+        this.commentBox.on('post:success', this.comments.addComment.bind(this.comments));
         this.canComment = true;
     }
 };
@@ -205,55 +206,9 @@ Loader.prototype.renderBottomCommentBox = function() {
         premod: this.user.privateFields.isPremoderated
     });
     this.bottomCommentBox.render(this.getElem('commentBoxBottom'));
-    this.bottomCommentBox.on('post:success', this.addComment.bind(this, true));
-};
-
-/**
- * TODO (jamesgorrie): Move this functionality over to component
- * It hasn't been done yet as I don't have a comment component
- * @param {object.<string.*>} comment
- */
-Loader.prototype.addComment = function(comment) {
-    var key, val, selector, elem,
-        attr,
-        map = {
-            username: 'd-comment__author',
-            timestamp: 'js-timestamp',
-            body: 'd-comment__body',
-            report: 'd-comment__action--report',
-            avatar: 'd-comment__avatar'
-        },
-        values = {
-            username: this.user.displayName,
-            timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
-            report: {
-                href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
-            },
-            avatar: {
-                src: this.user.avatar
-            }
-        },
-        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
-
-    for (key in map) {
-        if (map.hasOwnProperty(key)) {
-            selector = map[key];
-            val = values[key];
-            elem = qwery('.'+ selector, commentElem)[0];
-            if (typeof val === 'string') {
-                elem.innerHTML = val;
-            } else {
-                for (attr in val) {
-                    elem.setAttribute(attr, val[attr]);
-                }
-            }
-        }
-    }
-    commentElem.id = 'comment-'+ comment.id;
-    bonzo(this.comments.getElem('comments')).prepend(commentElem);
-    window.location.hash = '';
-    window.location.hash = '#comment-'+ comment.id;
+    this.bottomCommentBox.on('post:success', function(comment) {
+        this.comments.addComment(comment, true);
+    }.bind(this));
 };
 
 /**

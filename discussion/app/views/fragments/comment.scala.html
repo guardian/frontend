@@ -61,7 +61,7 @@
     </div>
 
     @if(comment.responses.nonEmpty){
-        <ul class="d-thread" data-responses="@comment.responses.length">
+        <ul class="d-thread d-thread--responses" data-responses="@comment.responses.length">
             @comment.responses.map{ response =>
                 @fragments.comment(response, isClosedForRecommendation, true)
             }

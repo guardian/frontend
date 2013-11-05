@@ -80,7 +80,7 @@ CommentBox.prototype.prerender = function() {
         elem = document.createElement('label');
         elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.id);
         elem.className = 'label '+ this.getClass('reply-to', true);
-        elem.innerHTML = 'to @'+ this.options.replyTo.author;
+        elem.innerHTML = 'to '+ this.options.replyTo.author;
         this.getElem('body').id = 'reply-to-'+ this.options.replyTo.id;
         bonzo(elem).insertAfter(this.getElem('submit'));
     }

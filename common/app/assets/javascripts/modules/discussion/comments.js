@@ -17,8 +17,9 @@ define([
 ) {
 
 /**
- * TODO (jamesgorrie): Move recommending into this,
- * it has no need for it's own module.
+ * TODO (jamesgorrie):
+ * * Move recommending into this, it has no need for it's own module.
+ * * Get the selectors up to date with BEM
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -125,7 +126,7 @@ Comments.prototype.renderReplyButtons = function(comments) {
 
     comments.forEach(function(elem, i) {
         actions = qwery(self.getClass('commentActions'), elem)[0];
-        bonzo(actions).append(
+        bonzo(actions).prepend(
             '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
             'role="button" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
     });
@@ -190,9 +191,8 @@ Comments.prototype.hideExcessReplies = function(comments) {
         if (replies.length > self.options.showRepliesCount) {
             repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
             bonzo(repliesToHide).attr('hidden', 'hidden');
-            // TODO: Don't like using d-thread,
-            // perhaps enhance to d-thread--replies
-            bonzo(qwery('.d-thread', elem)).append(
+
+            bonzo(qwery('.d-thread--responses', elem)).append(
                 '<li class="'+ self.getClass('showReplies', true) +' cta" data-link-name="Show more replies" data-is-ajax>Show '+
                     repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
                 '</li>');
@@ -228,11 +228,69 @@ Comments.prototype.removeShowMoreButton = function() {
     bonzo(this.getElem('showMore')).remove();
 };
 
+/**
+ * @param {object.<string.*>} comment
+ * @param {Boolean=} focus (optional)
+ * @param {Element=} parent (optional)
+ */
+Comments.prototype.addComment = function(comment, focus, parent) {
+    var key, val, selector, elem,
+        attr,
+        map = {
+            username: 'd-comment__author',
+            timestamp: 'js-timestamp',
+            body: 'd-comment__body',
+            report: 'd-comment__action--report',
+            avatar: 'd-comment__avatar'
+        },
+        values = {
+            username: this.user.displayName,
+            timestamp: 'Just now',
+            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
+            report: {
+                href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
+            },
+            avatar: {
+                src: this.user.avatar
+            }
+        },
+        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
+
+    for (key in map) {
+        if (map.hasOwnProperty(key)) {
+            selector = map[key];
+            val = values[key];
+            elem = qwery('.'+ selector, commentElem)[0];
+            if (typeof val === 'string') {
+                elem.innerHTML = val;
+            } else {
+                for (attr in val) {
+                    elem.setAttribute(attr, val[attr]);
+                }
+            }
+        }
+    }
+    commentElem.id = 'comment-'+ comment.id;
+
+    // Stupid hack. Will rearchitect.
+    if (!parent) {
+        bonzo(this.getElem('comments')).prepend(commentElem);
+    } else {
+        bonzo(parent).append(commentElem);
+    }
+
+    window.location.hash = '';
+    if (focus) {
+        window.location.hash = '#comment-'+ comment.id;
+    }
+};
+
 /** @param {Event} e */
 Comments.prototype.replyToComment = function(e) {
     var parentCommentEl, showRepliesElem,
         replyLink = e.currentTarget,
-        replyToId = replyLink.getAttribute('data-comment-id');
+        replyToId = replyLink.getAttribute('data-comment-id'),
+        self = this;
 
     // There is already a comment box for this on the page
     if (document.getElementById('reply-to-'+ replyToId)) {
@@ -243,7 +301,7 @@ Comments.prototype.replyToComment = function(e) {
     var replyToComment = qwery('#comment-'+ replyToId)[0],
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
         $replyToComment = bonzo(replyToComment),
-        commentForm = new CommentBox(this.context, this.mediator, {
+        commentBox = new CommentBox(this.context, this.mediator, {
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
             state: 'response',
@@ -263,7 +321,17 @@ Comments.prototype.replyToComment = function(e) {
     if (showRepliesElem.length > 0) {
         showRepliesElem[0].click();
     }
-    commentForm.render(parentCommentEl);
+    commentBox.render(parentCommentEl);
+
+    commentBox.on('post:success', function(comment) {
+        var responses = qwery('.d-thread--responses', parentCommentEl)[0];
+        if (!responses) {
+            responses = bonzo.create('<ul class="d-thread d-thread--responses"></ul>')[0];
+            bonzo(parentCommentEl).append(responses);
+        }
+        self.addComment(comment, false, responses);
+        this.destroy();
+    });
 };
 
 return Comments;
