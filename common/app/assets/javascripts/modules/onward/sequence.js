@@ -1,14 +1,15 @@
-/*jshint multistr: true */
 define([
     'bean',
     'ajax',
     'utils/mediator',
+    'lodash/arrays/difference',
     'modules/storage',
     'modules/onward/history'
 ], function(
     bean,
     ajax,
     mediator,
+    _difference,
     storage,
     History
     ){
@@ -39,13 +40,9 @@ define([
         });
     }
 
-    function dedupeSequence(sequence, callback) {
-        var hist = new History({}).get();
-
-        callback(sequence.filter(function(seqItem) {
-            return !hist.some(function(histItem) {
-                return seqItem === histItem.id;
-            });
+    function dedupeSequence(sequence) {
+        return _difference(sequence, new History({}).get().map(function(i){
+            return i.id;
         }));
     }
 
@@ -55,9 +52,7 @@ define([
             crossOrigin: true
         }).then(function (json) {
             if(json && 'trails' in json) {
-                dedupeSequence(cleanSequence(json.trails), function(sequence) {
-                    set('sequence', sequence);
-                });
+                set('sequence', dedupeSequence(cleanSequence(json.trails)));
                 removeContext();
             }
         }).fail(function(req) {
@@ -73,7 +68,7 @@ define([
         });
     }
 
-    function init(config) {
+    function init() {
         var context = getContext();
         if(context !== null) {
             loadSequence(context);
