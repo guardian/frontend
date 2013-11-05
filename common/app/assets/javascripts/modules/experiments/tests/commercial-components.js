@@ -37,6 +37,7 @@ define([
 
                     loadComponents({
                         keywordsParams: c.keywordsParams,
+                        userSegments: c.userSegments,
                         context: context
                     });
 
@@ -57,7 +58,7 @@ define([
     function loadComponents(opts) {
 
         var slotTargets = {
-            ".article__main-column": "/commercial/travel/offers?" + opts.keywordsParams,
+            ".article__main-column": "/commercial/travel/offers?" + opts.keywordsParams + "&" + opts.userSegments,
             ".js-mpu-ad-slot":       "/commercial/masterclasses?" + opts.keywordsParams
         };
 
