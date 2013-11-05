@@ -1,0 +1,326 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"music/2013/oct/29/john-lennon-first-house-sells",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-10-29T23:41:49Z",
+      "webTitle":"John Lennon's first house sells for £480,000",
+      "webUrl":"http://www.theguardian.com/music/2013/oct/29/john-lennon-first-house-sells",
+      "apiUrl":"http://content.guardianapis.com/music/2013/oct/29/john-lennon-first-house-sells",
+      "fields":{
+        "newspaperPageNumber":"16",
+        "trailText":"Anonymous American Beatles fan places winning bid for property at 9 Newcastle Road in Wavertree, Liverpool",
+        "headline":"John Lennon's first house sells for £480,000",
+        "body":"<p>John Lennon's modest first home has sold for almost half a million pounds – despite going on the market for just £150,000.</p><p>The property at 9 Newcastle Road in Wavertree, Liverpool, where the Beatles star lived from his birth in 1940, went for £480,000 at auction in the Cavern Club.</p><p>An anonymous American fan of the Beatles placed the winning bid over the phone, exceeding the guide price set at between £150,000 and £250,000.</p><p>The then suburban red brick terraced home where Lennon's mother Julia brought up her first-born son is just a stone's throw away from Penny Lane, which inspired the famous Beatles track.</p><p>It boasts a lounge, upstairs family bathroom, a sitting room, family room and kitchen which leads to a walled yard round the back.</p><p>Lennon made reference to the house later in life, and was quoted as saying: \"I lived in 9 Newcastle Road. I was born on the 9 of October. It's just a number that follows me around.\"</p><p>The previous owner told the Liverpool Echo: \"I'll be sad to leave John Lennon's first home but I am retired now and would really like a property with a bigger garden.</p><p>\"I have made sure original features have been preserved so that they reflect the 1960s period, when the Beatles wowed the whole world with their rock and roll music.\"</p><p>Lennon's second home – Mendips, on Menlove Avenue in Woolton – was last year given Grade II listed status by English Heritage.</p><p>Andrew Brown, managing director of auctioneer Countrywide Property, said: \"There was a lot of interest in the property before the auction from potential buyers who lived in the UK and internationally.</p><p>\"The auction was very exciting with a number of keen buyers bidding for the property and we are delighted to have sold such an iconic piece of The Beatles and Liverpool's history.\"</p><p>Stephen Giddins, regional sales director for selling agent Entwistle Green, said: \"We are delighted for our client as we were consciously aware that there was a lot of interest in the property and we wanted to ensure that this translated into achieving the best price possible for them.\"</p><!-- Guardian Watermark: internal-code/content/421243715|2013-11-05T11:03:51Z|b750717041304962ead29f0f30b5cd1f65853fe9 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T00:08:32Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090080197/John-Lennons-first-home-a-004.jpg",
+        "standfirst":"Anonymous American Beatles fan places winning bid for property at 9 Newcastle Road in Wavertree, Liverpool",
+        "shortUrl":"http://gu.com/p/3kx4t",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090080197/John-Lennons-first-home-a-004.jpg",
+        "wordcount":"346",
+        "commentable":"false",
+        "internalContentCode":"421243715",
+        "allowUgc":"false",
+        "internalOctopusCode":"8257542",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988838",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T23:41:49Z"
+      },
+      "tags":[{
+        "id":"music/johnlennon",
+        "type":"keyword",
+        "webTitle":"John Lennon",
+        "webUrl":"http://www.theguardian.com/music/johnlennon",
+        "apiUrl":"http://content.guardianapis.com/music/johnlennon",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"uk/liverpool",
+        "type":"keyword",
+        "webTitle":"Liverpool",
+        "webUrl":"http://www.theguardian.com/uk/liverpool",
+        "apiUrl":"http://content.guardianapis.com/uk/liverpool",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421243871",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090073334/John-Lennons-first-home-a-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"54",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090076193/John-Lennons-first-home-a-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"340",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090078112/John-Lennons-first-home-a-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"130",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090080197/John-Lennons-first-home-a-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"84",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090081952/John-Lennons-first-home-a-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"132",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090083835/John-Lennons-first-home-a-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"168",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090085612/John-Lennons-first-home-a-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"180",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090087408/John-Lennons-first-home-a-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"228",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090089222/John-Lennons-first-home-a-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"276",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090091107/John-Lennons-first-home-a-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"372",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090089222/John-Lennons-first-home-a-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"276",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421243872",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383090080197/John-Lennons-first-home-a-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Countrywide",
+            "altText":"John Lennon's first home at 9 Newcastle Road in Wavertree",
+            "height":"84",
+            "credit":"Countrywide/PA",
+            "caption":"John Lennon's first home at 9 Newcastle Road in Wavertree, Liverpool, which has sold for £480,000 at auction in the Cavern Club. Photograph: Countrywide/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

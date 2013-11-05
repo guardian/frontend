@@ -1,0 +1,129 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"books/2013/oct/16/review-siege-sarah-mussi",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-10-16T14:00:00Z",
+      "webTitle":"Siege by Sarah Mussi - review",
+      "webUrl":"http://www.theguardian.com/books/2013/oct/16/review-siege-sarah-mussi",
+      "apiUrl":"http://content.guardianapis.com/books/2013/oct/16/review-siege-sarah-mussi",
+      "fields":{
+        "trailText":"<p><strong>HorseLover3000:</strong> 'In parts, I think it is almost a warning, as if this is what could happen if we continue the way we are now'</p>",
+        "headline":"Siege by Sarah Mussi - review",
+        "body":"<p>Siege is a very intriguing book, and you never know the full story. You are always hearing it from Leah, the main character's point of view. What she doesn't know, you don't. I am guessing it is set in the future, but I'm not completely sure. I think it is definitely targeted to older teen readers, as some of it is quite hard-hitting and a little confusing at times. In parts, I think it is almost a warning, as if this is what could happen if we continue the way we are now. This book didn't make me cry. I don't think it's meant to. The author doesn't want you to be sad, she wants you to think. Siege has the reader questioning their own morals in places, and thinking hard about the decisions the character makes.</p><p>Siege is about a shooting at a school, a Siege. But it is about so much more than that, as Leah and Anton try to think why, find the motives of the gunners and decide what will happen, and how they can escape. Leah watches her friends killed, and is always questioning her morals. Is she right to save herself? Should she have stopped, should she have helped?</p><p>I would reccomend Siege to older teen readers, who are prepared for a dark and fairly difficult subject matter to read about. It is a very good book, and is heart-racing. But it will also have you thinking long after the last page has been turned.</p><p><strong>Want to tell the world about a book you've read? <a href=\"http://www.guardian.co.uk/books/childrens-books/2011/mar/02/how-do-i-get-involved-guardian-childrens-books\">Join the site</a> and send us your review!</strong></p><!-- Guardian Watermark: internal-code/content/419607835|2013-11-05T11:03:48Z|27595e8a6dfff0efc2e0eee23fd3f84ce284ec42 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T14:00:00Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Books/Pix/covers/2013/10/10/1381415819174/Siege.jpg",
+        "standfirst":"'In parts, I think it is almost a warning, as if this is what could happen if we continue the way we are now'",
+        "shortUrl":"http://gu.com/p/3jehe",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Books/Pix/covers/2013/10/10/1381415819174/Siege.jpg",
+        "wordcount":"266",
+        "commentable":"false",
+        "internalContentCode":"419607835",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"HorseLover3000",
+        "publication":"theguardian.com",
+        "internalPageCode":"1978979",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T14:00:00Z"
+      },
+      "tags":[{
+        "id":"books/teen-books",
+        "type":"keyword",
+        "webTitle":"Teen books",
+        "webUrl":"http://www.theguardian.com/books/teen-books",
+        "apiUrl":"http://content.guardianapis.com/books/teen-books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"childrens-books-site/childrens-books-site",
+        "type":"blog",
+        "webTitle":"Children's books",
+        "webUrl":"http://www.theguardian.com/childrens-books-site/childrens-books-site",
+        "apiUrl":"http://content.guardianapis.com/childrens-books-site/childrens-books-site",
+        "sectionId":"childrens-books-site",
+        "sectionName":"Children's books",
+        "references":[]
+      },{
+        "id":"books/booksforchildrenandteenagers",
+        "type":"keyword",
+        "webTitle":"Children and teenagers",
+        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
+        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/childrens-user-reviews",
+        "type":"tone",
+        "webTitle":"Children's user reviews",
+        "webUrl":"http://www.theguardian.com/tone/childrens-user-reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/childrens-user-reviews",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/school",
+        "type":"keyword",
+        "webTitle":"School",
+        "webUrl":"http://www.theguardian.com/books/school",
+        "apiUrl":"http://content.guardianapis.com/books/school",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419607836",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/covers/2013/10/10/1381415819174/Siege.jpg",
+          "typeData":{
+            "source":"Public Domain",
+            "altText":"Sarah Mussi, Siege",
+            "height":"130",
+            "credit":"Public Domain",
+            "caption":"Sarah Mussi, Siege",
+            "width":"84"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
