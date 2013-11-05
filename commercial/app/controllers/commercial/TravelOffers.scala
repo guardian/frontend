@@ -7,12 +7,6 @@ import model.commercial.Segment
 
 object TravelOffers extends Controller with ExecutionContexts {
 
-  def refresh = Action {
-    implicit request =>
-      OffersAgent.refresh()
-      Ok("OK") withHeaders ("Cache-Control" -> "max-age=0")
-  }
-
   def listOffers = Action {
     implicit request =>
 
