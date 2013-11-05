@@ -13,8 +13,10 @@ object DiagnosticsLoadJob extends Logging {
     log.info("Loading diagnostics data in to CloudWatch")
     Configuration.environment.stage.toUpperCase match {
       case "PROD" => {
-        CloudWatch.put("Diagnostics", Metric.averages)
+        CloudWatch.put("Diagnostics", Metric.averages ++ Map("views" -> View.count) ++ Map("sessions" -> Session.count))
         Metric.reset()
+        View.reset()
+        Session.reset()
       }
       case _ => log.info("DISABLED: Metrics uploaded in PROD only to limit duplication.")
     }
