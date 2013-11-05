@@ -59,6 +59,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
+  sealed case class CollectionItem(id: String, headline: Option[String])
+
   def requestCollection(id: String): Future[Response] = {
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
@@ -96,8 +98,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
             val bodyJson = parse(r.body)
 
             // extract the articles
-            val articles: Seq[(String, Option[String])] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              ((trail \ "id").as[String], (trail \ "meta" \ "webTitle").asOpt[String])
+            val articles: Seq[CollectionItem] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
+              CollectionItem((trail \ "id").as[String], (trail \ "meta" \ "webTitle").asOpt[String])
             }
 
             getArticles(articles, edition)
@@ -118,21 +120,21 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
   }
 
-  def getArticles(idAndHeadline: Seq[(String, Option[String])], edition: Edition): Future[List[Content]] = {
-    if (idAndHeadline.isEmpty) {
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]] = {
+    if (collectionItems.isEmpty) {
       Future(Nil)
     }
     else {
-      val results = idAndHeadline.foldLeft(Future[List[Content]](Nil)){(foldList, tuple) =>
-        val id = tuple._1
-        val headline = tuple._2
+      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldList, collectionItem) =>
+        val id = collectionItem.id
+        val headline = collectionItem.headline
         val response = ContentApi.item(id, edition).showFields("all").response
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
         for {l <- foldList; itemResponse <- response} yield {
           itemResponse.content.map(Content(_, headline)).map(_ +: l).getOrElse(l)
         }
       }
-      val sorted = results map { _.sortBy(t => idAndHeadline.indexWhere(_._1 == t.id))}
+      val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
       sorted
     }
   }
