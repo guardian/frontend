@@ -131,8 +131,9 @@
     background: $c-neutral5;
 }
 
-.check-label {
-    display: inline-block;
+.check-label,
+.radio-label {
+    display: block;
     font-family: $sans-serif;
     font-size: 13px;
     font-size: 1.3rem;
@@ -141,10 +142,12 @@
 }
 
 .check-label--helper {
+    display: inline-block;
     vertical-align: middle;
 }
 
-[type=checkbox] {
+[type=checkbox],
+[type=radio] {
     float: left;
     height: 13px;
     margin-left: -$gs-gutter;
