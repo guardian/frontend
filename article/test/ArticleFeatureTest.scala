@@ -184,6 +184,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Articles that are also a different content type") {
+
+      Given("An article that is also a video")
+      HtmlUnit("/science/grrlscientist/2013/nov/02/british-birds-look-around-you-bbc-video") { browser =>
+        import browser._
+
+        Then("It should be rendered as an article")
+        findFirst("[itemprop=headline]").getText should be ("Birds of Britain | video")
+      }
+    }
+
     scenario("Review body", ArticleComponents) {
 
       // Nb, The schema.org markup for a review body is different to an article body

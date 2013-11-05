@@ -2,11 +2,11 @@
 define([
     'common',
     'bonzo',
-    'domwrite'
+    'postscribe'
 ], function (
     common,
     bonzo,
-    domwrite
+    postscribe
 ) {
 
     var DocWriteAdSlot = function(name, el) {
@@ -21,9 +21,8 @@ define([
 
     DocWriteAdSlot.prototype.render = function () {
          try {
-            OAS_RICH(this.name);
             var slot = this.el;
-            domwrite.render(slot);
+            postscribe(slot, '<script>OAS_RICH("'+this.name+'")</script>');
             this.loaded = true;
          } catch(e) {
              //Hide slot to prevent layout bugs

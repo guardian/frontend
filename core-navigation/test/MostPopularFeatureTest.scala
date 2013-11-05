@@ -42,7 +42,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
         import browser._
 
         Then("I should see the site wide most read")
-        $("h2")(1).getText should be("Most read: The Guardian")
+        $("main h2")(1).getText should be("Most read: The Guardian")
       }
     }
   }

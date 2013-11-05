@@ -9,10 +9,6 @@ import play.api.mvc.{ Content => _, _ }
 object Error extends Logging {
   
   val agent = UADetectorServiceFactory.getResourceModuleParser()
-
-  private def isMetric(path: String): Boolean = {
-    path startsWith "/px.gif"
-  }
   
   private def isHealthCheck(userAgent: String): Boolean = {
     userAgent startsWith "ELB-HealthChecker"
@@ -33,7 +29,14 @@ object Error extends Logging {
   def report(queryString: Map[String, Seq[String]], userAgent: String) {
       val qs = queryString.map { case (k,v) => k -> v.mkString }
       val osFamily = getOperatingSystem(userAgent).toString
-      if (qs.contains("type")) {
+      
+      if (qs.contains("type") && !isHealthCheck(userAgent)) {
+      
+        // temporary log to the application logs until we find a decent log
+        // analysis tool to send this output
+
+        log.error(s"""${osFamily}\t${qs.values.mkString("\t")}\t${userAgent}""")
+        
         qs.get("type").get.toString match {
           case "js" => Metric.increment(s"js.${osFamily}") 
           case "ads" => Metric.increment("ads") 

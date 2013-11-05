@@ -1294,6 +1294,15 @@
         "sectionName":"Life and style",
         "references":[]
       },{
+        "id":"lifeandstyle/chicken",
+        "type":"keyword",
+        "webTitle":"Chicken",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/chicken",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/chicken",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",

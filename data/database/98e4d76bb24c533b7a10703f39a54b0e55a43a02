@@ -1,0 +1,1678 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/31/rupert-murdoch-australia-embrace-immigrants-economy",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-31T13:01:23Z",
+      "webTitle":"Rupert Murdoch says Australia must embrace immigrants to boost economy",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/31/rupert-murdoch-australia-embrace-immigrants-economy",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/31/rupert-murdoch-australia-embrace-immigrants-economy",
+      "fields":{
+        "trailText":"<p>Twenty-first century is 'Australia's for the taking', News Corp chairman says at Lowy Institute lecture in Sydney</p>",
+        "headline":"Rupert Murdoch says Australia must embrace immigrants to boost economy",
+        "body":"<video data-media-id=\"gu-video-421389709\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031Murdochimmigration-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/31/131031Murdochimmigration_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/31/131031Murdochimmigration/131031Murdochimmigration.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031Murdochimmigration_3gpSml16x9.3gp\"></source>\n      </video><p>Rupert Murdoch says Australia needs to embrace high immigration to add dynamism to the economy, enhance its human capital and create strong bonds with the rest of the world.</p><p>The News Corp chairman decried a \"self-defeating\" immigration debate in the United States and pointed to opportunity for Australia in embracing diversity and opening the doors to all comers – provided cultural relativism was resisted and the newcomers were willing to \"abide by our way of life\".</p><p>The positive intervention on immigration was a significant theme of a lecture the media mogul delivered at the Lowy Institute in Sydney on Thursday evening.</p><p>\"We think of the United States as an immigrant nation, and rightly so,\" Murdoch told his audience in Sydney.</p><p>\"But the percentage of foreign-born in the United States, a country currently racked by a self-defeating debate over immigration policy, is just about 12%. Incredibly, Australia is double that,\" he said.</p><p>\"That means Australia is on the way to becoming what may be the world's most diverse nation. This is an incredible competitive advantage.&nbsp;</p><p>\"A nation as small as ours will increasingly depend on trade. And the more people we have with ties to other parts of the world, the greater our advantage when we seek trade relationships with these nations.\"</p><p>Murdoch declared the 21st century \"Australia's for the taking\" – and contended Australia must be an economy that thrives on disruption. He talked about significant structural adjustments within his own publishing business, including the relentless rise of mobile communications, replacing the old ways of print newspapers and the distribution of news products.</p><p>Reality, once embraced, could be made rewarding, Murdoch reasoned.</p><p>\"It means we are always forced to think outside the box,\" he said.</p><p>\"The disruptive forces and the world economy today are as relentless as they are remorseless. Once we embrace that reality, we can make sure they are rewarding.\"</p><p>The lecture was strong on the Murdoch anti-elitist ethos. He suggested Australia had come a way to moving past the \"stuffy narrow-minded elitism\" of old, and had thrown off the \"faux class war that has been served by contemporary politicians grasping for a theme\" – a reference to the previous Labor government.</p><p>Proof of evolution beyond Australia's \"primeval prejudices\" stemming back to our colonial origins was the rise of Catholics in the Liberal party, with the&nbsp;prime minister, Tony Abbott, \"part of the proof\".</p><p>\"The heart of Australia today is our belief in a fair shake for all,\" Murdoch said.&nbsp;</p><p>\"No man or woman is above any other. We applaud achievement and innovation.\"</p><p>People prepared to exploit their talents and strive for success were the \"essence of an egalitarian meritocracy\".&nbsp; Australia, he said, was on the cusp of becoming just that, \"with more than a touch of libertarianism\" – qualities which were \"rare and valuable in this new world\".</p><p>Murdoch championed a free press, lawyers who did not interfere, and strong private institutions – and talked up the virtues of trade, technology and free markets.</p><p>He endorsed the Abbott government's focus on Jakarta in terms of foreign policy, while insisting America remained Australia's most important ally.</p><p>Murdoch argued for a good relationship with China even as \"[we] guard ourselves against a possible economic contraction there\".</p><p>But he said Australia had to be ambitious at a time of great global transformation, including the rise of the middle class in our region. And Australia had to realise it was people who defined the future, not governments or allies.</p><p>\"Let's stop thinking about Australia's place in the world as defined by its alliances, by its trading partners, by its government,\" Murdoch said.</p><p>\"We will fight regulations that hamper growth and economic development. But it is the Australian people who will, collectively define this nation's destiny.</p><p>\"We must be leaders, not followers. We must be egalitarian, not elitist. We must be victors and not victims. It won't be easy but the Australia that I know and love has never shied from a challenge.\"</p><!-- Guardian Watermark: internal-code/content/421370124|2013-11-05T11:03:48Z|1016e90c675e8601b5309fa3317c359ae2a1c7c2 -->",
+        "showInRelatedContent":"false",
+        "lastModified":"2013-11-01T08:43:37Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383223779367/Rupert-Murdoch-says-Austr-004.jpg",
+        "standfirst":"Twenty-first century is 'Australia's for the taking', News Corp chairman says at Lowy Institute lecture in Sydney",
+        "shortUrl":"http://gu.com/p/3k2dc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383223779367/Rupert-Murdoch-says-Austr-004.jpg",
+        "wordcount":"638",
+        "commentable":"true",
+        "internalContentCode":"421370124",
+        "allowUgc":"false",
+        "internalOctopusCode":"8263931",
+        "isPremoderated":"false",
+        "byline":"Katharine Murphy, deputy political editor",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989804",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T13:01:00Z"
+      },
+      "tags":[{
+        "id":"world/australia-economy",
+        "type":"keyword",
+        "webTitle":"Australia economy",
+        "webUrl":"http://www.theguardian.com/world/australia-economy",
+        "apiUrl":"http://content.guardianapis.com/world/australia-economy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-immigration-and-asylum",
+        "type":"keyword",
+        "webTitle":"Australian immigration and asylum",
+        "webUrl":"http://www.theguardian.com/world/australian-immigration-and-asylum",
+        "apiUrl":"http://content.guardianapis.com/world/australian-immigration-and-asylum",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/rupert-murdoch",
+        "type":"keyword",
+        "webTitle":"Rupert Murdoch",
+        "webUrl":"http://www.theguardian.com/media/rupert-murdoch",
+        "apiUrl":"http://content.guardianapis.com/media/rupert-murdoch",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/news-corporation",
+        "type":"keyword",
+        "webTitle":"News Corporation",
+        "webUrl":"http://www.theguardian.com/media/news-corporation",
+        "apiUrl":"http://content.guardianapis.com/media/news-corporation",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/sydney",
+        "type":"keyword",
+        "webTitle":"Sydney",
+        "webUrl":"http://www.theguardian.com/world/sydney",
+        "apiUrl":"http://content.guardianapis.com/world/sydney",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/katharine-murphy",
+        "type":"contributor",
+        "webTitle":"Katharine Murphy",
+        "webUrl":"http://www.theguardian.com/profile/katharine-murphy",
+        "apiUrl":"http://content.guardianapis.com/profile/katharine-murphy",
+        "bio":"<p>Katharine Murphy is deputy political editor for Guardian Australia. She has been reporting on federal politics for more than a decade. In 2008, she won the Paul Lyneham award for excellence in press gallery journalism, while in 2012 she was a Walkley award finalist in the best digital journalism category for her politics blog</p>",
+        "r2ContributorId":"55866",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/22/1369191235759/Katharine-Murphy1.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421438242",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383223779367/Rupert-Murdoch-says-Austr-004.jpg",
+          "typeData":{
+            "source":"Guardian Australia",
+            "photographer":"Andrew Quilty/Oculi",
+            "altText":"Rupert Murdoch says Australia must embrace immigrants to boost economy",
+            "height":"84",
+            "credit":"Andrew Quilty/Oculi/Guardian Australia",
+            "caption":"Rupert Murdoch: 'Australia is on the way to becoming what may be the world's most diverse nation. This is an incredible competitive advantage.' Photograph: Andrew Quilty/Oculi/Guardian Australia",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-421389709",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031Murdochimmigration-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031Murdochimmigration_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/31/131031Murdochimmigration_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/31/131031Murdochimmigration/131031Murdochimmigration.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/2013/oct/10/unemployment-rate-drops-election-jobs",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-10T06:09:44Z",
+      "webTitle":"Unemployment rate drops to 5.6%, thanks partly to jobs created by federal election ",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/10/unemployment-rate-drops-election-jobs",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/10/unemployment-rate-drops-election-jobs",
+      "fields":{
+        "trailText":"<p>Analysts believe monthly figures are likely to be a temporary halt before unemployment rises again in subsequent quarters</p>",
+        "headline":"Unemployment rate drops to 5.6%, thanks partly to jobs created by federal election",
+        "body":"<p>Manpower recruited for the federal election and a fall in the number of people looking for work have contributed to a fall in the unemployment rate to a four-month low.</p><p>The unemployment rate fell to 5.6% in September, the Australian Bureau of Statistics said, beating economists' expectations of 5.8%.</p><p>The number of people with jobs rose 9,100 while the participation rate – the proportion of the population that have a job, are looking for work or ready to start work – fell to 64.9% from 65% in August.</p><p>The fall in the participation rate – as well as the creation of jobs for the federal election, in roles such as operating polling booths – nudged unemployment lower, National Australia Bank's senior economist, David de Garis, said.</p><p>\"The employment numbers last month and this month have been flattered somewhat by the election,\" he said.</p><p>\"That unemployment rate probably isn't going to be fuel for any talk of a rate cut, next month anyway, unless the consumer price index is really low.\"</p><p>The September CPI will be released by the bureau on 23 October.</p><p>Commonwealth Bank senior economist Michael Workman put the lower unemployment rate down to the fall in the participation rate. The figure of 64.9% in September was a seven-year low.</p><p>\"Employment growth is just not enough to cover the number of new entrants into the workforce,\" Workman said.</p><p>\"Generally the unemployment rate should be rising, it's just this oddity with the participation rate in this survey that is producing an unemployment rate that is not going to 6% yet, but is most likely to get there in the next quarter or two.\"</p><p>Workman said he expected the unemployment rate to start stabilising in the first half of 2014 and then to trend downwards.</p><p>He said the possibility of the Reserve Bank cutting the cash rate this year was quite unlikely and the chance of a reduction next year was unclear.</p><p>\"It really depends on how high the unemployment rate gets over the next few quarters on whether the RBA goes again,\" he said.</p><p>ANZ's head of Australian economics, Justin Fabo, said the September unemployment rate was consistent with the stabilisation of other employment market indicators.</p><p>\"Jobs ads measures have increased modestly recently and firms have reported that the level of spare capacity in their businesses has reduced a little over the past few months,\" he said.</p><p>\"Today's data and the slight improvement in the suite of other labour market indicators are consistent with the RBA being on hold for several months.\"</p><p>Fabo said ANZ had changed its forecast for the RBA's cash rate. \"Until last week we had pencilled in a rate cut for November but pushed this out to February next year,\" he said.</p><p>\"The recent improvement in confidence and stabilisation in labour market conditions is welcome but is still only tentative evidence that economic activity is improving from below-trend rates rather than just stabilising.\"</p><!-- Guardian Watermark: internal-code/content/419551410|2013-11-05T11:03:48Z|6d6944815328da9970450494a11c42402a5c1d96 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-10T06:09:44Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/10/1381382136275/election-005.jpg",
+        "standfirst":"Analysts believe monthly figures are likely to be a temporary halt before unemployment rises again in subsequent quarters",
+        "shortUrl":"http://gu.com/p/3je3v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/10/1381382136275/election-005.jpg",
+        "wordcount":"470",
+        "commentable":"false",
+        "internalContentCode":"419551410",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1978587",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-13T06:09:44Z"
+      },
+      "tags":[{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/unemployment",
+        "type":"keyword",
+        "webTitle":"Unemployment",
+        "webUrl":"http://www.theguardian.com/society/unemployment",
+        "apiUrl":"http://content.guardianapis.com/society/unemployment",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"business/unemployment-and-employment-statistics",
+        "type":"keyword",
+        "webTitle":"Unemployment and employment statistics",
+        "webUrl":"http://www.theguardian.com/business/unemployment-and-employment-statistics",
+        "apiUrl":"http://content.guardianapis.com/business/unemployment-and-employment-statistics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/australia-economy",
+        "type":"keyword",
+        "webTitle":"Australia economy",
+        "webUrl":"http://www.theguardian.com/world/australia-economy",
+        "apiUrl":"http://content.guardianapis.com/world/australia-economy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419554586",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/10/1381382147880/election-010.jpg",
+          "typeData":{
+            "source":"AAP",
+            "photographer":"Lukas Coch",
+            "altText":"election",
+            "height":"276",
+            "credit":"Lukas Coch/AAP",
+            "caption":"Workers recruited for the election helped unemployment drop to 5.6% in September. Photograph: Lukas Coch/AAP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419554587",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/10/1381382136275/election-005.jpg",
+          "typeData":{
+            "source":"AAP",
+            "photographer":"Lukas Coch",
+            "altText":"election",
+            "height":"84",
+            "credit":"Lukas Coch/AAP",
+            "caption":"People vote in Brisbane. Photograph: Lukas Coch/AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/grogonomics/2013/oct/14/australia-wealth-top-world",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-14T01:31:00Z",
+      "webTitle":"Australia is rich and on top of the world: is it time to pop the champers?",
+      "webUrl":"http://www.theguardian.com/business/grogonomics/2013/oct/14/australia-wealth-top-world",
+      "apiUrl":"http://content.guardianapis.com/business/grogonomics/2013/oct/14/australia-wealth-top-world",
+      "fields":{
+        "trailText":"<p>People should not think everyone is enjoying this extra wealth, nor that it is built on foundations that will never crack</p>",
+        "headline":"Australia is rich and on top of the world: is it time to pop the champers?",
+        "body":"<p>The latest <a href=\"https://www.credit-suisse.com/ch/en/news-and-expertise/research/credit-suisse-research-institute/publications.html\">Credit Suisse world wealth report </a>released last week showed that, like last year, Australians are the richest people in the world. With a median wealth of US$219,500 per adult, we sit comfortably ahead of Luxembourg on $182,768. The US, with a median adult wealth of only $44,911, doesn't even make the top 25.</p><p><br />When counting by average wealth per adult, we drop to second behind Switzerland. Significantly, however, Australia is more equitable than most wealthy nations. Of the top 50 biggest economies, only Belgium, Italy and Finland have less of a difference between median and average wealth. </p><p>The greater the difference, the more wealth is in the hands of the richest. <br />Australia's average wealth is just 1.8 times our median wealth; by contrast the UK's is 2.2 times greater, while the US is second worst out of the top 50, at 6.7 times. Russia is the most inequitable, with its average wealth 12.6 times that of the median wealth.</p><p>So shall we break out the champers and order some extra large lobsters for Christmas lunch this year?</p><p>Well maybe ... but maybe not.</p><p>The Credit Suisse report is always a nice one for Australia. We certainly punch above our weight when it comes to wealth. But a closer inspection reveals that part of our high national wealth is due to the very measure used – US dollars.</p><p>The large appreciation in the value of Australia's currency in the past three years has meant that converting Australian dollars into US currency sees Australia rather wealthier than we once were in US dollars.</p><p>The average wealth of Australian adults is just over US$402,000, but if we measure it using a constant exchange rate that negates the improvement in our currency in the past three years, the average is only $328,900.</p><p>That we are this wealthy should not come as too much of a surprise. We have long been near the top of charts when comparing GDP per capita using US dollars. Currently of the IMF's top 34 advanced nations only Luxembourg, Norway and Switzerland sit above Australia using that measure.</p><p>But again if we look at the growth in Australia's GDP per capita, the big boost since 2009 occurs only if you measure in US dollars. Using nominal Australian dollars our growth since 2007 has increased by 24%, compared to 42% using American currency. If we account for inflation and look at the growth in real terms – the measure often used to define increase in standard of living – Australia has only increased by 5% since 2007. </p><p><br />So does this mean all this wealth is a fib?</p><p>Well, not really.</p><p>While a 5% increase in the standard of living since 2007 sounds pretty poor, in the context of the world economy during that time Australia is well above average.<br />Of the 34 advanced economies, Australia has the 8th best growth. And when compared to the 6% decline in the UK's living standard since 2007, 5% looks fairly impressive.</p><p><br />Moreover, even when accounting for a constant exchange rate, Australia has the third highest average wealth in the world, behind Switzerland and Norway. So it is not all about the exchange rate; the reality is, Australians are, in a global context, stinking rich.</p><p>How rich? Well, we are a mere 0.36% of the world's adult population but we account for 3.78% of the world's top 1% wealthiest. The only nation with a more lopsided share of the top 1% is Switzerland, whose 0.13% of the world's population still sees them with 1.63% of the richest 1%.</p><p>How did we earn such wealth? Mostly it has come about through home ownership. Credit Suisse notes that our wealth is \"heavily skewed towards real assets\", which amount on average to US$294,100 or about 59% of total assets. This average level of real assets is second only to Norway.</p><p>It suggests a situation open to risks of inequality, as those on poorer incomes are shut out of the wealth-generating housing market, and a danger that our wealth could collapse if house prices fall.</p><p>When the American housing market collapsed in 2007-08, its average wealth fell such that it took five years to get back to 2007 levels. And with only about 32% of American wealth in non-financial assets, it is much less exposed to the housing market than Australia.</p><p><br />At this point the question turns to how well this wealth is spread around Australia. <a href=\"http://www.theguardian.com/business/grogonomics/2013/aug/06/income-wealth-gfc-equality\">As we noted in August</a> inequality in the first part of this century increased significantly, but the GFC actually reduced inequality. ANU professor <a href=\"http://inside.org.au/poverty-in-a-time-of-prosperity/\">Peter Whiteford notes</a> this came about through the increase in the pension in 2009 and also because the incomes of higher earners did not increase by as much.</p><p>But one group left out were those on Newstart. Since the mid 1990s Newstart has gone from just below 50% of the median household income to now around 30% – well below poverty level.  </p><p>The Credit Suisse report should give Australians some sense of pride at how their country weathered the great recession. But while most of our issues are decidedly \"first world problems\", let us not think that everyone is enjoying this great increase in wealth, and neither should we think it is built on foundations that will never crack.</p><!-- Guardian Watermark: internal-code/content/419860759|2013-11-05T11:03:48Z|ce1f265c3fd700adc11b7c296cf43c75eb644833 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-14T02:18:03Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381713067606/champers-005.jpg",
+        "standfirst":"People should not think everyone is enjoying this extra wealth, nor that it is built on foundations that will never crack",
+        "shortUrl":"http://gu.com/p/3jgdv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381713067606/champers-005.jpg",
+        "wordcount":"863",
+        "commentable":"true",
+        "internalContentCode":"419860759",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Greg Jericho",
+        "publication":"theguardian.com",
+        "internalPageCode":"1980315",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-21T01:31:02Z"
+      },
+      "tags":[{
+        "id":"business/grogonomics",
+        "type":"blog",
+        "webTitle":"Grogonomics",
+        "webUrl":"http://www.theguardian.com/business/grogonomics",
+        "apiUrl":"http://content.guardianapis.com/business/grogonomics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/australia-economy",
+        "type":"keyword",
+        "webTitle":"Australia economy",
+        "webUrl":"http://www.theguardian.com/world/australia-economy",
+        "apiUrl":"http://content.guardianapis.com/world/australia-economy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/greg-jericho",
+        "type":"contributor",
+        "webTitle":"Greg Jericho",
+        "webUrl":"http://www.theguardian.com/profile/greg-jericho",
+        "apiUrl":"http://content.guardianapis.com/profile/greg-jericho",
+        "r2ContributorId":"56591",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/22/1369191059253/Greg-Jericho2.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"business/useconomy",
+        "type":"keyword",
+        "webTitle":"US economy",
+        "webUrl":"http://www.theguardian.com/business/useconomy",
+        "apiUrl":"http://content.guardianapis.com/business/useconomy",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419862563",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381713079461/champers-010.jpg",
+          "typeData":{
+            "source":"PR IMAGE",
+            "photographer":"MARRIOTT RESORT AND SPA",
+            "altText":"champers",
+            "height":"276",
+            "credit":"MARRIOTT RESORT AND SPA/PR IMAGE",
+            "caption":"Shall we break out the champers and order extra large lobsters for Christmas?\r\nWell maybe ... but maybe not. Photograph: AAP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419862564",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381713067606/champers-005.jpg",
+          "typeData":{
+            "source":"PR IMAGE",
+            "photographer":"MARRIOTT RESORT AND SPA",
+            "altText":"champers",
+            "height":"84",
+            "credit":"MARRIOTT RESORT AND SPA/PR IMAGE",
+            "caption":"The exclusive Elandra Retreat Club with stunning on the 27th floor of the Marriott is open from 6.30am to 10.00 pm every day with chef's breakfast, morning and afternoon tea, canapes and beverages, and sweets and coffee at night. Photograph: MARRIOTT RESORT AND SPA/PR IMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/22/australia-cut-spending-shrink-bureaucracy",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-22T06:26:27Z",
+      "webTitle":"Australia aims to cut spending, charge more and shrink bureaucracy",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/22/australia-cut-spending-shrink-bureaucracy",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/22/australia-cut-spending-shrink-bureaucracy",
+      "fields":{
+        "trailText":"'We have to fix the budget,' says treasurer Joe Hockey in announcing once-in-a-decade commission of audit",
+        "headline":"Australia aims to cut spending, charge more and shrink bureaucracy",
+        "body":"<p>&nbsp;The Abbott government is seeking advice about how it can cut spending, charge more for government services and shrink the size of the federal bureaucracy by handing responsibilities to the states and charities, in a sweeping brief to its new commission of audit.</p> <p>&ldquo;We have to fix the budget,&rdquo; the treasurer, Joe Hockey, said as he also revealed a decision to increase Australia&rsquo;s debt limit by $200bn to $500bn after advice that peak debt would be higher than predicted during the election campaign.</p> <p>The commission of audit &ndash; the first since the Howard government&rsquo;s in 1996 &ndash; will be chaired by the president of the Business Council of Australia, Tony Shepherd, and run by a secretariat in the Finance Department headed by the BCA chief economist and former adviser to John Howard, Peter Crone.</p> <p>The commissioners are Dr Peter Boxall, who was the former treasurer Peter Costello&rsquo;s chief of staff when spending was slashed in the 1996 budget and secretary of the Department of Finance from 1997 to 2002, the former Treasury secretary Tony Cole, who last year called for an extension of the goods and services tax, the former Howard government minister Amanda Vanstone and the former senior state bureaucrat Robert Fisher.</p> <p>As he sought to hose down voter concerns in the lead-up to the September election, Abbott insisted the audit would not consider spending cuts on health, education or pensions and pledged the government would not accept any changes to the rate or scope of the goods and services tax. He also promised to quarantine defence from budget cuts, in order to meet a longer term goal to restore defence spending to 2 per cent of gross domestic product.</p> <p>But announcing the audit&rsquo;s very wide-ranging brief, Hockey was clear that nothing was off limits.</p> <p>The terms of reference ask the commissioners to consider &ldquo;options to manage expenditure growth, including through reviewing existing policy settings, programmes and discretionary spending (such as grants); savings and appropriate price signals &ndash; such as the use of co-payments, user-charging or incentive payments &ndash; where such signals will help to ensure optimal targeting of programmes and expenditure (including to those most in need), while addressing the rising cost of social and other spending and &hellip; other savings or matters that the commission considers should be brought to the government&rsquo;s attention&rdquo;.</p> <p>The brief says the audit should be guided by the principles that &ldquo;government should do for people what they cannot do, or cannot do efficiently, for themselves, but no more&rdquo; and that the government should &ldquo;live within its means&rdquo;.</p> <p>And it asks the commissioners to consider every programme and activity undertaken by the commonwealth to decide &ldquo;whether there remains a compelling case for the activity to continue to be undertaken; and if so, whether there is a strong case for continued direct involvement of government, or whether the activity could be undertaken more efficiently by the private sector, the not-for-profit sector, the states, or local government&rdquo;.</p> <p>Cormann said the government &ldquo;will not implement recommendations inconsistent with the promises we took to the last election&rdquo;.</p> <p>The shadow finance spokesman, Tony Burke, said the &ldquo;commission of cuts&rdquo; was a complete contradiction of what the Coalition had said before the election.</p> <p>&ldquo;The Liberals are doing what Liberals always do; they have a commission of cuts across every area &hellip; areas we were told were immune are now not immune,&rdquo; Burke said.</p> <p>And he criticised the Coalition for claiming before the election that debt was a huge problem and then moving to increase the debt ceiling to half a trillion dollars.</p> <p>The audit &ndash; billed as a once-in-a-decade review of what the federal government spends, what it does and what it owns &ndash; will be a critical test of the new government&rsquo;s political resolve.</p> <p>It will also consider what public assets can be sold &ndash; including Medibank Private, which the government has promised to sell, and Australia Post, which it has said it will not privatise.</p> <p>The new government is under intense pressure to return the budget to a sustainable surplus, with government revenue remaining soft and spending on health and pensions projected to grow exponentially as the population ages.</p> <p>The government coupled the announcement of the audit with the revelation that Australia&rsquo;s debt will peak not at $370bn but at more than $400bn, meaning it will seek to raise the legislated debt ceiling from $300bn to $500bn to allow a &ldquo;buffer&rdquo; of between $40bn and $60bn on top of the predicted peak debt.</p> <p>&ldquo;This is a legacy of bad Labor government,&rdquo; Hockey said.</p> <p>The audit will provide two reports. The first will be be about government spending cuts and the appropriate role for the federal government and is due by the end of January so it can feed into next year&rsquo;s May budget. The second is about the performance and accountability of the public sector and is due by the end of March.</p> <p>The outgoing treasury secretary Martin Parkinson is among those who have warned of looming structural problems for the budget as revenue fails to keep pace with spending.</p> <p>&ldquo;We have a big gap between what the community demands of government and what it is prepared to pay,&rdquo; he told a conference in May. &ldquo;We have to think about savings or new sources of revenue.&rdquo;</p> <p>&ldquo;I am not saying we have to find extra sources of tax. I have never said that. But we cannot just keep promising to spend more and more.&rdquo;</p> <p>The audit will provide two reports &ndash; the first due within three months so that its recommendations can be considered as the government drafts the May budget &ndash; and a second broader report due next year considering the functions and financing of state, federal and local governments.</p> <p>Speaking before the election on radio 3AW, Abbott said: \"What we aren't going to do is we're not going to cut health spending, we're not going to cut education spending &hellip; We're not going to reduce pensions, we're not going to change the GST &ndash; all of the scares that Kevin Rudd has been hyper&shy;ventilating over, over the last few weeks, is simple nonsense.\"</p> <p>The Howard government had a commission of audit after it gained power in 1996. Headed by Professor Bob Officer, it suggested a plethora of savings and spending cuts. Some were adopted but many of its most politically-contentious recommendations were ignored, including a plan for less generous indexation arrangements for the aged pension.</p><!-- Guardian Watermark: internal-code/content/420595917|2013-11-05T11:03:48Z|c1605954d5009bb0c37eddbb8118b51d0b498b8d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-22T06:26:27Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008223/5db9e0c5-d32d-4510-82df-fd7ad439e62d-140x84.jpeg",
+        "standfirst":"'We have to fix the budget,' says treasurer Joe Hockey in announcing once-in-a-decade commission of audit",
+        "shortUrl":"http://gu.com/p/3jm9v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008223/5db9e0c5-d32d-4510-82df-fd7ad439e62d-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"420595917",
+        "allowUgc":"false",
+        "internalComposerCode":"52661372e4b026cbc0c565d7",
+        "isPremoderated":"false",
+        "byline":"Lenore Taylor political editor",
+        "publication":"theguardian.com",
+        "internalPageCode":"1984581",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-25T06:30:26Z"
+      },
+      "tags":[{
+        "id":"world/australia-economy",
+        "type":"keyword",
+        "webTitle":"Australia economy",
+        "webUrl":"http://www.theguardian.com/world/australia-economy",
+        "apiUrl":"http://content.guardianapis.com/world/australia-economy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/tony-abbott",
+        "type":"keyword",
+        "webTitle":"Tony Abbott",
+        "webUrl":"http://www.theguardian.com/world/tony-abbott",
+        "apiUrl":"http://content.guardianapis.com/world/tony-abbott",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/coalition",
+        "type":"keyword",
+        "webTitle":"Coalition",
+        "webUrl":"http://www.theguardian.com/world/coalition",
+        "apiUrl":"http://content.guardianapis.com/world/coalition",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/lenore-taylor",
+        "type":"contributor",
+        "webTitle":"Lenore Taylor",
+        "webUrl":"http://www.theguardian.com/profile/lenore-taylor",
+        "apiUrl":"http://content.guardianapis.com/profile/lenore-taylor",
+        "bio":"<p>Lenore Taylor is the political editor of Guardian Australia. She is a Walkley award winner and a winner of the Paul Lyneham award for excellence in press gallery journalism. She co-authored a book, Shitstorm, on the Rudd government's response to the global economic crisis.</p>",
+        "r2ContributorId":"55867",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/22/1369191255299/Lenore-Taylor1.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008223/5db9e0c5-d32d-4510-82df-fd7ad439e62d-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008223/5db9e0c5-d32d-4510-82df-fd7ad439e62d-140x84.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"84",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008515/5db9e0c5-d32d-4510-82df-fd7ad439e62d-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008515/5db9e0c5-d32d-4510-82df-fd7ad439e62d-1020x612.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"612",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008724/5db9e0c5-d32d-4510-82df-fd7ad439e62d-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008724/5db9e0c5-d32d-4510-82df-fd7ad439e62d-220x132.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"132",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008853/5db9e0c5-d32d-4510-82df-fd7ad439e62d-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008853/5db9e0c5-d32d-4510-82df-fd7ad439e62d-540x324.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"324",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008994/5db9e0c5-d32d-4510-82df-fd7ad439e62d-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422008994/5db9e0c5-d32d-4510-82df-fd7ad439e62d-300x180.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"180",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422009654/5db9e0c5-d32d-4510-82df-fd7ad439e62d-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422009654/5db9e0c5-d32d-4510-82df-fd7ad439e62d-2048x1536.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"1536",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422010385/5db9e0c5-d32d-4510-82df-fd7ad439e62d-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422010385/5db9e0c5-d32d-4510-82df-fd7ad439e62d-380x228.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"228",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422010903/5db9e0c5-d32d-4510-82df-fd7ad439e62d-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422010903/5db9e0c5-d32d-4510-82df-fd7ad439e62d-2060x1236.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"1236",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422011576/5db9e0c5-d32d-4510-82df-fd7ad439e62d-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422011576/5db9e0c5-d32d-4510-82df-fd7ad439e62d-620x372.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"372",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422011721/5db9e0c5-d32d-4510-82df-fd7ad439e62d-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422011721/5db9e0c5-d32d-4510-82df-fd7ad439e62d-460x276.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"276",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422011945/5db9e0c5-d32d-4510-82df-fd7ad439e62d-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/22/1382422011945/5db9e0c5-d32d-4510-82df-fd7ad439e62d-1024x768.jpeg",
+            "source":"AAP IMAGE",
+            "photographer":"ALAN PORRITT",
+            "altText":"Joe Hockey announces details of the Abbott government's commission of audit.",
+            "height":"768",
+            "credit":"ALAN PORRITT/AAP IMAGE",
+            "caption":"Sweeping brief to save money: Joe Hockey announces details of the Abbott government's commission of audit. Photograph: Alan Porritt/AAP",
+            "mediaId":"gu-fc-eb226da5-f43f-4992-97b2-413c7b9c9888",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/01/keep-education-levels-high-it-will-aid-our-future-economy",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-31T22:56:59Z",
+      "webTitle":"Education is like vaccination: the more Australians who have it the better",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/01/keep-education-levels-high-it-will-aid-our-future-economy",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/01/keep-education-levels-high-it-will-aid-our-future-economy",
+      "fields":{
+        "trailText":"Australia's educational advantage over other countries is being eroded. The number of 15- to 19-year-olds studying has decidedly flatlined, while elsewhere it has steadily increased",
+        "headline":"Education is like vaccination: the more Australians who have it the better",
+        "body":"<p>The Coag reform council's <a href=\"http://www.coagreformcouncil.gov.au/reports/skills-and-workforce-development/skills-australia-2012-five-years-performance\">Skills in Australia report</a> released on Wednesday made for sobering reading but also underlined the importance of education to individuals and our overall economy.</p> <p>The report was a five-yearly account that considered the period of the global financial crisis, so it was never going to be too cheery.</p> <p>It also makes it a bit tricky to discern the educational performance from the economic. The report, for example, notes: “The proportion of young people (17- to 24-year-olds) fully engaged in work or study following school declined from 73.9% in 2006 to 72.7% in 2011.” Thus within that age group in Australia, around 27% are neither working nor studying.</p> <p>That is quite shocking, but given the hit to the labour market, a 1% increase might be counted as not too bad. At the end of 2006 the youth unemployment rate was 9.6% and heading down whereas in 2011 it was 11.5% and heading up. Moreover, the current level of youth not employed nor in education is still well below the long-term rate for 20- to 24-year-olds, and around the average for those under 20 years of age:</p> <figure class=\"element element-embed\" data-alt=\"Level of youth not employed or in education\"> <iframe src=\"http://cf.datawrapper.de/lSUwE/2/\" frameborder=\"0\" allowtransparency=\"true\" allowfullscreen=\"allowfullscreen\" webkitallowfullscreen=\"webkitallowfullscreen\" mozallowfullscreen=\"mozallowfullscreen\" oallowfullscreen=\"oallowfullscreen\" msallowfullscreen=\"msallowfullscreen\" width=\"480\" height=\"400\"></iframe> </figure> <p>The reform council noted that the overriding reason for the increase in numbers of youth neither working nor studying was “due to a fall in full-time employment which more than offset increases in the rate of young people who were studying full-time”.</p> <p>Certainly youth full-time employment has been hit hardest by the economic downturn. During 2007 and the first half of 2008 youth full-time employment grew faster than it did for those over the age of 25. But while full-time employment for over 25-year-olds kept growing after a slight downturn in 2009, youth full-time employment has continued to fall.</p> <p>It is now 10% lower than it was in December 2006.</p> <figure class=\"element element-embed\" data-alt=\"Youth employment\"> <iframe src=\"http://cf.datawrapper.de/bUvLm/2/\" frameborder=\"0\" allowtransparency=\"true\" allowfullscreen=\"allowfullscreen\" webkitallowfullscreen=\"webkitallowfullscreen\" mozallowfullscreen=\"mozallowfullscreen\" oallowfullscreen=\"oallowfullscreen\" msallowfullscreen=\"msallowfullscreen\" width=\"480\" height=\"400\"></iframe> </figure> <p>It is thus not surprising that the numbers of youth in education has not been able to compensate for that fall.</p> <p>The report was perhaps most damning of the growing gap between the disadvantaged and “advantaged”. It noted that in 2011, after leaving school, 41.7% of young people from the lowest socioeconomic backgrounds were not fully engaged in work or study, compared with 17.4% for young people from the highest socioeconomic backgrounds. Most troubling is that this gap widened since 2006.</p> <p>One reason the gap has widened is because in economically tough times, one’s education becomes a vital determinant in maintaining employment – especially for youth who are not able to draw on years of experience to keep or gain work.&nbsp;</p> <p>But there were good aspects on this score because the report found that the proportion of those from the most disadvantaged area with higher level education (ie above secondary school) had increased by 5.8 percentage points from 33.7% in 2006 to 39.5% in 2011. Importantly the gap between the most and least disadvantaged areas decreased from 27.4 percentage points to 26.8 percentage points.</p> <p>Due to the tougher labour market the benefits of education were not as clear in 2012 as they were in 2008. In the case of vocational education and training, all age groups, except for those above 55, experienced less improvement in employment after education than they did in 2008.</p> <p>But this is not to suggest that the importance or impact of education is faltering. As with the numbers of youth who are not working or in education, the conditions of the labour market in comparative years is the main cause for the decline.</p> <p>And when we examine the unemployment rates according to education levels the importance becomes quite stark.</p> <p>In the US the Bureau of Labor Statistics surveys the employed and unemployed according to education level, however here, the ABS does not. We can, however, use data from the OECD which shows the annual difference in unemployment rates in Australia. It is clear that those who have graduated with a degree or better from university have a decided advantage:</p> <figure class=\"element element-embed\" data-alt=\"OECD annual difference in employment rates\"> <iframe src=\"http://cf.datawrapper.de/U0D1O/1/\" frameborder=\"0\" allowtransparency=\"true\" allowfullscreen=\"allowfullscreen\" webkitallowfullscreen=\"webkitallowfullscreen\" mozallowfullscreen=\"mozallowfullscreen\" oallowfullscreen=\"oallowfullscreen\" msallowfullscreen=\"msallowfullscreen\" width=\"480\" height=\"400\"></iframe> </figure> <p>But education in Australia also has a role in a world economic context for maintaining our competitive advantage.</p> <p>In terms of higher education, Australia is performing well above the OECD average. Our adult population ranks ninth in the OECD in terms of tertiary qualifications:</p> <figure class=\"element element-embed\" data-alt=\"Higher education, OECD\"> <iframe src=\"http://cf.datawrapper.de/z4u5v/1/\" frameborder=\"0\" allowtransparency=\"true\" allowfullscreen=\"allowfullscreen\" webkitallowfullscreen=\"webkitallowfullscreen\" mozallowfullscreen=\"mozallowfullscreen\" oallowfullscreen=\"oallowfullscreen\" msallowfullscreen=\"msallowfullscreen\" width=\"480\" height=\"400\"></iframe> </figure> <p>In a sense, education is like vaccination – not only is it good for you personally, but the more people in your country who are educated the better the nation is as a whole. The more educated you are, the more employable you are; the more educated our entire workforce is, the more competitive Australia can be.</p> <p>But while we look quite good, the future may not be as rosy. Other nations who have historically had fewer tertiary graduates are improving fast. And an examination of the percentage of 15- to 19-year-olds in education has decidedly flatlined in Australia, while for other countries in the OECD it has been steadily increasing:</p> <figure class=\"element element-embed\" data-alt=\"15 to 19 year olds in education\"> <iframe src=\"http://cf.datawrapper.de/lJuW1/1/\" frameborder=\"0\" allowtransparency=\"true\" allowfullscreen=\"allowfullscreen\" webkitallowfullscreen=\"webkitallowfullscreen\" mozallowfullscreen=\"mozallowfullscreen\" oallowfullscreen=\"oallowfullscreen\" msallowfullscreen=\"msallowfullscreen\" width=\"480\" height=\"400\"></iframe> </figure> <p>Education is no guarantee of a job, nor does it prevent losing industries to foreign competitors, but without it our economy is more likely to catch a cold when the world economy sneezes.</p><!-- Guardian Watermark: internal-code/content/421337051|2013-11-05T11:03:48Z|04811220e47d099a863c938878455233a6e4c1bb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T22:56:59Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698124/79f8cc84-ecf2-4b83-baac-370efa926a8d-140x84.jpeg",
+        "standfirst":"The more educated you are, the more employable you are; the more educated our entire workforce is, the more competitive Australia can be",
+        "shortUrl":"http://gu.com/p/3k24m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698124/79f8cc84-ecf2-4b83-baac-370efa926a8d-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421337051",
+        "allowUgc":"false",
+        "internalComposerCode":"5271b73de4b0cdcad3c04018",
+        "isPremoderated":"false",
+        "byline":"Greg Jericho",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989571",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T22:00:57Z"
+      },
+      "tags":[{
+        "id":"business/grogonomics",
+        "type":"blog",
+        "webTitle":"Grogonomics",
+        "webUrl":"http://www.theguardian.com/business/grogonomics",
+        "apiUrl":"http://content.guardianapis.com/business/grogonomics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/australia-economy",
+        "type":"keyword",
+        "webTitle":"Australia economy",
+        "webUrl":"http://www.theguardian.com/world/australia-economy",
+        "apiUrl":"http://content.guardianapis.com/world/australia-economy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/greg-jericho",
+        "type":"contributor",
+        "webTitle":"Greg Jericho",
+        "webUrl":"http://www.theguardian.com/profile/greg-jericho",
+        "apiUrl":"http://content.guardianapis.com/profile/greg-jericho",
+        "r2ContributorId":"56591",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/22/1369191059253/Greg-Jericho2.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698124/79f8cc84-ecf2-4b83-baac-370efa926a8d-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698124/79f8cc84-ecf2-4b83-baac-370efa926a8d-140x84.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"84",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698323/79f8cc84-ecf2-4b83-baac-370efa926a8d-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698323/79f8cc84-ecf2-4b83-baac-370efa926a8d-460x276.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"276",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698635/79f8cc84-ecf2-4b83-baac-370efa926a8d-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188698635/79f8cc84-ecf2-4b83-baac-370efa926a8d-220x132.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"132",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188699283/79f8cc84-ecf2-4b83-baac-370efa926a8d-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188699283/79f8cc84-ecf2-4b83-baac-370efa926a8d-2060x1236.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"1236",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700027/79f8cc84-ecf2-4b83-baac-370efa926a8d-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700027/79f8cc84-ecf2-4b83-baac-370efa926a8d-1020x612.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"612",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700252/79f8cc84-ecf2-4b83-baac-370efa926a8d-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700252/79f8cc84-ecf2-4b83-baac-370efa926a8d-300x180.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"180",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700411/79f8cc84-ecf2-4b83-baac-370efa926a8d-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700411/79f8cc84-ecf2-4b83-baac-370efa926a8d-540x324.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"324",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700573/79f8cc84-ecf2-4b83-baac-370efa926a8d-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700573/79f8cc84-ecf2-4b83-baac-370efa926a8d-68x68.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"68",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700759/79f8cc84-ecf2-4b83-baac-370efa926a8d-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188700759/79f8cc84-ecf2-4b83-baac-370efa926a8d-380x228.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"228",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188701332/79f8cc84-ecf2-4b83-baac-370efa926a8d-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188701332/79f8cc84-ecf2-4b83-baac-370efa926a8d-2048x1536.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"1536",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188702071/79f8cc84-ecf2-4b83-baac-370efa926a8d-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188702071/79f8cc84-ecf2-4b83-baac-370efa926a8d-620x372.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"372",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188702334/79f8cc84-ecf2-4b83-baac-370efa926a8d-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383188702334/79f8cc84-ecf2-4b83-baac-370efa926a8d-1024x768.jpeg",
+            "source":"Alamy",
+            "photographer":"Jim Wileman / Alamy",
+            "altText":"Coag reform council report shows that 27% of young people are neither working nor studying",
+            "height":"768",
+            "credit":"Jim Wileman / Alamy/Alamy",
+            "caption":"The Coag reform council report shows that 27% of young people are neither working nor studying",
+            "mediaId":"gu-fc-8e513487-f337-44cd-b51f-8215daf4c56c",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"media/video/2013/oct/31/rupert-murdoch-immigration-australia-video",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-10-31T15:51:49Z",
+      "webTitle":"Rupert Murdoch backs immigration to Australia - video",
+      "webUrl":"http://www.theguardian.com/media/video/2013/oct/31/rupert-murdoch-immigration-australia-video",
+      "apiUrl":"http://content.guardianapis.com/media/video/2013/oct/31/rupert-murdoch-immigration-australia-video",
+      "fields":{
+        "trailText":"<p>Rupert Murdoch says Australia should embrace immigration because he says diversity gives the country a competitive advantage</p>",
+        "headline":"Rupert Murdoch backs immigration to Australia - video",
+        "body":"<video data-media-id=\"gu-video-421389709\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232481758/Rupert-Murdoch-speaking-i-015.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031Murdochimmigration-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031Murdochimmigration_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/31/131031Murdochimmigration/131031Murdochimmigration.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/31/131031Murdochimmigration_3gpLg16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/421389709|2013-11-05T11:03:48Z|6d1a17ac08ed63c85a6965bf2dbad40ebf07e60c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T08:43:37Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232475128/Rupert-Murdoch-speaking-i-009.jpg",
+        "standfirst":"Rupert Murdoch says Australia should embrace immigration because he says diversity gives the country a competitive advantage. The News Corp chairman added that newcomers to Australia should 'abide by our way of life'. Murdoch backed Australia's newly elected Liberal government, which has a tough stance on asylum seekers arriving in the country",
+        "shortUrl":"http://gu.com/p/3k2ty",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232475128/Rupert-Murdoch-speaking-i-009.jpg",
+        "commentable":"false",
+        "internalContentCode":"421389709",
+        "allowUgc":"false",
+        "internalOctopusCode":"8265108",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989948",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T15:51:49Z"
+      },
+      "tags":[{
+        "id":"media/rupert-murdoch",
+        "type":"keyword",
+        "webTitle":"Rupert Murdoch",
+        "webUrl":"http://www.theguardian.com/media/rupert-murdoch",
+        "apiUrl":"http://content.guardianapis.com/media/rupert-murdoch",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/australian-immigration-and-asylum",
+        "type":"keyword",
+        "webTitle":"Australian immigration and asylum",
+        "webUrl":"http://www.theguardian.com/world/australian-immigration-and-asylum",
+        "apiUrl":"http://content.guardianapis.com/world/australian-immigration-and-asylum",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia-economy",
+        "type":"keyword",
+        "webTitle":"Australia economy",
+        "webUrl":"http://www.theguardian.com/world/australia-economy",
+        "apiUrl":"http://content.guardianapis.com/world/australia-economy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/sydney",
+        "type":"keyword",
+        "webTitle":"Sydney",
+        "webUrl":"http://www.theguardian.com/world/sydney",
+        "apiUrl":"http://content.guardianapis.com/world/sydney",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421389709",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232466187/Rupert-Murdoch-speaking-i-001.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"230",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232467614/Rupert-Murdoch-speaking-i-002.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"90",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232468690/Rupert-Murdoch-speaking-i-003.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"225",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232469791/Rupert-Murdoch-speaking-i-004.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"360",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232471928/Rupert-Murdoch-speaking-i-006.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"54",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232472962/Rupert-Murdoch-speaking-i-007.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"340",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232474045/Rupert-Murdoch-speaking-i-008.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"130",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232475128/Rupert-Murdoch-speaking-i-009.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"84",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232476345/Rupert-Murdoch-speaking-i-010.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"132",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232477450/Rupert-Murdoch-speaking-i-011.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"168",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232478490/Rupert-Murdoch-speaking-i-012.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"180",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232479554/Rupert-Murdoch-speaking-i-013.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"228",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232480640/Rupert-Murdoch-speaking-i-014.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"276",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232481758/Rupert-Murdoch-speaking-i-015.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"372",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232482842/Rupert-Murdoch-speaking-i-016.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"360",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031Murdochimmigration-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031Murdochimmigration_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/31/131031Murdochimmigration_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/31/131031Murdochimmigration/131031Murdochimmigration.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        }]
+      },{
+        "id":"gu-image-421391154",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383232475128/Rupert-Murdoch-speaking-i-009.jpg",
+          "typeData":{
+            "source":"  Richard Milnes/Demotix/Corbis",
+            "photographer":"Richard Milnes",
+            "altText":"Rupert Murdoch speaking in Sydney",
+            "height":"84",
+            "credit":"Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "caption":"Rupert Murdoch says Australia should embrace immigration because diversity gives the country a competitive advantage\r Photograph: Richard Milnes/  Richard Milnes/Demotix/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/31/rupert-murdoch-australia-embrace-immigrants-economy",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-31T13:01:23Z",
+      "webTitle":"Rupert Murdoch says Australia must embrace immigrants to boost economy",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/31/rupert-murdoch-australia-embrace-immigrants-economy",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/31/rupert-murdoch-australia-embrace-immigrants-economy",
+      "fields":{
+        "trailText":"<p>Twenty-first century is 'Australia's for the taking', News Corp chairman says at Lowy Institute lecture in Sydney</p>",
+        "headline":"Rupert Murdoch says Australia must embrace immigrants to boost economy",
+        "body":"<video data-media-id=\"gu-video-421389709\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031Murdochimmigration-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/31/131031Murdochimmigration_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/31/131031Murdochimmigration/131031Murdochimmigration.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031Murdochimmigration_3gpSml16x9.3gp\"></source>\n      </video><p>Rupert Murdoch says Australia needs to embrace high immigration to add dynamism to the economy, enhance its human capital and create strong bonds with the rest of the world.</p><p>The News Corp chairman decried a \"self-defeating\" immigration debate in the United States and pointed to opportunity for Australia in embracing diversity and opening the doors to all comers – provided cultural relativism was resisted and the newcomers were willing to \"abide by our way of life\".</p><p>The positive intervention on immigration was a significant theme of a lecture the media mogul delivered at the Lowy Institute in Sydney on Thursday evening.</p><p>\"We think of the United States as an immigrant nation, and rightly so,\" Murdoch told his audience in Sydney.</p><p>\"But the percentage of foreign-born in the United States, a country currently racked by a self-defeating debate over immigration policy, is just about 12%. Incredibly, Australia is double that,\" he said.</p><p>\"That means Australia is on the way to becoming what may be the world's most diverse nation. This is an incredible competitive advantage.&nbsp;</p><p>\"A nation as small as ours will increasingly depend on trade. And the more people we have with ties to other parts of the world, the greater our advantage when we seek trade relationships with these nations.\"</p><p>Murdoch declared the 21st century \"Australia's for the taking\" – and contended Australia must be an economy that thrives on disruption. He talked about significant structural adjustments within his own publishing business, including the relentless rise of mobile communications, replacing the old ways of print newspapers and the distribution of news products.</p><p>Reality, once embraced, could be made rewarding, Murdoch reasoned.</p><p>\"It means we are always forced to think outside the box,\" he said.</p><p>\"The disruptive forces and the world economy today are as relentless as they are remorseless. Once we embrace that reality, we can make sure they are rewarding.\"</p><p>The lecture was strong on the Murdoch anti-elitist ethos. He suggested Australia had come a way to moving past the \"stuffy narrow-minded elitism\" of old, and had thrown off the \"faux class war that has been served by contemporary politicians grasping for a theme\" – a reference to the previous Labor government.</p><p>Proof of evolution beyond Australia's \"primeval prejudices\" stemming back to our colonial origins was the rise of Catholics in the Liberal party, with the&nbsp;prime minister, Tony Abbott, \"part of the proof\".</p><p>\"The heart of Australia today is our belief in a fair shake for all,\" Murdoch said.&nbsp;</p><p>\"No man or woman is above any other. We applaud achievement and innovation.\"</p><p>People prepared to exploit their talents and strive for success were the \"essence of an egalitarian meritocracy\".&nbsp; Australia, he said, was on the cusp of becoming just that, \"with more than a touch of libertarianism\" – qualities which were \"rare and valuable in this new world\".</p><p>Murdoch championed a free press, lawyers who did not interfere, and strong private institutions – and talked up the virtues of trade, technology and free markets.</p><p>He endorsed the Abbott government's focus on Jakarta in terms of foreign policy, while insisting America remained Australia's most important ally.</p><p>Murdoch argued for a good relationship with China even as \"[we] guard ourselves against a possible economic contraction there\".</p><p>But he said Australia had to be ambitious at a time of great global transformation, including the rise of the middle class in our region. And Australia had to realise it was people who defined the future, not governments or allies.</p><p>\"Let's stop thinking about Australia's place in the world as defined by its alliances, by its trading partners, by its government,\" Murdoch said.</p><p>\"We will fight regulations that hamper growth and economic development. But it is the Australian people who will, collectively define this nation's destiny.</p><p>\"We must be leaders, not followers. We must be egalitarian, not elitist. We must be victors and not victims. It won't be easy but the Australia that I know and love has never shied from a challenge.\"</p><!-- Guardian Watermark: internal-code/content/421370124|2013-11-05T11:03:48Z|1016e90c675e8601b5309fa3317c359ae2a1c7c2 -->",
+        "showInRelatedContent":"false",
+        "lastModified":"2013-11-01T08:43:37Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383223779367/Rupert-Murdoch-says-Austr-004.jpg",
+        "standfirst":"Twenty-first century is 'Australia's for the taking', News Corp chairman says at Lowy Institute lecture in Sydney",
+        "shortUrl":"http://gu.com/p/3k2dc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383223779367/Rupert-Murdoch-says-Austr-004.jpg",
+        "wordcount":"638",
+        "commentable":"true",
+        "internalContentCode":"421370124",
+        "allowUgc":"false",
+        "internalOctopusCode":"8263931",
+        "isPremoderated":"false",
+        "byline":"Katharine Murphy, deputy political editor",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989804",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T13:01:00Z"
+      },
+      "tags":[{
+        "id":"world/australia-economy",
+        "type":"keyword",
+        "webTitle":"Australia economy",
+        "webUrl":"http://www.theguardian.com/world/australia-economy",
+        "apiUrl":"http://content.guardianapis.com/world/australia-economy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-immigration-and-asylum",
+        "type":"keyword",
+        "webTitle":"Australian immigration and asylum",
+        "webUrl":"http://www.theguardian.com/world/australian-immigration-and-asylum",
+        "apiUrl":"http://content.guardianapis.com/world/australian-immigration-and-asylum",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/rupert-murdoch",
+        "type":"keyword",
+        "webTitle":"Rupert Murdoch",
+        "webUrl":"http://www.theguardian.com/media/rupert-murdoch",
+        "apiUrl":"http://content.guardianapis.com/media/rupert-murdoch",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/news-corporation",
+        "type":"keyword",
+        "webTitle":"News Corporation",
+        "webUrl":"http://www.theguardian.com/media/news-corporation",
+        "apiUrl":"http://content.guardianapis.com/media/news-corporation",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/sydney",
+        "type":"keyword",
+        "webTitle":"Sydney",
+        "webUrl":"http://www.theguardian.com/world/sydney",
+        "apiUrl":"http://content.guardianapis.com/world/sydney",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/katharine-murphy",
+        "type":"contributor",
+        "webTitle":"Katharine Murphy",
+        "webUrl":"http://www.theguardian.com/profile/katharine-murphy",
+        "apiUrl":"http://content.guardianapis.com/profile/katharine-murphy",
+        "bio":"<p>Katharine Murphy is deputy political editor for Guardian Australia. She has been reporting on federal politics for more than a decade. In 2008, she won the Paul Lyneham award for excellence in press gallery journalism, while in 2012 she was a Walkley award finalist in the best digital journalism category for her politics blog</p>",
+        "r2ContributorId":"55866",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/22/1369191235759/Katharine-Murphy1.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421438242",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383223779367/Rupert-Murdoch-says-Austr-004.jpg",
+          "typeData":{
+            "source":"Guardian Australia",
+            "photographer":"Andrew Quilty/Oculi",
+            "altText":"Rupert Murdoch says Australia must embrace immigrants to boost economy",
+            "height":"84",
+            "credit":"Andrew Quilty/Oculi/Guardian Australia",
+            "caption":"Rupert Murdoch: 'Australia is on the way to becoming what may be the world's most diverse nation. This is an incredible competitive advantage.' Photograph: Andrew Quilty/Oculi/Guardian Australia",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-421389709",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031Murdochimmigration-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031Murdochimmigration_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/31/131031Murdochimmigration_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/31/131031Murdochimmigration/131031Murdochimmigration.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031Murdochimmigration_8265108.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
