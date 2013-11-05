@@ -435,7 +435,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
-                    src: ['**/*.js', '!components/**', '!common.js']
+                    src: ['**/*.js', '!components/**', '!utils/atob.js']
                 }]
             }
         },
