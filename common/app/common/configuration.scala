@@ -128,7 +128,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
-    lazy val facebookAppId = configuration.getStringProperty("id.facebookAppId").getOrElse("")
   }
 
   object static {
@@ -170,15 +169,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
     lazy val config: Map[String, String] = Map(
-      ("ophanUrl" , "http://s.ophan.co.uk/js/ophan.min"),
-      ("googleSearchUrl", "http://www.google.co.uk/cse/cse.js"),
-      ("interactiveUrl", "http://interactive.guim.co.uk/next-gen/"),
-      ("idApiUrl", id.apiRoot),
-      ("idFacebookAppId", id.facebookAppId),
-      ("idWebAppUrl", id.webappUrl),
-      ("discussionApiRoot", discussion.apiRoot),
-      ("discussionApiClientHeader", discussion.apiClientHeader)
+      "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
+      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
+      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
+      "idWebAppUrl" -> id.webappUrl,
+      "idApiUrl" -> id.apiRoot,
+      "discussionApiRoot" -> discussion.apiRoot,
+      "discussionApiClientHeader" -> discussion.apiClientHeader
     )
+
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
       keys.foldLeft(Map.empty[String, String]) {

@@ -3,13 +3,17 @@ define([
     "modules/identity",
     "modules/password-strength",
     "modules/id",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "modules/identity/autosignin",
+    "modules/detect"
 ], function(
     common,
     Identity,
     PasswordStrength,
     Id,
-    UserAdTargeting
+    UserAdTargeting,
+    AutoSignin,
+    detect
 ) {
 
     var modules = {
@@ -50,6 +54,13 @@ define([
             common.mediator.on('page:identity:ready', function(config, context) {
                 UserAdTargeting.requestUserSegmentsFromId();
             });
+        },
+        facebookAutoSignin : function() {
+            common.mediator.on('page:identity:ready', function(config, context) {
+                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                    new AutoSignin(config).init();
+                }
+            });
         }
     };
 
@@ -63,6 +74,7 @@ define([
             modules.usernameAvailable();
             modules.idConfig(config);
             modules.userAdTargeting();
+            modules.facebookAutoSignin();
         }
         common.mediator.emit("page:identity:ready", config, context);
     };

@@ -9,7 +9,6 @@ define('bootstraps/app', [
     'modules/fonts',
     'modules/debug',
     "modules/router",
-    "modules/detect",
     'modules/discussion/api',
     "bootstraps/common",
     "bootstraps/facia",
@@ -22,7 +21,6 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
-    "bootstraps/facebook",
     "bootstraps/section",
     "bootstraps/imagecontent",
     "modules/id",
@@ -37,7 +35,6 @@ define('bootstraps/app', [
     Fonts,
     Debug,
     Router,
-    Detect,
     DiscussionApi,
     bootstrapCommon,
     Facia,
@@ -50,7 +47,6 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
-    Facebook,
     Section,
     ImageContent,
     Id,
@@ -175,10 +171,6 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "ImageContent") {
                     ImageContent.init(config, context);
-                }
-
-                if ( Detect.getLayoutMode() !== 'mobile') {
-                    Facebook.init(config, context);
                 }
 
                 //Kick it all off

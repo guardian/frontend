@@ -2,17 +2,17 @@ define([
     "ajax",
     "bonzo",
     "common",
-    "modules/navigation/profile",
+    "modules/id",
     "modules/identity/facebook-authorizer",
-    "modules/id"
+    "modules/navigation/profile"
 ],
 function(
     ajax,
     bonzo,
     common,
-    Profile,
+    Id,
     FacebookAuthorizer,
-    Id
+    Profile
 ) {
 
     function AutoSignin(config) {
@@ -23,16 +23,15 @@ function(
         this.init = function() {
 
             if( Id.shouldAutoSigninInUser() ) {
-                var appId = this.config.page.idFacebookAppId;
+                var appId = this.config.page.fbAppId;
 
                 var authorizer = new FacebookAuthorizer(appId);
                 authorizer.getLoginStatus();
 
                 authorizer.onConnected.then( function(FB, statusResponse) {
                     authorizer.onUserDataLoaded.then( function(userData) {
-                        var name = userData.name;
                         if( userData.email ) {
-                            self.signin( statusResponse, name );
+                            self.signin( statusResponse, userData.name );
                         }
                     });
                 });
@@ -41,7 +40,7 @@ function(
 
         this.signin = function(authResponse, name) {
             ajax({
-                url: this.config.page.idWebAppUrl + '/jsapi/facebook/autosignup',
+                url:self.config.page.idWebAppUrl + '/jsapi/facebook/autosignup',
                 cache: false,
                 crossOrigin: true,
                 type: 'jsonp',
@@ -50,33 +49,30 @@ function(
                     accessToken : authResponse.accessToken
                 },
                 success: function(response) {
+                    self.writeFacebookWelcome(name);
                     if(response.status === "ok") {
                        var profile = new Profile(
                          self.header,{
                          url: self.config.page.idUrl
                        });
                        profile.init();
-                       self.writeFacebookWelcome(name);
                     }
                 }
             });
         };
 
         this.writeFacebookWelcome = function(name) {
-
             var element = document.body;
 
-            var html = "<div class=\"site-message\" data-link-name=\"facebook autosign message\">" +
-                "<div class=\"site-message__inner\">" +
-                "<p class=\"site-message__message\">" +
-                "Welcome " + name +", you're signed into the Guardian using facebook, click here to " +
-                "<a href=\"" + self.config.page.idUrl + "/signout\"/>Sign out</a>." +
-                "</p></div></div>";
+            var html = '<div class="site-message" data-link-name="facebook autosign message">' +
+                '<div class="site-message__inner">' +
+                '<p class="site-message__message">' +
+                'Welcome ' + name + ', you\'re signed into the Guardian using Facebook, click here to ' +
+                '<a href="' + self.config.page.idUrl + '/signout"/>Sign out</a>.' +
+                '</p></div></div>';
 
             var divBlock = bonzo(element).prepend(bonzo.create(html));
             common.$g('#header').addClass('js-site-message');
-
-
         };
     }
     return AutoSignin;

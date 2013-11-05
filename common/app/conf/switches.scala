@@ -175,6 +175,10 @@ object Switches extends Collections {
     "If this switch is on then content api redirects on items will be sent back to the end user.",
     safeState = Off)
 
+  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
+    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -286,7 +290,8 @@ object Switches extends Collections {
     ABAlphaAdvertsData,
     FollowItemRedirectsFromApiSwitch,
     ABCommercialComponents,
-    EditionRedirectLoggingSwitch
+    EditionRedirectLoggingSwitch,
+    FacebookAutoSigninSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
