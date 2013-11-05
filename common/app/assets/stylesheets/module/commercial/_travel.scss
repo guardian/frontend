@@ -1,42 +1,31 @@
 /* ==========================================================================
    Travel component
    ========================================================================== */
-.commercial--travel {
 
-    .offer {
-        padding-right: $gutter/2;
-        float: left;
-        width: 50%;
-        @include box-sizing(border-box);
+.travel-component {
+
+    background-color: #006EC9;
+    color: #ffffff;
+
+    .commercial__promo {
+        display: none;
     }
 
-    .offer__title {
-        margin-bottom: 0;
-    }
 
-    .offer__image img {
-        width: 100%;
-        display: block;
-    }
-
-    .offer__deal {
-        font-size: 14px;
-        padding: $gutter;
-        @include box-sizing(border-box);
-    }
-
-    .offer__link:hover .offer__deal {
-        background-color: $c-neutral5;
-    }
-
-    &.commercial--small {
-
-        .offer {
-            width: 100%;
+    &.commercial--w600 {
+        .products {
+            width: 50%;
         }
 
-        .offer:nth-child(2) {
+        .product {
+            width: 50%;
+            padding-right: $gs-gutter/2;
+            padding-bottom: $gs-baseline/2;
+        }
+
+        .product__title {
             display: none;
         }
     }
 }
+

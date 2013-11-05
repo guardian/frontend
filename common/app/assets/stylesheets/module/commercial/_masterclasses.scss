@@ -1,7 +1,47 @@
 /* ==========================================================================
    Masterclass component
    ========================================================================== */
-.commercial--masterclasses {
+
+.masterclasses-component {
+
+    background-color: #A7006F;
+    color: #ffffff;
+
+    .commercial__title span {
+        color: #FF97DC;
+    }
+
+    .product__title {
+        @include fs-header(1);
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+    &.commercial--w600 {
+
+        .products {
+            width: 100%;
+        }
+
+        .product {
+            width: 25%;
+            padding-right: $gs-gutter/2;
+            padding-bottom: $gs-baseline/2;
+        }
+
+        .commercial__promo {
+            display: none;
+        }
+    }
+}
+
+
+
+
+
+/*.masterclasses-component {
 
     ul, li {
         @include box-sizing(border-box);
@@ -74,4 +114,4 @@
             padding-right: 8px;
         }
     }
-}
+}*/

@@ -1,37 +1,88 @@
 .commercial {
+    @include box-sizing(border-box);
     text-align: left;
-    margin-top: $gs-baseline;
     color: $c-neutral1;
+    margin-top: $gs-baseline;
+    padding: $gs-baseline/2 $gs-gutter/2;
     overflow: hidden;
+    min-height: 250px;
 }
 
 .commercial__title {
     @include fs-headline(2);
-    padding-top: $baseline;
-    border-top: 1px dotted $c-neutral5;
-    color: #085FA6;
+    color: #FFFFFF;
 
     span {
         color: #64C5F8;
     }
 }
 
-.commercial__foot {
-    @include box-sizing(border-box);
-    font-size: 14px;
+
+.commercial__body {
     overflow: hidden;
+    margin-bottom: $gs-baseline/2;
 }
 
 .commercial__foot {
+    clear: both;
+}
+
+
+.commercial__search {
+    @extend .text-input;
+    width: 70%;
+    float: left;
+}
+
+.commercial__submit {
+    @extend .submit-input;
+    min-width: 0;
+    width: 30%;
+    margin-right: 0;
+    float: left;
+}
+
+
+/* ==========================================================================
+   Promo
+   ========================================================================== */
+
+
+.commercial__promo {
     display: none;
 
-    label {
+    .commercial--w600 & {
         display: block;
+        width: 50%;
+        float: right;
+    }
+}
+
+
+
+/* ==========================================================================
+   Products
+   ========================================================================== */
+.product {
+    float: left;
+    width: 100%;
+    @include box-sizing(border-box);
+
+    &:not(:first-child) {
+        display: none;
     }
 
-    .submit-input {
-        padding: 12px;
-        margin-left: 0;
+    .commercial--w600 & {
+        width: 25%;
         display: block;
     }
+}
+
+.product__title {
+    margin-bottom: 0;
+}
+
+.product__image img {
+    width: 100%;
+    display: block;
 }
