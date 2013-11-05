@@ -1,0 +1,2665 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"technology/2013/oct/30/bitcoin-first-atm-vancouver-canada",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-30T12:23:55Z",
+      "webTitle":"Bitcoin cashes in as its first ATM opens in Vancouver",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/30/bitcoin-first-atm-vancouver-canada",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/30/bitcoin-first-atm-vancouver-canada",
+      "fields":{
+        "trailText":"Virtual currency takes another step towards the mainstream as easy-to-use machine opens in Canadian coffee shop",
+        "headline":"Bitcoin cashes in as its first ATM opens in Vancouver",
+        "body":"<p>A silver and blue ATM, perched up next to the espresso bar in a trendy Vancouver coffee shop, could launch a new era for the virtual currency bitcoin, offering an almost instant way to exchange the world's leading virtual money for cash.</p><p>The value of a bitcoin soared from $13 in January to a high of $266 in April as more businesses and consumers used them to buy and sell online. Some investors are also treating bitcoins like gold, using them to hedge against currency fluctuations and speculating on their rise.</p><p>The kiosk, which looks like the average ATM but with hand and barcode scanners, opened for business on Tuesday and by mid-morning people were lined up to swap their bitcoins for cash, or to deposit cash to buy more bitcoins.</p><p>\"It's as easy as walking up to a machine, scanning your hand, entering some cash and buying bitcoin,\" said Jordan Kelley, chief executive of Las Vegas-based Robocoin, the company that builds the ATMs. \"With this, it's a 2-minute process. For any online exchange, it's at least two days.\"</p><p>Bitcoins, currently worth about $210 each, can be transferred without going through banks or clearing houses, thereby cutting fees. Users can buy products and services online or in a handful of stores, including the Waves coffee shop where the ATM is located.</p><p>With the bitcoin ATM, users scan their hand to confirm identity, then funds move to or from a virtual wallet on their smartphone. The system limits transfers to $1,000 a day, in an effort to curb money laundering and other fraud.</p><p>Bitcoiniacs, the local dealer that operates the ATM, will roll out four other kiosks across Canada in December. Robocoin said Canada was the ideal place to launch the kiosk due to a critical mass of users and less stringent oversight than in the US, where the bitcoin trade is monitored by anti-money laundering regulators.</p><p>\"We think the Vancouver market is enormous and we're excited to be here,\" said Kelley. \"By the end of 2013, we'll be all over Canada. By the end of 2014, we'll be all over the world, including the US.\"</p><p>Bitcoin is not a recognised currency in Canada, so Ottawa's anti-money laundering watchdog, the Financial Transactions and Reports Analysis Centre, does not monitor its trade.</p><p>However, Bitcoiniacs' founders say they are working with the agency to be ready for when Canada does start regulating them.</p><p>\"We're already being proactive in our business,\" said Bitcoiniacs co-founder Mitchell Demeter. \"We abide by any guidelines they would impose - which includes the 'know your customer' laws and anti-money laundering laws.\"</p><h2>Going mainstream</h2><p>Bitcoins were launched in 2008 and are traded within a global network of computers. They are not backed by a single company or government, but their release is tightly controlled, mimicking a central banking system's control over the minting of money.</p><p>Bitcoins can be bought with near anonymity, which supporters say lowers fraud risk and increases privacy. But critics say that also makes bitcoins a magnet for drug transactions, money-laundering and other illegal activities.</p><p>The currency's reputation took a hit this month, when US regulators shut down Silk Road, an online marketplace used to buy and sell illegal drugs, and seized $3.6m (£2.3m) in bitcoins.</p><p>But the virtual currency is gaining hold among businesses and consumers, a key step to a bigger role.</p><p>\"I think it's definitely going mainstream,\" said Demeter. \"I think as things progress, and the infrastructure is built, it will become easier for people to buy and sell, and so more people will start using it.\"</p><p>In Vancouver, for example, dozens of people attend weekly bitcoin meet-ups and a member co-op is promoting the currency to a growing list of local retailers.</p><p>At Waves, Vancouver resident Chung Cheong used bitcoin to pay for his mug of tea and was happy to mull over the future of the digital currency.</p><p>\"It's been said that we're at the stage where email was in 1992,\" he said. \"Is it risky? Sure. But look at how the internet and email changed the world.\"</p><!-- Guardian Watermark: internal-code/content/421280547|2013-11-05T11:03:48Z|1fa51a332195230cc4aba0c7ee3a666a26f8dd59 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T12:40:43Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+        "standfirst":"Virtual currency takes another step towards the mainstream as easy-to-use machine opens in Canadian coffee shop",
+        "shortUrl":"http://gu.com/p/3kxch",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+        "wordcount":"657",
+        "commentable":"false",
+        "internalContentCode":"421280547",
+        "allowUgc":"false",
+        "internalOctopusCode":"8258607",
+        "isPremoderated":"false",
+        "byline":"Reuters",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989053",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T12:23:55Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/canada",
+        "type":"keyword",
+        "webTitle":"Canada",
+        "webUrl":"http://www.theguardian.com/world/canada",
+        "apiUrl":"http://content.guardianapis.com/world/canada",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/americas",
+        "type":"keyword",
+        "webTitle":"Americas",
+        "webUrl":"http://www.theguardian.com/world/americas",
+        "apiUrl":"http://content.guardianapis.com/world/americas",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421280860",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135101649/Bitcoin-ATM-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"54",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135103820/Bitcoin-ATM-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"340",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135105117/Bitcoin-ATM-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"130",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"84",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135107749/Bitcoin-ATM-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"132",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135108961/Bitcoin-ATM-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"168",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135110513/Bitcoin-ATM-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"180",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135111902/Bitcoin-ATM-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"228",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135113393/Bitcoin-ATM-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"276",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135115239/Bitcoin-ATM-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"372",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135113393/Bitcoin-ATM-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"276",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421280861",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"84",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"technology/video/2013/apr/26/bitcoin-currency-moves-offline-berlin-video",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-04-26T10:06:00Z",
+      "webTitle":"Bitcoin: world's fastest growing currency migrates off the internet - video",
+      "webUrl":"http://www.theguardian.com/technology/video/2013/apr/26/bitcoin-currency-moves-offline-berlin-video",
+      "apiUrl":"http://content.guardianapis.com/technology/video/2013/apr/26/bitcoin-currency-moves-offline-berlin-video",
+      "fields":{
+        "trailText":"<p>In Kreuzberg, Berlin, virtual currency Bitcoin has expanded off the internet into the local economy</p>",
+        "headline":"Bitcoin: world's fastest growing currency migrates off the internet - video",
+        "body":"<video data-media-id=\"gu-video-407840737\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897302233/Composite-of-Bitcoin-logo-016.jpg\">\n        <source src=\"http://cdn.theguardian.tv/truemainwebsite/2013/4/25mainwebsite/2013/4/25/250413bitcoinberlin-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/4/25/250413bitcoinberlin_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/4/25/250413bitcoinberlin/250413bitcoinberlin.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/4/25/250413bitcoinberlin_3gpSml16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/407840737|2013-11-05T11:03:48Z|5929cb3992bc9ea1344ea354b05f97f61436ca98 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-26T11:24:56Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897294682/Composite-of-Bitcoin-logo-010.jpg",
+        "standfirst":"In Kreuzberg, Berlin, virtual currency Bitcoin has expanded off the internet to become a favoured medium of exchange in real shops and bars. Joerg Platzer, the owner of bar Room 77 is helping to establish what he believes to be the world's first Bitcoin local economy",
+        "shortUrl":"http://gu.com/p/3fd5y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897294682/Composite-of-Bitcoin-logo-010.jpg",
+        "commentable":"false",
+        "internalContentCode":"407840737",
+        "allowUgc":"false",
+        "internalOctopusCode":"7526136",
+        "isPremoderated":"false",
+        "byline":"Guy Grandjean and Kate Connolly",
+        "publication":"theguardian.com",
+        "internalPageCode":"1899201",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-29T10:06:27Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/germany",
+        "type":"keyword",
+        "webTitle":"Germany",
+        "webUrl":"http://www.theguardian.com/world/germany",
+        "apiUrl":"http://content.guardianapis.com/world/germany",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/guygrandjean",
+        "type":"contributor",
+        "webTitle":"Guy Grandjean",
+        "webUrl":"http://www.theguardian.com/profile/guygrandjean",
+        "apiUrl":"http://content.guardianapis.com/profile/guygrandjean",
+        "bio":"<p>Guy Grandjean is a video producer for guardian.co.uk. He has been a member of the <a href=\"http://www.guardian.co.uk/news/guardianfilms\">GuardianFilms</a> team since August 2004. He has worked on a wide range of award-winning films for broadcasters, including Iraq's Missing Billions (Channel 4 Dispatches) and Life Behind Bars (BBC Panorama). He has also produced and edited a number of films for the Guardian website</p>",
+        "r2ContributorId":"28269",
+        "references":[]
+      },{
+        "id":"profile/kateconnolly",
+        "type":"contributor",
+        "webTitle":"Kate Connolly",
+        "webUrl":"http://www.theguardian.com/profile/kateconnolly",
+        "apiUrl":"http://content.guardianapis.com/profile/kateconnolly",
+        "bio":"<p>Kate Connolly is the Guardian and Observer's Berlin correspondent. She previously worked as a foreign correspondent for The Daily Telegraph, and first contributed to the Guardian in 1997. She was a recipient of the Scott Trust bursary. Kate will be on maternity leave from October 2013</p>",
+        "rcsId":"GNL249409",
+        "r2ContributorId":"15943",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379597474737/Kate-Connolly.jpg",
+        "references":[]
+      },{
+        "id":"profile/mustafa-khalili",
+        "type":"contributor",
+        "webTitle":"Mustafa Khalili",
+        "webUrl":"http://www.theguardian.com/profile/mustafa-khalili",
+        "apiUrl":"http://content.guardianapis.com/profile/mustafa-khalili",
+        "bio":"<p>Mustafa Khalili is a multimedia editor for news at the Guardian. Previously he worked as a photojournalist, covering such subjects as celebrity culture in the UK and armed conflict in the Middle East. You can follow him on Twitter: <a href=\"http://twitter.com/#!/muskhalili\">@muskhalili</a></p>",
+        "r2ContributorId":"31262",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-407840737",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897280423/Composite-of-Bitcoin-logo-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"230",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897284238/Composite-of-Bitcoin-logo-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"90",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897285482/Composite-of-Bitcoin-logo-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"225",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897292105/Composite-of-Bitcoin-logo-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"340",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897293387/Composite-of-Bitcoin-logo-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"130",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897294682/Composite-of-Bitcoin-logo-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897296037/Composite-of-Bitcoin-logo-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"132",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897297256/Composite-of-Bitcoin-logo-012.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"168",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897298437/Composite-of-Bitcoin-logo-013.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"180",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897299683/Composite-of-Bitcoin-logo-014.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"228",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897302233/Composite-of-Bitcoin-logo-016.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"372",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366898813463/Bitcoin-composite-holding-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Bitcoin composite holding image new",
+            "height":"360",
+            "credit":"Guardian",
+            "caption":"Bitcoin composite holding image new Photograph: Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366898531757/Bitcoin-composite-holding-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Bitcoin composite holding image",
+            "height":"360",
+            "credit":"Guardian",
+            "caption":"Bitcoin composite holding image Photograph: Guardian",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366898934857/Bitcoin-composite-holding-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Bitcoin composite holding image",
+            "height":"54",
+            "credit":"Guardian",
+            "caption":"Bitcoin composite holding image Photograph: Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366898943758/Bitcoin-composite-holding-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Bitcoin composite holding image",
+            "height":"276",
+            "credit":"Guardian",
+            "caption":"Bitcoin composite holding image Photograph: Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/truemainwebsite/2013/4/25mainwebsite/2013/4/25/250413bitcoinberlin-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "height":"360",
+            "durationMinutes":"7",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/4/25/250413bitcoinberlin_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "height":"360",
+            "durationMinutes":"7",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/4/25/250413bitcoinberlin_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "height":"360",
+            "durationMinutes":"7",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/4/25/250413bitcoinberlin/250413bitcoinberlin.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "height":"360",
+            "durationMinutes":"7",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/25/250413bitcoinberlin_7526136.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        }]
+      },{
+        "id":"gu-image-407896393",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/25/1366897294682/Composite-of-Bitcoin-logo-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Composite of Bitcoin logo",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Composite of Bitcoin logo from Kreuzberg photos Photograph: Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/04/bitcoin-what-you-need-to-know-silk-road",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-04T10:49:43Z",
+      "webTitle":"Bitcoin: what you need to know",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/04/bitcoin-what-you-need-to-know-silk-road",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/04/bitcoin-what-you-need-to-know-silk-road",
+      "fields":{
+        "trailText":"The crypto-currency is back in the news after the closure of Silk Road. But what&nbsp;<em>is&nbsp;</em>Bitcoin? By <strong>Alex Hern</strong>",
+        "headline":"Bitcoin: what you need to know",
+        "body":"<p>When the Silk Road, the internet's biggest marketplace for illegal drugs, <a href=\"http://www.theguardian.com/technology/2013/oct/02/alleged-silk-road-website-founder-arrested-bitcoin\">was taken down earlier this week</a>, <a href=\"http://www.theguardian.com/technology/2013/oct/03/bitcoin-price-silk-road-ulbricht-value\">the price of Bitcoin plummeted</a>.</p> <p>The two were \"intrinsically linked\", according to&nbsp;Jeremy Cook, chief economist at currency brokers World First, but with Silk Road gone, does Bitcoin have a future?</p> <h2><strong>What are Bitcoins? </strong></h2> <p>Bitcoins are an anonymous, decentralised, peer-to-peer digital currency.</p> <p>In contrast to older forms of electronic money, no company controls Bitcoin, nor ever could: all the rules about how it works are embedded into the very operation of trade, including the rate of inflation and how to verify transactions.</p> <h2><strong>How do I get them? </strong></h2> <p>For most users, the easiest way to get Bitcoins is to buy them. But due to strict anti-money laundering controls, even that is tricky.</p> <p>Most Bitcoin exchanges, such as <a href=\"https://mtgox.com/\">Mt Gox</a>, the best-known, require users to wire money from their banks to the exchange.</p> <p>A small group of hardcore users get extra Bitcoins through 'mining' for them: running computers which perform the calculations needed to make the currency work, in exchange for a share of the built-in inflation.</p> <h2>What do they look like?</h2> <p>Files of seemingly random data.</p> <p>Bitcoins have no physical existence, although some have devised ways to spend the digital currency <a href=\"http://blockchain.info/wallet/paper-tutorial\">by printing the necessary information on paper notes</a>. Instead, they are long lists of the digital signatures of previous owners. When a Bitcoin is spent, the old owner adds their digital signature to the end of the list, combined with the digital signature of the new owner.</p> <h2><strong>How do I spend them? </strong></h2> <p>With difficulty: few mainstream places accept Bitcoins, though the number is growing and now includes <a href=\"http://www.bitfash.com/\">fashion websites</a>, <a href=\"http://www.theguardian.com/technology/shortcuts/2013/jun/23/britains-first-bitcoin-pub\">pubs</a>, and online dating service <a href=\"http://mashable.com/2013/04/17/okcupid-bitcoin/\">OKCupid</a>.</p> <p>If your tastes are on the geeky side, however, you might have more luck. You can buy web hosting, geeky t-shirts, and even membership of the Reddit social network with Bitcoin.</p> <h2><strong>Who's making money from Bitcoin?</strong></h2> <p><a href=\"http://www.businessweek.com/articles/2013-04-10/meet-the-bitcoin-millionaires\">People who bought early and sold at the peak</a>. The currency has been through two boom-and-bust cycles, with the cost of one Bitcoin rising from $2 to $30 in 2011, and then from $13 to $266 earlier this year. But having a fortune in Bitcoin is a bit like having a fortune in gold: you have to sell your holdings to really make the most of it.</p> <h2><strong>Why would I want them?</strong></h2> <p>The big driver in Bitcoin&rsquo;s early growth was the online drug marketplace Silk Road, which took advantage of the currency&rsquo;s qualities to provide anonymity to patrons.</p> <p>While Silk Road no longer exists, <a href=\"http://www.theguardian.com/technology/2013/oct/03/silk-road-underground-market-closed-bitcoin\">a number of smaller outfits offer the same services</a>.</p> <p>But beyond access to illicit substances, for many fans Bitcoin use is a political statement: its existence proves that a currency with no centralised control is possible.</p> <h2><strong>How secure is Bitcoin?</strong></h2> <p>As secure as its user.</p> <p>Although there have been <a href=\"http://siliconangle.com/blog/2013/05/13/bitcoin-blockchain-hard-fork-coming-may-15th-final-warning/\">some bugs</a> with the currency&rsquo;s programming, all of the reported thefts have come from the outside.</p> <p>If users don&rsquo;t keep their \"private key\", the password which lets them spend their Bitcoins, well hidden, <a href=\"http://www.geekosystem.com/first-major-bitcoin-theft/\">they can easily lose everything</a>.</p> <p>And, of course, anonymity cuts both ways: if you get tricked by a scammer into parting with your bitcoins, there&rsquo;s no higher authority to turn to.</p> <h2>Will it ever be a mainstream currency?</h2> <p>Economists and developers point to several flaws in the&nbsp;implementation&nbsp;of Bitcoin which render it unsuitable for widespread use. One problem is that the currency has deflation built in to its very core: only 21m bitcoins will ever be produced, and we're already halfway there. Most economists believe deflation is disastrous for an economy, but the Austrian school of economics, beloved by the libertarian creators of Bitcoin, disagrees.</p> <p>A more immediate problem is that it's not clear that the backbone of the currency can withstand the increased use that going mainstream would take. Transactions can already experience relatively lengthy delays in processing (taking minutes to clear), and that's just with Bitcoin remaining mostly popular amongst enthusiasts.</p> <p><strong>&bull; Was Silk Road's creator a genius who masterminded an online criminal underworld? Or did he actually do <a href=\"http://www.theguardian.com/technology/2013/oct/03/five-stupid-things-dread-pirate-roberts-did-to-get-arrested\">five very stupid things to get himself arrested</a>?</strong></p><!-- Guardian Watermark: internal-code/content/418997117|2013-11-05T11:03:48Z|554c0de1a09f88c7263badf5508bb8b91ef13060 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-04T11:30:06Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450276/b84d2225-09ac-4206-9e54-e622b8c2a684-140x84.jpeg",
+        "standfirst":"The crypto-currency <a href=\"http://www.theguardian.com/technology/2013/oct/03/bitcoin-price-silk-road-ulbricht-value\">is back in the news</a> after the closure of one of its biggest marketplaces. But what <em>is</em> Bitcoin?",
+        "shortUrl":"http://gu.com/p/3j9jq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450276/b84d2225-09ac-4206-9e54-e622b8c2a684-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"418997117",
+        "allowUgc":"false",
+        "internalComposerCode":"524dace7e4b0be95974ca13f",
+        "isPremoderated":"false",
+        "byline":"Alex Hern",
+        "publication":"theguardian.com",
+        "internalPageCode":"1975400",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-07T10:49:43Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/p2p",
+        "type":"keyword",
+        "webTitle":"P2P",
+        "webUrl":"http://www.theguardian.com/technology/p2p",
+        "apiUrl":"http://content.guardianapis.com/technology/p2p",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alex-hern",
+        "type":"contributor",
+        "webTitle":"Alex Hern",
+        "webUrl":"http://www.theguardian.com/profile/alex-hern",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-hern",
+        "bio":"<p>Alex Hern is a technology reporter for the Guardian</p>",
+        "r2ContributorId":"56277",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089603491/Alex-Hern-Guardian-staff--017.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877446939/b84d2225-09ac-4206-9e54-e622b8c2a684-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877446939/b84d2225-09ac-4206-9e54-e622b8c2a684-300x180.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877447526/b84d2225-09ac-4206-9e54-e622b8c2a684-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877447526/b84d2225-09ac-4206-9e54-e622b8c2a684-2060x1236.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"1236",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448137/b84d2225-09ac-4206-9e54-e622b8c2a684-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448137/b84d2225-09ac-4206-9e54-e622b8c2a684-380x228.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448275/b84d2225-09ac-4206-9e54-e622b8c2a684-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448275/b84d2225-09ac-4206-9e54-e622b8c2a684-540x324.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"324",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448481/b84d2225-09ac-4206-9e54-e622b8c2a684-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448481/b84d2225-09ac-4206-9e54-e622b8c2a684-620x372.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448688/b84d2225-09ac-4206-9e54-e622b8c2a684-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877448688/b84d2225-09ac-4206-9e54-e622b8c2a684-460x276.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877449185/b84d2225-09ac-4206-9e54-e622b8c2a684-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877449185/b84d2225-09ac-4206-9e54-e622b8c2a684-2048x1536.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"1536",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877449958/b84d2225-09ac-4206-9e54-e622b8c2a684-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877449958/b84d2225-09ac-4206-9e54-e622b8c2a684-1020x612.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"612",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450276/b84d2225-09ac-4206-9e54-e622b8c2a684-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450276/b84d2225-09ac-4206-9e54-e622b8c2a684-140x84.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450371/b84d2225-09ac-4206-9e54-e622b8c2a684-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450371/b84d2225-09ac-4206-9e54-e622b8c2a684-220x132.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450573/b84d2225-09ac-4206-9e54-e622b8c2a684-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380877450573/b84d2225-09ac-4206-9e54-e622b8c2a684-1024x768.jpeg",
+            "source":"Alamy",
+            "altText":"A mock-up of how Bitcoin might look if it were a physical currency.",
+            "height":"768",
+            "credit":"Alamy",
+            "caption":"A mock-up of how Bitcoin might look if it were a physical currency. Photograph: Alamy",
+            "mediaId":"gu-fc-28a4c4e3-04dc-4ddd-8108-8d8da4ebad65",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/07/fbi-bitcoin-pranked-silk-road",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-07T12:08:03Z",
+      "webTitle":"FBI pranked by furious Bitcoin users",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/07/fbi-bitcoin-pranked-silk-road",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/07/fbi-bitcoin-pranked-silk-road",
+      "fields":{
+        "trailText":"Hundreds of protest messages have flooded the FBI since it seized $3m of currency held by Silk Road. By <strong>Alex Hern</strong>",
+        "headline":"FBI pranked by furious Bitcoin users since Silk Road shutdown",
+        "body":"<p>The FBI has been deluged by more than 200 messages of protest from pro-drugs advocates after a raid on Silk Road, an online marketplace for illicit goods.</p> <p>The agency is attempting to access 600,000 Bitcoins, worth around $80m (&pound;49.7m), accumulated by Ross Ulbricht, the alleged creator of Silk Road, but has already seized 26,000 (<a href=\"http://preev.com/\">$3.2m</a>) that the site had held in escrow for its customers.</p> <p>The FBI&nbsp;then transferred the Bitcoins to a new address on <a href=\"http://blockchain.info/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX?offset=0&amp;filter=0\">blockchain.info</a>., which allows users to manage their Bitcoin accounts.</p> <p>Unfortunately for the FBI, hundreds of Silk Road users identified the FBI's wallet details and used blockchain to post publicly viewable messages along with&nbsp;miniscule transactions.&nbsp;</p> <p>Most were&nbsp;no larger than 0.00000001 BTC (0.0001p), but allowed users to vent their anger at the seizure of their virtual cash.</p> <p>&ldquo;Take the drugs, take the domain, but don't take the people's Bitcoins. This seizure was only legal because Bitcoin is not recognized as a currency,&rdquo; says one.</p> <p>Quoting Thomas Jefferson, one of the founding fathers of the US, one called for the end of the Federal Reserve: \"The issuing power should be taken from the banks and restored to the people, to whom it properly belongs\".</p> <p>\"The musicians that made all that great music that's enhanced your lives throughout the years were rrreal fucking high on drugs,\"&nbsp;posted another, who use&nbsp;six separate payments to reference comic&nbsp;<a href=\"http://www.theguardian.com/stage/2012/oct/25/comedy-gold-bill-hicks-relentless\">Bill Hicks</a>.</p> <p>\"The Beatles were so fucking high they let Ringo sing a few tunes.&rdquo;</p> <p>As well as a large number of pro-drug messages, some were arguing that the money was incorrectly seized.</p> <p>&ldquo;Many items sold through Silk Road were perfectly legal,&rdquo; says one such note. &ldquo;There is no way to know whether these funds were to be used for illicit purchases. Users should be allowed to withdraw their funds.&rdquo;</p> <p>Others used the opportunity to post adverts for Bitcoin-related services, and some comments were less critical.</p> <p>One posted a link&nbsp;<a href=\"http://i.imgur.com/TiWZJ7i.jpg\">to an image of Ulbricht&rsquo;s face</a>&nbsp;superimposed with the words &ldquo;sets up a multimillion-dollar drugs business. Uses real email address,&rdquo; a reference to&nbsp;<a href=\"http://www.theguardian.com/technology/2013/oct/03/five-stupid-things-dread-pirate-roberts-did-to-get-arrested\">one of the many slip-ups</a>&nbsp;which apparently led to the his arrest.</p> <p><strong>&bull; Silk Road founder Ross Ulbricht allegedly ran the multimillion dollar drugs empire &ndash; so why <a href=\"http://www.theguardian.com/technology/2013/oct/03/five-stupid-things-dread-pirate-roberts-did-to-get-arrested\">boast about its success on his LinkedIn profile</a>?</strong></p><!-- Guardian Watermark: internal-code/content/419244668|2013-11-05T11:03:48Z|0f2c5372ccd95f6233889d6f1499992e2ee48ad4 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T12:57:24Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/20/1369007833055/FBI-005.jpg",
+        "standfirst":"Hundreds of protest messages have flooded an FBI-controlled Bitcoin account since it seized $3m from Silk Road",
+        "shortUrl":"http://gu.com/p/3jbcb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/20/1369007833055/FBI-005.jpg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"419244668",
+        "allowUgc":"false",
+        "internalComposerCode":"5252919de4b01e4020f8d94f",
+        "isPremoderated":"false",
+        "byline":"Alex Hern",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976654",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T12:08:03Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/drugs-trade",
+        "type":"keyword",
+        "webTitle":"Drugs trade",
+        "webUrl":"http://www.theguardian.com/world/drugs-trade",
+        "apiUrl":"http://content.guardianapis.com/world/drugs-trade",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/efinance",
+        "type":"keyword",
+        "webTitle":"E-commerce",
+        "webUrl":"http://www.theguardian.com/technology/efinance",
+        "apiUrl":"http://content.guardianapis.com/technology/efinance",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/cybercrime",
+        "type":"keyword",
+        "webTitle":"Cybercrime",
+        "webUrl":"http://www.theguardian.com/technology/cybercrime",
+        "apiUrl":"http://content.guardianapis.com/technology/cybercrime",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/fbi",
+        "type":"keyword",
+        "webTitle":"FBI",
+        "webUrl":"http://www.theguardian.com/world/fbi",
+        "apiUrl":"http://content.guardianapis.com/world/fbi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alex-hern",
+        "type":"contributor",
+        "webTitle":"Alex Hern",
+        "webUrl":"http://www.theguardian.com/profile/alex-hern",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-hern",
+        "bio":"<p>Alex Hern is a technology reporter for the Guardian</p>",
+        "r2ContributorId":"56277",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089603491/Alex-Hern-Guardian-staff--017.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-59c75c7a-6446-4268-946f-62a2faf11e1e",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/29/1377782183067/Federal-Reserve-building--010.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/29/1377782183067/Federal-Reserve-building--010.jpg",
+            "source":"Getty Images",
+            "photographer":"Chip Somodevilla",
+            "altText":"Federal Reserve building in Washington",
+            "height":"276",
+            "credit":"Chip Somodevilla/Getty Images",
+            "caption":"Protesting against the FBI's seizure of Bitcoin crrency, one protestor called for an end to the US Federal Reserve. Photograph: Chip Somodevilla/Getty Images",
+            "mediaId":"gu-fc-59c75c7a-6446-4268-946f-62a2faf11e1e",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/21/bitcoin-price-surges-to-post-crash-high",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-21T13:54:38Z",
+      "webTitle":"Bitcoin price surges to post-crash high",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/21/bitcoin-price-surges-to-post-crash-high",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/21/bitcoin-price-surges-to-post-crash-high",
+      "fields":{
+        "trailText":"Price hits $197, following a jump of $30 in a day, calming fears that the closure of Silk Road would harm the currency. By <strong>Alex Hern</strong>",
+        "headline":"Bitcoin price surges to post-crash high",
+        "body":"<p>Bitcoin, the cryptographic peer-to-peer digital currency, has reached a new price high since the market crash in April this year.</p> <p>Over the two weeks to 21 October, the value of one bitcoin rose by almost $60, and on Tuesday hit a high of $197.40 <a href=\"http://bitcoin.clarkmoody.com/\">at the largest exchange</a>, Mt Gox. <a href=\"http://data.qz.com/bitcoin/\">An estimate of the current price</a> taking a broader spectrum of exchanges into account shows it at $182.74.</p> <p>The price of one bitcoin peaked at $266 on 10 April, before tumbling rapidly to a low of $50 shortly after. Since then, the price has not risen above $170 until this week.</p> <p>Some observers worried that the <a href=\"https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=5&amp;ved=0CF0QFjAE&amp;url=http%3A%2F%2Fwww.theguardian.com%2Ftechnology%2F2013%2Foct%2F02%2Falleged-silk-road-website-founder-arrested-bitcoin&amp;ei=UyplUoXiGuSR0QXD2IGoBg&amp;usg=AFQjCNEVgSDUiXeYvVvSH4MOw8NR2emaHw&amp;sig2=C8amtzX_6eNR4LcL-U-7hQ&amp;bvm=bv.54934254,d.d2k\">shutdown of the online drugs marketplace Silk Road</a> would hit the Bitcoin economy. <a href=\"http://www.cylab.cmu.edu/files/pdfs/tech_reports/CMUCyLab12018.pdf\">A paper from 2012</a> estimated that almost one bitcoin in 20 was spent on the site, and <a href=\"http://www.theguardian.com/technology/2013/oct/03/bitcoin-price-silk-road-ulbricht-value\">economist Jeffrey Cook of World&rsquo;s First currency brokers warned</a> that investors were &ldquo;scrabbling for the exit&rdquo;.</p> <p>But others pointed out that the closure could provide a source of strength for the fledgling currency. &ldquo;If anything, the fall of Silk Road has done Bitcoin a favour,&rdquo; said Emily Spaven, editor of the digital currency news website <a href=\"http://www.coindesk.com/\">CoinDesk</a>. &ldquo;Hopefully now that the website no longer exists, people will start to see Bitcoin in a more positive light and appreciate the numerous benefits it offers.&rdquo;</p> <p>That latter prediction seems to have stood up. The price drop caused by the closure of Silk Road was reversed in less than two weeks, and the value of a bitcoin has seen near-continuous growth since then.</p> <p>The currency has not completely lost its association with the darker side of the internet, however. In a report from McAfee, Digital Laundry, authors Raj Samani, Fran&ccedil;ois Paget and Matthew Hart assess a number of different digital currencies for their potential criminal uses.</p> <p>Bitcoin receives criticism for its &ldquo;mining&rdquo; mechanic, whereby users are given bitcoins for doing the complex calculations which enable the currency to operate.</p> <p>&ldquo;Once cybercriminals recognised the monetary opportunity in Bitcoin,&rdquo; the authors write &ldquo;it became a key focus of their activity.&rdquo; They detail an occasion when <a href=\"http://www.wired.com/wiredenterprise/2013/07/esea-2/\">a rogue employee of the E-Sports Entertainment Association</a> updated the company&rsquo;s software, used by serious gamers to play online competitively, to make its computers mine for him. In a few weeks, he earned 30 bitcoins, currently worth about $6,000, but damaged customers' computers in the process.</p> <p>They also point to the ability to rent botnets, huge networks of computers taken over by hackers, and set them working at mining Bitcoins.</p> <p>A new virus is also reinforcing the link between Bitcoin and criminality. <a href=\"http://www.theguardian.com/money/2013/oct/19/cryptolocker-attacks-computer-ransomeware\">CryptoLocker encrypts victim&rsquo;s files, and then demands payment</a> &ndash; currently either $300 or two bitcoins&nbsp;&ndash; within three days to unlock them. Unlike similar \"ransomware\" viruses, Cryptolocker makes good on its promise, leaving users with a tricky choice.</p> <p>But the virus underscores another perennial problem with Bitcoin: when the prices were set, two bitcoins were worth slightly less than $300. Now they are worth almost $100 more, the currency&rsquo;s notorious volatility having left the old prices out of sync with each other.</p> <p>&bull; <strong><a href=\"http://www.theguardian.com/technology/2013/oct/15/silk-road-ross-ulbricht-alleged-mastermind\">The man alleged to be behind the Silk Road says he is not \"excessively concerned\" about his future</a>.</strong></p><!-- Guardian Watermark: internal-code/content/420535787|2013-11-05T11:03:48Z|2b85115057835cda4923626760ffd99c7b65c239 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-29T10:19:26Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200013/c35c24ba-cf35-4276-9c19-812b7e4b1881-140x84.jpeg",
+        "standfirst":"Price hits $197, following a jump of $30 in a day, calming fears that the closure of Silk Road would harm the currency<br /><br /><a href=\"http://www.theguardian.com/technology/2013/oct/04/bitcoin-what-you-need-to-know-silk-road\"><strong>Bitcoin: what you need to know</strong></a>",
+        "shortUrl":"http://gu.com/p/3jyyz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200013/c35c24ba-cf35-4276-9c19-812b7e4b1881-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"420535787",
+        "allowUgc":"false",
+        "internalComposerCode":"526520abe4b0bbc67cfff65b",
+        "isPremoderated":"false",
+        "byline":"Alex Hern",
+        "publication":"theguardian.com",
+        "internalPageCode":"1984200",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-24T13:00:38Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/silk-road",
+        "type":"keyword",
+        "webTitle":"Silk Road",
+        "webUrl":"http://www.theguardian.com/technology/silk-road",
+        "apiUrl":"http://content.guardianapis.com/technology/silk-road",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/viruses",
+        "type":"keyword",
+        "webTitle":"Viruses",
+        "webUrl":"http://www.theguardian.com/technology/viruses",
+        "apiUrl":"http://content.guardianapis.com/technology/viruses",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alex-hern",
+        "type":"contributor",
+        "webTitle":"Alex Hern",
+        "webUrl":"http://www.theguardian.com/profile/alex-hern",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-hern",
+        "bio":"<p>Alex Hern is a technology reporter for the Guardian</p>",
+        "r2ContributorId":"56277",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089603491/Alex-Hern-Guardian-staff--017.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360196738/c35c24ba-cf35-4276-9c19-812b7e4b1881-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360196738/c35c24ba-cf35-4276-9c19-812b7e4b1881-300x180.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360197256/c35c24ba-cf35-4276-9c19-812b7e4b1881-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360197256/c35c24ba-cf35-4276-9c19-812b7e4b1881-2060x1236.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"1236",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360197890/c35c24ba-cf35-4276-9c19-812b7e4b1881-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360197890/c35c24ba-cf35-4276-9c19-812b7e4b1881-380x228.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198036/c35c24ba-cf35-4276-9c19-812b7e4b1881-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198036/c35c24ba-cf35-4276-9c19-812b7e4b1881-540x324.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"324",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198210/c35c24ba-cf35-4276-9c19-812b7e4b1881-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198210/c35c24ba-cf35-4276-9c19-812b7e4b1881-620x372.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198402/c35c24ba-cf35-4276-9c19-812b7e4b1881-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198402/c35c24ba-cf35-4276-9c19-812b7e4b1881-460x276.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198924/c35c24ba-cf35-4276-9c19-812b7e4b1881-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360198924/c35c24ba-cf35-4276-9c19-812b7e4b1881-2048x1536.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"1536",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360199772/c35c24ba-cf35-4276-9c19-812b7e4b1881-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360199772/c35c24ba-cf35-4276-9c19-812b7e4b1881-1020x612.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"612",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200013/c35c24ba-cf35-4276-9c19-812b7e4b1881-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200013/c35c24ba-cf35-4276-9c19-812b7e4b1881-140x84.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200121/c35c24ba-cf35-4276-9c19-812b7e4b1881-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200121/c35c24ba-cf35-4276-9c19-812b7e4b1881-220x132.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200323/c35c24ba-cf35-4276-9c19-812b7e4b1881-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/21/1382360200323/c35c24ba-cf35-4276-9c19-812b7e4b1881-1024x768.jpeg",
+            "source":"Alamy",
+            "altText":"A physical mock-up of a bitcoin.",
+            "height":"768",
+            "credit":"Alamy",
+            "caption":"A physical mock-up of a bitcoin. Photograph: Alamy",
+            "mediaId":"gu-fc-da804b55-14af-475c-9c56-0ba785d49edd",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/26/bitcoins-seized-silk-road-raid",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-26T07:02:00Z",
+      "webTitle":"Bitcoins seized in Silk Road raid",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/26/bitcoins-seized-silk-road-raid",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/26/bitcoins-seized-silk-road-raid",
+      "fields":{
+        "trailText":"<p>$28m in digital currency taken by US authorities from Ross William Ulbricht, accused of running online criminal marketplace</p>",
+        "headline":"Bitcoins seized in Silk Road raid",
+        "body":"<p>Authorities in the US have seized an estimated $28m in bitcoins, a digital currency, from the alleged owner of Silk Road, the online marketplace for drugs and criminal activity that law enforcement shut down three weeks ago.<br /> <br />Federal prosecutors in New York said Friday that the 144,336 bitcoins, which were widely used on the defunct site, were discovered on computer hardware belonging to Ross William Ulbricht, known online as Dread Pirate Roberts, who was arrested 1 October in San Francisco and charged with various conspiracy counts. They said it represented the largest ever bitcoin seizure.<br /> <br />Ulbricht's lawyer could not immediately be reached on Friday evening, though he had previously told reporters that Ulbricht denied the charges.<br /> <br />Since it began operations in 2011 Silk Road had provided an anonymous site where drug dealers, counterfeiters and other criminals could shop for everything from heroin to hitmen, according to the justice department.<br /> <br />More than 900,000 registered users of the site bought and sold drugs using bitcoins, according to authorities. The currency, which has been around since 2008, first came under scrutiny by law enforcement officials in mid-2011 after media reports surfaced linking bitcoins to Silk Road.<br /> <br />With nearly 30,000 bitcoins previously seized, federal agents had so far collected more than $33m worth based on current value, the US attorney's office in Manhattan said.<br /> <br />The seizures were carried out as part of a corresponding civil action against Silk Road and Ulbricht. Ulbricht, who is detained in California, is expected to appear within weeks in Manhattan federal court to face criminal charges of narcotics trafficking conspiracy, computer hacking conspiracy and money laundering conspiracy.<br /> <br />Court documents allege that $1.2bn in bitcoins changed hands through Silk Road during more than two years of operation, with the site charging 8-15% in commissions.</p><!-- Guardian Watermark: internal-code/content/421003535|2013-11-05T11:03:48Z|adc539d95bdc2949f394ee5d4d3c050d5623d2d8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-26T07:50:42Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382770823437/Bitcoin-logo-005.jpg",
+        "standfirst":"$28m in digital currency taken by US authorities from Ross William Ulbricht, accused of running online criminal marketplace",
+        "shortUrl":"http://gu.com/p/3jqxg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382770823437/Bitcoin-logo-005.jpg",
+        "wordcount":"294",
+        "commentable":"false",
+        "internalContentCode":"421003535",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Reuters in New York",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987297",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-29T08:02:00Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/silk-road",
+        "type":"keyword",
+        "webTitle":"Silk Road",
+        "webUrl":"http://www.theguardian.com/technology/silk-road",
+        "apiUrl":"http://content.guardianapis.com/technology/silk-road",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-crime",
+        "type":"keyword",
+        "webTitle":"US crime",
+        "webUrl":"http://www.theguardian.com/world/us-crime",
+        "apiUrl":"http://content.guardianapis.com/world/us-crime",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/organised-crime",
+        "type":"keyword",
+        "webTitle":"Organised crime",
+        "webUrl":"http://www.theguardian.com/world/organised-crime",
+        "apiUrl":"http://content.guardianapis.com/world/organised-crime",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421003561",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382770831416/Bitcoin-logo-009.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ted Soqui",
+            "altText":"Bitcoin logo",
+            "height":"228",
+            "credit":"Ted Soqui/Corbis",
+            "caption":"US authorities have shut down the Silk Road website and seized $28m worth of bitcoins, a digital currency. Photograph: Ted Soqui/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382770840723/Bitcoin-logo-010.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ted Soqui",
+            "altText":"Bitcoin logo",
+            "height":"276",
+            "credit":"Ted Soqui/Corbis",
+            "caption":"US authorities have shut down the Silk Road website and seized $28m worth of bitcoins, a digital currency. Photograph: Ted Soqui/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421003562",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382770823437/Bitcoin-logo-005.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ted Soqui",
+            "altText":"Bitcoin logo",
+            "height":"84",
+            "credit":"Ted Soqui/Corbis",
+            "caption":"US authorities have shut down the Silk Road website and seized $28m worth of bitcoins, a digital currency. Photograph: Ted Soqui/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/video/2013/mar/22/bitcoin-currency-video",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-03-22T16:05:22Z",
+      "webTitle":"Bitcoin: the fastest growing currency in the world - video",
+      "webUrl":"http://www.theguardian.com/technology/video/2013/mar/22/bitcoin-currency-video",
+      "apiUrl":"http://content.guardianapis.com/technology/video/2013/mar/22/bitcoin-currency-video",
+      "fields":{
+        "trailText":"<p>The people behind Bitcoin talk about their unregulated, uncontrolled online currency – worth more than £500m</p>",
+        "headline":"Bitcoin: the fastest growing currency in the world - video",
+        "body":"<video data-media-id=\"gu-video-406077098\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962749664/Bitcoin-developer-Amir-Ta-005.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/3/22/130322Bitcoinfinal-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/3/22/130322Bitcoinfinal_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/3/22/130322Bitcoinfinal_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/130322Bitcoinfinal/130322Bitcoinfinal.m3u8\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/406077098|2013-11-05T11:03:48Z|0940f1f6bf7a4acccbcb9e5333ba4f689d0f58c0 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-04-11T13:49:35Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962758342/Bitcoin-developer-Amir-Ta-010.jpg",
+        "standfirst":"Bitcoin is an unregulated, uncontrolled online currency – worth more than £500m, it's the world's fastest growing. It can be used to buy drugs, move money across the world, or get rich quick. The people behind Bitcoin speak to the Guardian's James Ball at their home in a squat in central London",
+        "shortUrl":"http://gu.com/p/3ejy4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962758342/Bitcoin-developer-Amir-Ta-010.jpg",
+        "commentable":"false",
+        "internalContentCode":"406077098",
+        "allowUgc":"false",
+        "internalOctopusCode":"7395812",
+        "isPremoderated":"false",
+        "byline":"Guy Grandjean and James Ball",
+        "publication":"theguardian.com",
+        "internalPageCode":"1884307",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-03-25T16:05:22Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"society/drugs",
+        "type":"keyword",
+        "webTitle":"Drugs",
+        "webUrl":"http://www.theguardian.com/society/drugs",
+        "apiUrl":"http://content.guardianapis.com/society/drugs",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/guygrandjean",
+        "type":"contributor",
+        "webTitle":"Guy Grandjean",
+        "webUrl":"http://www.theguardian.com/profile/guygrandjean",
+        "apiUrl":"http://content.guardianapis.com/profile/guygrandjean",
+        "bio":"<p>Guy Grandjean is a video producer for guardian.co.uk. He has been a member of the <a href=\"http://www.guardian.co.uk/news/guardianfilms\">GuardianFilms</a> team since August 2004. He has worked on a wide range of award-winning films for broadcasters, including Iraq's Missing Billions (Channel 4 Dispatches) and Life Behind Bars (BBC Panorama). He has also produced and edited a number of films for the Guardian website</p>",
+        "r2ContributorId":"28269",
+        "references":[]
+      },{
+        "id":"profile/jamesball",
+        "type":"contributor",
+        "webTitle":"James Ball",
+        "webUrl":"http://www.theguardian.com/profile/jamesball",
+        "apiUrl":"http://content.guardianapis.com/profile/jamesball",
+        "bio":"<p>James Ball is a data journalist working for the Guardian investigations team. He joined the Guardian from <a href=\"http://www.wikileaks.ch\">Wikileaks</a>, and the <a href=\"http://www.tbij.com\">Bureau of Investigative Journalism</a>. He is the Washington Post Laurence Stern Fellow for 2012.</p>",
+        "rcsId":"GNL043866",
+        "r2ContributorId":"22541",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/25/1319546073704/james_ball.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.theguardian.com/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-406077098",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962742796/Bitcoin-developer-Amir-Ta-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"230",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962744476/Bitcoin-developer-Amir-Ta-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"90",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962746176/Bitcoin-developer-Amir-Ta-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"225",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962747828/Bitcoin-developer-Amir-Ta-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"360",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962749664/Bitcoin-developer-Amir-Ta-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"360",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962753003/Bitcoin-developer-Amir-Ta-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"54",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962754601/Bitcoin-developer-Amir-Ta-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"340",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962756460/Bitcoin-developer-Amir-Ta-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"130",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962758342/Bitcoin-developer-Amir-Ta-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"84",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962760036/Bitcoin-developer-Amir-Ta-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"132",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962761599/Bitcoin-developer-Amir-Ta-012.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"168",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962763251/Bitcoin-developer-Amir-Ta-013.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"180",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962766015/Bitcoin-developer-Amir-Ta-014.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"228",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962767702/Bitcoin-developer-Amir-Ta-015.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"276",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962769368/Bitcoin-developer-Amir-Ta-016.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"372",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/3/22/130322Bitcoinfinal_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "height":"360",
+            "durationMinutes":"5",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "width":"480",
+            "durationSeconds":"45"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/3/22/130322Bitcoinfinal_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "height":"360",
+            "durationMinutes":"5",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "width":"480",
+            "durationSeconds":"45"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130322Bitcoinfinal/130322Bitcoinfinal.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "height":"360",
+            "durationMinutes":"5",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "width":"480",
+            "durationSeconds":"45"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/3/22/130322Bitcoinfinal-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "height":"360",
+            "durationMinutes":"5",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/22/130322Bitcoinfinal_7395812.jpg",
+            "width":"480",
+            "durationSeconds":"45"
+          }
+        }]
+      },{
+        "id":"gu-image-406077825",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/22/1363962758342/Bitcoin-developer-Amir-Ta-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Bitcoin developer Amir Taaki",
+            "height":"84",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Amir Taaki, Bitcoin project manager, holding a Bitcoin. \rPhoto by Linda Nylind. 21/3/2013. Photograph: Linda Nylind for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/30/bitcoin-first-atm-vancouver-canada",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-30T12:23:55Z",
+      "webTitle":"Bitcoin cashes in as its first ATM opens in Vancouver",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/30/bitcoin-first-atm-vancouver-canada",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/30/bitcoin-first-atm-vancouver-canada",
+      "fields":{
+        "trailText":"Virtual currency takes another step towards the mainstream as easy-to-use machine opens in Canadian coffee shop",
+        "headline":"Bitcoin cashes in as its first ATM opens in Vancouver",
+        "body":"<p>A silver and blue ATM, perched up next to the espresso bar in a trendy Vancouver coffee shop, could launch a new era for the virtual currency bitcoin, offering an almost instant way to exchange the world's leading virtual money for cash.</p><p>The value of a bitcoin soared from $13 in January to a high of $266 in April as more businesses and consumers used them to buy and sell online. Some investors are also treating bitcoins like gold, using them to hedge against currency fluctuations and speculating on their rise.</p><p>The kiosk, which looks like the average ATM but with hand and barcode scanners, opened for business on Tuesday and by mid-morning people were lined up to swap their bitcoins for cash, or to deposit cash to buy more bitcoins.</p><p>\"It's as easy as walking up to a machine, scanning your hand, entering some cash and buying bitcoin,\" said Jordan Kelley, chief executive of Las Vegas-based Robocoin, the company that builds the ATMs. \"With this, it's a 2-minute process. For any online exchange, it's at least two days.\"</p><p>Bitcoins, currently worth about $210 each, can be transferred without going through banks or clearing houses, thereby cutting fees. Users can buy products and services online or in a handful of stores, including the Waves coffee shop where the ATM is located.</p><p>With the bitcoin ATM, users scan their hand to confirm identity, then funds move to or from a virtual wallet on their smartphone. The system limits transfers to $1,000 a day, in an effort to curb money laundering and other fraud.</p><p>Bitcoiniacs, the local dealer that operates the ATM, will roll out four other kiosks across Canada in December. Robocoin said Canada was the ideal place to launch the kiosk due to a critical mass of users and less stringent oversight than in the US, where the bitcoin trade is monitored by anti-money laundering regulators.</p><p>\"We think the Vancouver market is enormous and we're excited to be here,\" said Kelley. \"By the end of 2013, we'll be all over Canada. By the end of 2014, we'll be all over the world, including the US.\"</p><p>Bitcoin is not a recognised currency in Canada, so Ottawa's anti-money laundering watchdog, the Financial Transactions and Reports Analysis Centre, does not monitor its trade.</p><p>However, Bitcoiniacs' founders say they are working with the agency to be ready for when Canada does start regulating them.</p><p>\"We're already being proactive in our business,\" said Bitcoiniacs co-founder Mitchell Demeter. \"We abide by any guidelines they would impose - which includes the 'know your customer' laws and anti-money laundering laws.\"</p><h2>Going mainstream</h2><p>Bitcoins were launched in 2008 and are traded within a global network of computers. They are not backed by a single company or government, but their release is tightly controlled, mimicking a central banking system's control over the minting of money.</p><p>Bitcoins can be bought with near anonymity, which supporters say lowers fraud risk and increases privacy. But critics say that also makes bitcoins a magnet for drug transactions, money-laundering and other illegal activities.</p><p>The currency's reputation took a hit this month, when US regulators shut down Silk Road, an online marketplace used to buy and sell illegal drugs, and seized $3.6m (£2.3m) in bitcoins.</p><p>But the virtual currency is gaining hold among businesses and consumers, a key step to a bigger role.</p><p>\"I think it's definitely going mainstream,\" said Demeter. \"I think as things progress, and the infrastructure is built, it will become easier for people to buy and sell, and so more people will start using it.\"</p><p>In Vancouver, for example, dozens of people attend weekly bitcoin meet-ups and a member co-op is promoting the currency to a growing list of local retailers.</p><p>At Waves, Vancouver resident Chung Cheong used bitcoin to pay for his mug of tea and was happy to mull over the future of the digital currency.</p><p>\"It's been said that we're at the stage where email was in 1992,\" he said. \"Is it risky? Sure. But look at how the internet and email changed the world.\"</p><!-- Guardian Watermark: internal-code/content/421280547|2013-11-05T11:03:48Z|1fa51a332195230cc4aba0c7ee3a666a26f8dd59 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T12:40:43Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+        "standfirst":"Virtual currency takes another step towards the mainstream as easy-to-use machine opens in Canadian coffee shop",
+        "shortUrl":"http://gu.com/p/3kxch",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+        "wordcount":"657",
+        "commentable":"false",
+        "internalContentCode":"421280547",
+        "allowUgc":"false",
+        "internalOctopusCode":"8258607",
+        "isPremoderated":"false",
+        "byline":"Reuters",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989053",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T12:23:55Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/canada",
+        "type":"keyword",
+        "webTitle":"Canada",
+        "webUrl":"http://www.theguardian.com/world/canada",
+        "apiUrl":"http://content.guardianapis.com/world/canada",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/americas",
+        "type":"keyword",
+        "webTitle":"Americas",
+        "webUrl":"http://www.theguardian.com/world/americas",
+        "apiUrl":"http://content.guardianapis.com/world/americas",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421280860",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135101649/Bitcoin-ATM-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"54",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135103820/Bitcoin-ATM-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"340",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135105117/Bitcoin-ATM-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"130",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"84",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135107749/Bitcoin-ATM-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"132",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135108961/Bitcoin-ATM-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"168",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135110513/Bitcoin-ATM-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"180",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135111902/Bitcoin-ATM-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"228",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135113393/Bitcoin-ATM-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"276",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135115239/Bitcoin-ATM-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"372",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135113393/Bitcoin-ATM-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"276",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421280861",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/30/1383135106492/Bitcoin-ATM-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM",
+            "height":"84",
+            "credit":"Andy Clark/Reuters",
+            "caption":"A Vancouver resident uses the world's first bitcoin ATM.  Photograph: Andy Clark/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/29/bitcoin-forgotten-currency-norway-oslo-home",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-29T14:07:57Z",
+      "webTitle":"Man buys $27 of bitcoin, forgets about them, finds they're now worth $886k",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/29/bitcoin-forgotten-currency-norway-oslo-home",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/29/bitcoin-forgotten-currency-norway-oslo-home",
+      "fields":{
+        "trailText":"Bought in 2009, currency's rise in value saw $27 turn into enough to buy an apartment in a wealthy area of Oslo. By <strong>Samuel Gibbs</strong>",
+        "headline":"Man buys $27 of bitcoin, forgets about them, finds they're now worth $886k",
+        "body":"<p>The meteoric rise in <a href=\"http://www.theguardian.com/technology/bitcoin\">bitcoin</a> has meant that within the space of four years, one Norwegian man’s $27 investment turned into a forgotten $886,000 windfall.</p> <p>Kristoffer Koch invested 150 kroner ($26.60) in 5,000 bitcoins in 2009, after discovering them during the course of writing a thesis on encryption. He promptly forgot about them until widespread media coverage of the anonymous, decentralised, <a href=\"http://www.theguardian.com/technology/2013/oct/04/bitcoin-what-you-need-to-know-silk-road\">peer-to-peer digital currency</a> in April 2013 jogged his memory.</p> <p>Bitcoins are stored in encrypted wallets secured with a private key, something Koch had forgotten. After eventually working out what the password could be, Koch got a pleasant surprise:&nbsp;</p> <p>&quot;It said I had 5,000 bitcoins in there. Measuring that in today's rates it's about NOK5m ($886,000),&quot; Koch <a href=\"http://www.nrk.no/okonomi/kjopte-bolig-for-internettpenger-1.11314773\">told NRK</a>.</p> <h2><strong>Silk Road fluctuations</strong></h2> <p>In April 2013, the value of bitcoin peaked at $266 before crashing to a low of $50 soon after. Since then, bitcoin has seen large fluctuations in its value, most recently following the <a href=\"http://www.theguardian.com/technology/2013/oct/02/alleged-silk-road-website-founder-arrested-bitcoin\">seizure of online drugs marketplace Silk Road</a>, <a href=\"http://www.theguardian.com/technology/2013/oct/03/bitcoin-price-silk-road-ulbricht-value\">plummeting</a> before jumping $30 in one day to&nbsp;<a href=\"http://www.theguardian.com/technology/2013/oct/21/bitcoin-price-surges-to-post-crash-high\">a high of $197 in October</a>.</p> <p>Koch exchanged one fifth of his 5,000 bitcoins, generating enough kroner to buy an apartment in Toyen, one of the Norwegian capital’s wealthier areas.</p> <h2><strong>Two ways to acquire bitcoins</strong></h2> <figure class=\"element element-image\" data-media-id=\"gu-fc-480840c9-5847-4374-8059-0037eb5c3961\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093762289/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-460x276.jpeg\" alt=\"Bitcoin ATM at a coffee shop in Vancouver.\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters</figcaption> </figure> <p>Typically bitcoins are bought using traditional currency from a bitcoin &quot;exchanger&quot;, although due to strict anti-money laundering controls, the process can can be tricky. A user can then withdraw those bitcoins by sending them back to an exchanger like <a href=\"https://www.mtgox.com/\">Mt Gox</a>, the best known bitcoin exchange, in return for cash.</p> <p>However, bitcoin is gaining more and more traction within the physical world too. It is now possible to actually spend bitcoins without exchanging them for traditional currency first <a href=\"http://www.theguardian.com/technology/shortcuts/2013/jun/23/britains-first-bitcoin-pub\">in a few British pubs</a>, including the Pembury Tavern in Hackney, London, for instance. On 29 October, the <a href=\"http://www.theguardian.com/technology/2013/oct/30/bitcoin-first-atm-vancouver-canada\">world's first bitcoin ATM</a> also went online in Vancouver, Canada, which scans a user's palm before letting them buy or sell bitcoins for cash.&nbsp;</p> <p>A small group of hardcore users also generate extra bitcoins by &quot;mining&quot; for them – a process that requires computers to perform the calculations needed to make the digital currency work, in exchange for a share of the built-in inflation.</p> <p>Mining is a time-consuming and expensive endeavour due to the way the currency is designed. Each subsequent bitcoin mined is more complex than the previous one, requiring more computational time and therefore investment through the electricity and computer hardware required.</p> <p><strong>• In August, Germany <a href=\"http://www.theguardian.com/technology/2013/aug/19/bitcoin-unit-of-account-germany\">recognised bitcoin as a &quot;unit of account</a>&quot;, allowing the country to tax users or creators of the digital currency</strong></p><!-- Guardian Watermark: internal-code/content/421199275|2013-11-05T11:03:48Z|fdd50fedc8eea567b8ab29a486f44cba2593f12a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T14:08:31Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680509/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-140x84.jpeg",
+        "standfirst":"Bought in 2009, currency's rise in value saw small investment turn into enough to buy an apartment in a wealthy area of Oslo<br /><br /><a href=\"http://www.theguardian.com/technology/2013/oct/04/bitcoin-what-you-need-to-know-silk-road\">Bitcoin: what you need to know</a>",
+        "shortUrl":"http://gu.com/p/3kvgc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680509/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421199275",
+        "allowUgc":"false",
+        "internalComposerCode":"526facc6e4b0ded76c0a90ea",
+        "isPremoderated":"false",
+        "byline":"Samuel Gibbs",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988427",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T14:07:57Z"
+      },
+      "tags":[{
+        "id":"technology/bitcoin",
+        "type":"keyword",
+        "webTitle":"Bitcoin",
+        "webUrl":"http://www.theguardian.com/technology/bitcoin",
+        "apiUrl":"http://content.guardianapis.com/technology/bitcoin",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/currencies",
+        "type":"keyword",
+        "webTitle":"Currencies",
+        "webUrl":"http://www.theguardian.com/business/currencies",
+        "apiUrl":"http://content.guardianapis.com/business/currencies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680509/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680509/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-140x84.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"84",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680663/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680663/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-460x276.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"276",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680817/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680817/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-220x132.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"132",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680960/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-bestSizeAvailable.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051680960/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-bestSizeAvailable.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"342",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"570"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681170/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681170/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-300x180.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"180",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681325/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681325/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-540x324.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"324",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681488/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681488/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-68x68.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"68",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681599/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051681599/05fa6b0c-2170-4612-9b15-3dcfaf9ff36f-380x228.jpeg",
+            "source":"Getty Images",
+            "photographer":"George Frey",
+            "altText":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy a flat",
+            "height":"228",
+            "credit":"George Frey/Getty Images",
+            "caption":"Norwegian man discovers $27 bitcoin investment now worth more than enough to buy an apartment. Photograph: George Frey/Getty Images",
+            "mediaId":"gu-fc-c6bce523-8644-45d5-9231-e1b1c99b539f",
+            "width":"380"
+          }
+        }]
+      },{
+        "id":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093762005/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093762005/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-140x84.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"84",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093762289/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093762289/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-460x276.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"276",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093762525/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093762525/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-220x132.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"132",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093763013/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093763013/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-2060x1236.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"1236",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093763759/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093763759/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-1020x612.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"612",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093763998/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093763998/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-300x180.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"180",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093764343/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093764343/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-540x324.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"324",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093764485/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093764485/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-68x68.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"68",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093764639/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093764639/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-380x228.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"228",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093765251/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093765251/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-2048x1536.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"1536",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093766055/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093766055/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-620x372.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"372",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093766348/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383093766348/d4c7ce7c-974a-4c3b-a780-3793c0cc382e-1024x768.jpeg",
+            "source":"Reuters",
+            "photographer":"Andy Clark",
+            "altText":"Bitcoin ATM at a coffee shop in Vancouver.",
+            "height":"768",
+            "credit":"Andy Clark/Reuters",
+            "caption":"Customers line-up to use the world's first ever permanent bitcoin ATM at a coffee shop in Vancouver, British Columbia. Photograph: Andy Clark/Reuters",
+            "mediaId":"gu-fc-480840c9-5847-4374-8059-0037eb5c3961",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
