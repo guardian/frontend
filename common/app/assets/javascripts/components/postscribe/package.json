@@ -1,0 +1,50 @@
+{
+  "name": "postscribe",
+  "description": "Asynchronously write javascript, even with document.write.",
+  "version": "1.1.2",
+  "keywords": ["document.write", "tag writer", "asynchronous", "javascript", "after load"],
+  "author": {
+    "name": "Derek Brans",
+    "email": "dbrans@gmail.com",
+    "web": "http://github.com/dbrans"
+  },
+  "contributors": [{
+    "name": "Derek Brans",
+    "email": "dbrans@gmail.com",
+    "web": "http://github.com/dbrans"
+  }, {
+    "name": "Nick Sullivan",
+    "email": "nick@sullivanflock.com",
+    "web": "http://creationeer.me"
+  }],
+  "maintainers": [{
+    "name": "Derek Brans",
+    "email": "dbrans@gmail.com"
+  }, {
+    "name": "Nick Sullivan",
+    "email": "nick@sullivanflock.com",
+    "web": "http://creationeer.me"
+  }],
+  "bugs": "https://github.com/krux/postscribe/issues",
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/krux/postscribe/blob/master/LICENSE"
+  }],
+  "repositories": [{
+    "type": "git",
+    "url": "git@github.com:krux/postscribe.git"
+  }],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "0.3.x",
+    "testem": "0.2.x",
+    "browserstack-cli": "0.x.x"
+  },
+  "homepage": "https://github.com/krux/postscribe",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
+}

@@ -64,6 +64,9 @@ define('bootstraps/app', [
         },
 
         attachGlobalErrorHandler: function (config) {
+            if (!config.switches.clientSideErrors) {
+                return false;
+            }
             var e = new Errors({
                 window: window,
                 isDev: config.page.isDev,

@@ -34,18 +34,18 @@
     float: left;
     height: 28px;
     width: 1px;
-    margin-right: 8px;
+    margin-right: 5px;
     background-color: #274C98;
     border-left: 1px solid #122853;
+
+    .is-active & {
+        border-color: #ffffff;
+        background-color: #ffffff;
+    }
 }
 
-.is-active .i-nav-divider {
-    border-color: #ffffff;
-    background-color: #ffffff;
-}
 
-
-/* Sections control - (Hamburger icon )
+/* Sections control - (Hamburger icon)
    ========================================================================== */
 
 .control--sections {
@@ -58,9 +58,6 @@
         top: $headerHeight;
     }
     &.is-active {
-        @include mq(desktop) {
-            background-color: transparent;
-        }
         @include mq(1157px, 1299px) {
             border-right: 1px solid $c-neutral5;
             padding-right: $gutter - 1;
@@ -71,15 +68,11 @@
         }
     }
 }
-
-
-
 .control__menu.i {
     float: right;
     margin-top: 7px;
     text-indent: -1000em;
 }
-
 span.control__menu.i-menu {
     display: inline-block;
     margin-left: 6px;
@@ -88,7 +81,6 @@ span.control__menu.i-menu {
         display: none;
     }
 }
-
 .control--sections .i-menu-active {
     display: none;
 
@@ -97,22 +89,22 @@ span.control__menu.i-menu {
         display: inline-block;
     }
 }
-
 .control--sections .i-nav-divider {
     @include mq(tablet) {
         top: 6px;
         position: relative;
         margin-right: $gutter - 3;
-        border-color: #bbbbbb;
+        border: none;
         background-color: $c-neutral5;
     }
 }
 .control--sections.is-active .i-nav-divider {
-    @include mq(tablet, desktop) {
+    @include mq(tablet) {
         top: 0;
         height: 41px;
     }
 }
+
 
 /* Top stories control
    ========================================================================== */
@@ -137,7 +129,7 @@ span.control__menu.i-menu {
         border-color: transparent;
     }
     .i-top-stories {
-        margin: 2px $gutter 0 $gutter/2;
+        margin: 2px 12px 0 $gutter/2;
 
         @include mq(tablet) {
             margin-left: 0;
@@ -149,15 +141,19 @@ span.control__menu.i-menu {
 }
 
 
-
 /* Search control
    ========================================================================== */
 
 .control--search {
+    padding-right: 14px;
+
+    @include mq(tablet) {
+        padding-right: 16px;
+    }
+
     .i-search {
         margin-top: 5px;
-        margin-left: 6px;
-        margin-right: 2px;
+        margin-left: 7px;
     }
 }
 
@@ -177,9 +173,7 @@ span.control__menu.i-menu {
             margin-left: 0;
         }
     }
-    
 }
-
 .control__info {
     display: none;
     height: 28px;

@@ -46,7 +46,6 @@ define([
                                         '<a data-link-name="Comment on desktop" class="d-actions__link" href="/'+ config.page.pageId +'?view=desktop#start-of-comments">'+
                                             'Want our fully featured commenting experience? Head to our old site.'+
                                         '</a>'+
-                                        '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a>'+
                                     '</div>',
             apiRoot               = config.page.discussionApiRoot,
             user                  = Id.getUserFromCookie(),

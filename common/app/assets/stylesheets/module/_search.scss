@@ -1,5 +1,7 @@
 .nav-popup-search {
     min-height: 47px;
+    padding-top: 14px;
+    padding-bottom: 7px;
 
     @include mq(tablet) {
         right: 0;
