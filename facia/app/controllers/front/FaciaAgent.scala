@@ -99,7 +99,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
             // extract the articles
             val articles: Seq[CollectionItem] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              CollectionItem((trail \ "id").as[String], (trail \ "meta" \ "webTitle").asOpt[String])
+              CollectionItem((trail \ "id").as[String], (trail \ "meta" \ "headline").asOpt[String])
             }
 
             getArticles(articles, edition)

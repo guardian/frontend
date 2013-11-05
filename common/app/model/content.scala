@@ -125,8 +125,8 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, webTitle: Option[String]): Content = {
-    webTitle match {
+  def apply(delegate: ApiContent, headline: Option[String]): Content = {
+    headline match {
       case Some(title) => new ContentWithHeadline(delegate, title)
       case _ => apply(delegate)
     }
