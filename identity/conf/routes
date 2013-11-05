@@ -12,5 +12,6 @@ GET     /requestnewtoken                                @controllers.ResetPasswo
 GET     /register                                       @controllers.RegistrationController.renderForm
 POST    /register                                       @controllers.RegistrationController.processForm
 GET     /email-prefs                                    @controllers.EmailController.preferences
+POST    /email-prefs                                    @controllers.EmailController.savePreferences
 GET     /profile/public                                 @controllers.PubilcProfileController.displayForm
 POST    /profile/public                                 @controllers.PubilcProfileController.submitForm

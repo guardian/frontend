@@ -31,8 +31,8 @@ class AuthAction @Inject()(authService: AuthenticationService)
 
 @Singleton
 class AuthenticationService @Inject()(cookieDecoder: FrontendIdentityCookieDecoder,
-                            idRequestParser: IdRequestParser,
-                            identityUrlBuilder: IdentityUrlBuilder) extends Logging {
+                                      idRequestParser: IdRequestParser,
+                                      identityUrlBuilder: IdentityUrlBuilder) extends Logging {
   def handleAuthenticatedRequest[A](request: Request[A]): Either[SimpleResult, AuthRequest[A]] = {
     request.cookies.get("SC_GU_U").flatMap { cookie =>
       cookieDecoder.getUserDataForScGuU(cookie.value).map { user =>

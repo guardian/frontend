@@ -70,6 +70,25 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map jsonBodyParser.extract(jsonField("user"))
   }
 
+  /**
+   * data to save to a subdocument in the user's record
+   * The path param provides the subdocument to be saved to e.g. prefs.myApp
+   */
+  def updateUser(userId: String, auth: Auth, trackingData: TrackingData, path: String, data: JValue): Future[Response[JValue]] = {
+    val params = buildParams(tracking = Some(trackingData), auth = Some(auth))
+    val headers = buildHeaders(auth = Some(auth))
+    val pathParts = path.split('.').toList
+    val response = http.POST(apiUrl(urlJoin("user" :: userId :: pathParts : _*)), Some(write(data)), params, headers)
+    response map jsonBodyParser.extract(jsonField(pathParts.head))
+  }
+
+  def updateUser(user: User, auth: Auth, trackingData: TrackingData): Future[Response[User]] = {
+    val params = buildParams(tracking = Some(trackingData), auth = Some(auth))
+    val headers = buildHeaders(auth = Some(auth))
+    val response = http.POST(apiUrl("user"), Some(write(user)), params, headers)
+    response map jsonBodyParser.extract(jsonField("user"))
+  }
+
   def register(user: User, trackingParameters: TrackingData): Future[Response[User]] = {
     val userData = write(user)
     val params = buildParams(tracking = Some(trackingParameters))
@@ -103,11 +122,19 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   // EMAILS
 
-  def userEmails(user: User, trackingParameters: TrackingData): Future[Response[Subscriber]] = {
-    val apiPath = urlJoin("useremails", user.getId())
+  def userEmails(userId: String, trackingParameters: TrackingData): Future[Response[Subscriber]] = {
+    val apiPath = urlJoin("useremails", userId)
     val params = buildParams(tracking = Some(trackingParameters))
     val response = http.GET(apiUrl(apiPath), params, buildHeaders())
     response map jsonBodyParser.extract(jsonField("result"))
+  }
+
+  def updateUserEmails(userId: String, subscriber: Subscriber, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
+    val apiPath = urlJoin("useremails", userId)
+    val params = buildParams(tracking = Some(trackingParameters), auth = Some(auth))
+    val headers = buildHeaders(auth = Some(auth))
+    val response = http.POST(apiUrl(apiPath), Some(write(subscriber)), params, headers)
+    response map jsonBodyParser.extractUnit
   }
 }
 
