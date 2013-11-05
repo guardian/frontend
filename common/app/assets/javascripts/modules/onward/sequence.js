@@ -1,14 +1,14 @@
 /*jshint multistr: true */
 define([
-    'common',
     'bean',
     'ajax',
+    'utils/mediator',
     'modules/storage',
     'modules/onward/history'
 ], function(
-    common,
     bean,
     ajax,
+    mediator,
     storage,
     History
     ){
@@ -18,12 +18,11 @@ define([
         prefixes = {
             context: 'gu.context',
             sequence: 'gu.sequence'
-        },
-        expiry = 10000;
+        };
 
     function set(type, item) {
         storage.set(prefixes[type], item);
-        common.mediator.emit('modules:sequence:'+ type +':loaded', item);
+        mediator.emit('modules:sequence:'+ type +':loaded', item);
     }
 
     function get(type) {
@@ -62,12 +61,12 @@ define([
                 removeContext();
             }
         }).fail(function(req) {
-            common.mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
+            mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
         });
     }
 
     function bindListeners() {
-        common.mediator.on('module:clickstream:click', function(clickSpec){
+        mediator.on('module:clickstream:click', function(clickSpec){
             if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContext) {
                 set('context', clickSpec.linkContext);
             }
