@@ -2,22 +2,28 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial commercial--masterclasses">
+<div class="commercial masterclasses-component">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian<span>masterclasses</span></h3>
     </div>
+
     <div class="commercial__body">
-        <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382691234022/hp-discover.jpg">
-        <ul class="unstyled">
+
+        <div class="commercial__promo">
+            <a href="#" class="product__image">
+                <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382691234022/hp-discover.jpg">
+            </a>
+        </div>
+
+        <ul class="products unstyled">
             @for(event <- events) {
-                <li>
-                    <h3><a href="@event.url">@event.name</a></h3>
-                    <p>@event.description</p>
-                    <p class="tickets-price">@event.displayPrice</p>
-                    <p class="tickets-left">X seats left</p>
+                <li class="product">
+                    <h3 class="product__title"><a href="@event.url">@event.name</a></h3>
+                    <div class="product__description">@event.description</p>
                 </li>
             }
         </ul>
     </div>
+
     <div class="commercial__foot"></div>
 </div>
