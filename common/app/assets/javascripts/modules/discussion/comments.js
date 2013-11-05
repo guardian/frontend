@@ -279,7 +279,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         bonzo(parent).append(commentElem);
     }
 
-    window.location.hash = '';
+    window.location.hash = '#_';
     if (focus) {
         window.location.hash = '#comment-'+ comment.id;
     }
