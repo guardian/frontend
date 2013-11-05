@@ -18,6 +18,9 @@ class TemplateDeduping extends implicits.Collections {
 
   def apply(numberWanted: Int, collection: Collection): Collection = take(numberWanted, collection)
   def apply(collection: Collection): Collection = take(collection.items.length, collection)
+
+  def apply(numberWanted: Int, items: Seq[Trail]): Seq[Trail] = take(numberWanted, items)
+  def apply(items: Seq[Trail]): Seq[Trail] = take(items.length, items)
 }
 
 object TemplateDeduping {
