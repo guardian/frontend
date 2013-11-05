@@ -6,6 +6,10 @@ import conf.ContentApi
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import scala.util.Try
+import play.api.Play
+import services.S3
+import scala.xml.XML
+import play.api.Play.current
 
 object JobsAgent extends ExecutionContexts with Logging {
 
@@ -22,8 +26,19 @@ object JobsAgent extends ExecutionContexts with Logging {
   def currentJobs: Seq[Job] = agent()
 
   def refresh() {
+
+    val currentJobs =
+      if (Play.isDev) {
+        S3.get("DEV/commercial/job-ads.xml").map {
+          content =>
+            val xml = Future(XML.loadString(content))
+            JobsApi.getCurrentJobs(xml)
+        }.getOrElse(Future(Nil))
+      }
+      else JobsApi.getCurrentJobs()
+
     for {
-      untaggedJobs <- JobsApi.getCurrentJobs()
+      untaggedJobs <- currentJobs
       (unchangedJobs, newUntaggedJobs) = unchangedJobsAndNewUntaggedJobs(untaggedJobs)
       jobs = unchangedJobs ++ tagWithKeywords(newUntaggedJobs)
     } yield agent send jobs
@@ -48,7 +63,9 @@ object JobsAgent extends ExecutionContexts with Logging {
       val query = jobApiTag replace("&", "") replace(",", "")
       val keywords = Try(Await.result(lookUp(query), atMost = 2.seconds)).getOrElse(Nil)
 
-      log.debug(s"Looking up $jobApiTag gave ${keywords.map(_.id).mkString("; ")}")
+      log.debug(s"Looking up $jobApiTag gave ${
+keywords.map(_.id).mkString("; ")
+}")
       keywords
     }
 
@@ -71,9 +88,15 @@ object JobsAgent extends ExecutionContexts with Logging {
       jobKeywords = keywordsForJobApiTags(job.sectorTags)
     } yield job.copy(keywords = jobKeywords)
 
-    log.info(s"Tagged ${jobs.size} jobs")
-    log.debug(s"First jobs loaded: ${jobs.take(5).mkString("\n")}")
-    log.debug(s"Last jobs loaded: ${jobs.takeRight(5).mkString("\n")}")
+    log.info(s"Tagged ${
+jobs.size
+} jobs")
+    log.debug(s"First jobs loaded: ${
+jobs.take(5).mkString("\n")
+}")
+    log.debug(s"Last jobs loaded: ${
+jobs.takeRight(5).mkString("\n")
+}")
 
     jobs
   }
