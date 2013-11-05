@@ -63,9 +63,7 @@ object JobsAgent extends ExecutionContexts with Logging {
       val query = jobApiTag replace("&", "") replace(",", "")
       val keywords = Try(Await.result(lookUp(query), atMost = 2.seconds)).getOrElse(Nil)
 
-      log.debug(s"Looking up $jobApiTag gave ${
-keywords.map(_.id).mkString("; ")
-}")
+      log.debug(s"Looking up $jobApiTag gave ${keywords.map(_.id).mkString("; ")}")
       keywords
     }
 
@@ -88,15 +86,9 @@ keywords.map(_.id).mkString("; ")
       jobKeywords = keywordsForJobApiTags(job.sectorTags)
     } yield job.copy(keywords = jobKeywords)
 
-    log.info(s"Tagged ${
-jobs.size
-} jobs")
-    log.debug(s"First jobs loaded: ${
-jobs.take(5).mkString("\n")
-}")
-    log.debug(s"Last jobs loaded: ${
-jobs.takeRight(5).mkString("\n")
-}")
+    log.info(s"Tagged ${jobs.size} jobs")
+    log.debug(s"First jobs loaded: ${jobs.take(5).mkString("\n")}")
+    log.debug(s"Last jobs loaded: ${jobs.takeRight(5).mkString("\n")}")
 
     jobs
   }
