@@ -40,6 +40,8 @@ object Error extends Logging {
         qs.get("type").get.toString match {
           case "js" => Metric.increment(s"js.${osFamily}") 
           case "ads" => Metric.increment("ads") 
+          case "session" => Session.increment
+          case "view" => View.increment
           case _ => {}
         }
       }
