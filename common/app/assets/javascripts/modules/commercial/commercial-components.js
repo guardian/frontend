@@ -23,7 +23,8 @@ define([
         context: document,
         elCls: 'commercial',
         smallAdWidth:  300,  // Up to, but excluding
-        mediumAdWidth: 600
+        mediumAdWidth: 600,
+        breakpoints: [300, 600] // Just testing this
     };
 
     Commercial.prototype.init = function(options) {
@@ -51,12 +52,28 @@ define([
             var $node = bonzo(this),
                 width = $node.dim().width;
 
+            // Predefined breakpoint names
             $node.removeClass(classname + '--small ' + classname + '--medium');
 
             if (width > self.options.smallAdWidth) {
                 $node.addClass(classname + '--medium');
             } else {
                 $node.addClass(classname + '--small');
+            }
+
+
+            // Specific width classnames
+            $node[0].className = $node[0].className.replace(/(commercial--w\d{1,3})\s?/g, '');
+
+            var matchedWidth = 0;
+            self.options.breakpoints.forEach(function(breakpointWidth) {
+                if (width >= breakpointWidth) {
+                    matchedWidth = breakpointWidth;
+                }
+            });
+
+            if (matchedWidth > 0) {
+                $node.addClass(classname + '--w' + matchedWidth);
             }
 
             $node.attr('data-width', width);
