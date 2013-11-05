@@ -1,0 +1,253 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"women-in-leadership/2013/oct/30/co-educational-schools-bad-for-girls",
+      "sectionId":"women-in-leadership",
+      "sectionName":"Women in Leadership",
+      "webPublicationDate":"2013-10-30T10:01:27Z",
+      "webTitle":"Co-educational schools are bad for girls",
+      "webUrl":"http://www.theguardian.com/women-in-leadership/2013/oct/30/co-educational-schools-bad-for-girls",
+      "apiUrl":"http://content.guardianapis.com/women-in-leadership/2013/oct/30/co-educational-schools-bad-for-girls",
+      "fields":{
+        "trailText":"Gender-segregated education gives girls the chance to excel without pressures to conform to gender stereotypes, writes <strong>Belinda Parmar</strong>",
+        "headline":"Co-educational schools are bad for girls",
+        "body":"<p>My nephew remarked recently that in his GCSE computer science class there was just one girl among 29 boys. When I asked him why he thought that was, he replied that he saw nothing unusual – in his opinion computer science was simply a subject \"for boys\".</p><p></p><p>This, and a recent visit to a London co-educational and a girls' school on the same day, showed me that many of my assumptions about what was good for girls had been utterly wrong.</p><p></p><p>Far from being places of equal opportunity and preparation for the real world, even the best co-educational schools do not celebrate girls' achievements. Worse, girls continually struggle to get their voices heard amongst rowdy cajoling boys. The girls' school I visited, by comparison, was doing a much better job of overcoming gender stereotypes associated with STEM subjects.</p><p></p><p>It was a temple to female achievement and had hallways festooned with images of high-achieving women. The school surrounds its girls with photos of female MPs, scientists and entrepreneurs. As a consequence the girls who attend are more likely to see themselves as future leaders.</p><p></p><p>In an all female environment there's no reason to assume that subjects have gender: computing and science classes are all full of girls. It's not unseemly for a girl to imagine herself as a chemist, a primeminister, or possibly both.</p><p></p><p>The second school I visited was co-educational. As a product of this kind of school myself, I had always believed that the co-ed system was better for girls: sharing classes with the boys is supposed to toughen us up for whatever struggles lie ahead.</p><p></p><p>Part of this is true – coeducational schools are replete with real world problems – most noticeably the girls feel under the same kind of gender pressure that women do in working life. When girls are amongst boys they feel a greater compulsion to be feminine – often without even realising it.</p><p></p><p>These stereotypes are impeding girls' achievements. Girls from single sex schools are almost <a href=\"http://www.gsa.uk.com/news/institute-of-physics-stats-prove-that-girls-only-i/\" title=\"\">two and a half times more likely</a> to study physics at A-Level than girls who attend co-ed schools. The number of girls studying computing at A-Level this year <a href=\"http://www.theguardian.com/news/datablog/2013/aug/15/a-level-results-complete-breakdown\" title=\"\">decreased again</a> from an already dismally low 297 to 245, just under 6.5% of the total number of students taking the subject.</p><p></p><p>Co-educational schools show a kind of unintentional systematic bias. They teach a science and history curriculum which mainly emphasises the achievements of remarkable men. There are relatively few female protagonists in text-books - <a href=\"http://www.law.umaryland.edu/marshall/usccr/documents/cr11062.pdf\" title=\"\">women represent just 27% of all central characters</a>.</p><p></p><p>This reflects the sad truth that for much of history, women have been relatively powerless and unimportant. It's hardly surprising that girls leave education with the notion that high achievement is not for them.</p><p></p><p>One might argue that the girls-only school is teaching a biased version of history by over-emphasising women's contributions, but the reality is that history has created its own gender-bias.</p><p></p><p>The last thing a self-conscious 13 year old girl needs is a biased view of the world, we need to celebrate the few female heroes that already exist, and uncover the ones that history has glossed over.</p><p></p><p>I cannot help thinking of that lone girl in my nephew's computer science class. I imagine she must be brave and determined to study computing. It cannot be easy being the only girl in class.</p><p></p><p>Lots of girls would like to do what she has chosen, but social pressure and competition with boys means that very few girls have the courage to follow their calling, especially if they are interested in 'geeky' subjects.</p><p></p><p>The girls-school students are simply better off than her in one regard: they are free to choose to study what they want without anybody compelling them to conform to traditional roles. There are no boys (like my nephew) to innocently inform her that she's in the wrong classroom.</p><p></p><p>It seems rather ironic that the easiest way to eliminate this gender bias from education is to segregate our children. But that's just a quick-fix - we need to work much harder to eliminate this kind of bias and celebrate female heroes within our co-educational schools. Girls will only be able to get a fair chance in life when the boys they study alongside see them as equals, and we're not there yet.</p><p></p><p><em>Belinda Parmar is the founder of social enterprise </em><a href=\"http://littlemissgeek.com/her-in-hero\" title=\"\"><em>Little Miss Geek</em></a><em> which campaigns to celebrate female tech pioneers </em></p><p></p><p><strong>Sign up to become a member of the </strong><a href=\"https://register.theguardian.com/women-in-leadership/\" title=\"\"><strong>Women in Leadership community here</strong></a><strong> for more comment, analysis and best practice direct to your inbox</strong></p><!-- Guardian Watermark: internal-code/content/421191398|2013-11-05T11:03:48Z|b9eda7be5be0f98a66d74f4f7a17669b5b21fcb6 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T10:01:27Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045593785/Teenagers-in-school-unifo-003.jpg",
+        "standfirst":"Gender-segregated education gives girls the chance to excel without pressures to conform to gender stereotypes",
+        "shortUrl":"http://gu.com/p/3kvdf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045593785/Teenagers-in-school-unifo-003.jpg",
+        "wordcount":"743",
+        "commentable":"true",
+        "internalContentCode":"421191398",
+        "allowUgc":"false",
+        "internalOctopusCode":"8253405",
+        "isPremoderated":"false",
+        "byline":"Belinda Parmar",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988349",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T10:01:27Z"
+      },
+      "tags":[{
+        "id":"women-in-leadership/women-in-leadership",
+        "type":"keyword",
+        "webTitle":"Women in Leadership",
+        "webUrl":"http://www.theguardian.com/women-in-leadership/women-in-leadership",
+        "apiUrl":"http://content.guardianapis.com/women-in-leadership/women-in-leadership",
+        "sectionId":"women-in-leadership",
+        "sectionName":"Women in Leadership",
+        "references":[]
+      },{
+        "id":"women-in-leadership/leadership",
+        "type":"keyword",
+        "webTitle":"Leadership",
+        "webUrl":"http://www.theguardian.com/women-in-leadership/leadership",
+        "apiUrl":"http://content.guardianapis.com/women-in-leadership/leadership",
+        "sectionId":"women-in-leadership",
+        "sectionName":"Women in Leadership",
+        "references":[]
+      },{
+        "id":"women-in-leadership/leadership-training",
+        "type":"keyword",
+        "webTitle":"Leadership training",
+        "webUrl":"http://www.theguardian.com/women-in-leadership/leadership-training",
+        "apiUrl":"http://content.guardianapis.com/women-in-leadership/leadership-training",
+        "sectionId":"women-in-leadership",
+        "sectionName":"Women in Leadership",
+        "references":[]
+      },{
+        "id":"women-in-leadership/policy",
+        "type":"keyword",
+        "webTitle":"Policy",
+        "webUrl":"http://www.theguardian.com/women-in-leadership/policy",
+        "apiUrl":"http://content.guardianapis.com/women-in-leadership/policy",
+        "sectionId":"women-in-leadership",
+        "sectionName":"Women in Leadership",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/belinda-parmar",
+        "type":"contributor",
+        "webTitle":"Belinda Parmar",
+        "webUrl":"http://www.theguardian.com/profile/belinda-parmar",
+        "apiUrl":"http://content.guardianapis.com/profile/belinda-parmar",
+        "bio":"<p>Belinda Parmar is the founder of social enterprise <a href=\"http://littlemissgeek.org/\">Little Miss Geek</a> and the CEO of <a href=\"http://ladygeek.com/\">Lady Geek</a>. The Lady Geeks campaign to inspire women to change the world through technology</p>",
+        "r2ContributorId":"54743",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421192747",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045588763/Teenagers-in-school-unifo-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"54",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045592250/Teenagers-in-school-unifo-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"130",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045593785/Teenagers-in-school-unifo-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"84",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045595049/Teenagers-in-school-unifo-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"132",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045596276/Teenagers-in-school-unifo-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"168",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045597690/Teenagers-in-school-unifo-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"180",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045598958/Teenagers-in-school-unifo-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"228",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045600231/Teenagers-in-school-unifo-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"276",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045600231/Teenagers-in-school-unifo-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"276",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421192748",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383045593785/Teenagers-in-school-unifo-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Roger Bamber",
+            "altText":"Teenagers in school uniforms in a drama class",
+            "height":"84",
+            "credit":"Roger Bamber/Alamy",
+            "caption":"A group of schoolchildren in a drama lesson at a co-educational school. Photograph: Roger Bamber/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

@@ -1,0 +1,2697 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"business/2013/oct/17/china-buy-uk-nuclear-power-stations-george-osborne",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-17T08:50:27Z",
+      "webTitle":"China will be allowed to buy UK nuclear power stations, George Osborne says",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/17/china-buy-uk-nuclear-power-stations-george-osborne",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/17/china-buy-uk-nuclear-power-stations-george-osborne",
+      "fields":{
+        "trailText":"<p>Chancellor's announcement paves way for Chinese companies to take stake in or own 100% of new nuclear power stations</p>",
+        "headline":"China will be allowed to buy UK nuclear power stations, George Osborne says",
+        "body":"<video data-media-id=\"gu-video-420261760\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/17/131017OsborneChina-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/17/131017OsborneChina/131017OsborneChina.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/17/131017OsborneChina_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/17/131017OsborneChina_3gpSml16x9.3gp\"></source>\n      </video><p>China could play an instrumental role in Britain's future nuclear power generation after George Osborne said companies in the world's second largest economy would be allowed to buy into the sector.</p><p>The decision would pave the way for Chinese companies to take a stake in or own 100% of new British nuclear power stations.</p><p>The chancellor made the announcement at the Taishan nuclear power plant on the final day of his trade visit to China, which was aimed at strengthening the UK's business ties with the country.</p><p>Chinese investment would likely begin with a minority stake in a power project, but majority ownership of subsequent new power stations was a possibility, the government said.</p><p>Osborne said it would pave the way for lower energy costs for British consumers.</p><p>\"Today is another demonstration of the next big step in the relationship between Britain and China – the world's oldest civil nuclear power and the world's fastest growing civil nuclear power,\" he said on Thursday.</p><p>\"It means the potential of more investment and jobs in Britain, and lower long-term energy costs for consumers.\"</p><p>The move followed <a href=\"http://www.theguardian.com/business/2013/oct/15/london-china-investment-rules-yuan\" title=\"\">an agreement reached earlier in the week which would see civil nuclear collaboration between the UK and China on investment, technology, construction and expertise</a>.</p><p>The government said that as well as supporting Chinese investment in the UK, the agreement would make sure that British companies including Rolls-Royce, International Nuclear Services, and engineering companies such as Mott MacDonald would be part of China's multibillion-pound new nuclear programme.</p><p>The energy minister, Ed Davey, said over the weekend that Britain was \"extremely close\" to agreeing a deal with France's EDF Energy to build <a href=\"http://uk.reuters.com/article/2013/10/13/uk-britain-nuclear-edf-idUKBRE99C09S20131013\" title=\"\">a new nuclear plant at Hinkley Point in Somerset</a>, with a Chinese company also expected to take part in the project.</p><p>During his trip to China, Osborne also unveiled a <a href=\"http://www.theguardian.com/politics/2013/oct/14/george-osborne-china-visa\" title=\"\">new visa system to make it easier for Chinese business leaders</a> and rich tourists to visit the UK.</p><p>He also made a surprise decision to allow Chinese banks to set up more easily in the UK, which <a href=\"http://www.theguardian.com/politics/2013/oct/16/osborne-chinese-banks-mps-check-city\" title=\"\">raised eyebrows among the cross-party Treasury select committee of MPs</a>.</p><p>Led by its chairman, Andrew Tyrie, the committee is seeking assurances that the chancellor consulted the City's regulatory bodies over the proposal to relax rules, and that they are satisfied with the plans.</p><!-- Guardian Watermark: internal-code/content/420230646|2013-11-05T11:03:48Z|afb28c061230c160960dc793daa1bb9990b8c812 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-17T16:51:03Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1381999122072/George-Osborne-visits-Chi-003.jpg",
+        "standfirst":"Chancellor's announcement paves way for Chinese companies to take stake in or own 100% of new nuclear power stations",
+        "shortUrl":"http://gu.com/p/3jj8c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1381999122072/George-Osborne-visits-Chi-003.jpg",
+        "wordcount":"372",
+        "commentable":"false",
+        "internalContentCode":"420230646",
+        "allowUgc":"false",
+        "internalOctopusCode":"8205730",
+        "isPremoderated":"false",
+        "byline":"Angela Monaghan",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982379",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T08:50:27Z"
+      },
+      "tags":[{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/nuclearpower",
+        "type":"keyword",
+        "webTitle":"Nuclear power",
+        "webUrl":"http://www.theguardian.com/environment/nuclearpower",
+        "apiUrl":"http://content.guardianapis.com/environment/nuclearpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/angela-monaghan",
+        "type":"contributor",
+        "webTitle":"Angela Monaghan",
+        "webUrl":"http://www.theguardian.com/profile/angela-monaghan",
+        "apiUrl":"http://content.guardianapis.com/profile/angela-monaghan",
+        "bio":"<p>Angela Monaghan is a reporter at the Guardian</p>",
+        "r2ContributorId":"56451",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/8/1375945830573/Angela-Monaghan-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420280335",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1381999122072/George-Osborne-visits-Chi-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne visits China",
+            "height":"84",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne meets the CEO and founder of Huawei during his trade visit to China.  Photograph: Bobby Yip/EPA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-420261760",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/17/131017OsborneChina-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/17/131017OsborneChina_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/17/131017OsborneChina_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/17/131017OsborneChina/131017OsborneChina.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/oct/17/china-britain-nuclear-industry",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-17T14:30:01Z",
+      "webTitle":"What does China want with Britain's nuclear industry? | Isabel Hilton",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/17/china-britain-nuclear-industry",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/17/china-britain-nuclear-industry",
+      "fields":{
+        "newspaperPageNumber":"38",
+        "trailText":"<strong>Isabel Hilton:</strong> The Chinese state is not philanthropic. Questions about safety, sovereignty and cost should be asked before we take its money",
+        "headline":"What does China want with Britain's nuclear industry?",
+        "body":"<p>For a chancellor so keen on the defence of UK national sovereignty against democratic Europeans, George Osborne's <a href=\"http://www.theguardian.com/business/2013/oct/17/china-buy-uk-nuclear-power-stations-george-osborne\" title=\"\">unbridled enthusiasm for Chinese investment in the UK's critical infrastructure</a> is striking. If all these memorandums of understanding come to fruition, Chinese entities will hold important stakes in water in the UK, airports, IT infrastructure and now nuclear power generation, all without a serious national debate on any potential risks such involvement might bring.</p><p>Since the Chinese government does its homework, it knows that Osborne represents a country reduced to penury by the financial crisis, and with some tricky, big-ticket items on its wishlist. Since the Chinese appreciate deference from their visitors, they must have been delighted by the chancellor. Britain is open for business, as he likes to say. Just make me an offer.</p><p>Neither China's <a href=\"http://www.theguardian.com/business/2012/nov/16/china-investment-corporation-eurozone-austerity-jin-liqun\" title=\"\">sovereign wealth fund</a> nor its state-owned enterprises are philanthropic. All have large war chests, and their search for profitable, secure investments around the world has stimulated competition among aspirant recipients. But good bargains are not always done in haste and a number of unanswered questions hang over China's proposed investment, future majority stake-holding and possible future operational involvement in Britain's nuclear power.</p><p>Some are hardy perennials: the world has 270,000 tonnes of high-level waste in temporary storage, an unlovely heap that grows by 10,000 tonnes each year. In 50 years of nuclear power, nobody has come up with a workable plan for the million years that safety regulations demand. Are the costs of that, and of decommissioning, built into the deal and if so, who pays?</p><p>Then there is public subsidy: nobody has ever built a nuclear power plant without it, but the mandatory opening up of European electricity systems to competition means consumers are no longer obliged to underwrite unlimited costs, or to pay for expensive nuclear energy. This transfers the financial risk to the owners and financiers – hence the difficulty of finding the cash. What is different here?</p><p><a href=\"http://news.xinhuanet.com/english/china/2013-04/26/c_124633021.htm\" title=\"\">French enthusiasm</a> is explained by the attempt to save their industry after decades of nuclear chill: <a href=\"http://www.theguardian.com/business/2013/sep/16/japan-nuclear-shutdown-raises-energy-prices\" title=\"\">Japan's plants are currently shuttered</a>, for obvious reasons; new licensing is suspended in the United States; many countries (Germany, Sweden, Switzerland, the Netherlands, Spain and Belgium) are phasing out nuclear power, or have never had it (Ireland, Austria, Norway, Greece, Portugal, Italy and Denmark).</p><p>But what is in it for China? China has been the global nuclear industry's main hope of survival in recent years. It is a newcomer, starting to build its first commercial reactor only in 1985. It now has 16 in operation and a further 26 under construction, and more are planned. Now China hopes to become the world's next big nuclear exporter and sees involvement in a British plant as a key step to gaining credibility in the market.</p><p>This is an ambitious programme, not least on the management side. Most nuclear accidents resulted from human error and today industry experts are worried by China's weak regulatory structure and its unproven capacity to build a safe management culture at such speed. Even in China, post <a href=\"http://www.theguardian.com/environment/fukushima\" title=\"\">Fukushima</a>, public anxiety over the nuclear programme has begun to spill out on to the streets: earlier this year, public protests halted the construction of a waste processing plant in Guangdong that the authorities had insisted was perfectly safe.</p><p>Surely we, too, should be asking more questions of a chancellor who appears to think that Chinese money buys him out of the intractable difficulties and uncertain costs of nuclear power? Will British consumers end up paying high energy prices to guarantee a Chinese investor a good return? What future leverage will Chinese investment in British infrastructure give to an emerging power that frequently says it does not accept established global rules? What degree of transparency and accountability can we, as supplicants, enforce on our new partner? What guarantee have we that in depending on Chinese finance, we haven't surrendered more than we bargained for? Perhaps it is not too late to ask.</p><!-- Guardian Watermark: internal-code/content/420263056|2013-11-05T11:03:48Z|7943c4fb769fcb9da41cf6e4bb860e42ecf32cd6 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-17T23:06:19Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018291431/Chancellor-of-the-Exchequ-003.jpg",
+        "standfirst":"The Chinese state is not philanthropic. Questions about safety, sovereignty and cost should be asked before we take its money",
+        "shortUrl":"http://gu.com/p/3jjh9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018291431/Chancellor-of-the-Exchequ-003.jpg",
+        "wordcount":"654",
+        "commentable":"true",
+        "internalContentCode":"420263056",
+        "allowUgc":"false",
+        "internalOctopusCode":"8207469",
+        "isPremoderated":"false",
+        "byline":"Isabel Hilton",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-18",
+        "internalPageCode":"1982619",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T14:30:01Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/foreignpolicy",
+        "type":"keyword",
+        "webTitle":"Foreign policy",
+        "webUrl":"http://www.theguardian.com/politics/foreignpolicy",
+        "apiUrl":"http://content.guardianapis.com/politics/foreignpolicy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"environment/nuclearpower",
+        "type":"keyword",
+        "webTitle":"Nuclear power",
+        "webUrl":"http://www.theguardian.com/environment/nuclearpower",
+        "apiUrl":"http://content.guardianapis.com/environment/nuclearpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/commentanddebate",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & debate",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/isabelhilton",
+        "type":"contributor",
+        "webTitle":"Isabel Hilton",
+        "webUrl":"http://www.theguardian.com/profile/isabelhilton",
+        "apiUrl":"http://content.guardianapis.com/profile/isabelhilton",
+        "bio":"<p>Isabel Hilton is the editor of china<br />dialogue.net</p>",
+        "rcsId":"GNL217737",
+        "r2ContributorId":"15759",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/12/1365759126889/Isabel-Hilton-NEW.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420264446",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018285288/Chancellor-of-the-Exchequ-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"54",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018289821/Chancellor-of-the-Exchequ-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"130",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018291431/Chancellor-of-the-Exchequ-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"84",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018293080/Chancellor-of-the-Exchequ-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"132",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018294654/Chancellor-of-the-Exchequ-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"168",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018296400/Chancellor-of-the-Exchequ-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"180",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018298148/Chancellor-of-the-Exchequ-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"228",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018299798/Chancellor-of-the-Exchequ-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"276",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018299798/Chancellor-of-the-Exchequ-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"276",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China, where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420264447",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382018291431/Chancellor-of-the-Exchequ-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"KOTA ENDO / POOL",
+            "altText":"Chancellor of the Exchequer Osborne visits China",
+            "height":"84",
+            "credit":"KOTA ENDO / POOL/EPA",
+            "caption":"George Osborne in China where he agreed to allow Chinese investors to buy into the British nuclear industry. Photograph: Koto Endo/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/nils-pratley-on-finance/2013/oct/16/andrew-tyrie-questions-chinese-banks-uk",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-16T18:52:58Z",
+      "webTitle":"Andrew Tyrie's questions about Chinese banks in UK must be answered in full",
+      "webUrl":"http://www.theguardian.com/business/nils-pratley-on-finance/2013/oct/16/andrew-tyrie-questions-chinese-banks-uk",
+      "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance/2013/oct/16/andrew-tyrie-questions-chinese-banks-uk",
+      "fields":{
+        "newspaperPageNumber":"32",
+        "trailText":"Chairman of the Treasury select committee is right to demand answers from Bank of England over plans for Chinese banks",
+        "headline":"Andrew Tyrie's questions about Chinese banks in UK must be answered in full",
+        "body":"<p>Well done, Andrew Tyrie. The chairman of the Treasury select committee is right to demand answers from the Bank of England on how it has come to pass that Chinese banks, usually regarded as some of the world's most impenetrable financial institutions, may soon be allowed to operate in London under a gentle form of regulatory oversight.</p><p>The difference between a bank branch and a bank subsidiary may seem a dry distinction but, in the world of financial regulation, it is critical.</p><p>Branches of foreign-controlled banks can operate with less capital and the lead role in their oversight is taken by regulators in the home country. Banks from the European Economic Area can operate in the UK this way and the privilege is usually only extended to banks from countries, such as the US, where standards of regulation are perceived to be high and where the flow of information is smooth between the Bank of England and its local counterpart.</p><p>Subsidiaries, on the other hand, must operate to UK standards on capital and be subject to normal UK regulatory scrutiny. In the post-crisis world, it had been assumed that the Bank wished to see fewer branches and more subsidiaries. That way the UK financial system ought to be safer, other factors being equal.</p><p>But George Osborne has now said that Chinese banks will be allowed to apply to open branches in the UK. These would be wholesale branches, rather than retail branches taking deposits and savings from the public. Even so, this looks like a huge shift in UK regulatory policy that had not been aired until the chancellor unveiled the news to his (presumably delighted) hosts in China this week.</p><p>Tyrie wants to know whether the Threadneedle Street's Prudential Regulation Authority (PRA) was leant upon; whether it is happy with the arrangements described by Osborne; whether the PRA's policy on branches and subsidiaries has indeed changed; and whether any changes apply only to China.</p><p>These questions are urgent. The government's current love-in with Beijing will look a dismal policy if the UK is actually whipping up business by giving special treatment to China's state-owned banks special treatment. Yes, it would be jolly nice for the City to be able to trade renminbis to its heart's content – but not if the cost is a watering down of regulatory reforms and the Bank's authority. Tyrie's questions require point-by-point answers.</p><!-- Guardian Watermark: internal-code/content/420183615|2013-11-05T11:03:48Z|4ce3c6e0142ce93409f185d77cead08dd95045c5 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T23:05:45Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949252712/Chinese-yuan-notes-004.jpg",
+        "standfirst":"Chairman of the Treasury select committee is right to demand answers from Bank of England over plans for Chinese banks",
+        "shortUrl":"http://gu.com/p/3jj3j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949252712/Chinese-yuan-notes-004.jpg",
+        "wordcount":"393",
+        "commentable":"true",
+        "internalContentCode":"420183615",
+        "allowUgc":"false",
+        "internalOctopusCode":"8203868",
+        "isPremoderated":"false",
+        "byline":"Nils Pratley",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-17",
+        "internalPageCode":"1982251",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-23T18:52:58Z"
+      },
+      "tags":[{
+        "id":"business/bankofenglandgovernor",
+        "type":"keyword",
+        "webTitle":"Bank of England",
+        "webUrl":"http://www.theguardian.com/business/bankofenglandgovernor",
+        "apiUrl":"http://content.guardianapis.com/business/bankofenglandgovernor",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/nils-pratley-on-finance",
+        "type":"blog",
+        "webTitle":"Nils Pratley on finance",
+        "webUrl":"http://www.theguardian.com/business/nils-pratley-on-finance",
+        "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/blog",
+        "type":"blog",
+        "webTitle":"Business blog",
+        "webUrl":"http://www.theguardian.com/business/blog",
+        "apiUrl":"http://content.guardianapis.com/business/blog",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/nilspratley",
+        "type":"contributor",
+        "webTitle":"Nils Pratley",
+        "webUrl":"http://www.theguardian.com/profile/nilspratley",
+        "apiUrl":"http://content.guardianapis.com/profile/nilspratley",
+        "bio":"<p>Nils Pratley is the Guardian's financial editor. Read his opinions on markets, boardroom winner and losers and business values on his <a href=\"http://www.guardian.co.uk/business/nils-pratley-on-finance\">Nils Pratley on Finance blog</a>. Follow him on Twitter at <a href=\"http://twitter.com/nilspratley\">@nilspratley</a></p>",
+        "rcsId":"GNL001064",
+        "r2ContributorId":"16201",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2008/02/06/nilspratleyb140140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420184579",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949247606/Chinese-yuan-notes-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"54",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949250056/Chinese-yuan-notes-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"340",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949251530/Chinese-yuan-notes-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"130",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949252712/Chinese-yuan-notes-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"84",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949253892/Chinese-yuan-notes-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"132",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949255116/Chinese-yuan-notes-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"168",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949256318/Chinese-yuan-notes-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"180",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949257603/Chinese-yuan-notes-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"228",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949259068/Chinese-yuan-notes-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"276",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949260407/Chinese-yuan-notes-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"372",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949259068/Chinese-yuan-notes-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"276",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420184580",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381949252712/Chinese-yuan-notes-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Stringer/China",
+            "altText":"Chinese yuan notes",
+            "height":"84",
+            "credit":"Stringer/China/Reuters",
+            "caption":"Chinese banks may soon be allowed to operate in London under a relatively gentle form of regulatory oversight. Photograph: Stringer/China/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"politics/2013/oct/16/osborne-chinese-banks-mps-check-city",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-16T16:39:10Z",
+      "webTitle":"Osborne's open door to Chinese banks prompts MPs' check on City rules",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/16/osborne-chinese-banks-mps-check-city",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/16/osborne-chinese-banks-mps-check-city",
+      "fields":{
+        "newspaperPageNumber":"28",
+        "trailText":"<p>Andrew Tyrie, Treasury committee chair, questions regulator after chancellor bid to draw more renminbi trade to London</p>",
+        "headline":"Osborne's open door to Chinese banks prompts MPs' check on City rules",
+        "body":"<p>This week's surprise decision by George Osborne to allow Chinese banks to set up more easily in the UK is being questioned by the Treasury select committee of MPs.</p><p>Andrew Tyrie, chairman of the committee, is seeking assurances that the chancellor did not put too much pressure on the City's regulatory bodies to relax rules to entice Chinese investment banking businesses to set up in London.</p><p>The Conservative MP has written to Andrew Bailey, chief executive of Prudential Regulation Authority, to find out if he was consulted about allowing Chinese banks to operate as branches in the UK rather than as subsidiaries – the latter option bringing tougher oversight by the City regulator.</p><p>Osborne announced the plans this week during two days of talks with his Chinese counterpart, the vice-premier Ma Kai, as part of his goal of attracting more trading of the renminbi in London, already the destination of 41% of global currency trading.</p><p>The report by the parliamentary commission on banking standards, chaired by Tyrie but now disbanded, had noted that some Chinese banks were moving away from the UK to Luxembourg because of a refusal by the City regulators to allow them to set up as branches in the UK.</p><p>Branches are treated as extensions of the overseas bank. The alternative is to form a subsidiary and meet tough standards on capital and liquidity. Bank of China already operates a branch in the UK.</p><p>Tyrie said in the letter to Bailey, which he also copied to the chancellor: \"I would be grateful for your assurance that the PRA was consulted about this announcement, is content with the arrangement that was proposed, and in particular does not have concerns on prudential grounds.</p><p>\"Clarity is needed about whether conditions have been attached and whether such conditions constitute a change in policy. I would be grateful for an assurance that any change is not specific to a particular country and that you were not put under any due pressure to agree to something about which you may have had concerns.\"</p><p>The cross-party commission, set up in the wake of the Libor rigging scandal, also recommended that the Bank of England governor be given a statutory power to reveal if lobbying to seek rule changes has occurred – although the government did not adopt this proposal.</p><p>Neither the PRA nor the Treasury would comment immediately on Tyrie's letter.</p><!-- Guardian Watermark: internal-code/content/420172435|2013-11-05T11:03:48Z|ef0c23283c8db4d5c90f8850c3edbedbe5a44cd6 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T23:57:35Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941457405/George-Osborne-in-China-1-004.jpg",
+        "standfirst":"Andrew Tyrie, Treasury committee chair, questions regulator after chancellor bid to draw more renminbi trade to London",
+        "shortUrl":"http://gu.com/p/3jtqz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941457405/George-Osborne-in-China-1-004.jpg",
+        "wordcount":"388",
+        "commentable":"false",
+        "internalContentCode":"420172435",
+        "allowUgc":"false",
+        "internalOctopusCode":"8203018",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-17",
+        "internalPageCode":"1982148",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T16:39:10Z"
+      },
+      "tags":[{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/economy",
+        "type":"keyword",
+        "webTitle":"Economic policy",
+        "webUrl":"http://www.theguardian.com/politics/economy",
+        "apiUrl":"http://content.guardianapis.com/politics/economy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/andrewtyrie",
+        "type":"contributor",
+        "webTitle":"Andrew Tyrie",
+        "webUrl":"http://www.theguardian.com/profile/andrewtyrie",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewtyrie",
+        "bio":"<p>Andrew Tyrie is Conservative member of parliament for Chichester and chairman of the all-party parliamentary group on extraordinary rendition</p>",
+        "rcsId":"GNL026381",
+        "r2ContributorId":"22155",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/06/04/Andrew_Tyrie_140x140.jpg",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.theguardian.com/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/bankofenglandgovernor",
+        "type":"keyword",
+        "webTitle":"Bank of England",
+        "webUrl":"http://www.theguardian.com/business/bankofenglandgovernor",
+        "apiUrl":"http://content.guardianapis.com/business/bankofenglandgovernor",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420201474",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941452583/George-Osborne-in-China-1-001.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"54",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941454763/George-Osborne-in-China-1-002.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"340",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941456188/George-Osborne-in-China-1-003.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"130",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941457405/George-Osborne-in-China-1-004.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"84",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941458681/George-Osborne-in-China-1-005.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"132",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941459914/George-Osborne-in-China-1-006.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"168",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941461459/George-Osborne-in-China-1-007.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"180",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941462856/George-Osborne-in-China-1-008.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"228",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941464164/George-Osborne-in-China-1-009.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"276",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941465413/George-Osborne-in-China-1-010.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"372",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941464164/George-Osborne-in-China-1-009.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"276",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420201475",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381941457405/George-Osborne-in-China-1-004.jpg",
+          "typeData":{
+            "source":"Rex",
+            "photographer":"Mao Siqian",
+            "altText":"George Osborne in China, 16 Oct 2013",
+            "height":"84",
+            "credit":"Mao Siqian/Rex",
+            "caption":"George Osborne addressing a Chinese business on Wednesday during his visit to the country to encourage investors. Photograph: Mao Siqian/Rex",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/oct/17/china-buy-uk-nuclear-power-stations-george-osborne",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-17T08:50:27Z",
+      "webTitle":"China will be allowed to buy UK nuclear power stations, George Osborne says",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/17/china-buy-uk-nuclear-power-stations-george-osborne",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/17/china-buy-uk-nuclear-power-stations-george-osborne",
+      "fields":{
+        "trailText":"<p>Chancellor's announcement paves way for Chinese companies to take stake in or own 100% of new nuclear power stations</p>",
+        "headline":"China will be allowed to buy UK nuclear power stations, George Osborne says",
+        "body":"<video data-media-id=\"gu-video-420261760\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/17/131017OsborneChina-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/17/131017OsborneChina/131017OsborneChina.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/17/131017OsborneChina_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/17/131017OsborneChina_3gpSml16x9.3gp\"></source>\n      </video><p>China could play an instrumental role in Britain's future nuclear power generation after George Osborne said companies in the world's second largest economy would be allowed to buy into the sector.</p><p>The decision would pave the way for Chinese companies to take a stake in or own 100% of new British nuclear power stations.</p><p>The chancellor made the announcement at the Taishan nuclear power plant on the final day of his trade visit to China, which was aimed at strengthening the UK's business ties with the country.</p><p>Chinese investment would likely begin with a minority stake in a power project, but majority ownership of subsequent new power stations was a possibility, the government said.</p><p>Osborne said it would pave the way for lower energy costs for British consumers.</p><p>\"Today is another demonstration of the next big step in the relationship between Britain and China – the world's oldest civil nuclear power and the world's fastest growing civil nuclear power,\" he said on Thursday.</p><p>\"It means the potential of more investment and jobs in Britain, and lower long-term energy costs for consumers.\"</p><p>The move followed <a href=\"http://www.theguardian.com/business/2013/oct/15/london-china-investment-rules-yuan\" title=\"\">an agreement reached earlier in the week which would see civil nuclear collaboration between the UK and China on investment, technology, construction and expertise</a>.</p><p>The government said that as well as supporting Chinese investment in the UK, the agreement would make sure that British companies including Rolls-Royce, International Nuclear Services, and engineering companies such as Mott MacDonald would be part of China's multibillion-pound new nuclear programme.</p><p>The energy minister, Ed Davey, said over the weekend that Britain was \"extremely close\" to agreeing a deal with France's EDF Energy to build <a href=\"http://uk.reuters.com/article/2013/10/13/uk-britain-nuclear-edf-idUKBRE99C09S20131013\" title=\"\">a new nuclear plant at Hinkley Point in Somerset</a>, with a Chinese company also expected to take part in the project.</p><p>During his trip to China, Osborne also unveiled a <a href=\"http://www.theguardian.com/politics/2013/oct/14/george-osborne-china-visa\" title=\"\">new visa system to make it easier for Chinese business leaders</a> and rich tourists to visit the UK.</p><p>He also made a surprise decision to allow Chinese banks to set up more easily in the UK, which <a href=\"http://www.theguardian.com/politics/2013/oct/16/osborne-chinese-banks-mps-check-city\" title=\"\">raised eyebrows among the cross-party Treasury select committee of MPs</a>.</p><p>Led by its chairman, Andrew Tyrie, the committee is seeking assurances that the chancellor consulted the City's regulatory bodies over the proposal to relax rules, and that they are satisfied with the plans.</p><!-- Guardian Watermark: internal-code/content/420230646|2013-11-05T11:03:48Z|afb28c061230c160960dc793daa1bb9990b8c812 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-17T16:51:03Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1381999122072/George-Osborne-visits-Chi-003.jpg",
+        "standfirst":"Chancellor's announcement paves way for Chinese companies to take stake in or own 100% of new nuclear power stations",
+        "shortUrl":"http://gu.com/p/3jj8c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1381999122072/George-Osborne-visits-Chi-003.jpg",
+        "wordcount":"372",
+        "commentable":"false",
+        "internalContentCode":"420230646",
+        "allowUgc":"false",
+        "internalOctopusCode":"8205730",
+        "isPremoderated":"false",
+        "byline":"Angela Monaghan",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982379",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T08:50:27Z"
+      },
+      "tags":[{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/nuclearpower",
+        "type":"keyword",
+        "webTitle":"Nuclear power",
+        "webUrl":"http://www.theguardian.com/environment/nuclearpower",
+        "apiUrl":"http://content.guardianapis.com/environment/nuclearpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/angela-monaghan",
+        "type":"contributor",
+        "webTitle":"Angela Monaghan",
+        "webUrl":"http://www.theguardian.com/profile/angela-monaghan",
+        "apiUrl":"http://content.guardianapis.com/profile/angela-monaghan",
+        "bio":"<p>Angela Monaghan is a reporter at the Guardian</p>",
+        "r2ContributorId":"56451",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/8/1375945830573/Angela-Monaghan-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420280335",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/17/1381999122072/George-Osborne-visits-Chi-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne visits China",
+            "height":"84",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne meets the CEO and founder of Huawei during his trade visit to China.  Photograph: Bobby Yip/EPA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-420261760",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/17/131017OsborneChina-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/17/131017OsborneChina_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/17/131017OsborneChina_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/17/131017OsborneChina/131017OsborneChina.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/17/131017OsborneChina_8207727.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/17/131017OsborneChina_8207727.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/17/china-investment-uk-osborne-nuclear",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-17T18:24:04Z",
+      "webTitle":"China's investment in UK: Osborne pushes the nuclear button ",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/17/china-investment-uk-osborne-nuclear",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/17/china-investment-uk-osborne-nuclear",
+      "fields":{
+        "newspaperPageNumber":"15",
+        "trailText":"Chancellor determined to welcome Chinese investment across the board, but critics sound warning on firms' transparency",
+        "headline":"China's investment in UK: Osborne pushes the nuclear button",
+        "body":"<p>The announcement that Chinese companies can take a stake in British nuclear plants was hardly a surprise: George Osborne had already told reporters that the UK welcomed Chinese investment in all its infrastructure – citing the sovereign wealth fund CIC's existing investment in Thames Water and Heathrow.</p><p>China has massively <a href=\"http://www.ft.com/intl/cms/s/0/806f926e-afc7-11e1-a025-00144feabdc0.html\" title=\"\">increased investment in Europe</a> in recent years. One study this spring, by private equity firm A Capital, found that Chinese state-owned companies invested more than $12.6bn (£7.8bn) in the continent last year: a year-on-year increase of about 20%. Cash-strapped <a href=\"http://www.spiegel.de/international/business/study-finds-massive-investment-in-europe-by-chinese-state-companies-a-894570.html\" title=\"\">European countries have proved relatively welcoming</a>.</p><p>Involvement in critical infrastructure – and particularly the nuclear sector – is a more delicate issue. Jonathan Fenby, director of the China team at research service Trusted Sources, said: \"The question is whether people in Britain will say, 'Our electricity is being sold to the Chinese and if something happens and we say something we shouldn't, they will turn off the lights.' I think that's pretty unlikely, but nuclear brings a level of sensitivity.\"</p><p>But on the Chinese side, the same concerns – diversifying holdings, gaining technical knowledge and turning a profit – apply. The UK is expected to guarantee a <a href=\"http://online.wsj.com/news/articles/SB10001424052702304864504579140952002183822\" title=\"\">generous price for nuclear-generated electricity </a>to ensure more plants are built.</p><p>\"All these deals have a commercial logic to them. In this case they will get, they hope, some technological expertise which is what they have wanted for their domestic nuclear programme. Then, if it is a successful investment, that helps them vis-a-vis joint ventures elsewhere in the world or selling on their technology,\" said Fenby.</p><p>China already has 17 nuclear reactors and another 28 plants under way at home, although construction has been held up by a moratorium that was imposed after the Fukushima crisis.</p><p>If firms manage to meet Britain's strict regulatory requirements, it will give them credibility as they seek to sell their technology elsewhere, experts say. The memorandum of understanding also includes training for Chinese technicians in Britain in radioactive waste management.</p><p>Osborne's determination to welcome the Chinese across the board was underscored by his visit to the HQ of telecoms equipment firm Huawei in Shenzhen. Its founder is a former officer with the People's Liberation Army, and despite its insistence that it is not tied to the military or Chinese government, it has faced hostility or outright bans on its involvement in projects in the US, Australia and Canada.</p><p>\"There are some western governments that have blocked Huawei from making investments. Not Britain. Quite the opposite. That is why I was pleased to welcome Huawei's opening of a flagship office in our country in June, and of £1.3bn of investment that came with it,\" the chancellor said.</p><p>But while Osborne this week praised Chinese firms as \"very straightforward partners\", others are more wary and say greater openness is crucial.</p><p>The nuclear announcement came on the same day that anti-corruption watchdog Transparency International gave Chinese companies the worst ratings in a survey of the openness of firms in Brics economies. Eight of the 10 worst-performing companies – including Huawei – were Chinese, scoring zero on a scale where 10 indicated the greatest transparency.</p><p>\"Results show that companies from China lag behind in every dimension with an overall score of 20%,\" Transparency said in the report.</p><p>\"Considering their growing influence in markets around the world, this poor performance is of concern.\"</p><!-- Guardian Watermark: internal-code/content/420291401|2013-11-05T11:03:48Z|dd1b8cf7df5909f01cf6626beda249d9d4a13cd1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-17T23:52:35Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034135872/George-Osborne-with-Guo-L-004.jpg",
+        "standfirst":"Chancellor determined to welcome Chinese investment across the board, but critics sound warning on firms' transparency",
+        "shortUrl":"http://gu.com/p/3jjqd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034135872/George-Osborne-with-Guo-L-004.jpg",
+        "wordcount":"548",
+        "commentable":"false",
+        "internalContentCode":"420291401",
+        "allowUgc":"false",
+        "internalOctopusCode":"8209385",
+        "isPremoderated":"false",
+        "byline":"Tania Branigan in Beijing",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-18",
+        "internalPageCode":"1982866",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T18:24:04Z"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/nuclearpower",
+        "type":"keyword",
+        "webTitle":"Nuclear power",
+        "webUrl":"http://www.theguardian.com/environment/nuclearpower",
+        "apiUrl":"http://content.guardianapis.com/environment/nuclearpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"tone/analysis",
+        "type":"tone",
+        "webTitle":"Analysis",
+        "webUrl":"http://www.theguardian.com/tone/analysis",
+        "apiUrl":"http://content.guardianapis.com/tone/analysis",
+        "references":[]
+      },{
+        "id":"profile/taniabranigan",
+        "type":"contributor",
+        "webTitle":"Tania Branigan",
+        "webUrl":"http://www.theguardian.com/profile/taniabranigan",
+        "apiUrl":"http://content.guardianapis.com/profile/taniabranigan",
+        "bio":"<p>Tania Branigan is <a href=\"http://www.guardian.co.uk/world/china\">China correspondent</a> for the Guardian</p>",
+        "rcsId":"GNL004773",
+        "r2ContributorId":"16507",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/tania_branigan_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420293552",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034131236/George-Osborne-with-Guo-L-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"54",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034133276/George-Osborne-with-Guo-L-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"340",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034134551/George-Osborne-with-Guo-L-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"130",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034135872/George-Osborne-with-Guo-L-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"84",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034137677/George-Osborne-with-Guo-L-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"132",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034138989/George-Osborne-with-Guo-L-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"168",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034140345/George-Osborne-with-Guo-L-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"180",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034141651/George-Osborne-with-Guo-L-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"228",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034143000/George-Osborne-with-Guo-L-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"276",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034144588/George-Osborne-with-Guo-L-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"372",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034143000/George-Osborne-with-Guo-L-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"276",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420293553",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034135872/George-Osborne-with-Guo-L-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"George Osborne with Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF",
+            "height":"84",
+            "credit":"Pool/Getty Images",
+            "caption":"George Osborne, flanked by Guo Liming of Taishan Nuclear Power and Vincent de Rivaz of EDF Energy, walk past a nuclear reactor under construction in Guangdong province, China. Photograph: Pool/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/oct/17/nuclear-expert-warning-chinese-role-uk-plants",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-10-17T19:19:27Z",
+      "webTitle":"Nuclear expert raises concerns about Chinese role in UK's new nuclear plants",
+      "webUrl":"http://www.theguardian.com/environment/2013/oct/17/nuclear-expert-warning-chinese-role-uk-plants",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/oct/17/nuclear-expert-warning-chinese-role-uk-plants",
+      "fields":{
+        "newspaperPageNumber":"15",
+        "trailText":"<p>UK government adviser John Large says Chinese firms are rooted in state system without independent safety regulators</p>",
+        "headline":"Nuclear expert raises concerns about Chinese role in UK's new nuclear plants",
+        "body":"<p>One of Britain's leading nuclear engineering consultants has raised serious concerns about the safety implications of handing over some of Britain's nuclear plants to Chinese operators.</p><p>John Large, a government adviser, said he felt uncomfortable with the lack of transparency around the Chinese atomic industry, which has been drafted in to help the UK by George Osborne on the chancellor's trade mission to China. Osborne has given the green light to Chinese nuclear firms taking majority stakes in the UK's next generation of nuclear plants.</p><p>The first deal is likely to be unveiled next week, with China General Nuclear Power Corporation (CGNPC) taking a minority stake with the main operator, France's EDF, to build the new Hinkley Point C power station in Somerset. No UK firms are involved after Centrica pulled out.</p><p>Large, who has advised the UK government on nuclear issues, said: \"We can see that even with the French operatorship of UK nuclear power stations [through EDF] that there are differences in the regulatory regimes in France and the UK.</p><p>\"But these problems would be much more profound with the Chinese, who like the Russians, are rooted in a government system without independent [safety] regulators,\" he said.</p><p>His warning came as a report from the anti-corruption organisation Transparency International highlighted Chinese firms as some of the most secretive within the world's fastest-growing markets.</p><p>Large said it would be quite easy to supervise a US company working in Britain because they were used to operating under the American safety regime, which is noted for its openness.</p><p>But he said he was very wary of the \"totally non-transparent\" Chinese regulatory system, which left outsiders with almost no idea how it really worked.</p><p>Large feared that the Treasury's enthusiasm for winning and keeping foreign investment might mean pressure being brought to bear on the UK's Office for Nuclear Regulation to gloss over problems encountered with a Chinese operator.</p><p>The reaction from Large, who in the past also helped the Russian government raise the stricken nuclear submarine Kursk, comes after Osborne endorsed Chinese firms' purchase of stakes in British reactors, including majority ownership.</p><p>The Treasury said: \"While any initial Chinese stake in a nuclear-power project is likely to be a minority stake, over time stakes in subsequent new power stations could be majority stakes.\"</p><p>But it added: \"Any investment from any country has to comply with rigorous regulatory standards for safety and security.\"</p><p>The government is expected to agree a deal over a generous 35-year subsidy regime to enable EDF and CGNPC to proceed with building a new Hinkley C reactor.</p><p>There has always been unease in some quarters about the security issues around inviting China to take a close role in certain industries such as telecoms and power. A leader from the GMB union recently told the Independent it was \"almost Orwellian\" to allow a country like China, which has been linked to allegations of corporate hacking, to be allowed access to highly sensitive energy infrastructure.</p><p>The concerns came as a report showed that China has the least transparent companies operating in the major emerging economies of Brazil, India, Russia and South Africa. In a survey of 75 companies across the Brics by Transparency International, Chinese companies were the least likely to publish financial information and vital details about corporate structure that allows them to be held to account.</p><p>Of 33 Chinese firms surveyed, including Chery Automobile and China National Offshore Oil Corporation, none has made any public statements on outlawing bribery.</p><p>Robert Barrington, executive director of Transparency International, said: \"There is a lack of transparency about some global companies in emerging markets, particularly in China. As they expand, that is a problem because the citizens of the countries in which they are operating will want to know some basic things about them. And indeed we think they have a right to know.\"</p><p>\"Part of the quid pro quo of coming into the international arena is that you have to play by international norms.\"</p><p>Barrington said Osborne had to ensure that Chinese firms operating in the UK met British legal and company standards. \"[Osborne] hasn't sent that message out publicly – I hope he is doing it privately.\"</p><p>• This article was amended on 18 October 2013 to correct the spelling of the Russian submarine Kursk</p><!-- Guardian Watermark: internal-code/content/420296488|2013-11-05T11:03:48Z|45595ff0291890ec4f42dd785f294ab3e2e3d42c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-18T11:21:58Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037415171/George-Osborne-and-Guo-Li-003.jpg",
+        "standfirst":"UK government adviser John Large says Chinese firms are rooted in state system without independent safety regulators",
+        "shortUrl":"http://gu.com/p/3jkvc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037415171/George-Osborne-and-Guo-Li-003.jpg",
+        "wordcount":"696",
+        "commentable":"false",
+        "internalContentCode":"420296488",
+        "allowUgc":"false",
+        "internalOctopusCode":"8207687",
+        "isPremoderated":"false",
+        "byline":"Terry Macalister and Jennifer Rankin",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-18",
+        "internalPageCode":"1982892",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T19:19:27Z"
+      },
+      "tags":[{
+        "id":"environment/nuclearpower",
+        "type":"keyword",
+        "webTitle":"Nuclear power",
+        "webUrl":"http://www.theguardian.com/environment/nuclearpower",
+        "apiUrl":"http://content.guardianapis.com/environment/nuclearpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/regulators",
+        "type":"keyword",
+        "webTitle":"Regulators",
+        "webUrl":"http://www.theguardian.com/business/regulators",
+        "apiUrl":"http://content.guardianapis.com/business/regulators",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/edf",
+        "type":"keyword",
+        "webTitle":"EDF Energy",
+        "webUrl":"http://www.theguardian.com/business/edf",
+        "apiUrl":"http://content.guardianapis.com/business/edf",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/terrymacalister",
+        "type":"contributor",
+        "webTitle":"Terry Macalister",
+        "webUrl":"http://www.theguardian.com/profile/terrymacalister",
+        "apiUrl":"http://content.guardianapis.com/profile/terrymacalister",
+        "bio":"<p>Terry Macalister is energy editor of the Guardian. He has been employed at the paper and website for 12 years and previously worked for the Independent and other national titles</p>",
+        "rcsId":"GNL030712",
+        "r2ContributorId":"16511",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/terry_macallister_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/jennifer-rankin",
+        "type":"contributor",
+        "webTitle":"Jennifer Rankin",
+        "webUrl":"http://www.theguardian.com/profile/jennifer-rankin",
+        "apiUrl":"http://content.guardianapis.com/profile/jennifer-rankin",
+        "r2ContributorId":"55690",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/14/1376462480287/Jennifer-Rankin-003.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420348623",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037408478/George-Osborne-and-Guo-Li-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"54",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037413317/George-Osborne-and-Guo-Li-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"340",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037415171/George-Osborne-and-Guo-Li-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"84",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037416782/George-Osborne-and-Guo-Li-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"132",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037418636/George-Osborne-and-Guo-Li-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"168",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037420223/George-Osborne-and-Guo-Li-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"180",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037421875/George-Osborne-and-Guo-Li-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"228",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037423593/George-Osborne-and-Guo-Li-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"276",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037425390/George-Osborne-and-Guo-Li-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"372",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037423593/George-Osborne-and-Guo-Li-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"276",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor being built in Guangdong, China. Photograph: Bobby Yip/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420348624",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/10/17/1382037415171/George-Osborne-and-Guo-Li-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Bobby Yip",
+            "altText":"George Osborne and Guo Liming, of Taishan Nuclear Power, in front of a nuclear reactor in Guangdong",
+            "height":"84",
+            "credit":"Bobby Yip/EPA",
+            "caption":"George Osborne and Guo Liming, of Taishan Nuclear Power Joint Venture Company, in front of a nuclear reactor being built in Guangdong, China.  Photograph: Bobby Yip/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/oct/18/china-economy-gdp-q3-78",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-18T04:05:54Z",
+      "webTitle":"China's economy grows by 7.8%",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/18/china-economy-gdp-q3-78",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/18/china-economy-gdp-q3-78",
+      "fields":{
+        "trailText":"Third-quarter GDP grew at the fastest pace this year, but China on course for worst performance in 23 years",
+        "headline":"China's economy grows by 7.8%",
+        "body":"<p>China's economy grew 7.8% in the third quarter, its fastest pace this year and in line with expectations, as firmer foreign and domestic demand lifted factory production and retail sales.</p> <p>Yet any optimism from the government figures released on Friday could fade quickly as global demand remains volatile, which was underlined by a surprise fall in exports in September. Efforts at home to engineer slower but more sustainable growth will also weigh on the economy in coming quarters, analysts say.</p> <p>\"The Q3 GDP figure is in line with market expectations but the uncertainty is whether the current recovery is sustainable,\" said Shen Jianguang, chief China economist with Mizuho Securities in Hong Kong.</p> <p>\"We think the recovery in the third quarter was mainly driven by the strong momentum of the property market.\"</p> <p>After three decades of blistering expansion fuelled by exports and investment, Beijing is trying to shift the economic mix so that activity is geared much more to consumption. That means a slowdown from the double-digit growth of previous years.</p> <p>Analysts polled by Reuters had expected the world's second-largest economy to grow 7.8% in the third quarter from a year earlier, picking up from 7.5% in the second quarter and compared with 7.7% in the first. The latest expansion was the strongest since 7.9% in the fourth quarter of 2012.</p> <p>The data showed that the economy grew 2.2% on a seasonally adjusted basis from the previous quarter.</p> <p>The GDP readings keep China on track to achieve the government's 2013 growth target of 7.5%, stronger than other major economies but still the worst performance for the country in 23 years.</p> <p>Growth in the first nine months of the year was 7.7%, the data from the National Bureau of Statistics showed.</p> <p>\"We have confidence in fulfilling the targets set out for economic and social development in 2013,\" Premier Li Keqiang said this month.</p> <p>In other figures released on Friday, factory output in September rose 10.2% from a year earlier, slightly above expectations of 10.1% and slowing down from August's annual pace of 10.4%.</p> <p>Retail sales rose 13.3% from a year earlier, slightly below expectations for an increase of 13.5%.</p> <p>Fixed asset investment, a crucial growth driver, rose in the first nine months of 2013 by 20.2% compared with a year earlier. Analysts had expected a rise of 20.3%.</p> <p>Real estate investment increased 19.7% in the first nine months of the year compared with a year earlier, picking up slightly from 19.3% in the first eight months.</p> <p>The fragility of China's economic revival was underscored last week when data showed September's exports fell 0.3% from a year earlier, in stark contrast to expectations for a 6% rise.</p> <p>Weaker demand in south-east Asia had driven the surprise drop in exports, as fears of possible US monetary policy tightening led investors to retreat from emerging markets, bruising consumer confidence and demand for Chinese goods.</p> <p>With China's economic pick-up so shaky, most economists believe Chinese authorities are likely to stand still on monetary policy in the next year and a half. But at the same time, few believe Beijing would dramatically loosen policy to aid growth, barring a sharp downturn.</p><!-- Guardian Watermark: internal-code/content/420318542|2013-11-05T11:03:48Z|a1e3f6e871c26fffae4a2df25c7417078a592651 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-18T04:05:48Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068123596/3701995c-7524-48c5-8461-fa0f3193c234-140x84.jpeg",
+        "standfirst":"Third-quarter GDP grew at the fastest pace this year, but China on course for its worst annual performance in 23 years",
+        "shortUrl":"http://gu.com/p/3jk3x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068123596/3701995c-7524-48c5-8461-fa0f3193c234-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"420318542",
+        "allowUgc":"false",
+        "internalComposerCode":"5260aa98e4b0010b6627a99d",
+        "isPremoderated":"false",
+        "byline":"Reuters",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982962",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-21T04:05:54Z"
+      },
+      "tags":[{
+        "id":"business/global-economy",
+        "type":"keyword",
+        "webTitle":"Global economy",
+        "webUrl":"http://www.theguardian.com/business/global-economy",
+        "apiUrl":"http://content.guardianapis.com/business/global-economy",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068123596/3701995c-7524-48c5-8461-fa0f3193c234-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068123596/3701995c-7524-48c5-8461-fa0f3193c234-140x84.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"84",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068123859/3701995c-7524-48c5-8461-fa0f3193c234-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068123859/3701995c-7524-48c5-8461-fa0f3193c234-620x372.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"372",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124017/3701995c-7524-48c5-8461-fa0f3193c234-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124017/3701995c-7524-48c5-8461-fa0f3193c234-300x180.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"180",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124132/3701995c-7524-48c5-8461-fa0f3193c234-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124132/3701995c-7524-48c5-8461-fa0f3193c234-380x228.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"228",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124378/3701995c-7524-48c5-8461-fa0f3193c234-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124378/3701995c-7524-48c5-8461-fa0f3193c234-540x324.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"324",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124795/3701995c-7524-48c5-8461-fa0f3193c234-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068124795/3701995c-7524-48c5-8461-fa0f3193c234-1020x612.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"612",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068125487/3701995c-7524-48c5-8461-fa0f3193c234-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068125487/3701995c-7524-48c5-8461-fa0f3193c234-2048x1536.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"1536",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068126258/3701995c-7524-48c5-8461-fa0f3193c234-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068126258/3701995c-7524-48c5-8461-fa0f3193c234-220x132.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"132",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068126865/3701995c-7524-48c5-8461-fa0f3193c234-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068126865/3701995c-7524-48c5-8461-fa0f3193c234-2060x1236.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"1236",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068127699/3701995c-7524-48c5-8461-fa0f3193c234-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068127699/3701995c-7524-48c5-8461-fa0f3193c234-1024x768.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"768",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068128015/3701995c-7524-48c5-8461-fa0f3193c234-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382068128015/3701995c-7524-48c5-8461-fa0f3193c234-460x276.jpeg",
+            "source":"  Imaginechina/Corbis",
+            "altText":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, Anhui province.",
+            "height":"276",
+            "credit":"  Imaginechina/Corbis",
+            "caption":"Chinese workers sew clothes to be exported to Japan at a factory in Huaibei, east Chinas Anhui province. Photograph: Imaginechina/Corbis",
+            "mediaId":"gu-fc-e7ca4e02-5ff8-4102-8943-c14c68ecab58",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"politics/2013/oct/18/boris-johnson-china-trade-agreement-uk",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-10-18T08:46:42Z",
+      "webTitle":"Boris Johnson: UK should have its own free-trade agreement with China",
+      "webUrl":"http://www.theguardian.com/politics/2013/oct/18/boris-johnson-china-trade-agreement-uk",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/oct/18/boris-johnson-china-trade-agreement-uk",
+      "fields":{
+        "trailText":"Mayor of London says VAT and import duty reform key to breaking down trade barriers between west and east",
+        "headline":"Boris Johnson: UK should have its own free-trade agreement with China",
+        "body":"<p>Britain should negotiate its own free-trade agreement with China if talks between the European Union and Beijing fail to yield one, Boris Johnson has said.</p><p>Trade talks between European and Chinese leaders which could pave the way for a free-trade deal are due to open imminently, but the mayor of London recognised there could be difficulties.</p><p>Brussels and Beijing narrowly avoided a trade war earlier this year over European tariffs on Chinese solar panels.</p><p>At a British Chamber of Commerce event in Hong Kong, Johnson asked the audience what they wanted to change in London to help break down barriers between the west and the east. He was told to reform import duty and sort out VAT claim-back issues at Heathrow airport.</p><p>Johnson said: \"VAT and import duty – those it seems to me are classically things that can be resolved by growing trade and co-operation between London and China, London and Beijing. We need a proper, thoroughgoing free-trade agreement. If the EU won't do it we can do it on our own.\"</p><p>Johnson's remarks will give succour to Eurosceptic Tory MPs who want more UK trade independence, and they were warmly welcomed by the audience of mainly expat business people.</p><p>It is understood the mayor is not calling for unlimited migration or freedom of movement between the two nations, something he has in the past advocated with Australia and New Zealand.</p><p>Johnson said: \"Free trade would bring greater prosperity in both Britain and China and we should embrace it.</p><p>\"It would mean better access for British projects to Chinese markets, access that would bring huge benefits to London's economy, creating jobs and growth.\"</p><p>Johnson has been in China since Sunday promoting British products and courting Chinese investment in London.</p><p>Last month he called on David Cameron to deliver \"serious and proper and substantive\" reform of the \"intrusive\" EU.</p><p>The prime minister is committed to renegotiating the UK's relationship with Brussels before putting an in/out referendum on the EU before the British public.</p><!-- Guardian Watermark: internal-code/content/420333682|2013-11-05T11:03:48Z|f165af963ab2d29bc70eff8e3e3d255fc5cda2ad -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-18T08:54:30Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085679159/Boris-Johnson-003.jpg",
+        "standfirst":"Mayor of London says VAT and import duty reform key to breaking down trade barriers between west and east",
+        "shortUrl":"http://gu.com/p/3jk4f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085679159/Boris-Johnson-003.jpg",
+        "wordcount":"322",
+        "commentable":"true",
+        "internalContentCode":"420333682",
+        "allowUgc":"false",
+        "internalOctopusCode":"8210897",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "internalPageCode":"1983003",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-21T08:46:42Z"
+      },
+      "tags":[{
+        "id":"politics/boris",
+        "type":"keyword",
+        "webTitle":"Boris Johnson",
+        "webUrl":"http://www.theguardian.com/politics/boris",
+        "apiUrl":"http://content.guardianapis.com/politics/boris",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/internationaltrade",
+        "type":"keyword",
+        "webTitle":"International trade",
+        "webUrl":"http://www.theguardian.com/business/internationaltrade",
+        "apiUrl":"http://content.guardianapis.com/business/internationaltrade",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.theguardian.com/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/global-economy",
+        "type":"keyword",
+        "webTitle":"Global economy",
+        "webUrl":"http://www.theguardian.com/business/global-economy",
+        "apiUrl":"http://content.guardianapis.com/business/global-economy",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420334988",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085676268/Boris-Johnson-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"54",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085677863/Boris-Johnson-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"130",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085679159/Boris-Johnson-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"84",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085680367/Boris-Johnson-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"132",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085681579/Boris-Johnson-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"168",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085682862/Boris-Johnson-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"180",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085684106/Boris-Johnson-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"228",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085685345/Boris-Johnson-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"276",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085685345/Boris-Johnson-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"276",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson said: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r\n Photograph: China Daily/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420334989",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/18/1382085679159/Boris-Johnson-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"China Daily",
+            "altText":"Boris Johnson",
+            "height":"84",
+            "credit":"China Daily/Reuters",
+            "caption":"Boris Johnson says: 'Free trade would bring greater prosperity in both Britain and China and we should embrace it.'\r Photograph: China Daily/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
