@@ -248,25 +248,6 @@
 /* CTAs
    ========================================================================== */
 
-.d-actions .top {
-    color: #808080;
-    background-color: #fff;
-    border: 1px solid #bbb;
-    position: relative;
-    padding-left: $gutter*2;
-    width: auto;
-}
-
-.d-actions .top:before {
-    @extend .i-filter-arrow-right;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    content: ' ';
-    display: inline-block;
-    @include rotate(-90deg);
-}
-
 .d-actions__link,
 .d-actions__link:hover,
 .d-actions__link:focus {
