@@ -119,7 +119,6 @@ GET         /troubleshoot/football                                              
 
 # Commercial
 GET         /commercial/travel/offers                                                                        controllers.commercial.TravelOffers.listOffers
-GET         /commercial/travel/devload                                                                       controllers.commercial.TravelOffers.refresh
 GET         /commercial/jobs                                                                                 controllers.commercial.JobAds.jobs
 GET         /commercial/$advert<(soulmates|masterclasses)>                                                   controllers.commercial.SimpleAdvert.render(advert)
 
