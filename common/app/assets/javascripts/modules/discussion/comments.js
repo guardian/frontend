@@ -323,6 +323,7 @@ Comments.prototype.replyToComment = function(e) {
     }
     commentBox.render(parentCommentEl);
 
+    // TODO (jamesgorrie): Remove Hack hack hack
     commentBox.on('post:success', function(comment) {
         var responses = qwery('.d-thread--responses', parentCommentEl)[0];
         if (!responses) {
