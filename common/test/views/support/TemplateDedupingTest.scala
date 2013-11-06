@@ -114,10 +114,4 @@ case class TestTrail(url: String) extends Trail {
   def section: String = ""
   def sectionName: String = ""
   def isLive: Boolean = true
-
-  override def delegate = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some trail",
-    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    "http://content.guardianapis.com/foo/2012/jan/07/bar",
-    elements = None,
-    fields = None)
 }
