@@ -1,32 +1,15 @@
-package utils
+package services
 
-import play.api.mvc._
-import com.gu.identity.model.User
-import scala.concurrent.Future
+import com.google.inject.{Inject, Singleton}
 import conf.FrontendIdentityCookieDecoder
-import com.google.inject.{Singleton, Inject}
-import play.api.mvc.Results._
-import services.{IdentityUrlBuilder, IdRequestParser}
-import java.net.URLEncoder
-import client.{Response, Logging, Auth}
+import client.Logging
+import play.api.mvc.{SimpleResult, Request}
 import idapiclient.ScGuU
+import java.net.URLEncoder
+import play.api.mvc.Results._
 import scala.Some
 import play.api.mvc.SimpleResult
-
-
-case class AuthRequest[A](request: Request[A], user: User, auth: Auth) extends WrappedRequest(request)
-
-@Singleton
-class AuthAction @Inject()(authService: AuthenticationService)
-  extends ActionBuilder[AuthRequest] with SafeLogging {
-
-  protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]) = {
-    authService.handleAuthenticatedRequest(request).fold(
-      { error => Future.successful(error) },
-      { auth => block(auth)}
-    )
-  }
-}
+import actions.AuthRequest
 
 
 @Singleton

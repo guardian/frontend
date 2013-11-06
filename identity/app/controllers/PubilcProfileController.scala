@@ -2,17 +2,21 @@ package controllers
 
 import play.api.mvc._
 import common.ExecutionContexts
-import services.IdentityUrlBuilder
+import services.{IdRequestParser, IdentityUrlBuilder}
 import com.google.inject.{Inject, Singleton}
-import utils.{UserFromApiActionBuilder, SafeLogging}
+import utils.SafeLogging
 import model.IdentityPage
 import play.api.data.{Forms, Form}
-import idapiclient.{UserCookie, IdApiClient, UserUpdate}
+import idapiclient.{IdApiClient, UserUpdate}
 import com.gu.identity.model.{PrivateFields, PublicFields, User}
+import actions.AuthActionWithUser
 
 
 @Singleton
-class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder, userFromApiAction: UserFromApiActionBuilder, identityApiClient: IdApiClient )
+class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
+                                        authActionWithUser: AuthActionWithUser,
+                                        identityApiClient: IdApiClient,
+                                        idRequestParser: IdRequestParser)
   extends Controller with ExecutionContexts with SafeLogging {
 
   val form = Form(
@@ -27,8 +31,9 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder, userFr
 
   val page = IdentityPage("/profile/public", "Public profile", "public profile")
 
-  def displayForm = userFromApiAction.apply { implicit request =>
-    Ok(views.html.public_profile(page.tracking(request.identityRequest), request.identityRequest, idUrlBuilder, bindFormFromUser(request.user)))
+  def displayForm = authActionWithUser.apply { implicit request =>
+    val idRequest = idRequestParser(request)
+    Ok(views.html.public_profile(page.tracking(idRequest), idRequest, idUrlBuilder, bindFormFromUser(request.user)))
   }
 
   def bindFormFromUser(user: User): Form[(Option[String], Option[String], Option[String], Option[String], Option[String])] = {
@@ -43,8 +48,9 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder, userFr
     )
   }
 
-  def submitForm = userFromApiAction.async { implicit request =>
-    val formData = form.bindFromRequest();
+  def submitForm = authActionWithUser.async { implicit request =>
+    val idRequest = idRequestParser(request)
+    val formData = form.bindFromRequest()
 
     val userUpdate = UserUpdate(
       publicFields = Some(PublicFields(
@@ -58,16 +64,16 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder, userFr
       ))
     )
 
-    identityApiClient.saveUser( request.user.id, userUpdate, request.userAuth )
+    identityApiClient.saveUser( request.user.id, userUpdate, request.auth )
       .map { _.fold(
         { errors =>
           val formDataWithErrors = errors.foldLeft(formData) { (formWithErrors,error) =>
             formWithErrors.withError(error.context.getOrElse(""), error.description)
           }
-          Ok(views.html.public_profile(page.tracking(request.identityRequest), request.identityRequest, idUrlBuilder, formDataWithErrors))
+          Ok(views.html.public_profile(page.tracking(idRequest), idRequest, idUrlBuilder, formDataWithErrors))
         },
         { user =>
-          Ok(views.html.public_profile(page.accountEdited(request.identityRequest), request.identityRequest, idUrlBuilder, bindFormFromUser(user)))
+          Ok(views.html.public_profile(page.accountEdited(idRequest), idRequest, idUrlBuilder, bindFormFromUser(user)))
         })
       }
   }
