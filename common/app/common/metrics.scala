@@ -157,6 +157,16 @@ object AdminMetrics {
   val all = Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
 }
 
+object DiagnosticsMetrics {
+  object DiagnosticsLoadTimingMetric extends TimingMetric(
+    "diagnostics",
+    "diagnostics-load",
+    "Diagnostics load timing",
+    "Time spent running diagnostics load jobs",
+    None
+  ) with TimingMetricLogging
+}
+
 object PorterMetrics {
   object AnalyticsLoadTimingMetric extends TimingMetric(
     "porter",
@@ -177,7 +187,7 @@ object PorterMetrics {
   val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
 }
 
-object CoreNavivationMetrics {
+object CoreNavigationMetrics {
   object MostPopularLoadTimingMetric extends TimingMetric(
     "core-nav",
     "core-nav-most-popular-load",
@@ -299,7 +309,6 @@ object FaciaToolMetrics {
   )
 }
 
-
 object CommercialMetrics {
 
   object TravelOffersLoadTimingMetric extends TimingMetric(
@@ -321,6 +330,17 @@ object CommercialMetrics {
   val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric)
 }
 
+object OnwardMetrics {
+  object OnwardLoadTimingMetric extends TimingMetric(
+    "onward",
+    "onward-most-popular-load",
+    "Onward Journey load timing",
+    "Time spent running onward journey data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(OnwardLoadTimingMetric)
+}
 
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
@@ -333,7 +353,7 @@ object Metrics {
   lazy val facia = FaciaMetrics.all
   lazy val faciaTool = FaciaToolMetrics.all
   lazy val porter = PorterMetrics.all
-  lazy val coreNavigation = CoreNavivationMetrics.all
+  lazy val coreNavigation = CoreNavigationMetrics.all
   lazy val front = FrontMetrics.all
   lazy val football = FootballMetrics.all
   lazy val commercial = CommercialMetrics.all

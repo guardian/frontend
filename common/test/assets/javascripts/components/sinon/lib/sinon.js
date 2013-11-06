@@ -49,6 +49,10 @@ var sinon = (function (buster) {
         }
     }
 
+    function isRestorable (obj) {
+        return typeof obj === "function" && typeof obj.restore === "function" && obj.restore.sinon;
+    }
+
     var sinon = {
         wrapMethod: function wrapMethod(object, property, method) {
             if (!object) {
@@ -161,6 +165,10 @@ var sinon = (function (buster) {
                 return true;
             }
 
+            if (aString == "[object Date]") {
+                return a.valueOf() === b.valueOf();
+            }
+
             var prop, aLength = 0, bLength = 0;
 
             for (prop in a) {
@@ -175,11 +183,7 @@ var sinon = (function (buster) {
                 bLength += 1;
             }
 
-            if (aLength != bLength) {
-                return false;
-            }
-
-            return true;
+            return aLength == bLength;
         },
 
         functionName: function functionName(func) {
@@ -299,6 +303,19 @@ var sinon = (function (buster) {
                 throw new TypeError("The constructor should be a function.");
             }
             return sinon.stub(sinon.create(constructor.prototype));
+        },
+
+        restore: function (object) {
+            if (object !== null && typeof object === "object") {
+                for (var prop in object) {
+                    if (isRestorable(object[prop])) {
+                        object[prop].restore();
+                    }
+                }
+            }
+            else if (isRestorable(object)) {
+                object.restore();
+            }
         }
     };
 
@@ -310,6 +327,7 @@ var sinon = (function (buster) {
         } catch (e) {}
         module.exports = sinon;
         module.exports.spy = require("./sinon/spy");
+        module.exports.spyCall = require("./sinon/call");
         module.exports.stub = require("./sinon/stub");
         module.exports.mock = require("./sinon/mock");
         module.exports.collection = require("./sinon/collection");

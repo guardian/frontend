@@ -78,6 +78,7 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = { super.metaData ++ Map(
     ("keywords", keywords.map { _.name }.mkString(",")),
+    ("keywordIds", keywords.map { _.id }.mkString(",")),
     ("publication", publication),
     ("headline", headline),
     ("web-publication-date", webPublicationDate),
@@ -114,10 +115,11 @@ object Content {
 
   def apply(delegate: ApiContent): Content = {
     delegate match {
-      case gallery if delegate.isGallery => new Gallery(delegate)
-      case video if delegate.isVideo => new Video(delegate)
+      // liveblog / article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
       case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
+      case gallery if delegate.isGallery => new Gallery(delegate)
+      case video if delegate.isVideo => new Video(delegate)
       case picture if delegate.isImageContent => new ImageContent(delegate)
       case _ => new Content(delegate)
     }

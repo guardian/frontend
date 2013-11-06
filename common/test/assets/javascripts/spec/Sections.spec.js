@@ -65,6 +65,15 @@ define([ 'common',
               expect(document.querySelector('#preloads').className).toContain('has-localnav');
             });
 
+            it("Should show the local nav when on a content page", function() {
+                config.page.section = 'football';
+                config.page.pageId = 'football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup';
+                sections = new Sections(config);
+                sections.view.insertLocalNav(document);
+
+                expect(document.querySelectorAll('.nav--local').length).toBe(1);
+            });
+
             it("Should not insert a local nav when in Business", function() {
               config.page.section = 'business';
               config.page.pageId = 'business';
@@ -93,7 +102,6 @@ define([ 'common',
 
               expect(document.querySelector('[data-link-name="Books"]').parentNode.className).toContain('is-active');
             });
-
 
             it("Should not contain the first link in the wide desktop nav", function() {
               config.page.section = 'books';

@@ -1,5 +1,3 @@
-$headerHeight: 58px;
-
 /* Global wrapper
    ========================================================================== */
 
@@ -57,15 +55,12 @@ $headerHeight: 58px;
                 background-color: $c-neutral7;
                 border-bottom: 1px solid $c-neutral5;
             }
-
-            .header__inner {
-                height: 60px;
-            }
         }
     }
 }
     .header__inner {
         background-color: $c-brandBlue;
+        height: $headerHeight;
     }
 
 .guardian-logo-wrapper {

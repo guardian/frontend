@@ -1,16 +1,20 @@
-@(page: CommentPage)(implicit request: RequestHeader)
+@(page: CommentPage, blankComment: Comment = null)(implicit request: RequestHeader)
 
 <div class="d-discussion"
      data-page-count="@page.pages">
 	<div class="d-discussion__header">
 		<span class="d-discussion__disclaimer d-meta-item">Comments sorted by newest first</span>
 	</div>
-	<ul class="d-thread">
+	<ul class="d-thread d-thread--top-level">
 	    @page.comments.map{ comment =>
 	        @fragments.comment(comment, page.isClosedForRecommendation)
 	    }
 	</ul>
+    @if(page.currentPage + 1 <= page.pages){
+        <a class="js-show-more-comments cta" data-link-name="Show more comments" href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Show more comments</a>
+    }
+    
+    <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
+    <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>
+    @if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}
 </div>
-
-<script type="text/template" id="tmpl-comment-box">@fragments.commentBox(true, "")</script>
-<script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>

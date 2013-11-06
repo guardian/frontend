@@ -72,7 +72,7 @@ define([
         })
 
         function fetchConfigsList() {
-            return authedAjax({
+            return authedAjax.request({
                 url: common.config.apiBase + '/config'
             }).then(function(resp) {
                 if (!(_.isArray(resp) && resp.length > 0)) {
@@ -101,7 +101,7 @@ define([
 
             if (!getConfig()) { return; }
 
-            authedAjax({
+            authedAjax.request({
                 url: common.config.apiBase + '/config/' + getConfig()
             })
             .then(function(collections){

@@ -1,9 +1,11 @@
 define([
     'bean',
+    'bonzo',
     'modules/discussion/api',
-    'modules/component',
+    'modules/component'
 ], function(
     bean,
+    bonzo,
     DiscussionApi,
     Component
 ) {
@@ -20,20 +22,16 @@ function CommentBox(context, mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
 }
-Component.create(CommentBox);
+Component.define(CommentBox);
 
 /** @type {Object.<string.*>} */
 CommentBox.CONFIG = {
+    templateName: 'comment-box',
+    componentClass: 'd-comment-box',
     classes: {
-        component: 'js-comment-box',
-        show: 'js-show-comment-box',
-        body: 'd-comment-box__body',
-        bodyExpanded: 'd-comment-box__body--expanded',
-        submitButton: 'd-comment-box__submit',
-        messages: 'd-comment-box__messages',
-        error: 'd-comment-box__error',
-        condensed: 'd-comment-box--condensed'
+        bodyExpanded: 'd-comment-box__body--expanded'
     },
+    useBem: true,
     errors: {
         EMPTY_COMMENT_BODY: 'Please write a comment.',
         COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
@@ -49,8 +47,12 @@ CommentBox.CONFIG = {
 CommentBox.prototype.defaultOptions = {
     discussionId: null,
     apiRoot: null,
-    condensed: false,
-    maxLength: 5000
+    maxLength: 5000,
+    premod: false,
+    focus: false,
+    state: 'top-level',
+    replyTo: null,
+    cancelable: false
 };
 
 /**
@@ -58,14 +60,45 @@ CommentBox.prototype.defaultOptions = {
  */
 CommentBox.prototype.errors = [];
 
+/** @oevrride */
+CommentBox.prototype.prerender = function() {
+    if (!this.options.premod) {
+        this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
+    }
+
+    if (this.options.state === 'response') {
+        this.getElem('submit').innerHTML = 'Post reply';
+    }
+
+    if (this.options.replyTo) {
+        var elem = document.createElement('input');
+        elem.type = 'hidden';
+        elem.name = 'replyToId';
+        elem.value = this.options.replyTo.id;
+        this.elem.appendChild(elem);
+
+        elem = document.createElement('label');
+        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.id);
+        elem.className = 'label '+ this.getClass('reply-to', true);
+        elem.innerHTML = 'to '+ this.options.replyTo.author;
+        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.id;
+        bonzo(elem).insertAfter(this.getElem('submit'));
+    }
+
+    if (this.options.cancelable) {
+        var beforeElem = this.getElem('reply-to') ? this.getElem('reply-to') : this.getElem('submit');
+        bonzo(bonzo.create('<div class="u-fauxlink '+ this.getClass('cancel', true) +'" role="button">Cancel</div>')).insertAfter(beforeElem);
+    }
+};
+
 /** @override */
 CommentBox.prototype.ready = function() {
     if (this.getDiscussionId() === null) {
-        throw new Error('CommentBox: You need to set the "data-discussion-id" on your element');
+        throw new Error('CommentBox: You need to set the "data-discussion-key" on your element');
     }
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submitButton');
+        submitButton = this.getElem('submit');
 
     this.setFormState();
 
@@ -73,10 +106,12 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+    this.on('click', this.getClass('cancel'), this.destroy);
 
-    if (this.options.condensed) {
-        this.elem.className = this.elem.className +' '+ this.getClass('condensed', true);
-        bean.on(this.context, 'click', [this.getElem('show')], this.showCommentBox.bind(this));
+    this.setState(this.options.state);
+
+    if (this.options.focus) {
+        this.getElem('body').focus();
     }
 };
 
@@ -99,6 +134,10 @@ CommentBox.prototype.postComment = function(e) {
 
     else if (comment.body.length > this.options.maxLength) {
         this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
+    }
+
+    if (this.options.replyTo) {
+        comment.replyTo = this.elem.replyToId.value;
     }
 
     if (this.errors.length === 0) {
@@ -127,6 +166,7 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} resp
  */
 CommentBox.prototype.success = function(comment, resp) {
+    comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
     this.setFormState();
     this.emit('post:success', comment);
@@ -161,7 +201,7 @@ CommentBox.prototype.fail = function(xhr) {
  * @return {string}
  */
 CommentBox.prototype.getDiscussionId = function() {
-    return this.options.discussionId || this.elem.getAttribute('data-discussion-id').replace('discussion', '');
+    return this.options.discussionId || this.elem.getAttribute('data-discussion-key').replace('discussion', '');
 };
 
 /**
@@ -172,7 +212,7 @@ CommentBox.prototype.setFormState = function(disabled) {
     disabled = typeof disabled === 'boolean' ? disabled : false;
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submitButton');
+        submitButton = this.getElem('submit');
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
@@ -184,25 +224,8 @@ CommentBox.prototype.setFormState = function(disabled) {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.showCommentBox = function(e) {
-    var condensedClass = this.getClass('condensed', true);
-
-    if (this.elem.className.match(condensedClass)) {
-        this.elem.className = this.elem.className.replace(condensedClass, '');
-        this.getElem('body').focus();
-    }
-};
-
-/**
- * @param {Event=} e (optional)
- */
 CommentBox.prototype.setExpanded = function(e) {
-    var commentBody = this.getElem('body'),
-        expandedClass = this.getClass('bodyExpanded', true);
-
-    if (!commentBody.className.match(expandedClass)) {
-        commentBody.className = commentBody.className +' '+ expandedClass;
-    }
+    this.setState('expanded', 'body');
 };
 
 

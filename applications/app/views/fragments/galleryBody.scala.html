@@ -9,7 +9,7 @@
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
-        <div class="article__inner">
+        <div class="article__inner article__inner--head">
             <header class="article__head">
                 @fragments.headline(gallery.headline)
                 @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
@@ -51,7 +51,9 @@
                         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
                             @if(row.rowNum == index) {
                                 <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                src="@image.path" />
+                                    src="@image.path"
+                                    alt="@image.altText.getOrElse("")"
+                                />
 
                                 <div class="gallery-caption">
                                     <p class="caption">@Html(image.caption.getOrElse(""))</p>

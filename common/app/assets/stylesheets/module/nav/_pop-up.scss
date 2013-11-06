@@ -4,14 +4,14 @@
 
 .nav-popup {
     position: absolute;
-    top: 58px;
+    top: $headerHeight;
     clear: both;
     z-index: 100;
     padding: $baseline*2 0;
     list-style: none;
     margin-bottom: -4px;
     border-bottom: $baseline solid $c-brandBlue;
-    background: #fff;
+    background: #ffffff;
     width: 100%;
     @include transform(translateZ(0)); // Hotfix to make popups stay on top
                                        // of .preload elements in Chrome Android
@@ -22,18 +22,36 @@
    ========================================================================== */
 
 .nav-popup--small {
+    padding-top: $baseline*3;
     padding-bottom: 0;
+
+    .nav__link {
+        color: #333333;
+    }
 
     @include mq(tablet) {
         position: absolute;
         top: 99px;
         right: 0;
         width: auto;
-        padding: 0;
-        min-width: 160px;
-        background-color: #fff;
+        padding-top: $baseline;
+        width: gs-span(4) + $gs-gutter;
+        @include box-sizing(border-box);
+        background-color: #ffffff;
         border-bottom: 1px solid $c-neutral5;
         border-left: 1px solid $c-neutral5;
+
+        .nav--additional-sections > .nav__item {
+            > .nav__link {
+                border-top: 0;
+                border-bottom: 1px solid $c-neutral7;
+            }
+        }
+
+        .nav__link {
+            @include font-size(14, 19);
+            padding: 10px 0;
+        }
     }
 
     // Popup is not sticking to the edge of screen
@@ -42,28 +60,5 @@
     }
     @include mq(1316px) {
         border-right: 1px solid $c-neutral5;
-    }
-
-    @include mq(tablet) {
-        .nav__item {
-            margin: 0 $gs-gutter;
-            text-align: right;
-        }
-        .nav--stacked > .nav__item {
-            > .nav__link {
-                border-bottom: 1px solid $c-neutral5;
-            }
-            &:last-child > .nav__link {
-                border-bottom: none;
-            }
-        }
-    }
-    .nav__link {
-        color: #333333;
-
-        @include mq(tablet) {
-            @include font-size(14, 19);
-            padding: 10px 0;
-        }
     }
 }

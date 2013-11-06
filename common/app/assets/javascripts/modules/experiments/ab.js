@@ -7,7 +7,6 @@ define([
     'modules/experiments/tests/live-blog-show-more',
     'modules/experiments/tests/alpha-adverts',
     'modules/experiments/tests/commercial-components',
-    'modules/experiments/tests/ultimate-paragraph-spacing'
 ], function (
     common,
     store,
@@ -15,8 +14,7 @@ define([
     Aa,
     LiveBlogShowMore,
     AlphaAdverts,
-    CommercialComponentsTest,
-    UltimateParagraphSpacing
+    CommercialComponentsTest
     ) {
 
     var TESTS = [
@@ -24,7 +22,6 @@ define([
             new LiveBlogShowMore(),
             new AlphaAdverts(),
             new CommercialComponentsTest(),
-            new UltimateParagraphSpacing()
         ],
         participationsKey = 'gu.ab.participations';
 

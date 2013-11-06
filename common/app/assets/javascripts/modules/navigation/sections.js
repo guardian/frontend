@@ -101,15 +101,12 @@ define([
 
             showColumns : function(sectionsHeader, sectionsNav) {
                 common.$g('.nav__item', sectionsHeader).removeClass('u-h');
-                common.$g('nav > .nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
             hideColumns :  function(sectionsHeader, sectionsNav) {
                 var firstTopPos,
                     visibleItems = [],
                     popupItems = common.$g('.nav__item', sectionsHeader).removeClass('u-h');
-
-                common.$g('nav > .nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
                 common.$g('.nav__item', sectionsNav).each(function(e) {
                     firstTopPos = firstTopPos || bonzo(e).offset().top;
@@ -124,10 +121,11 @@ define([
             },
 
             getCurrentSection: function() {
+                var pageSection = config.page.pageId.split('/')[0];
                 for(var i=0; i < sections.length; i++) {
                     var zones = Object.keys(sections[i].zones);
 
-                    if (zones.indexOf('/' + config.page.pageId) !== -1) {
+                    if (zones.indexOf('/' + pageSection) !== -1) {
                         return sections[i];
                     }
                 }
@@ -168,8 +166,8 @@ define([
                                           currentSection.zones['/'+config.page.section] ||
                                           currentSection.sectionName,
 
-                        localNavCtaHtml = '<div class="localnav--small tone-' + currentSection.sectionTone + '">' +
-                                          '  <div class="localnav__inner tone-accent-border u-cf">' +
+                        localNavCtaHtml = '<div class="localnav--small tone-' + currentSection.sectionTone + ' tone-accent-border">' +
+                                          '  <div class="localnav__inner u-cf">' +
                                           '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +

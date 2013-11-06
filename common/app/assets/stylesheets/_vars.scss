@@ -24,6 +24,7 @@ $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
+$headerHeight: 58px;
 
 
 /* Breakpoints
@@ -56,7 +57,7 @@ $mq-breakpoints: (
     // Article layout
     (rightCol $a-rightCol-trigger)
     (leftCol $a-leftCol-trigger)
-);
+) !global;
 
 
 /* Fonts

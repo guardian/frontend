@@ -238,6 +238,20 @@ buster.testCase("sinon", {
             assert(sinon.deepEqual(obj1, obj2));
         },
 
+        "passes equal dates": function () {
+            var date1 = new Date(2012, 3, 5);
+            var date2 = new Date(2012, 3, 5);
+
+            assert(sinon.deepEqual(date1, date2));
+        },
+
+        "fails different dates": function () {
+            var date1 = new Date(2012, 3, 5);
+            var date2 = new Date(2013, 3, 5);
+
+            assert.isFalse(sinon.deepEqual(date1, date2));
+        },
+
         "in browsers": {
             requiresSupportFor: {
                 "document object": typeof document !== "undefined"
@@ -499,6 +513,41 @@ buster.testCase("sinon", {
                     sinon.createStubInstance(types[i]);
                 });
             }
+        }
+    },
+
+    ".restore": {
+        "restores all methods of supplied object": function () {
+            var methodA = function () {};
+            var methodB = function () {};
+            var obj = { methodA: methodA, methodB: methodB };
+
+            sinon.stub(obj);
+            sinon.restore(obj);
+
+            assert.same(obj.methodA, methodA);
+            assert.same(obj.methodB, methodB);
+        },
+
+        "only restores restorable methods": function () {
+            var stubbedMethod = function () {};
+            var vanillaMethod = function () {};
+            var obj = { stubbedMethod: stubbedMethod, vanillaMethod: vanillaMethod };
+
+            sinon.stub(obj, "stubbedMethod");
+            sinon.restore(obj);
+
+            assert.same(obj.stubbedMethod, stubbedMethod);
+        },
+
+        "restores a single stubbed method": function () {
+            var method = function () {};
+            var obj = { method: method };
+
+            sinon.stub(obj);
+            sinon.restore(obj.method);
+
+            assert.same(obj.method, method);
         }
     }
 });

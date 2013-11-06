@@ -1,3 +1,15 @@
+/**
+ * Dependency inject Images
+ *
+ * TODO: need to clean up after
+ */
+var imagesUpgradeStub = sinon.stub();
+define('modules/facia/images', [], function(){
+    return {
+        upgrade: imagesUpgradeStub
+    }
+});
+
 define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 'ajax'], function(popular, bonzo, common, bean, fixtures, ajax) {
 
     describe('Popular', function() {
@@ -31,7 +43,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
         beforeEach(function() {
             fixtures.render({
                 id: 'popular',
-                fixtures: ['<section class="collection"></section>']
+                fixtures: ['<section class="container"></section>']
             });
             // set up fake server
             server = sinon.fakeServer.create();
@@ -50,19 +62,29 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.collection--popular').length;
-            }, 'popular collection to be rendered', 100);
+                return common.$g('.container--popular').length;
+            }, 'popular container to be rendered', 100);
+        });
+
+        it('should have data-link-name attribute equal to "block | popular"', function() {
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.container--popular').length;
+            }, 'popular container to be rendered', 100);
+            runs(function() {
+                expect(common.$g('.container--popular').attr('data-link-name')).toEqual('block | popular');
+            });
         });
 
         it('should have a "data-type" attribute of value "popular"', function() {
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.collection--popular').length;
-            }, 'popular collection to be rendered', 100);
-
+                return common.$g('.container--popular').length;
+            }, 'popular container to be rendered', 100);
             runs(function() {
-                expect(common.$g('.collection--popular').attr('data-type')).toEqual('popular');
+                expect(common.$g('.container--popular').attr('data-type')).toEqual('popular');
             });
         });
 
@@ -76,17 +98,27 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             });
 
             waitsFor(function() {
-                return common.$g('.collection--popular').length;
-            }, 'popular collection to be rendered', 100);
+                return common.$g('.container--popular').length;
+            }, 'popular container to be rendered', 100);
+        });
+
+        it('should upgrade images', function() {
+            popular.render({});
+
+            waitsFor(function() {
+                return common.$g('.container--popular').length;
+            }, 'popular container to be rendered', 100);
+            runs(function() {
+                expect(imagesUpgradeStub).toHaveBeenCalledWith(document.querySelector('.container--popular .collection'));
+            });
         });
 
         it('dates should be relativised', function() {
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.collection--popular').length;
-            }, 'popular collection to be rendered', 100);
-
+                return common.$g('.container--popular').length;
+            }, 'popular container to be rendered', 100);
             runs(function() {
                 common.$g('.timestamp__text').each(function(item) {
                     expect(bonzo(item).text()).toEqual('1 Jan 1970');
