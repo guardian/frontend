@@ -5,8 +5,7 @@
 
 @input(idInput.field, idInput.args:_*) { (id, name, value, htmlArgs) =>
     <label class="check-label">
-        <input type="checkbox" name="@name" id="@id" value="true"
-        @if(value.map(_ == "true").getOrElse(false)){ checked } @toHtmlArgs(htmlArgs) />
+        @fragments.form.checkbox(idInput.field, idInput.args:_*)
         @idInput.args.toMap.get('_label).map { label =>
             @label
         }

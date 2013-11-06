@@ -9,7 +9,7 @@
 
 @input(field, args:_*) { (id, name, value, htmlArgs) =>
   @for((inputValue, inputLabel) <- valueAndLabel) {
-      <label class="check-label">
+      <label class="radio-label">
           <input type="radio" name="@field.name" id="@{s"${field.id}_$inputValue"}" value="@inputValue"
           @if(value.map(_ == inputValue).getOrElse(false)){ checked } @toHtmlArgs(args.toMap) />
           @inputLabel
