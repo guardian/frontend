@@ -157,7 +157,6 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
 
     result.capacity should be (18)
     result.url should be ("https://www.eventurl.com")
-    result.description should be ("<P>A bunch of HTML goes here</P>")
   }
 
   "MasterClass companion object" should "handle classes with 2 tickets as a range" in {

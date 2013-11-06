@@ -13,7 +13,9 @@ object MasterClass {
     val startDate: DateTime = datePattern.parseDateTime(literalDate)
     val url = (block \ "url").as[String]
     val description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat molestie lectus id placerat. Sed rutrum, dui vitae tempus mollis, sem metus ultrices est."
-    val price = "£400"
+    val status = (block \ "status").as[String]
+    val capacity = (block \ "capacity").as[Int]
+
 
 
     val tickets = (block \\ "ticket") map { ticket =>
@@ -21,7 +23,7 @@ object MasterClass {
       new Ticket(price)
     } 
 
-    new MasterClass(title, startDate, url, description, "status", tickets.toList, 30)
+    new MasterClass(title, startDate, url, description, status, tickets.toList, capacity)
   }
 }
 
