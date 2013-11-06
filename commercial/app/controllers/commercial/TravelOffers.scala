@@ -2,8 +2,9 @@ package controllers.commercial
 
 import play.api.mvc._
 import model.commercial.travel.OffersAgent
+import common.ExecutionContexts
 
-object TravelOffers extends CommercialComponentController {
+object TravelOffers extends Controller with ExecutionContexts with ExpectsSegmentInRequests {
 
   def listOffers = Action {
     implicit request =>

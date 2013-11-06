@@ -3,8 +3,9 @@ package controllers.commercial
 import play.api.mvc._
 import scala.util.Random
 import model.commercial.jobs.JobsAgent
+import common.ExecutionContexts
 
-object JobAds extends CommercialComponentController {
+object JobAds extends Controller with ExecutionContexts with ExpectsSegmentInRequests {
 
   def jobs = Action {
     implicit request =>

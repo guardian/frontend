@@ -29,8 +29,8 @@ case class Job(id: Int,
     val sectionMatches = segment.context.section exists {
       section => intersects(sectorTags.toSet, Job.matchingSectorTags(section))
     }
-    val keywordsMatch = intersects(keywords.map(_.name), segment.context.keywords.toSet)
-    sectionMatches || keywordsMatch
+    val someKeywordsMatch = intersects(keywords.map(_.name), segment.context.keywords.toSet)
+    sectionMatches || someKeywordsMatch
   }
 
 }
