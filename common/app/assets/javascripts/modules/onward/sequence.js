@@ -36,7 +36,7 @@ define([
 
     function cleanSequence(sequence) {
         return sequence.map(function(el) {
-            return el.replace('http://gu.com', '');
+            return el.shortUrl.replace('http://gu.com', '');
         });
     }
 

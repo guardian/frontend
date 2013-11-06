@@ -34,26 +34,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.mostPopular(popular, 5),
-            "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.shortUrl),
-            "fullTrails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map{ trail =>
-              Json.obj(
-                "url" -> trail.url,
-                "headline" -> trail.headline,
-                "trailText" -> trail.trailText.map{ text =>
-                  cleanTrailText(text)(Edition(request)).toString()
-                },
-                "itemPicture" -> trail.trailPicture(5,3).map{ trailPictures =>
-                  trailPictures.largestImage.map { largestImage =>
-                    largestImage.url.map(ImgSrc(_, Profile("item-{width}")))
-                  }
-                },
-                "published" ->Json.obj(
-                  "unix" -> trail.webPublicationDate.getMillis,
-                  "datetime" -> trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ"),
-                  ("datetimeShort", trail.webPublicationDate.toString("d MMM y"))
-                )
-              )
-            })
+            "trails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map(TrailToJson(_)))
           )
         }
       }

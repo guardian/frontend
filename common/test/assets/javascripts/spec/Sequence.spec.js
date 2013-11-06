@@ -5,10 +5,10 @@ define(['common', 'ajax', 'modules/onward/sequence'], function(common, ajax, seq
             server,
             response = JSON.stringify({
                 trails: [
-                    "http://gu.com/p/3k4vt",
-                    "http://gu.com/p/3k44f",
-                    "http://gu.com/p/3k43n",
-                    "http://gu.com/p/3k44b"
+                    {"shortUrl": "http://gu.com/p/3k4vt"},
+                    {"shortUrl": "http://gu.com/p/3k44f"},
+                    {"shortUrl": "http://gu.com/p/3k43n"},
+                    {"shortUrl": "http://gu.com/p/3k44b"}
                 ]
             });
 

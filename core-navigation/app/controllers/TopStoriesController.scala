@@ -8,6 +8,7 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.ApiError
 import scala.Some
+import play.api.libs.json.JsArray
 
 object TopStoriesController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
@@ -62,7 +63,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
       if (request.isJson)
         JsonComponent(
           "html" -> jsonResponse(),
-          "trails" -> trails.map(_.shortUrl)
+          "trails" -> JsArray(trails.map(TrailToJson(_)))
         )
       else
         Ok(htmlResponse())
