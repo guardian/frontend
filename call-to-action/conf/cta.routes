@@ -1,0 +1,1 @@
+GET	/forarticle/*articleId		controllers.CallToActionController.forArticle(articleId)
