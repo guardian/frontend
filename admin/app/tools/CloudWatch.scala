@@ -96,6 +96,23 @@ trait CloudWatch {
         asyncHandler)
     )
   }.toSeq
+  
+  private val liveStatsMetrics = List(
+    ("Responsive views over sessions", "viewsOverSessions.responsive")
+  )
+ 
+  def liveStats = liveStatsMetrics.map{ case (name, metric) =>
+    new LiveStatsGraph( name, metric, 
+      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(6).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(120)
+        .withStatistics("Average")
+        .withNamespace("Diagnostics")
+        .withMetricName(metric),
+        asyncHandler)
+      )
+  }.toSeq
 
   // charges are only available from the 'default' region
   private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)

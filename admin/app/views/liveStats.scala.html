@@ -1,0 +1,63 @@
+@(charts: Seq[tools.Chart], env: String)
+
+<html>
+  <head>
+        <meta http-equiv="refresh" content="60">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>theguardian.com livestats</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Georgia, serif;
+            }
+            .display {
+                display: table;
+                width: 50%;
+                float: left;
+                min-height: 100%;
+                max-height: 100%;
+                font-size: 100px;
+            }
+            .display span {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+            }
+            .display h2 {
+                position: absolute;
+                top: 10px;
+                font-size: 30px;
+                text-align: center;
+                width: 50%;
+            }
+            .desktop {
+                background-color: black;
+                color: white;
+                text-shadow: 1px 1px #ccc;
+            } 
+            .responsive {
+                background-color: white;
+                color: black;
+                text-shadow: 1px 1px #ccc;
+            }
+        </style>
+  </head>
+  <body>
+        <div class="display desktop">
+            <h2>desktop</h2>
+            <span>-</span>
+        </div>
+        <div class="display responsive">
+            <h2>responsive</h2>
+            <span>
+                @charts.map{ chart =>
+                    @{"%.2f".format(chart.dataset.last.values.head)}
+                }
+            </span>
+        </div>
+
+
+  </body>
+</html>
