@@ -82,9 +82,6 @@ trait DispatchAsyncHttpClient extends Http {
     futureResponse.onSuccess{ case Left(t) =>
       logger.error("POST Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
     }
-    futureResponse.collect {
-      case Right(HttpResponse(body, statusCode, _)) => logger.error(s"statusCode: $statusCode, body: $body")
-    }
     futureResponse.map(mapFutureToResponse)
   }
 
