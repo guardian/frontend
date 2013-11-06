@@ -20,35 +20,34 @@ as illustrated in this article posted on the Guardian's developer blog:
    to your Sass project.
 2. Import the partial in your Sass files and override default settings
    with your own preferences before the file is imported:
+    ```scss
+    // To enable support for browsers that do not support @media queries,
+    // (IE <= 8, Firefox <= 3, Opera <= 9) set $mq-responsive to false
+    // Create a separate stylesheet served exclusively to these browsers,
+    // meaning @media queries will be rasterized, relying on the cascade itself
+    $mq-responsive: true;
 
-```scss
-// To enable support for browsers that do not support @media queries,
-// (IE <= 8, Firefox <= 3, Opera <= 9) set $mq-responsive to false
-// Create a separate stylesheet served exclusively to these browsers,
-// meaning @media queries will be rasterized, relying on the cascade itself
-$mq-responsive: true;
+    // Name your breakpoints in a way that creates a ubiquitous language
+    // across team members. It will improve communication between
+    // stakeholders, designers, developers, and testers.
+    $mq-breakpoints: (
+        mobile:  300px,
+        tablet:  600px,
+        desktop: 900px,
+        wide:    1260px,
 
-// Name your breakpoints in a way that creates a ubiquitous language
-// across team members. It will improve communication between
-// stakeholders, designers, developers, and testers.
-$mq-breakpoints: (
-    (mobile  300px)
-    (tablet  600px)
-    (desktop 900px)
-    (wide    1260px)
+        // Tweakpoints
+        desktopAd: 810px,
+        mobileLandscape: 480px
+    );
 
-    // Tweakpoints
-    (desktopAd 810px)
-    (mobileLandscape 480px)
-);
+    // Define the breakpoint from the $mq-breakpoints list that should
+    // be used as the target width when outputting a static stylesheet
+    // (i.e. when $mq-responsive is set to 'false').
+    $mq-static-breakpoint: desktop;
 
-// Define the breakpoint from the $mq-breakpoints list that should
-// be used as the target width when outputting a static stylesheet
-// (i.e. when $mq-responsive is set to 'false').
-$mq-static-breakpoint: desktop;
-
-@import 'path/to/mq';
-```
+    @import 'path/to/mq';
+    ```
 3. Play around with `mq()` (see below)
 
 ### Responsive mode ON (default)
