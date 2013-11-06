@@ -21,7 +21,7 @@ object MasterClass {
       new Ticket(price)
     } 
 
-    new MasterClass(title, startDate, url, description, status, tickets.toList, capacity: Int)
+    new MasterClass(title, startDate, url, description, "status", tickets.toList, 30)
   }
 }
 
