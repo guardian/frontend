@@ -1,25 +1,25 @@
 package diagnostics
 
 import org.scalatest.{BeforeAndAfterEach, Matchers, FlatSpec}
-import model.diagnostics.{View, Session}
+import model.diagnostics.{NextGenView, NextGenSession}
 
 class ViewTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   override def beforeEach() {
-    View.reset()
-    Session.reset()
+    NextGenView.reset()
+    NextGenSession.reset()
   }
 
-  "View" should "increment values" in {
-    View.increment should be (1)
-    View.increment should be (2)
-    View.count should be (2)
+  "NextGen" should "increment values" in {
+    NextGenView.increment should be (1)
+    NextGenView.increment should be (2)
+    NextGenView.count should be (2)
   }
 
-  "View" should "reset values" in {
-    View.increment should be (1)
-    View.reset
-    View.count should be (0)
+  "NextGen" should "reset values" in {
+    NextGenView.increment should be (1)
+    NextGenView.reset
+    NextGenView.count should be (0)
   }
   
 }
