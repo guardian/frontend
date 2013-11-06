@@ -78,16 +78,13 @@ define('bootstraps/app', [
             common.mediator.on("module:error", e.log);
         },
         
-       liveStats: function (config) {
+        liveStats: function (config) {
             if (!config.switches.liveStats) {
                 return false;
             }
-            var l = new LiveStats({
-                beaconUrl: config.page.beaconUrl
-            });
-            l.log();
+            new LiveStats({ beaconUrl: config.page.beaconUrl }).log();
         },
-
+        
         initialiseAbTest: function (config) {
             var forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
