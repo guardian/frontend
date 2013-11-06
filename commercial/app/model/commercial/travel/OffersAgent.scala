@@ -3,7 +3,7 @@ package model.commercial.travel
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import scala.concurrent.Future
 import conf.ContentApi
-import model.commercial.Keyword
+import model.commercial.{Segment, Keyword}
 
 object OffersAgent extends Logging with ExecutionContexts {
 
@@ -11,9 +11,11 @@ object OffersAgent extends Logging with ExecutionContexts {
 
   def allOffers: List[Offer] = agent()
 
-  def offers(keywords: Seq[String], offersToChooseFrom: List[Offer] = allOffers) = {
-    offersToChooseFrom.filter {
-      offer => (keywords.map(_.toLowerCase).toSet & offer.keywords.map(_.name.toLowerCase).toSet).size > 0
+  def offers(segment: Segment, offersToChooseFrom: List[Offer] = allOffers) = {
+    offersToChooseFrom filter {
+      offer => (segment.keywords.map(_.toLowerCase).toSet & offer.keywords.map(_.name.toLowerCase).toSet).size > 0
+    } filter {
+      offer => segment.isRepeatVisitor
     }
   }
 

@@ -1,4 +1,12 @@
 define(['common', 'modules/id'], function(common, Id) {
+    /**
+     * event51: Comment
+     * event72: Engagement event (e.g. recommendation)
+     * eVar65: Only for event72. Type of interaction (any string)
+     * eVar66: User ID of current user
+     * eVar67: User ID of person being acted upon
+     * eVar68: Only for event51. comment || response
+     */
     function Track() {}
 
     /**
@@ -17,10 +25,11 @@ define(['common', 'modules/id'], function(common, Id) {
         return linkTrackVars.concat(extras).join(',');
     };
 
-    Track.prototype.comment = function() {
+    Track.prototype.comment = function(comment) {
         s.events = 'event51';
-        s.eVar66 = Id.getUserFromCookie().id;
-        s.eVar68 = 'comment';
+        s.eVar66 = Id.getUserFromCookie().id || null;
+        s.eVar68 = comment.replyTo ? 'response' : 'comment';
+        s.eVar67 = comment.replyTo ? comment.replyTo.authorId : null;
         s.linkTrackVars = this.getLinkTrackVars(['eVar68']);
         s.linkTrackEvents = 'event51';
         s.tl(true, 'o', 'comment');

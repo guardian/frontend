@@ -3,22 +3,22 @@
  Description: Gets and sets users reading history
  */
 define([
-    'common',
+    'lodash/objects/assign',
     'modules/storage'
 ], function(
-    common,
+    _assign,
     storage
     ) {
 
     var HistoryItem = function(item) {
         this.id = item.id;
         this.timestamp = Date.now();
-        common.extend(this, item.meta);
+        _assign(this, item.meta);
         return this;
     };
 
     var History = function(config) {
-        this.config = common.extend(this.DEFAULTS, config);
+        this.config = _assign(this.DEFAULTS, config);
         return this;
     };
 
