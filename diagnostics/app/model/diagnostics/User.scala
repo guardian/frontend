@@ -13,10 +13,12 @@ class User {
   }
   
   def count = { 
-    metric.get
+    metric.doubleValue
   }
 
-  def reset() {}
+  def reset() {
+    metric.set(0)
+  }
 
 }
 

@@ -13,7 +13,7 @@ object DiagnosticsLoadJob extends Logging {
     log.info("Loading diagnostics data in to CloudWatch")
     Configuration.environment.stage.toUpperCase match {
       case "PROD" => {
-        CloudWatch.put("Diagnostics", Metric.averages ++ Map("views" -> View.count) ++ Map("sessions" -> Session.count))
+        CloudWatch.put("Diagnostics", Metric.averages ++ Map("views" -> View.count) ++ Map("viewsOverSessions" -> View.count / Session.count))
         Metric.reset()
         View.reset()
         Session.reset()
