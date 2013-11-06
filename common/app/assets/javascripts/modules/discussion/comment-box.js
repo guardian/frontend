@@ -71,17 +71,11 @@ CommentBox.prototype.prerender = function() {
     }
 
     if (this.options.replyTo) {
-        var elem = document.createElement('input');
-        elem.type = 'hidden';
-        elem.name = 'replyToId';
-        elem.value = this.options.replyTo.id;
-        this.elem.appendChild(elem);
-
-        elem = document.createElement('label');
-        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.id);
+        var elem = document.createElement('label');
+        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.commentId);
         elem.className = 'label '+ this.getClass('reply-to', true);
         elem.innerHTML = 'to '+ this.options.replyTo.author;
-        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.id;
+        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.commentId;
         bonzo(elem).insertAfter(this.getElem('submit'));
     }
 
@@ -137,7 +131,7 @@ CommentBox.prototype.postComment = function(e) {
     }
 
     if (this.options.replyTo) {
-        comment.replyTo = this.elem.replyToId.value;
+        comment.replyTo = this.options.replyTo;
     }
 
     if (this.errors.length === 0) {
@@ -170,7 +164,7 @@ CommentBox.prototype.success = function(comment, resp) {
     this.getElem('body').value = '';
     this.setFormState();
     this.emit('post:success', comment);
-    this.mediator.emit('discussion:commentbox:post:success', resp);
+    this.mediator.emit('discussion:commentbox:post:success', comment);
 };
 
 /**
