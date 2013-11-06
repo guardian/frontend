@@ -1,18 +1,14 @@
 package controllers.commercial
 
 import play.api.mvc._
-import common.ExecutionContexts
 import scala.util.Random
 import model.commercial.jobs.JobsAgent
 
-object JobAds extends Controller with ExecutionContexts {
+object JobAds extends CommercialComponentController {
 
   def jobs = Action {
     implicit request =>
-      val jobs = request.queryString.get("k") map {
-        keywords => JobsAgent.jobs(keywords)
-      } getOrElse Nil
-
+      val jobs = JobsAgent.matchingAds(segment)
       if (jobs.isEmpty) {
         Ok("No jobs") withHeaders ("Cache-Control" -> "max-age=60")
       } else {
