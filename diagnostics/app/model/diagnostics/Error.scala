@@ -39,15 +39,19 @@ object Error extends Logging {
           case Some("ads") => Metric.increment("ads") 
           case Some("session") => {
             platform match {
-              case Some("r2") => R2Session.increment
-              case Some("nextgen") => NextGenSession.increment
+              case Some("desktop") =>
+                DesktopSession.increment
+                DesktopView.increment
+              case Some("responsive") =>
+                ResponsiveSession.increment
+                ResponsiveView.increment
               case _ => {}
             }
           }
           case Some("view") => {
             platform match {
-              case Some("r2") => R2View.increment
-              case Some("nextgen") => NextGenView.increment
+              case Some("desktop") => DesktopView.increment
+              case Some("responsive") => ResponsiveView.increment
               case _ => {}
             }
           }

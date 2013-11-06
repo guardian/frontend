@@ -14,7 +14,9 @@
     list-style: none;
     margin: 0 0 1em;
 }
-.d-thread .d-thread {
+
+.d-thread--responses,
+.d-comment-box--response {
     padding-left: 28px; /* aligns with top level comment's body */
     border-left: $gutter/2 solid $c-neutral5;
 
@@ -160,7 +162,12 @@
 
 .d-comment__action {
     color: $c-neutral2;
+    display: inline-block;
     font-size: .85714285714em;
+}
+
+.d-comment__action--report {
+    float: right;
 }
 
 .d-comment__recommend {
@@ -271,14 +278,16 @@
 .d-show-cta:hover,
 .d-show-cta:focus {
     @extend %type-6;
-    line-height: 1;
+
+    background-color: $c-neutral7;
     color: $c-neutral1;
-    position: relative;
     display: block;
+    line-height: 1;
+    margin-bottom: $baseline*6;
+    overflow: auto;
+    position: relative;
     padding: $baseline*2 8px $baseline*6 6px;
     text-align: left;
-    overflow: auto;
-    background-color: $c-neutral7;
     position: relative;
 
     .d-commentcount {
@@ -309,19 +318,9 @@
 
 .d-comment-box {}
 
-.d-comment-box--condensed {
-    .d-comment-box__content {
-        display: none;
-    }
-
-    .d-comment-box__add-comment {
-        display: block;
-    }
-}
-
 .d-comment-box__body {
     @include box-sizing(border-box);
-    
+
     border: 1px solid $c-neutral3;
     height: 50px;
     margin: $baseline*2 0;
@@ -341,4 +340,22 @@
 
 .d-comment-box__add-comment {
     display: none;
+}
+
+.d-comment-box__submit {
+    display: inline-block;
+    margin-right: $gutter;
+}
+
+.d-comment-box__reply-to,
+.d-comment-box__cancel {
+    @include fs-data(2);
+    color: $c-neutral1;
+    display: inline-block;
+}
+
+.d-comment-box__cancel {
+    color: $c-neutral2;
+    float: right;
+    margin-top: $baseline*3;
 }

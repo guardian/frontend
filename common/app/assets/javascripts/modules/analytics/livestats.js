@@ -1,5 +1,5 @@
 /*global Event:true */
-define(['modules/storage'], function (storage) {
+define([], function () {
 
     var Session = function () {
         
@@ -24,7 +24,8 @@ define(['modules/storage'], function (storage) {
             url = config.beaconUrl,
             path = '/px.gif',
             body = document.body,
-            platform = 'nextgen',
+            platform = 'responsive',
+            sessionLength = 30,
             createImage = function(url) {
                 var image = new Image();
                 image.id = 'js-livestats';

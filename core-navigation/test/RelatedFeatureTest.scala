@@ -1,9 +1,8 @@
-import common.UsesElasticSearch
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import test.HtmlUnit
 
-class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Related links") {
 

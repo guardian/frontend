@@ -1,7 +1,5 @@
 package model.diagnostics
 
-import common.Logging
-import java.util.concurrent.ConcurrentHashMap
 import com.google.common.util.concurrent.AtomicDouble
 
 class User {
@@ -25,8 +23,8 @@ class User {
 
 }
 
-object R2View extends User with Logging {} 
-object R2Session extends User with Logging {}
-object NextGenSession extends User with Logging {}
-object NextGenView extends User with Logging {}
+object DesktopView extends User 
+object DesktopSession extends User
+object ResponsiveSession extends User
+object ResponsiveView extends User
 

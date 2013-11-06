@@ -166,8 +166,8 @@ define([
                                           currentSection.zones['/'+config.page.section] ||
                                           currentSection.sectionName,
 
-                        localNavCtaHtml = '<div class="localnav--small tone-' + currentSection.sectionTone + '">' +
-                                          '  <div class="localnav__inner tone-accent-border u-cf">' +
+                        localNavCtaHtml = '<div class="localnav--small tone-' + currentSection.sectionTone + ' tone-accent-border">' +
+                                          '  <div class="localnav__inner u-cf">' +
                                           '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +

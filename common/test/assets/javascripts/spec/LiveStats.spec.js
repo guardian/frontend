@@ -13,7 +13,7 @@ define(['common', 'modules/analytics/livestats'], function(common, LiveStats) {
         it("should log a new session as type 'session'", function(){
             ls.log();
             expect(document.getElementById('js-livestats').getAttribute('src')).toContain(
-                'beacon.gu.com/px.gif?type=session&platform=nextgen'
+                'beacon.gu.com/px.gif?type=session&platform=responsive'
             );
         });
         
@@ -21,7 +21,7 @@ define(['common', 'modules/analytics/livestats'], function(common, LiveStats) {
             window.sessionStorage.setItem("gu.session", true);
             ls.log();
             expect(document.getElementById('js-livestats').getAttribute('src')).toContain(
-                'beacon.gu.com/px.gif?type=view&platform=nextgen'
+                'beacon.gu.com/px.gif?type=view&platform=responsive'
             );
         });
 

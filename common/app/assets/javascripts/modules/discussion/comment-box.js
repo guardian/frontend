@@ -1,9 +1,11 @@
 define([
     'bean',
+    'bonzo',
     'modules/discussion/api',
     'modules/component'
 ], function(
     bean,
+    bonzo,
     DiscussionApi,
     Component
 ) {
@@ -25,16 +27,11 @@ Component.define(CommentBox);
 /** @type {Object.<string.*>} */
 CommentBox.CONFIG = {
     templateName: 'comment-box',
-    componentClass: 'js-comment-box',
+    componentClass: 'd-comment-box',
     classes: {
-        show: 'js-show-comment-box',
-        body: 'd-comment-box__body',
-        bodyExpanded: 'd-comment-box__body--expanded',
-        submitButton: 'd-comment-box__submit',
-        messages: 'd-comment-box__messages',
-        error: 'd-comment-box__error',
-        condensed: 'd-comment-box--condensed'
+        bodyExpanded: 'd-comment-box__body--expanded'
     },
+    useBem: true,
     errors: {
         EMPTY_COMMENT_BODY: 'Please write a comment.',
         COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
@@ -50,14 +47,43 @@ CommentBox.CONFIG = {
 CommentBox.prototype.defaultOptions = {
     discussionId: null,
     apiRoot: null,
-    condensed: false,
-    maxLength: 5000
+    maxLength: 5000,
+    premod: false,
+    focus: false,
+    state: 'top-level',
+    replyTo: null,
+    cancelable: false
 };
 
 /**
  * @type {Array.<string>}
  */
 CommentBox.prototype.errors = [];
+
+/** @oevrride */
+CommentBox.prototype.prerender = function() {
+    if (!this.options.premod) {
+        this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
+    }
+
+    if (this.options.state === 'response') {
+        this.getElem('submit').innerHTML = 'Post reply';
+    }
+
+    if (this.options.replyTo) {
+        var elem = document.createElement('label');
+        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.commentId);
+        elem.className = 'label '+ this.getClass('reply-to', true);
+        elem.innerHTML = 'to '+ this.options.replyTo.author;
+        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.commentId;
+        bonzo(elem).insertAfter(this.getElem('submit'));
+    }
+
+    if (this.options.cancelable) {
+        var beforeElem = this.getElem('reply-to') ? this.getElem('reply-to') : this.getElem('submit');
+        bonzo(bonzo.create('<div class="u-fauxlink '+ this.getClass('cancel', true) +'" role="button">Cancel</div>')).insertAfter(beforeElem);
+    }
+};
 
 /** @override */
 CommentBox.prototype.ready = function() {
@@ -66,7 +92,7 @@ CommentBox.prototype.ready = function() {
     }
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submitButton');
+        submitButton = this.getElem('submit');
 
     this.setFormState();
 
@@ -74,10 +100,12 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+    this.on('click', this.getClass('cancel'), this.destroy);
 
-    if (this.options.condensed) {
-        this.elem.className = this.elem.className +' '+ this.getClass('condensed', true);
-        bean.on(this.context, 'click', [this.getElem('show')], this.showCommentBox.bind(this));
+    this.setState(this.options.state);
+
+    if (this.options.focus) {
+        this.getElem('body').focus();
     }
 };
 
@@ -100,6 +128,10 @@ CommentBox.prototype.postComment = function(e) {
 
     else if (comment.body.length > this.options.maxLength) {
         this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
+    }
+
+    if (this.options.replyTo) {
+        comment.replyTo = this.options.replyTo;
     }
 
     if (this.errors.length === 0) {
@@ -132,7 +164,7 @@ CommentBox.prototype.success = function(comment, resp) {
     this.getElem('body').value = '';
     this.setFormState();
     this.emit('post:success', comment);
-    this.mediator.emit('discussion:commentbox:post:success', resp);
+    this.mediator.emit('discussion:commentbox:post:success', comment);
 };
 
 /**
@@ -174,7 +206,7 @@ CommentBox.prototype.setFormState = function(disabled) {
     disabled = typeof disabled === 'boolean' ? disabled : false;
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submitButton');
+        submitButton = this.getElem('submit');
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
@@ -186,25 +218,8 @@ CommentBox.prototype.setFormState = function(disabled) {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.showCommentBox = function(e) {
-    var condensedClass = this.getClass('condensed', true);
-
-    if (this.elem.className.match(condensedClass)) {
-        this.elem.className = this.elem.className.replace(condensedClass, '');
-        this.getElem('body').focus();
-    }
-};
-
-/**
- * @param {Event=} e (optional)
- */
 CommentBox.prototype.setExpanded = function(e) {
-    var commentBody = this.getElem('body'),
-        expandedClass = this.getClass('bodyExpanded', true);
-
-    if (!commentBody.className.match(expandedClass)) {
-        commentBody.className = commentBody.className +' '+ expandedClass;
-    }
+    this.setState('expanded', 'body');
 };
 
 
