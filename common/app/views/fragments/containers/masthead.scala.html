@@ -4,12 +4,8 @@
     <section class="container container--@style.containerType js-container--toggle tone-@style.tone"
              data-link-name="block | @config.id"
              data-id="@config.id"
-<<<<<<< HEAD:common/app/views/fragments/collections/sectionZone.scala.html
              data-link-context="@config.section"
-    >
-=======
              data-type="@style.containerType">
->>>>>>> master:common/app/views/fragments/containers/masthead.scala.html
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
             @if(title.nonEmpty) {
