@@ -8,6 +8,29 @@ define([
     'modules/adverts/sticky'
 ], function (common, qwery, bonzo, detect, inview, Sticky) {
 
+    var adViewTime = 0,
+        adViewTimings = [1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60],
+        adViewTrack = 0;
+
+    //Top1:15,Middle1:10,Bottom1:5
+
+    function startAdViewTimer() {
+        setInterval(function() {
+            var elem = $('#Middle'),
+                docViewTop = $(window).scrollTop(),
+                docViewBottom = docViewTop + $(window).height(),
+                elemTop = $(elem).offset().top,
+                elemBottom = elemTop + $(elem).height(),
+                isVisible = ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+
+            if (isVisible) {
+                adViewTime++;
+                if (adViewTimings[adViewTime]) { adViewTrack = adViewTimings[adViewTime]; }
+            }
+        }, 1000);
+    }
+
+
     var AlphaAdverts = function () {
 
         var self = this,
