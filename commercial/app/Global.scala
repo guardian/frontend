@@ -1,4 +1,4 @@
-import common.{CommercialMetrics, Jobs}
+import common.{AkkaAsync, CommercialMetrics, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.masterclasses.MasterClassAgent
@@ -25,8 +25,13 @@ trait CommercialLifecycle extends GlobalSettings {
       OffersAgent.refresh()
     }
 
-    // fire at 3 mins past every hour
-    Jobs.schedule("JobsRefreshJob", "0 3 * * * ?", CommercialMetrics.JobsLoadTimingMetric) {
+    // fire at 6.03am and 6.03pm
+    Jobs.schedule("JobsRefreshJob", "0 3 6,18 * * ?", CommercialMetrics.JobsLoadTimingMetric) {
+      JobsAgent.refresh()
+    }
+
+    AkkaAsync{
+      OffersAgent.refresh()
       JobsAgent.refresh()
     }
 

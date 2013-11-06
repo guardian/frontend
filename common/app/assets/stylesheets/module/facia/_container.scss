@@ -1,5 +1,6 @@
 .collection--container {
     @include mq(tablet) {
+        @include first-row(2);
         .items {
             overflow: hidden;
         }
@@ -8,19 +9,6 @@
         }
         .item:nth-child(n+2) {
             @include card;
-        }
-        .item:nth-child(2) {
-            @include card-image;
-        }
-    }
-    @include mq(tablet, desktop) {
-        .item:first-child,
-        .item:nth-child(2n+2) {
-            @include row-start;
-        }
-        .item:first-child,
-        .item:nth-child(2n+3) {
-            @include row-end;
         }
     }
     @include mq(desktop, wide) {
@@ -95,7 +83,6 @@
         @include first-row(1);
     }
 }
-.collection--news,
 .collection--sport {
     @include mq($to: tablet) {
         .item:first-child {
@@ -156,7 +143,15 @@
         }
     }
     @include mq(tablet, desktop) {
-        .item:nth-child(n+3):nth-child(-n+5) {
+        .item:nth-child(3n+1) {
+            @include row-start;
+        }
+        .item:nth-child(2),
+        .item:nth-child(3n+3) {
+            @include row-end;
+        }
+        .item:nth-child(2),
+        .item:nth-child(n+4):nth-child(-n+6) {
             @include card-image;
         }
     }

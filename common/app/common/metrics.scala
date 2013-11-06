@@ -157,6 +157,16 @@ object AdminMetrics {
   val all = Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
 }
 
+object DiagnosticsMetrics {
+  object DiagnosticsLoadTimingMetric extends TimingMetric(
+    "diagnostics",
+    "diagnostics-load",
+    "Diagnostics load timing",
+    "Time spent running diagnostics load jobs",
+    None
+  ) with TimingMetricLogging
+}
+
 object PorterMetrics {
   object AnalyticsLoadTimingMetric extends TimingMetric(
     "porter",

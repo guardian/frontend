@@ -1,11 +1,13 @@
 define([
     'bean',
     'qwery',
-    'bonzo'
+    'bonzo',
+    'ajax'
 ], function(
     bean,
     qwery,
-    bonzo
+    bonzo,
+    ajax
 ) {
 
 /**
@@ -27,6 +29,7 @@ var Component = function() {};
 Component.CONFIG = {
     templateName: '{{ TEMPLATE_NAME }}',
     componentClass: '{{ COMPONENT_CLASS }}',
+    endpoint: '{{ ENDPOINT }}',
     classes: {},
     elements: {}
 };
@@ -74,10 +77,46 @@ Component.prototype.render = function(parent) {
         container = parent || document.body;
 
     this.elems = {};
-    bonzo(container).append(template);
     this.elem = template;
+    this.prerender();
+    bonzo(container).append(template);
     this.ready();
 };
+
+/**
+ * @param {Element} parent
+ */
+Component.prototype.fetch = function(parent) {
+    var self = this,
+        endpoint = this.conf().endpoint,
+        opt;
+
+    for (opt in this.options) {
+        endpoint = endpoint.replace(':'+ opt, this.options[opt]);
+    }
+
+    return ajax({
+        url: endpoint,
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(
+        function render(resp) {
+            self.elem = bonzo.create(resp.html)[0];
+            bonzo(parent).append(self.elem);
+            self.elems = {};
+            self.prerender();
+            self.ready();
+        }
+    );
+};
+
+/**
+ * This is user to edit this.elem before it's rendered
+ * This will help with the rendering performance that
+ * we would lose if rendered then manipulated
+ */
+Component.prototype.prerender = function() {};
 
 /**
  * Once the render / decorate methods have been called
@@ -120,8 +159,10 @@ Component.prototype.emit = function(eventName, args) {
  */
 Component.prototype.getElem = function(elemName) {
     if (this.elems[elemName]) { return this.elems[elemName]; }
+
     var elem = qwery(this.getClass(elemName), this.elem)[0];
     this.elems[elemName] = elem;
+
     return elem;
 };
 
@@ -131,8 +172,29 @@ Component.prototype.getElem = function(elemName) {
  * @return {string}
  */
 Component.prototype.getClass = function(elemName, sansDot) {
-    var config = this.conf();
-    return (sansDot ? '' : '.') + config.classes[elemName] || null;
+    var config = this.conf(),
+        className = this.conf().useBem ? this.conf().componentClass +'__'+ elemName : config.classes[elemName];
+
+    return (sansDot ? '' : '.') + className;
+};
+
+/**
+ * @param {string} state
+ * @param {string|null} elemName
+ */
+Component.prototype.setState = function(state, elemName) {
+    var elem = elemName ? this.getElem(elemName) : this.elem;
+    bonzo(elem).addClass(this.conf().componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+};
+
+/**
+ * @param {string|null} state
+ * @param {string|null} elemName
+ * return {Boolean}
+ */
+Component.prototype.hasState = function(state, elemName) {
+    var elem = elemName ? this.getElem(elemName) : this.elem;
+    return bonzo(elem).hasClass(this.conf().componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
 };
 
 /**
@@ -151,6 +213,14 @@ Component.prototype.setOptions = function(options) {
     for (var prop in this.defaultOptions) {
         this.options[prop] = options[prop] || this.defaultOptions[prop];
     }
+};
+
+/**
+ * Removes all event listeners and removes the DOM elem
+ */
+Component.prototype.destroy = function() {
+    bean.off(this.elem);
+    bonzo(this.elem).remove();
 };
 
 /**

@@ -4,9 +4,9 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import conf.Switches
+import common.UsesElasticSearch
 
-class IndexControllerTest extends FlatSpec with Matchers {
+class IndexControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
 
   val section = "books"
   val callbackName = "aFunction"
@@ -50,12 +50,19 @@ class IndexControllerTest extends FlatSpec with Matchers {
 
   it should "redirect when content api says it is on the wrong web url" in Fake {
 
-    Switches.FollowItemRedirectsFromApiSwitch.switchOn()
-
-    val result = controllers.IndexController.render("type/video")(FakeRequest(GET, "/type/video"))
+    val result = controllers.IndexController.render("type/video")(TestRequest("/type/video"))
 
     status(result) should be (302)
     header("Location", result).get should be ("/video")
+  }
+
+  // ignore while content api fixes a field in elastic search...
+  ignore should "correctly redirect short urls to other servers" in Fake {
+
+    val result = controllers.IndexController.render("p/3jdag")(TestRequest("/p/3jdag"))
+
+    status(result) should be (302)
+    header("Location", result).get should be ("/music/2013/oct/11/david-byrne-internet-content-world")
   }
 
   it should "return JSONP when callback is supplied to front trails" in Fake {

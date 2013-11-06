@@ -10,7 +10,7 @@
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(image)">
         <article id="article" class="article"
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
-            <div class="article__inner">
+            <div class="article__inner article__inner--head">
                 <header class="article__head">
 
                     @fragments.headline(image.headline)
@@ -56,19 +56,24 @@
 
         <div class="article__inner">
             @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-                <h2 id="comments" class="page-sub-header tone-colour">Comments</h2>
-                <div class="article__discussion"></div>
+                <div class="discussion"
+                    data-discussion-key="@image.discussionId"
+                    data-discussion-closed="@image.isClosedForComments">
+                    <h2 id="comments" class="page-sub-header tone-colour">Comments</h2>
 
-                <div class="d-show-cta-wrapper">
-                    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@image.shortUrlId}"
-                       data-is-ajax data-link-name="View all comments" rel="nofollow">
-                        View all comments
+                    <div class="discussion__comment-box discussion__comment-box--top"></div>
+                    <div class="discussion__comments"></div>
+                    <div class="discussion__comment-box discussion__comment-box--bottom"></div>
+                    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@image.discussionId}"
+                        data-is-ajax data-link-name="View all comments" rel="nofollow">
+                        Join the discussion…
                         <span class="d-commentcount speech-bubble tone-background tone-border">
                             <span class="js-commentcount__number"></span>
                         </span>
                         <i class="i i-arrow-grey-down"></i>
                     </a>
                 </div>
+
             }
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" data-link-context="@image.section">

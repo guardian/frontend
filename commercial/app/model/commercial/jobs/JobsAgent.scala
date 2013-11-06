@@ -6,6 +6,10 @@ import conf.ContentApi
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import scala.util.Try
+import play.api.Play
+import services.S3
+import scala.xml.XML
+import play.api.Play.current
 
 object JobsAgent extends ExecutionContexts with Logging {
 
@@ -22,8 +26,19 @@ object JobsAgent extends ExecutionContexts with Logging {
   def currentJobs: Seq[Job] = agent()
 
   def refresh() {
+
+    val currentJobs =
+      if (Play.isDev) {
+        S3.get("DEV/commercial/job-ads.xml").map {
+          content =>
+            val xml = Future(XML.loadString(content))
+            JobsApi.getCurrentJobs(xml)
+        }.getOrElse(Future(Nil))
+      }
+      else JobsApi.getCurrentJobs()
+
     for {
-      untaggedJobs <- JobsApi.getCurrentJobs()
+      untaggedJobs <- currentJobs
       (unchangedJobs, newUntaggedJobs) = unchangedJobsAndNewUntaggedJobs(untaggedJobs)
       jobs = unchangedJobs ++ tagWithKeywords(newUntaggedJobs)
     } yield agent send jobs

@@ -4,3 +4,5 @@
 
 # For dev machines
 GET     /   controllers.Application.front
+
+GET     /px.gif         controllers.ErrorController.px

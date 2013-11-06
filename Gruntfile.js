@@ -56,11 +56,17 @@ module.exports = function (grunt) {
                         "EventEmitter": "components/eventEmitter/EventEmitter",
                         "qwery": "components/qwery/mobile/qwery-mobile",
                         "reqwest": "components/reqwest/src/reqwest",
-                        "domwrite": "components/dom-write/dom-write",
+                        "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
-                        "swipeview": "components/swipeview/src/swipeview"
+                        "swipeview": "components/swipeview/src/swipeview",
+                        "lodash": "components/lodash-amd/modern"
                     },
-                    "wrap" : {
+                    shim: {
+                        "postscribe": {
+                            exports: "postscribe"
+                        }
+                    },
+                    wrap: {
                         "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         "endFile": "common/app/assets/javascripts/bootstraps/go.js"
                     },
@@ -75,7 +81,7 @@ module.exports = function (grunt) {
         webfontjson: {
             WebAgateSansWoff: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebAgateSans.woff.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -88,7 +94,7 @@ module.exports = function (grunt) {
             },
             WebAgateSansTtf: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebAgateSans.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.ttf.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -101,7 +107,7 @@ module.exports = function (grunt) {
             },
             WebEgyptianWoff: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebEgyptian.woff.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -146,14 +152,9 @@ module.exports = function (grunt) {
             },
             WebEgyptianTtf: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebEgyptian.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.ttf.json",
                     "callback": "guFont",
                     "fonts": [
-                        {
-                            "font-family": "AgateSans",
-                            "file": "resources/fonts/AgateSans-Regular.ttf",
-                            "format": "ttf"
-                        },
                         {
                             "font-family": "EgyptianText",
                             "file": "resources/fonts/EgyptianText-Regular.ttf",
@@ -356,6 +357,7 @@ module.exports = function (grunt) {
                             swipe:        'components/swipe/swipe',
                             swipeview:    'components/swipeview/src/swipeview',
                             moment:       'components/moment/moment',
+                            lodash:       'components/lodash-amd/modern',
                             omniture:     '../../../app/public/javascripts/vendor/omniture',
                             fixtures:     '../../../test/assets/javascripts/fixtures',
                             helpers:      '../../../test/assets/javascripts/helpers'
@@ -435,7 +437,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
-                    src: ['**/*.js', '!components/**', '!common.js']
+                    src: ['**/*.js', '!components/**', '!utils/atob.js']
                 }]
             }
         },
@@ -483,7 +485,7 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/gallery/*.spec.js']
             },
             article: {
-                src: []
+                src: ['integration-tests/casper/tests/article/article.spec.js']
             },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
@@ -545,6 +547,7 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
+            staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts'],
             css: [staticTargetDir + 'stylesheets'],
             images: [staticTargetDir + 'images'],
@@ -623,7 +626,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', function() {
-        grunt.task.run(['compile:images', 'compile:css', 'compile:js', 'compile:fonts', 'compile:flash']);
+        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js', 'compile:fonts', 'compile:flash']);
         if (!isDev) {
             grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
         }

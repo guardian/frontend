@@ -1,0 +1,374 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/video/2013/oct/31/bodysnatchers-bangkok-thailand-emergency-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-31T05:27:00Z",
+      "webTitle":"The bodysnatchers of Bangkok: Thailand's volunteer emergency service - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/oct/31/bodysnatchers-bangkok-thailand-emergency-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/oct/31/bodysnatchers-bangkok-thailand-emergency-video",
+      "fields":{
+        "trailText":"<p>We spend the night with a Noppadon, one of Bangkok's many volunteer body-collectors - also known as bodysnatchers</p>",
+        "headline":"The bodysnatchers of Bangkok: Thailand's volunteer emergency service - video",
+        "body":"<video data-media-id=\"gu-video-420574126\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383046680/ambulance-drivers-collect-012.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/21/131021BodysnatchersThai-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/21/131021BodysnatchersThai_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/21/131021BodysnatchersThai_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/21/131021BodysnatchersThai/131021BodysnatchersThai.m3u8\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/420574126|2013-11-05T11:03:48Z|3566ec27f275a7faf71cadfceb6c8ca0a6548307 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T17:21:17Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383037768/ambulance-drivers-collect-006.jpg",
+        "standfirst":"Unlike the UK or US, Thailand operates on a two-tier emergency support system, sending out volunteers, or 'basic teams', to accident or crime scenes first, and only then an advanced life-support ambulance if needed. These 'basic teams' provide a vital service and account for about 60% of the emergency cases Bangkok's hospitals see every year. Most Thais believe that helping others – be it the injured or dead – allows one to earn karmic merit. Here we spend the night with a Noppadon, one of Bangkok's many volunteer body-collectors - also known as bodysnatchers",
+        "shortUrl":"http://gu.com/p/3jm5n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383037768/ambulance-drivers-collect-006.jpg",
+        "commentable":"true",
+        "internalContentCode":"420574126",
+        "allowUgc":"false",
+        "internalOctopusCode":"8223755",
+        "isPremoderated":"false",
+        "byline":"Chris Kelly and Kate Hodal",
+        "publication":"theguardian.com",
+        "internalPageCode":"1984496",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T23:59:00Z"
+      },
+      "tags":[{
+        "id":"world/thailand",
+        "type":"keyword",
+        "webTitle":"Thailand",
+        "webUrl":"http://www.theguardian.com/world/thailand",
+        "apiUrl":"http://content.guardianapis.com/world/thailand",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/buddhism",
+        "type":"keyword",
+        "webTitle":"Buddhism",
+        "webUrl":"http://www.theguardian.com/world/buddhism",
+        "apiUrl":"http://content.guardianapis.com/world/buddhism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/kate-hodal",
+        "type":"contributor",
+        "webTitle":"Kate Hodal",
+        "webUrl":"http://www.theguardian.com/profile/kate-hodal",
+        "apiUrl":"http://content.guardianapis.com/profile/kate-hodal",
+        "r2ContributorId":"47767",
+        "references":[]
+      },{
+        "id":"profile/mustafa-khalili",
+        "type":"contributor",
+        "webTitle":"Mustafa Khalili",
+        "webUrl":"http://www.theguardian.com/profile/mustafa-khalili",
+        "apiUrl":"http://content.guardianapis.com/profile/mustafa-khalili",
+        "bio":"<p>Mustafa Khalili is a multimedia editor for news at the Guardian. Previously he worked as a photojournalist, covering such subjects as celebrity culture in the UK and armed conflict in the Middle East. You can follow him on Twitter: <a href=\"http://twitter.com/#!/muskhalili\">@muskhalili</a></p>",
+        "r2ContributorId":"31262",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-420574126",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382354338136/golden-dawn-member-tattoo-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"golden dawn member tattoo",
+            "height":"90",
+            "credit":"guardian.co.uk",
+            "caption":"For the last two or three years many people in Greece have been visiting tattoo parlours asking for nationalist symbols or even the banner of the neonazi party Golden Dawn. But after the crackdown on the party’s leadership the mood has changed.  Photograph: guardian.co.uk",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382354340098/golden-dawn-member-tattoo-002.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"golden dawn member tattoo",
+            "height":"225",
+            "credit":"guardian.co.uk",
+            "caption":"For the last two or three years many people in Greece have been visiting tattoo parlours asking for nationalist symbols or even the banner of the neonazi party Golden Dawn. But after the crackdown on the party’s leadership the mood has changed.  Photograph: guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383029334/ambulance-drivers-collect-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"360",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383033367/ambulance-drivers-collect-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"130",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383034862/ambulance-drivers-collect-004.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"54",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383036316/ambulance-drivers-collect-005.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"340",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383037768/ambulance-drivers-collect-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"84",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383039376/ambulance-drivers-collect-007.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"132",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383040756/ambulance-drivers-collect-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"168",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383042275/ambulance-drivers-collect-009.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"180",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383043695/ambulance-drivers-collect-010.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"228",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383045093/ambulance-drivers-collect-011.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"276",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383046680/ambulance-drivers-collect-012.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"372",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383048189/ambulance-drivers-collect-013.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"360",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue & Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/21/131021BodysnatchersThai-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/21/131021BodysnatchersThai_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/21/131021BodysnatchersThai/131021BodysnatchersThai.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/21/131021BodysnatchersThai_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/21/131021BodysnatchersThai_8223755.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        }]
+      },{
+        "id":"gu-image-421352122",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/21/1382383037768/ambulance-drivers-collect-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Chris Kelly",
+            "altText":"ambulance drivers collecting body white sheet",
+            "height":"84",
+            "credit":"Chris Kelly/guardian.co.uk",
+            "caption":"Noppadon Sritongkham,.Deputy Manager of Rescue &amp; Training at the Ruam Katanyu Foundation, and two volunteers wrap up the remains of an elderly woman in Bangkok, Thailand, 13/09/2013. © Chris Kelly Photograph: Chris Kelly/guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

@@ -257,7 +257,7 @@
         "id":"pa-football-team/98"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       }]
     },{
       "id":"football/2013/jan/27/st-mirren-celtic-scottish-league-cup",
@@ -532,7 +532,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       }]
     },{
       "id":"football/2013/jan/26/inverness-hearts-league-cup-semi-final",
@@ -778,7 +778,7 @@
         "id":"pa-football-team/98"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/1456"
@@ -903,7 +903,7 @@
       }],
       "references":[{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/101"
@@ -1181,7 +1181,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/115"
@@ -1424,7 +1424,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       }]
     },{
       "id":"football/blog/2012/mar/19/liam-kelly-father-death-kilmarnock",
@@ -1680,7 +1680,7 @@
         "id":"pa-football-team/123"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       }]
     },{
       "id":"football/2012/mar/19/kilmarnock-cis-insurance-cup",
@@ -1804,7 +1804,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/123"
@@ -2066,7 +2066,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/123"
@@ -2328,7 +2328,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/123"
@@ -2590,7 +2590,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/108"
@@ -2823,7 +2823,7 @@
       }],
       "references":[{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/123"
@@ -2994,7 +2994,7 @@
       }],
       "references":[{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/123"
@@ -3232,11 +3232,11 @@
         "type":"pa-football-team",
         "id":"pa-football-team/94"
       },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/321"
+      },{
         "type":"pa-football-team",
         "id":"pa-football-team/99"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
       }]
     },{
       "id":"football/blog/2011/sep/23/rangers-ally-mccoist-league-cup",
@@ -3428,7 +3428,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/101"
@@ -3624,7 +3624,7 @@
       }],
       "references":[{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/101"
@@ -3863,7 +3863,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/848"
@@ -4108,7 +4108,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/101"
@@ -4350,7 +4350,7 @@
         "id":"pa-football-team/101"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       }]
     },{
       "id":"football/2011/mar/18/rangers-celtic-league-cup-final",
@@ -4490,7 +4490,7 @@
         "id":"pa-football-team/94"
       },{
         "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
+        "id":"pa-football-competition/321"
       },{
         "type":"pa-football-team",
         "id":"pa-football-team/101"
