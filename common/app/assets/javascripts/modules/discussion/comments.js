@@ -128,7 +128,7 @@ Comments.prototype.renderReplyButtons = function(comments) {
         actions = qwery(self.getClass('commentActions'), elem)[0];
         bonzo(actions).prepend(
             '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
-            'role="button" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
+            'role="button" data-link-name="reply to comment" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
     });
 };
 
