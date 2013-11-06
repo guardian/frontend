@@ -300,14 +300,16 @@ Comments.prototype.replyToComment = function(e) {
 
     var replyToComment = qwery('#comment-'+ replyToId)[0],
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
+        replyToAuthorId = replyToComment.getAttribute('data-comment-author-id'),
         $replyToComment = bonzo(replyToComment),
         commentBox = new CommentBox(this.context, this.mediator, {
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
             state: 'response',
             replyTo: {
-                id: replyToId,
-                author: replyToAuthor
+                commentId: replyToId,
+                author: replyToAuthor,
+                authorId: replyToAuthorId
             },
             focus: true,
             cancelable: true

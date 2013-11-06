@@ -60,7 +60,7 @@ Api.send = function(endpoint, method, data, anon) {
  */
 Api.postComment = function(discussionId, comment) {
     var endpoint = '/discussion/'+ discussionId +'/comment'+
-        (comment.replyTo ? '/'+ comment.replyTo +'/reply' : '');
+        (comment.replyTo ? '/'+ comment.replyTo.commentId +'/reply' : '');
     
     return Api.send(endpoint, 'post', comment);
 };
