@@ -128,7 +128,7 @@ Comments.prototype.renderReplyButtons = function(comments) {
         actions = qwery(self.getClass('commentActions'), elem)[0];
         bonzo(actions).prepend(
             '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
-            'role="button" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
+            'role="button" data-link-name="reply to comment" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
     });
 };
 
@@ -300,14 +300,16 @@ Comments.prototype.replyToComment = function(e) {
 
     var replyToComment = qwery('#comment-'+ replyToId)[0],
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
+        replyToAuthorId = replyToComment.getAttribute('data-comment-author-id'),
         $replyToComment = bonzo(replyToComment),
         commentBox = new CommentBox(this.context, this.mediator, {
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
             state: 'response',
             replyTo: {
-                id: replyToId,
-                author: replyToAuthor
+                commentId: replyToId,
+                author: replyToAuthor,
+                authorId: replyToAuthorId
             },
             focus: true,
             cancelable: true
