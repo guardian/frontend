@@ -2,7 +2,7 @@ package common
 
 trait InputValidation {
 
-  val blacklist = "<>/"
+  val blacklist = ""
 
   def sanitize(s: String): String = s.filterNot(blacklist.contains(_))
 }
