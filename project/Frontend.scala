@@ -60,7 +60,7 @@ object Frontend extends Build with Prototypes {
 
   val router = application("router")
 
-  val diagnostics = application("diagnostics").settings(
+  val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "net.sf.uadetector" % "uadetector-resources" % "2013.04",
       "net.sf.opencsv" % "opencsv" % "2.3"
@@ -94,6 +94,8 @@ object Frontend extends Build with Prototypes {
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+
+  val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
   val endtoend = application("fronts-endtoend-tests").settings(
     libraryDependencies ++= Seq(
@@ -153,6 +155,7 @@ object Frontend extends Build with Prototypes {
     admin,
     porter,
     identity,
-    commercial
+    commercial,
+    onward
   )
 }

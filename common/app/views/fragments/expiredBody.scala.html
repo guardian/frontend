@@ -1,11 +1,13 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-<h2 class="article-zone tone-@VisualTone(content) tone-accent-border">
-    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+<h2 class="article-zone left-col-deport tone-@VisualTone(content) tone-accent-border">
+    <span class="left-col-deport__body">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+    </span>
 </h2>
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(content)">
     <article id="article" class="article" itemprop="mainContentOfPage" role="main">
-        <div class="article-v2__inner">
+        <div class="article__inner article__inner--head">
             <header class="article__head">
                 @fragments.headline(content.headline)
                 @fragments.standfirst(content)
@@ -14,8 +16,8 @@
 
             <div class="after-header"></div>
         </div>
-        <div class="article-v2__columning-wrapper">
-            <div class="article-v2__main-column">
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
                 <div class="article__meta-container">
                     @fragments.byline(content.byline, content)
 
@@ -30,10 +32,10 @@
                     </div>
                 </div>
             </div>
-            <div class="article-v2__secondary-column" aria-hidden="true"></div>
+            <div class="article__secondary-column" aria-hidden="true"></div>
         </div>
     </article>
-    <div class="article-v2__inner">
-        <div class="js-popular article__popular"></div>
+    <div class="article__inner">
+        @fragments.mostPopularPlaceholder(content.section)
     </div>
 </div>

@@ -1,7 +1,7 @@
 {
     "packages":{
         "frontend-sport":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::sport" ],
             "data":{
                 "secondsToWait":1200,

@@ -1,7 +1,7 @@
 {
     "packages":{
         "frontend-core-navigation":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::core-navigation" ],
             "data":{
                 "secondsToWait":1200,

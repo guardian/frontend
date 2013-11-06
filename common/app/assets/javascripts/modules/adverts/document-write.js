@@ -2,14 +2,12 @@
 define([
     'common',
     'ajax',
-    'domwrite',
 
     'modules/detect',
     'modules/adverts/audience-science'
 ], function (
     common,
     ajax,
-    domwrite,
 
     detect,
     audienceScience
@@ -116,7 +114,8 @@ define([
 
     return {
         load: load,
-        generateUrl: generateUrl
+        generateUrl: generateUrl,
+        getKeywords: getKeywords
     };
 
 });

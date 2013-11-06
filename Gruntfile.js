@@ -4,7 +4,8 @@ module.exports = function (grunt) {
         jasmineSpec = grunt.option('spec') || '*',
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/');
+        timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/'),
+        staticTargetDir = 'static/target/';
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -23,13 +24,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'common/app/assets/stylesheets',
                     src: ['*.scss', '!_*'],
-                    dest: 'static/target/compiled/stylesheets/',
+                    dest: staticTargetDir + 'stylesheets/',
                     rename: function(dest, src) {
                         return dest + src.replace('scss', 'css');
                     }
                 }],
                 options: {
-                    style: 'compressed',
+                    style: (isDev) ? 'expanded' : 'compressed',
                     sourcemap: false,
                     noCache: (isDev) ? false : true,
                     quiet: (isDev) ? false : true,
@@ -47,7 +48,7 @@ module.exports = function (grunt) {
                 options: {
                     baseUrl: "common/app/assets/javascripts",
                     name: "bootstraps/app",
-                    out: "static/target/compiled/javascripts/bootstraps/app.js",
+                    out: staticTargetDir + "javascripts/bootstraps/app.js",
                     paths: {
                         "bean": "components/bean/bean",
                         "bonzo": "components/bonzo/src/bonzo",
@@ -55,11 +56,17 @@ module.exports = function (grunt) {
                         "EventEmitter": "components/eventEmitter/EventEmitter",
                         "qwery": "components/qwery/mobile/qwery-mobile",
                         "reqwest": "components/reqwest/src/reqwest",
-                        "domwrite": "components/dom-write/dom-write",
+                        "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
-                        "swipeview": "components/swipeview/src/swipeview"
+                        "swipeview": "components/swipeview/src/swipeview",
+                        "lodash": "components/lodash-amd/modern"
                     },
-                    "wrap" : {
+                    shim: {
+                        "postscribe": {
+                            exports: "postscribe"
+                        }
+                    },
+                    wrap: {
                         "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         "endFile": "common/app/assets/javascripts/bootstraps/go.js"
                     },
@@ -74,7 +81,7 @@ module.exports = function (grunt) {
         webfontjson: {
             WebAgateSansWoff: {
                 options: {
-                    "filename": "static/target/compiled/fonts/WebAgateSans.woff.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -87,7 +94,7 @@ module.exports = function (grunt) {
             },
             WebAgateSansTtf: {
                 options: {
-                    "filename": "static/target/compiled/fonts/WebAgateSans.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.ttf.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -100,7 +107,7 @@ module.exports = function (grunt) {
             },
             WebEgyptianWoff: {
                 options: {
-                    "filename": "static/target/compiled/fonts/WebEgyptian.woff.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -145,14 +152,9 @@ module.exports = function (grunt) {
             },
             WebEgyptianTtf: {
                 options: {
-                    "filename": "static/target/compiled/fonts/WebEgyptian.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.ttf.json",
                     "callback": "guFont",
                     "fonts": [
-                        {
-                            "font-family": "AgateSans",
-                            "file": "resources/fonts/AgateSans-Regular.ttf",
-                            "format": "ttf"
-                        },
                         {
                             "font-family": "EgyptianText",
                             "file": "resources/fonts/EgyptianText-Regular.ttf",
@@ -196,90 +198,82 @@ module.exports = function (grunt) {
         },
 
         shell: {
-            // grunt-mkdir wouldn't do what it was told for this
-            webfontjson: {
-                command: 'mkdir -p static/target/compiled/fonts',
-
-                options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: true
-                }
-            },
-
-            icons: {
+            spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
                     'node spricon.js global-icon-config.json'
                 ].join('&&'),
-
                 options: {
                     stdout: true,
                     stderr: true,
                     failOnError: true
                 }
             },
-
-            // Should be later in file but can't separate shell task definition
-            hooks: {
-                // Copy the project's pre-commit hook into .git/hooks
+            /**
+             * Using this task to copy hooks, as Grunt's own copy task doesn't preserve permissions
+             */
+            copyHooks: {
                 command: 'cp git-hooks/pre-commit .git/hooks/',
-
                 options: {
                     stdout: true,
                     stderr: true,
                     failOnError: false
                 }
             }
-
         },
 
         imagemin: {
-            compile: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/assets/images/',
-                    src: ['**/*.png'],
-                    dest: 'static/target/compiled/images/'
-                },{
-                    expand: true,
-                    cwd: 'static/target/generated/images/',
-                    src: ['**/*.{png,gif,jpg}'],
-                    dest: 'static/target/compiled/images/'
-                },{
-                    expand: true,
-                    cwd: 'common/app/public/images/',
-                    src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
-                    dest: 'static/target/compiled/images/'
-                }]
+            files: {
+                expand: true,
+                cwd: staticTargetDir + 'images/',
+                src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
+                dest: staticTargetDir + 'images'
             }
         },
 
         copy: {
-            compile: {
+            js: {
                 files: [{
                     expand: true,
-                    cwd: 'common/app/assets/images',
-                    src: ['**/*.ico'],
-                    dest: 'static/target/compiled/images'
-                },{
+                    cwd: 'common/app/public/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticTargetDir + 'javascripts'
+                }]
+            },
+            images: {
+                files: [{
                     expand: true,
-                    cwd: 'common/app/public/',
+                    cwd: 'common/app/public/images',
                     src: ['**/*'],
-                    dest: 'static/target/compiled/'
-                },{
+                    dest: staticTargetDir + 'images'
+                }]
+            },
+            flash: {
+                files: [{
                     expand: true,
-                    cwd: 'common/app/assets/flash',
+                    cwd: 'common/app/public/flash',
                     src: ['**/*.swf'],
-                    dest: 'static/target/compiled/flash'
+                    dest: staticTargetDir + 'flash'
                 }]
             },
             headCss: {
                 files: [{
                     expand: true,
-                    cwd: 'static/target/compiled/stylesheets',
-                    src: ['**/*.css'],
+                    cwd: 'static/target/stylesheets',
+                    src: ['**/head*.css'],
                     dest: 'common/conf/assets'
+                }]
+            },
+            /**
+             * NOTE: not using this as doesn't preserve file permissions (using shell:copyHooks instead)
+             * Waiting for Grunt 0.4.3 - https://github.com/gruntjs/grunt/issues/615
+             */
+            hooks: {
+                files: [{
+                    expand: true,
+                    cwd: 'git-hooks',
+                    src: ['*'],
+                    dest: '.git/hooks/'
                 }]
             }
         },
@@ -289,22 +283,42 @@ module.exports = function (grunt) {
                 // assets.map must go where Play can find it from resources at runtime.
                 // Everything else goes into frontend-static bundling.
                 mapping: 'common/conf/assets/assets.map',
-                srcBasePath: 'static/target/compiled',
-                destBasePath: 'static/target/hashed',
+                srcBasePath: staticTargetDir,
+                destBasePath: staticTargetDir,
                 flatten: false,
                 hashLength: (isDev) ? 0 : 32
             },
-
             files: {
                 expand: true,
-                cwd: 'static/target/compiled/',
+                cwd: staticTargetDir,
                 src: '**/*',
                 filter: 'isFile',
-                dest: 'static/target/hashed/',
+                dest: staticTargetDir,
                 rename: function(dest, src) {
                     // remove .. when hash length is 0
                     return dest + src.split('/').slice(0, -1).join('/');
                 }
+            }
+        },
+
+        concat: {
+            imager: {
+                src: [
+                    'common/app/assets/javascripts/components/imager.js/src/imager.js',
+                    'common/app/assets/javascripts/components/imager.js/src/strategies/container.js'
+                ],
+                dest: staticTargetDir + 'javascripts/vendor/imager.js'
+            }
+        },
+
+        uglify: {
+            vendor: {
+                files: [{
+                    expand: true,
+                    cwd: staticTargetDir + 'javascripts/vendor/',
+                    src: '**/*.js',
+                    dest: staticTargetDir + 'javascripts/vendor/'
+                }]
             }
         },
 
@@ -319,6 +333,7 @@ module.exports = function (grunt) {
                 keepRunner: true,
                 vendor: [
                     'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+                    'common/test/assets/javascripts/components/sinon/lib/sinon/call.js',
                     'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
                     'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
                     'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
@@ -342,6 +357,7 @@ module.exports = function (grunt) {
                             swipe:        'components/swipe/swipe',
                             swipeview:    'components/swipeview/src/swipeview',
                             moment:       'components/moment/moment',
+                            lodash:       'components/lodash-amd/modern',
                             omniture:     '../../../app/public/javascripts/vendor/omniture',
                             fixtures:     '../../../test/assets/javascripts/fixtures',
                             helpers:      '../../../test/assets/javascripts/helpers'
@@ -417,11 +433,13 @@ module.exports = function (grunt) {
             self: [
                 'Gruntfile.js'
             ],
-            common: [
-                'common/app/assets/javascripts/bootstraps/*.js',
-                'common/app/assets/javascripts/modules/*.js',
-                'common/app/assets/javascripts/modules/**/*.js'
-            ]
+            common: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/javascripts/',
+                    src: ['**/*.js', '!components/**', '!utils/atob.js']
+                }]
+            }
         },
 
         // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
@@ -467,7 +485,7 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/gallery/*.spec.js']
             },
             article: {
-                src: []
+                src: ['integration-tests/casper/tests/article/article.spec.js']
             },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
@@ -489,7 +507,7 @@ module.exports = function (grunt) {
          */
         cssmetrics: {
             common: {
-                src: ['static/target/compiled/stylesheets/*.min.css'],
+                src: [staticTargetDir + 'stylesheets/**/*.css'],
                 options: {
                     quiet: false,
                     maxRules: 4096, //IE max rules
@@ -503,7 +521,14 @@ module.exports = function (grunt) {
          */
         mkdir: {
             screenshots: {
-                create: [screenshotsDir]
+                options: {
+                    create: [screenshotsDir]
+                }
+            },
+            fontsTarget: {
+                options: {
+                    create: [staticTargetDir + 'fonts']
+                }
             }
         },
 
@@ -522,37 +547,45 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
-            compile: [
-                'static/target',
-                'common/conf/assets/head.min.css',
-                'common/conf/assets/head.facia.min.css',
-                'common/conf/assets/head.identity.min.css',
-                'common/conf/assets/assets.map'
-            ],
-
+            staticTarget: [staticTargetDir],
+            js: [staticTargetDir + 'javascripts'],
+            css: [staticTargetDir + 'stylesheets'],
+            images: [staticTargetDir + 'images'],
+            flash: [staticTargetDir + 'flash'],
+            fonts: [staticTargetDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
-            hooks: ['.git/hooks/pre-commit']
+            hooks: ['.git/hooks/pre-commit'],
+            assets: ['common/conf/assets'],
+            screenshots: [screenshotsDir]
         },
 
         // Recompile on change
         watch: {
             js: {
-                files: ['common/**/*.js'],
-                tasks: ['requirejs:compile', 'hash'],
+                files: ['common/app/{assets, public}/javascripts/**/*.js'],
+                tasks: ['compile:js'],
                 options: {
                     spawn: false
                 }
             },
-            sass: {
-                files: ['common/**/*.scss'],
-                tasks: ['sass:compile', 'copy:headCss', 'hash'],
+            css: {
+                files: ['common/app/assets/stylesheets/**/*.scss'],
+                tasks: ['compile:css'],
                 options: {
                     spawn: false
                 }
             },
-            icons: {
-                files: ['common/app/assets/images/**/*'],
-                tasks: ['imagemin:compile', 'copy:compile', 'hash']
+            images: {
+                files: ['common/app/{assets, public}/images/**/*'],
+                tasks: ['compile:images']
+            },
+            flash: {
+                files: ['common/app/public/flash/**/*'],
+                tasks: ['compile:flash']
+            },
+            fonts: {
+                files: ['resources/fonts/**/*'],
+                tasks: ['compile:fonts']
             }
         }
     });
@@ -574,22 +607,30 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
     // Compile tasks
-    grunt.registerTask('compile', [
-        'sass:compile',
-        'requirejs:compile',
-        'shell:webfontjson',
-        'webfontjson',
-        'shell:icons',
-        'imagemin:compile',
-        'copy:compile',
-        'copy:headCss',
-        'hash'
-    ]);
+    grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
+    grunt.registerTask('compile:js', function() {
+        grunt.task.run(['clean:js', 'copy:js', 'concat:imager']);
+        if (!isDev) {
+            grunt.task.run('uglify:vendor');
+        }
+        grunt.task.run('requirejs:compile');
+    });
+    grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
+    grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
+    grunt.registerTask('compile', function() {
+        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js', 'compile:fonts', 'compile:flash']);
+        if (!isDev) {
+            grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
+        }
+    });
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
@@ -600,13 +641,13 @@ module.exports = function (grunt) {
     grunt.registerTask('test:unit', function(app) {
         grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
     });
-    grunt.registerTask('test', ['compile', 'jshint:common', 'test:unit', 'test:integration']);
+    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
     // Analyse tasks
-    grunt.registerTask('analyse', ['compile', 'cssmetrics:common']);
-    grunt.registerTask('analyse:css:common', ['sass:compile', 'cssmetrics:common']);
+    grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
+    grunt.registerTask('analyse', ['analyse:css']);
 
     // Miscellaneous task
-    grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
-    grunt.registerTask('snap', ['env:casperjs', 'clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
+    grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
+    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:upload']);
 };

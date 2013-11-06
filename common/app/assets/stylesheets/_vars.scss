@@ -24,6 +24,7 @@ $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
+$headerHeight: 58px;
 
 
 /* Breakpoints
@@ -37,14 +38,15 @@ $trailblockImgWidthLarge: 140px;
 @import 'layout/_grid-system';
 
 // Article breakpoints
-$a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11) + $gs-gutter*2; // 900px
-$a-leftCol-width:    gs-span(2); // Grows to 3 columns on wide viewports
-$a-leftCol-trigger:  gs-span(13) + $gs-gutter*2; // 1060px
+$a-rightCol-width:    gs-span(4);
+$a-rightCol-trigger:  gs-span(11) + $gs-gutter*2; // 900px
+$a-leftCol-width:     gs-span(2); // Grows to 3 columns on wide viewports
+$a-leftCol-trigger:   gs-span(13) + $gs-gutter*2; // 1060px
+$a-leftColWide-width: gs-span(3); // Grows to 3 columns on wide viewports
 
 $mq-breakpoints: (
     (mobile  gs-span(4)  + $gs-gutter)   // 320px
-    (tablet  gs-span(8)  + $gs-gutter*2) // 660px
+    (tablet  gs-span(9)  + $gs-gutter*2) // 740px
     (desktop gs-span(12) + $gs-gutter*2) // 980px
     (wide    gs-span(16) + $gs-gutter*2) // 1300px
 
@@ -55,7 +57,7 @@ $mq-breakpoints: (
     // Article layout
     (rightCol $a-rightCol-trigger)
     (leftCol $a-leftCol-trigger)
-);
+) !global;
 
 
 /* Fonts

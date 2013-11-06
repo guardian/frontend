@@ -1,8 +1,8 @@
 define([
     'common',
-    'domwrite',
     'qwery',
     'bonzo',
+    'ajax',
 
     'modules/userPrefs',
     'modules/detect',
@@ -16,9 +16,9 @@ define([
 ],
 function (
     common,
-    domwrite,
     qwery,
     bonzo,
+    ajax,
 
     userPrefs,
     detect,
@@ -86,9 +86,6 @@ function (
     }
 
     function loadAds() {
-
-        domwrite.capture();
-
         //Run through adslots and check if they are on screen. Load if so.
         for (var i = 0, j = slots.length; i<j; ++i) {
             //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading

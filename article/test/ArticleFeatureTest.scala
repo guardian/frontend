@@ -184,6 +184,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Articles that are also a different content type") {
+
+      Given("An article that is also a video")
+      HtmlUnit("/science/grrlscientist/2013/nov/02/british-birds-look-around-you-bbc-video") { browser =>
+        import browser._
+
+        Then("It should be rendered as an article")
+        findFirst("[itemprop=headline]").getText should be ("Birds of Britain | video")
+      }
+    }
+
     scenario("Review body", ArticleComponents) {
 
       // Nb, The schema.org markup for a review body is different to an article body
@@ -270,7 +281,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         relatedContent.get(1).getText should be("Iraq war logs: media reaction around the world")
         relatedContent.get(2).getText should be("Iraq war logs: 'The US was part of the Wolf Brigade operation against us'")
         relatedContent.get(3).getText should be("Iraq war logs: Prisoner beaten to death days after British handover to police")
-        relatedContent.get(4).getText should be("Iraq war logs: US turned over captives to Iraqi torture squads")
+        relatedContent.get(4).getText should be("Iraq war logs: These crimes were not secret, they were tolerated")
       }
     }
 
@@ -401,7 +412,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("I should see the main ARIA roles described")
         findFirst(".related-trails").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
-        findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
@@ -430,6 +440,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
 
 
+    }
+
+    scenario("Link to most popular") {
+      Given("I'm on an article and JavaScript turned off")
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("I should see link to most popular in the article section")
+        $(".js-popular a") should have size (1)
+      }
     }
 
     scenario("Show keywords in an article"){

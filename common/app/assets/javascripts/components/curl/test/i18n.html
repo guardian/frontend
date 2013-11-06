@@ -30,7 +30,7 @@ function test1 () {
 			var val1 = !!strings, val2 = strings.labels.beer == 'brew';
 			write((val1 ? 'SUCCESS' : 'FAILED') + ': i18n string bundle should be loaded.');
 			write((val2 ? 'SUCCESS' : 'FAILED') + ': i18n string should have correct value.');
-			undefine(['curl/plugin/i18n!i18n/strings', 'i18n!i18n/strings']);
+			undefine(['curl/plugin/i18n!i18n/strings', 'i18n/strings']);
 		},
 		function (ex) {
 			write('FAILED: to load i18n!i18n/strings ' + ex.message);

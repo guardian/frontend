@@ -31,6 +31,8 @@
         @include fs-headline(4, true);
         margin-bottom: $baseline*8 - 3px;
     }
+
+    > a { display: block; }
 }
 .trail__headline a,
 .trail__headline a:hover,
@@ -173,9 +175,6 @@
 
     &:first-child {
         margin-top: -8px;
-    }
-    .front-section &:first-child {
-        margin-top: 8px;
     }
     .i-gallery {
         margin-top: 0;

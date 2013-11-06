@@ -1,0 +1,1485 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/27/iraq-bombings-kill-dozens-baghdad-mosul",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-27T19:02:36Z",
+      "webTitle":"Iraq bombings kill dozens in Baghdad, Mosul and Tarmiya",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/27/iraq-bombings-kill-dozens-baghdad-mosul",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/27/iraq-bombings-kill-dozens-baghdad-mosul",
+      "fields":{
+        "newspaperPageNumber":"16",
+        "trailText":"Coordinated attacks claim at least 60 lives, taking the number of people killed across the country since April to more than 5,000",
+        "headline":"Iraq bombings kill dozens in Baghdad, Mosul and Tarmiya",
+        "body":"<video data-media-id=\"gu-video-421063440\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv/ITNP_WORLD_IRAQBOMB_27_dv.m3u8\"></source>\n      </video><p>A series of car bombings in Baghdad, an explosion at a market and a suicide attack in the northern city of Mosul killed at least 62 people on Sunday in the latest wave of attacks in Iraq.</p><p>The attacks made Sunday the deadliest day in the country since 5 October, when 75 people were killed. Iraq suffers a number of coordinated bombings each month, feeding a spike in bloodshed that has killed more than 5,000 people since April.</p><p>The local branch of al-Qaida often takes responsibility, but there was no immediate claim for Sunday's attacks.</p><p>Police officers said that the bombs in Baghdad, placed in parked cars and detonated over a half-hour period, targeted commercial areas and car parks, killing 42 people.</p><p>The deadliest blasts were in the south-eastern Nahrwan district of the city, where two car bombs exploded simultaneously, killing seven people and wounding 15, authorities said. Two other explosions took place in the northern Shaab and southern Abu Dshir neighbourhoods, each killing six people, and other blasts hit the eastern neighbourhoods of Mashtal, Baladiyat and Ur, Bayaa in the south-west, and Sab al-Bor and Hurriya in the north.</p><p>In Mosul, a suicide bomber drove a car laden with explosives into a group of soldiers as they were sealing off a street leading to a bank where troops were receiving salaries, a police officer said. Fourteen people were killed, and at least 30 people were wounded, the same source said. Police also said gunmen had killed two off-duty soldiers in a drive-by shooting in the city, a former insurgent stronghold around 225 miles north-west of Baghdad.</p><p>In the Sunni town of Tarmiya, 30 miles north of Baghdad, a bomb blast killed four people and wounded 11 at an outdoor market , authorities said.</p><p>Such coordinated attacks are a favorite tactic of al-Qaida's Iraq branch, which frequently targets civilians in markets, cafes and commercial streets in Shia areas. All of Sunday's Baghdad attacks took place in Shia neighbourhoods.</p><p>All officials spoke on condition of anonymity as they were not authorised to make information public.</p><p>The number of killings in Iraq has reached levels unseen since 2008 in recent months and Sunday's attacks bring the death toll across the country in October to 545, according to an Associated Press count.</p><!-- Guardian Watermark: internal-code/content/421076525|2013-11-05T11:03:48Z|aad8835be07cc6ea5b6c46f389a04e3d85a34584 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T00:23:42Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+        "standfirst":"Coordinated attacks claim at least 60 lives, taking the number of people killed across the country since April to more than 5,000",
+        "shortUrl":"http://gu.com/p/3jqby",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+        "wordcount":"370",
+        "commentable":"false",
+        "internalContentCode":"421076525",
+        "allowUgc":"false",
+        "internalOctopusCode":"8248003",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Baghdad",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-10-28",
+        "internalPageCode":"1987572",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T19:02:36Z"
+      },
+      "tags":[{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421076695",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Abbas",
+            "altText":"Aftermath of car bomb in Baghdad",
+            "height":"84",
+            "credit":"Ali Abbas/EPA",
+            "caption":"Aftermath of car bomb in Baghdad Photograph: Ali Abbas/EPA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-421063440",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv/ITNP_WORLD_IRAQBOMB_27_dv.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/2013/oct/27/syrian-kurds-capture-border-crossing-iraq",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-26T23:16:53Z",
+      "webTitle":"Syrian Kurds capture border crossing with Iraq after intense fighting",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/27/syrian-kurds-capture-border-crossing-iraq",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/27/syrian-kurds-capture-border-crossing-iraq",
+      "fields":{
+        "trailText":"Militiamen capture Yaaroubiyeh post in north-east Syria after three days of clashes with several jihadist groups",
+        "headline":"Syrian Kurds capture border crossing with Iraq after intense fighting",
+        "body":"<p>Syrian Kurdish gunmen on Saturday seized a major border crossing with Iraq from al-Qaida-linked groups following intense infighting between rebel groups that raised concerns of a spillover, activists and an Iraqi official said.</p><p>The latest violence coincided with a visit by the UN-Arab League envoy to Iran, a staunch ally of President Bashar al-Assad's government, to press efforts for international peace talks aimed at ending the civil war, now in its third year.</p><p>The Kurdish militiamen captured the Yaaroubiyeh post in north-east Syria after three days of clashes with several jihadist groups there, including Jabhat al-Nusra and the Islamic State in Iraq and the Levant.</p><p>An Iraqi intelligence official confirmed that Kurdish rebels now held the crossing point – one of two main crossings with Iraq – adding that Baghdad brought reinforcements to the area to prevent any spillover of violence.</p><p>\"They were heavy battles in which all types of weapons were used,\" said the Iraqi official, who spoke on condition of anonymity in line with regulations. \"Iraqi forces are ready to repel any attack.\"</p><p>Kurdish groups control a large swath of northern Syria, and they are suspicious of Islamic groups who have moved into predominantly Kurdish areas in the chaos of the civil war. Clashes between their fighters and jihadists in northern and north-eastern areas of Syria have killed hundreds of people in the past months.</p><p>The border crossing point was under government control until March when hard-line rebels captured it. Syrian rebels, particularly the hard-line groups, are believed to draw support from insurgents in Iraq. Sunni Arabs dominate both the Syrian rebel movement and the Iraqi insurgency.</p><p>The Syrian conflict, which began as a largely peaceful uprising against Assad in March 2011, has triggered a humanitarian crisis on a massive scale, killing more than 100,000 people, driving nearly 7 million more from their homes and devastating the nation's cities and towns.</p><p>The US, the United Nations and Russia are pushing for an international peace conference to be held in Geneva next month, bringing together the warring sides. But no final date for the conference has been set and it is unclear whether the sides can reach an agreement on the agenda.</p><p>Loay al-Mikdad, a spokesman for the rebel Free Syrian Army, said on Saturday he expected the conference to be postponed. Members of the FSA command met on Thursday with the UN-Arab League Special Envoy for Syria, Lakhdar Brahimi, who travelled on Saturday to Tehran.</p><p>\"As a result of the discussions, we felt that there is an international direction toward postponing the conference for some time,\" al-Mikdad said. Arab League officials said earlier this month that the conference would be held 23-24 November.</p><p>Brahimi, at a joint press conference with Iran's foreign minister Mohammad Javad Zarif, said Iran's participation in such a conference is \"necessary\". Zarif said Iran would participate if it is invited.</p><p>Syrian rebels, meanwhile, denied government media reports that the head of the Nusra Front had been killed.</p><p>Friday's one-line state media report, which could not be independently confirmed, said Abu Mohammad al-Golani died in the coastal province of Latakia. But rebels said they had received no word of clashes in that province.</p><p>If government reports on the death of al-Golani are correct, then the capture of the Yaarobiyeh post would be the second setback for al-Nusra and its allies in recent days.</p><p>Al-Mikdad said Syrian rebels did not report any recent clash in Latakia province. He says his group is unsure if al-Golani even exists.</p><p>\"This is part of the regime's lies. Our information from the ground says that this is not true and not accurate,\" al-Mikdad said by telephone.</p><p>The Nusra Front has emerged as one of the most effective among rebel groups fighting Assad, and it has claimed responsibility for numerous suicide bombings against government targets. The US state department put the group on its list of terrorist organisations for its connections to al-Qaida.</p><p>In Daraa province in the south of the country, rebels captured the town of Tafas after weeks of fighting that left scores of people dead, the Britain-based Syrian Observatory for Human Rights said. Syrian state media did not report on the battle.</p><p>Also on Saturday, the Observatory reported that three more women detainees were being released. They included Tal al-Mallohi, a prominent young Syrian blogger convicted of spying for a foreign country and whose prison sentence ended two months ago.</p><p>The release would bring to 64 the number of female detainees recently freed by Syrian authorities. It is likely part of a complicated, three-way hostage swap last week brokered by Qatar and the Palestinian Authority during which Syrian rebels freed nine Lebanese Shiite Muslims while Lebanese gunmen released two Turkish pilots.</p><p>The Syrian government has not commented on the swap or the prisoner releases.</p><!-- Guardian Watermark: internal-code/content/421043729|2013-11-05T11:03:48Z|9e4251384ebd8ef08590b40dc345e01069eaca32 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-26T23:16:53Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829331871/Syrian-YPG-fighters-at-th-004.jpg",
+        "standfirst":"Militiamen capture Yaaroubiyeh post in north-east Syria after three days of clashes with several jihadist groups",
+        "shortUrl":"http://gu.com/p/3jq5z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829331871/Syrian-YPG-fighters-at-th-004.jpg",
+        "wordcount":"775",
+        "commentable":"false",
+        "internalContentCode":"421043729",
+        "allowUgc":"false",
+        "internalOctopusCode":"8246962",
+        "isPremoderated":"false",
+        "byline":"Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987413",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T00:16:53Z"
+      },
+      "tags":[{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.theguardian.com/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/kurds",
+        "type":"keyword",
+        "webTitle":"Kurds",
+        "webUrl":"http://www.theguardian.com/world/kurds",
+        "apiUrl":"http://content.guardianapis.com/world/kurds",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421044230",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829324716/Syrian-YPG-fighters-at-th-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"54",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829327780/Syrian-YPG-fighters-at-th-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"340",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829329760/Syrian-YPG-fighters-at-th-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"130",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829331871/Syrian-YPG-fighters-at-th-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"84",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829333918/Syrian-YPG-fighters-at-th-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"132",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829335644/Syrian-YPG-fighters-at-th-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"168",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829337637/Syrian-YPG-fighters-at-th-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"180",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829339680/Syrian-YPG-fighters-at-th-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"228",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829341727/Syrian-YPG-fighters-at-th-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"276",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829344195/Syrian-YPG-fighters-at-th-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"372",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829341727/Syrian-YPG-fighters-at-th-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"276",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421044231",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/27/1382829331871/Syrian-YPG-fighters-at-th-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Morales",
+            "altText":"Syrian YPG fighters at the frontline",
+            "height":"84",
+            "credit":"Mauricio Morales/EPA",
+            "caption":"A Kurdish fighter in north-east Syria. Photograph: Mauricio Morales/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/no-more-arms-to-iraq-obama-nouri-al-maliki",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T08:00:09Z",
+      "webTitle":"No more arms to Iraq, Obama | Haifa Zangana",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/no-more-arms-to-iraq-obama-nouri-al-maliki",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/no-more-arms-to-iraq-obama-nouri-al-maliki",
+      "fields":{
+        "trailText":"<strong>Haifa Zangana: </strong>Nouri al-Maliki is meeting Barack Obama to ask for help 'fighting terrorism' .But it's the regime's own militias that Iraqis fear",
+        "headline":"No more arms to Iraq, Obama",
+        "body":"<p>Barack Obama <a href=\"http://www.theguardian.com/commentisfree/2013/oct/30/iraq-friends-like-these-editorial\" title=\"\">is meeting Iraq's prime minister</a>, Nouri al-Maliki, today in Washington. According to the official Iraqi story, they are to discuss Maliki's plea to train and equip Iraqi forces with advanced weapons to fight terrorism. If this is heeded, it will add to the crimes committed by the US against Iraqis since the invasion of 2003, as weapons and equipment made available to the regime have, to date, been used only against Iraqi people.</p><p>The Maliki regime blames all terrorist acts (<a href=\"http://www.hrw.org/news/2013/08/11/iraq-attacks-amount-crimes-against-humanity\" title=\"\">frequent car explosions, often in markets</a>, cafes and mosques) on al-Qaida, selectively choosing not to mention the regime's own militias: Asa'ib Ahl al-Haq, Iraqi Hezbollah, factions of the Mahdi army, the Badr brigades and the Mokhtar army.</p><p>A common belief among Iraqis is that only agents connected to the nearly 1 million strong army and security forces, and especially to the Special Forces (inherited from the occupation, trained by the US and now attached directly to Maliki's office) could carry out such sustained and widespread campaign of terror.</p><p>Why is it that so many come to the conclusion that most atrocities blamed on al-Qaida are actually the work of the regime, its factional fighters, and regional actors with links to security services? It is because the regime is the embodiment of the sectarian divide entrenched by the occupation. Its constitution and political process, nurtured by the US and UK, has spawned a kleptocracy of warlords, charlatans, and merchants of religion. Yes, al-Qaida is a presence. But the sectarian political parties that mushroomed after the invasion are also fighting each other, killing thousands of civilians in the process. Almost 3,000 people were killed in acts of violence between July and September this year alone with three times that number wounded. Many of those wounded often die due to lack of medical services. Acts of violence are presented daily on Iraqi TV like the weather forecast in Britain. They are destroying the very fabric of society and pushing people who have been living together for centuries to speak and act about \"them\" and \"us\".</p><p><a href=\"http://www.transparency.org/whatwedo/answer/iraq_overview_of_corruption_and_anti_corruption\" title=\"\">Transparency International has described</a> the link between kleptocracy and violence as follows: \"Massive embezzlement, procurement scams, money laundering, oil smuggling and widespread bureaucratic bribery … have fuelled political violence and hampered effective state building and service delivery.\"</p><p>Every week, <a href=\"http://blog.transparency.org/2013/04/03/iraqs-corruption-legacy/\" title=\"\">an estimated $800 million </a>is said to be unlawfully transferred out of the country,  while Iraqis are left deprived of basic needs.</p><p>A climate of fear has been manufactured to allow militias and mafia-like gangs to control daily life while unprecedented campaigns of arrests, detention, torture and executions force dissenting voices to flee the country. In Baghdad, Falluja, southern Nasiriya and other cities, protesters are faced by threats and imprisonment while in Hawija, north of Baghdad, 51 demonstrators were killed and many wounded when security forces and the army attacked a protest camp on 23 April. Three journalists were shot dead in October alone. Iraq is a country where <a href=\"http://www.cpj.org/mideast/iraq/\" title=\"\">the murders of journalists</a>  go unpunished.</p><p><a href=\"http://www.hrw.org/world-report/2013/country-chapters/iraq\" title=\"\">Human Rights Watch reports</a> give a stark picture of how fear and terror have been institutionalised: \"Forces controlled by the defence, interior, and justice ministries, as well as elite forces reporting directly to the prime minister's office, continued arbitrary detentions of a broad spectrum of detainees, including in secret prisons outside the purview of the interior and justice ministries.\"</p><p><a href=\"http://www.nytimes.com/2013/10/11/world/middleeast/iraq-42-prisoners-executed-this-week.html\" title=\"\">Forty-two prisoners, who included a woman, were executed</a> earlier this month in an act denounced by the UN human rights chief, as \"obscene and inhuman\". Under current Iraqi law, 48 offences are subject to the death penalty.</p><p>No wonder that Iraqis see no way out under the current regime. Even fiercely nationalist organisations like the Association of Muslim Scholars calls for international actions to help Iraq retain its integrity and security.</p><p>While Iraqis are struggling relentlessly to achieve that and fight terrorism at the same time, we should also call on the American and British people to take action. They should press their elected governments prohibit security aid, especially arms, to oppressive regimes. Maliki's included.</p><!-- Guardian Watermark: internal-code/content/421389354|2013-11-05T11:03:48Z|3e7ec0c64dc9a58de2c641661edbb445b1250a9a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T08:00:09Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233544205/iraqi-soldiers-003.jpg",
+        "standfirst":"Nouri al-Maliki is meeting Barack Obama to ask for help 'fighting terrorism' .But it's the regime's own militias that Iraqis fear",
+        "shortUrl":"http://gu.com/p/3k2th",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233544205/iraqi-soldiers-003.jpg",
+        "wordcount":"662",
+        "commentable":"true",
+        "internalContentCode":"421389354",
+        "allowUgc":"false",
+        "internalOctopusCode":"8263721",
+        "isPremoderated":"false",
+        "byline":"Haifa Zangana",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989944",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T08:00:09Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/haifazangana",
+        "type":"contributor",
+        "webTitle":"Haifa Zangana",
+        "webUrl":"http://www.theguardian.com/profile/haifazangana",
+        "apiUrl":"http://content.guardianapis.com/profile/haifazangana",
+        "bio":"<p>Haifa Zangana is a Kurdish-Iraqi novelist and former prisoner of Saddam Hussein's regime, whose works include Not One More Death (2006) and War With No End (2007). She has advised the UNDP and Brussels Tribunal, and contributed to al-Quds, the Guardian, Red Pepper, and al-Ahram Weekly</p>",
+        "rcsId":"GNL515270",
+        "r2ContributorId":"22466",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361564200618/Haifa_Zangana_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.theguardian.com/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421391072",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233540038/iraqi-soldiers-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"54",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233542555/iraqi-soldiers-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"130",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233544205/iraqi-soldiers-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"84",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233545788/iraqi-soldiers-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"132",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233547422/iraqi-soldiers-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"168",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233548974/iraqi-soldiers-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"180",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233550563/iraqi-soldiers-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"228",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233552149/iraqi-soldiers-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"276",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233552149/iraqi-soldiers-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"276",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around a Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421391073",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383233544205/iraqi-soldiers-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sean Smith",
+            "altText":"iraqi soldiers",
+            "height":"84",
+            "credit":"Sean Smith/Guardian",
+            "caption":"Iraqi soldiers search the area around Mahdi army weapons cache discovered in Shulla, north-west Baghdad. Photograph: Sean Smith for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/24/iraq-leadership-people-death-toll-unity",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-24T19:30:00Z",
+      "webTitle":"Iraq needs leadership worthy of its people | Rachel Shabi",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/24/iraq-leadership-people-death-toll-unity",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/24/iraq-leadership-people-death-toll-unity",
+      "fields":{
+        "newspaperPageNumber":"36",
+        "trailText":"<p><strong>Rachel Shabi:</strong> With a death toll of half a million since 2003, the country deserves leaders who can put national unity above personal gain</p>",
+        "headline":"Iraq needs leadership worthy of its people",
+        "body":"<p>As a new wave of violence ravages Iraq, a new wave of <a href=\"http://www.youtube.com/watch?v=8moePxHpvok\" title=\"\">\"oh dearism\"</a> seems to have taken hold of us. Coined by the documentary filmmaker Adam Curtis, this disease occurs when terrible, bloody conflicts are covered by oversimplifying media without any meaningful context, so that we don't ever really get what we're looking at. Stripped of any tools to form a take, our only remaining response to Iraq, as to a litany of other seemingly inscrutable conflicts, is reduced to: \"Oh dear.\"</p><p>In the coverage of Iraq, there are mentions of al-Qaida, a \"sectarian conflict\" and a civil war, as we hear about yet another roadside or restaurant bomb that has killed yet more innocent civilians. These terrorising attacks are now routine, increasingly co-ordinated and horrifyingly effective. Last month alone in Iraq, <a href=\"http://www.bbc.co.uk/news/world-middle-east-24362859\" title=\"\">bombs killed nearly 1,000 people</a>. A couple of weeks ago, <a href=\"http://www.reuters.com/article/2013/10/13/us-iraq-violence-idUSBRE99B09020131013\" title=\"\">25 people were killed as 16 bombs went off on the same day</a>. And just days ago, 10 bombs exploded in Baghdad, killing 44. That's on top of a new survey, apparently the most rigorous to date, that puts the <a href=\"http://america.aljazeera.com/articles/2013/10/15/iraq-war-civiliandeathtoll500knewstudyestimates.html\" title=\"\">Iraqi death toll since the eviscerating, avoidable 2003 invasion at half a million lives</a>. This is what <a href=\"http://en.wikipedia.org/wiki/Mission_Accomplished_speech\" title=\"\">George Bush's victory cry of \"mission accomplished\"</a> looks like in real life.</p><p>The current horror is of course the direct, damning consequence of that US-led invasion and the ravaging aftermath executed by coalition forces, which dismantled the Iraqi government, police and security apparatus. There was no al-Qaida in Iraq prior to that invasion, which not only opened the door to it but effectively rolled out a welcome carpet too. The US-led coalition set up avoidable rifts by marginalising Iraqi Sunnis – hobbling Iraq by fomenting sectarianism, condemning it to instability and obliterating the chance of any functional political recovery. Divisive and combustible policies were then pursued by the US-backed Iraqi prime minister, Nouri al-Maliki, whose Shia elite-dominated government is routinely accused of authoritarianism and corruption.</p><p>Maliki's rule has been a wrecking-ball mix of wrongheaded and incompetent. He has dismissed and disempowered Sunni politicians while simultaneously ramping up security forces and misusing terrorism laws to target Sunni areas, stirring up grievances over ethnocentric injustices. And the incompetence? Just one detail: Maliki's forces are still using the <a href=\"http://www.theguardian.com/world/2013/oct/03/james-mccormicks-fake-bomb-detectors-still-used-in-iraq\" title=\"\">fake bomb detectors sold to Iraq by the convicted former policeman James McCormick</a>.</p><p>In May, Maliki was insisting that some of the detectors are fine – to the horror of the Iraqi population that has to negotiate increasingly deadly everyday public spaces. All of this worsened in December last year, when <a href=\"http://www.theguardian.com/commentisfree/2013/jan/18/sectarian-conflict-iraq-maliki-us\" title=\"\">forces arrested the bodyguards of the Sunni former finance minister, Rafi al-Issawi</a>, under terrorism laws, prompting mass protests that were brutally dispersed. The violence included an army raid on protesters in Hawija, northern Iraq, in April, killing 50 and injuring many more.</p><p>Added to this nightmarish tinderbox is the fuel of the Syrian conflict, which now operates in a two-way flow across the border into Iraq – each feeding the other – both now serving al-Qaida-allied groups: the al-Nusra front and the Islamic State of Iraq and the Levant. Meanwhile, the cynical proxy war waged in Syria has a hold on Iraq too: Saudi Arabia's funding of Syrian militants has an impact across the now porous border with Iraq. And, fearing what would happen if Bashar al-Assad were toppled, <a href=\"http://articles.washingtonpost.com/2012-09-05/world/35494446_1_iranian-planes-iranian-overflights-iran-sanctions\" title=\"\">Maliki has allegedly allowed Iran to use Iraqi airspace</a> to deliver munitions to the Syrian dictator. All of which means that, without the US-led invasion of 2003, neither Iraq nor Syria would be as deadly today.</p><p>Meanwhile, an added component in Iraq is that violent militants have become much better at beating security forces that haven't concurrently improved – look at the <a href=\"http://uk.reuters.com/article/2013/07/30/uk-iraq-security-jailbreak-insight-idUKBRE96T0X420130730\" title=\"\">jailbreaks of militants in July</a> for an idea of how outmatched the Iraqi security forces are.</p><p>With so many more unemployed, politically marginalised people to target as potential recruits, violent, sectarian militants are variously fighting for an Islamic state and trying to discredit Maliki – whose key platform for the 2014 elections is security – while also terrorising the population with protection rackets to fund activities.</p><p>Disparate groups are competing for power in Iraq – religious, secular, peaceful and violent – but it's not true that the splits run only along sectarian lines. On the ground, affiliations aren't so narrow either. Since 2003, polls show that even as towns and cities have become less mixed, even as there is sectarian-based fear of travel across regions, the majority of the population still wants a unified Iraq and a centralised political system. The trouble is that, as Zaid al-Ali, a senior adviser on constitution building for the International Institute for Democracy and Electoral Assistance in Cairo, who is closely involved with Iraq, says: \"There is no party, no movement that brings them together.\" There's a fashion among commentators to note that Iraq is a superficial entity carved up in the colonial Sykes-Picot agreement between France and Britain in 1916. That's true on paper, but dismissive in practice. As Sami Zubaida, a specialist in Middle East politics, has written: \"While its borders may be arbitrary and contested, it does not follow that Iraq does not have the heart of a real nation, shared by the different groups who live within them.\"</p><p>This is the tiny shred of hope: a sense of cohesion, despite everything, that could shine a way out of a deadly crisis. Now, ahead of elections next year, the&nbsp;country desperately needs leadership worthy of the Iraqi people – consensus-based leaders who put national unity above corrupted, narrow politics&nbsp;and personal gain.</p><!-- Guardian Watermark: internal-code/content/420878204|2013-11-05T11:03:48Z|632aece9988ad31682ec5e8d77e4ee7b5d3b0002 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-25T10:08:22Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633622183/Iraqi-women-grieve-at-fun-003.jpg",
+        "standfirst":"With a death toll of half a million since 2003, the country deserves leaders who can put national unity above personal gain",
+        "shortUrl":"http://gu.com/p/3jzpm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633622183/Iraqi-women-grieve-at-fun-003.jpg",
+        "wordcount":"917",
+        "commentable":"true",
+        "internalContentCode":"420878204",
+        "allowUgc":"false",
+        "internalOctopusCode":"8235682",
+        "isPremoderated":"false",
+        "byline":"Rachel Shabi",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-25",
+        "internalPageCode":"1986493",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-27T20:30:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/commentanddebate",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & debate",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nouri-al-maliki",
+        "type":"keyword",
+        "webTitle":"Nouri al-Maliki",
+        "webUrl":"http://www.theguardian.com/world/nouri-al-maliki",
+        "apiUrl":"http://content.guardianapis.com/world/nouri-al-maliki",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/rachelshabi",
+        "type":"contributor",
+        "webTitle":"Rachel Shabi",
+        "webUrl":"http://www.theguardian.com/profile/rachelshabi",
+        "apiUrl":"http://content.guardianapis.com/profile/rachelshabi",
+        "bio":"<p>Rachel Shabi has written extensively on the Israeli-Palestinian conflict and the Middle East. Her award-winning book, Not the Enemy: Israel's Jews from Arab Lands, was published in 2009. She received the International Media Awards Cutting Edge prize in 2013, the Anna Lindh Journalism Award for reporting across cultures in 2011, and was shortlisted for the Orwell Prize the same year. She tweets <a href=\"https://twitter.com/rachshabi\">@rachshabi</a></p>",
+        "r2ContributorId":"23638",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/22/1350916376637/Rachel-Shabi2.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420931355",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633617343/Iraqi-women-grieve-at-fun-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"54",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633620802/Iraqi-women-grieve-at-fun-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"130",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633622183/Iraqi-women-grieve-at-fun-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"84",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633623616/Iraqi-women-grieve-at-fun-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"132",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633624994/Iraqi-women-grieve-at-fun-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"168",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633626382/Iraqi-women-grieve-at-fun-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"180",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633627873/Iraqi-women-grieve-at-fun-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"228",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633629311/Iraqi-women-grieve-at-fun-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"276",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633629311/Iraqi-women-grieve-at-fun-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"276",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420931356",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/24/1382633622183/Iraqi-women-grieve-at-fun-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Jaber Al-Helo",
+            "altText":"Iraqi women grieve at funeral",
+            "height":"84",
+            "credit":"Jaber Al-Helo/AP",
+            "caption":"A funeral for a bomb attack victim in Najaf, Iraq, this week. 'Last month alone in Iraq, bombs killed nearly 1,000 people.' Photograph: Jaber Al-Helo/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"media/greenslade/2013/oct/28/journalist-safety-iraq",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-10-28T09:32:49Z",
+      "webTitle":"Iraqi TV journalist shot dead",
+      "webUrl":"http://www.theguardian.com/media/greenslade/2013/oct/28/journalist-safety-iraq",
+      "apiUrl":"http://content.guardianapis.com/media/greenslade/2013/oct/28/journalist-safety-iraq",
+      "fields":{
+        "trailText":"<p>Channel says it is subject of smear campaign  </p>",
+        "headline":"Iraqi TV journalist shot dead",
+        "body":"<p>Iraqi cameraman Bashar al-Nuaimi was shot dead near his home in the northern city of Mosul on Thursday (24 October). His death followed the <a href=\"http://www.theguardian.com/media/greenslade/2013/oct/10/journalist-safety-iraq\">murders of two Iraqi TV journalists earlier this month.</a></p><p>Al-Nuaimi worked for the Al-Mosuliya TV channel, which - according to its deputy manager, Murad Ghazi - has often reported critically on the local government. He said it had recently been subjected to a smear campaign in which it was accused of serving US interests.</p><p>The deaths of the three journalists come amid escalating violence in the country that has left more than 5,000 dead this year. <a href=\"http://www.theguardian.com/world/2013/oct/27/iraq-bombings-kill-dozens-baghdad-mosul\">At least 62 people were killed yesterday</a> in a series of car bombings in Baghdad and Mosul, a city known for sectarian tensions.</p><p><em>Source:</em> <a href=\"http://cpj.org/2013/10/gunmen-kill-iraqi-journalist-near-his-home-in-mosu.php\">CPJ</a></p><!-- Guardian Watermark: internal-code/content/421103774|2013-11-05T11:03:48Z|5ae5bd3cc74ebde916f189d5c5b9186d64d934fc -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T09:32:49Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "shortUrl":"http://gu.com/p/3jqg8",
+        "wordcount":"122",
+        "commentable":"true",
+        "internalContentCode":"421103774",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Roy Greenslade",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987694",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T09:32:49Z"
+      },
+      "tags":[{
+        "id":"media/greenslade",
+        "type":"blog",
+        "webTitle":"Greenslade",
+        "webUrl":"http://www.theguardian.com/media/greenslade",
+        "apiUrl":"http://content.guardianapis.com/media/greenslade",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/roygreenslade",
+        "type":"contributor",
+        "webTitle":"Roy Greenslade",
+        "webUrl":"http://www.theguardian.com/profile/roygreenslade",
+        "apiUrl":"http://content.guardianapis.com/profile/roygreenslade",
+        "bio":"<p>Roy Greenslade is professor of journalism at City University, and was editor of the Daily Mirror from 1990-91</p>",
+        "rcsId":"GNL016410",
+        "r2ContributorId":"16378",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/roy_greenslade_140x140.jpg",
+        "references":[]
+      },{
+        "id":"media/journalist-safety",
+        "type":"keyword",
+        "webTitle":"Journalist safety",
+        "webUrl":"http://www.theguardian.com/media/journalist-safety",
+        "apiUrl":"http://content.guardianapis.com/media/journalist-safety",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/press-freedom",
+        "type":"keyword",
+        "webTitle":"Press freedom",
+        "webUrl":"http://www.theguardian.com/media/press-freedom",
+        "apiUrl":"http://content.guardianapis.com/media/press-freedom",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"law/human-rights",
+        "type":"keyword",
+        "webTitle":"Human rights",
+        "webUrl":"http://www.theguardian.com/law/human-rights",
+        "apiUrl":"http://content.guardianapis.com/law/human-rights",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"world/video/2013/oct/27/iraq-10-car-bombs-dozens-dead-baghdad",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-27T15:59:00Z",
+      "webTitle":"Iraq: 10 car bombs leave dozens dead in Baghdad - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/oct/27/iraq-10-car-bombs-dozens-dead-baghdad",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/oct/27/iraq-10-car-bombs-dozens-dead-baghdad",
+      "fields":{
+        "trailText":"<p>A wave of at least 10 car bombs in Shia areas of the Iraqi capital leave at least 39 people dead and many more wounded</p>",
+        "headline":"Iraq: 10 car bombs leave dozens dead in Baghdad - video",
+        "body":"<video data-media-id=\"gu-video-421063440\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889476209/Aftermath-of-car-bomb-in--015.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv/ITNP_WORLD_IRAQBOMB_27_dv.m3u8\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/421063440|2013-11-05T11:03:48Z|3e2329a758121ef1d062e4847511f9ba232843a5 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-27T19:02:36Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+        "standfirst":"A wave of at least 10 car bombs in Shia areas of the Iraqi capital leave at least 39 people dead and many more wounded. The coordinated attacks took place over a half-hour period, and though no one has yet claimed responsibility, the string of bombings echoes similar attacks by al-Qaida",
+        "shortUrl":"http://gu.com/p/3jq8y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+        "commentable":"false",
+        "internalContentCode":"421063440",
+        "allowUgc":"false",
+        "internalOctopusCode":"8247466",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987491",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T15:59:38Z"
+      },
+      "tags":[{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421063440",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889459132/Aftermath-of-car-bomb-in--003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Abbas",
+            "altText":"Aftermath of car bomb in Baghdad",
+            "height":"360",
+            "credit":"Ali Abbas/EPA",
+            "caption":"Aftermath of car bomb in Baghdad Photograph: Ali Abbas/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889476209/Aftermath-of-car-bomb-in--015.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Abbas",
+            "altText":"Aftermath of car bomb in Baghdad",
+            "height":"360",
+            "credit":"Ali Abbas/EPA",
+            "caption":"Aftermath of car bomb in Baghdad Photograph: Ali Abbas/EPA",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv/ITNP_WORLD_IRAQBOMB_27_dv.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        }]
+      },{
+        "id":"gu-image-421076622",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Abbas",
+            "altText":"Aftermath of car bomb in Baghdad",
+            "height":"84",
+            "credit":"Ali Abbas/EPA",
+            "caption":"Aftermath of car bomb in Baghdad Photograph: Ali Abbas/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/27/iraq-bombings-kill-dozens-baghdad-mosul",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-27T19:02:36Z",
+      "webTitle":"Iraq bombings kill dozens in Baghdad, Mosul and Tarmiya",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/27/iraq-bombings-kill-dozens-baghdad-mosul",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/27/iraq-bombings-kill-dozens-baghdad-mosul",
+      "fields":{
+        "newspaperPageNumber":"16",
+        "trailText":"Coordinated attacks claim at least 60 lives, taking the number of people killed across the country since April to more than 5,000",
+        "headline":"Iraq bombings kill dozens in Baghdad, Mosul and Tarmiya",
+        "body":"<video data-media-id=\"gu-video-421063440\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv/ITNP_WORLD_IRAQBOMB_27_dv.m3u8\"></source>\n      </video><p>A series of car bombings in Baghdad, an explosion at a market and a suicide attack in the northern city of Mosul killed at least 62 people on Sunday in the latest wave of attacks in Iraq.</p><p>The attacks made Sunday the deadliest day in the country since 5 October, when 75 people were killed. Iraq suffers a number of coordinated bombings each month, feeding a spike in bloodshed that has killed more than 5,000 people since April.</p><p>The local branch of al-Qaida often takes responsibility, but there was no immediate claim for Sunday's attacks.</p><p>Police officers said that the bombs in Baghdad, placed in parked cars and detonated over a half-hour period, targeted commercial areas and car parks, killing 42 people.</p><p>The deadliest blasts were in the south-eastern Nahrwan district of the city, where two car bombs exploded simultaneously, killing seven people and wounding 15, authorities said. Two other explosions took place in the northern Shaab and southern Abu Dshir neighbourhoods, each killing six people, and other blasts hit the eastern neighbourhoods of Mashtal, Baladiyat and Ur, Bayaa in the south-west, and Sab al-Bor and Hurriya in the north.</p><p>In Mosul, a suicide bomber drove a car laden with explosives into a group of soldiers as they were sealing off a street leading to a bank where troops were receiving salaries, a police officer said. Fourteen people were killed, and at least 30 people were wounded, the same source said. Police also said gunmen had killed two off-duty soldiers in a drive-by shooting in the city, a former insurgent stronghold around 225 miles north-west of Baghdad.</p><p>In the Sunni town of Tarmiya, 30 miles north of Baghdad, a bomb blast killed four people and wounded 11 at an outdoor market , authorities said.</p><p>Such coordinated attacks are a favorite tactic of al-Qaida's Iraq branch, which frequently targets civilians in markets, cafes and commercial streets in Shia areas. All of Sunday's Baghdad attacks took place in Shia neighbourhoods.</p><p>All officials spoke on condition of anonymity as they were not authorised to make information public.</p><p>The number of killings in Iraq has reached levels unseen since 2008 in recent months and Sunday's attacks bring the death toll across the country in October to 545, according to an Associated Press count.</p><!-- Guardian Watermark: internal-code/content/421076525|2013-11-05T11:03:48Z|aad8835be07cc6ea5b6c46f389a04e3d85a34584 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T00:23:42Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+        "standfirst":"Coordinated attacks claim at least 60 lives, taking the number of people killed across the country since April to more than 5,000",
+        "shortUrl":"http://gu.com/p/3jqby",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+        "wordcount":"370",
+        "commentable":"false",
+        "internalContentCode":"421076525",
+        "allowUgc":"false",
+        "internalOctopusCode":"8248003",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Baghdad",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-10-28",
+        "internalPageCode":"1987572",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T19:02:36Z"
+      },
+      "tags":[{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421076695",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889466246/Aftermath-of-car-bomb-in--008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Abbas",
+            "altText":"Aftermath of car bomb in Baghdad",
+            "height":"84",
+            "credit":"Ali Abbas/EPA",
+            "caption":"Aftermath of car bomb in Baghdad Photograph: Ali Abbas/EPA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-421063440",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv/ITNP_WORLD_IRAQBOMB_27_dv.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

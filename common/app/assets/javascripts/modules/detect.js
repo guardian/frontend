@@ -8,7 +8,7 @@
 
 define(['modules/userPrefs', 'common'], function (userPrefs, common) {
 
-    var BASE_WIDTH     = 660,
+    var BASE_WIDTH     = 740,
         MEDIAN_WIDTH   = 980,
         EXTENDED_WIDTH = 1060,  // Breakpoint where we see the left column in article pages
         mobileOS,
@@ -310,6 +310,10 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
         return pageVisibility === 'visible' ? true : false;
     }
 
+    function hasWebSocket() {
+        return 'WebSocket' in window;
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getMobileOS: getMobileOS,
@@ -326,7 +330,8 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
         getOrientation: getOrientation,
         getBreakpoint: getBreakpoint,
         initPageVisibility: initPageVisibility,
-        pageVisible: pageVisible
+        pageVisible: pageVisible,
+        hasWebSocket: hasWebSocket
     };
 
 });

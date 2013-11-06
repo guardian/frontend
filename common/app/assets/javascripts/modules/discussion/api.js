@@ -38,7 +38,7 @@ Api.send = function(endpoint, method, data, anon) {
         data.GU_U = cookies.get('GU_U');
     }
 
-    return ajax({
+    var request = ajax({
         url: Api.root + endpoint,
         type: 'json',
         method: method,
@@ -49,6 +49,8 @@ Api.send = function(endpoint, method, data, anon) {
             'GU-Client': Api.clientHeader
         }
     });
+
+    return request;
 };
 
 /**
@@ -57,7 +59,9 @@ Api.send = function(endpoint, method, data, anon) {
  * @return {Reqwest} a promise
  */
 Api.postComment = function(discussionId, comment) {
-    var endpoint = '/discussion/'+ discussionId +'/comment';
+    var endpoint = '/discussion/'+ discussionId +'/comment'+
+        (comment.replyTo ? '/'+ comment.replyTo +'/reply' : '');
+    
     return Api.send(endpoint, 'post', comment);
 };
 
@@ -68,6 +72,16 @@ Api.postComment = function(discussionId, comment) {
 Api.recommendComment = function(id) {
     var endpoint = '/comment/'+ id +'/recommend';
     return Api.send(endpoint, 'post', {}, true);
+};
+
+/**
+ * The id here is optional, but you shoudl try to specify it
+ * If it isn't we use profile/me, which isn't as cachable
+ * @param {number=} id (optional)
+ */
+Api.getUser = function(id) {
+    var endpoint = '/profile/' + (!id ? 'me' : id);
+    return Api.send(endpoint, 'get');
 };
 
 return Api;

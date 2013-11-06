@@ -3,22 +3,18 @@ package controllers.commercial
 import play.api.mvc._
 import common.ExecutionContexts
 import model.commercial.travel.OffersAgent
-import scala.util.Random
+import model.commercial.Segment
 
 object TravelOffers extends Controller with ExecutionContexts {
 
-  def refresh = Action {
-    implicit request =>
-      OffersAgent.refresh()
-      Ok("OK") withHeaders ("Cache-Control" -> "max-age=0")
-  }
-
   def listOffers = Action {
     implicit request =>
-      val keywords = request.queryString.get("k")
-      val offers = keywords map (OffersAgent.offers(_)) getOrElse OffersAgent.allOffers
+
+      def expectedParam(paramName: String): Seq[String] = request.queryString.get(paramName) getOrElse Nil
+
+      val segment = Segment(expectedParam("k"), expectedParam("seg"))
+      val offers = OffersAgent.offers(segment)
       if (offers.size > 1) {
-        val shuffled = Random.shuffle(offers.indices.toList)
         val view = views.html.fragments.travelOffer(offers)
         Ok(view) withHeaders ("Cache-Control" -> "max-age=60")
       } else {

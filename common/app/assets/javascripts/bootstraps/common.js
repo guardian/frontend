@@ -1,3 +1,4 @@
+/*global Imager:true */
 define([
     //Commmon libraries
     'common',
@@ -35,7 +36,8 @@ define([
     "modules/lightbox-gallery",
     "modules/swipe/ears",
     "modules/swipe/bar",
-    "modules/facia/image-upgrade"
+    "modules/facia/images",
+    "modules/onward/history"
 ], function (
     common,
     ajax,
@@ -73,24 +75,18 @@ define([
     LightboxGallery,
     ears,
     SwipeBar,
-    ImageUpgrade
+    faciaImages,
+    History
 ) {
 
     var modules = {
 
         upgradeImages: function () {
+            faciaImages.upgrade();
+
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
-
-                // upgrade facia images
-                // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
-                common.$g('.collection', context).each(function(collection) {
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, collection.getAttribute('data-type') && index === 0)
-                            .upgrade();
-                    });
-                });
             });
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
@@ -104,8 +100,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var toggles = new Toggles(),
-                topStories = new TopStories(),
+             var topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
                 header = document.getElementById('header'),
@@ -118,14 +113,9 @@ define([
                 profile.init();
             }
 
-            sections.init(header);
-            toggles.init(header);
+            sections.init(document);
             topStories.load(config, header);
             search.init(header);
-
-            common.mediator.on('page:common:ready', function(){
-                toggles.reset();
-            });
         },
 
         transcludeRelated: function () {
@@ -149,8 +139,9 @@ define([
 
         showToggles: function() {
             var toggles = new Toggles();
+            toggles.init(document);
             common.mediator.on('page:common:ready', function(config, context) {
-                toggles.init(context);
+                toggles.reset();
             });
         },
 
@@ -354,6 +345,20 @@ define([
                     }
                 });
             }
+        },
+
+        logReadingHistory : function() {
+            common.mediator.on('page:common:ready', function(config) {
+                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                    return new History().log({
+                        id: config.page.shortUrl.replace('http://gu.com', ''),
+                        meta: {
+                            section: config.page.section,
+                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                        }
+                    });
+                }
+            });
         }
     };
 
@@ -379,12 +384,12 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
-            modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             if (config.switches.analyticsOnDomReady) {
@@ -395,6 +400,7 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage(config);
+            modules.logReadingHistory();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

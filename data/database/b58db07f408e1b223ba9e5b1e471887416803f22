@@ -1,0 +1,1618 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"technology/2013/oct/30/dell-laptop-cat-pee-urine-smell-latitude-e6430u",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-30T11:05:19Z",
+      "webTitle":"Dell users get claws out over laptops that stink of cat pee",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/30/dell-laptop-cat-pee-urine-smell-latitude-e6430u",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/30/dell-laptop-cat-pee-urine-smell-latitude-e6430u",
+      "fields":{
+        "trailText":"Computer maker forced to offer replacements after buyers complain of smell from keyboard like 'tomcat's litter box'. By <strong>Samuel Gibbs</strong>",
+        "headline":"Dell users get claws out over laptops that stink of cat pee",
+        "body":"<p>Owners of a certain model of Dell laptop have been subjected to very unpleasant &ldquo;cat urine&rdquo; odours emanating from their new machines.</p> <p>The powerful odour is &ldquo;not at all health hazard&rdquo; and seems to have been caused by a &ldquo;manufacturing process that has now been changed,&rdquo; according to SteveB, a senior technical consultant for Dell <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/p/19512174/20459364.aspx%2320459364\">posting on the company&rsquo;s support forums</a>.</p> <p>Dell was first made aware of the issue in June 2013 when a Dell user called &ldquo;three west&rdquo; <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/t/19512174.aspx\">first posted about the smell</a>&nbsp;of a new Dell Latitude E6430u&nbsp;saying &ldquo;the machine is great, but it smells as if it was assembled near a tomcat's litter box. It is truly awful! It seems to be coming from the keyboard&rdquo;.</p> <h2>Cleaning is not the answer</h2> <p>Dell first suggested cleaning the keyboard and air vents around the laptop to cure the smell, but as more and more users complained of the same stench being emitted from the laptop from different countries and regions, it soon became clear that it wasn&rsquo;t users to blame but the actual laptop.</p> <p>&ldquo;Well .. here I am Sunday doing some work on the couch and my wife says ,\"What stinks like cat pee?\". I said ... I think its this laptop ... she puts her nose up to the keyboard and BAM! It really stinks,&rdquo; <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/t/19512174.aspx\">said gambit29</a>.</p> <h2>Fixed but still smelling in the home</h2> <p>The smell was narrowed down to an issue with manufacturing, which was apparently resolved in October, meaning that new machines running off the production line were cured of the cat-pee smell.</p> <p>For all those suffering from the smell, the only solution was to return the affected laptops to Dell for a replacement, although <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/p/19512174/20461012.aspx%2320461012\">Dell was initially worried</a> it wouldn&rsquo;t &ldquo;have sufficient stock for everyone and also that any parts we are sending out do not also have the same issue&rdquo;.</p> <p>Unfortunately, not all of Dell&rsquo;s replacement machines were free from odour <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/p/19512174/20461056.aspx%2320461056\">as one user complained</a>: &ldquo;I just received my 5th replacement 6430u yesterday and the smell is still there ...&rdquo;</p> <p>Dell Latitude E6430u users are now advised to contact technical support to arrange for an exchange of any odour afflicted machines.</p> <p>Dell failed to elaborate exactly what was causing the issue, but the majority of users complained that the laptop&rsquo;s palm rest and keyboard seemed to be the culprit.</p> <p>&ldquo;If you order an E6430u now, it will not have the issue,&rdquo; SteveB added.</p> <p><strong>&bull; In September, Dell&rsquo;s founder Michael Dell </strong><a href=\"http://www.theguardian.com/technology/2013/sep/12/michael-dell-buys-back-pc-company-founded\"><strong>bought back the PC manufacturer</strong></a><strong> in a $24.8bn deal</strong></p><!-- Guardian Watermark: internal-code/content/421266927|2013-11-05T11:03:51Z|bd3ae2d21b90693999bd8987f7da4074249e66fb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T14:35:49Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+        "standfirst":"Computer maker forced to offer replacements after buyers complain of smell from&nbsp;Latitude E6430u like 'tomcat's litter box'",
+        "shortUrl":"http://gu.com/p/3kx8d",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421266927",
+        "allowUgc":"false",
+        "internalComposerCode":"5270dae8e4b0ded76c0a914f",
+        "isPremoderated":"false",
+        "byline":"Samuel Gibbs",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988941",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T11:05:19Z"
+      },
+      "tags":[{
+        "id":"technology/dell",
+        "type":"keyword",
+        "webTitle":"Dell",
+        "webUrl":"http://www.theguardian.com/technology/dell",
+        "apiUrl":"http://content.guardianapis.com/technology/dell",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gadgets",
+        "type":"keyword",
+        "webTitle":"Gadgets",
+        "webUrl":"http://www.theguardian.com/technology/gadgets",
+        "apiUrl":"http://content.guardianapis.com/technology/gadgets",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/windows",
+        "type":"keyword",
+        "webTitle":"Windows",
+        "webUrl":"http://www.theguardian.com/technology/windows",
+        "apiUrl":"http://content.guardianapis.com/technology/windows",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"84",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094134/248b4f05-05f0-449b-9a23-59b82dbc40a3-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094134/248b4f05-05f0-449b-9a23-59b82dbc40a3-460x276.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"276",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094312/248b4f05-05f0-449b-9a23-59b82dbc40a3-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094312/248b4f05-05f0-449b-9a23-59b82dbc40a3-220x132.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"132",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094839/248b4f05-05f0-449b-9a23-59b82dbc40a3-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094839/248b4f05-05f0-449b-9a23-59b82dbc40a3-2060x1236.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"1236",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095563/248b4f05-05f0-449b-9a23-59b82dbc40a3-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095563/248b4f05-05f0-449b-9a23-59b82dbc40a3-1020x612.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"612",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095835/248b4f05-05f0-449b-9a23-59b82dbc40a3-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095835/248b4f05-05f0-449b-9a23-59b82dbc40a3-300x180.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"180",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096133/248b4f05-05f0-449b-9a23-59b82dbc40a3-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096133/248b4f05-05f0-449b-9a23-59b82dbc40a3-540x324.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"324",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096326/248b4f05-05f0-449b-9a23-59b82dbc40a3-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096326/248b4f05-05f0-449b-9a23-59b82dbc40a3-68x68.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"68",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096458/248b4f05-05f0-449b-9a23-59b82dbc40a3-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096458/248b4f05-05f0-449b-9a23-59b82dbc40a3-380x228.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"228",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097176/248b4f05-05f0-449b-9a23-59b82dbc40a3-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097176/248b4f05-05f0-449b-9a23-59b82dbc40a3-2048x1536.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"1536",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097941/248b4f05-05f0-449b-9a23-59b82dbc40a3-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097941/248b4f05-05f0-449b-9a23-59b82dbc40a3-620x372.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"372",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128098235/248b4f05-05f0-449b-9a23-59b82dbc40a3-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128098235/248b4f05-05f0-449b-9a23-59b82dbc40a3-1024x768.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"768",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"technology/askjack/2013/sep/05/pc-or-mac-laptop-university",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-05T13:35:00Z",
+      "webTitle":"PC or Mac: which laptop for university?",
+      "webUrl":"http://www.theguardian.com/technology/askjack/2013/sep/05/pc-or-mac-laptop-university",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/sep/05/pc-or-mac-laptop-university",
+      "fields":{
+        "trailText":"<p><strong>Ask Jack: </strong>Temitope is a Windows user who is attracted by the MacBook Air while Kate wants to switch from Mac to a Windows workstation for her architecture studies</p>",
+        "headline":"PC or Mac: which laptop for university?",
+        "body":"<p><em>I'm off to university – my first year for a BSc in Economics – and I need advice on which laptop to get. I would like a decent, light, fast and portable laptop. I have recently come to like very much the Asus Zenbook Touch UX31A. However, the MacBook Air seems to be a better contender. I have never used Mac OS before.</em><br /><strong>Temitope</strong><br /><br />If you are buying a laptop for a specific purpose, then you need to make sure that it does the job. In this case, the best source of advice would be economics department staff at the university you're going to attend. You may need to run specific business software for some parts of your course, and if your laptop can't run it, then you will probably need to run it in the university's computer labs. This can be inconvenient.</p><p>While I have no idea which programs might be needed, it's a good bet that your course will include Microsoft Excel spreadsheets, including programs written for Excel. Although Microsoft Office is available for both Windows and Mac OS X, I would recommend against choosing the Mac version. The huge gap has closed dramatically with Excel for Mac 2011, but it doesn't have exactly the same functionality, plug-ins may not work, and you'll find it harder to get help.</p><p>This doesn't mean you can't buy a MacBook Air if you want one. However, you may need to add a copy of Parallels software, a copy of Microsoft Windows 7, and a PC version of Office. See <a href=\"http://blogs.parallels.com/enterprise-blog/2012/6/25/excel-for-mac-vs-pc-whats-the-difference.html\">Excel for Mac vs. PC: What's the Difference?</a> at the Parallels blog. This works, though the Mac keyboard is far from ideal for using  the Windows version of Excel, and most of the keyboard shortcuts are different. You may need to translate them from workbooks etc using this very wonderful ExcelJet chart: <a href=\"http://exceljet.net/keyboard-shortcuts\">Excel PC and Mac keyboard shortcuts side-by-side</a>.</p><p>As mentioned here previously, the best deal is <a href=\"http://office.microsoft.com/en-gb/university/\">Office 365 for University</a>. This supports both PCs and Macs –  so you won't need to buy Office twice –  and provides all seven major Office programs for four years for £59.99.</p><p>Bear in mind that you will also have to learn to use Mac OS X, so I'd try to get some hands-on experience before buying a Mac. It's not hard, but there is a time penalty for switching systems.</p><p>When it comes to the hardware, Asus has improved the Zenbook range since it first appeared, so now there's not much to choose. I think the MacBook Air has a slightly better keyboard, a much better trackpad, and better battery life. The Zenbook UX31A has a better, brighter Full HD screen (1920 x 1080 pixels versus 1440 x 900 on the MacBook Air), and it's a touchscreen, which you can't get on a Mac. However, I do agree with the UX31A Touch review at <a href=\"http://www.notebookcheck.net/Review-Asus-Zenbook-Prime-UX31A-Touch-Ultrabook.87921.0.html\">Notebookcheck</a>: the extra speed of the low-voltage Intel Core i7 processor isn't worth the extra cost over the Core i5 version.</p><p>Also, note that at this point, the MacBook Air has been upgraded to fourth-generation Core chips, codenamed Haswell, while the Asus Zenbook range hasn't. The Haswell version is the UX31A LA, but I don't know when it will appear. If you must have Haswell, then the <a href=\"http://www.acer.com/aspires7/en_US/\">Acer S7-392</a> is a comparable aluminium unibody Ultrabook with a backlit keyboard. It's worth a look if you can find one.</p><p>Finally, while all these machines are \"light, fast and portable\" laptops, the portability has a price, in number of ports and upgradability as well as in financial terms. If I were buying a workhorse to run spreadsheets – especially if running Excel under Parallels and Windows – then I'd go for a MacBook Pro rather than a MacBook Air. The MacBook Pro has a 2.5GHz third-gen Core i5 processor compared to the Air's 1.3GHz version, and Nvidia GeForce GT 650M graphics, for about the same price.</p><h2>Mac user wants Windows workstation</h2><p><em>I'm an architecture student and I've been using a 17in MacBook Pro for the past five years. It's on its last legs, and I want to use Windows as my operating system because some of the programs I use are made exclusively for Windows. I need a lot of space, memory, a good graphics card and something that doesn't weigh a lot. I've been investigating Samsung, Dell and Sony. The cheapest option is not necessarily the best.</em><br /><strong>Kate C</strong></p><p>The 17in MacBook Pro from around 2008 was a bit of a monster, weighing over 3kg, and Apple no longer does this screen size. Usually, 17in screens are used in laptops designed to replace desktops, rather than carrieds around. Choosing a 15.6in screen will give you more screen area, though dropping down to 13.3in – a big shift from 17in – will give you a more portable machine. Either way, the 17in MacBook Pro had a screen resolution of 1680 x 1050 pixels, so even a good 13in Ultrabook like the Zenbook UX31A (1920 x 1080 pixels) would beat that.</p><p>It's usually a good idea to consult your university for advice on systems, but in your case, you already know which software you need to run. However, you have a trickier, technical question: do any of your important programs works best with Quadro graphics cards?</p><p>Many consumers are familiar with Nvidia GeForce cards (your 17in MacBook Pro has one), but very few know about the Quadro range. These are similar in hardware terms, but aimed at different markets. Gamers value speed (frame rate), so if rendering is taking a long time, they want the graphics card to drop it and move on to the next frame. Architects and designers value detail and precision, so they usually want their graphics card to render things completely, even if it takes longer. Naturally, this comes at a significantly higher price.</p><p>Buying a portable with Quadro graphics moves you out of the consumer laptop market and into the workstation business. Leading examples include the Lenovo <a href=\"http://shop.lenovo.com/gb/en/laptops/thinkpad/w-series/w530/\">ThinkPad W530</a> series, the <a href=\"http://www.dell.com/uk/business/p/precision-laptops\">Dell Precision</a> range, and HP EliteBook models such as the <a href=\"http://h20386.www2.hp.com/UKStore/Merch/Product.aspx?id=LY556ET&amp;opt=ABU&amp;sel=PBNB\">EliteBook 8570w</a>. Dell has a <a href=\"http://advisors.dell.com/advisorweb/Advisor.aspx?advisor=6eb02850-6fea-4d68-b859-bd5fbc70d44a-00d004\">Precision Workstation Advisor</a> to help you choose.</p><p>A key phrase when buying this kind of system is \"ISV Certified\". This means it has been tested by independent software vendors (ISVs) such as AutoCAD to ensure that their software runs correctly.</p><p>Professional workstations are usually designed for power and robustness rather than mobility. There is at least one model that's different: the <a href=\"http://www.dell.com/learn/us/en/04/campaigns/precision-m3800-workstation?c=us&amp;l=en&amp;s=bsd\">Dell Precision M3800</a>. Dell previewed it at the SIGGRAPH computer graphics conference as <a href=\"http://hexus.net/tech/news/laptop/58269-dell-precision-m3800-thinnest-lightest-workstation-ever/\">the \"world's thinnest and lightest workstation\"</a>, and I think it's the first workstation with Ultrabook styling. It packs workstation components such as a fourth-generation Core i7, UltraSharp 3200 x 1800 pixel multitouch screen and Quadro graphics into a very sleek and comparatively light (2kg) package. I expect there will be a long queue for the M3800 when it arrives, unless HP comes up with something as good or better.</p><p>Another exceptional workstation is the <a href=\"http://www8.hp.com/uk/en/products/workstations/product-detail.html?oid=5230510#!tab=specs\">HP Z1</a> all-in-one. Most all-in-ones are aimed at consumers, but HP's claim for the Z1 is that you get the power without the tower. The spec includes a 27in, 2560 x 1440 pixel screen, a choice of Core iX and Intel Xeon processors, up to 32GB of memory, and a wide choice of graphics cards. This includes four Nvidia Quadro cards from entry level (500M with 1GB of graphics memory) to high-end (K4000M with 4GB). Also unlike most all-in-ones, the HP Z1 is designed to be opened and upgraded very easily.</p><p>If price is not a problem, you could pair an HP Z1 with an ultralight portable such as a MacBook Air or a laptop/tablet hybrid such as the Lenovo IdeaPad Yoga 11S or Microsoft Surface Pro. The Z1 would give you all the screen space, power and graphics capabilities you need, while a Windows 8 hybrid would give you an ultraportable laptop plus tablet functionality plus digitizing pen (sketching and note-taking) features.</p><p>Whatever you choose, it shouldn't be hard to find something faster, lighter and much cheaper than your 5-year-old MacBook Pro. If yours has an Intel Core 2 Duo T9300 processor, that's roughly the equivalent of today's Intel Pentium B970, so most recent Core i5 chips should outperform it.</p><!-- Guardian Watermark: internal-code/content/416592231|2013-11-05T11:03:51Z|29f94b18c5312284efbda5732e098f5aeca2fcd5 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-05T13:59:09Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2008/06/17/LaptopTonyAvelarAFP84.jpg",
+        "standfirst":"Lots of students want advice on choosing laptops for their courses. This week, Temitope is a Windows user who is attracted by the MacBook Air while Kate wants to switch from Mac to a Windows workstation for her architecture studies",
+        "shortUrl":"http://gu.com/p/3tgny",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2008/06/17/LaptopTonyAvelarAFP84.jpg",
+        "wordcount":"1356",
+        "commentable":"true",
+        "internalContentCode":"416592231",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Jack Schofield",
+        "publication":"theguardian.com",
+        "internalPageCode":"1960923",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-05T14:00:00Z"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.theguardian.com/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.theguardian.com/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"education/higher-education",
+        "type":"keyword",
+        "webTitle":"Higher education",
+        "webUrl":"http://www.theguardian.com/education/higher-education",
+        "apiUrl":"http://content.guardianapis.com/education/higher-education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.theguardian.com/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416595494",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2008/06/17/LaptopTonyAvelarAFP84.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Apple MacBook Air",
+            "height":"84",
+            "credit":"AFP",
+            "caption":"Photograph: Tony Avelar/AFP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/2013/sep/17/laptops-buyers-guide",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-09-17T12:05:09Z",
+      "webTitle":"Laptops: a buyer's guide",
+      "webUrl":"http://www.theguardian.com/money/2013/sep/17/laptops-buyers-guide",
+      "apiUrl":"http://content.guardianapis.com/money/2013/sep/17/laptops-buyers-guide",
+      "fields":{
+        "trailText":"<p>The portable computer market now takes in netbooks and tablets as well as laptops. We look at things to consider before you make your purchase</p>",
+        "headline":"Laptops: a buyer's guide",
+        "body":"<p>A corner of a room dedicated to the computer has become a thing of the past in many households, and according to market researchers Mintel the trend is set to continue, with laptops set to outsell desktops by more than four to one this year.</p><p>And if they work for families, small compact computers are a god send for students who need something they carry back and forth to university for researching and writing assignments, producing presentations and, time permitting of course, keeping up-to-date on social networks.</p><p>Third-year student Adam Higgs, a blogger for <a href=\"http://www.thestudentroom.co.uk/\" title=\"The Student Room website\">the Student Room</a>, has advice for students looking for the right machine: \"Before buying, consider the course you're doing. Find out from your faculty if there is any specific software that is required, or certain work you need to do that could affect your purchasing decision.\"</p><p>Is the software you require downloadable from the internet, or do you need a disc drive to install it? Does the machine have a powerful enough processor for your needs? Would you benefit from a larger screen for detailed work, or a lighter more portable machine for lectures? Does it have enough RAM to run smoothly all the programs you want?</p><p>\"If you want the device to last for the duration of your course, consider what may be useful over the next three or four years,\" Higgs says. Even if you think you might buy online, take the opportunity to go into a store, trying out one or two on your shortlist before purchasing.</p><h2>The choices</h2><p>There are many types of portable computer, but we will focus on these five types:</p><p><strong>Laptop </strong>Probably closest to the traditional desktop computer, but can run unplugged for a few hours. Screens vary in size but can go up to about 18\". Typically, the machine has an internal CD/DVD drive with many laptops able to \"burn\" discs. The Apple equivalent is the MacBook Pro, which works on a different operating system (OS X Mountain Lion) to Windows-based laptops.</p><p><strong>Convertible laptop </strong>These are laptops that convert into a tablet by letting you either detach the keyboard or use a swivel hinge to move it out of the way, at which point touch screen technology takes over.</p><p><strong>Netbooks </strong>A small portable laptop. These have a keyboard but do not have internal disc drives, although you can normally add an external one. Battery life is generally longer than for a laptop. Selection is limited as the rise of tablets has stopped them taking off.</p><p><strong>Subnotebooks/Ultrabooks</strong> These are thinner, lighter and quicker to start up than a typical laptop. Processors tend to be powerful and often use solid state drives (SSDs), which have faster speeds than hard drives but are more expensive. Most lack an internal disc drive, but have ports for you to add external products. The MacBook Air would fit into this category.</p><p><strong>Chromebook </strong>Using Chrome's own operating system, the Chromebook has a battery life typically in excess of six hours. You can buy 3G or Wi-Fi Chromebooks with a start up time normally of less than 10 seconds. They do have a small hard drive, but are almost totally internet-dependent with the \"cloud\" storing all files and documents. Apps are accessed via the Chrome webstore with some available in offline mode. If you need specialist software for your course that is not available via an app you will need an alternative computer.</p><h2>Other considerations</h2><p>It's important to have enough storage space for all your software, documents, files, photos and videos, so make sure you have a large enough drive. It may also be useful to use a cloud-based service for back-up.</p><p>Manufacturers advertise battery life, but Higgs says \"it is typically based on the least intensive usage scenarios possible, so it's best not to get too invested in it\".</p><p>Bear in mind the cost of replacing your machine if it is stolen or damaged. Before you go for an expensive model, check how much it will cost to insure. You might decide to go for something inexpensive that is cheaper to cover or replace if something does go wrong.</p><h2>The machines</h2><p>Below are the best prices for some popular models, but be aware retailers often sell varieties of the same machine with some differences in specification. For example, one shop may offer a faster processor or larger hard drive than another, all of which affects price. Prices can change rapidly so please put any better deals you spot in the comments section below.</p><p><strong>Laptops</strong></p><p>The 15.6\" Acer Aspire E1-571 weighs 2.45kg, has a 2.6GHz Intel Core i5 processor, a 750GB hard drive, webcam and a DVD drive and is <a href=\"http://www.currys.co.uk/gbuk/computing/laptops/laptops/acer-aspire-e1-571-15-6-laptop-21286170-pdt.html\" title=\"\">£399.99 at Currys</a>.</p><p>The 15.6\" HP Compaq CQ58-253SA weighs 2.5kg, has a 2.2GHz Intel Core i3 processor, 500GB hard drive and a DVD drive. It is priced at <a href=\"http://www.laptopsdirect.co.uk/HP_Compaq_CQ58_Core_i3_Windows_8_Laptop_in_Black__C1Z88EA/version.asp\" title=\"\">£332.95 including postage with Laptops Direct</a>, and you can reduce this by £15 by signing up to a one-month subscription to Which? magazine for £1. But if you don't want to continue the subscription beyond that, remember to cancel it.</p><p><strong>Convertible laptops</strong></p><p>The Acer Iconia W510 has a detachable keyboard and a 10.1\" touchscreen, which can be used on its own as a tablet. It has a 64GB hard drive, 1.8GHz Intel Atom Z2760 processor and weighs only 0.58kg. Priced as high as £649 elsewhere, this is <a href=\"http://www.currys.co.uk/gbuk/computing/laptops/laptops/acer-iconia-w510-10-1-touchscreen-convertible-laptop-silver-21295598-pdt.html\" title=\"\">currently £499.99 with Currys online</a>.</p><figure data-media-id='gu-image-417519772'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379419029400/laptop-netbook-008.jpg' alt='laptop netbook' width='460' height='276' class='gu-image'/><figcaption>Photograph: Currys/PR</figcaption></figure><p><br /><strong>Netbook</strong></p><p>The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1\" screen, a 1.6GHz Intel Atom processor and a 320GB hard drive. IT Trade Station <a href=\"http://www.amazon.co.uk/Asus-X101CH-10-1-inch-Netbook-Purple/dp/B00A15DDKS/ref=sr_1_3?ie=UTF8&amp;qid=1378975591&amp;sr=8-3&amp;keywords=netbook\" title=\"\">sells it via Amazon for £219.95</a>.</p><p><strong>Ultrabook</strong></p><p>The Samsung Series 5 NP540U3C is a 13.3\" touchscreen ultrabook with an Intel Core i3 processor with up to 6.5 hours battery life and a 500GB hard drive coupled with 24GB of fast storage on a SSD. You can spend more than £700 on this model, but it is available for <a href=\"http://www.currys.co.uk/gbuk/computing/laptops/laptops/samsung-series-5-np540u3c-13-3-touchscreen-ultrabook-silver-20582417-pdt.html\" title=\"\">£599.99 at Currys</a>.</p><figure data-media-id='gu-image-417519773'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418368522/laptop-air-008.jpg' alt='laptop air' width='460' height='276' class='gu-image'/><figcaption>Photograph: Currys/PR</figcaption></figure><p><br />The MacBook Air 11\" with 128GB flash storage and an Intel Core i5 processor is just 1.7cm thick, weighs 1.08kg and starts at £849. However, if you are a student you may be eligible for a <a href=\"http://store.apple.com/uk/browse/home/education_routing\" title=\"\">discount of up to 15% from the Apple Store</a>. If that discount isn't good enough, <a href=\"http://www.pcworld.co.uk/gbuk/laptops-netbooks/laptops/apple-laptops/apple-macbook-air-md711b-a-11-6-laptop-silver-21399875-pdt.html\" title=\"\">PC World is offering £100 cashback on MacBooks until Wednesday</a>.</p><figure data-media-id='gu-image-417519774'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418793742/laptop-chrome-008.jpg' alt='laptop chrome' width='460' height='276' class='gu-image'/><figcaption>Photograph: Currys/PR</figcaption></figure><p><br /><strong>Chromebook</strong></p><p>The HP Pavilion 14-c001sa has a 14\" screen and a 16GB SSD drive. Best price for this model is via the <a href=\"http://www.pcworld.co.uk/gbuk/laptops-netbooks/laptops/chromebooks/hp-pavilion-14-c001sa-chromebook-black-21324848-pdt.html\" title=\"\">PC World website</a>; if you enter the code CHROME5 at the online checkout you will get it for £189.99.</p><p>Refurbished models sometimes offer good value. Make sure you buy from a reputable company, that the computer has been checked and the warranty offered is the same length as if you bought a new one.</p><p>Do you have a favourite machine or tips on the best places to buy? Please add your thoughts below.</p><!-- Guardian Watermark: internal-code/content/417409834|2013-11-05T11:03:51Z|814c1a45b11618f8f97bed11272193b44ab20f18 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-17T12:05:09Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418204091/laptop-general-003.jpg",
+        "standfirst":"The portable computer market now takes in netbooks and tablets as well as laptops. We look at things to consider before you make your purchase",
+        "shortUrl":"http://gu.com/p/3tzvh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418204091/laptop-general-003.jpg",
+        "wordcount":"1110",
+        "commentable":"true",
+        "internalContentCode":"417409834",
+        "allowUgc":"false",
+        "internalOctopusCode":"8065261",
+        "isPremoderated":"false",
+        "byline":"Marc Lockley",
+        "publication":"theguardian.com",
+        "internalPageCode":"1966130",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-20T12:05:09Z"
+      },
+      "tags":[{
+        "id":"money/series/price-check",
+        "type":"series",
+        "webTitle":"Price check",
+        "webUrl":"http://www.theguardian.com/money/series/price-check",
+        "apiUrl":"http://content.guardianapis.com/money/series/price-check",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/saving-money",
+        "type":"keyword",
+        "webTitle":"Saving money",
+        "webUrl":"http://www.theguardian.com/money/saving-money",
+        "apiUrl":"http://content.guardianapis.com/money/saving-money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"education/students",
+        "type":"keyword",
+        "webTitle":"Students",
+        "webUrl":"http://www.theguardian.com/education/students",
+        "apiUrl":"http://content.guardianapis.com/education/students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/higher-education",
+        "type":"keyword",
+        "webTitle":"Higher education",
+        "webUrl":"http://www.theguardian.com/education/higher-education",
+        "apiUrl":"http://content.guardianapis.com/education/higher-education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"profile/marc-lockley",
+        "type":"contributor",
+        "webTitle":"Marc Lockley",
+        "webUrl":"http://www.theguardian.com/profile/marc-lockley",
+        "apiUrl":"http://content.guardianapis.com/profile/marc-lockley",
+        "bio":"<p>Marc Lockley is the writer of guardian.co.uk's money-saving column, <a href=\"http://www.guardian.co.uk/money/series/the-negotiator\">The Negotiator</a>, and author of <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781845282370\">How to pay less for more</a></p>",
+        "r2ContributorId":"37607",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2010/4/29/1272554034050/Marc-Lockley-byline-pictu-002.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417519771",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418201658/laptop-general-001.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"54",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418203073/laptop-general-002.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"130",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418204091/laptop-general-003.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"84",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418205130/laptop-general-004.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"132",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418206125/laptop-general-005.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"168",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418207116/laptop-general-006.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"180",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418208356/laptop-general-007.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"228",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418209400/laptop-general-008.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"276",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418209400/laptop-general-008.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"276",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417519772",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379419029400/laptop-netbook-008.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop netbook",
+            "height":"276",
+            "credit":"Currys/PR",
+            "caption":"Photograph: Currys/PR",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417519773",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418368522/laptop-air-008.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop air",
+            "height":"276",
+            "credit":"Currys/PR",
+            "caption":"Photograph: Currys/PR",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417519774",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418793742/laptop-chrome-008.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop chrome",
+            "height":"276",
+            "credit":"Currys/PR",
+            "caption":"Photograph: Currys/PR",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417519775",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/9/17/1379418204091/laptop-general-003.jpg",
+          "typeData":{
+            "source":"Currys/PR",
+            "altText":"laptop general",
+            "height":"84",
+            "credit":"Currys/PR",
+            "caption":"Laptops are set to out sell desktops by four to one this year. Photograph: Currys/PR",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-19T14:58:36Z",
+      "webTitle":"All I use is Microsoft Word – should I get a laptop or netbook?",
+      "webUrl":"http://www.theguardian.com/technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "fields":{
+        "trailText":"<p>Charlotte, a novelist, wants a cheap but very light machine for working on manuscripts</p>",
+        "headline":"All I use is Microsoft Word – should I get a laptop or netbook?",
+        "body":"<p><em>I'm a novelist with a bad back, and need something more portable than my perfectly functional laptop for working on my manuscripts away from home. Netbooks are dead; Ultrabooks are expensive; Chromebooks defeat the object, because all I need is to work in, and save frequently on, Microsoft Word – no touchscreens and, probably, no cloud.</em><br /><strong>Charlotte</strong><br /><br />You don't mention a budget, but is £350 too much? At the moment I'd go for an <a href=\"http://www.amazon.co.uk/gp/product/B00B4AAS7K/\">Asus VivoBook S200</a> with an 11.6in screen for £349.97. This gets you a PC that is about the size and weight of a netbook but with a much better specification. It includes an Intel Pentium processor, 4GB of memory, a 500GB hard drive, VGA (D-SUB) and HDMI video ports, two USB 2 ports, one USB 3 port, an SD card slot and an Ethernet port.</p><p>The VivoBook S200SE comes loaded with Microsoft Windows 8, which will soon get a free upgrade to Windows 8.1. As you say, you don't really need a touch-sensitive screen, but it is an advantage when using Windows 8's \"modern\" (formerly Metro) apps downloaded from the Windows Store.</p><p>Even better, go for VivoBook S200E, which is essentially the same machine with an Intel Core i3 processor. This increases the price by £37.90 to <a href=\"http://www.amazon.co.uk/gp/product/B00B2HMMDS/\">£387.87</a>, but provides a worthwhile increase in performance. For completeness, you can also get the S200E with a much slower 1.1GHz Intel Celeron 847 processor and a smaller, 320GB hard drive for <a href=\"http://www.tesco.com/direct/asus-vivobook-s200e-touch-116-cel-320gb-silver-laptop/430-4497.prd\">£329 from Tesco Direct</a>. However, it's really not worth saving £21.</p><p>The VivoBook S200E is solidly made, for this class of machine, with a brushed aluminium top and a decent keyboard. It includes \"instant on\", starting from sleep/hibernate in about two seconds. It doesn't qualify as an Ultrabook because, at 21.7mm, it's a couple of millimetres too thick.</p><p>If the 11.5in screen is too small, consider the <a href=\"http://www.amazon.co.uk/Acer-Aspire-S3-391-13-3-Ultrabook/dp/B00ARAKD46\">Acer Aspire S3-391</a> Ultrabook at £451.99. This has a 13.3in non-touch screen, but otherwise it has a similar specification to the VivoBook S200E with an Intel Core i3-3217U. There's also an <a href=\"http://www.amazon.co.uk/VivoBook-S400CA-14-inch-Touchscreen-Laptop/dp/B00B2I6E5E/\">Asus VivoBook S400CA</a> with a 14in screen for £384, but this is about a pound heavier at 1.8kg against 1.3kg for the S200E and 1.4kg for the Acer Aspire S3-391.</p><h2>The netbook resuscitated</h2><p>Later, Charlotte responded to a much shorter email version of the  suggestions above:</p><p><em>I looked at the Asus [VivoBook S200E] in John Lewis, who had only one left and think it's being stopped. Can't decide if I should snap it up or wait for possible future cheap models. I love the thought of one of these but will only be using it infrequently and am loathe to spend £350 on what feels like an indulgence. But is that a false economy? Also, <a href=\"http://www.theguardian.com/money/2013/sep/17/laptops-buyers-guide\">today's Guardian recommends a netbook</a>: \"The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1in screen, a 1.6GHz Intel Atom processor and a 320GB hard drive. IT Trade Station sells it via Amazon for £219.95.\" </em></p><p>Actually, there is a pink version of the same netbook being sold by Technoworld on Amazon for only <a href=\"http://www.amazon.co.uk/Asus-X101CH-10-1-inch-Netbook-Pink/dp/B00A15DDNU/\">£174</a>, which is an even better deal.</p><p>The Asus Eee PC X101CH is a very good netbook, as netbooks go, and it would do the job. However, netbooks have a lot of limitations, which is why they have almost died out (though they still sell in some poor countries, and are often used in schools). </p><p>The main limitations of the PC X101CH are its slow 32-bit 1.6GHz Intel Atom N2600 processor, slow graphics, very limited 1GB of memory, screen resolution of 1024 x 600 pixels, and its use of Microsoft Windows 7 Starter Edition. The Asus VivoBook S200E has a 64-bit processor that is two or three times quicker, has four times as much memory (4GB), a touch-sensitive screen, stereo sound and a significantly better keyboard. It also has, in Windows 8, a much better operating system. With most netbooks you would lose Windows 8's fast start from sleep, though the PC X101CH does offer Asus's own rapid-resume technology.</p><p>The 1GB of memory is a big drawback when running Windows and Microsoft Office. Unfortunately, the memory is soldered to the motherboard and there is no standard SODIMM slot. This makes it impractical to replace the 1GB with the maximum 2GB memory chip that has been the salvation of many an old netbook.</p><p>The netbook's lower screen resolution means that you could lose roughly nine or 10 lines of text on screen, and each line will be about six words shorter, compared to the usual low-end Windows screen resolution of 1366 x 768 pixels. This is based on running Microsoft Word 2007 full screen with text in 11pt New Times Roman in web layout with the ribbon minimised, which I simulated by changing the size of Word's window on my own much bigger (1920 x 1080) screen. That is, I could see 39 lines of text with Word in a 1366 x 768-pixel window and 29 lines in a 1024 x 600-pixel window. I usually write in a Word window that's roughly 1200 x 800, so I find the netbook screen cramped. Tastes vary, so this may not bother you, but you should be aware of it.</p><h2>How about a mini-laptop?</h2><p>Instead of a netbook, you should consider a new-style mini-laptop that doesn't use an Intel processor, and is therefore free of Intel's netbook requirements. The blue 11.6in Acer Aspire V5-121 is a good example at <a href=\"http://www.amazon.co.uk/Acer-Aspire-V5-121-11-6-inch-Laptop/dp/B00CFHP6FU/\">£237.94</a> with free delivery from Amazon.co.uk. For less than £20 more than a purple netbook, you get a 1kg laptop that has 2GB of memory, a standard 1366 x 768-pixel screen, and a full copy of Windows 8. </p><p>The main drawback with the cheapest Acer Aspire V5-121 is the horribly slow 1GHz AMD C70 processor, which was previously used in some Acer Aspire One models sold as netbooks. However, <a href=\"http://www.notebookcheck.net/AMD-C-Series-C-70-Notebook-Processor.82852.0.html\">NotebookCheck</a> says \"the processor speed is somewhere between a single core 1.6 GHz Atom N455 and a dual core Atom N550,\" which puts it in the same ballpark as the Atom N2600. Without actually being able to try it, I'd guess that the extra memory (2GB) and the slightly better efficiency of Windows 8 will make the Aspire V5-121 roughly as good (or as bad) at running Microsoft Word. Anyone who has done it is invited to comment below.</p><p>The VivoBook S200E (£350) is a faster, better-made, and all-round much more capable Windows machine but, as you say, you already have a perfectly good laptop. If you're only going to use it to run Microsoft Word, and run it \"infrequently\", then it may not be worth paying twice the price of a pink Asus Eee PC X101CH (£174), or £112 more than an Acer Aspire V5-121 (£238). Your money, your decision.</p><p>If you can wait, there should be some better mini-laptops coming out for the Christmas sales season. One example is the <a href=\"http://www.cnet.com/laptops/dell-inspiron-11-intel/4505-3121_7-35827688.html\">Dell Inspiron 11</a>. Most will have Windows 8.1 and some will have new versions of Intel's Core iX chips (code-named Haswell) and a much-improved Atom processor (Bay Trail), which will be better at running Microsoft Word.</p><!-- Guardian Watermark: internal-code/content/417768012|2013-11-05T11:03:51Z|d7a3bdb1fb9834bb5aaee8d5ac81627e40386459 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-19T14:58:36Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602481630/Asus-Eee-PC-X101CH-netboo-003.jpg",
+        "standfirst":"Charlotte, a novelist, wants a cheap but very light machine for working on manuscripts",
+        "shortUrl":"http://gu.com/p/3tqk8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602481630/Asus-Eee-PC-X101CH-netboo-003.jpg",
+        "wordcount":"1170",
+        "commentable":"true",
+        "internalContentCode":"417768012",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Jack Schofield",
+        "publication":"theguardian.com",
+        "internalPageCode":"1968119",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-26T14:55:00Z"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.theguardian.com/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.theguardian.com/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417769037",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602487576/Asus-Eee-PC-X101CH-netboo-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Asus Eee PC X101CH netbook",
+            "height":"276",
+            "credit":"PR",
+            "caption":"The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1in screen, a 1.6GHz Intel Atom processor and a 320GB hard drive.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417769038",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602481630/Asus-Eee-PC-X101CH-netboo-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Asus Eee PC X101CH netbook",
+            "height":"84",
+            "credit":"PR",
+            "caption":"The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1in screen, a 1.6GHz Intel Atom processor and a 320GB hard drive.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/askjack/2013/oct/24/tablet-child-minecraft-laptop",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-24T14:21:35Z",
+      "webTitle":"What's the best laptop for a child ... who plays Minecraft?",
+      "webUrl":"http://www.theguardian.com/technology/askjack/2013/oct/24/tablet-child-minecraft-laptop",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/oct/24/tablet-child-minecraft-laptop",
+      "fields":{
+        "trailText":"<p>Ed wants a laptop for his eight-year-old son. The real<br />problem is that he plays Minecraft, and this requires something with better graphics processing capabilities ...</p>",
+        "headline":"What's the best laptop for a child ... who plays Minecraft?",
+        "body":"<p><em>It's been nearly two years since your <a href=\"http://www.theguardian.com/technology/askjack/2011/nov/24/ask-jack-laptop-for-child-wanted\">\"best laptop for a child\"</a> article so I wondered what your current advice is?<br />Our son is autistic and struggles to write with a pen but has been quite energised by learning to touch type. We have promised him a laptop as a reward for completing the course but are not sure which is best. He will use it primarily for school work but also to play Minecraft, which is a bit of an obsession. I don't want him complaining of 'lag' as this will cause him anxiety. <br />We were looking mainly at netbook-size machines as he is eight, but I looked at your recommended Asus 200E and the screen seems too small, so now we're looking at the Samsung Activbook 9, Acer Aspire S7 and Lenovo U330. Or another? We were hoping not to pay over £300 but are flexible if you advise to go for a higher spec.</em><br /><strong>Ed</strong><br /><br />It looks as though the \"best laptop for a child\" market has been overtaken by the \"best tablet for a child\" market, particularly for younger children. This has been reinforced by the decline of the netbook market, with Microsoft killing off Windows XP and declining to provide an ultra low cost version of Windows 8 to run on them. Indeed, it looks as though Arm-based tablets, laptops and hybrids running Windows RT are Microsoft's preferred solution for this market, though the market has yet to agree.</p><p>At the moment, hybrids like the Dell Venue 11 Pro, or the smaller Venue 8 Pro, look ideal for kids, because they work as both tablets and laptops. They are much like the Microsoft Surface Pro but cheaper because Intel Atom-powered. In your case, a tablet/hybrid is probably not the best solution. You're looking for a laptop that will help your son to exploit his new typing skills and play Minecraft, and presumably other games.</p><p>Minecraft is a Java program, which enables it to run on different platforms: Microsoft Windows, Mac OS X and Linux. There's also an <a href=\"http://marketplace.xbox.com/en-US/Product/Minecraft-Xbox-360-Edition/66acd000-77fe-1000-9115-d802584111f7?nosplash=1&amp;DownloadType=Game\">Xbox 360</a> version and a <a href=\"https://minecraft.net/pocket\">Pocket Edition</a> for Apple's iOS and Google Android. Unfortunately, Java programs have a reputation for being slow – deservedly, in my experience – which suggests getting the fastest PC you can afford. </p><h2>Laptops for Minecraft</h2><p>I did a few searches to find the best laptop for running Minecraft. It seems to be a hot topic but one where there's no consensus. There's not even much useful information to be gained from Gamepedia's <a href=\"http://minecraft.gamepedia.com/Hardware_performance\">user benchmarks</a> beyond the obvious point that the results are extremely variable. However, the Minecraft Support Center's <a href=\"https://help.mojang.com/customer/portal/articles/325948-minecraft-system-requirements\">\"recommended system\"</a> makes it clear that the processor is less important than the graphics card. For the processor, it recommends an \"Intel Pentium D or AMD Athlon 64 (K8) 2.6 GHz\" – a low bar – while for the graphics it recommends a \"GeForce 6xxx or ATI Radeon 9xxx and up with OpenGL 2.1 Support (Excluding Integrated Chipsets)\".</p><p>The Support Center adds: \"If you have a laptop with a built-in (integrated) graphics card, rather than a dedicated card, it is highly suggested that you try the <a href=\"http://minecraft.net/demo\">demo</a> before purchase.\"</p><p>The problem is that most cheap laptops have integrated graphics, not dedicated graphics cards. Intel HD3000 integrated graphics are probably enough on a desktop PC, but HD3000 integrated graphics are much less capable on slow, mobile processors. I wouldn't want to recommend this without trying one. </p><p>A processor with HD4000 integrated graphics would be a better bet, which means a third-generation Intel Core iX chip, code-named Sandy Bridge. However, as <a href=\"http://www.notebookcheck.net/Intel-HD-Graphics-4000.69168.0.html\">Notebookcheck</a> warns: \"Depending on the processor model, the base and turbo clock rate may differ greatly resulting in different graphics performance of ULV parts compared to high end quad-core parts.\"</p><p>In other words, HD4000 in mobile or ultra-low voltage (ULV) chips is not going to perform as well as HD4000 in fast but hot desktop processors. A thin Ultrabook designed for low battery life and minimal fan use will probably not be the best choice.</p><h2>Some options</h2><p>The cheapest Core-based laptop I can see with HD4000 graphics is a 15.6-inch Asus X550CA-XO266H with a 1.4GHz Core i3, 4GB of memory and a 500GB hard drive for <a href=\"http://www.amazon.co.uk/gp/product/B00ECBT63A/\">£364.39 at Amazon.co.uk</a>, or £585.10 with a Core i5. If you're going to spend that much on a PC with Intel integrated graphics, then the red Asus K55A-SX376H would be a better option. That gets you a much faster 2.5GHz Intel Core i5-3210M with 6GB or memory and a 500GB hard drive for <a href=\"http://www.amazon.co.uk/gp/product/B009YUF87M/\">£498</a>.</p><p>The Core i5 also has a SpeedStep feature – which increases the clock speed when needed – that the Core i3 lacks.</p><p>The Lenovo U330, which you mention, has a fourth-generation Haswell processor, a Core i5-4200U, but it has a slower clock speed (1.6GHz) and the same HD4000 graphics for a higher price: <a href=\"http://www.amazon.co.uk/Lenovo-U330-13-3-inch-Touchscreen-Laptop/dp/B00DPERVS2/\">£634.53</a>. It's a nicer laptop and has a touch screen, but I wouldn't expect it to run Minecraft better. The Core i5-4200U provides better battery life, but it's not as fast as a Core i3-3110M or even a Pentium G860.</p><p>The Samsung ATIV Book 9 Lite, which you also mention, is best avoided for your son's purposes. It's attractive as a cheap Ultrabook with an SSD (solid-state disk) drive. However, the 1GHz-1.4GHz AMD A6-1450 processor is designed for very low power consumption (8W) and it's extremely slow. A modern Celeron or Pentium chip, such as the 987, would be faster. (PC Pro has a <a href=\"http://www.pcpro.co.uk/reviews/laptops/383779/samsung-ativ-book-9-lite\">review</a>.)</p><h2>Laptops with graphics cards</h2><p>Stepping up to laptop with a built-in graphics card, as recommended for Minecraft, usually involves a step up in price, and a dramatic reduction in the number of options available. However, HP, Dell and some other firms have more affordable options.</p><p>For example, the 14in HP EliteBook 8460p has a 2.5GHz Intel Core i5-2520M processor, 4GB of memory and a fast (7200rpm) 320GB hard drive. The second-generation processor is saved by the Radeon HD 6470M graphics with 1GB of memory. The Amazon price is <a href=\"http://www.amazon.co.uk/EliteBook-Widescreen-7200rpm-graphics-Ethernet/dp/B005GIZO52/\">£599.99</a>, which is twice your preferred budget.</p><p>The EliteBook 8460p ships with 64-bit Windows 7 Professional, but check if this includes Windows 8. Business laptops are sold with Windows 8 Pro, partly because this includes downgrade rights to Windows 7 Pro, which is the business standard. This means there's a \"free\" upgrade to Windows 8 if required. (I notice that Acer is shipping business laptops in the UK with both Windows 7 Pro and Windows 8 Pro, so you can choose which you want when you set it up.)</p><p>There's also the <a href=\"http://www.dell.com/uk/p/inspiron-15r-se-7520/pd?oc=cn15s02&amp;model_id=inspiron-15r-se-7520\">Dell Inspiron 15R Special Edition</a>, which seems to be aimed at the back-to-school market. This has a third-generation 2.6GHz Core i5-3230M with 4GB of memory, plus a <a href=\"http://www.notebookcheck.net/AMD-Radeon-HD-7730M.72678.0.html\">Radeon HD 7730M</a> graphics card with its own 2GB of memory, for £499, including a year's in-home service.</p><p>The Inspiron 15 is big and a bit clunky – my son has owned two of them, and I bought the first – but they are generally good value workhorses.</p><p>The best value I can find today is the Fujitsu Lifebook AH532. This has a 2.4GHz Core i3-3110M processor with 4GB of memory and an Nvidia GeForce GT 620M graphics card with 1GB of memory for <a href=\"http://www.amazon.co.uk/Fujitsu-Lifebook-AH532-15-6-inch-Laptop/dp/B00F36LAT6/\">£374.94</a>, as sold by Amazon. The normal price seems to be around £470. However, I've never seen this machine, and it would be a good idea to read a few <a href=\"http://www.notebookcheck.net/Review-Fujitsu-Lifebook-AH532-Notebook.81495.0.html\">reviews</a>. Get a hands-on if you can.</p><p>If you search for laptops with (roughly) 2GHz or faster Intel Core i3 or i5 processors with HD4000 graphics and/or dedicated Nvidia GeForce or AMD/ATI Radeon graphics, then you may be able to find something better.</p><p>This spec should be capable of running Minecraft reasonably well, though not with the highest frame rates, and probably not with the Fancy graphics option turned on.</p><p>Incidentally, you asked for a laptop, but a desktop is usually a better option for gaming. Desktop processors can be run hot, often from 95W (like my Core i5-2500K) to 130W, whereas laptops are trending down from 35W to 15W or less. This means <a href=\"http://www.bit-tech.net/blog/2013/05/25/don-t-be-fooled-by-laptop-cpus/\">a cheap desktop processor can often outperform a \"higher spec\" laptop chip</a>. A desktop tower case also provides room for high-powered but relatively cheap graphics cards, which are very easy to upgrade. Finally, you can fit a much better keyboard and a bigger screen.</p><!-- Guardian Watermark: internal-code/content/420863720|2013-11-05T11:03:51Z|b17464d5cf368b2d2863ff943904326db0e1b0ee -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-24T14:21:35Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/24/1382624326695/Minecraft-003.jpg",
+        "standfirst":"Ed wants a laptop for his eight-year-old son. The real<br />problem is that he plays Minecraft, and this requires something with better graphics processing capabilities ...",
+        "shortUrl":"http://gu.com/p/3jzj5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/24/1382624326695/Minecraft-003.jpg",
+        "wordcount":"1368",
+        "commentable":"true",
+        "internalContentCode":"420863720",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Jack Schofield",
+        "publication":"theguardian.com",
+        "internalPageCode":"1986314",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-31T07:30:00Z"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.theguardian.com/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/minecraft",
+        "type":"keyword",
+        "webTitle":"Minecraft",
+        "webUrl":"http://www.theguardian.com/technology/minecraft",
+        "apiUrl":"http://content.guardianapis.com/technology/minecraft",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/blog",
+        "type":"blog",
+        "webTitle":"Technology blog",
+        "webUrl":"http://www.theguardian.com/technology/blog",
+        "apiUrl":"http://content.guardianapis.com/technology/blog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.theguardian.com/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"technology/dell",
+        "type":"keyword",
+        "webTitle":"Dell",
+        "webUrl":"http://www.theguardian.com/technology/dell",
+        "apiUrl":"http://content.guardianapis.com/technology/dell",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/microsoft",
+        "type":"keyword",
+        "webTitle":"Microsoft",
+        "webUrl":"http://www.theguardian.com/technology/microsoft",
+        "apiUrl":"http://content.guardianapis.com/technology/microsoft",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420864729",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/24/1382624332924/Minecraft-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Minecraft",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Minecraft is a Java program, which enables it to run on different platforms.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420864730",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/10/24/1382624326695/Minecraft-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Minecraft",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Minecraft is a Java program, which enables it to run on different platforms.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/12/michael-dell-buys-back-pc-company-founded",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-12T19:54:58Z",
+      "webTitle":"Michael Dell buys back PC company he founded in $24.8bn deal",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/12/michael-dell-buys-back-pc-company-founded",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/12/michael-dell-buys-back-pc-company-founded",
+      "fields":{
+        "newspaperPageNumber":"37",
+        "trailText":"Buyout seen as way to refocus ailing computer manufacturer as popularity of tablets forces shift to corporate market. By Charles Arthur",
+        "headline":"Michael Dell buys back PC company he founded in $24.8bn deal",
+        "body":"<p>Michael Dell has the won the battle for control of the computer company that he created, after shareholders backed his $24.8bn (£15.7bn) offer to take Dell private and revive the struggling business away from the incessant pressure of Wall&nbsp;Street.</p><p>The vote clears the way for the huge buyout, in which Dell is working with private equity partners Silver Lake after seeing off a challenge from activist investor Carl Icahn.</p><p>The move comes as traditional PC companies struggle to make money in a market that is rapidly shrinking, with the latest forecasts showing that PC sales will be overtaken by tablets for the first time in the final quarter of this year.</p><p>Research group IDC said tablets will outsell all PCs in the three months to Christmas, and by 2015 they will regularly outsell PCs as consumers' tastes shift towards the more mobile format.</p><p>\"We are forecasting 84.1m tablets will be shipped in the fourth quarter of 2013, compared to 83.1m PCs,\" said an IDC spokesman.</p><p>The abruptness of the shift – modern tablets only went on sale with the launch of Apple's iPad in April 2010 – has caught a number of traditional PC companies, including Dell, flatfooted and with no viable strategy in the fast-growing mobile&nbsp;market.</p><p>By 2017, says IDC, 87% of devices connected to the internet will be tablets and smartphones, relegating PCs from their former position as the main means of getting online.</p><p>Speaking after the Dell vote, Francisco Jeronimo, IDC's smartphones analyst, said the wider market shift will \"kill many old companies and create new leaders\".</p><p>PC makers such as Dell have struggled with limited profits for years. But as consumers, who made up half of PC buyers, have shifted spending to tablets and smartphones, the industry has suffered falls in sales which are squeezing small and large players alike.</p><p>Michael Dell, who founded the company from a college dorm room in 1984, has fought for months to convince investors his offer is the best option for the company's future. Icahn ended his challenge after deciding it was \"impossible to win\".</p><p>Dell has been forced into a buyout after 25 years on the stock market because the PC market is dwindling so rapidly. The company reported a 72% slump in quarterly earnings last month as it cut prices and prepared an attack on the market for supplying big \"enterprise\" businesses.</p><p>The iPad was rapidly followed by more tablets, from companies including Samsung, Amazon and Google. After years when PC sales growth was regularly between 10% and 20%, it has gone into reverse for the past five quarters, and IDC forecasts a drop of nearly 10% this year.</p><p>Other companies besides Dell have been hit due to the lack of a successful tablet strategy. Taiwan's Acer, one of the five biggest PC makers, has seen profits collapse since 2011, and revenues have shrunk for five quarters in a row. HP, which bought Palm for $1bn but wrote off its TouchPad tablet in August 2011 after less than two months, is also struggling to make a profit from PCs.</p><p>Michael Dell argues that the company needs to go private so it can restructure to cope with the new computing landscape away from the quarterly pressures of Wall Street, and focus as IBM does on providing its storage, servers and services to public organisations and large companies.</p><p>Dell first proposed the buyout in private discussions in June 2012. It was announced on 5 February at $13.65 per share. Rival bidder Blackstone raised that to $14.25 in March, and Icahn offered $15 soon afterwards. Dell finally offered $13.75 per share.</p><p>A vote on the buyout had been postponed three times as Michael Dell and the company's board scrambled to garner enough votes in favour. But last month Dell raised his offer price, tacked on a special-dividend sweetener, and got the board to change voting rules so that abstentions no longer count against him – turning the tide in his favour.</p><p>A change of over two months in the deadline for proxy votes may also have brought backing from hedge funds that bought shares for short-term gain and were likely to support a buyout.</p><!-- Guardian Watermark: internal-code/content/417165497|2013-11-05T11:03:51Z|a6c23398b72af09daf2fead3f876be236a07aeef -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-12T23:06:04Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015145323/Michael-Dell-taking-his-c-005.jpg",
+        "standfirst":"Buyout seen as way to refocus ailing computer manufacturer as popularity of tablets forces shift to corporate market",
+        "shortUrl":"http://gu.com/p/3tm4z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015145323/Michael-Dell-taking-his-c-005.jpg",
+        "wordcount":"677",
+        "commentable":"true",
+        "internalContentCode":"417165497",
+        "allowUgc":"false",
+        "internalOctopusCode":"8068139",
+        "isPremoderated":"false",
+        "byline":"Charles Arthur, technology editor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-09-13",
+        "internalPageCode":"1964787",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-15T19:54:58Z"
+      },
+      "tags":[{
+        "id":"technology/dell",
+        "type":"keyword",
+        "webTitle":"Dell",
+        "webUrl":"http://www.theguardian.com/technology/dell",
+        "apiUrl":"http://content.guardianapis.com/technology/dell",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/privateequity",
+        "type":"keyword",
+        "webTitle":"Private equity",
+        "webUrl":"http://www.theguardian.com/business/privateequity",
+        "apiUrl":"http://content.guardianapis.com/business/privateequity",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/charlesarthur",
+        "type":"contributor",
+        "webTitle":"Charles Arthur",
+        "webUrl":"http://www.theguardian.com/profile/charlesarthur",
+        "apiUrl":"http://content.guardianapis.com/profile/charlesarthur",
+        "bio":"<p>Charles Arthur is the Guardian's<br /><a href=\"http://www.guardian.co.uk/technology\">technology</a> editor. Previously, he covered science, technology and health at the Independent for nine years</p>",
+        "r2ContributorId":"19137",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2007/10/17/charles_arthur_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417165639",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015142078/Michael-Dell-taking-his-c-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"54",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015143129/Michael-Dell-taking-his-c-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"340",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015144277/Michael-Dell-taking-his-c-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"130",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015145323/Michael-Dell-taking-his-c-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"84",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015146355/Michael-Dell-taking-his-c-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"132",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015147384/Michael-Dell-taking-his-c-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"168",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015148447/Michael-Dell-taking-his-c-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"180",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015149472/Michael-Dell-taking-his-c-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"228",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015150590/Michael-Dell-taking-his-c-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"276",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015151720/Michael-Dell-taking-his-c-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"372",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015150590/Michael-Dell-taking-his-c-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"276",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417165640",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1379015145323/Michael-Dell-taking-his-c-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Lucas Jackson",
+            "altText":"Michael Dell: taking his company private",
+            "height":"84",
+            "credit":"Lucas Jackson/Reuters",
+            "caption":"Michael Dell: taking his company private. Photograph: Lucas Jackson/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/30/dell-laptop-cat-pee-urine-smell-latitude-e6430u",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-30T11:05:19Z",
+      "webTitle":"Dell users get claws out over laptops that stink of cat pee",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/30/dell-laptop-cat-pee-urine-smell-latitude-e6430u",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/30/dell-laptop-cat-pee-urine-smell-latitude-e6430u",
+      "fields":{
+        "trailText":"Computer maker forced to offer replacements after buyers complain of smell from keyboard like 'tomcat's litter box'. By <strong>Samuel Gibbs</strong>",
+        "headline":"Dell users get claws out over laptops that stink of cat pee",
+        "body":"<p>Owners of a certain model of Dell laptop have been subjected to very unpleasant &ldquo;cat urine&rdquo; odours emanating from their new machines.</p> <p>The powerful odour is &ldquo;not at all health hazard&rdquo; and seems to have been caused by a &ldquo;manufacturing process that has now been changed,&rdquo; according to SteveB, a senior technical consultant for Dell <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/p/19512174/20459364.aspx%2320459364\">posting on the company&rsquo;s support forums</a>.</p> <p>Dell was first made aware of the issue in June 2013 when a Dell user called &ldquo;three west&rdquo; <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/t/19512174.aspx\">first posted about the smell</a>&nbsp;of a new Dell Latitude E6430u&nbsp;saying &ldquo;the machine is great, but it smells as if it was assembled near a tomcat's litter box. It is truly awful! It seems to be coming from the keyboard&rdquo;.</p> <h2>Cleaning is not the answer</h2> <p>Dell first suggested cleaning the keyboard and air vents around the laptop to cure the smell, but as more and more users complained of the same stench being emitted from the laptop from different countries and regions, it soon became clear that it wasn&rsquo;t users to blame but the actual laptop.</p> <p>&ldquo;Well .. here I am Sunday doing some work on the couch and my wife says ,\"What stinks like cat pee?\". I said ... I think its this laptop ... she puts her nose up to the keyboard and BAM! It really stinks,&rdquo; <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/t/19512174.aspx\">said gambit29</a>.</p> <h2>Fixed but still smelling in the home</h2> <p>The smell was narrowed down to an issue with manufacturing, which was apparently resolved in October, meaning that new machines running off the production line were cured of the cat-pee smell.</p> <p>For all those suffering from the smell, the only solution was to return the affected laptops to Dell for a replacement, although <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/p/19512174/20461012.aspx%2320461012\">Dell was initially worried</a> it wouldn&rsquo;t &ldquo;have sufficient stock for everyone and also that any parts we are sending out do not also have the same issue&rdquo;.</p> <p>Unfortunately, not all of Dell&rsquo;s replacement machines were free from odour <a href=\"http://en.community.dell.com/support-forums/laptop/f/3518/p/19512174/20461056.aspx%2320461056\">as one user complained</a>: &ldquo;I just received my 5th replacement 6430u yesterday and the smell is still there ...&rdquo;</p> <p>Dell Latitude E6430u users are now advised to contact technical support to arrange for an exchange of any odour afflicted machines.</p> <p>Dell failed to elaborate exactly what was causing the issue, but the majority of users complained that the laptop&rsquo;s palm rest and keyboard seemed to be the culprit.</p> <p>&ldquo;If you order an E6430u now, it will not have the issue,&rdquo; SteveB added.</p> <p><strong>&bull; In September, Dell&rsquo;s founder Michael Dell </strong><a href=\"http://www.theguardian.com/technology/2013/sep/12/michael-dell-buys-back-pc-company-founded\"><strong>bought back the PC manufacturer</strong></a><strong> in a $24.8bn deal</strong></p><!-- Guardian Watermark: internal-code/content/421266927|2013-11-05T11:03:51Z|bd3ae2d21b90693999bd8987f7da4074249e66fb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T14:35:49Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+        "standfirst":"Computer maker forced to offer replacements after buyers complain of smell from&nbsp;Latitude E6430u like 'tomcat's litter box'",
+        "shortUrl":"http://gu.com/p/3kx8d",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421266927",
+        "allowUgc":"false",
+        "internalComposerCode":"5270dae8e4b0ded76c0a914f",
+        "isPremoderated":"false",
+        "byline":"Samuel Gibbs",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988941",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T11:05:19Z"
+      },
+      "tags":[{
+        "id":"technology/dell",
+        "type":"keyword",
+        "webTitle":"Dell",
+        "webUrl":"http://www.theguardian.com/technology/dell",
+        "apiUrl":"http://content.guardianapis.com/technology/dell",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gadgets",
+        "type":"keyword",
+        "webTitle":"Gadgets",
+        "webUrl":"http://www.theguardian.com/technology/gadgets",
+        "apiUrl":"http://content.guardianapis.com/technology/gadgets",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/windows",
+        "type":"keyword",
+        "webTitle":"Windows",
+        "webUrl":"http://www.theguardian.com/technology/windows",
+        "apiUrl":"http://content.guardianapis.com/technology/windows",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128093820/248b4f05-05f0-449b-9a23-59b82dbc40a3-140x84.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"84",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094134/248b4f05-05f0-449b-9a23-59b82dbc40a3-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094134/248b4f05-05f0-449b-9a23-59b82dbc40a3-460x276.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"276",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094312/248b4f05-05f0-449b-9a23-59b82dbc40a3-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094312/248b4f05-05f0-449b-9a23-59b82dbc40a3-220x132.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"132",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094839/248b4f05-05f0-449b-9a23-59b82dbc40a3-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128094839/248b4f05-05f0-449b-9a23-59b82dbc40a3-2060x1236.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"1236",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095563/248b4f05-05f0-449b-9a23-59b82dbc40a3-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095563/248b4f05-05f0-449b-9a23-59b82dbc40a3-1020x612.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"612",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095835/248b4f05-05f0-449b-9a23-59b82dbc40a3-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128095835/248b4f05-05f0-449b-9a23-59b82dbc40a3-300x180.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"180",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096133/248b4f05-05f0-449b-9a23-59b82dbc40a3-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096133/248b4f05-05f0-449b-9a23-59b82dbc40a3-540x324.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"324",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096326/248b4f05-05f0-449b-9a23-59b82dbc40a3-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096326/248b4f05-05f0-449b-9a23-59b82dbc40a3-68x68.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"68",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096458/248b4f05-05f0-449b-9a23-59b82dbc40a3-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128096458/248b4f05-05f0-449b-9a23-59b82dbc40a3-380x228.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"228",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097176/248b4f05-05f0-449b-9a23-59b82dbc40a3-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097176/248b4f05-05f0-449b-9a23-59b82dbc40a3-2048x1536.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"1536",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097941/248b4f05-05f0-449b-9a23-59b82dbc40a3-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128097941/248b4f05-05f0-449b-9a23-59b82dbc40a3-620x372.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"372",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128098235/248b4f05-05f0-449b-9a23-59b82dbc40a3-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383128098235/248b4f05-05f0-449b-9a23-59b82dbc40a3-1024x768.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"Vyacheslav Oseledko",
+            "altText":"Dell laptops afflicted with strong 'cat urine' odour.",
+            "height":"768",
+            "credit":"Vyacheslav Oseledko/AFP/Getty Images",
+            "caption":"Dell laptops afflicted with strong 'cat urine' odour. Photograph: Vyacheslav Oseledko/AFP/Getty Images",
+            "mediaId":"gu-fc-13ad3236-0323-4c5a-8118-a381578f3668",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

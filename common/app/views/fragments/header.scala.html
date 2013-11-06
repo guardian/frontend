@@ -1,6 +1,11 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
 
+@*<!--
+Identity pages use identityHeader.scala.html, be sure
+to apply any necessary changes to non-shared code there too.
+-->*@
+
 <header id="header" class="has-nav" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="header__inner gs-container u-cf">
         <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
@@ -39,7 +44,7 @@
         }
 
         <a href="@LinkTo("/top-stories")" data-is-ajax data-link-name="Top stories" data-toggle="nav-popup-topstories"
-           class="control control--topstories @if(SearchSwitch.isSwitchedOff) { control--right }">
+           class="control control--topstories">
             <i class="i i-nav-divider"></i>
             <span>Top stories</span>
             <i class="i i-top-stories"></i>

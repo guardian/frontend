@@ -30,11 +30,12 @@
 @import "module/_stars";
 @import "module/_social";
     @include socialDelayed;
-@import "module/_search";
 @import "module/_debug";
 @import "module/_gallerythumbs";
 @import "module/nav/_pop-up";
 @import "module/nav/_localnav";
+@import "module/nav/_aside";
+@import "module/_search";
 @import "module/_live-blog";
 @import "module/_live-filter";
 @import "module/_live-summary";
@@ -49,8 +50,8 @@
 @import "module/_lightbox-gallery";
 @import "module/_identity";
 @import "module/facia/_mixins";
-@import "module/facia/_popular";
-
+@import "module/containers/_popular";
+@import "module/_commercial-components";
 
 /* ==========================================================================
    External modules

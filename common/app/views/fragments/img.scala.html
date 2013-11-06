@@ -7,15 +7,14 @@
 
     <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
         <img class="maxed main-image" src="@LargeThumbnail.bestFor(picture)"
-        data-force-upgrade="true"
-        @LargeThumbnail.width.map{w => data-thumb-width="@w"}
-        data-fullsrc="@ArticleMainPicture.bestFor(picture)"
-        @ArticleMainPicture.width.map{w => data-full-width="@w"}
-        itemprop="contentURL"
-        @ArticleMainPicture.captionFor(picture).map{ caption =>
-            alt="@Html(caption)"
-            title="@StripHtmlTagsAndUnescapeEntities(caption)" />
-        }
+            data-force-upgrade="true"
+            @LargeThumbnail.width.map{w => data-thumb-width="@w"}
+            data-fullsrc="@ArticleMainPicture.bestFor(picture)"
+            @ArticleMainPicture.width.map{w => data-full-width="@w"}
+            itemprop="contentURL"
+            title="@ArticleMainPicture.altTextFor(picture).getOrElse("")"
+            alt="@ArticleMainPicture.altTextFor(picture).getOrElse("")"
+        />
 
         @LargeThumbnail.captionFor(picture).map{ caption =>
             <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>

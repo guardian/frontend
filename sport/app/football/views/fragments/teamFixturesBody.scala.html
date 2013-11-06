@@ -14,9 +14,9 @@
 
     <div class="matches-container component" role="main">
         @fixtures.map{ fixture =>
-            <h2 class="competitions-date type-4">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
+            <h2 class="competitions-date type-7">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
-            <a class="competition-title football-table-link tone-colour type-4" href="@fixture.competition.url" data-link-name="view competition">
+            <a class="competition-title football-table-link tone-colour type-7" href="@fixture.competition.url" data-link-name="view competition">
                 @fixture.competition.fullName<i class="i i-sport-arrow"></i>
             </a>
             <ol class="matches unstyled">

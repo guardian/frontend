@@ -1,6 +1,6 @@
 package controllers
 
-import org.scalatest.{BeforeAndAfterAll, FlatSpec}
+import org.scalatest.{FlatSpecLike, Matchers, BeforeAndAfterAll, FlatSpec}
 import org.scalatest.matchers.ShouldMatchers
 import scala.concurrent.{Future, Await}
 import scala.language.postfixOps
@@ -10,7 +10,7 @@ import play.api.mvc.Results._
 import play.api.test._
 import play.api.libs.json.JsValue
 
-class DiscussionApiPluginIntegrationTest extends DiscussionApiPlugin(null) with FlatSpec with ShouldMatchers with BeforeAndAfterAll {
+class DiscussionApiPluginIntegrationTest extends DiscussionApiPlugin(null) with FlatSpecLike with Matchers with BeforeAndAfterAll {
 
   val fakeDiscussionApiServer = FakeDiscussionServer()
 

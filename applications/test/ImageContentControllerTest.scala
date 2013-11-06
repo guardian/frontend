@@ -11,12 +11,12 @@ class ImageContentControllerTest extends FlatSpec with Matchers with UsesElastic
   val pictureUrl = "/artanddesign/picture/2013/oct/08/photography"
 
   "Image Content Controller" should "200 when content type is picture" in Fake {
-    val result = controllers.ImageContentController.render(pictureUrl)(TestRequest())
+    val result = controllers.ImageContentController.render(pictureUrl)(TestRequest(pictureUrl))
     status(result) should be(200)
   }
   
   "Image Content Controller" should "200 when content type is cartoon" in Fake {
-    val result = controllers.ImageContentController.render(cartoonUrl)(TestRequest())
+    val result = controllers.ImageContentController.render(cartoonUrl)(TestRequest(cartoonUrl))
     status(result) should be(200)
   }
 

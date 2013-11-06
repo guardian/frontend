@@ -170,6 +170,10 @@ object Switches extends Collections {
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = Off)
+  
+  val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
+    "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
+    safeState = Off)
 
   // A/B Test Switches
 
@@ -193,12 +197,12 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
-  val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
-    "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
-    safeState = Off)
-
   val ABAlphaAdvertsData = Switch("A/B Tests", "ab-alpha-adverts-data",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+
+  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
+    "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
   // Sport Switch
@@ -258,6 +262,7 @@ object Switches extends Collections {
     ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
+    ClientSideErrorSwitch,
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
@@ -269,13 +274,13 @@ object Switches extends Collections {
     AdSlotImpressionStatsSwitch,
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
-    ABUltimateParagraphSpacing,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
     ABAlphaAdvertsData,
+    ABCommercialComponents,
     EditionRedirectLoggingSwitch
   )
 

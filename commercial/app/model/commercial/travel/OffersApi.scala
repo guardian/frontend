@@ -2,27 +2,27 @@ package model.commercial.travel
 
 import scala.concurrent.Future
 import play.api.libs.ws.WS
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import org.joda.time.format.DateTimeFormat
-import scala.xml.{XML, Node}
+import scala.xml.{Elem, Node}
+import conf.CommercialConfiguration
 
-object OffersApi extends OffersApi {
-
-  def getOffersRequestBody: Future[String] = WS.url("http://extranet.gho.red2.co.uk/Offers/XmlOffers")
-    .withHeaders(("Cache-Control", "public, max-age=1")) withRequestTimeout 20000 get() map {
-    response => response.body
-  }
-
-}
-
-
-trait OffersApi extends ExecutionContexts {
+object OffersApi extends ExecutionContexts with Logging {
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
-  protected def getOffersRequestBody: Future[String]
+  private def loadXml: Future[Elem] = {
+    CommercialConfiguration.travelOffersApi.url map {
+      WS.url(_) withHeaders (("Cache-Control", "public, max-age=1")) withRequestTimeout 20000 get() map {
+        response => response.xml
+      }
+    } getOrElse {
+      log.error("No Travel Offers API config properties set")
+      Future(<offers/>)
+    }
+  }
 
-  def getAllOffers: Future[List[Offer]] = {
+  def getAllOffers(xml: => Future[Elem] = loadXml): Future[List[Offer]] = {
 
     def buildOffer(id: Int, node: Node): Offer = {
       Offer(
@@ -37,10 +37,10 @@ trait OffersApi extends ExecutionContexts {
       )
     }
 
-    getOffersRequestBody map {
-      body =>
-        ((XML.loadString(body) \\ "offer").zipWithIndex map {
-          case (xml, idx) => buildOffer(idx, xml)
+    xml map {
+      offers =>
+        ((offers \\ "offer").zipWithIndex map {
+          case (offerXml, idx) => buildOffer(idx, offerXml)
         }).toList
     }
   }

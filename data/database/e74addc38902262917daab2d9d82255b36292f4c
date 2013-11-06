@@ -1,0 +1,591 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"technology/2013/oct/30/call-of-duty-ghosts-infinity-ward",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-30T13:04:11Z",
+      "webTitle":"Call of Duty: Ghosts – the billion-dollar new beginning",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/30/call-of-duty-ghosts-infinity-ward",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/30/call-of-duty-ghosts-infinity-ward",
+      "fields":{
+        "trailText":"Developer Infinity Ward talks dynamic maps, killstreak tweaks, and the potential for merging single and multiplayer gameplay. By <strong>Keith Stuart</strong>",
+        "headline":"Call of Duty: Ghosts – the billion-dollar new beginning",
+        "body":"<p>Infinity Ward knows a thing or two about change – even if it has worked on the same multimillion-dollar franchise since its origins as a splinter group from the Medal of Honor series 11 years ago.</p> <p>In that time it has seen the Call of Duty brand catapulted from a modestly successful cinematic shooter to the biggest entertainment property in the world. It has also seen its founders Jason West and Vince Zampella, leaving under a vast mushroom cloud of controversy and recrimination, taking many veteran staff with them, to the new horizons of Respawn Entertainment.</p> <p>It has seen FPS contenders come and go; it is now staring down the barrel of a new console generation that may have fresh ideas about the shooter genre.</p> <p>I visited this studio two years ago, its battered old office in Encino looking tired and dark. Since then the company has moved to Woodland Hills, and into a cavernous bespoke building, designed to accommodate the huge development teams that a game of this size requires.</p> <p>Now, that team is putting the finishing touches to Call of Duty: Ghosts, a very recognisable CoD game, but with a brand new setting and story, and a few little twists to the formula. With its release sandwiched between the gargantuan success of GTA V and the promise of Destiny and Titanfall, the pressure is on. And the pressure never lets up for these guys.</p> <p>Executive producer Mark&nbsp;Rubin is his usual relaxed yet resolute self when I meet up with him, first in LA for the Ghosts multiplayer announcement, and then weeks later at Gamescom. &quot;It's been refreshing,&quot; he tells me about the move to a new narrative universe.</p> <p>&quot;On many levels, the game has been such a new experience for us – and moving into a new studio was part of that. It feels like a fresh start. And this is a console transition year so we knew we were going to be on new hardware; because of that we knew we'd need a new engine. That made it feel different, too. We felt that Modern Warfare had completed its story arc and we wanted to start a new one that would be in a completely refreshed universe. We just carried that theme throughout the entire project. Everything felt different. I mean, in terms of formula there are pieces that are very obviously Call of Duty, but with multiplayer, we just felt that we were going to take some bigger risks – we changed some systems that have been pretty sacred since Modern Warfare.&quot;</p> <figure class=\"element element-image\" data-media-id=\"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314126/e3180b65-5995-4008-9bed-9b50548f1497-460x276.jpeg\" alt=\"Call of Duty: Ghosts\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>Call of Duty: Ghosts</figcaption> </figure> <h2>'Dynamic maps won't always mean destruction'</h2> <p>It's the multiplayer that I've seen most of so far. The new character system, which does away with anonymous custom load-out mannequins in favour of actual customisable soldiers all with their own kit. The emphasis on ground warfare rather than aerial killstreak blitzkriegs. There are 30 new weapons, including a new class of marksman rifles; Perks now have a points system, allowing you to buy several weaker options or opt for one or two really meaty specials.</p> <p>None of this represents the big risk that Rubin alluded to. &quot;It's the whole dynamic map system,&quot; he says, alluding to the feature which sees buildings collapse and train carriages fall into chasms. &quot;People who've played Call of Duty over the years are used to a a certain style of map, a certain design. We really branched away from that. Dynamic maps won't always mean destruction. You can blow up a gas station or parts of the wall in some environments, but in others you can move objects or open and close doors to change paths.</p> <p>&nbsp;&quot;Controlling those points becomes part of the strategy of defending those maps. And there are other maps where it's about full-on massive change. So in Strikezone, when someone earns the relevant care package from completing a Field Order challenge, they can destroy the entire map. Then there are the more environmental non-player controlled versions of that. So we have a map where the environment is falling and as it falls things change, like walls collapse or paths alter – you're fighting in a crumbling world. The whole idea started with the concept of bringing campaign cinema beats to multiplayer.&quot;</p> <p>&nbsp;We chat about the maps I've seen so far; the abandoned sports stadium in StrikeZone, the wrecked cityscape in Chasm … How do these designs start? &quot;It either comes up at a brainstorming session, or someone – it does't matter who – pitches an idea to someone else,&quot; says Rubin.</p> <p>&quot;From here, it begins to gather momentum. Usually when we pitch things to each other, the person being pitched to attacks the idea – it's how we're used to doing it, playing the devil's advocate. You have to defend your ideas. If you can't do that straight up then it's not good enough to continue with. Later someone will make a prototype and we'll try it out, get lots of feedback, make lots of changes and continue the iteration. Blitz didn't start out the way it is now, it has shaped itself over many playtests.&quot;</p> <p>&nbsp;So what's the hit to waste ratio during this process? &quot;You'd be surprised at how many levels get thrown out,&quot; he shrugs. &quot;There are six to eight maps that aren't going to ship that I've seen multiple iterations of. Early on, we had a group of maps that were really fun and I thought they'd ship, but we keep going, keep going and they don't work out. There's a lot of that stuff on the cutting room floor. That's a general philosophy for us – we're really good at cutting. If it doesn't make the game better, it doesn't belong.&quot;</p> <h2>'We're trying a more organic new style of design'</h2> <p>I'm interested in this process – after-all there must be a financial impetus to just keep everything. In these days of downloadable content, each map represents potential revenue. So if creativity and gameplay rule, I want to know what makes a classic map, and how easy one is to spot.&nbsp;There have been some fantastic ones in the CoD lifeline – Crash, Terminal, Crossfire – but also some stinkers that somehow made it though; maps with horrible camping spots and site lines that strafe the whole arena.</p> <p>What's clear is that there is a formula: most maps have three parallel paths allowing flanking play, or they generate out from a central hub in concentric circles. You learn the layout and you exploit it. The same tricks always work the same way. Ghosts is in on that of course, but Rubin insists that his team is playing with some of the conventions this time round. Chasm, for example.</p> <p>&quot;Chasm is a medium to large map – it plays a little larger than it is. From one end to another isn't that long, but there are a lot of twisting routes. We're trying a more organic new style of design; we wanted to come up with some maps that don't feel like gameplay arenas, that feel like real places, but still have the necessary routing to make them play like Call of Duty,&quot; says Rubin.</p> <p>&quot;It's a real challenge and there were some maps that we really struggled with. Chasm fits into the organic style. It's a broken down building on the edge of a giant crater from one of the Odin strikes [the massively destructive super-weapon that forms the basis of the single-player campaign] – the paths all flow in and out, they're like spaghetti going over and under each other.&quot;</p> <p>&nbsp;So there are no choke or skirmish points? &quot;There are still fun engagement areas,&quot; he continues. &quot;But we want it to feel like something you've never played before. There's a section where you're in a broken building with an elevator where the shaft around it is damaged and it's just hanging by a few wires. You can run and jump onto the elevator and then on to the floor on the other side. But I've watched players take a C4, throw it on the elevator roofs as they pass, then fire it off to cause the elevator to fall, taking anyone following into the shaft.&quot;</p> <figure class=\"element element-image\" data-media-id=\"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134390729/b61cd97c-f1a3-433a-ae26-5ddbd2ac0660-460x276.jpeg\" alt=\"Call of Duty: Ghosts\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>Call of Duty: Ghosts</figcaption> </figure> <h2>'No one starts with a blank piece of paper'</h2> <p>I wanted to talk about the stuff people don't like – at least people not entirely embedded in the CoD community. The over-riding power of certain killstreaks for example. &quot;We've altered every system someway to make it interesting,&quot; insists Rubin.</p> <p>&quot;For killstreaks, one of the things we noticed when we've watched players is that they'll spend a lot of time just running and then being killed by something from the sky, or running around looking up, trying to fire their stinger missile at something above and not paying attention to what's in the game around them. We felt … let's get people's heads back down to ground level. We still have some air stuff – it's important to have that balance. But there are less air-based killstreaks now.&quot;</p> <p>The other thing people always pick up on is the Infinity Ward engine – the rusting battery that's been powering the series for many years, with seemingly only the occasionally half-hearted re-charge. Ghosts has a 'new' engine apparently, but what does that mean? How new is new? Rubin takes it in his stride. &quot;No one starts with a blank piece of paper – you have to start with something,&quot; he says.</p> <p>&quot;But then you go through and you pick apart systems. Some of them are much broader: if it's a tool-based change or a massive change to the way memory is handled – which we had to do this time around in order to provide customisation – we have to add in a whole new system of transient files. That's a new tech that effected everything in the game. It all had to be rewritten to work with that system. Sometimes it's a few lines of code, but it can require massive changes. So the engine starts with what we had before, but it changed dramatically over time.&quot;&nbsp;</p> <p>Actually, you know, I don't really care about the engine – and for all the faults of CoD, one of the things I like about this game is, it doesn't much care either. Obviously, it cares that things work, but the engine is there to service the flow of the action, the 60-frames-per-second hyper-pace of spawning, shooting and sprinting.</p> <p>Whatever this game is, whatever it says about us that it's the biggest entertainment leviathan on the planet, it just wants to get its bloody job done. And some of the biggest changes are to the flow state of the game – the fact that players can now knee slide across the ground into cover, or vault seamlessly over obstacles. These are little additions we know well from other games, but here they will make more of an impact than, I don't know, super advanced particle effects.</p> <h2>'Separate multi- and single player modes has a very long future'</h2> <p>Anyway, I want to get away from all this. I want to talk about the future. Infinity Ward must have looked across at Respawn and wondered what those guys, those ex-colleagues, were up to. And now we know. It's Titanfall, the undisputed winner at Gamescom.</p> <p>There's this new game design concept – mingle player – that seeks to merge single- and multiplayer components together into seamless experiences. There's Destiny lurking out there, too. Does the rigid structure of CoD have a place in this nascent universe? Can the centre hold? What about this brave new era of campaign multiplayer and online narratives?</p> <p>&quot;I've thought about this a lot myself,&quot; says Rubin. &quot;I think it would be really fun to try something like that with Call of Duty, but I don't think it's the required future. I think there will always be a mass audience that wants one aspect of the game, and not the others. That's the problem when you blend the two. If you look at PvE and PvP servers on MMORPGs – the PvP guys hate the PvE guys and vice versa. Blending the two isn't necessarily always the right idea. So I think separate multi- and single player modes has a very long future … but again, from an artistic standpoint, it would be an interesting thing to do.&quot;</p> <p>This might be a polite brush-off, the typically open-ended, non-committal answer of the media-trained exec. But Rubin continues. &quot;It could be handled in a very game-like way,&quot; he says. &quot;You could be in an open-world single-player environment where you can go up to a gate and when you enter that base, you're walking into a multiplayer map. That would be fun.&quot; This is, of course, how Destiny is handling things, and how GTA Online works, too. CoD rarely breaks new ground, but it has always quietly adapted. How much more can this behemoth adapt to the vagaries of cloud-based persistent worlds?</p> <p>How about, say, more players in these new next-gen modes? &quot;It's possible, but ground war in general has always been a difficult mode for CoD,&quot; says Rubin. &quot;It's fun, but spawning is horrible … and with that many people you can cover the whole map. There's nowhere you can spawn that someone from the other team doesn't see you. The easy thing is, we can always do that – tomorrow we can set up a new playlist and say now it's 24 players . The question is, should we?&quot;</p> <figure class=\"element element-image\" data-media-id=\"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134528599/b8dea688-71cf-414e-a7eb-6103e1ba1da8-460x276.jpeg\" alt=\"Call of Duty: Ghosts\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>Call of Duty: Ghosts</figcaption> </figure> <h2>'The interactivity of it is the thing that's most compelling'</h2> <p>And that's always the question with this series. CoD is a billion-a-year business, with 30 million customers – all of that starts in Rubin's office. When I talk about how the next ten consoles are seeking to revolutionaries the concept of matchmaking and lobbies, he bats the issue away – the CoD system works just fine, thank you.</p> <p>When I put a similar question to Eric Hirshberg, the CEO of Activision, the response is slightly different. &quot;I agree that games need to be more social,&quot; he says as we talk in Gamescom meeting room. &quot;That's why we developed Call of Duty Elite – the design conceit was, wouldn't it be great if we could unlock the game as a more social experience. At the time, with the current gen consoles as our platforms, we had to do a lot of technological gymnastics just to do simple things like creating your character's load out on your smartphone on the train then have it waiting for you on the console when you got home. Now that wall has been lowered - the idea of the second screen is baked right into the hardware design.&quot;</p> <p>Hirschberg, an advertising industry veteran, sees the value in engaging with and encouraging social activity away from the raw game – or the brand – itself. &quot;We put a lot of capabilities into Black Ops II that were designed for e-sports competition and again, the creative process has a way of repurposing things that aren't always expected,&quot; he says. &quot;The theatre mode for example, was designed to capture highlights, but it has turned into a cottage industry of blooper films and other user-generated content that our fans have had a blast with. There are thousands of videos getting millions of views from that mode because we handed creative tools over to players and they used them in ways we never anticipated.&quot;</p> <p>But I don't want to get bogged down in the issue of audiences and social content systems. I want to question how games like Call of Duty can continue to function in a changing industry. After The Last of Us, we're seemingly moving toward an era of emotional realism. What does it mean for CoD? Can it just go along as it always has?</p> <p>Fans will say yes, that it fulfils a particular need. But let's look at cinema – in America, the Western was the predominant action genre for decades, and it spoke to its audience in the same way as military first-person shooters talk to gamers: tough men, following arcane codes of honour, brawling in the streets, bringing order to anarchy. But socio-political changes and the rise of auteur cinema in the seventies effectively killed the western. People change. Do people want meaning now?</p> <p>Hirshberg is fascinatingly mechanistic in his response. &quot;With the enhanced graphics and facial animations in Ghosts, we've made the decision to have it be about one platoon of characters that you're with from the beginning to the end of the campaign - it's the first time we've done that. We've brought in Steve&nbsp;Gaghan to hopefully provide a more rich and compelling story. But at the end of the day it's a Call of Duty game and there will be a percentage of people who press the X button to skip past all that wonderful rich story to get to the action faster. That's because it's a game and the interactivity of it is the thing that's most compelling, and that's what it is designed to driver first and foremost.&quot;</p> <h2>'The content level keeps climbing… it's… it's scary'</h2> <p>Rubin is more circumspect. He considers the question very carefully. &quot;There's a simple side to this. The tech will make characters look more realistic and more believable. That's the obvious part. We can do amazing CG-style moments, like big character interaction moments, which could be really cool,&quot; he says.</p> <p>&quot;I'll use Quantic Dream as an example: that Kara demo is the perfect example of where you <em>could</em> go in terms of storytelling. I think Kara is stunning, amazing quality in terms of tech and interesting emotional story-telling. I get teary in the part where she says she wants to live. It's so impactful. Putting that into games is something I think will make games better.</p> <p>&nbsp;&quot;But there's a downside – we've seen it happen with a lot of developers and it's hurting. We're having to put in so much more content and that content is getting harder and harder to make, and taking longer and longer, and more and more resources and money … I mean, it's something we all want to do but there's an obvious challenge there that I don't think enough people are really thinking about. Do we understand where we may be going if we start down this route? I still want us to do it, it's awesome, but as a producer, it scares me! If we have to do a whole game with masses of emotional intensity, the content level keeps climbing … it's … it's scary.&quot;</p> <p>This is where I wanted to go. Toward the future of game design and what that can mean for a studio of creative people working on a 'franchise' that makes money on a vast industrial scale. We're talking fresh starts now, so how about it? Can Call of Duty be an emotional journey? Ghosts is marketed as a human story, but death will be the one writing the script, we all know that. Does Infinity Ward care at all about fear and loss and humanity? Does it need to?</p> <p>&quot;We do try to have those moments, and we tie them together. There's a moment early in CoD 4 when you're sitting in a helicopter flying in at night to a cargo ship. And Price is there, smoking a cigarette, expressionless … then he throws the cigarette away, pulls the mask down and he's ready for action. That told a story about a character who can just get into combat mode, this intensity, without worrying about dying,&quot; says Rubin.</p> <p>&quot;In Modern Warfare 2, we have Soap on the side of a cliff about to engage an enemy base; and he's just sitting smoking a cigar, then he tosses it and the level begins. It was a purposeful tie in between the two characters. Doing things like that, is something we always want to try. The moment when you jump across the ice chasm and slip, and someone catches you – there's a little bit of emotion in his face that says 'I've got your back'.&quot;</p> <p>&quot;That's always something we're trying to do,&quot; he says. &quot;The problem with Call of Duty is, most of the time, you're shooting guys.&quot;</p> <p><strong><em>&nbsp;• Call of Duty: Ghosts is due out on PC, PS3, Wii U and Xbox 360 on November 5 and on next-gen consoles later in the month</em></strong></p><!-- Guardian Watermark: internal-code/content/421275999|2013-11-05T11:03:48Z|b84936109f1b9cf6219664888078b83edfda59cb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T16:48:21Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/14/1376516698036/COD_Ghosts_small.jpg",
+        "standfirst":"Developer Infinity Ward talks dynamic maps, killstreak tweaks, and the potential for merging single and multiplayer gameplay",
+        "shortUrl":"http://gu.com/p/3kxb4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/14/1376516698036/COD_Ghosts_small.jpg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421275999",
+        "allowUgc":"false",
+        "internalComposerCode":"5270edd7e4b0ded76c0a915b",
+        "isPremoderated":"false",
+        "byline":"Keith Stuart",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989013",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T13:00:08Z"
+      },
+      "tags":[{
+        "id":"technology/call-of-duty",
+        "type":"keyword",
+        "webTitle":"Call of Duty",
+        "webUrl":"http://www.theguardian.com/technology/call-of-duty",
+        "apiUrl":"http://content.guardianapis.com/technology/call-of-duty",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/xbox-one",
+        "type":"keyword",
+        "webTitle":"Xbox One",
+        "webUrl":"http://www.theguardian.com/technology/xbox-one",
+        "apiUrl":"http://content.guardianapis.com/technology/xbox-one",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation-4",
+        "type":"keyword",
+        "webTitle":"PlayStation 4",
+        "webUrl":"http://www.theguardian.com/technology/playstation-4",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation-4",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/activision-blizzard",
+        "type":"keyword",
+        "webTitle":"Activision Blizzard",
+        "webUrl":"http://www.theguardian.com/technology/activision-blizzard",
+        "apiUrl":"http://content.guardianapis.com/technology/activision-blizzard",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/shoot-em-up",
+        "type":"keyword",
+        "webTitle":"Shoot 'em ups",
+        "webUrl":"http://www.theguardian.com/technology/shoot-em-up",
+        "apiUrl":"http://content.guardianapis.com/technology/shoot-em-up",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-75a32f64-2b06-4010-b004-0e40037a042e",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/14/1376516649417/COD_Ghosts_main.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/14/1376516649417/COD_Ghosts_main.jpg",
+            "source":"PR",
+            "altText":"Call of Duty: Ghosts",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Call of Duty: Ghosts 'feels like a fresh start' for its developer Infinity Ward",
+            "mediaId":"gu-fc-75a32f64-2b06-4010-b004-0e40037a042e",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134313789/ae7cda62-9040-41f0-b1bd-a3f132dae5e3-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134313789/ae7cda62-9040-41f0-b1bd-a3f132dae5e3-140x84.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"84",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314126/e3180b65-5995-4008-9bed-9b50548f1497-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314126/e3180b65-5995-4008-9bed-9b50548f1497-460x276.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"276",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314271/56838b51-73d3-4091-ab84-8c9355302faa-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314271/56838b51-73d3-4091-ab84-8c9355302faa-220x132.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"132",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314530/0a9e6f0a-15a4-4e92-ae6e-afe5ae197591-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314530/0a9e6f0a-15a4-4e92-ae6e-afe5ae197591-1020x612.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"612",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314823/89e6a414-fe6d-4a06-be0c-37fa87bf0886-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314823/89e6a414-fe6d-4a06-be0c-37fa87bf0886-300x180.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"180",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314997/c41e447a-7682-4717-944a-612c83365afa-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134314997/c41e447a-7682-4717-944a-612c83365afa-540x324.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"324",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315155/4c6a2bf6-2186-492e-9cee-5aa56519a571-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315155/4c6a2bf6-2186-492e-9cee-5aa56519a571-68x68.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"68",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315260/77eddaab-e674-458b-b0f8-1c6d5bc10dd9-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315260/77eddaab-e674-458b-b0f8-1c6d5bc10dd9-380x228.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"228",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315437/10e7014b-9875-44e1-bab3-bedcceebb4a6-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315437/10e7014b-9875-44e1-bab3-bedcceebb4a6-620x372.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"372",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315686/713223ac-1e5b-4047-a200-4757bf86729f-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134315686/713223ac-1e5b-4047-a200-4757bf86729f-1024x768.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"768",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-2f75d8f1-bc56-48d4-8092-63949a0e8686",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134390611/92d50ea0-d09b-4431-9ed8-c55eac1c82a1-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134390611/92d50ea0-d09b-4431-9ed8-c55eac1c82a1-140x84.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"84",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134390729/b61cd97c-f1a3-433a-ae26-5ddbd2ac0660-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134390729/b61cd97c-f1a3-433a-ae26-5ddbd2ac0660-460x276.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"276",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391079/5d87dfd6-7919-4fa3-a50c-7eaeda48b345-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391079/5d87dfd6-7919-4fa3-a50c-7eaeda48b345-220x132.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"132",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391280/c7dc0bc9-f871-4940-a110-a220fe9eee3d-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391280/c7dc0bc9-f871-4940-a110-a220fe9eee3d-1020x612.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"612",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391521/eb7269af-3606-4ddf-a857-f30c783983e7-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391521/eb7269af-3606-4ddf-a857-f30c783983e7-300x180.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"180",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391666/a9590e4d-d758-4b53-ac14-66da92bbd5ed-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391666/a9590e4d-d758-4b53-ac14-66da92bbd5ed-540x324.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"324",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391819/7181f159-a04c-4842-b578-7be82186c867-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134391819/7181f159-a04c-4842-b578-7be82186c867-68x68.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"68",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134392015/8e81bd77-cc4e-4d19-be67-94f5fa7b2856-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134392015/8e81bd77-cc4e-4d19-be67-94f5fa7b2856-380x228.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"228",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134392298/aba72a4d-4406-456f-a0a0-0d44f786b8f6-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134392298/aba72a4d-4406-456f-a0a0-0d44f786b8f6-620x372.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"372",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134392637/c36ce56a-6631-4b29-928c-ad469687553a-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134392637/c36ce56a-6631-4b29-928c-ad469687553a-1024x768.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"768",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-fe7d7b0c-5b7e-4e7f-b156-bac69526d36d",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134528392/227a0d88-da14-4fe6-af63-dd800030ec72-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134528392/227a0d88-da14-4fe6-af63-dd800030ec72-140x84.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"84",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134528599/b8dea688-71cf-414e-a7eb-6103e1ba1da8-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134528599/b8dea688-71cf-414e-a7eb-6103e1ba1da8-460x276.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"276",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134528750/d4aa0026-2ef4-441e-acda-43fb78d328f2-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134528750/d4aa0026-2ef4-441e-acda-43fb78d328f2-220x132.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"132",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134529224/477b4267-d1e4-401d-b37b-bdd9515b0b1d-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134529224/477b4267-d1e4-401d-b37b-bdd9515b0b1d-2060x1236.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"1236",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134530258/280306c0-e02e-493e-8819-a63b062c3c03-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134530258/280306c0-e02e-493e-8819-a63b062c3c03-1020x612.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"612",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134530544/9503b9e3-5a56-44ef-b393-4a546399f3ff-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134530544/9503b9e3-5a56-44ef-b393-4a546399f3ff-300x180.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"180",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134530957/750d850a-db4f-431f-bd6a-a7e69f963b11-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134530957/750d850a-db4f-431f-bd6a-a7e69f963b11-540x324.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"324",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134531205/95b43d30-400e-4ab2-9741-8c170a740389-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134531205/95b43d30-400e-4ab2-9741-8c170a740389-68x68.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"68",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134531328/cefc811f-72d2-4d19-8642-1e5d49200305-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134531328/cefc811f-72d2-4d19-8642-1e5d49200305-380x228.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"228",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134531884/0c9a7b3f-cfff-4d25-9e02-5c5d943820a9-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134531884/0c9a7b3f-cfff-4d25-9e02-5c5d943820a9-2048x1536.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"1536",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134532608/e387d1ef-8b2a-4cd7-960d-4ae1fd0dfa40-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134532608/e387d1ef-8b2a-4cd7-960d-4ae1fd0dfa40-620x372.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"372",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134532887/90a296d2-2799-481a-9323-8b4c640a1a19-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383134532887/90a296d2-2799-481a-9323-8b4c640a1a19-1024x768.jpeg",
+            "source":"Activision",
+            "altText":"Call of Duty: Ghosts",
+            "height":"768",
+            "credit":"Activision",
+            "caption":"Call of Duty: Ghosts",
+            "mediaId":"gu-fc-70479113-d51e-4615-a2e7-9c23bd8f60e2",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
