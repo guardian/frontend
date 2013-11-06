@@ -29,7 +29,8 @@ object JobsAgent extends ExecutionContexts with Logging {
 
     val currentJobs =
       if (Play.isDev) {
-        S3.get("DEV/commercial/job-ads.xml").map {
+        val jobAdData = Try(S3.get("DEV/commercial/job-ads.xml")) getOrElse None
+        jobAdData.map {
           content =>
             val xml = Future(XML.loadString(content))
             JobsApi.getCurrentJobs(xml)
