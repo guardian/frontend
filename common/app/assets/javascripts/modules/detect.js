@@ -310,6 +310,10 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
         return pageVisibility === 'visible' ? true : false;
     }
 
+    function hasWebSocket() {
+        return 'WebSocket' in window;
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getMobileOS: getMobileOS,
@@ -326,7 +330,8 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
         getOrientation: getOrientation,
         getBreakpoint: getBreakpoint,
         initPageVisibility: initPageVisibility,
-        pageVisible: pageVisible
+        pageVisible: pageVisible,
+        hasWebSocket: hasWebSocket
     };
 
 });

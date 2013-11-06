@@ -1,0 +1,401 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"football/blog/2013/oct/28/newcastle-mike-ashley-alan-pardew",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-28T17:49:14Z",
+      "webTitle":"Alan Pardew's future is just one problem for Newcastle and Mike Ashley | Louise Taylor",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/oct/28/newcastle-mike-ashley-alan-pardew",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/oct/28/newcastle-mike-ashley-alan-pardew",
+      "fields":{
+        "newspaperPageNumber":"47",
+        "trailText":"<strong>Louise Taylor: </strong>Mike Ashley is leading Newcastle down a dangerous path marked by feuds and farce and is refusing to explain his actions",
+        "headline":"Alan Pardew's future is just one problem for Newcastle and Mike Ashley",
+        "body":"<p>Alan Pardew looked embarrassed and emasculated, a couple of South Korean journalists sat slack-jawed in astonishment, and Newcastle United had scored another ludicrous own goal.</p><p>Pardew had just <a href=\"http://www.theguardian.com/football/2013/oct/27/sunderland-newcastle-premier-league-match-report\" title=\"\">seen his side lose 2-1</a> at Sunderland on Sunday afternoon. It was Newcastle's second defeat to their hitherto struggling north-east enemies in six months and there were plenty of questions. Unfortunately those from three local papers were summarily silenced by the club's press officer, who interjected whenever Pardew seemed poised to speak.</p><p>Tyneside's sister publications, The Journal, The Evening Chronicle and The Sunday Sun, have been banned from press conferences and matches at Newcastle by Mike Ashley, the club's owner, for <a href=\"http://www.chroniclelive.co.uk/news/north-east-news/full-text-letter-newcastle-united-6249120#.Um54P8lkOpg.twitter\" title=\"\">measured coverage of a recent fans' march protesting against his stewardship</a>.</p><p>As the foreigners present wondered what on earth had happened to Britain's freedom of speech, Pardew – who has lost his last three games against Poyet's teams – must have wished Ashley could borrow some humility from Ellis Short.</p><p>Before Sunderland's first win of a previously disastrous season, their owner apologised to supporters for the failure of Paolo Di Canio's tenure. \"I have to take the blame,\" said Short. \"Clearly at least one of the decisions I made over the last several months was the wrong one.\"</p><p>If only Ashley could also say sorry. Or at least, for the first time, face his public. If only he could accept that those few hundred fans who, under the banner of the Time4Change group, marched against, among other things, the contentious appointment of Joe Kinnear as director of football and the team's similarly controversial shirt sponsorship by Wonga, the payday lender, might have a legitimate point.</p><p>Ashley is impossible to second-guess but he has ignored previous protests and right now he is probably rather more preoccupied with what to do with Pardew.</p><p>It is widely acknowledged that he has fallen out of love with the manager who led Newcastle to fifth place two seasons ago, quite possibly imposing Kinnear on him as some sort of bizarre punishment.</p><p>But it is barely 12 months since Pardew signed an eight-year contract. He would be very expensive to dismiss while Kinnear – who supplied Newcastle's manager with a scouting report on Sunderland before the derby defeat – would be a hugely unpopular appointment. Even so there are suggestions that Roberto Di Matteo, the former West Bromwich and Chelsea manager, is on Ashley's radar.</p><p>Few insiders doubt that the next three games – Manchester City at home in the League Cup on Wednesday night, Chelsea at St James' Park on Saturday and Tottenham away the following Sunday – will define Pardew's future.</p><p>He could have done without Cheik Tioté, his acting captain, appearing at the city's crown court on Monday to plead guilty to a charge of possessing a fake Belgian driving licence.</p><p>When the Ivorian midfielder has been fully concentrating on the pitch Pardew's  very attacking, slick-passing, revamped 4–3–3 formation has, at times, looked inspired this season. On other occasions key components, including the potentially outstanding midfielder Moussa Sissoko, the star forward Hatem Ben Arfa and the France right-back Mathieu Debuchy have underachieved horribly in a strangely inconsistent side.</p><p>Some blame Pardew's coaching and man-management while others point to a lack of competition exacerbated by the signing of only one player – Loïc Rémy on loan from QPR – during the summer. Another school of thought believes the dressing room has become unhealthily Francophone; on Sunday seven of Newcastle's starting XI spoke French as their first language.</p><p>This cornering of the cut-price Ligue 1 transfer market should not obscure the reality that Ashley runs Newcastle in a strangely parochial manner for a club that Freddy Shepherd, the former chairman, used to boast possessed powerful global reach.</p><p>These days they no longer participate in those long-haul summer tours so beloved of Premier League merchandising departments; signing up with Wonga smacked of limited marketing horizons.</p><p>It is particularly telling that on the very June afternoon Kinnear announced his Tyneside return, Jakaya Kikwete, the president of Tanzania, toured Sunderland's Academy of Light training complex with Short, whose desire to gain a commercial and scouting foothold in Africa has led Sunderland to help fund a football academy in Dar es Salaam.</p><p>These two simultaneous yet unconnected events served to emphasise the growing contrasts between the north-east rivals and their respective visions.</p><p>Granted Ashley has, creditably, placed Newcastle on a sound financial footing but he now needs to forget about feuding with local papers and start securing the club's long-term future by putting it back on the international map.</p><p>Along the way he might even find a buyer for a once amusing toy he seems to be fast tiring of.</p><!-- Guardian Watermark: internal-code/content/421147401|2013-11-05T11:03:48Z|d388f78557145bb35a2f564df38a2b2cb2f2c381 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-29T00:01:02Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982266487/Mike-Ashley-Newcastle-Uni-006.jpg",
+        "standfirst":"Mike Ashley is leading Newcastle down a dangerous path marked by feuds and farce and is refusing to explain his actions",
+        "shortUrl":"http://gu.com/p/3kv3x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982266487/Mike-Ashley-Newcastle-Uni-006.jpg",
+        "wordcount":"762",
+        "commentable":"true",
+        "internalContentCode":"421147401",
+        "allowUgc":"false",
+        "internalOctopusCode":"8251500",
+        "isPremoderated":"false",
+        "byline":"Louise Taylor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-29",
+        "internalPageCode":"1988065",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-31T17:49:14Z"
+      },
+      "tags":[{
+        "id":"football/newcastleunited",
+        "type":"keyword",
+        "webTitle":"Newcastle United",
+        "webUrl":"http://www.theguardian.com/football/newcastleunited",
+        "apiUrl":"http://content.guardianapis.com/football/newcastleunited",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/31"
+        }]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/mike-ashley",
+        "type":"keyword",
+        "webTitle":"Mike Ashley",
+        "webUrl":"http://www.theguardian.com/football/mike-ashley",
+        "apiUrl":"http://content.guardianapis.com/football/mike-ashley",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/alan-pardew",
+        "type":"keyword",
+        "webTitle":"Alan Pardew",
+        "webUrl":"http://www.theguardian.com/football/alan-pardew",
+        "apiUrl":"http://content.guardianapis.com/football/alan-pardew",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/joe-kinnear",
+        "type":"keyword",
+        "webTitle":"Joe Kinnear",
+        "webUrl":"http://www.theguardian.com/football/joe-kinnear",
+        "apiUrl":"http://content.guardianapis.com/football/joe-kinnear",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"business/wonga",
+        "type":"keyword",
+        "webTitle":"Wonga",
+        "webUrl":"http://www.theguardian.com/business/wonga",
+        "apiUrl":"http://content.guardianapis.com/business/wonga",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/louisetaylor",
+        "type":"contributor",
+        "webTitle":"Louise Taylor",
+        "webUrl":"http://www.theguardian.com/profile/louisetaylor",
+        "apiUrl":"http://content.guardianapis.com/profile/louisetaylor",
+        "bio":"<p>Louise Taylor is north-east football correspondent for the Guardian</p>",
+        "r2ContributorId":"22724",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/18/louisetaylor.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421148148",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982259006/Mike-Ashley-Newcastle-Uni-001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"54",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982260446/Mike-Ashley-Newcastle-Uni-002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"340",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982261715/Mike-Ashley-Newcastle-Uni-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"130",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982263014/Mike-Ashley-Newcastle-Uni-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"720",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982264631/Mike-Ashley-Newcastle-Uni-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"1536",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982266487/Mike-Ashley-Newcastle-Uni-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"84",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982267682/Mike-Ashley-Newcastle-Uni-007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"132",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982268911/Mike-Ashley-Newcastle-Uni-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"168",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982270264/Mike-Ashley-Newcastle-Uni-009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"180",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982271544/Mike-Ashley-Newcastle-Uni-010.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"228",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982272817/Mike-Ashley-Newcastle-Uni-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"276",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982274095/Mike-Ashley-Newcastle-Uni-012.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"372",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982275500/Mike-Ashley-Newcastle-Uni-013.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"1116",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982277448/Mike-Ashley-Newcastle-Uni-014.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"1536",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982272817/Mike-Ashley-Newcastle-Uni-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"276",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421148149",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/28/1382982266487/Mike-Ashley-Newcastle-Uni-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Lee Smith",
+            "altText":"Mike Ashley Newcastle United",
+            "height":"84",
+            "credit":"Lee Smith/Action Images",
+            "caption":"Mike Ashley has put Newcastle United on a sound financial footing but he now needs to start securing the club’s long-term future by putting it back on the international map. Photograph: Lee Smith/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/31"
+      }]
+    },
+    "storyPackage":[]
+  }
+}

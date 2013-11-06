@@ -15,7 +15,7 @@ object Management extends GuManagement {
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/ophan-next/path.json"
+      "/popular-onward/path.json"
     ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
