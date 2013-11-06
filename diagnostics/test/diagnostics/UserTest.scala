@@ -19,7 +19,7 @@ class ViewTest extends FlatSpec with Matchers with BeforeAndAfterEach {
   "NextGen" should "reset values" in {
     NextGenView.increment should be (1)
     NextGenView.reset
-    NextGenView.count should be (0)
+    NextGenView.count should be (0.01)
   }
   
 }

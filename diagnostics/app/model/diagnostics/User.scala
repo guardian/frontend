@@ -13,11 +13,14 @@ class User {
   }
   
   def count = { 
-    metric.doubleValue
+    metric.doubleValue match {
+      case 0.0 => 0.01
+      case _ => metric.doubleValue
+    } 
   }
 
   def reset() {
-    metric.set(0)
+    metric.set(0.0)
   }
 
 }
