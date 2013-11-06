@@ -33,6 +33,7 @@ define(['common', 'modules/detect', 'bean', 'modules/experiments/ab'], function 
         };
 
         var getClickSpec = function (spec, forceValid) {
+            if (!spec.el) { return false; }
             var el = spec.el,
                 elName = el.tagName.toLowerCase(),
                 dataLinkName = el.getAttribute('data-link-name'),

@@ -1,15 +1,19 @@
-@(config: Config, collection: Collection, style: SectionZone, containerIndex: Int)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 @if(collection.items.nonEmpty) {
-    <section class="collection collection--@style.className js-collection--display-toggle tone-@style.tone"
+    <section class="container container--@style.containerType js-container--toggle tone-@style.tone"
              data-link-name="block | @config.id"
              data-id="@config.id"
+<<<<<<< HEAD:common/app/views/fragments/collections/sectionZone.scala.html
              data-link-context="@config.section"
     >
+=======
+             data-type="@style.containerType">
+>>>>>>> master:common/app/views/fragments/containers/masthead.scala.html
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
             @if(title.nonEmpty) {
-                <h2 class="collection__title tone-background tone-accent-border">
+                <h2 class="container__title tone-background tone-accent-border">
                     <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
                 </h2>
             }

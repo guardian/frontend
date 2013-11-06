@@ -1,0 +1,20 @@
+@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
+
+@if(collection.items.nonEmpty) {
+    <section class="container container--@style.containerType @if(containerIndex > 0){js-container--toggle} tone-@style.tone"
+             data-link-name="block | @config.id"
+             data-id="@config.id"
+             data-type="@style.containerType">
+
+        @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
+            @if(title.nonEmpty) {
+                <h2 class="container__title tone-colour tone-background tone-accent-border">
+                    <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
+                </h2>
+            }
+        }
+
+        @fragments.collections.standard(collection, style, containerIndex)
+
+    </section>
+}
