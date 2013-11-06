@@ -1,0 +1,86 @@
+.container--comment {
+    @include mq($to: tablet) {
+        @include first-row(1);
+        .item:first-child {
+            @include card-mobile-image;
+        }
+        .item:nth-child(-n+3) {
+            @include card-mobile;
+        }
+        .item:nth-child(n+2):nth-child(-n+3),{
+            .item__title {
+                @include fs-headline(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-headline(3, $size-only: true);
+                }
+                .svg & .i {
+                    width: 26px;
+                    height: 16px;
+                    background-size: 100%;
+                }
+            }
+            .item__byline {
+                @include fs-header(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-header(3, $size-only: true);
+                }
+            }
+        }
+        .item:nth-child(n+4) {
+            @include card-headline;
+        }
+        .item:nth-child(n+5) {
+            .item__link {
+                border-top: 1px dotted $c-neutral5;
+            }
+        }
+    }
+    @include mq(tablet, desktop) {
+        .item:first-child {
+            @include card-full-width;
+        }
+        .item:nth-child(n+2) {
+            @include card;
+        }
+        .item:nth-child(2),
+        .item:nth-child(4) {
+            @include card-image;
+        }
+        .item:nth-child(3) {
+            min-height: gs-height(6) - $metaHeight;
+            .item__title {
+                @include fs-headline(3, $size-only: true);
+            }
+            .item__byline {
+                @include fs-header(4, $size-only: true);
+            }
+        }
+        .item:nth-child(3n+2) {
+            @include row-start;
+        }
+        .item:nth-child(3n+4) {
+            @include row-end;
+        }
+    }
+    @include mq(desktop) {
+        .item:first-child {
+            @include card-double-width;
+        }
+        .item:nth-child(n+2) {
+            @include card;
+        }
+        .item:nth-child(2),
+        .item:nth-child(3) {
+            @include card-image;
+        }
+        @include first-row(3);
+        .item:nth-child(4n+6) {
+            @include row-start;
+        }
+        .item:nth-child(3),
+        .item:nth-child(5),
+        .item:nth-child(4n+9) {
+            @include row-end;
+        }
+    }
+}

@@ -1,13 +1,11 @@
 @mixin first-row($first-row-size) {
     .item:nth-child(-n+#{$first-row-size}) {
-        margin-top: $gs-baseline/3;
+        margin-top: 0;
         .item__link {
             border-top-style: none;
         }
-        .responsive-img,
-        .connection--low & .item__title,
-        &.item--has-no-image .item__title {
-            margin-top: 0;
+        .competition-table {
+            border-top-style: none !important;
         }
     }
 }
@@ -32,23 +30,11 @@
         @include row-end;
     }
 }
-@mixin card($with-image: false) {
-    min-height: gs-height(4) + $gs-baseline;
-    @if $with-image {
-        @include card-mobile;
-    }
-}
-@mixin card-image {
-    min-height: gs-height(8);
-    .item__image-container,
-    .connection--low & .item__standfirst,
-    &.item--has-no-image .item__standfirst {
-        display: block;
-    }
-}
+
+$metaHeight: 14px;
 @mixin card-mobile($with-image: false) {
+    padding-bottom: $metaHeight;
     .item__title {
-        margin-top: $gs-baseline*(2/3);
         @include fs-headline(3, $size-only: true);
     }
     @include mq(mobileLandscape) {
@@ -59,13 +45,6 @@
             @include fs-headline(2, $size-only: true);
         }
     }
-    .connection--low & .item__title,
-    &.item--has-no-image .item__title {
-        margin-top: 2px;
-    }
-    .item__meta {
-        margin-top: $gs-baseline*(7/3);
-     }
     @if $with-image {
         @include card-mobile-image;
     }
@@ -76,14 +55,19 @@
     &.item--has-no-image .item__standfirst {
         display: block;
     }
+    .connection--not-low & .item__title {
+        margin-top: $gs-baseline*(2/3);
+    }
 }
 @mixin card-headline {
     float: left;
     width: 100%;
     margin-top: $gs-baseline*(5/3);
-    .item__title,
-    .item__byline {
+    .item__title {
         @include fs-headline(1, $size-only: true);
+    }
+    .item__byline {
+        @include fs-header(2, $size-only: true);
     }
     .item__title .i,
     .item__meta {
@@ -96,23 +80,22 @@
 }
 @mixin card-half-width($with-image: false) {
     width: 50%;
+    min-height: gs-height(3) - $metaHeight;
     padding-left: $gs-gutter/2 - 1;
     padding-right: $gs-gutter/2;
+    padding-bottom: $metaHeight;
     border-left: 1px dotted $c-neutral5;
     float: left;
     .item__title {
         @include fs-headline(1, $size-only: true);
+        @include mq(mobileLandscape) {
+            @include fs-headline(2, $size-only: true);
+        }
     }
     .item__byline {
         @include fs-header(1, $size-only: true);
         @include mq(mobileLandscape) {
             @include fs-header(2, $size-only: true);
-        }
-    }
-    .item__title {
-        min-height: 100px;
-        @include mq(mobileLandscape) {
-            @include fs-headline(2, $size-only: true);
         }
     }
     .item__live-indicator {
@@ -124,19 +107,50 @@
     }
 }
 @mixin card-half-width-image {
-     .connection--not-low &.item--has-no-image .item__title {
-        min-height: 186px
+    .connection--not-low & {
+        min-height: gs-height(5) - $metaHeight;
     }
     .item__image-container {
         display: block;
     }
 }
+
+@mixin card($with-image: false) {
+    width: gs-span(3);
+    min-height: gs-height(3) - $metaHeight;
+    @include mq(wide) {
+        width: gs-span(4);
+        min-height: gs-height(4) - $metaHeight;
+    }
+    padding-bottom: $metaHeight;
+    @if $with-image {
+        @include card-mobile;
+    }
+}
+@mixin card-image {
+    min-height: gs-height(6) - $metaHeight;
+    @include mq(wide) {
+        min-height: gs-height(8) - $metaHeight;
+    }
+    .item__image-container,
+    .connection--low & .item__standfirst,
+    &.item--has-no-image .item__standfirst {
+        display: block;
+    }
+}
 @mixin card-double-width {
-    width: gs-span(8);
-    min-height: gs-height(12);
     float: left;
+    width: gs-span(6);
+    min-height: gs-height(9);
+    @include mq(wide) {
+        width: gs-span(8);
+        min-height: gs-height(12);
+    }
     .item__title {
-        @include fs-headline(7, $size-only: true);
+        @include fs-headline(5, $size-only: true);
+    }
+    .connection--not-low &.item--has-image .item__title {
+        margin-top: $gs-baseline;
     }
     .item__image-container,
     .connection--low & .item__standfirst,
@@ -149,28 +163,66 @@
     }
 }
 @mixin card-triple-width {
-    width: gs-span(12);
-    min-height: gs-height(8);
+    width: gs-span(9);
+    min-height: gs-height(12) - $metaHeight;
+    @include mq(wide) {
+        width: gs-span(12);
+        min-height: gs-height(16) - $metaHeight;
+    }
     float: left;
-    border-left: none;
-    padding-left: 0;
-    .connection--not-low &.item--has-image {
-        width: gs-span(4);
-        padding-left: gs-span(8) + $gs-gutter;
+    padding-bottom: $metaHeight;
+    .item__image-container,
+    .connection--not-low &.item--has-no-image .item__standfirst,
+    .connection--low & .item__standfirst {
+        display: block;
     }
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
+    .connection--not-low & .item__title {
+        margin-top: $gs-baseline*(2/3);
+    }
+}
+@mixin card-full-width {
+    width: 100%;
+    padding-bottom: $metaHeight;
+    .connection--not-low &.item--has-image {
+        width: gs-span(3);
+        min-height: gs-height(6) - $metaHeight;
+        padding-left: gs-span(6) + $gs-gutter;
+    }
+    .item__title {
+        @include fs-headline(4, $size-only: true);
+    }
+    .item__byline {
+        @include fs-header(5, $size-only: true);
+    }
     .item__image-container,
-    .item__standfirst {
+    .connection--not-low &.item--has-no-image .item__standfirst,
+    .connection--low & .item__standfirst {
         display: block;
     }
     .connection--not-low & .item__image-container {
-        width: gs-span(8);
-        height: gs-height(8);
+        width: gs-span(6);
+        height: gs-height(6);
         position: absolute;
         top: 0;
         left: 0;
         padding-bottom: 0;
+    }
+}
+@mixin card-full-width-feature {
+    width: 100%;
+    padding-bottom: $metaHeight;
+    .item__image-container,
+    .connection--not-low &.item--has-no-image .item__standfirst,
+    .connection--low & .item__standfirst {
+        display: block;
+    }
+    .item__title {
+        @include fs-headline(4, $size-only: true);
+    }
+    .connection--not-low & .item__title {
+        margin-top: $gs-baseline*(2/3);
     }
 }

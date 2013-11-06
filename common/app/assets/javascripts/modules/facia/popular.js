@@ -3,9 +3,9 @@ define([
     'ajax',
     'bonzo',
     'modules/relativedates',
-    'modules/facia/items-show-more',
+    'modules/facia/collection-show-more',
     'modules/facia/images'
-], function (common, ajax, bonzo, relativeDates, ItemsShowMore, faciaImages) {
+], function (common, ajax, bonzo, relativeDates, CollectionShowMore, faciaImages) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -14,9 +14,9 @@ define([
                 }, trail);
             });
         },
-        collectionTmpl =
-            '<section class="collection collection--popular tone-news" data-link-name="block | popular" data-type="popular">' +
-                '<h2 class="collection__title tone-background tone-accent-border">Popular</h2>' +
+        containerTmpl =
+            '<section class="container container--popular tone-news" data-link-name="block | popular" data-type="popular">' +
+                '<h2 class="container__title tone-colour tone-background tone-accent-border">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
             return updateTmpl(
@@ -52,7 +52,7 @@ define([
                     if (!resp || !resp.fullTrails || resp.fullTrails.length === 0) {
                         return;
                     }
-                    var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>'));
+                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection"></ul>'));
                     resp.fullTrails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(
                             itemTmpl(trail)
@@ -66,19 +66,19 @@ define([
                         }
 
                         // add item to the items
-                        $items.append($item);
+                        $collection.append($item);
                     });
                     // add the popular collection before the last collection
-                    bonzo(bonzo.create(collectionTmpl))
-                        .append($items)
-                        .insertAfter('.collection:last-child');
+                    bonzo(bonzo.create(containerTmpl))
+                        .append($collection)
+                        .insertAfter('.container:last-child');
                     // add show more button
-                    new ItemsShowMore($items[0])
+                    new CollectionShowMore($collection[0])
                         .addShowMore();
                     // relativise timestamps
-                    relativeDates.init($items[0]);
+                    relativeDates.init($collection[0]);
                     // upgrade image
-                    faciaImages.upgrade($items[0]);
+                    faciaImages.upgrade($collection[0]);
                 },
                 function(req) {
                     common.mediator.emit(

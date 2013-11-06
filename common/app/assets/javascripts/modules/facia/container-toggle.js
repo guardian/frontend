@@ -1,24 +1,24 @@
 define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo, bean, userPrefs) {
 
-    return function(collection) {
+    return function(container) {
 
-        var _$collection = bonzo(collection),
+        var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
-                '<button class="collection__display-toggle" data-link-name="Show">'
+                '<button class="container__toggle" data-link-name="Show">'
                     + '<i class="i i-arrow-white-large"></i>'
-                    + '<span class="collection__display-toggle__text u-h">Hide</span>'
+                    + '<span class="container__toggle__text">Hide</span>'
                 +'</button>'
             )),
-            _prefName = 'collection-states',
+            _prefName = 'container-states',
             _toggleText = {
                 hidden: 'Show',
                 displayed: 'Hide'
             },
             _state = 'displayed',
-            _updatePref = function($collection, state) {
+            _updatePref = function($container, state) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName),
-                    prefValue = $collection.attr('data-id');
+                    prefValue = $container.attr('data-id');
                 if (state === 'displayed') {
                     delete prefs[prefValue];
                 } else {
@@ -29,10 +29,10 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
                 }
                 userPrefs.set(_prefName, prefs);
             },
-            _readPrefs = function($collection) {
+            _readPrefs = function($container) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName);
-                if (prefs && prefs[$collection.attr('data-id')]) {
+                if (prefs && prefs[$container.attr('data-id')]) {
                     bean.fire(_$button[0], 'click');
                 }
             };
@@ -42,20 +42,20 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
 
         this.addToggle =  function () {
             // append toggle button
-            _$collection
+            _$container
                 .prepend(_$button)
-                .removeClass('js-collection--display-toggle');
+                .removeClass('js-container--toggle');
             // listen to event
             bean.on(_$button[0], 'click', function(e) {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';
                 // add/remove rolled class
-                _$collection[_state === 'displayed' ? 'removeClass' : 'addClass']('collection--rolled-up');
+                _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                common.$g('.collection__display-toggle__text', _$button[0]).text(_toggleText[_state]);
-                _updatePref(_$collection, _state);
+                common.$g('.container__toggle__text', _$button[0]).text(_toggleText[_state]);
+                _updatePref(_$container, _state);
             });
-            _readPrefs(_$collection);
+            _readPrefs(_$container);
         };
 
     };
