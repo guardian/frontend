@@ -25,19 +25,19 @@ define(['modules/storage'], function (storage) {
             path = '/px.gif',
             body = document.body,
             platform = 'nextgen',
-            sessionLength = 30,
             createImage = function(url) {
                 var image = new Image();
-                image.id = 'js-err';
+                image.id = 'js-livestats';
                 image.className = 'u-h';
                 image.src = url;
+                body.appendChild(image);
             },
             makeUrl = function(properties) {
                 var query = [];
                 for (var name in properties) {
                     query.push(name + '=' + encodeURIComponent(properties[name]));
                 }
-                return url + path + '?' + query.join('&');
+                return path + '?' + query.join('&');
             },
             log = function() {
                 if (new Session().isNewSession()) {
