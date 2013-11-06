@@ -1,19 +1,28 @@
 /*global Event:true */
 define(['modules/storage'], function (storage) {
 
+    var Session = function () {
+        
+        var key = 'gu.session',
+            isNewSession = function () {
+                if (window.sessionStorage && !!window.sessionStorage.getItem(key)) {
+                    return false;
+                } else {
+                    window.sessionStorage.setItem(key, true);
+                    return true;
+                }
+            };
+
+        return this;
+    };
+
     var LiveStats = function (config) {
 
         var c = config || {},
             url = config.beaconUrl,
             path = '/px.gif',
             body = document.body,
-            sessionLength = 1,
-            isNewSession = function () {
-                var history = storage.get('gu.history');
-                var sessionStart = new Date();
-                sessionStart.setMinutes(sessionStart.getMinutes() - sessionLength);
-                return (history) ? (history[0].timestamp < sessionStart) : false;
-            },
+            sessionLength = 30,
             createImage = function(url) {
                 var image = new Image();
                 image.id = 'js-err';
@@ -29,10 +38,12 @@ define(['modules/storage'], function (storage) {
                 return url + path + '?' + query.join('&');
             },
             log = function() {
-                if (isNewSession()) {
-                    makeUrl({ name: 'livestats', views: isNewSession() });
-                    createImage(url);
+                if (new Session().isNewSession()) {
+                    url += makeUrl({ name: 'livestats', type: 'session' });
+                } else {
+                    url += makeUrl({ name: 'livestats', type: 'view' });
                 }
+                createImage(url);
             };
 
         return {
