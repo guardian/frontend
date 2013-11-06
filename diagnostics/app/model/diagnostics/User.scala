@@ -22,6 +22,8 @@ class User {
 
 }
 
-object View extends User with Logging {} 
-object Session extends User with Logging {}
+object R2View extends User with Logging {} 
+object R2Session extends User with Logging {}
+object NextGenSession extends User with Logging {}
+object NextGenView extends User with Logging {}
 
