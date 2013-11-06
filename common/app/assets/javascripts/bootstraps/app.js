@@ -6,6 +6,7 @@ define('bootstraps/app', [
     "ajax",
     'modules/detect',
     'modules/errors',
+    'modules/analytics/livestats',
     'modules/fonts',
     'modules/debug',
     "modules/router",
@@ -32,6 +33,7 @@ define('bootstraps/app', [
     ajax,
     detect,
     Errors,
+    LiveStats,
     Fonts,
     Debug,
     Router,
@@ -74,6 +76,16 @@ define('bootstraps/app', [
             });
             e.init();
             common.mediator.on("module:error", e.log);
+        },
+        
+       liveStats: function (config) {
+            if (!config.switches.liveStats) {
+                return false;
+            }
+            var l = new LiveStats({
+                beaconUrl: config.page.beaconUrl
+            });
+            l.log();
         },
 
         initialiseAbTest: function (config) {
@@ -124,6 +136,7 @@ define('bootstraps/app', [
             modules.showDebug();
             modules.initId(config);
             modules.initUserAdTargeting();
+            modules.liveStats(config);
 
             var pageRoute = function(config, context, contextHtml) {
 

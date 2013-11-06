@@ -83,6 +83,10 @@ object Switches extends Collections {
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
     "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
+  
+  val LiveStatsSwitch = Switch("Analytics", "live-stats",
+    "Turns on our real-time KPIs",
+    safeState = On)
 
   // Discussion Switches
 
@@ -270,6 +274,7 @@ object Switches extends Collections {
     ExternalLinksCardsSwitch,
     LiveSummarySwitch,
     LiveCricketSwitch,
+    LiveStatsSwitch,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABLiveBlogShowMore,
