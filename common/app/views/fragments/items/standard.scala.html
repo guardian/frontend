@@ -1,11 +1,10 @@
 @(trail: Trail, index: Int, mainItem: Boolean = false)(implicit request: RequestHeader)
 
 @defining(VisualTone(trail)) { tone =>
-    <li class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no"}}-image tone-@tone" data-link-name="trail | @{index + 1}"
+    <li class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image tone-@tone" data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
-
             @trail.trailPicture(5,3).map{ trailPictures =>
                 @trailPictures.largestImage.map { largestImage =>
                     @largestImage.url.map { url =>
