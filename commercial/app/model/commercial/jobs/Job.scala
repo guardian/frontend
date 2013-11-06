@@ -37,7 +37,10 @@ case class Job(id: Int,
 
 object Job {
 
-  private val sectionSectorTagsMap = Map[String, Set[String]]()
+  private val sectionSectorTagsMap = Map[String, Set[String]](
+    "society" -> Set("Housing", "Property & estate agency"),
+    "law" -> Set("Legal")
+  )
 
   def matchingSectorTags(section: String): Set[String] = {
     sectionSectorTagsMap getOrElse(section, Set())
