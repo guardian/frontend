@@ -12,28 +12,31 @@ object MasterClass {
     val literalDate = (block \ "start_date").as[String]
     val startDate: DateTime = datePattern.parseDateTime(literalDate)
     val url = (block \ "url").as[String]
-    val description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat molestie lectus id placerat. Sed rutrum, dui vitae tempus mollis, sem metus ultrices est."
-    val price = "£400"
+    val description = (block \ "description").as[String]
+    val status = (block \ "status").as[String]
+    val capacity = (block \ "capacity").as[Int]
 
 
-    val tickets = (block \\ "ticket") map { ticket =>
-      val price = (ticket \ "display_price").as[String].toDouble
-      new Ticket(price)
-    } 
 
-    new MasterClass(title, startDate, url, description, "status", tickets.toList, 30)
+    val tickets = (block \\ "ticket") map {
+      ticket =>
+        val price = (ticket \ "display_price").as[String].toDouble
+        new Ticket(price)
+    }
+
+    new MasterClass(title, startDate, url, description, status, tickets.toList, capacity)
   }
 }
 
-case class MasterClass(name: String, 
-                       startDate: DateTime, 
-                       url: String, 
-                       description: String, 
-                       status: String, 
+case class MasterClass(name: String,
+                       startDate: DateTime,
+                       url: String,
+                       description: String,
+                       status: String,
                        tickets: List[Ticket],
                        capacity: Int) {
   def isOpen = status == "Live"
-  
+
   lazy val displayPrice = {
     val priceList = tickets.map(_.price).sorted.distinct
     if (priceList.size > 1) {
