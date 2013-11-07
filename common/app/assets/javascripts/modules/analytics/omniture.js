@@ -5,14 +5,16 @@ define([
     'modules/experiments/ab',
     'modules/storage',
     'modules/id',
-    'modules/errors'
+    'modules/errors',
+    'modules/cookies'
 ], function(
     common,
     detect,
     ab,
     storage,
     id,
-    Errors
+    Errors,
+    Cookies
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -143,6 +145,14 @@ define([
 
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
+               
+                // prefix all the MVT tests with the alpha user tag if present
+                if (Cookies.get('GU_ALPHA') === "true") {
+                    var alphaTag = 'r2alpha,';
+                    s.prop51  = alphaTag + s.prop51;
+                    s.eVar51  = alphaTag + s.eVar51;
+                }
+
                 s.events = s.apl(s.events,'event58',',');
             }
 
