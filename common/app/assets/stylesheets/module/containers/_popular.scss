@@ -36,13 +36,13 @@
         }
     }
     @include mq(tablet, desktop) {
-        @include row(3);
+        @include first-row(3);
         .item:nth-child(-n+3) {
             @include card-image;
         }
     }
     @include mq(desktop) {
-        @include row(4);
+        @include first-row(4);
         .item:nth-child(-n+4) {
             @include card-image;
         }
