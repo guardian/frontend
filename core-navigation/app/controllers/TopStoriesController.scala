@@ -7,7 +7,6 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.ApiError
-import scala.Some
 import play.api.libs.json.JsArray
 
 object TopStoriesController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {

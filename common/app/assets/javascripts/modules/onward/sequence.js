@@ -34,12 +34,6 @@ define([
     function getContext() { return get('context'); }
     function removeContext() { return storage.remove(prefixes.context); }
 
-    function cleanSequence(sequence) {
-        return sequence.map(function(el) {
-            return el.shortUrl.replace('http://gu.com', '');
-        });
-    }
-
     function dedupeSequence(sequence) {
         return _difference(sequence, new History({}).get().map(function(i){
             return i.id;
@@ -52,7 +46,7 @@ define([
             crossOrigin: true
         }).then(function (json) {
             if(json && 'trails' in json) {
-                set('sequence', dedupeSequence(cleanSequence(json.trails)));
+                set('sequence', dedupeSequence(json.trails.map(function(t){ return t.url; })));
                 removeContext();
             }
         }).fail(function(req) {
