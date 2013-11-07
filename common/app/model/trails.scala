@@ -17,7 +17,6 @@ trait Trail extends Elements with Tags {
   def linkText: String
   def headline: String
   def url: String
-  def shortUrl: String
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String

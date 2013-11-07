@@ -10,7 +10,6 @@ object TrailToJson {
     Json.obj(
       ("url", trail.url),
       ("headline", trail.headline),
-      ("shortUrl", trail.shortUrl),
       ("trailText", trail.trailText.map{ text =>
         cleanTrailText(text)(Edition(request)).toString()
       }),
