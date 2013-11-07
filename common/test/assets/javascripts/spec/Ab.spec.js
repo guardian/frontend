@@ -110,6 +110,12 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
                 expect(localStorage.getItem(participationsKey)).toBe('{"value":{"DummyTest2":{"variant":"foo"}}}');
             });
 
+            it('should remove participation from tests that have been removed/renamed', function () {
+                localStorage.setItem(participationsKey, '{ "value": { "DummyTest": { "variant": "foo" }, "DummyTestDeleted": { "variant": "bar" } } }');
+                ab.run(switches.test_one_on);
+                expect(localStorage.getItem(participationsKey)).toBe('{"value":{"DummyTest":{"variant":"foo"}}}');
+            })
+
             it('should allow the forcing of users in to a given test and variant', function () {
                 ab.forceSegment('DummyTest', 'bar');
                 expect(getItem('DummyTest').variant).toBe('bar');

@@ -52,6 +52,17 @@ define([
         return store.remove(participationsKey);
     }
 
+    function cleanParticipations(config) {
+        // Removes any tests from localstorage that have been
+        // renamed/deleted from the backend
+        var participations = getParticipations();
+        Object.keys(participations).forEach(function (k) {
+            if (typeof(config.switches['ab' + k]) === 'undefined') {
+                removeParticipation({ id: k });
+            }
+        });
+    }
+
     function getActiveTests() {
         return TESTS.filter(function(test) {
             var expired = (new Date() - new Date(test.expiry)) > 0;
@@ -159,6 +170,8 @@ define([
 
         run: function(config, context, options) {
             var opts = options || {};
+
+            cleanParticipations(config);
 
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
