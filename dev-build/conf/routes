@@ -120,7 +120,7 @@ GET         /troubleshoot/football                                              
 # Commercial
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                            controllers.commercial.JobAds.jobs
-GET         /commercial/masterclasses.json                                                                   controllers.commercial.Masterclasses.list
+GET         /commercial/masterclasses.json                                                                   controllers.commercial.MasterClasses.list
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")

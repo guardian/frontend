@@ -12,4 +12,4 @@ GET    /commercial/travel/offers.json                           controllers.comm
 GET    /commercial/jobs.json                                    controllers.commercial.JobAds.jobs
 
 # Masterclasses
-GET     /commercial/masterclasses.json                          controllers.commercial.Masterclasses.list
+GET     /commercial/masterclasses.json                          controllers.commercial.MasterClasses.list

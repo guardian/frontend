@@ -14,7 +14,8 @@ object MasterClassesApi extends ExecutionContexts {
 
   def getAll: Future[Seq[MasterClass]] = {getMasterClassJson map {
       eventBriteJson =>
-        extractEventsFromFeed(eventBriteJson) map (MasterClass(_))
+        val maybes: Seq[Option[MasterClass]] = extractEventsFromFeed(eventBriteJson) map (MasterClass(_))
+        maybes.flatten
     }
   }
 
