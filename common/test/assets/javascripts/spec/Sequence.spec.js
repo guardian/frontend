@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'modules/onward/sequence'], function(common, ajax, sequence) {
+define(['utils/mediator', 'ajax', 'modules/onward/sequence'], function(mediator, ajax, sequence) {
 
     describe("Sequence", function() {
         var sequenceLoadedCallback,
@@ -12,8 +12,8 @@ define(['common', 'ajax', 'modules/onward/sequence'], function(common, ajax, seq
                 ]
             });
 
-        var setStorageItem = function(key, item) {
-            window.localStorage.setItem('gu.' + key, JSON.stringify({
+        var setStorageItem = function(key, item, type) {
+            window[type].setItem('gu.' + key, JSON.stringify({
                 'value' : item
             }));
         };
@@ -24,20 +24,21 @@ define(['common', 'ajax', 'modules/onward/sequence'], function(common, ajax, seq
                 edition: "UK"
             }});
             sequenceLoadedCallback = sinon.stub();
-            common.mediator.on('modules:sequence:sequence:loaded', sequenceLoadedCallback);
+            mediator.on('modules:sequence:sequence:loaded', sequenceLoadedCallback);
+            mediator.on('modules:sequence:sequence:loaded', function() { console.log(Array.prototype.slice.call(arguments)); });
             //Set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
             server.autoRespondAfter = 20;
             server.respondWith('/world.json?_edition=UK', [200, {}, response]);
             //Set up storage
-            setStorageItem('context', 'world');
-            setStorageItem('history', [{"id":"/p/3k43n"}]);
+            setStorageItem('context', 'world', 'sessionStorage');
+            setStorageItem('history', [{"id":"/p/3k43n"}], 'localStorage');
         });
 
         afterEach(function () {
             server.restore();
-            window.localStorage.removeItem('gu.context');
+            window.sessionStorage.removeItem('gu.context');
             window.localStorage.removeItem('gu.sequence');
         });
 

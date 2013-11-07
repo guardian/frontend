@@ -15,6 +15,7 @@ define([
     ){
 
     var context,
+        store = storage.session,
         sequence = [],
         prefixes = {
             context: 'gu.context',
@@ -22,17 +23,17 @@ define([
         };
 
     function set(type, item) {
-        storage.set(prefixes[type], item);
+        store.set(prefixes[type], item);
         mediator.emit('modules:sequence:'+ type +':loaded', item);
     }
 
     function get(type) {
-        return storage.get(prefixes[type]);
+        return store.get(prefixes[type]);
     }
 
     function getSequence() { return get('sequence'); }
     function getContext() { return get('context'); }
-    function removeContext() { return storage.remove(prefixes.context); }
+    function removeContext() { return store.remove(prefixes.context); }
 
     function dedupeSequence(sequence) {
         return _difference(sequence, new History({}).get().map(function(i){

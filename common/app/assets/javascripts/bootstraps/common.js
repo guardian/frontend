@@ -227,7 +227,7 @@ define([
 
                         var viewData = {};
 
-                        var audsci = storage.get('gu.ads.audsci');
+                        var audsci = storage.local.get('gu.ads.audsci');
                         if (audsci) {
                             viewData.audsci_json = JSON.stringify(audsci);
                         }

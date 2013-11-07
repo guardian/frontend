@@ -18,7 +18,7 @@ define([
         this.options        = common.extend(this.DEFAULTS, options);
         this.keywords       = this.options.config.page.keywords.split(',');
         this.keywordsParams = documentWrite.getKeywords(this.options.config.page);
-        this.userSegments   = 'seg=' + (storage.get('gu.history').length <= 1 ? 'new' : 'repeat');
+        this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
     };
 
 
