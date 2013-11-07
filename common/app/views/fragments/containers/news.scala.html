@@ -1,4 +1,4 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(page: model.MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 @if(collection.items.nonEmpty) {
     <section class="container container--@style.containerType @if(containerIndex > 0){js-container--toggle} tone-@style.tone"
@@ -14,6 +14,8 @@
                 </h2>
             }
         }
+
+        @fragments.contributor(page)
 
         @fragments.collections.standard(collection, style, containerIndex)
 
