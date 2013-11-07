@@ -4,6 +4,7 @@ import common._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import services._
+import play.api.libs.json.JsArray
 
 object RelatedController extends Controller with Related with Logging with ExecutionContexts {
 
@@ -22,7 +23,7 @@ object RelatedController extends Controller with Related with Logging with Execu
     if (request.isJson)
       JsonComponent(
         "html" -> html,
-        "trails" -> trails.map(_.url)
+        "trails" -> JsArray(trails.map(TrailToJson(_)))
       )
     else
       Ok(html)

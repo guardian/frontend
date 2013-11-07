@@ -10,7 +10,7 @@
     "queries",
     "media"
   ],
-  "version": "1.1.1",
+  "version": "2.0.0-rc.1",
   "main": "_mq.scss",
   "author": "Guardian Media Group",
   "ignore": [
@@ -25,5 +25,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/guardian/sass-mq"
-  }
+  },
+  "ignore": [
+    "test"
+  ]
 }

@@ -46,7 +46,12 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     Play.maybeApplication.foreach{ implicit application =>
       // json requests have no SEO implication but will affect caching
 
-      if (!isProd && !request.isJson && !request.uri.startsWith("/openIDCallback")) {
+      if (
+        !isProd &&
+        !request.isJson &&
+        !request.uri.startsWith("/openIDCallback") &&
+        !request.uri.startsWith("/px.gif")  // diagnostics box
+      ) {
         val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
         if (illegalParams.nonEmpty) {
           // it is pretty hard to spot what is happening in tests without this println
