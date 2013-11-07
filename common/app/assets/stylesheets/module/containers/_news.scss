@@ -53,8 +53,8 @@
         }
         &:nth-of-type(even) .item:first-child {
             float: right;
-            @include item-separator-vertical(right);
             @include first-row(2);
+            @include item-separator-vertical(right, $force: true);
         }
         .item:nth-child(n+2) {
             @include card;
