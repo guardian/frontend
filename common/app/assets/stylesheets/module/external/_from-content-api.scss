@@ -327,7 +327,7 @@ p + video {
         > p {
             margin-bottom: 0;
 
-            + a + p, // Inline link cards are inserted between paragraphs
+            + .card-wrapper + p, // Inline link cards are inserted between paragraphs
             + .inline-image + p,
             + p {
                 // Indent consecutive paragraphs

@@ -8,11 +8,16 @@ $mq-responsive: true !default;
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
 $mq-breakpoints: (
-    (mobile  300px)
-    (tablet  600px)
-    (desktop 900px)
-    (wide    1260px)
+    mobile:  300px,
+    tablet:  600px,
+    desktop: 900px,
+    wide:    1260px
 ) !default;
+
+// Define the breakpoint from the $mq-breakpoints list that should
+// be used as the target width when outputting a static stylesheet
+// (i.e. when $mq-responsive is set to 'false').
+$mq-static-breakpoint: desktop !default;
 
 
 @function mq-px2em($px, $base-font-size: 16px) {
@@ -25,16 +30,12 @@ $mq-breakpoints: (
     @return ($px / $base-font-size) * 1em;
 }
 
-@function mq-retrieve-breakpoint-width($name) {
-    @each $breakpoint in $mq-breakpoints {
-        $breakpoint-name:  nth($breakpoint, 1);
-        $breakpoint-width: nth($breakpoint, 2);
-
-        @if $name == $breakpoint-name {
-            @return $breakpoint-width;
-        }
+@function mq-get-breakpoint-width($name) {
+    @if(map-has-key($mq-breakpoints, $name)) {
+        @return map-get($mq-breakpoints, $name);
+    } @else {
+        @return 'Breakpoint #{$name} does not exist';
     }
-    @return 'Breakpoint #{$name} does not exist';
 }
 
 // Media Query mixin
@@ -69,7 +70,7 @@ $mq-breakpoints: (
         @if type-of($from) == number {
             $min-width: mq-px2em($from);
         } @else {
-            $min-width: mq-px2em(mq-retrieve-breakpoint-width($from));
+            $min-width: mq-px2em(mq-get-breakpoint-width($from));
         }
     }
 
@@ -78,18 +79,26 @@ $mq-breakpoints: (
         @if type-of($to) == number {
             $max-width: mq-px2em($to);
         } @else {
-            $max-width: mq-px2em(mq-retrieve-breakpoint-width($to) - 1px);
+            $max-width: mq-px2em(mq-get-breakpoint-width($to)) - .01em;
         }
     }
 
     // Responsive support is disabled, rasterize the output outside @media blocks
     // The browser will rely on the cascade itself.
     @if ($mq-responsive == false) {
-        // Output rules in min-width statements only
-        @if ($from and $to == false and $and == false) {
-            @content;
+        $static-breakpoint-width: mq-get-breakpoint-width($mq-static-breakpoint);
+        @if type-of($static-breakpoint-width) == number {
+            $target-width: mq-px2em($static-breakpoint-width);
+            // Output only rules that start at or span our target width
+            @if ($and == false and ($min-width <= $target-width) and (($to == false) or ($max-width >= $target-width))) {
+                @content;
+            }
+        } @else {
+            // Throw a warning if $mq-static-breakpoint is not in the $mq-breakpoints list
+            @warn "No static styles will be output: #{$static-breakpoint-width}";
         }
     }
+
     // Responsive support is enabled, output rules inside @media queries
     @else {
         @if $min-width != 0 { $mediaQuery: '#{$mediaQuery} and (min-width: #{$min-width})'; }
@@ -106,9 +115,7 @@ $mq-breakpoints: (
 
 // Add a breakpoint
 // Usage: $mq-breakpoints: mq-add-breakpoint(tvscreen, 1920px);
-// Credit goes to Sam Richard (author of the `respond-to()` mixin)
 @function mq-add-breakpoint($name, $breakpoint) {
-    $breakpoint: $name $breakpoint;
-    $output: append($mq-breakpoints, $breakpoint, 'space');
-    @return $output;
+    $new-breakpoint: (#{$name}: $breakpoint);
+    @return map-merge($mq-breakpoints, $new-breakpoint);
 }

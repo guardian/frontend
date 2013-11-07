@@ -6,6 +6,9 @@
 GET         /assets/internal/*file                                                                           controllers.Assets.at(path="/public", file)
 GET         /assets/*path                                                                                    dev.DevAssetsController.at(path)
 
+# Diagnostics
+GET         /px.gif                                                                                          controllers.ErrorController.px
+
 # Discussion
 GET         /discussion/comment-box.json                                                                     controllers.DiscussionApp.commentBox()
 GET         /discussion/comment-counts                                                                       controllers.DiscussionApp.commentCount(shortUrls: String)
@@ -114,13 +117,14 @@ GET         /metrics/fastly                                                     
 GET         /radiator                                                                                        controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                           controllers.admin.RadiatorController.commitDetail(hash)
+GET         /radiator/livestats                                                                              controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 
 
 # Commercial
-GET         /commercial/travel/offers                                                                        controllers.commercial.TravelOffers.listOffers
-GET         /commercial/jobs                                                                                 controllers.commercial.JobAds.jobs
-GET         /commercial/$advert<(soulmates|masterclasses)>                                                   controllers.commercial.SimpleAdvert.render(advert)
+GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
+GET         /commercial/jobs.json                                                                            controllers.commercial.JobAds.jobs
+GET         /commercial/$advert<(soulmates|masterclasses)>.json                                              controllers.commercial.SimpleAdvert.render(advert)
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")

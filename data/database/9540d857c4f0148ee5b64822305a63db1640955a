@@ -1,0 +1,3776 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":6030,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":603,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/rugbyleague",
+      "type":"keyword",
+      "webTitle":"Rugby league",
+      "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+      "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/oct/31/england-george-burgess-world-cup-ireland",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-31T21:59:00Z",
+      "webTitle":"England's George Burgess determined to satisfy demands on return home",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/31/england-george-burgess-world-cup-ireland",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/31/england-george-burgess-world-cup-ireland",
+      "fields":{
+        "trailText":"George Burgess is eager to seal opening World Cup win against Ireland in front of family and friends in his native Yorkshire",
+        "headline":"England's George Burgess determined to satisfy demands on return home",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k2zv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240972363/George-Burgess-England-006.jpg",
+        "wordcount":"879",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T21:59:00Z"
+      },
+      "tags":[{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ireland-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Ireland rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/ireland-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/ireland-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421400312",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240960807/George-Burgess-England-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"54",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240963752/George-Burgess-England-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"340",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240965343/George-Burgess-England-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"130",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240967035/George-Burgess-England-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"720",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240970048/George-Burgess-England-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"1536",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240972363/George-Burgess-England-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"84",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240973956/George-Burgess-England-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"132",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240975822/George-Burgess-England-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"168",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240977389/George-Burgess-England-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"180",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240979072/George-Burgess-England-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"228",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240980761/George-Burgess-England-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"276",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240982560/George-Burgess-England-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"372",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240984376/George-Burgess-England-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"1116",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240986667/George-Burgess-England-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"1536",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240980761/George-Burgess-England-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"276",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421400313",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383240972363/George-Burgess-England-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"George Burgess England",
+            "height":"84",
+            "credit":"Lynne Cameron/PA",
+            "caption":"George Burgess, centre, was the standout performer in England's 28-20 defeat by Australia in their opening World Cup game.  Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/oct/31/rugby-league-world-cup-usa-cook-islands",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-31T00:54:03Z",
+      "webTitle":"Bristol charmed by the Cook Islands and USA in World Cup meeting of the minnows | Andy Bull",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/31/rugby-league-world-cup-usa-cook-islands",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/31/rugby-league-world-cup-usa-cook-islands",
+      "fields":{
+        "trailText":"<p><strong>Andy Bull</strong> sees the Cook Island and USA bring a touch of rugby league World Cup colour to a union stronghold</p>",
+        "headline":"Bristol opens its heart to the Cook Islands as they take on the USA",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k24b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180675634/The-Cook-Island-players-p-001.jpg",
+        "wordcount":"733",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T00:54:00Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/usa-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"USA rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/usa-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/usa-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cook-islands-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Cook Islands rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/cook-islands-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/cook-islands-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/andybull",
+        "type":"contributor",
+        "webTitle":"Andy Bull",
+        "webUrl":"http://www.theguardian.com/profile/andybull",
+        "apiUrl":"http://content.guardianapis.com/profile/andybull",
+        "bio":"<p>Andy Bull is a sports writer for guardian.co.uk, who would rather be sat in a deckchair watching cricket. He has also written for Observer Sports Monthly and the Wisden Almanack</p>",
+        "r2ContributorId":"19389",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2010/12/19/1292770757544/Andy-Bull-003.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421336804",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180680138/The-Cook-Island-players-p-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"132",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180681716/The-Cook-Island-players-p-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"168",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180683304/The-Cook-Island-players-p-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"180",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180684876/The-Cook-Island-players-p-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"228",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180686563/The-Cook-Island-players-p-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"276",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180688222/The-Cook-Island-players-p-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"372",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180690336/The-Cook-Island-players-p-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"1116",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180692661/The-Cook-Island-players-p-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"1536",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180675634/The-Cook-Island-players-p-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"84",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180686563/The-Cook-Island-players-p-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"276",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421336805",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/31/1383180675634/The-Cook-Island-players-p-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA. ",
+            "height":"84",
+            "credit":"David Davies/PA",
+            "caption":"The Cook Island players perform their Haka before the rugby league World Cup match against the USA.  Photograph: David Davies/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/30/rugby-league-world-cup-2013-usa-cook-islands",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-30T23:17:07Z",
+      "webTitle":"Rugby League World Cup 2013: USA mark World Cup debut with a victory",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/30/rugby-league-world-cup-2013-usa-cook-islands",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/30/rugby-league-world-cup-2013-usa-cook-islands",
+      "fields":{
+        "trailText":"<p>The USA marked their rugby league World Cup debut with a close-fought victory over the Cook Islands in Bristol</p>",
+        "headline":"Rugby League World Cup 2013: USA mark World Cup debut with a victory",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k23j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174728803/Rugby-League---World-Cup--006.jpg",
+        "wordcount":"448",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T23:17:00Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cook-islands-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Cook Islands rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/cook-islands-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/cook-islands-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/usa-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"USA rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/usa-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/usa-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421337709",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174718171/Rugby-League---World-Cup--001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"54",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174721040/Rugby-League---World-Cup--002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"340",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174722727/Rugby-League---World-Cup--003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"130",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174724525/Rugby-League---World-Cup--004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"720",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174726714/Rugby-League---World-Cup--005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"1536",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174728803/Rugby-League---World-Cup--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"84",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174730391/Rugby-League---World-Cup--007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"132",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174731976/Rugby-League---World-Cup--008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"168",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174733568/Rugby-League---World-Cup--009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"180",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174735127/Rugby-League---World-Cup--010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"228",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174736732/Rugby-League---World-Cup--011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"276",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174738361/Rugby-League---World-Cup--012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"372",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174740184/Rugby-League---World-Cup--013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"1116",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174742540/Rugby-League---World-Cup--014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"1536",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174736732/Rugby-League---World-Cup--011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"276",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421337710",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383174728803/Rugby-League---World-Cup--006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Rugby League - World Cup 2013 - Group D - USA v Cook Islands - Memorial Stadium",
+            "height":"84",
+            "credit":"David Davies/PA",
+            "caption":"The USA's Mark Offerdahl dives over for a try during his side's victory over the Cook Islands. Photograph: David Davies/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/30/rugby-league-world-cup-tonga-scotland",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-30T00:42:00Z",
+      "webTitle":"Tonga 24-26 Scotland | Rugby League World Cup match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/30/rugby-league-world-cup-tonga-scotland",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/30/rugby-league-world-cup-tonga-scotland",
+      "fields":{
+        "trailText":"The coach Steve McCormack's nerves were frayed but intact after Scotland secured a thrilling 26-24 World Cup win over Tonga at Workington",
+        "headline":"Rugby League World Cup 2013: Scotland shock Tonga in thriller",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3kx4y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091494821/Tonga-Scotland-006.jpg",
+        "wordcount":"181",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T00:06:11Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/tongarugbyleagueteam",
+        "type":"keyword",
+        "webTitle":"Tongarugbyleagueteam",
+        "webUrl":"http://www.theguardian.com/sport/tongarugbyleagueteam",
+        "apiUrl":"http://content.guardianapis.com/sport/tongarugbyleagueteam",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/scotland-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Scotland rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/scotland-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/scotland-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421244584",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091484665/Tonga-Scotland-001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"54",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091488771/Tonga-Scotland-002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"340",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091490038/Tonga-Scotland-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"130",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091491331/Tonga-Scotland-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"720",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091493012/Tonga-Scotland-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"1536",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091494821/Tonga-Scotland-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"84",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091496158/Tonga-Scotland-007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"132",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091497740/Tonga-Scotland-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"168",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091499011/Tonga-Scotland-009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"180",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091500250/Tonga-Scotland-010.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"228",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091501523/Tonga-Scotland-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"276",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091502856/Tonga-Scotland-012.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"372",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091504924/Tonga-Scotland-013.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"1116",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091506902/Tonga-Scotland-014.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"1536",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091501523/Tonga-Scotland-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"276",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421244585",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/30/1383091494821/Tonga-Scotland-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Jason Cairnduff",
+            "altText":"Tonga Scotland",
+            "height":"84",
+            "credit":"Jason Cairnduff/Action Images",
+            "caption":"Fuifui Moimoi of Tonga, centre, is tackled by Kane Linnett, left, and Dale Ferguson in Scotland's 26-24 World Cup win. Photograph: Jason Cairnduff/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/29/rugby-league-wolrd-cup-england-burgess-italy",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-29T20:17:00Z",
+      "webTitle":"Rugby League World Cup 2013: England coach says Sam Burgess is no thug",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/29/rugby-league-wolrd-cup-england-burgess-italy",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/29/rugby-league-wolrd-cup-england-burgess-italy",
+      "fields":{
+        "trailText":"England's coach, Steve McNamara, has dismissed 'thug' charge against Sam Burgess over his high tackle on Australia's Sam Thaiday",
+        "headline":"Rugby League World Cup 2013: Sam Burgess is no thug – England coach",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3kx2v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074547675/Sam-Burgess-has-been-susp-006.jpg",
+        "wordcount":"447",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T20:15:09Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/steve-mcnamara",
+        "type":"keyword",
+        "webTitle":"Steve McNamara",
+        "webUrl":"http://www.theguardian.com/sport/steve-mcnamara",
+        "apiUrl":"http://content.guardianapis.com/sport/steve-mcnamara",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ireland-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Ireland rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/ireland-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/ireland-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421231163",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074537370/Sam-Burgess-has-been-susp-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"54",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074540215/Sam-Burgess-has-been-susp-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"340",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074541826/Sam-Burgess-has-been-susp-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"130",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074543520/Sam-Burgess-has-been-susp-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"720",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074545577/Sam-Burgess-has-been-susp-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"1536",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074547675/Sam-Burgess-has-been-susp-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"84",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074549265/Sam-Burgess-has-been-susp-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"132",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074550834/Sam-Burgess-has-been-susp-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"168",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074552423/Sam-Burgess-has-been-susp-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"180",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074554025/Sam-Burgess-has-been-susp-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"228",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074555634/Sam-Burgess-has-been-susp-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"276",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074557347/Sam-Burgess-has-been-susp-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"372",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074559121/Sam-Burgess-has-been-susp-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"1116",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074561427/Sam-Burgess-has-been-susp-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"1536",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074555634/Sam-Burgess-has-been-susp-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"276",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421231164",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/29/1383074547675/Sam-Burgess-has-been-susp-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Sam Burgess has been suspended for England's game against Ireland on Saturday.",
+            "height":"84",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Sam Burgess has been suspended for England's game against Ireland on Saturday. Photograph: Anna Gowthorpe/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/28/rugby-league-world-cup-fiji-ireland",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-28T23:37:25Z",
+      "webTitle":"Ireland 14-32 Fiji | Rugby League World Cup 2013",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/28/rugby-league-world-cup-fiji-ireland",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/28/rugby-league-world-cup-fiji-ireland",
+      "fields":{
+        "trailText":"Fiji effectively ended Ireland's World Cup dream for the second time after outmuscling them in a bruising Group A match at a packed Spotland",
+        "headline":"Rugby League World Cup 2013: Fiji lay waste to Ireland's chances",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3kv7n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003309354/Fiji-celebrate-one-of-Aku-006.jpg",
+        "wordcount":"440",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-31T23:37:25Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ireland-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Ireland rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/ireland-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/ireland-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/fijirugbyleagueteam",
+        "type":"keyword",
+        "webTitle":"Fijirugbyleagueteam",
+        "webUrl":"http://www.theguardian.com/sport/fijirugbyleagueteam",
+        "apiUrl":"http://content.guardianapis.com/sport/fijirugbyleagueteam",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421165230",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003299021/Fiji-celebrate-one-of-Aku-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"54",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003301484/Fiji-celebrate-one-of-Aku-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"340",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003303235/Fiji-celebrate-one-of-Aku-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"130",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003304989/Fiji-celebrate-one-of-Aku-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"720",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003307092/Fiji-celebrate-one-of-Aku-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"1536",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003309354/Fiji-celebrate-one-of-Aku-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"84",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003311053/Fiji-celebrate-one-of-Aku-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"132",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003312814/Fiji-celebrate-one-of-Aku-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"168",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003314485/Fiji-celebrate-one-of-Aku-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"180",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003316255/Fiji-celebrate-one-of-Aku-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"228",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003318006/Fiji-celebrate-one-of-Aku-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"276",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003319709/Fiji-celebrate-one-of-Aku-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"372",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003321661/Fiji-celebrate-one-of-Aku-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"1116",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003324158/Fiji-celebrate-one-of-Aku-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"1536",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003318006/Fiji-celebrate-one-of-Aku-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"276",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421165231",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1383003309354/Fiji-celebrate-one-of-Aku-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale",
+            "height":"84",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Fiji celebrate one of Akuila Uate's tries against Ireland in Rochdale, home to England's largest Fijian community outside London.  Photograph: Anna Gowthorpe/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/28/rugby-league-world-cup-2013-england-sam-burgess-banned",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-28T16:57:02Z",
+      "webTitle":"Rugby League World Cup 2013: England's Sam Burgess banned",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/28/rugby-league-world-cup-2013-england-sam-burgess-banned",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/28/rugby-league-world-cup-2013-england-sam-burgess-banned",
+      "fields":{
+        "trailText":"The South Sydney forward has been suspended for the match against Ireland following a high tackle during the defeat by Australia",
+        "headline":"Rugby League World Cup 2013: England's Sam Burgess banned",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3kvv9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978037829/Sam-Burgess-right-is-bann-006.jpg",
+        "wordcount":"415",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-31T16:57:02Z"
+      },
+      "tags":[{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/steve-mcnamara",
+        "type":"keyword",
+        "webTitle":"Steve McNamara",
+        "webUrl":"http://www.theguardian.com/sport/steve-mcnamara",
+        "apiUrl":"http://content.guardianapis.com/sport/steve-mcnamara",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ireland-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Ireland rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/ireland-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/ireland-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421142886",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978027153/Sam-Burgess-right-is-bann-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"54",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978030089/Sam-Burgess-right-is-bann-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"340",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978031699/Sam-Burgess-right-is-bann-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"130",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978033469/Sam-Burgess-right-is-bann-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"720",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978035646/Sam-Burgess-right-is-bann-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"1536",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978037829/Sam-Burgess-right-is-bann-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"84",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978039510/Sam-Burgess-right-is-bann-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"132",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978041062/Sam-Burgess-right-is-bann-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"168",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978042615/Sam-Burgess-right-is-bann-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"180",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978045179/Sam-Burgess-right-is-bann-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"228",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978046815/Sam-Burgess-right-is-bann-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"276",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978048439/Sam-Burgess-right-is-bann-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"372",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978050249/Sam-Burgess-right-is-bann-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"1116",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978054158/Sam-Burgess-right-is-bann-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"1536",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978046815/Sam-Burgess-right-is-bann-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"276",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby League World Cup 2013 game against Ireland because of a one-game ban. Photograph: Stu Forster/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421142887",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382978037829/Sam-Burgess-right-is-bann-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Sam Burgess, right, is banned for England's Rugby World Cup 2013 game against Ireland",
+            "height":"84",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Sam Burgess, right, will sit out England's Rugby World Cup 2013 game against Ireland after being given a one-match ban for a high tackle. Photograph: Stu Forster/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/28/sonny-bill-williams-new-zealand-world-cup",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-28T15:52:47Z",
+      "webTitle":"Sonny Bill Williams: 'All those troubles made me the man I am today'",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/28/sonny-bill-williams-new-zealand-world-cup",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/28/sonny-bill-williams-new-zealand-world-cup",
+      "fields":{
+        "trailText":"<p>The ferocious ambition in Sonny Bill Williams, as he moves between union and league, is often greeted with disdain but the star of the 2013 Rugby League World Cup tells Donald McRae he is no traitor</p>",
+        "headline":"Sonny Bill Williams: 'All those troubles made me the man I am today'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jqpj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974360822/Sonny-Bill-Williams-rugby-006.jpg",
+        "wordcount":"2121",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-31T15:52:47Z"
+      },
+      "tags":[{
+        "id":"sport/sonny-bill-williams",
+        "type":"keyword",
+        "webTitle":"Sonny Bill Williams",
+        "webUrl":"http://www.theguardian.com/sport/sonny-bill-williams",
+        "apiUrl":"http://content.guardianapis.com/sport/sonny-bill-williams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-union-team",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby union team",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-union-team",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-union-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"profile/donaldmcrae",
+        "type":"contributor",
+        "webTitle":"Donald McRae",
+        "webUrl":"http://www.theguardian.com/profile/donaldmcrae",
+        "apiUrl":"http://content.guardianapis.com/profile/donaldmcrae",
+        "rcsId":"GNL000413",
+        "r2ContributorId":"15253",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/donald_mcrae_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421177738",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974350235/Sonny-Bill-Williams-rugby-001.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"54",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974353108/Sonny-Bill-Williams-rugby-002.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"340",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974354681/Sonny-Bill-Williams-rugby-003.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"130",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974356681/Sonny-Bill-Williams-rugby-004.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"720",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974358599/Sonny-Bill-Williams-rugby-005.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"1536",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974360822/Sonny-Bill-Williams-rugby-006.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"84",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974362350/Sonny-Bill-Williams-rugby-007.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"132",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974363864/Sonny-Bill-Williams-rugby-008.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"168",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974365415/Sonny-Bill-Williams-rugby-009.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"180",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974367043/Sonny-Bill-Williams-rugby-010.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"228",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974368631/Sonny-Bill-Williams-rugby-011.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"276",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974370241/Sonny-Bill-Williams-rugby-012.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"372",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974371983/Sonny-Bill-Williams-rugby-013.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"1116",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974374233/Sonny-Bill-Williams-rugby-014.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"1536",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974368631/Sonny-Bill-Williams-rugby-011.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"276",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I’d fallen in love with rugby league again – and I knew if I didn’t play I’d have regrets the rest of my life,' Sonny Bill Williams says of his U-turn over playing for New Zealand in Rugby League World Cup. Photograph: Christopher Thomond for the Guardian.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421177739",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/28/1382974360822/Sonny-Bill-Williams-rugby-006.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "photographer":"Christopher Thomond",
+            "altText":"Sonny Bill Williams, rugby player",
+            "height":"84",
+            "credit":"Christopher Thomond/Christopher Thomond",
+            "caption":"'I'd fallen in love with rugby league again – and I knew if I didn't play I'd have regrets the rest of my life,' says the New Zealander Sonny Bill Williams. Photograph: Christopher Thomond",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/oct/28/rugby-league-world-cup-2013-england-new-zealand",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-28T15:40:27Z",
+      "webTitle":"Rugby League World Cup 2013: five talking points from the weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/28/rugby-league-world-cup-2013-england-new-zealand",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/28/rugby-league-world-cup-2013-england-new-zealand",
+      "fields":{
+        "trailText":"<strong>James Riach:</strong> England have a chance, New Zealand must up their game and Italy could be the dark horses of the tournament",
+        "headline":"Rugby League World Cup 2013: five talking points from the weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jqp5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974350566/England-lost-28-20-to-Aus-006.jpg",
+        "wordcount":"726",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:40:27Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-zealand-rugby-league",
+        "type":"keyword",
+        "webTitle":"New Zealand rugby league",
+        "webUrl":"http://www.theguardian.com/sport/new-zealand-rugby-league",
+        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-rugby-league",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/fijirugbyleagueteam",
+        "type":"keyword",
+        "webTitle":"Fijirugbyleagueteam",
+        "webUrl":"http://www.theguardian.com/sport/fijirugbyleagueteam",
+        "apiUrl":"http://content.guardianapis.com/sport/fijirugbyleagueteam",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australiarugbyleague",
+        "type":"keyword",
+        "webTitle":"Australia rugby league",
+        "webUrl":"http://www.theguardian.com/sport/australiarugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/australiarugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421135877",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974340616/England-lost-28-20-to-Aus-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"54",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974342764/England-lost-28-20-to-Aus-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"340",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974344435/England-lost-28-20-to-Aus-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"130",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974346114/England-lost-28-20-to-Aus-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"720",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974348301/England-lost-28-20-to-Aus-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"1536",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974350566/England-lost-28-20-to-Aus-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"84",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974352188/England-lost-28-20-to-Aus-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"132",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974353828/England-lost-28-20-to-Aus-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"168",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974355442/England-lost-28-20-to-Aus-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"180",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974357092/England-lost-28-20-to-Aus-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"228",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974358726/England-lost-28-20-to-Aus-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"276",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974360433/England-lost-28-20-to-Aus-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"372",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974362239/England-lost-28-20-to-Aus-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"1116",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974364721/England-lost-28-20-to-Aus-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"1536",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974358726/England-lost-28-20-to-Aus-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"276",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421135878",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/28/1382974350566/England-lost-28-20-to-Aus-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"England lost 28-20 to Australia in their Rugby League World Cup opener ",
+            "height":"84",
+            "credit":"Lynne Cameron/PA",
+            "caption":"England lost 28-20 to Australia in their Rugby League World Cup opener but can take encouragement from their performance Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/27/australia-england-rugby-league-world-cup-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-27T23:24:39Z",
+      "webTitle":"Sam Tomkins says England must improve despite testing out Australia",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/27/australia-england-rugby-league-world-cup-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/27/australia-england-rugby-league-world-cup-report",
+      "fields":{
+        "trailText":"Sam Tomkins, England's full-back, prefers to dwell on the negatives rather than accentuate the many positives in the World Cup opener against Australia",
+        "headline":"Sam Tomkins says England must improve despite testing out Australia",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jqc9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903990855/Sam-Tomkins-one-of-Englan-006.jpg",
+        "wordcount":"562",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T23:24:39Z"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australiarugbyleague",
+        "type":"keyword",
+        "webTitle":"Australia rugby league",
+        "webUrl":"http://www.theguardian.com/sport/australiarugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/australiarugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421079862",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903980169/Sam-Tomkins-one-of-Englan-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"54",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903982988/Sam-Tomkins-one-of-Englan-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"340",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903984805/Sam-Tomkins-one-of-Englan-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"130",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903986491/Sam-Tomkins-one-of-Englan-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"720",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903988598/Sam-Tomkins-one-of-Englan-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"1536",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903990855/Sam-Tomkins-one-of-Englan-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"84",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903992441/Sam-Tomkins-one-of-Englan-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"132",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903994091/Sam-Tomkins-one-of-Englan-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"168",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903995783/Sam-Tomkins-one-of-Englan-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"180",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903997522/Sam-Tomkins-one-of-Englan-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"228",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903999463/Sam-Tomkins-one-of-Englan-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"276",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382904001099/Sam-Tomkins-one-of-Englan-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"372",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382904003134/Sam-Tomkins-one-of-Englan-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"1116",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382904006121/Sam-Tomkins-one-of-Englan-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"1536",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903999463/Sam-Tomkins-one-of-Englan-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"276",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421079863",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/27/1382903990855/Sam-Tomkins-one-of-Englan-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Lynne Cameron",
+            "altText":"Sam Tomkins, one of England's best players, applauds the fans after the opener against Australia.",
+            "height":"84",
+            "credit":"Lynne Cameron/PA",
+            "caption":"Sam Tomkins, one of England's best players, applauds the fans following the Group A opener against Australia. Photograph: Lynne Cameron/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-12T12:28:37Z",
+      "webTitle":"Australian doping investigators look at six rugby league clubs - video",
+      "webUrl":"http://www.theguardian.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "fields":{
+        "trailText":"<p>National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting</p>",
+        "headline":"Australian doping investigators look at six rugby league clubs - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3dm52",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-02-15T12:28:37Z"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-403913910",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670916587/Australian-doping-probe-s-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"230",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670918097/Australian-doping-probe-s-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"90",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670919487/Australian-doping-probe-s-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"225",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670920754/Australian-doping-probe-s-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670925668/Australian-doping-probe-s-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"54",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670927255/Australian-doping-probe-s-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"340",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670928656/Australian-doping-probe-s-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"130",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670931876/Australian-doping-probe-s-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"132",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670933195/Australian-doping-probe-s-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"168",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670934454/Australian-doping-probe-s-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"180",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670935828/Australian-doping-probe-s-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"228",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670937108/Australian-doping-probe-s-015.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"276",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670938599/Australian-doping-probe-s-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"372",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/2/12/130212Ausdope_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/2/12/130212Ausdope_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/2/12/130212Ausdope-720.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130212Ausdope/130212Ausdope.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+            "width":"480",
+            "durationSeconds":"5"
+          }
+        }]
+      },{
+        "id":"gu-image-403914887",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Australian doping probe: six rugby league clubs under investigation",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\r Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
