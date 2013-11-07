@@ -1,7 +1,10 @@
 package model.commercial
 
 
-case class Segment(keywords: Seq[String], userSegments: Seq[String]) {
+case class Context(section: Option[String], keywords: Seq[String])
 
-  def isRepeatVisitor = userSegments contains "repeat"
+case class Segment(context: Context, userSegments: Seq[String]) {
+
+  val isRepeatVisitor = userSegments contains "repeat"
+
 }
