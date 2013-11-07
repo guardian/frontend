@@ -204,12 +204,10 @@ $metaHeight: 14px;
     }
 }
 @mixin card-full-width {
-    width: 100%;
     padding-bottom: $metaHeight;
     .connection--not-low &.item--has-image {
-        width: gs-span(3) + $gs-gutter;
         min-height: gs-height(6);
-        padding-left: gs-span(6) + $gs-gutter;
+        padding-left: gs-span(6) + $gs-gutter*1.5;
     }
     .item__title {
         @include fs-headline(4, $size-only: true);
@@ -223,11 +221,12 @@ $metaHeight: 14px;
         display: block;
     }
     .connection--not-low & .item__image-container {
-        width: gs-span(6) + $gs-gutter;
+        margin-top: 0;
+        width: gs-span(6);
         height: gs-height(6);
         position: absolute;
         top: 0;
-        left: 0;
+        left: $gs-gutter/2;
         padding-bottom: 0;
     }
 }
@@ -244,5 +243,8 @@ $metaHeight: 14px;
     }
     .connection--not-low & .item__title {
         margin-top: $gs-baseline*(2/3);
+    }
+    .connection--not-low & .item__image-container {
+        margin-top: 0;
     }
 }
