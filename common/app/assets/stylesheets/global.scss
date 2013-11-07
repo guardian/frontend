@@ -28,8 +28,6 @@
 @import "module/_cta";
 @import "module/_footer";
 @import "module/_stars";
-@import "module/_social";
-    @include socialDelayed;
 @import "module/_debug";
 @import "module/_gallerythumbs";
 @import "module/nav/_pop-up";
@@ -44,16 +42,15 @@
 @import "module/sport/_summary";
 @import "module/sport/_mini-scorecard";
 @import "module/sport/_full-scorecard";
-@import "module/_discussion";
 @import "module/_interactive";
 @import "module/_overlay";
 @import "module/_lightbox-gallery";
-@import "module/_identity";
 @import "module/facia/_mixins";
 @import "module/containers/_popular";
 @import "module/_commercial-components";
 @import "module/trails/_trailblock";
 @import "module/trails/_trail";
+
 
 /* ==========================================================================
    External modules
@@ -83,9 +80,3 @@
 @import "theme/_global-icons-sprite";
 @import "theme/_global-icons-svg";
 @import "theme/_icons";
-
-
-/* Zone colours
-   ========================================================================== */
-
-@import "theme/_zones";
