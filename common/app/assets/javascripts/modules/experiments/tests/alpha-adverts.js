@@ -98,7 +98,7 @@ define([
 
         this.id = 'AlphaAdverts';
         this.expiry = '2013-11-30';
-        this.audience = 0.01;
+        this.audience = 0.1;
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article') {
