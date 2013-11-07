@@ -8,36 +8,34 @@
 @import form.Input
 @import helper._
 
-@main(page, conf.Switches.all){
+@identityMain(page, conf.Switches.all){
 }{
 <div class="identity-wrapper">
-    <div class="identity-section">
-        <h2 class="type-2">Edit your profile</h2>
+    <h2 class="type-2">Edit your profile</h2>
 
-        <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
-            @if(profileForm.globalError.isDefined) {
-                <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
-            }
+    <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+        @if(profileForm.globalError.isDefined) {
+            <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
+        }
 
-            <ul class="form-fields">
-                @inputField(Input(profileForm("publicFields.location"), '_label -> "Location"))
-                @select(
-                    profileForm("privateFields.gender"),
-                    List(("Male", "Male"), ("Female", "Female"), ("prefer not to say","unknown")),
-                    '_label -> "Gender",
-                    '_default -> ""
-                )
+        <ul class="form-fields">
+            @inputField(Input(profileForm("publicFields.location"), '_label -> "Location"))
+            @select(
+                profileForm("privateFields.gender"),
+                List(("Male", "Male"), ("Female", "Female"), ("prefer not to say","unknown")),
+                '_label -> "Gender",
+                '_default -> ""
+            )
 
-                @inputField(Input(profileForm("publicFields.aboutMe"), '_label -> "About me"))
-                @inputField(Input(profileForm("publicFields.interests"), '_label -> "Interests"))
-                @inputField(Input(profileForm("publicFields.webPage"), '_label -> "Website"))
+            @inputField(Input(profileForm("publicFields.aboutMe"), '_label -> "About me"))
+            @inputField(Input(profileForm("publicFields.interests"), '_label -> "Interests"))
+            @inputField(Input(profileForm("publicFields.webPage"), '_label -> "Website"))
 
-                <li>
-                    <button type="submit" class="submit-input" data-link-name="Create account">Create account</button>
-                </li>
-            </ul>
-        </form>
-    </div>
+            <li>
+                <button type="submit" class="submit-input" data-link-name="Create account">Create account</button>
+            </li>
+        </ul>
+    </form>
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>

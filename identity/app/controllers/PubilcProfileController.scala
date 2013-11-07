@@ -64,17 +64,16 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
       ))
     )
 
-    identityApiClient.saveUser( request.user.id, userUpdate, request.auth )
-      .map { _.fold(
-        { errors =>
-          val formDataWithErrors = errors.foldLeft(formData) { (formWithErrors,error) =>
-            formWithErrors.withError(error.context.getOrElse(""), error.description)
-          }
-          Ok(views.html.public_profile(page.tracking(idRequest), idRequest, idUrlBuilder, formDataWithErrors))
-        },
-        { user =>
-          Ok(views.html.public_profile(page.accountEdited(idRequest), idRequest, idUrlBuilder, bindFormFromUser(user)))
-        })
+    identityApiClient.saveUser(request.user.id, userUpdate, request.auth).map {
+      case Left(errors) => {
+        val formDataWithErrors = errors.foldLeft(formData) { (formWithErrors,error) =>
+          formWithErrors.withError(error.context.getOrElse(""), error.description)
+        }
+        Ok(views.html.public_profile(page.tracking(idRequest), idRequest, idUrlBuilder, formDataWithErrors))
       }
+      case Right(user) => {
+        Ok(views.html.public_profile(page.accountEdited(idRequest), idRequest, idUrlBuilder, bindFormFromUser(user)))
+      }
+    }
   }
 }
