@@ -3,19 +3,22 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'modules/adverts/document-write'
+    'modules/adverts/document-write',
+    'modules/storage'
 ], function (
     common,
     qwery,
     bonzo,
     bean,
-    documentWrite
+    documentWrite,
+    storage
 ) {
 
     var Commercial = function(options) {
         this.options        = common.extend(this.DEFAULTS, options);
         this.keywords       = this.options.config.page.keywords.split(',');
         this.keywordsParams = documentWrite.getKeywords(this.options.config.page);
+        this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
     };
 
 
@@ -26,10 +29,10 @@ define([
         mediumAdWidth: 600
     };
 
-    Commercial.prototype.init = function(options) {
+    Commercial.prototype.init = function() {
         var self = this;
 
-        bean.on(window, 'resize', common.debounce(function(e) {
+        bean.on(window, 'resize', common.debounce(function() {
             self.applyClassnames();
         }, 250));
 

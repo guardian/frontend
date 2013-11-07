@@ -1,0 +1,1294 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"news/blog/2013/oct/30/mercury-prize-undemocratic-critics",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-10-30T15:27:20Z",
+      "webTitle":"Is the Mercury prize undemocratic?",
+      "webUrl":"http://www.theguardian.com/news/blog/2013/oct/30/mercury-prize-undemocratic-critics",
+      "apiUrl":"http://content.guardianapis.com/news/blog/2013/oct/30/mercury-prize-undemocratic-critics",
+      "fields":{
+        "trailText":"Expensive to enter and judged by a secret cabal, the Mercury prize is under scrutiny from critics. Does the public respect it?",
+        "headline":"Is the Mercury prize undemocratic?",
+        "body":"<p>It was billed as the credible alternative to the Brit awards, a music equivalent to the Booker prize for literature and the Turner prize for art. But the Barclaycard Mercury prize, the 21st winner of which will be announced on Wednesday evening, has come under scrutiny from critics who accuse it of peddling &quot;middle-of-the-road, dinner party music&quot; selected by a secret cabal of industry judges.</p><p>Since Primal Scream took the inaugural Mercury music award in 1992, debate over the format has never disappeared. Its critics have taken aim at the &quot;undemocratic&quot; nomination process – the judges are not named until after the winner is announced – and its often inoffensive album of the year shortlists.</p><p>&quot;It's a conceit. At least the Brit awards have an element of democracy,&quot; said the music critic Simon Price. &quot;It's chosen by people who know better that you: a cabal of industry people and critics meeting in what once would be smoke-filled rooms, and the idea is that, almost in the same way the pope is chosen, they'll emit the white smoke to tell you who's won. As a critic, the idea of consensus is horrific. I enjoy disagreeing with people.&quot;</p><p>Kevin Shields, frontman of My Bloody Valentine, reignited debate over the Mercuries last month when he claimed that the band's album, MBV, was banned from entering because &quot;<a href=\"http://www.theguardian.com/music/2013/sep/13/my-bloody-valentine-slams-mercury-prize\" title=\"\">we're not on Amazon or iTunes</a>&quot;. The awards' terms and conditions state that entrants must have &quot;a digital and physical distribution deal in place in the UK&quot;. My Bloody Valentine self-released their album and sold the digital version only through their website.</p><p>Damon Albarn, the Blur frontman, <a href=\"http://news.bbc.co.uk/1/hi/entertainment/1454072.stm\" title=\"\">compared the &pound;20,000 winner's cheque to &quot;a dead albatross round your neck for eternity&quot;</a>. But does the top prize do anything for its winner?</p><p>Plan B's Ill Manors is reported to have had a sales boost of more than 40,000 copies after being named on last year's shortlist, and Speech Debelle – who has all but disappeared from public view since her win in 2009 – saw her sales rocket from 3,000 when she took the prize four years ago.</p><p>For little-known bands on the smaller labels, the admission costs can prove a barrier to entry. It costs &pound;170, plus about &pound;30 in VAT, to enter an album for consideration, plus about 10 physical copies of the record, which amounts to no small change for a struggling label. A table at the star-studded event at the Roundhouse, north London, will set you back a cool &pound;6,500 if you happen not to be on the shortlist.</p><p>&quot;That's another major problem,&quot; said Price. &quot;For a small indie label, that &pound;200 often rules them out. I've heard of artists who got a great critical reception who have not applied because of the cost.&quot;</p><p>Supporters of the ceremony, such as EMI's president of music, Mike Smith, believe that just appearing on the Mercury shortlist lends kudos to artists without an established fanbase.</p><p>&quot;The Barclaycard Mercury prize is a credible alternative to the Brits for no other reason than that it has to be,&quot; said JJ Dunning, editor of rock magazine the Fly. &quot;More than anything, it brings non-mainstream music into the public discourse at least once a year, which is vitally important – making it all the more necessary to know who's making the decisions.&quot;</p><p>Dunning said there was a tendency among anti-Mercury music critics to forget that not everyone in the country is up with new music, so the awards shortlist may not be as edgy as one compiled by those critics.</p><p>&quot;To me, this says that as far as the general public are concerned – and the Mercury is a prize that the general public care about – the list is nearer counter-culture than mainstream,&quot; he said.</p><p>&quot;It's a great platform and for this reason I think that it needs to reconsider what its function is. What is its mandate? Is it there to champion music from the fringes of mainstream culture? Because at present it's only really dipping its toe in the water. It could go further and be more radical in my view – it won't lose the public's attention by doing so.&quot;</p><p>The Birmingham-born singer-songwriter Laura Mvula has been installed as the <a href=\"http://www.theguardian.com/music/2013/oct/29/laura-mvula-sing-to-moon-mercury-prize-2013\" title=\"\">bookies' favourite to win</a> the 2013 prize. Odds against her album Sing to the Moon, released to critical acclaim in March, have fallen from 16/1 to 5/4 on the eve of the ceremony, pipping the previous favourites, Disclosure and Foals.</p><p>Punters looking for a safer bet should assume that debate over the future of the Mercury prize will continue to rumble on.</p><!-- Guardian Watermark: internal-code/content/421299792|2013-11-05T11:03:51Z|dcf317e983fe061275816dcb3d6495816a969d1e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T16:03:56Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+        "standfirst":"Expensive to enter and judged by a secret cabal, the Mercury prize is under scrutiny from critics. Does the public respect it?",
+        "shortUrl":"http://gu.com/p/3kxtp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+        "wordcount":"751",
+        "commentable":"true",
+        "internalContentCode":"421299792",
+        "allowUgc":"false",
+        "internalOctopusCode":"8258943",
+        "isPremoderated":"false",
+        "byline":"Josh Halliday",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989223",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T15:27:00Z"
+      },
+      "tags":[{
+        "id":"news/blog",
+        "type":"blog",
+        "webTitle":"News blog",
+        "webUrl":"http://www.theguardian.com/news/blog",
+        "apiUrl":"http://content.guardianapis.com/news/blog",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"music/mercuryprize",
+        "type":"keyword",
+        "webTitle":"Mercury prize",
+        "webUrl":"http://www.theguardian.com/music/mercuryprize",
+        "apiUrl":"http://content.guardianapis.com/music/mercuryprize",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"business/musicindustry",
+        "type":"keyword",
+        "webTitle":"Music industry",
+        "webUrl":"http://www.theguardian.com/business/musicindustry",
+        "apiUrl":"http://content.guardianapis.com/business/musicindustry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/josh-halliday",
+        "type":"contributor",
+        "webTitle":"Josh Halliday",
+        "webUrl":"http://www.theguardian.com/profile/josh-halliday",
+        "apiUrl":"http://content.guardianapis.com/profile/josh-halliday",
+        "bio":"<p><a href=\"http://twitter.com/JoshHalliday\">Josh Halliday</a> is a media and technology reporter. Josh has a keen interest in digital media and privacy. Dislikes insufferable enthusiasm. Bradfordian via Wearside</p>",
+        "r2ContributorId":"38624",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/7/14/1279118930047/Josh-Halliday.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421302279",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146450006/Laura-Mvula-the-bookies-f-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"54",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146452290/Laura-Mvula-the-bookies-f-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"340",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146453946/Laura-Mvula-the-bookies-f-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"130",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"84",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146457052/Laura-Mvula-the-bookies-f-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"132",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146458705/Laura-Mvula-the-bookies-f-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"168",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146460298/Laura-Mvula-the-bookies-f-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"180",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146461987/Laura-Mvula-the-bookies-f-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"228",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146463588/Laura-Mvula-the-bookies-f-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"276",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146465145/Laura-Mvula-the-bookies-f-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"372",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146463588/Laura-Mvula-the-bookies-f-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"276",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r\n Photograph: Christian Sinibaldi for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421302280",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"84",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"music/2013/sep/13/my-bloody-valentine-slams-mercury-prize",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-09-13T11:39:10Z",
+      "webTitle":"My Bloody Valentine frontman slams Mercury prize list",
+      "webUrl":"http://www.theguardian.com/music/2013/sep/13/my-bloody-valentine-slams-mercury-prize",
+      "apiUrl":"http://content.guardianapis.com/music/2013/sep/13/my-bloody-valentine-slams-mercury-prize",
+      "fields":{
+        "trailText":"Kevin Shields says independence is 'virtually illegal' after band's self-released album is banned from Mercury nominations<br />",
+        "headline":"My Bloody Valentine frontman slams Mercury prize list",
+        "body":"<p>Kevin Shields has accused the Mercury prize of \"banning\" My Bloody Valentine from consideration for the award. The band's frontman claims that <a href=\"http://www.theguardian.com/music/2013/feb/04/mbv-review-my-bloody-valentine\" title=\"\">mbv</a>, their first album in 22 years, was left off the <a href=\"http://www.theguardian.com/music/2013/sep/11/david-bowie-mercury-prize-2013-shortlist\" title=\"\">Mercury shortlist</a> because the group bypassed corporate powers such as Apple, Amazon and record labels.</p><p>\"Isn't Mercury a phone company or something, anyway? What's that got to do with music?\" Shields said in an exclusive interview. \"We're banned by them, and do you know why? Because we're not on Amazon or iTunes. That's one of the qualifying criteria. You have to have major distribution or be on iTunes or Amazon.\"</p><p>Shields may be correct. According to the terms and conditions on the <a href=\"http://www.mercuryprize.com/info/\" title=\"\">Mercury website</a>, qualifying albums will have \"a digital and physical distribution deal in place in the UK\". My Bloody Valentine, who self-released their album, only sold the digital version of mbv through their own website. This may not be considered a \"digital distribution deal\".</p><p>\"We released our record, mbv, independently,\" Shields said. My Bloody Valentine didn't even rely on an indie label such as Domino or Alcopop! Records. \"It's interesting to learn that to be as independent as we are is … virtually illegal,\" he said. \"It's not a real record. Our album's not a real album because it's independent. The corporate-ness has got to such a point where we've essentially been told that we don't exist. So, technically, that album doesn't exist. OK? It's not allowed to exist according to the Mercury prize.\"</p><p>Shields also had harsh words for the industry magazine Music Week, which has \"never mentioned\" My Bloody Valentine since mbv's release. \"Again, to them we don't exist. Ask anyone if they can find our name in that paper and they won't be able to. We stopped existing once we [self-released] this album.\"</p><p>Yet Shields said he has no regrets about the way the band released their third album. \"I'd recommend it to anyone in our kind of position,\" he said. However, \"just to see what happens\", the group does plan to begin selling mbv through the iTunes music store.</p><p>David Bowie and Arctic Monkeys are bookies' frontrunners for the 2013 Barclaycard Mercury music prize. The shortlist, announced on Wednesday night, also includes Disclosure, Foals, Jake Bugg, James Blake, Jon Hopkins, Laura Marling, Laura Mvula, Rudimental, Savages and Villagers.</p><p>\"God help\" whoever wins, Shields said. Every act who has ever won the Mercury \"suffered\" in the aftermath. Even Primal Scream and \"even M People\". \"Seriously,\" Shields advised, \"there are sinister forces at work.\"</p><p>The winner of the award will be unveiled on 30 October.</p><!-- Guardian Watermark: internal-code/content/417207273|2013-11-05T11:03:51Z|3dda3043e4354f0363a05dbc0fc029c93fcaa2c6 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-13T11:39:10Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070701186/Kevin-Shields-on-stage-wi-005.jpg",
+        "standfirst":"Kevin Shields says independence is 'virtually illegal' after band's self-released album is banned from Mercury nominations<br />",
+        "shortUrl":"http://gu.com/p/3tmbz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070701186/Kevin-Shields-on-stage-wi-005.jpg",
+        "wordcount":"424",
+        "commentable":"false",
+        "internalContentCode":"417207273",
+        "allowUgc":"false",
+        "internalOctopusCode":"8069423",
+        "isPremoderated":"false",
+        "byline":"Adrian Deevoy and Sean Michaels",
+        "publication":"theguardian.com",
+        "internalPageCode":"1964976",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-16T11:39:10Z"
+      },
+      "tags":[{
+        "id":"music/my-bloody-valentine",
+        "type":"keyword",
+        "webTitle":"My Bloody Valentine",
+        "webUrl":"http://www.theguardian.com/music/my-bloody-valentine",
+        "apiUrl":"http://content.guardianapis.com/music/my-bloody-valentine",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/mercuryprize",
+        "type":"keyword",
+        "webTitle":"Mercury prize",
+        "webUrl":"http://www.theguardian.com/music/mercuryprize",
+        "apiUrl":"http://content.guardianapis.com/music/mercuryprize",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/seanmichaels",
+        "type":"contributor",
+        "webTitle":"Sean Michaels",
+        "webUrl":"http://www.theguardian.com/profile/seanmichaels",
+        "apiUrl":"http://content.guardianapis.com/profile/seanmichaels",
+        "bio":"<p>Sean Michaels is guardian.co.uk Music's north American news correspondent and writer for the Montreal-based music blog Said the Gramophone</p>",
+        "r2ContributorId":"23518",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417212658",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070695955/Kevin-Shields-on-stage-wi-002.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"54",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070697808/Kevin-Shields-on-stage-wi-003.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"340",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070699529/Kevin-Shields-on-stage-wi-004.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"130",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070701186/Kevin-Shields-on-stage-wi-005.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"84",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070702779/Kevin-Shields-on-stage-wi-006.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"132",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070704496/Kevin-Shields-on-stage-wi-007.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"168",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070706118/Kevin-Shields-on-stage-wi-008.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"180",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070708311/Kevin-Shields-on-stage-wi-009.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"228",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070710125/Kevin-Shields-on-stage-wi-010.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"276",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070711780/Kevin-Shields-on-stage-wi-011.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"372",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070710125/Kevin-Shields-on-stage-wi-010.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"276",
+            "credit":"No Byline",
+            "caption":"Kevin Shields: 'Technically, the album doesn't exist'",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417212659",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379070701186/Kevin-Shields-on-stage-wi-005.jpg",
+          "typeData":{
+            "source":"No Byline",
+            "altText":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year.",
+            "height":"84",
+            "credit":"No Byline",
+            "caption":"Kevin Shields on stage with My Bloody Valentine in Glasgow in March this year. Photograph: No Byline",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"news/blog/2013/oct/30/mercury-prize-undemocratic-critics",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-10-30T15:27:20Z",
+      "webTitle":"Is the Mercury prize undemocratic?",
+      "webUrl":"http://www.theguardian.com/news/blog/2013/oct/30/mercury-prize-undemocratic-critics",
+      "apiUrl":"http://content.guardianapis.com/news/blog/2013/oct/30/mercury-prize-undemocratic-critics",
+      "fields":{
+        "trailText":"Expensive to enter and judged by a secret cabal, the Mercury prize is under scrutiny from critics. Does the public respect it?",
+        "headline":"Is the Mercury prize undemocratic?",
+        "body":"<p>It was billed as the credible alternative to the Brit awards, a music equivalent to the Booker prize for literature and the Turner prize for art. But the Barclaycard Mercury prize, the 21st winner of which will be announced on Wednesday evening, has come under scrutiny from critics who accuse it of peddling &quot;middle-of-the-road, dinner party music&quot; selected by a secret cabal of industry judges.</p><p>Since Primal Scream took the inaugural Mercury music award in 1992, debate over the format has never disappeared. Its critics have taken aim at the &quot;undemocratic&quot; nomination process – the judges are not named until after the winner is announced – and its often inoffensive album of the year shortlists.</p><p>&quot;It's a conceit. At least the Brit awards have an element of democracy,&quot; said the music critic Simon Price. &quot;It's chosen by people who know better that you: a cabal of industry people and critics meeting in what once would be smoke-filled rooms, and the idea is that, almost in the same way the pope is chosen, they'll emit the white smoke to tell you who's won. As a critic, the idea of consensus is horrific. I enjoy disagreeing with people.&quot;</p><p>Kevin Shields, frontman of My Bloody Valentine, reignited debate over the Mercuries last month when he claimed that the band's album, MBV, was banned from entering because &quot;<a href=\"http://www.theguardian.com/music/2013/sep/13/my-bloody-valentine-slams-mercury-prize\" title=\"\">we're not on Amazon or iTunes</a>&quot;. The awards' terms and conditions state that entrants must have &quot;a digital and physical distribution deal in place in the UK&quot;. My Bloody Valentine self-released their album and sold the digital version only through their website.</p><p>Damon Albarn, the Blur frontman, <a href=\"http://news.bbc.co.uk/1/hi/entertainment/1454072.stm\" title=\"\">compared the &pound;20,000 winner's cheque to &quot;a dead albatross round your neck for eternity&quot;</a>. But does the top prize do anything for its winner?</p><p>Plan B's Ill Manors is reported to have had a sales boost of more than 40,000 copies after being named on last year's shortlist, and Speech Debelle – who has all but disappeared from public view since her win in 2009 – saw her sales rocket from 3,000 when she took the prize four years ago.</p><p>For little-known bands on the smaller labels, the admission costs can prove a barrier to entry. It costs &pound;170, plus about &pound;30 in VAT, to enter an album for consideration, plus about 10 physical copies of the record, which amounts to no small change for a struggling label. A table at the star-studded event at the Roundhouse, north London, will set you back a cool &pound;6,500 if you happen not to be on the shortlist.</p><p>&quot;That's another major problem,&quot; said Price. &quot;For a small indie label, that &pound;200 often rules them out. I've heard of artists who got a great critical reception who have not applied because of the cost.&quot;</p><p>Supporters of the ceremony, such as EMI's president of music, Mike Smith, believe that just appearing on the Mercury shortlist lends kudos to artists without an established fanbase.</p><p>&quot;The Barclaycard Mercury prize is a credible alternative to the Brits for no other reason than that it has to be,&quot; said JJ Dunning, editor of rock magazine the Fly. &quot;More than anything, it brings non-mainstream music into the public discourse at least once a year, which is vitally important – making it all the more necessary to know who's making the decisions.&quot;</p><p>Dunning said there was a tendency among anti-Mercury music critics to forget that not everyone in the country is up with new music, so the awards shortlist may not be as edgy as one compiled by those critics.</p><p>&quot;To me, this says that as far as the general public are concerned – and the Mercury is a prize that the general public care about – the list is nearer counter-culture than mainstream,&quot; he said.</p><p>&quot;It's a great platform and for this reason I think that it needs to reconsider what its function is. What is its mandate? Is it there to champion music from the fringes of mainstream culture? Because at present it's only really dipping its toe in the water. It could go further and be more radical in my view – it won't lose the public's attention by doing so.&quot;</p><p>The Birmingham-born singer-songwriter Laura Mvula has been installed as the <a href=\"http://www.theguardian.com/music/2013/oct/29/laura-mvula-sing-to-moon-mercury-prize-2013\" title=\"\">bookies' favourite to win</a> the 2013 prize. Odds against her album Sing to the Moon, released to critical acclaim in March, have fallen from 16/1 to 5/4 on the eve of the ceremony, pipping the previous favourites, Disclosure and Foals.</p><p>Punters looking for a safer bet should assume that debate over the future of the Mercury prize will continue to rumble on.</p><!-- Guardian Watermark: internal-code/content/421299792|2013-11-05T11:03:51Z|dcf317e983fe061275816dcb3d6495816a969d1e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T16:03:56Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+        "standfirst":"Expensive to enter and judged by a secret cabal, the Mercury prize is under scrutiny from critics. Does the public respect it?",
+        "shortUrl":"http://gu.com/p/3kxtp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+        "wordcount":"751",
+        "commentable":"true",
+        "internalContentCode":"421299792",
+        "allowUgc":"false",
+        "internalOctopusCode":"8258943",
+        "isPremoderated":"false",
+        "byline":"Josh Halliday",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989223",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T15:27:00Z"
+      },
+      "tags":[{
+        "id":"news/blog",
+        "type":"blog",
+        "webTitle":"News blog",
+        "webUrl":"http://www.theguardian.com/news/blog",
+        "apiUrl":"http://content.guardianapis.com/news/blog",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"music/mercuryprize",
+        "type":"keyword",
+        "webTitle":"Mercury prize",
+        "webUrl":"http://www.theguardian.com/music/mercuryprize",
+        "apiUrl":"http://content.guardianapis.com/music/mercuryprize",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"business/musicindustry",
+        "type":"keyword",
+        "webTitle":"Music industry",
+        "webUrl":"http://www.theguardian.com/business/musicindustry",
+        "apiUrl":"http://content.guardianapis.com/business/musicindustry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/josh-halliday",
+        "type":"contributor",
+        "webTitle":"Josh Halliday",
+        "webUrl":"http://www.theguardian.com/profile/josh-halliday",
+        "apiUrl":"http://content.guardianapis.com/profile/josh-halliday",
+        "bio":"<p><a href=\"http://twitter.com/JoshHalliday\">Josh Halliday</a> is a media and technology reporter. Josh has a keen interest in digital media and privacy. Dislikes insufferable enthusiasm. Bradfordian via Wearside</p>",
+        "r2ContributorId":"38624",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/7/14/1279118930047/Josh-Halliday.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421302279",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146450006/Laura-Mvula-the-bookies-f-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"54",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146452290/Laura-Mvula-the-bookies-f-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"340",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146453946/Laura-Mvula-the-bookies-f-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"130",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"84",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146457052/Laura-Mvula-the-bookies-f-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"132",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146458705/Laura-Mvula-the-bookies-f-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"168",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146460298/Laura-Mvula-the-bookies-f-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"180",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146461987/Laura-Mvula-the-bookies-f-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"228",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146463588/Laura-Mvula-the-bookies-f-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"276",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146465145/Laura-Mvula-the-bookies-f-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"372",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146463588/Laura-Mvula-the-bookies-f-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"276",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r\n Photograph: Christian Sinibaldi for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421302280",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146455488/Laura-Mvula-the-bookies-f-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Christian Sinibaldi",
+            "altText":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r",
+            "height":"84",
+            "credit":"Christian Sinibaldi/Guardian",
+            "caption":"Laura Mvula, the bookies' favourite for the 2013 Barclaycard Mercury prize.\r Photograph: Christian Sinibaldi for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"music/musicblog/2013/oct/31/james-blake-watch-video-mercury-prize",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-10-31T13:21:19Z",
+      "webTitle":"James Blake: watch an exclusive set from the Mercury prize winner",
+      "webUrl":"http://www.theguardian.com/music/musicblog/2013/oct/31/james-blake-watch-video-mercury-prize",
+      "apiUrl":"http://content.guardianapis.com/music/musicblog/2013/oct/31/james-blake-watch-video-mercury-prize",
+      "fields":{
+        "trailText":"<p>Following his success at the Mercury prize last night, watch this exclusive live set from James Blake, recorded at London's Heaven earlier this year</p>",
+        "headline":"James Blake: watch an exclusive set from the Mercury prize winner",
+        "body":"<p><a href=\"http://www.muzu.tv/jamesblake/playlists/james-blake-live-at-heaven-london/1114137/\">Reading on mobile? Click here to view</a></p><p>To celebrate his triumph at last night's Mercury prize ceremony, here's a set from James Blake. Recorded earlier this year at London club Heaven, the performance draws on work from his early cult EPs (Air and Lack Thereof, the Kelis-sampling CMYK), his self-titled debut album and Mercury-winning second, <a href=\"http://www.theguardian.com/music/2013/apr/04/james-blake-overgrown-review\">Overgrown</a>, and ends with his signature cover of Joni Mitchell's <a href=\"http://www.youtube.com/watch?v=6voJjexENok\">A Case of You</a>.</p><!-- Guardian Watermark: internal-code/content/421364276|2013-11-05T11:03:51Z|0312e7e8fb1b3e81ffa054ce372bd9470b4bf468 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T13:21:19Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/31/1383179737355/James-Blake-003.jpg",
+        "standfirst":"Following his success at the Mercury prize last night, here's an exclusive live set from James Blake, recorded at London's Heaven earlier this year<br /><br /><a href=\"http://www.theguardian.com/music/video/2013/oct/31/james-blake-mercury-prize-2013-video\">- James Blake on winning the 2013 Mercury prize - video</a><br /><a href=\"http://www.theguardian.com/music/2013/oct/31/mercury-prize-winner-james-blake\">- James Blake: a surprise choice from an unsurprising Mercury prize shortlist</a>",
+        "shortUrl":"http://gu.com/p/3k2a8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/31/1383179737355/James-Blake-003.jpg",
+        "wordcount":"68",
+        "commentable":"true",
+        "internalContentCode":"421364276",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Beaumont-Thomas",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989719",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T13:21:19Z"
+      },
+      "tags":[{
+        "id":"music/james-blake",
+        "type":"keyword",
+        "webTitle":"James Blake",
+        "webUrl":"http://www.theguardian.com/music/james-blake",
+        "apiUrl":"http://content.guardianapis.com/music/james-blake",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"profile/ben-beaumont-thomas",
+        "type":"contributor",
+        "webTitle":"Ben Beaumont-Thomas",
+        "webUrl":"http://www.theguardian.com/profile/ben-beaumont-thomas",
+        "apiUrl":"http://content.guardianapis.com/profile/ben-beaumont-thomas",
+        "bio":"<p>Ben Beaumont-Thomas is currently Acting Culture Editor of The Guardian. He is also a freelance writer for Wired and Uncut, and curates the Future Human event series in Shoreditch, London. Follow him <a href=\"https://twitter.com/ben_bt\">@ben_bt</a></p>",
+        "r2ContributorId":"31786",
+        "references":[]
+      },{
+        "id":"music/electronicmusic",
+        "type":"keyword",
+        "webTitle":"Electronic music",
+        "webUrl":"http://www.theguardian.com/music/electronicmusic",
+        "apiUrl":"http://content.guardianapis.com/music/electronicmusic",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"music/musicblog",
+        "type":"blog",
+        "webTitle":"Music blog",
+        "webUrl":"http://www.theguardian.com/music/musicblog",
+        "apiUrl":"http://content.guardianapis.com/music/musicblog",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/mercuryprize",
+        "type":"keyword",
+        "webTitle":"Mercury prize",
+        "webUrl":"http://www.theguardian.com/music/mercuryprize",
+        "apiUrl":"http://content.guardianapis.com/music/mercuryprize",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421374523",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/31/1383179737355/James-Blake-003.jpg",
+          "typeData":{
+            "source":"Paul Hebert/Invision/AP",
+            "photographer":"Paul A Hebert",
+            "altText":"James Blake",
+            "height":"84",
+            "credit":"Paul A Hebert/Paul Hebert/Invision/AP",
+            "caption":"James Blake, the winner of the 2013 Mercury music prize. Photograph: Paul A Hebert/Paul Hebert/Invision/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"music/2013/oct/31/gomez-ms-dynamite-m-people-mercury-prize-winnings",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-10-31T18:05:00Z",
+      "webTitle":"Gomez, Ms Dynamite and M People: how we spent our Mercury prize winnings",
+      "webUrl":"http://www.theguardian.com/music/2013/oct/31/gomez-ms-dynamite-m-people-mercury-prize-winnings",
+      "apiUrl":"http://content.guardianapis.com/music/2013/oct/31/gomez-ms-dynamite-m-people-mercury-prize-winnings",
+      "fields":{
+        "newspaperPageNumber":"10",
+        "trailText":"<p>Unlike the Brits, a Mercury prize win comes with a fat cheque attached. So who lost theirs, who gave it to charity, and who spent it all on beer</p>",
+        "headline":"Gomez, Ms Dynamite and M People: how we spent our Mercury prize winnings",
+        "body":"<p><strong> Talvin Singh </strong></p><p><em>Winning album: OK (1999)</em></p><p>&quot;I bought my dad a car and I also paid a lot of tax with it; I donated it to the Inland Revenue. It wasn't a great time for me personally. Professionally, yes. It was one of the big markers of success and it was very special, although shortly after winning I lost my point-person at the record company and all the doors were starting to shut in front of me. It was the first time I felt struggle.</p><p>&quot;Anyway, I got my dad a nice Mercedes. Indian people love Mercedes. But to be honest, I thought me winning was going to make the music scene a lot wider and more colourful, and that elements of eastern music would be integrated with dub and rock just like Jamaican music. What actually happened was a sort of ghettoisation and the establishment off things like the <a href=\"http://www.bbc.co.uk/asiannetwork\" title=\"\">Asian Network</a>, which I think corners people on the basis of their race. As for the Merc, it got written off.&quot;</p><p><a href=\"http://www.theguardian.com/music/2011/may/22/ms-dynamite-interview-neva-soft\" title=\"\"><strong> Ms Dynamite</strong></a></p><p><em>Winning album: A Little Deeper (2002)</em></p><p>&quot;It was &pound;20,000 the year I won. Was that the biggest amount I'd seen up to that point? Yeah, definitely. I donated it to charity. No one involved in the music – including me – got any of the money. According to my mum, I actually donated five grand of my own as well, because I didn't have enough to split it equally among the charities I wanted it to go to. I gave eight grand to the NSPCC, eight to Sickle Cell, and eight to the Caribbean studies department of the Metropolitan University where my mum did her degree, which was facing closure. And I donated a grand to Highgate Newtown, my local community centre, to their gymnastics class, because I did gymnastics when I was younger and they needed new equipment.</p><p>&quot;No one tried to stop me but secretly a few people were probably annoyed. But I'm happy with my decision. I can totally get how people might think: 'What a raving lunatic.' How did my 10 brothers and sisters feel about it? Do you know what? We're all right. The people that benefitted from that money needed it more.</p><p>&quot;It took me so long to get my head round the fact that I'd won. I'd been living in the same street for years and suddenly I couldn't go anywhere without the most random of people, from old pensioners to little kids, coming up to me. My life changed overnight. But St Dynamite? Do me a favour! No, there are a lot of stories about me I could tell you that are the complete opposite of holier than thou, believe me.&quot;</p><p><a href=\"http://www.theguardian.com/music/2009/jan/03/antony-hegarty-and-the-johnsons\" title=\"\"><strong> Antony Hegarty</strong></a><strong> of Antony and the Johnsons</strong></p><p><em>Winning album: I Am a Bird Now (2005) </em></p><p>&quot;I used it to compensate my band for all the underpaid work they had done for me for years prior.&quot;</p><p><strong> Gus Unger-Hamilton of </strong><a href=\"http://www.theguardian.com/music/2012/aug/30/alt-j-a-cut-above\" title=\"\"><strong>Alt-J</strong></a></p><p><em>Winning album: An Awesome Wave (2012)</em></p><p>&quot;It went in our bank account and we probably bought a bus with it. Anyway, once you've paid your manager 20% and paid the tax on it, it becomes a smaller and smaller amount which is quite depressing. We were always quite business-minded. Not that we wanted to make money, but we wanted to keep on top of things. That's Alt-J: quite sensible. So on the night, we didn't put a grand behind the bar or anything like that. I think our label put some behind the bar at the after-party. But it was never like, 'Let's spunk it on drugs and booze!'</p><p>&quot;Was it the biggest cheque I'd seen up to that point? It was the largest amount of money although it wasn't physically that big. It was standard cheque size. But it did have a lot of noughts at the end. Have I seen larger amounts since? I wouldn't want to comment. It's been a good year.</p><p>&quot;For some musicians it would be a life-changing amount. We were lucky to be signed to an indie label who put money behind us. It was a little bonus. I'm not even sure why there is money attached to it. We won an <a href=\"http://www.xfm.co.uk/artists/noel-gallaghers-high-flying-birds/news/maccabees-alt-j-win-ivor-novello-awards/\" title=\"\">Ivor Novello</a> too and there wasn't any money for that and you don't win cash for a Brit, but for some reason the Mercury has a cheque attached. It's an arbitrary amount. It could be &pound;200,000 or &pound;200. The Turner and Booker awards have cash prizes as well, but artists and writers are more likely to need the money. On our shortlist, for a lot of the groups it wouldn't have made much difference. But the money wasn't a part of our excitement about being nominated or winning.&quot;</p><p><strong> </strong></p><p><a href=\"http://www.theguardian.com/music/badlydrawnboy\" title=\"\"><strong>Badly Drawn Boy</strong></a></p><p><em>Winning album: The Hour of Bewilderbeast (2000)</em></p><p>&quot;What I did was stupidly throw the cheque away. Was it a gesture against the idea of remunerating art or because I was drunk and didn't give a toss? All of the above. I was so overwhelmed. It was just to get a laugh, I suppose. My sense of humour isn't always understood; maybe because it's not funny. I was sat next to the <a href=\"http://www.youtube.com/watch?v=vh92tC1n59M\" title=\"\">Doves</a>, who were nominated and were friends of mine, and I spent a lot of the next few hours with Chris Martin [Coldplay were nominated for Parachutes], who was really pleased for me. But when the Doves jumped up and applauded, I thought they'd won! So I jumped up and they were all hugging me because I didn't hear Jools Holland announce it properly. Then I walked up to the stage, got the cheque, threw it away saying, 'I don't need this,' and did all my backstage interviews with Jo Whiley and whoever and forgot about the cheque till later that night. It eventually appeared in the Sun and that was the first time I really saw it; a cheque made out to me for &pound;20,000. The story I've heard since is that the journalist who found it was <a href=\"http://www.theguardian.com/culture/tvandradioblog/2007/oct/16/whenkarlpilkingtonsperfectl\" title=\"\">Karl Pilkington</a>. It rings true because he was apparently working at the Sun at the time. The cheque was returned to me so I can only be grateful to Karl for that.</p><p>&quot;When I finally got the cheque back, I had to tour America and the label pulled the money for it; it cost me &pound;22,000. So in essence the prize money helped me tour America. And pay for a good few months' worth of nappies [his daughter Edie was born shortly afterwards].</p><p>&quot;The prize itself, the crystal ball that's sat on the big chunk of metal, fell off on the train back to Manchester. I Superglued it back on just recently. The bookend to my story is that two weeks ago I gave my Mercury prize to Frank Sidebottom's family; <a href=\"http://www.bbc.co.uk/news/uk-england-manchester-24601038\" title=\"\">his statue was unveiled in Timperley</a> so I took it down with my first ever guitar and handed it to his family for making me laugh. I wanted the prize to be there with his statue. His son Stirling said he's going to create a shrine with it, a mini-museum for Frank, and my prize and guitar will take pride of place.&quot; </p><p><strong> Heather Small of M People</strong></p><p><em>Winning album: Elegant Slumming (1994)</em></p><p>&quot;We gave ours to a multiple sclerosis charity because someone we knew was suffering from the disease. It was a unanimous decision; there was no dissent. We just thought it was the right thing to do. Winning was quite enough, and we were in a position where we could afford to do it; we'd already had a little bit of success. So our winning touched somebody else's life. The money was the cherry on top but we didn't need the cherry, because we had the cake.</p><p>&quot;I was just stunned that we won because the prize was in its infancy and people assumed it was an indie award [Primal Scream and Suede had won previously]. Some people took offence at us winning. But 20 years down the line we're still performing those songs to very appreciative audiences. The judges said they chose the album that moved them most, and they went with their gut feeling, and I feel their belief was justified. No one can tell me how sincere I am or how much integrity I've got. I'm from a working-class immigrant background living on a council estate, so to sing songs of hope and happiness, I'll take it. I wanted to say there was a way forward.</p><p>&quot;Did we go to a bar? There's always a bash. I don't drink or smoke and I can't remember the night! We were up against Blur, Pulp, the Prodigy, the guy from the Style Council – all very worthy people. But it's human nature: you want to win. I was shocked but happy because there was so much snobbery and the backlash from the press was unbelievable. But good music is good music and how dare you judge us so harshly? How dare you rubbish my hard work? That's what made it sweeter that we won.&quot; </p><p><strong> Tom Gray of Gomez</strong></p><p><em>Winning album: Bring It On (1998)</em></p><p>&quot;We were on a four-year touring cycle and money was coming in and out left, right and centre. There was a brief period between 1998-2001 when we made an extraordinary amount of money. It was the late 90s and there was still loads swimming about. The music industry was at fever pitch and indie bands were getting signed for enormous sums. What happened to Ultrasound? What happened to <a href=\"http://www.youtube.com/watch?v=LivXnB9SG_M\" title=\"\">Gay Dad</a>? Madonna was going to charter us a plane to fly us out [to sign to her label Maverick]. That was when we realised we were just taking the piss, having a laugh at people's expense.</p><p>&quot;Bring It On, off the back of the Mercury, sold well over a million copies worldwide. And we were touring all around the world, and if you do that you start making loads of money – and losing loads. The turnover is so fast, so the Mercury money almost certainly just disappeared down a black hole along with the rest. My recollection is, two days later we were playing a gig in Germany and we probably spunked it all on beer.&quot;</p><h2>So how will James Blake spend his &pound;20,000?</h2><p>&quot;Erm … [long pause] I really have no idea. That's quite a lot of money. I really thought Disclosure would win it. Could I spend it on a round for everyone else at the Mercury awards? I think that would just be pissing it right up the wall.&quot;</p><!-- Guardian Watermark: internal-code/content/421400145|2013-11-05T11:03:51Z|e0966b041b542b9ff253130c56905e0dc9d55236 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T00:07:59Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241134272/Badly-Drawn-Boy-003.jpg",
+        "standfirst":"Unlike the Brits, a Mercury prize win comes with a fat cheque attached. So who lost theirs, who gave it to charity, and who spent it all on beer",
+        "shortUrl":"http://gu.com/p/3k2z4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241134272/Badly-Drawn-Boy-003.jpg",
+        "wordcount":"1735",
+        "commentable":"true",
+        "internalContentCode":"421400145",
+        "allowUgc":"false",
+        "internalOctopusCode":"8264391",
+        "isPremoderated":"false",
+        "byline":"Paul Lester",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-01",
+        "internalPageCode":"1990093",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T18:05:00Z"
+      },
+      "tags":[{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/paullester",
+        "type":"contributor",
+        "webTitle":"Paul Lester",
+        "webUrl":"http://www.theguardian.com/profile/paullester",
+        "apiUrl":"http://content.guardianapis.com/profile/paullester",
+        "bio":"<p>Paul Lester been contributing to the Guardian for most of this century. Among other things, he writes the <a href=\"http://www.guardian.co.uk/music/series/newbandoftheday\">new band of the day</a> feature for <a href=\"http://www.guardian.co.uk/music\">guardian.co.uk's music site</a></p>",
+        "r2ContributorId":"26286",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/paul_lester.jpg",
+        "references":[]
+      },{
+        "id":"music/ms-dynamite",
+        "type":"keyword",
+        "webTitle":"Ms Dynamite",
+        "webUrl":"http://www.theguardian.com/music/ms-dynamite",
+        "apiUrl":"http://content.guardianapis.com/music/ms-dynamite",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/badlydrawnboy",
+        "type":"keyword",
+        "webTitle":"Badly Drawn Boy",
+        "webUrl":"http://www.theguardian.com/music/badlydrawnboy",
+        "apiUrl":"http://content.guardianapis.com/music/badlydrawnboy",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/alt-j",
+        "type":"keyword",
+        "webTitle":"Alt-J",
+        "webUrl":"http://www.theguardian.com/music/alt-j",
+        "apiUrl":"http://content.guardianapis.com/music/alt-j",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/antonyandthejohnsons",
+        "type":"keyword",
+        "webTitle":"Antony and the Johnsons",
+        "webUrl":"http://www.theguardian.com/music/antonyandthejohnsons",
+        "apiUrl":"http://content.guardianapis.com/music/antonyandthejohnsons",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"music/mercuryprize",
+        "type":"keyword",
+        "webTitle":"Mercury prize",
+        "webUrl":"http://www.theguardian.com/music/mercuryprize",
+        "apiUrl":"http://content.guardianapis.com/music/mercuryprize",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"theguardian/g2/film-and-music",
+        "type":"newspaper-book-section",
+        "webTitle":"Film and music",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/film-and-music",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/film-and-music",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421401938",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241130136/Badly-Drawn-Boy-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"54",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241133059/Badly-Drawn-Boy-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"130",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241134272/Badly-Drawn-Boy-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"84",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241135607/Badly-Drawn-Boy-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"132",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241136867/Badly-Drawn-Boy-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"168",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241138087/Badly-Drawn-Boy-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"180",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241139393/Badly-Drawn-Boy-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"228",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241140601/Badly-Drawn-Boy-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"276",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241140601/Badly-Drawn-Boy-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"276",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421401939",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383241134272/Badly-Drawn-Boy-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Stuart",
+            "altText":"Badly Drawn Boy",
+            "height":"84",
+            "credit":"Andrew Stuart/PA",
+            "caption":"Badly Drawn Boym AKA Damon Gough, wonders where that cheque got to.  Photograph: Andrew Stuart/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -9,7 +9,7 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage("/px.gif") { override val base = "http://localhost" },
+    new UrlPagesHealthcheckManagementPage("/px.gif"),
     new LogbackLevelPage(applicationName)
   )
 }

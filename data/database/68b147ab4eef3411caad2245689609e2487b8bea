@@ -1,0 +1,245 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"music/2013/oct/30/stevie-wonder-new-album-release",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-10-30T13:29:48Z",
+      "webTitle":"Stevie Wonder confirms first new albums in eight years",
+      "webUrl":"http://www.theguardian.com/music/2013/oct/30/stevie-wonder-new-album-release",
+      "apiUrl":"http://content.guardianapis.com/music/2013/oct/30/stevie-wonder-new-album-release",
+      "fields":{
+        "trailText":"<p><strong>Harriet Gibsone:</strong> The 63-year-old singer will release two albums in 2014 and is working on a third in tribute to his late mother, Lula</p>",
+        "headline":"Stevie Wonder confirms first new albums in eight years",
+        "body":"<p><a href=\"http://www.theguardian.com/music/steviewonder\" title=\"\">Stevie Wonder</a> says he will release his first album in eight years, with two albums in 2014, and a possible third in the making.</p><p>The legendary 63-year-old performer said on 29 October that he has been recording some new songs for the albums When the World Began and Ten Billion Hearts, in collaboration with producer David Foster.</p><p>Confirming the new album rumours, which began to circulate earlier this year, the soul singer revealed in an interview <a href=\"http://m.apnews.com/ap/db_268764/contentdetail.htm?contentguid=Wa3yaTmI\">with Associated Press</a> that the new material would be influenced by hip-hop's political methods. \"I listen a lot to rap, and I'm inspired to take it, to use it in another way, to get the message across,\" Wonder said. Previously this year, Wonder told <a href=\"http://www.rollingstone.com/music/news/stevie-wonder-working-on-symphonic-gospel-albums-20130625\" title=\"\">Rolling Stone</a> that his new music would be accompanied by an orchestra.</p><p>Filing for divorce last year, the singer explained that the albums were inspired by \"my children, family, change, growth, heartbreaks\". He is also planning to fulfil a promise to his late mother Lula Mae Hardaway, who died in 2006, by recording a gospel album in her memory. \"We're going to do some traditional gospel stuff, but I'm thinking about doing a gospel song in Arabic. I'm going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel. The word of gospel really is love and it really is about people following the word, whether they read the Qur'an, the Torah or the Bible, whatever they read,\" he said in June.</p><p>As well as details of his new records, Stevie Wonder has also announced that he will perform his 1976 album Songs In the Key of Life in full for the first time.</p><p>As part of his annual House Full of Toys benefit concert in Los Angeles on 21 December, which helps children in need during the holiday season, Wonder revealed that he would perform his landmark LP in its entirety.</p><p>\"This has been a fantasy of mine for a while,\" said Wonder during a press conference at Club Nokia in Los Angeles. \"I wanted to do something that would thank everyone for supporting my career and also thank God for me being able to do the music I do. And listening to this album again, it is amazing to me how relevant it is today.\"</p><p>In previous years, Wonder has performed a set at the event dressed as Father Christmas, as well as using the show to advocate tighter gun laws, following the <a href=\"http://www.theguardian.com/world/2013/oct/25/newtown-shooting-mental-health-fund-lawyers\" title=\"\">Newtown school shootings</a> last December.</p><!-- Guardian Watermark: internal-code/content/421284091|2013-11-05T11:03:48Z|7dfaac753059a17dc28d2d3a4820e8235686e7a5 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T19:07:21Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137543850/Stevie-Wonder-003.jpg",
+        "standfirst":"The 63-year-old singer will release two albums in 2014 and is working on a third in tribute to his late mother, Lula",
+        "shortUrl":"http://gu.com/p/3kxea",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137543850/Stevie-Wonder-003.jpg",
+        "wordcount":"413",
+        "commentable":"true",
+        "internalContentCode":"421284091",
+        "allowUgc":"false",
+        "internalOctopusCode":"8257935",
+        "isPremoderated":"false",
+        "byline":"Harriet Gibsone",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989100",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T12:46:00Z"
+      },
+      "tags":[{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/steviewonder",
+        "type":"keyword",
+        "webTitle":"Stevie Wonder",
+        "webUrl":"http://www.theguardian.com/music/steviewonder",
+        "apiUrl":"http://content.guardianapis.com/music/steviewonder",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/harriet-gibsone",
+        "type":"contributor",
+        "webTitle":"Harriet Gibsone",
+        "webUrl":"http://www.theguardian.com/profile/harriet-gibsone",
+        "apiUrl":"http://content.guardianapis.com/profile/harriet-gibsone",
+        "bio":"<p>Harriet Gibsone is a freelance culture journalist</p>",
+        "r2ContributorId":"47769",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/30/1377875996286/Harriet-Gibsone.-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421319649",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137540728/Stevie-Wonder-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"54",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137542482/Stevie-Wonder-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"130",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137543850/Stevie-Wonder-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"84",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137545148/Stevie-Wonder-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"132",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137546500/Stevie-Wonder-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"168",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137547809/Stevie-Wonder-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"180",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137549182/Stevie-Wonder-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"228",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137550551/Stevie-Wonder-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"276",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I’m thinking about doing a gospel song in Arabic. I’m going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137550551/Stevie-Wonder-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"276",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder … 'I’m thinking of doing a gospel song in Arabic.' Photograph: Ian Gavan/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421319650",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137543850/Stevie-Wonder-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Gavan",
+            "altText":"Stevie Wonder",
+            "height":"84",
+            "credit":"Ian Gavan/Getty Images",
+            "caption":"Stevie Wonder: 'I'm thinking about doing a gospel song in Arabic. I'm going to twist it all up in different ways, because I think everyone needs to hear the word of the gospel.' Photograph: Ian Gavan/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

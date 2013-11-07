@@ -278,7 +278,7 @@
     width: 100%;
     float: left;
     border: 0 !important;
-    height: $gs-column-height + $baseline !important;
+    height: $gs-column-height + $baseline - 3 !important;
     padding-left: 0 !important;
 }
 

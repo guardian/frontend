@@ -236,10 +236,10 @@ define([
             // data-link-context was from a click within this app
             linkContext = undefined;
         } else {
-            sequenceUrl = storage.get(storePrefix + 'linkContext');
+            sequenceUrl = storage.session.get(storePrefix + 'linkContext');
             if (sequenceUrl) {
                 // data-link-context was set by a click on a previous page
-                storage.remove(storePrefix + 'linkContext');
+                storage.session.remove(storePrefix + 'linkContext');
             } else {
                 // No data-link-context, so infer the section/tag component from the url,
                 if("page" in config) {
@@ -508,7 +508,7 @@ define([
                     }
 
                 } else if (clickSpec.linkContext) {
-                    storage.set(storePrefix + 'linkContext', clickSpec.linkContext, {
+                    storage.session.set(storePrefix + 'linkContext', clickSpec.linkContext, {
                         expires: 10000 + (new Date()).getTime()
                     });
                 }

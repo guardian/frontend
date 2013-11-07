@@ -5,14 +5,16 @@ define([
     'modules/experiments/ab',
     'modules/storage',
     'modules/id',
-    'modules/errors'
+    'modules/errors',
+    'modules/cookies'
 ], function(
     common,
     detect,
     ab,
     storage,
     id,
-    Errors
+    Errors,
+    Cookies
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -57,7 +59,7 @@ define([
                     tag: spec.tag,
                     time: new Date().getTime()
                 };
-                storage.set(storagePrefix + 'referrerVars', storeObj);
+                storage.session.set(storagePrefix + 'referrerVars', storeObj);
             } else {
                 that.populateEventProperties(spec.tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
@@ -143,6 +145,14 @@ define([
 
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
+               
+                // prefix all the MVT tests with the alpha user tag if present
+                if (Cookies.get('GU_ALPHA') === "true") {
+                    var alphaTag = 'r2alpha,';
+                    s.prop51  = alphaTag + s.prop51;
+                    s.eVar51  = alphaTag + s.eVar51;
+                }
+
                 s.events = s.apl(s.events,'event58',',');
             }
 
@@ -174,7 +184,7 @@ define([
             }
 
             /* Retrieve navigation interaction data, incl. swipe */
-            var ni = storage.get('gu.analytics.referrerVars');
+            var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
                 var d = new Date().getTime();
                 if (d - ni.time < 60 * 1000) { // One minute
@@ -182,7 +192,7 @@ define([
                     s.eVar37 = ni.tag;
                     s.events   = 'event37';
                 }
-                storage.remove('gu.analytics.referrerVars');
+                storage.session.remove('gu.analytics.referrerVars');
             } else if (config.swipe) {
                 s.referrer = config.swipe.referrer;
                 s.eVar24   = config.swipe.referrerPageName;

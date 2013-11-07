@@ -6,24 +6,28 @@ import com.amazonaws.services.cloudwatch.model._
 import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
 import common.Logging
+import Configuration._
 
 trait CloudWatch {
 
-  val primaryLoadBalancers = Map(
+  val stage = new Dimension().withName("Stage").withValue(environment.stage)
+
+  val primaryLoadBalancers = Seq(
     ("frontend-RouterLo-1HHMP4C9L33QJ", "Router"),
     ("frontend-ArticleL-T0BUR121RZIG", "Article"),
     ("frontend-FaciaLoa-I92TZ7OEAX7W", "Front"),
     ("frontend-Applicat-V36EHVHAEI15", "Applications")
   )
 
-  val secondaryLoadBalancers = Map(
+  val secondaryLoadBalancers = Seq(
     ("frontend-CoreNavi-19L03IVT6RTL5", "CoreNav"),
     ("frontend-Discussi-KC65SADEVHIE", "Discussion"),
     ("frontend-Identity-1ITBJ706CLQIC", "Identity"),
     ("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image"),
     ("frontend-SportLoa-GLJK02HUD48W", "Sport"),
     ("frontend-Commerci-12ZQ79RIOLIYE", "Commercial"),
-    ("frontend-OnwardLo-14YIUHL6HIW63", "Onward")
+    ("frontend-OnwardLo-14YIUHL6HIW63", "Onward"),
+    ("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football")
   )
 
   private val fastlyMetrics = List(
@@ -45,7 +49,7 @@ trait CloudWatch {
   def latencyShortStack = latency(primaryLoadBalancers)
   def latencyFullStack = latencyShortStack ++ latency(secondaryLoadBalancers)
 
-  private def latency(loadBalancers: Map[String,String]): Seq[LatencyGraph] = {
+  private def latency(loadBalancers: Seq[(String,String)]): Seq[LatencyGraph] = {
     loadBalancers.map{ case (loadBalancer, name) =>
       new LatencyGraph(name ,
         cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
@@ -65,7 +69,7 @@ trait CloudWatch {
   def requestOkShortStack = requestOkCount(primaryLoadBalancers)
   def requestOkFullStack = requestOkShortStack ++ requestOkCount(secondaryLoadBalancers)
 
-  private def requestOkCount(loadBalancers: Map[String,String]): Seq[Request2xxGraph] = {
+  private def requestOkCount(loadBalancers: Seq[(String,String)]): Seq[Request2xxGraph] = {
     loadBalancers.map{ case (loadBalancer, name) =>
       new Request2xxGraph(name,
         cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
@@ -95,6 +99,18 @@ trait CloudWatch {
         asyncHandler)
     )
   }.toSeq
+  
+  def liveStats(statistic: String) = new LiveStatsGraph(
+    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(6).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(120)
+      .withStatistics("Average")
+      .withNamespace("Diagnostics")
+      .withMetricName(statistic)
+      .withDimensions(stage),
+      asyncHandler))
+
 
   // charges are only available from the 'default' region
   private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)

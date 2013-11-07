@@ -51,6 +51,7 @@ GET           /metrics/fastly                  controllers.admin.FastlyControlle
 GET           /radiator                        controllers.admin.RadiatorController.renderRadiator()
 GET           /radiator/pingdom                controllers.admin.RadiatorController.pingdom()
 GET           /radiator/commit/*hash           controllers.admin.RadiatorController.commitDetail(hash)
+GET           /radiator/livestats              controllers.admin.RadiatorController.liveStats()
 
 # Football Troubleshooter
 GET           /troubleshoot/football           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()

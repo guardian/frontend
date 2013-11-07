@@ -2,9 +2,9 @@ package test
 
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import scala.collection.JavaConversions._
+import common.UsesElasticSearch
 
-class TagTemplateTest extends FlatSpec with Matchers {
+class TagTemplateTest extends FlatSpec with Matchers with UsesElasticSearch {
 
   it should "render tag headline" in HtmlUnit("/world/turkey") { browser =>
     import browser._

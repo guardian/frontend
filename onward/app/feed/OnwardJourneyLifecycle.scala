@@ -13,10 +13,12 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     // fire every min
     Jobs.schedule("OnwardJourneyAgentRefreshJob",  "0 * * * * ?", OnwardMetrics.OnwardLoadTimingMetric) {
       OnwardJourneyAgent.update()
+      LatestContentAgent.update()
     }
 
     if (Play.isDev) {
       OnwardJourneyAgent.update()
+      LatestContentAgent.update()
     }
   }
 
