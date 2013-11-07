@@ -38,7 +38,7 @@ define([
     "modules/swipe/bar",
     "modules/facia/images",
     "modules/onward/history",
-    "modules/identity/autosignin",
+    "modules/identity/autosignin"
 ], function (
     common,
     ajax,

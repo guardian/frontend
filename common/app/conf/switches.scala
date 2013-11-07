@@ -83,6 +83,10 @@ object Switches extends Collections {
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
     "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
+  
+  val LiveStatsSwitch = Switch("Analytics", "live-stats",
+    "Turns on our real-time KPIs",
+    safeState = On)
 
   // Discussion Switches
 
@@ -201,7 +205,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
-  val ABAlphaAdvertsData = Switch("A/B Tests", "ab-alpha-adverts-data",
+  val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
 
@@ -274,6 +278,7 @@ object Switches extends Collections {
     ExternalLinksCardsSwitch,
     LiveSummarySwitch,
     LiveCricketSwitch,
+    LiveStatsSwitch,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABLiveBlogShowMore,
@@ -283,7 +288,7 @@ object Switches extends Collections {
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
-    ABAlphaAdvertsData,
+    ABAlphaAdverts,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch

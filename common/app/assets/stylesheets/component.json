@@ -4,6 +4,6 @@
     "dependencies": {
         "normalize-scss": "*",
         "pasteup": "*",
-        "sass-mq": "*"
+        "sass-mq": "2.0.0-rc.1"
     }
 }
