@@ -248,16 +248,12 @@ case class FastlyMetricGraph(
   )
 }
 
-case class LiveStatsGraph(
-  name: String,
-  metric: String,
-  metricResults: Future[GetMetricStatisticsResult]) extends Chart {
-    override lazy val labels = Seq("Time", metric)
-    override lazy val yAxis = Some(metric)
-    private lazy val datapoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
-    override lazy val dataset = datapoints.map(d => DataPoint(
+case class LiveStatsGraph(metricResults: Future[GetMetricStatisticsResult]) {
+    private lazy val dataPoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
+    lazy val dataset = dataPoints.map(d => DataPoint(
       new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
     )
+    lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.1)
 }
 
 case class CostMetric(costMetric: Future[GetMetricStatisticsResult]) {

@@ -1,4 +1,4 @@
-@(charts: Seq[tools.Chart], env: String)
+@(responsive: tools.LiveStatsGraph, desktop: tools.LiveStatsGraph, env: String)
 
 <!DOCTYPE html>
 <html>
@@ -48,14 +48,16 @@
   <body>
         <div class="display desktop">
             <h2>desktop</h2>
-            <span>-</span>
+            <span>
+                @{"%.2f".format(desktop.latest)}
+            </span>
         </div>
         <div class="display responsive">
             <h2>responsive</h2>
             <span>
-                @charts.map{ chart =>
-                    @{"%.2f".format(chart.dataset.last.values.head)}
-                }
+
+                @{"%.2f".format(responsive.latest)}
+
             </span>
         </div>
 

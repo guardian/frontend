@@ -6,8 +6,11 @@ import com.amazonaws.services.cloudwatch.model._
 import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
 import common.Logging
+import Configuration._
 
 trait CloudWatch {
+
+  val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   val primaryLoadBalancers = Seq(
     ("frontend-RouterLo-1HHMP4C9L33QJ", "Router"),
@@ -97,22 +100,17 @@ trait CloudWatch {
     )
   }.toSeq
   
-  private val liveStatsMetrics = List(
-    ("Responsive views over sessions", "viewsOverSessions.responsive")
-  )
- 
-  def liveStats = liveStatsMetrics.map{ case (name, metric) =>
-    new LiveStatsGraph( name, metric, 
-      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusHours(6).toDate)
-        .withEndTime(new DateTime().toDate)
-        .withPeriod(120)
-        .withStatistics("Average")
-        .withNamespace("Diagnostics")
-        .withMetricName(metric),
-        asyncHandler)
-      )
-  }.toSeq
+  def liveStats(statistic: String) = new LiveStatsGraph(
+    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(6).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(120)
+      .withStatistics("Average")
+      .withNamespace("Diagnostics")
+      .withMetricName(statistic)
+      .withDimensions(stage),
+      asyncHandler))
+
 
   // charges are only available from the 'default' region
   private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
