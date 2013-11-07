@@ -9,6 +9,7 @@ import com.ning.http.client.Realm
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
+import model.NoCache
 
 object RadiatorController extends Controller with Logging with AuthLogging {
 
@@ -26,14 +27,14 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   def commitDetail(hash: String) = Authenticated.async { implicit request =>
     val call = WS.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
     call.map{ c =>
-      Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8")
+      NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
 
   def renderRadiator() = Authenticated { implicit request =>
     val graphs = CloudWatch.latencyShortStack ++ CloudWatch.fastlyStatistics
     val multilineGraphs = CloudWatch.fastlyHitMissStatistics
-    Ok(views.html.radiator(graphs, multilineGraphs, CloudWatch.cost, Configuration.environment.stage))
+    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, CloudWatch.cost, Configuration.environment.stage)))
   }
 
   def pingdom() = Authenticated.async { implicit request =>
@@ -47,7 +48,13 @@ object RadiatorController extends Controller with Logging with AuthLogging {
       .withAuth(user, password,  Realm.AuthScheme.BASIC)
       .withHeaders("App-Key" ->  apiKey)
       .get().map { response =>
-        Ok(Json.toJson(response.body))
+        NoCache(Ok(Json.toJson(response.body)))
       }
+  }
+  
+  def liveStats() = Authenticated { implicit request =>
+    val responsive = CloudWatch.liveStats("viewsOverSessions.responsive")
+    val desktop = CloudWatch.liveStats("viewsOverSessions.desktop")
+    NoCache(Ok(views.html.liveStats(responsive, desktop, Configuration.environment.stage)))
   }
 }
