@@ -10,9 +10,13 @@ trait Ad {
 
 trait AdAgent[T <: Ad] {
 
-  lazy val agent = AkkaAgent[Seq[T]](Nil)
+  private lazy val agent = AkkaAgent[Seq[T]](Nil)
 
-  def matchingAds(segment: Segment, adsToChooseFrom: Seq[T] = agent()): Seq[T] = {
+  protected def currentAds: Seq[T] = agent()
+
+  protected def updateCurrentAds(ads: Seq[T]) = agent send ads
+
+  def matchingAds(segment: Segment, adsToChooseFrom: Seq[T] = currentAds): Seq[T] = {
     adsToChooseFrom filter (segment.isRepeatVisitor && _.matches(segment))
   }
 
