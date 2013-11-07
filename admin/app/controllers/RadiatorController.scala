@@ -50,4 +50,9 @@ object RadiatorController extends Controller with Logging with AuthLogging {
         Ok(Json.toJson(response.body))
       }
   }
+  
+  def liveStats() = Authenticated { implicit request =>
+    val graphs = CloudWatch.liveStats
+    Ok(views.html.liveStats(graphs, Configuration.environment.stage))
+  }
 }
