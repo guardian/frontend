@@ -2,14 +2,12 @@
 define([
     'common',
     'ajax',
-    'domwrite',
 
     'modules/detect',
     'modules/adverts/audience-science'
 ], function (
     common,
     ajax,
-    domwrite,
 
     detect,
     audienceScience
@@ -28,7 +26,7 @@ define([
 
     function getKeywords(config) {
         return config.keywords.split(',').map(function(keyword){
-            return 'k=' + encodeURIComponent(keyword.replace(" ", "-").toLowerCase());
+            return 'k=' + encodeURIComponent(keyword.replace(/\s/g, "-").toLowerCase());
         }).join('&');
     }
 
@@ -116,7 +114,8 @@ define([
 
     return {
         load: load,
-        generateUrl: generateUrl
+        generateUrl: generateUrl,
+        getKeywords: getKeywords
     };
 
 });

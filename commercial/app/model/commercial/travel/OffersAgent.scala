@@ -1,21 +1,11 @@
 package model.commercial.travel
 
-import common.{AkkaAgent, ExecutionContexts, Logging}
+import common.{ExecutionContexts, Logging}
 import scala.concurrent.Future
 import conf.ContentApi
-import model.commercial.Keyword
+import model.commercial.{AdAgent, Keyword}
 
-object OffersAgent extends Logging with ExecutionContexts {
-
-  private lazy val agent = AkkaAgent[List[Offer]](Nil)
-
-  def allOffers: List[Offer] = agent()
-
-  def offers(keywords: Seq[String], offersToChooseFrom: List[Offer] = allOffers) = {
-    offersToChooseFrom.filter {
-      offer => (keywords.map(_.toLowerCase).toSet & offer.keywords.map(_.name.toLowerCase).toSet).size > 0
-    }
-  }
+object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
 
   def refresh() {
 
@@ -32,7 +22,7 @@ object OffersAgent extends Logging with ExecutionContexts {
             val keywords = response.results map (tag => Keyword(tag.id, tag.webTitle))
             countries.foldLeft(Map[String, List[Keyword]]()) {
               (countryKeywords, country) =>
-                countryKeywords + (country -> keywords.filter(keyword => keyword.name == country))
+                countryKeywords + (country -> keywords.filter(keyword => keyword.webTitle == country))
             }
         }
       }

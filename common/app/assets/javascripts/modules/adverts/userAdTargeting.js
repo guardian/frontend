@@ -2,15 +2,15 @@ define(['modules/storage', 'modules/id', 'modules/time' ], function(storage, id,
     var userSegmentsKey = "gu.ads.userSegmentsData";
 
     function getUserSegments() {
-        if(storage.isAvailable()) {
-            var userSegmentsData = storage.get(userSegmentsKey);
+        if(storage.local.isAvailable()) {
+            var userSegmentsData = storage.local.get(userSegmentsKey);
             var userCookieData = id.getUserFromCookie();
 
             if(userSegmentsData) {
                 if( userCookieData && ( userSegmentsData.userHash === ( userCookieData.id % 9999 ) ) ) {
                     return userSegmentsData.segments;
                 } else {
-                    storage.remove(userSegmentsKey);
+                    storage.local.remove(userSegmentsKey);
                 }
             }
         }
@@ -19,7 +19,7 @@ define(['modules/storage', 'modules/id', 'modules/time' ], function(storage, id,
     }
 
     function requestUserSegmentsFromId() {
-        if(storage.isAvailable() && (storage.get(userSegmentsKey) === null)) {
+        if(storage.local.isAvailable() && (storage.local.get(userSegmentsKey) === null)) {
             if(id.getUserFromCookie()) {
                 id.getUserFromApi(
                     function(user) {
@@ -28,7 +28,7 @@ define(['modules/storage', 'modules/id', 'modules/time' ], function(storage, id,
                             for(var key in user.adData) {
                                 userSegments.push(key + user.adData[key]);
                             }
-                            storage.set(
+                            storage.local.set(
                                 userSegmentsKey,
                                 {
                                     'segments' : userSegments,

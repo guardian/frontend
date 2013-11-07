@@ -1,17 +1,20 @@
+/*global s_i_guardian:true */
 define([
     'common',
     'modules/detect',
     'modules/experiments/ab',
     'modules/storage',
     'modules/id',
-    'modules/errors'
+    'modules/errors',
+    'modules/cookies'
 ], function(
     common,
     detect,
     ab,
     storage,
     id,
-    Errors
+    Errors,
+    Cookies
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -27,8 +30,11 @@ define([
 
         w = w || {};
 
+        this.pageviewSent = false;
+
         this.logView = function() {
             s.t();
+            this.confirmPageView();
         };
 
         this.logUpdate = function() {
@@ -53,7 +59,7 @@ define([
                     tag: spec.tag,
                     time: new Date().getTime()
                 };
-                storage.set(storagePrefix + 'referrerVars', storeObj);
+                storage.session.set(storagePrefix + 'referrerVars', storeObj);
             } else {
                 that.populateEventProperties(spec.tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
@@ -139,6 +145,14 @@ define([
 
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
+               
+                // prefix all the MVT tests with the alpha user tag if present
+                if (Cookies.get('GU_ALPHA') === "true") {
+                    var alphaTag = 'r2alpha,';
+                    s.prop51  = alphaTag + s.prop51;
+                    s.eVar51  = alphaTag + s.eVar51;
+                }
+
                 s.events = s.apl(s.events,'event58',',');
             }
 
@@ -170,7 +184,7 @@ define([
             }
 
             /* Retrieve navigation interaction data, incl. swipe */
-            var ni = storage.get('gu.analytics.referrerVars');
+            var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
                 var d = new Date().getTime();
                 if (d - ni.time < 60 * 1000) { // One minute
@@ -178,7 +192,7 @@ define([
                     s.eVar37 = ni.tag;
                     s.events   = 'event37';
                 }
-                storage.remove('gu.analytics.referrerVars');
+                storage.session.remove('gu.analytics.referrerVars');
             } else if (config.swipe) {
                 s.referrer = config.swipe.referrer;
                 s.eVar24   = config.swipe.referrerPageName;
@@ -215,6 +229,29 @@ define([
                     that.loaded(callback);
                 });
             }
+        };
+
+        this.confirmPageView = function() {
+            // This ensures that the Omniture pageview beacon has successfully loaded
+            // Can be used as a way to prevent other events to fire earlier than the pageview
+            var self = this;
+            var checkForPageViewInterval = setInterval(function() {
+                // s_i_guardian is a globally defined Image() object created by Omniture
+                // It does not sit in the DOM tree, and seems to be the only surefire way
+                // to check if the intial beacon has been successfully sent
+                if (typeof(s_i_guardian) !== 'undefined' &&
+                    (s_i_guardian.complete === true || s_i_guardian.width + s_i_guardian.height > 0)) {
+                    clearInterval(checkForPageViewInterval);
+
+                    self.pageviewSent = true;
+                    common.mediator.emit('module:analytics:omniture:pageview:sent');
+                }
+            }, 250);
+
+            // Give up after 10 seconds
+            setTimeout(function() {
+                clearInterval(checkForPageViewInterval);
+            }, 10000);
         };
 
         common.mediator.on('module:analytics:adimpression', that.trackAdImpression );

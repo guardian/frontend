@@ -104,7 +104,14 @@
             if (!sinon.calledInOrder(arguments)) {
                 try {
                     expected = [].join.call(arguments, ", ");
-                    actual = sinon.orderByFirstCall(slice.call(arguments)).join(", ");
+                    var calls = slice.call(arguments);
+                    var i = calls.length;
+                    while (i) {
+                        if (!calls[--i].called) {
+                            calls.splice(i, 1);
+                        }
+                    }
+                    actual = sinon.orderByFirstCall(calls).join(", ");
                 } catch (e) {
                     // If this fails, we'll just fall back to the blank string
                 }
@@ -173,4 +180,4 @@
     } else {
         sinon.assert = assert;
     }
-}(typeof sinon == "object" && sinon || null, typeof window != "undefined" ? window : global));
+}(typeof sinon == "object" && sinon || null, typeof window != "undefined" ? window : (typeof self != "undefined") ? self : global));

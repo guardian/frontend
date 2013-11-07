@@ -7,12 +7,6 @@ define([
 ) {
     return {
         config: {
-            breakpoints: [
-                { width:  320,  height: 480,  name: "Mobile" },
-                { width:  1295, height: 1024, name: "Desktop" },
-                { width:  768,  height: 1024, name: "Tablet portrait" },
-                { width:  1024, height: 768,  name: "Tablet landscape" }
-            ],
             previewUrlBase: {
                 dev:  'http://localhost:9000/responsive-viewer#',
                 code: 'http://code.preview.guardianapps.co.uk/responsive-viewer#http://m.code.dev-theguardian.com',
@@ -32,13 +26,14 @@ define([
             collectionsPollMs:     10000, // 10 seconds
             latestArticlesPollMs:  30000, // 10 seconds
             cacheExpiryMs:         60000, // 1 min
-            defaultToLiveMode:     false,
 
             apiBase:               '',
             apiSearchBase:         '/api/proxy'
         },
 
-        state: {},
+        state: {
+            liveMode: ko.observable(true) // default to live mode?
+        },
 
         util: {
             mediator: new EventEmitter(),

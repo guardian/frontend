@@ -10,10 +10,13 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
 
     Id.cookieName = 'GU_U';
 
-    var idApiRoot = null;
+    var idApiRoot = null,
+        idUrl = null;
+
 
     Id.init = function(conf) {
         idApiRoot = conf.page.idApiUrl;
+        idUrl = conf.page.idUrl;
     };
 
 
@@ -56,8 +59,18 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
         return Cookies.get(Id.cookieName);
     };
 
+    /**
+     * @return {boolean}
+     */
     Id.isUserLoggedIn = function() {
         return Id.getUserFromCookie() !== null;
+    };
+
+    /**
+     * @return {string}
+     */
+    Id.getUrl = function() {
+        return idUrl;
     };
 
     /**

@@ -7,10 +7,10 @@
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
     </h2>
-    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) paragraph-spacing--indents">
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-            <div class="article-v2__inner">
+            <div class="article__inner article__inner--head">
                 <header class="article__head">
 
                     @fragments.headline(article.headline)
@@ -25,8 +25,8 @@
 
                 <div class="after-header"></div>
             </div>
-            <div class="article-v2__columning-wrapper">
-                <div class="article-v2__main-column">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
                     @if(!article.hasVideoAtTop) {
                         @if(article.hasMainVideo) {
@@ -60,24 +60,24 @@
                     </div>
 
                     <div class="js-article__container article__container u-cf">
-                        <div class="article-body from-content-api"
+                        <div class="article-body u-cf from-content-api"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
                         </div>
-                    </div>
 
-                    @if(ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="article keywords">
-                            @fragments.keywordList(article.keywords)
-                        </div>
-                    }
+                        @if(ArticleKeywordsSwitch.isSwitchedOn){
+                            <div class="article__keywords" data-link-name="article keywords">
+                                @fragments.keywordList(article.keywords)
+                            </div>
+                        }
+                    </div>
 
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
                 </div>
-                <div class="article-v2__secondary-column" aria-hidden="true">
-                    <div class="article-v2__secondary-column__inner">
+                <div class="article__secondary-column" aria-hidden="true">
+                    <div class="article__secondary-column__inner">
                         <div class="js-sticky-upper" data-id="mpu-ad-slot"></div>
                         <div class="u-table">
                             <div class="u-table__row">
@@ -100,13 +100,14 @@
                                     }
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </article>
 
-        <div class="article-v2__inner">
+        <div class="article__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             }
@@ -118,7 +119,7 @@
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
             }
 
-            <div class="js-popular article__popular" role="complementary"></div>
+            @fragments.mostPopularPlaceholder(article.section)
         </div>
     </div>
 }

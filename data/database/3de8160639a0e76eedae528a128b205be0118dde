@@ -1094,6 +1094,15 @@
         "sectionName":"Technology",
         "references":[]
       },{
+        "id":"science/series/science-blog-network",
+        "type":"series",
+        "webTitle":"Science blog network",
+        "webUrl":"http://www.theguardian.com/science/series/science-blog-network",
+        "apiUrl":"http://content.guardianapis.com/science/series/science-blog-network",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",

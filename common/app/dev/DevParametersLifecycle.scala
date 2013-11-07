@@ -37,7 +37,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     // these params are only whitelisted on dev machines, they will not make it through the CDN
     "view",
     "_edition", //allows us to spoof edition in tests
-    "k" // keywords in ad requests
+    "k", // keywords in commercial component requests
+    "seg" // user segments in commercial component requests
   )
 
   override def onRouteRequest(request: RequestHeader) = {
@@ -45,7 +46,12 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     Play.maybeApplication.foreach{ implicit application =>
       // json requests have no SEO implication but will affect caching
 
-      if (!isProd && !request.isJson && !request.uri.startsWith("/openIDCallback")) {
+      if (
+        !isProd &&
+        !request.isJson &&
+        !request.uri.startsWith("/openIDCallback") &&
+        !request.uri.startsWith("/px.gif")  // diagnostics box
+      ) {
         val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
         if (illegalParams.nonEmpty) {
           // it is pretty hard to spot what is happening in tests without this println

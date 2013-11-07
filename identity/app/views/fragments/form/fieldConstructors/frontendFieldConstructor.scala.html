@@ -2,7 +2,7 @@
 
 @elements.args.toMap.get('type)
 
-<li class="@elements.args.get('_class) @if(elements.hasErrors) {form-field--error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
+<li class="form-field @elements.args.get('_class) @if(elements.hasErrors) {form-field--error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
     <label class="label" for="@elements.id">@elements.label</label>
     <div class="input">
         @if(elements.infos.nonEmpty) {

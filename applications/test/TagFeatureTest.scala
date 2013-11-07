@@ -4,8 +4,9 @@ import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
 import conf.{Switches, Configuration}
+import common.UsesElasticSearch
 
-class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
 
   feature("Tag Pages trail size") {
 
@@ -15,14 +16,14 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/technology/askjack") { browser =>
         import browser._
-        val trails = $(".items .item")
+        val trails = $(".collection .item")
         trails.length should be(20)
       }
 
     }
 
   }
-  
+
   feature("Contributor pages") {
 
     scenario("Should display the profile images") {
@@ -44,7 +45,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
         Then("I should not see her profile image")
         val profileImages = find(".profile-img img")
-        profileImages.length should be(0) 
+        profileImages.length should be(0)
       }
 
     }

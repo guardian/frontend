@@ -30,7 +30,7 @@ function (
         } else {
             defer.notify([{_alert : "searching for " + path + "..."}]);
 
-            authedAjax({
+            authedAjax.request({
                 url: common.config.apiSearchBase + url + "&page-size=" + maxItems
             }).then(
                 function(resp) {

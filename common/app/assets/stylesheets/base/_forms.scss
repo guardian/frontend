@@ -1,6 +1,13 @@
 /* Base form styles
    ========================================================================== */
 
+@if $old-ie {
+   // IE 8 won't display webfonts in password fields…
+   [type=password] {
+      font-family: sans-serif !important;
+   }
+}
+
 .form {
     margin-top: $baseline*6;
     margin-bottom: $baseline*6;
@@ -23,6 +30,10 @@
 .form-fields {
     margin: $baseline*6 0;
     padding: 0;
+}
+
+.form-fields-group .form-field {
+    margin-bottom: 0;
 }
 
 .form-fields > li,
@@ -131,8 +142,9 @@
     background: $c-neutral5;
 }
 
-.check-label {
-    display: inline-block;
+.check-label,
+.radio-label {
+    display: block;
     font-family: $sans-serif;
     font-size: 13px;
     font-size: 1.3rem;
@@ -141,10 +153,12 @@
 }
 
 .check-label--helper {
+    display: inline-block;
     vertical-align: middle;
 }
 
-[type=checkbox] {
+[type=checkbox],
+[type=radio] {
     float: left;
     height: 13px;
     margin-left: -$gs-gutter;

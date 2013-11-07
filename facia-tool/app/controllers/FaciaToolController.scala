@@ -8,6 +8,7 @@ import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
+import play.api.libs.ws.WS
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -52,6 +53,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         val identity = Identity(request).get
         UpdateActions.updateCollectionList(id, update, identity)
         //TODO: How do we know if it was updated or created? Do we need to know?
+        notifyContentApi(id)
         Ok
       }
       case blockAction: BlockActionJson => {
@@ -60,11 +62,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           .map { _ =>
             FaciaToolMetrics.DraftPublishCount.increment()
             FaciaApi.publishBlock(id, identity)
+            notifyContentApi(id)
             Ok
           }
           .orElse {
           blockAction.discard.filter {_ == true}.map { _ =>
             FaciaApi.discardBlock(id, identity)
+            notifyContentApi(id)
             Ok
           }
         } getOrElse NotFound("Invalid JSON")
@@ -72,6 +76,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       case updateTrailblock: UpdateTrailblockJson => {
         val identity = Identity(request).get
         UpdateActions.updateTrailblockJson(id, updateTrailblock, identity)
+        notifyContentApi(id)
         Ok
       }
       case _ => NotFound
@@ -90,10 +95,20 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionFilter(id, update, identity)
+        notifyContentApi(id)
         Ok
       }
       case _ => NotFound
     } getOrElse NotFound
+  }
+
+  def notifyContentApi(id: String): Unit = {
+    Configuration.faciatool.contentApiPostEndpoint map { postUrl =>
+      val url = "%s/collection/%s".format(postUrl, id)
+      val r = WS.url(url).post("")
+      r.onSuccess{case s => log.info("Content API POST: %s %s".format(s.status.toString, s.body))}
+      r.onFailure{case e: Throwable => log.error("Error posting to Content API: %s".format(e.toString))}
+    }
   }
 
 }

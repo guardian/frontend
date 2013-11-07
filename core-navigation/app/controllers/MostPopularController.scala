@@ -9,7 +9,7 @@ import play.api.libs.json._
 import play.api.libs.json.Json
 import scala.concurrent.Future
 import scala.util.Random
-import views.support.{cleanTrailText, ImgSrc, FrontItem, FrontItemMain, FrontItemMobile, FrontItemMainMobile}
+import views.support.{Profile, ImgSrc, cleanTrailText}
 
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
@@ -34,31 +34,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.mostPopular(popular, 5),
-            "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url),
-            "fullTrails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map{ trail =>
-              Json.obj(
-                "url" -> trail.url,
-                "headline" -> trail.headline,
-                "trailText" -> trail.trailText.map{ text =>
-                  cleanTrailText(text)(Edition(request)).toString()
-                },
-                "mainPicture" -> trail.mainPicture.map{ mainPicture =>
-                  FrontItem.bestFor(mainPicture).map { bestFitPicture =>
-                    Json.obj(
-                      "item" -> FrontItem.bestFor(mainPicture),
-                      "itemMain" -> FrontItemMain.bestFor(mainPicture),
-                      "itemMobile" -> FrontItemMobile.bestFor(mainPicture),
-                      "itemMainMobile" -> FrontItemMainMobile.bestFor(mainPicture)
-                    )
-                  }
-                },
-                "published" ->Json.obj(
-                  "unix" -> trail.webPublicationDate.getMillis,
-                  "datetime" -> trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ"),
-                  ("datetimeShort", trail.webPublicationDate.toString("d MMM y"))
-                )
-              )
-            })
+            "trails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map(TrailToJson(_)))
           )
         }
       }

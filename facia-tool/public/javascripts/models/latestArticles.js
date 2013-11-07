@@ -101,7 +101,7 @@ define([
                     propName = 'results';
                 }
 
-                authedAjax({
+                authedAjax.request({
                     url: url
                 }).then(function(data) {
                     var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];

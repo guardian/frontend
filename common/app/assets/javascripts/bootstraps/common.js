@@ -1,3 +1,4 @@
+/*global Imager:true */
 define([
     //Commmon libraries
     'common',
@@ -35,7 +36,9 @@ define([
     "modules/lightbox-gallery",
     "modules/swipe/ears",
     "modules/swipe/bar",
-    "modules/facia/image-upgrade"
+    "modules/facia/images",
+    "modules/onward/history",
+    "modules/onward/sequence"
 ], function (
     common,
     ajax,
@@ -73,24 +76,19 @@ define([
     LightboxGallery,
     ears,
     SwipeBar,
-    ImageUpgrade
+    faciaImages,
+    History,
+    sequence
 ) {
 
     var modules = {
 
         upgradeImages: function () {
+            faciaImages.upgrade();
+
             var images = new Images();
             common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
-
-                // upgrade facia images
-                // TODO: better image upgrade solution, e.g. https://github.com/BBC-News/Imager.js/
-                common.$g('.collection', context).each(function(collection) {
-                    common.$g('.item', collection).each(function(item, index) {
-                        new ImageUpgrade(item, collection.getAttribute('data-type') && index === 0)
-                            .upgrade();
-                    });
-                });
             });
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
@@ -229,7 +227,7 @@ define([
 
                         var viewData = {};
 
-                        var audsci = storage.get('gu.ads.audsci');
+                        var audsci = storage.local.get('gu.ads.audsci');
                         if (audsci) {
                             viewData.audsci_json = JSON.stringify(audsci);
                         }
@@ -349,6 +347,21 @@ define([
                     }
                 });
             }
+        },
+
+        logReadingHistory : function() {
+            common.mediator.on('page:common:ready', function(config) {
+                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                    new History().log({
+                        id: '/' + config.page.pageId,
+                        meta: {
+                            section: config.page.section,
+                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                        }
+                    });
+                }
+                sequence.init();
+            });
         }
     };
 
@@ -390,6 +403,7 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage(config);
+            modules.logReadingHistory();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

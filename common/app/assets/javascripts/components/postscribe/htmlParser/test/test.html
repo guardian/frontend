@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                      "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="qunit.js"></script>
+    <script src="../htmlParser.js"></script>
+
+    <script>
+
+      $(document).ready(function(){
+
+        var logTokens = function(tokenizer) {
+          console.log('Tokens:');
+          for(var tok; tok = tokenizer.readToken();) {
+            console.log(tok);
+          }
+        }
+
+        // echo all the tokens in a parser. Good for testing.
+        var echo = function(parser) {
+          var stream = '';
+          while(tok = parser.readToken()) {
+            stream += htmlParser.tokenToString(tok);
+          }
+          return stream;
+        };
+
+        var nextId = 0;
+        var testEcho = function(name, html, expected) {
+          var id = ++nextId;
+          if (arguments.length === 1) {
+            expected = html;
+            html = name;
+            // name is just html
+          }
+          expected = expected || html;
+          test(name, function() {
+            equal(echo(htmlParser(html)), expected);
+          });
+        };
+
+        testEcho('<p foo="3"><i></p>');
+
+        testEcho('<p foo="3"><i/></p>');
+
+        testEcho('<p foo="3">foo<i/>bar</p>bla');
+
+        test('A', function() {
+          var parser = htmlParser('<p foo="3"><i/></p><b');
+          equal(echo(parser), '<p foo="3"><i/></p>');
+          parser.append(' bar="q"><script src="funny">foo');
+          equal(echo(parser), '<b bar="q">');
+          parser.append('<\/script>');
+          equal(echo(parser), '<script src="funny">foo<\/script>');
+        });
+
+      });
+    </script>
+
+  </head>
+  <body>
+    <h1 id="qunit-header">htmlParser tests</h1>
+   <h2 id="qunit-banner"></h2>
+   <div id="qunit-testrunner-toolbar"></div>
+   <h2 id="qunit-userAgent"></h2>
+   <ol id="qunit-tests"></ol>
+   <div id="qunit-fixture">test markup, will be hidden</div>
+
+  </body>
+</html>

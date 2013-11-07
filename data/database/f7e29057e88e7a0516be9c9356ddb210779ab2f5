@@ -1,0 +1,160 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/27/dozens-dead-baghdad-bombings-shia-areas",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-27T08:30:22Z",
+      "webTitle":"Dozens dead in fresh wave of Baghdad bombings aimed at Shia areas",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/27/dozens-dead-baghdad-bombings-shia-areas",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/27/dozens-dead-baghdad-bombings-shia-areas",
+      "fields":{
+        "trailText":"Al-Qaida branch suspected after co-ordinated blasts rock the Iraqi capital over half an hour",
+        "headline":"Dozens dead in fresh wave of Baghdad bombings aimed at Shia areas",
+        "body":"<p>Insurgents unleashed a new wave of car bombs in Shia neighborhoods of Baghdad on Sunday, killing at least 39 people and wounding dozens, officials said. It was the latest in a series of co-ordinated attacks targeting civilian areas that have killed hundreds in recent months.</p> <p>Four police officers said the bombs, placed in parked cars and detonated over half an hour, targeted commercial areas and car parks. The deadliest blasts were in the northern Shaab, southern Abu Dshir and south-eastern Nahrwan districts, each of which killed six people.</p> <p>Other blasts hit the neighbourhoods of Mashtal, Baladiyat and Ur in eastern Baghdad and the northern Sab al-Bor and Hurriyah districts.</p> <p>Six medical officials confirmed the casualty figures. All officials spoke on condition of anonymity as they were not authorised to release information.</p> <p>There was no immediate claim of responsibility, but such systematic attacks are a common tactic of al-Qaida's local branch. It frequently targets civilians in markets, cafes and commercial streets in Shia areas in an attempt to undermine confidence in the government, as well as members of the security forces.</p> <p>Violence has spiked in Iraq since April, when the pace of killing reached levels unseen since 2008. Sunday's attacks bring the death toll across the country this month to more than 500, according to an Associated Press count.</p><!-- Guardian Watermark: internal-code/content/421052307|2013-11-05T11:03:48Z|96baac7009b01edb451d9c078615623331e76f89 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-27T16:03:11Z",
+        "hasStoryPackage":"false",
+        "standfirst":"Al-Qaida branch suspected after co-ordinated blasts rock the Iraqi capital over half an hour",
+        "shortUrl":"http://gu.com/p/3jq6h",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"421052307",
+        "allowUgc":"false",
+        "internalComposerCode":"526cc50de4b0ac030bfe3977",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Baghdad",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987433",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T08:30:22Z"
+      },
+      "tags":[{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421063440",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "durationMinutes":"1",
+            "mediaId":"gu-video-421063440",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "durationMinutes":"1",
+            "mediaId":"gu-video-421063440",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "durationMinutes":"1",
+            "mediaId":"gu-video-421063440",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/27/ITNP_WORLD_IRAQBOMB_27_dv/ITNP_WORLD_IRAQBOMB_27_dv.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "durationMinutes":"1",
+            "mediaId":"gu-video-421063440",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889459132/Aftermath-of-car-bomb-in--003.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889459132/Aftermath-of-car-bomb-in--003.jpg",
+            "source":"EPA",
+            "photographer":"Ali Abbas",
+            "altText":"Aftermath of car bomb in Baghdad",
+            "height":"360",
+            "credit":"Ali Abbas/EPA",
+            "caption":"Aftermath of car bomb in Baghdad Photograph: Ali Abbas/EPA",
+            "mediaId":"gu-video-421063440",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889476209/Aftermath-of-car-bomb-in--015.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/27/1382889476209/Aftermath-of-car-bomb-in--015.jpg",
+            "source":"EPA",
+            "photographer":"Ali Abbas",
+            "altText":"Aftermath of car bomb in Baghdad",
+            "height":"360",
+            "credit":"Ali Abbas/EPA",
+            "caption":"Aftermath of car bomb in Baghdad Photograph: Ali Abbas/EPA",
+            "mediaId":"gu-video-421063440",
+            "width":"640"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

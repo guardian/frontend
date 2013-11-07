@@ -1,0 +1,971 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/30/giant-mirrors-first-winter-sun-norway-rjukan",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-30T15:33:50Z",
+      "webTitle":"Giant mirrors reflect winter sun into Norwegian town of Rjukan",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/30/giant-mirrors-first-winter-sun-norway-rjukan",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/30/giant-mirrors-first-winter-sun-norway-rjukan",
+      "fields":{
+        "trailText":"Celebrations as project to illuminate mountain town during winter months results in first deflected sunrays reaching its main square",
+        "headline":"Giant mirrors reflect winter sun into Norwegian town of Rjukan",
+        "body":"<p>Residents of the small Norwegian town of Rjukan have finally seen the light.</p><p>Tucked in-between steep mountains, the town is normally shrouded in shadow for almost six months a year, with residents having to catch a cable car to the top of a nearby precipice to get a fix of midday vitamin D.</p><p>But on Wednesday faint rays from the winter sun for the first time reached the town's market square, thanks to three giant mirrors placed on a mountain.</p><p>Cheering families, some on sun loungers, drinking cocktails and waving Norwegian flags, donned shades as the sun crept from behind a cloud to hit the mirrors and reflect down onto the faces of delighted children below.</p><p>TV footage of the event showed the centre of the crowded square light up a touch, but not as if hit by direct sunlight. Still, residents said the effect was noticeable.</p><p>\"Before when it was a fine day, you would see that the sky was blue and you knew that the sun was shining. But you couldn't quite see it. It was very frustrating,\" said Karin Roe, from the local tourist office. \"This feels warm. When there is no time to get to the top of the mountains on weekdays, it will be lovely to come out for an hour and feel this warmth on my face.\"</p><p>Like much of Scandinavia, Rjukan often is freezing throughout the winter, but on Wednesday it was 7 C.</p><figure data-media-id='gu-image-421302497'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383147871868/Giant-mirrors--007.jpg' alt='Giant mirrors ' width='460' height='276' class='gu-image'/><figcaption>Three giant mirrors were erected on the hills above Rjukan. Photograph: Tore Meek/EPA</figcaption></figure><p>The Italian town of Viganella has a similar, but smaller, sun mirror.</p><p>The plan to illuminate Rjukan was cooked up 100 years ago by the Norwegian industrialist Sam Eyde, who built the town to provide workers for a hydroelectric plant he located at the foot of a nearby waterfall.</p><p>The renowned engineer never saw his plan become reality, but his plant and the Telemark town he founded developed a special affection in the Norwegian imagination as the site of the country's most famous wartime escapade.</p><p>Occupied by the Germans during the second world war, the factory was a staging post in Hitler's quest for the atomic bomb. The story of how 12 Norwegian saboteurs parachuted into the nearby tundra and survived freezing temperatures to destroy the factory's \"heavy water\" plant inspired a 1965 Hollywood film, The Heroes of Telemark, and is being turned into a 10-part TV series by Oscar-winning director Danny Boyle.</p><p>In contrast to the shadow cast over Europe by Hitler's plan for an atomic weapon, the three mirrors, measuring 183-sq ft (17-sq m) and ironically being remotely controlled from Germany, captured the sunlight and sent it in an ellipse that illuminated about one-third of the square below.</p><p>A band encouraged a cloud that weakened the effect to move away with the song, Let The Sunshine In.</p><figure data-media-id='gu-image-421302495'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383148016506/People-gather-in-front-of-009.jpg' alt='People gather in front of the town hall of Rjukan,' width='460' height='276' class='gu-image'/><figcaption>People gather in front of the town hall of Rjukan, which is known for its darkness in winter. Photograph: Meek, Tore/AP</figcaption></figure><p>Jan-Anders Dam-Nielsen, director of the Norwegian Industrial Museum, located on the site of the famous factory, said the solar experiment would mark another chapter in the history of Rjukan.</p><p>\"Soon we will celebrate 70 years since the saboteurs struck the factory,\" he said. \"Then we will think about how we mark this. This is a really important day in the history of this town. And like the mirrors reflected the sun, we will reflect this in the museum.\"</p><p>Helicoptered in and installed 450m above the town square, the 5m kroner (£520,000) computer-controlled mirrors, or heliostats, are more commonly used to create solar power in sun-drenched regions of the Middle East. Here, the solar energy the heliostats capture is used to power their tilting trajectory as they follow the sun's brief dash across the Norwegian winter sky.</p><p>The century old idea was revived in 2005 by Martin Andersen, an artist and resident of the town, who helped raise the sponsorship money. Most of it has come from Norsk Hydro, the company founded by Sam Eyde.</p><!-- Guardian Watermark: internal-code/content/421300036|2013-11-05T11:03:51Z|1fb4f8b878e12fda42a5d2432024ff138e34b821 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T15:49:15Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+        "standfirst":"Celebrations as project to illuminate mountain town during winter months results in first deflected sunrays reaching its main square",
+        "shortUrl":"http://gu.com/p/3kxj8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+        "wordcount":"618",
+        "commentable":"false",
+        "internalContentCode":"421300036",
+        "allowUgc":"false",
+        "internalOctopusCode":"8259775",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Stavanger",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989233",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T15:33:50Z"
+      },
+      "tags":[{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/solarpower",
+        "type":"keyword",
+        "webTitle":"Solar power",
+        "webUrl":"http://www.theguardian.com/environment/solarpower",
+        "apiUrl":"http://content.guardianapis.com/environment/solarpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/renewableenergy",
+        "type":"keyword",
+        "webTitle":"Renewable energy",
+        "webUrl":"http://www.theguardian.com/environment/renewableenergy",
+        "apiUrl":"http://content.guardianapis.com/environment/renewableenergy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421302494",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146563613/Rjukan-giant-sun-mirrors--002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"340",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146564942/Rjukan-giant-sun-mirrors--003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"130",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"84",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146567808/Rjukan-giant-sun-mirrors--005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"132",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146569020/Rjukan-giant-sun-mirrors--006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"168",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146570292/Rjukan-giant-sun-mirrors--007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"180",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146571571/Rjukan-giant-sun-mirrors--008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"228",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146572837/Rjukan-giant-sun-mirrors--009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"276",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146574110/Rjukan-giant-sun-mirrors--010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"372",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146560645/Rjukan-giant-sun-mirrors--001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"54",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146572837/Rjukan-giant-sun-mirrors--009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"276",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather during the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421302495",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383148016506/People-gather-in-front-of-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Meek, Tore",
+            "altText":"People gather in front of the town hall of Rjukan,",
+            "height":"276",
+            "credit":"Meek, Tore/AP",
+            "caption":"People gather in front of the town hall of Rjukan, which is known for its darkness in winter. Photograph: Meek, Tore/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421302496",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"84",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421302497",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383147871868/Giant-mirrors--007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tore Meek",
+            "altText":"Giant mirrors ",
+            "height":"276",
+            "credit":"Tore Meek/EPA",
+            "caption":"Three giant mirrors were erected on the hills above Rjukan. Photograph: Tore Meek/EPA",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/oct/25/norwegian-town-rjuken-stealing-sun",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-25T10:13:13Z",
+      "webTitle":"Is stealing sun in the Norwegian town of Rjuken playing with fire? | Jonathan Jones",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/25/norwegian-town-rjuken-stealing-sun",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/25/norwegian-town-rjuken-stealing-sun",
+      "fields":{
+        "trailText":"<p><strong>Jonathan Jones: Framing the debate:</strong> Artist Martin Andersen's giant mirrors have brought light to a dark town in Norway, but our exact need for the sun is enigmatic</p>",
+        "headline":"Is stealing sun in the Norwegian town of Rjuken playing with fire?",
+        "body":"<p>A group of almost nervous-looking Norwegians gather to greet the sun. It is rising in silver splendour over the mountains that enfold their little town, casting a pool of bright light around them. In this new morning they cast shadows on the town square. Real shadows at last!</p><p>But that is not the sun. It is a system of gigantic mirrors set up on the mountain to give Rjukan a sunlight boost. This town buried in a deep valley never gets any direct natural light in winter, when the northern sun is too low in the sky to get past its walls of rock. Until now. The mirrors are the brainchild of Martin Andersen, an artist who moved to Rjukan 10 years ago. His \"heliostats\" reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.</p><figure data-media-id='gu-image-420963725'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382713954553/Rjukan-mirrors-009.jpg' alt='Rjukan mirrors' width='460' height='276' class='gu-image'/><figcaption>People gather on a spot in front of the town hall of Rjukan, where sunshine is reflected by three giant mirrors. Photograph: Meek, Tore/AP</figcaption></figure><p>Why is this artwork so fascinating? It plays with one thing that is generally deemed beyond human control. The sun is the raging force that sustains our solar system, a vast benign inferno of nuclear reactions and cosmic flares that dwarfs our orbiting and utterly dependent rock. We've done plenty to our planet, but changing the sun and the ebb and flow of its light and warmth as the earth spins will surely always be beyond us.</p><p>Modern life has found ways to avoid thinking about that fundamental primordial power that shapes our existence. Electric light creates 24-hour cities and homes that need never be dark. To change the sun itself and its impact on earth is, however, a bizarre, almost criminal, branch of underground science. There's something unholy about it, or megalomaniac – wasn't it his crazy scheme to rob Springfield of sunlight with giant sunshades that got The Simpsons' Mr Burns shot?</p><p>The first person who is known to have dreamed of toying with sunlight was the ancient Greek scientist Archimedes. One of the secret weapons he is said to have invented to defend the Greek city of Syracuse from Roman attack in the 3rd century BC was a giant parabolic mirror that concentrated sunlight so fiercely that it could set ships on fire from afar. Whether or not this solar death ray really existed, it fascinated Leonardo da Vinci so much that he tried to recreate it in his workshop in early 16th-century Rome.</p><figure data-media-id='gu-image-420963726'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382713992171/Rjukan-mirrors-004.jpg' alt='Rjukan mirrors' width='460' height='276' class='gu-image'/><figcaption>Giant mirrors erected on a mountainside reflect sunlight into the Norwegian industrial town of Rjukan in the valley below. Photograph: Ntb Scanpix/Reuters</figcaption></figure><p>Andersen's mirrors reverse the violent intent of these hubristic predecessors and bring light and warmth into a cold dark valley – a boon for \"the pale little children of Rjukan\", as its mayor said. The mirrors address our deep human need for sunlight. In Isaac Asimov's science fiction story Nightfall, a planet with multiple suns never experiences night. There's always at least one sun in the sky. When, every few thousand years, an eclipse does create darkness, no one can cope and an entire society goes mad.</p><p>It seems to be a myth that suicide rates soar in the Arctic Circle in the long lightless winter months. In fact <a href=\"http://www.vice.com/en_uk/read/arctic-wave-suicides-507-v16n1\" title=\"\">suicides in Greenland</a> are at their worst when the sun comes back at the end of winter. The self-inflicted death rate soars in spring and summer. Greenland has an extremely high suicide rate and this is surely connected with its extremes of sunlight and darkness. This suggests a deep yet mysterious connection between the sun and mental wellbeing.</p><p>There are so many myths about the sun. Pagans still go to Stonehenge for the summer solstice when all the evidence suggests Britain's neolithic monuments are aligned to the winter solstice. They seem to be \"tuned\" to the darkest day of the year. At Maeshowe in Orkney the sun on the darkest day sends a beam of light straight down a narrow tunnel into the central chamber of a burial mound. It's a stone telescope set up for that one moment.</p><p>Why? Perhaps so the community could know when winter was at its deepest and start looking forward to the sun's return. Then again, the ghost stories and folk tales of Europe reveal our peculiar pleasure in the dark, our ability to get gloomily addicted to winter. In Viking sagas they winter around fires telling stories and getting very, very drunk.</p><p>Our exact need for the sun is enigmatic and complex. Dark and light are both part of our lives and our minds. Perhaps, in meddling with these ancient forces, the little town of Rjukan is after all following in the dangerous footsteps of Archimedes and his burning mirrors. We don't know how the sun shapes us and we cannot control our strange relationship with it, the greatest love affair in any of our lives.</p><!-- Guardian Watermark: internal-code/content/420929229|2013-11-05T11:03:51Z|811eb6a948972db5c8093e59d6968090fd2bc552 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-25T15:13:45Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694763410/Martin-Andersons-mirror-i-003.jpg",
+        "standfirst":"Artist Martin Andersen's giant mirrors have brought light to a dark town in Norway, but our exact need for the sun is enigmatic",
+        "shortUrl":"http://gu.com/p/3jp7d",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694763410/Martin-Andersons-mirror-i-003.jpg",
+        "wordcount":"769",
+        "commentable":"true",
+        "internalContentCode":"420929229",
+        "allowUgc":"false",
+        "internalOctopusCode":"8240006",
+        "isPremoderated":"false",
+        "byline":"Jonathan Jones",
+        "publication":"theguardian.com",
+        "internalPageCode":"1986727",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T11:13:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/series/framing-the-debate",
+        "type":"series",
+        "webTitle":"Framing the debate",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/framing-the-debate",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/framing-the-debate",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"artanddesign/photography-blog",
+        "type":"blog",
+        "webTitle":"Photography blog",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography-blog",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography-blog",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/jonathanjones",
+        "type":"contributor",
+        "webTitle":"Jonathan Jones",
+        "webUrl":"http://www.theguardian.com/profile/jonathanjones",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanjones",
+        "bio":"<p>Jonathan Jones writes on art for the Guardian and was on the jury for the 2009 Turner prize</p>",
+        "rcsId":"GNL234013",
+        "r2ContributorId":"15906",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_jones_140x140.jpg",
+        "references":[]
+      },{
+        "id":"media/news-photography",
+        "type":"keyword",
+        "webTitle":"News photography",
+        "webUrl":"http://www.theguardian.com/media/news-photography",
+        "apiUrl":"http://content.guardianapis.com/media/news-photography",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420963723",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694760807/Martin-Andersons-mirror-i-001.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"54",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694762229/Martin-Andersons-mirror-i-002.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"130",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694763410/Martin-Andersons-mirror-i-003.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"84",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694764631/Martin-Andersons-mirror-i-004.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"132",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694765804/Martin-Andersons-mirror-i-005.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"168",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694766992/Martin-Andersons-mirror-i-006.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"180",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694768267/Martin-Andersons-mirror-i-007.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"228",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694769491/Martin-Andersons-mirror-i-008.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"276",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694769491/Martin-Andersons-mirror-i-008.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"276",
+            "credit":"AFP",
+            "caption":"Martin Andersen's 'heliostats' reflect a pool of sunlight on to the Rjukan town square 365 days a year, keeping the sun in town even in the darkest winter. Photograph: AP/Tore Meek",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382698676145/Rjukan-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Meek, Tore",
+            "altText":"Rjukan",
+            "height":"683",
+            "credit":"Meek, Tore/AP",
+            "caption":"Martin Andersen's 'heliostats' reflect a pool of sunlight on to the Rjukan town square 365 days a year, keeping the sun in town even in the darkest winter. Photograph: Meek, Tore/AP",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-image-420963725",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382713954553/Rjukan-mirrors-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Meek, Tore",
+            "altText":"Rjukan mirrors",
+            "height":"276",
+            "credit":"Meek, Tore/AP",
+            "caption":"People gather on a spot in front of the town hall of Rjukan, where sunshine is reflected by three giant mirrors. Photograph: Meek, Tore/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420963726",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382713992171/Rjukan-mirrors-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan mirrors",
+            "height":"276",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"Giant mirrors erected on a mountainside reflect sunlight into the Norwegian industrial town of Rjukan in the valley below. Photograph: Ntb Scanpix/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420963727",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382694763410/Martin-Andersons-mirror-i-003.jpg",
+          "typeData":{
+            "source":"AFP",
+            "altText":"Martin Anderson's mirror installation in Rjuken, Norway",
+            "height":"84",
+            "credit":"AFP",
+            "caption":"'Martin Andersen's 'heliostats' reflect this pool of sunlight on to the town square 365 days a year, keeping the sun in town even in the darkest winter.' Photograph: AFP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/30/giant-mirrors-first-winter-sun-norway-rjukan",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-30T15:33:50Z",
+      "webTitle":"Giant mirrors reflect winter sun into Norwegian town of Rjukan",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/30/giant-mirrors-first-winter-sun-norway-rjukan",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/30/giant-mirrors-first-winter-sun-norway-rjukan",
+      "fields":{
+        "trailText":"Celebrations as project to illuminate mountain town during winter months results in first deflected sunrays reaching its main square",
+        "headline":"Giant mirrors reflect winter sun into Norwegian town of Rjukan",
+        "body":"<p>Residents of the small Norwegian town of Rjukan have finally seen the light.</p><p>Tucked in-between steep mountains, the town is normally shrouded in shadow for almost six months a year, with residents having to catch a cable car to the top of a nearby precipice to get a fix of midday vitamin D.</p><p>But on Wednesday faint rays from the winter sun for the first time reached the town's market square, thanks to three giant mirrors placed on a mountain.</p><p>Cheering families, some on sun loungers, drinking cocktails and waving Norwegian flags, donned shades as the sun crept from behind a cloud to hit the mirrors and reflect down onto the faces of delighted children below.</p><p>TV footage of the event showed the centre of the crowded square light up a touch, but not as if hit by direct sunlight. Still, residents said the effect was noticeable.</p><p>\"Before when it was a fine day, you would see that the sky was blue and you knew that the sun was shining. But you couldn't quite see it. It was very frustrating,\" said Karin Roe, from the local tourist office. \"This feels warm. When there is no time to get to the top of the mountains on weekdays, it will be lovely to come out for an hour and feel this warmth on my face.\"</p><p>Like much of Scandinavia, Rjukan often is freezing throughout the winter, but on Wednesday it was 7 C.</p><figure data-media-id='gu-image-421302497'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383147871868/Giant-mirrors--007.jpg' alt='Giant mirrors ' width='460' height='276' class='gu-image'/><figcaption>Three giant mirrors were erected on the hills above Rjukan. Photograph: Tore Meek/EPA</figcaption></figure><p>The Italian town of Viganella has a similar, but smaller, sun mirror.</p><p>The plan to illuminate Rjukan was cooked up 100 years ago by the Norwegian industrialist Sam Eyde, who built the town to provide workers for a hydroelectric plant he located at the foot of a nearby waterfall.</p><p>The renowned engineer never saw his plan become reality, but his plant and the Telemark town he founded developed a special affection in the Norwegian imagination as the site of the country's most famous wartime escapade.</p><p>Occupied by the Germans during the second world war, the factory was a staging post in Hitler's quest for the atomic bomb. The story of how 12 Norwegian saboteurs parachuted into the nearby tundra and survived freezing temperatures to destroy the factory's \"heavy water\" plant inspired a 1965 Hollywood film, The Heroes of Telemark, and is being turned into a 10-part TV series by Oscar-winning director Danny Boyle.</p><p>In contrast to the shadow cast over Europe by Hitler's plan for an atomic weapon, the three mirrors, measuring 183-sq ft (17-sq m) and ironically being remotely controlled from Germany, captured the sunlight and sent it in an ellipse that illuminated about one-third of the square below.</p><p>A band encouraged a cloud that weakened the effect to move away with the song, Let The Sunshine In.</p><figure data-media-id='gu-image-421302495'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383148016506/People-gather-in-front-of-009.jpg' alt='People gather in front of the town hall of Rjukan,' width='460' height='276' class='gu-image'/><figcaption>People gather in front of the town hall of Rjukan, which is known for its darkness in winter. Photograph: Meek, Tore/AP</figcaption></figure><p>Jan-Anders Dam-Nielsen, director of the Norwegian Industrial Museum, located on the site of the famous factory, said the solar experiment would mark another chapter in the history of Rjukan.</p><p>\"Soon we will celebrate 70 years since the saboteurs struck the factory,\" he said. \"Then we will think about how we mark this. This is a really important day in the history of this town. And like the mirrors reflected the sun, we will reflect this in the museum.\"</p><p>Helicoptered in and installed 450m above the town square, the 5m kroner (£520,000) computer-controlled mirrors, or heliostats, are more commonly used to create solar power in sun-drenched regions of the Middle East. Here, the solar energy the heliostats capture is used to power their tilting trajectory as they follow the sun's brief dash across the Norwegian winter sky.</p><p>The century old idea was revived in 2005 by Martin Andersen, an artist and resident of the town, who helped raise the sponsorship money. Most of it has come from Norsk Hydro, the company founded by Sam Eyde.</p><!-- Guardian Watermark: internal-code/content/421300036|2013-11-05T11:03:51Z|1fb4f8b878e12fda42a5d2432024ff138e34b821 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T15:49:15Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+        "standfirst":"Celebrations as project to illuminate mountain town during winter months results in first deflected sunrays reaching its main square",
+        "shortUrl":"http://gu.com/p/3kxj8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+        "wordcount":"618",
+        "commentable":"false",
+        "internalContentCode":"421300036",
+        "allowUgc":"false",
+        "internalOctopusCode":"8259775",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Stavanger",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989233",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T15:33:50Z"
+      },
+      "tags":[{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/solarpower",
+        "type":"keyword",
+        "webTitle":"Solar power",
+        "webUrl":"http://www.theguardian.com/environment/solarpower",
+        "apiUrl":"http://content.guardianapis.com/environment/solarpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/renewableenergy",
+        "type":"keyword",
+        "webTitle":"Renewable energy",
+        "webUrl":"http://www.theguardian.com/environment/renewableenergy",
+        "apiUrl":"http://content.guardianapis.com/environment/renewableenergy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421302494",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146563613/Rjukan-giant-sun-mirrors--002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"340",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146564942/Rjukan-giant-sun-mirrors--003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"130",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"84",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146567808/Rjukan-giant-sun-mirrors--005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"132",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146569020/Rjukan-giant-sun-mirrors--006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"168",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146570292/Rjukan-giant-sun-mirrors--007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"180",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146571571/Rjukan-giant-sun-mirrors--008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"228",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146572837/Rjukan-giant-sun-mirrors--009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"276",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146574110/Rjukan-giant-sun-mirrors--010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"372",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146560645/Rjukan-giant-sun-mirrors--001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"54",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146572837/Rjukan-giant-sun-mirrors--009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"276",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather during the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421302495",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383148016506/People-gather-in-front-of-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Meek, Tore",
+            "altText":"People gather in front of the town hall of Rjukan,",
+            "height":"276",
+            "credit":"Meek, Tore/AP",
+            "caption":"People gather in front of the town hall of Rjukan, which is known for its darkness in winter. Photograph: Meek, Tore/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421302496",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383146566536/Rjukan-giant-sun-mirrors--004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Ntb Scanpix",
+            "altText":"Rjukan giant sun mirrors ",
+            "height":"84",
+            "credit":"Ntb Scanpix/Reuters",
+            "caption":"People gather uring the official opening of giant sun mirrors erected on the mountainside in Rjukan.  Photograph: Ntb Scanpix/Reuters",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421302497",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383147871868/Giant-mirrors--007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tore Meek",
+            "altText":"Giant mirrors ",
+            "height":"276",
+            "credit":"Tore Meek/EPA",
+            "caption":"Three giant mirrors were erected on the hills above Rjukan. Photograph: Tore Meek/EPA",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

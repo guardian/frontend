@@ -35,6 +35,8 @@
 
 			function countdown () {
 				if (--count == 0) {
+					write((spy.calledMany(howMany || 0) ? 'SUCCESS' : 'FAILED') + ': should load ' + moduleId + ' exactly once');
+					priv.core.loadScript = origLoadScript;
 					promise.resolve();
 				}
 			}
@@ -53,14 +55,6 @@
 				}
 			);
 
-			if (spy.calledMany(howMany || 0)) {
-				write('SUCCESS: loaded ' + moduleId + ' exactly once');
-			}
-			else {
-				write('FAILED: loaded ' + moduleId + ' more than once');
-			}
-
-			priv.core.loadScript = origLoadScript;
 
 			return promise;
 

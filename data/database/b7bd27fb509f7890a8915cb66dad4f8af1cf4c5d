@@ -1,0 +1,524 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/31/nsa-files-mps-debate-oversight-of-the-intelligence-services",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-31T16:32:09Z",
+      "webTitle":"NSA files – MPs debate oversight of the intelligence services – live",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/31/nsa-files-mps-debate-oversight-of-the-intelligence-services",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/31/nsa-files-mps-debate-oversight-of-the-intelligence-services",
+      "fields":{
+        "trailText":"Westminster Hall hosts three-hour debate on whether Britain&rsquo;s security services are sufficiently well supervised in wake of Guardian Snowden revelations",
+        "headline":"NSA files – MPs debate oversight of the intelligence services – live",
+        "body":"<div id=\"block-52728287e4b0ad7c52b604ab\" class=\"block is-summary\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T16:32:09.873Z\">4.32pm <span class=\"timezone\">GMT</span></time> </p> <h2 class=\"block-title\">Summary</h2> <div class=\"block-elements\"> <p>That's it from me for today. Here is a summary of today's events:</p> <p>•&nbsp;<strong>A Conservative MP and former Foreign Office lawyer has criticised the&nbsp;<a href=\"http://www.theguardian.com/uk/mi5\">MI5</a>&nbsp;director general, Andrew Parker, for suggesting that&nbsp;<a href=\"http://www.theguardian.com/media/theguardian\">the Guardian</a>'s reporting of&nbsp;<a href=\"http://www.theguardian.com/world/the-nsa-files\">the NSA files</a>&nbsp;was a &quot;gift&quot; to terrorists.&nbsp;</strong>Dominic Raab said that the files leaked by whistleblower Edward Snowden had highlighted the &quot;reach&quot; of British and American intelligence agencies and had not disclosed interception techniques or sources.</p> <p>•&nbsp;<strong>But his fellow Tory Julian Smith, who recently wrote to the Metropolitan police to call for a criminal investigation into the Guardian, accused the newspaper of potential treason.</strong> Smith told MPs: &quot;The Guardian, which had every right to report on this issue, which has raised important topics of debate, which has done so in a digital and global way and an interesting way - with good journalism - has threatened the security of our country and which today stands guilty potentially of treasonous behaviour.&quot;</p> <p>&nbsp;• <strong>Home Office minister James Brokenshire said the debate had been important because it had highlighted the strength of scrutiny the UK had over its security services.</strong>&nbsp;Oversight was essential, he said, but much of it must necessarily take place behind closed doors to ensure secret intelligence remains secret.</p> <p>&nbsp;• <strong>Reporter Glenn Greenwald, who broke many of the Snowden stories, <a href=\"http://www.theguardian.com/world/2013/oct/31/nsa-files-mps-debate-oversight-of-the-intelligence-services#block-52727abae4b0ad7c52b604a1\">explained</a> why he was leaving the Guardian today and how he would operate in future.</strong> He also attacked what he saw as an increasing climate of hostility to the press in the US and UK.</p> <p>Thanks for all the comments and see you tomorrow.</p> </div> </div> <div id=\"block-527285a4e4b0ad7c52b604ae\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T16:30:30.191Z\">4.30pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He says the debate has been important because it has highlighted the strength of scrutiny the UK has over the security services.</p> <p>And with that the debate is over.</p> </div> </div> <div id=\"block-5272855ae4b0ad7c52b604ad\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T16:29:35.641Z\">4.29pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Brokenshire says scrutiny should not cut across ongoing security activity.&nbsp;</p> <p>He says the home and foreign secretaries are responsible for balancing the needs for privacy and security.</p> <p>Meacher suggests the government was keen to get the communications data bill through parliament to give retrospective sanction to things GCHQ was already doing.</p> <p>Brokenshire says under the bill this information would have been admissible in court, so that's very different.</p> <p>He says the ISC has receiveed a 30% uplift in its resources.</p> </div> </div> <div id=\"block-52728444e4b01fc33230d40c\" class=\"block is-key-event\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T16:24:44.298Z\">4.24pm <span class=\"timezone\">GMT</span></time> </p> <h2 class=\"block-title\">Debate</h2> <div class=\"block-elements\"> <p>Back to the debate. Home Office minister James Brokenshire speaks next.&nbsp;</p> <p>He says oversight is essential but much of it must necessarily take place behind closed doors to ensure secret intelligence remains secret.</p> <p>He recognises the desire for transparency, but secrets are necessary for the agencies to do the work they do.</p> <p>&quot;Secrecy is essential to safeguard sensitive methods and sources,&quot; he says.</p> <p>There is a difference between transparency and scrutiny, says Tom Watson. He asks why Tempora was not given scrutiny in parliament like RIPA was, for example.</p> <p>Discussing sensitive techniques publicly simply is not appropriate, Brokenshire says.&nbsp;</p> <p>But he says arrangements are in place for GCHQ not to keep any material it does not need.</p> <p>GCHQ operates at all times in accordance with RIPA. That is overseen by the commissioners, he says.</p> </div> </div> <div id=\"block-52727abae4b0ad7c52b604a1\" class=\"block is-key-event\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T16:14:10.541Z\">4.14pm <span class=\"timezone\">GMT</span></time> </p> <h2 class=\"block-title\">Goodbye from Glenn Greenwald</h2> <div class=\"block-elements\"> <p>Just to take a break from the debate for a second: Glenn Greenwald is leaving the Guardian today, and has written a <a href=\"http://www.theguardian.com/commentisfree/2013/oct/31/glenn-greenwald-leaving-guardian\">final column</a>&nbsp;looking back at his time with the paper and attacking a climate of hostility towards press freedom in the US and UK.&nbsp;He explains how he will operate in the future:</p> <blockquote class=\"quoted\"> <p>We do not yet have an exact launch date for the new outlet, but rest assured: I'm not going to disappear for months or anything like that. The new site will be up and running reasonably soon.</p> <p>In the meantime, I'll continue reporting in partnership with foreign media outlets (stories on mass&nbsp;<a href=\"http://www.theguardian.com/world/nsa\">NSA</a>&nbsp;surveillance in France began last week in Le Monde, and stories on bulk surveillance of Spanish citizens and NSA's cooperation with Spanish intelligence have appeared this week in Spain's El Mundo), as well as in partnership with US outlets. As I did yesterday when<a href=\"http://ggsidedocs.blogspot.com.br/2013/10/on-nsa-claims-about-misreporting-of-two.html\">&nbsp;responding to NSA claims about these stories</a>, I'll also periodically post on my personal blog –&nbsp;<a href=\"http://ggsidedocs.blogspot.com/\">here</a>&nbsp;– with an active comment section, as well as on our&nbsp;<a href=\"http://www.omidyargroup.com/newco/veteran-journalists-joins-the-team/\">pre-launch temporary blog</a>. Until launch of the new media outlet, the best way to learn of new stories, new posts, and other activity is my Twitter feed,&nbsp;<a href=\"https://twitter.com/ggreenwald\">@ggreenwald</a>. My new email address and PGP key are&nbsp;<a href=\"http://ggsidedocs.blogspot.com.br/2013/08/pgp-public-key.html\">here</a>.</p> </blockquote> <p>Answering a question from a reader, US editor Janine Gibson wrote:&nbsp;</p> <figure class=\"element element-comment\" data-canonical-url=\"http://discussion.theguardian.com/comment-permalink/28461418\"> <div class=\"d2-comment-embedded\" itemscope=\"\" itemtype=\"http://schema.org/Comment\"> <div class=\"d2-left-col\"> <a href=\"http://www.theguardian.com/discussion/user/id/742706\" title=\"View JanineGibson’s profile\"> <img class=\"d2-avatar\" src=\"http://static.guim.co.uk/sys-images/discussion/avatars/2010/08/22/JanineGibson/337df5f2-7c10-4c3d-9b3e-73cd4bb29577/60x60.png\" height=\"40\" width=\"40\" alt=\"User avatar for JanineGibson\" /> </a> <span class=\"d2-badge d2-badge-staff d2-hidetext\" title=\"Guardian staff\" itemprop=\"jobTitle\">Guardian staff</span> </div> <div class=\"d2-right-col\"> <div itemscope=\"\" itemprop=\"author\" itemtype=\"http://schema.org/Person\"> <a class=\"d2-username\" href=\"http://www.theguardian.com/discussion/user/id/742706\" title=\"View JanineGibson’s profile\" itemprop=\"url\"> <span itemprop=\"givenName\">JanineGibson</span> </a> </div> <div class=\"d2-permalink\"> <a class=\"d2-datetime\" href=\"http://discussion.theguardian.com/comment-permalink/28461418\" title=\"Link to this comment\" itemprop=\"datePublished\">31 October 2013 3:28pm</a> </div> <div class=\"d2-body\" itemprop=\"text\"><p>Yes. The Guardian will continue to aggressively report this story according to the extremely high standards and careful consideration we have applied so far. As, we're certain, will Glenn, the Washington Post and others.</p></div> </div> </div> </figure> </div> </div> <div id=\"block-52728075e4b01fc33230d40a\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T16:10:05.337Z\">4.10pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Here is <a href=\"http://www.theguardian.com/media/2013/oct/31/tory-dominic-raab-defends-guardian-mi5-nsa-gchq\">my colleague Nicholas Watt's write-up of the first half of this debate</a>.</p> <blockquote class=\"quoted\"> <p>A Conservative MP and former Foreign Office lawyer has criticised the<a href=\"http://www.theguardian.com/uk/mi5\">MI5</a>&nbsp;director general, Andrew Parker, for suggesting that&nbsp;<a href=\"http://www.theguardian.com/media/theguardian\">the Guardian</a>'s reporting of&nbsp;<a href=\"http://www.theguardian.com/world/the-nsa-files\">the NSA files</a>&nbsp;was a &quot;gift&quot; to terrorists.</p> <p>Dominic Raab said that the files leaked by whistleblower Edward Snowden had highlighted the &quot;reach&quot; of British and American intelligence agencies and had not disclosed interception techniques or sources.</p> <p>Speaking in a parliamentary debate on surveillance at Westminster Hall on Thursday, Raab also asked why nobody from the Guardian has been charged or arrested after Theresa May suggested that lives have been put at risk by the disclosure.</p> <p>&quot;Either UK law enforcement is surprisingly slow, given these assertions that have been made, or national security is being used as a fig leaf to muzzle disclosures,&quot; he told MPs.</p> <p>But a Conservative MP who recently wrote to the Metropolitan police to call for a criminal investigation into the Guardian, accused the newspaper of potential treason. Julian Smith told MPs: &quot;The Guardian, which had every right to report on this issue, which has raised important topics of debate, which has done so in a digital and global way and an interesting way - with good journalism - has threatened the security of our country and which today stands guilty potentially of treasonous behaviour.&quot;</p> <p>Raab opened his speech by praising the work of MI5 and&nbsp;GCHQ, with whom he worked as a Foreign Office lawyer. But he took issue with Parker's claim that the disclosures about the work of GCHQ in the&nbsp;<a href=\"http://www.theguardian.com/world/nsa\">NSA</a>files had helped terrorists.</p> <p>Raab said: &quot;In his speech the MI5 director general lambasted the Guardian for handing terrorists a gift - a very potent word he used. Ministers have more recently claimed that the disclosures have put lives at risk.</p> <p>&quot;I want to take that seriously because Mr Parker claimed that making public 'the reach and limits of&nbsp;GCHQ&nbsp;breaches national security'. Let us be very clear about what was being talked of here - not disclosing interception techniques, not the technical aspect, not the revelation of source or operatives - clearly a major cause of concern if that were to happen. Simply revealing our intelligence reach. I find this assertion difficult to take at face value. It may be true but it is not on the mere assertion.&quot;</p> <p>Raab questioned whether national security had been breached because terrorists knew their communications were being routinely monitored. He said: &quot;Any serious terrorist group assumes their phones, emails and internet use will be monitored. That is no secret. Learning that western spies drain the swamp of their own citizens' data in the process does not help terrorists in any tangible way.</p> <p>&quot;If national security were materially breached why hasn't anyone at the Guardian been charged or even arrested since the search of their offices back in July? Why wasn't David Miranda, detained for several hours, arrested and then bailed following his detention at Heathrow in August?&quot;</p> <p>Meanwhile, Smith accused the Guardian of having failed to discuss the documents with the government even though its editor-in-chief, Alan Rusbridger, held a meeting with the cabinet secretary, Sir Jeremy Heywood. This led the Guardian to agree to destroy hard drives after Heywood threatened to block further publication of details of the files using a high court injunction.</p> <p>Liberal Democrat MP Julian Huppert challenged Smith, saying: &quot;Is he aware that [they] been in touch for many, many months to talk about these things? Does he think part of the onus should be on the government to provide advice if it is concerned about these things?</p> <p>&quot;The Guardian is quite happy to talk about how to make sure this [data] is secure and frankly the&nbsp;NSA&nbsp;should never have lost it in the first place.&quot;</p> </blockquote> <figure class=\"element element-image\" data-media-id=\"gu-fc-55e8d17f-d48b-4fa0-bb2e-bd6731095f7d\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/8/22/1345643283780/Dominic-Raab---People-who-010.jpg\" alt=\"Dominic Raab … 'People who are coasting – it should be easier to let them go.'\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>Dominic Raab. Photograph: Sutton-Hibbert / Rex Features</figcaption> </figure> </div> </div> <div id=\"block-52727f80e4b01fc33230d409\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T16:04:20.515Z\">4.04pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Tory Julian Lewis says there is something terribly wrong with a system that allows an army private or junior technician to access such secrets.</p> <p>He asks who should rightly be regarded as a whistleblower. The person who steals the mass database and transmits it, when he cannot possibly have read or assessed the whole contents is not acting responsibly, he says.</p> <p>&quot;Somebody like Snowden is no more a whistleblower than somebody like Julian Assange,&quot; Lewis says.&nbsp;</p> <p>They must think nothing should be kept secret, he claims.</p> </div> </div> <div id=\"block-52727da4e4b0ad7c52b604a8\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:56:22.937Z\">3.56pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Tory Richard Graham says when he was a diplomat one of his phone calls was once interrupted by a third party saying: &quot;Please repeat the last sentence.&quot;</p> <p>Graham says of course spies spy, but not every email is being read.</p> <p>Parliamentary interest in the topic is legitimate though, he allows.</p> <p>He rejects Dominic Raab's contention that the terrorist threat has declined.</p> </div> </div> <div id=\"block-527279dce4b0ad7c52b604a0\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:40:16.098Z\">3.40pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Modern computers can digest vast amounts of information and can discard 99.99% of it, leaving only that which pertains to a terrorist, Rifkind says. The 99.99% is never even looked at, he says.</p> <p>The idea of living in a mass surveillance society sounds vaguely sinister, but the reality is everyone in this room is not having their emails read, he says.</p> <p>Tom Watson asks about algorithmic searches and the identification of patterns of behaviour - &quot;it gives leverage to people&quot;.</p> <p>Rifkind says the intelligence agencies have far more important things to do than looking at patterns of behaviour, except where it relates to crime.</p> <p>He says there is a legitimate public debate, and the ISC is going to look at whether the relevant acts remain appropriate.</p> <p>There is a revolution in oversight, and people should acknowledge that, he says.</p> <p>As the services' capabilities have grown, oversight has grown. Only the UK and US have substantial capabilities and substantial oversight.&nbsp;</p> <p>There hasn't been a single suggestion today of a power the ISC should have that it doesn't already have, he says.</p> </div> </div> <div id=\"block-52727877e4b0ad7c52b6049f\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:34:26.389Z\">3.34pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>ISC chair Sir Malcolm Rifkind speaks next. He says it is ironic that <a href=\"http://www.theguardian.com/world/2013/oct/31/edward-snowden-work-russian-website-nsa-contractor%20\">Edward Snowden's lawyer does not want to reveal where he works</a> - &quot;perhaps the need for a Russian whistleblower!&quot;</p> <p>He says he doesn't mind the ISC being criticised, but fundamental changes have been made in the last year to the committee. It now reports to parliament, not the PM, and in future the chairman will be chosen by the committee itself.&nbsp;</p> <p>The intelligence heads are now required to respond to the committee, he says.</p> <p>We have the right to demand operational information from the agencies, Rifkind says. Our staff can now go into MCHQ, MI5 and MI6 and look at the files relevant to our investigations, and the staff decide what the committee should see, not the intelligence agencies.</p> <p>Meacher asks why the ISC doesn't know about there Tempora programme when it was introduced.</p> <p>Rifkind says Meacher has no idea whether or not the committee knew about it. Secret information like that has to be kept secret, he says.</p> </div> </div> <div id=\"block-5272776ee4b0ad7c52b6049d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:29:55.457Z\">3.29pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The ISC should be elected by parliament, Meacher says, although the government should choose the chair.</p> <p>People say we should trust the security services, he says. &quot;Well, we did,&quot; he says, and then we found out from Snowden what they were really up to.</p> </div> </div> <div id=\"block-5272768ae4b01fc33230d3fe\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:26:05.943Z\">3.26pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Meacher is interrupted and told the ISC is the only committee that deals with confidential material.</p> <p>That requires safeguards, Meacher says, but not the current structure.&nbsp;</p> <p>Malcolm Rifkind says parliament can reject the names put forward by the prime minister for the ISC.</p> <p>But Meacher says the question is whether this is an effective way for the legislature to make the choice. He says he does not think so.</p> <p>Huppert says only someone put forward by the PM can be a member.</p> </div> </div> <div id=\"block-527275f3e4b0ad7c52b6049a\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:23:33.403Z\">3.23pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Labour's Michael Meacher says it is a good thing that the debate over information that public servants can access is now taking place.</p> <p>GCHQ says it always acts within the law.&nbsp;</p> <p>Meacher says points out that this legal basis sometimes comes from a drop-down menu.</p> <p>RIPA is so poorly drafted and open to such broad interpretation that it really allows government agencies to do whatever they like, he says.</p> <p>The NSA is spending a quarter of a billion pounds a year on breaking encryption, he says.</p> <p>Prism and Tempora have mutually acquired the capability to hoover up vast quantities of data from undersea internet cables, he says.</p> <p>Does this matter? I think it does, says Meacher. The security agencies are operating via outdated laws and without any genuine public mandate, he says.</p> <p>The ISC is the only committee not elected by the house, he points out. It operates in a totally different way.</p> </div> </div> <div id=\"block-52727249e4b0ad7c52b60497\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:07:55.257Z\">3.07pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>McDonnell is asked to give an example of a conflict of interest in the ISC.</p> <p>&quot;That's the problem,&quot; McDonnell says. &quot;Who knows?&quot;</p> <p>There needs to be a restoration of confidence, he says.</p> </div> </div> <div id=\"block-5272712de4b01fc33230d3f9\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:06:37.921Z\">3.06pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The public wants the debate, McDonnell says, quoting a poll. We need to respond to that public opinion.</p> <p>He suggests legal opinions underpinning surveillance are published, the budget and investigatory capacity of the ISC are published, and the two commissioners. The investigatory powers tribunal should be reformed so there's an assumption it would sit in public. The secretary of state should no longer have to give permission for agency heads to give evidence, and such evidence should be in public wherever possible.</p> <p>Details of the use of surveillance should be broken down by agency, he says.</p> <p>Parliament has to lead this process, McDonnell says.</p> <p>There is a concern about former ministers being on the ISC who were previously in charge of those services (eg former foreign secretary Malcolm Rifkind).</p> </div> </div> <div id=\"block-527270b1e4b01fc33230d3f8\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:03:01.037Z\">3.03pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Labour's John McDonnell points to the Guardian's Michael White, who is sitting at the press bench, and says he wants to drag him off to the Tower for being a running dog of the bourgeoisie – but not for treason.&nbsp;</p> <p>He runs through the gathering political criticism of what has been revealed in the US.</p> <p>That is what we are calling for here, McDonnell says.</p> </div> </div> <div id=\"block-52726f57e4b0ad7c52b60496\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T15:00:51.557Z\">3.00pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Spying is dangerous, Wallace says. And if you get it wrong, people die. Then constituents get upset, the country gets less secure, terrorists and our enemies start to win.</p> <p>He says the Guardian has not revealed any crime.</p> <p>Without it the paper has no public interest defence, he claims.&nbsp;</p> <p>He says the former features editor of the Guardian <a href=\"http://en.wikipedia.org/wiki/Richard_Gott\">Richard Gott</a> resigned in 1994 after allegations he had taken money from the KGB.</p> <p>The state is a better judge than a whole load of journalists locking themselves in a room, he says.</p> <p>But if the Guardian produces a crime, he will support its right to publish.</p> <p>Edward Snowden could have gone to Switzerland and escaped the US, as Roman Polanski did. Instead he chose China and Russia. Wallace says Snowden is not a traitor, but he does question his judgment.</p> <p>Wallace says there is no obligation for internet providers to keep data at the moment - that can be a problem if it's needed by law enforcement agencies.&nbsp;</p> </div> </div> <div id=\"block-52726eb5e4b01fc33230d3f7\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:54:55.096Z\">2.54pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Tory Ben Wallace says &quot;spies spy&quot; and that should not be a surprise to anyone.</p> <p>He says he has worked in intelligence in Northern Ireland and so none of this comes as a surprise to him.</p> <p>He says MPs are democratically elected and that is the first part of the oversight. The home secretary and prime minister are drawn from parliament.</p> <p>He says he operated before RIPA and he didn't have to sign off anything, so it was a good bit of legislation. &quot;My former colleagues still hate it - and that's a good sign,&quot; he says.&nbsp;</p> </div> </div> <div id=\"block-52726e08e4b0ad7c52b60495\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:50:03.848Z\">2.50pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>There may be a case that the interception commissioner should be someone more outward-facing, he says.&nbsp;</p> </div> </div> <div id=\"block-52726dcce4b01fc33230d3f5\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:49:33.331Z\">2.49pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Our committee is doing the job, Howarth says.</p> <p>The commissioner is also doing his job, he says.</p> <p>There is a debate to be had about his role, though, he says.&nbsp;</p> </div> </div> <div id=\"block-52726d3de4b01fc33230d3f3\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:48:31.389Z\">2.48pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Howarth says the ISC looked in detail about how GCHQ used information and concluded it was not breaking the law.&nbsp;</p> <p>Labour's Hazel Blears says the ISC had also looked at whether the legal framework needed reform.&nbsp;</p> <p>Howarth says it's almost as if Blears has read his speech in advance.</p> <p>He says the ISC's report said it was going to examine in the future the interaction between the intelligence services, the Human Rights Act, and RIPA.</p> </div> </div> <div id=\"block-52726cabe4b01fc33230d3f1\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:46:16.452Z\">2.46pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Tom Watson asks if July was the first time the ISC had examined Prism and was that after the Guardian revelations.</p> <p>It was after the Guardian's revelations, Howarth says.</p> <p>Why didn't it look into it before, asks Tory Rory Stewart.</p> <p>Howarth says he will have to be &quot;non too specific&quot; in the way he answers. It's not that we didn't have any concerns or any interest in what GCHQ were capable of - that is an ongoing project. But when something new emerges it is appropriate that as a committee we look into it.</p> <p>(He seemed to just about admit they did not know about Prism beforehand and that was why.)&nbsp;</p> </div> </div> <div id=\"block-52726c50e4b0ad7c52b60494\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:43:37.240Z\">2.43pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Labour's George Howarth, a member of the ISC, says Julian Huppert is not familiar with the current powers of his committee.</p> <p>The ISC has looked at the NSA's Prism programme, he says, and issued an interim statement in July arriving at &quot;some important conclusions&quot;.</p> <p>He says they found GCHQ did not circumvent UK law to use Prism.</p> </div> </div> <div id=\"block-52726bf5e4b01fc33230d3ef\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:41:08.806Z\">2.41pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>This was the statement the Guardian put out after Julian Smith's debate on the Guardian last week, during which the Tory MP made many of the same points:</p> <blockquote class=\"quoted\"> <p>Unfortunately, Julian Smith's speech propagated a series of myths about the Guardian's reporting of the Snowden documents.</p> <p>When responsible journalists working on the same story share documents they are engaged in journalism, not terrorism.</p> <p>Senior politicians and government officials in the UK and internationally, over 30 of the world’s leading newspaper editors, and an overwhelming majority of the public have all said that the Guardian's reporting on this story is important for democracy.</p> <p>They all agree, as does Mr Smith, that surveillance of citizens by intelligence agencies is a legitimate subject for debate. But there would be no public debate had there been no disclosure.</p> </blockquote> </div> </div> <div id=\"block-52726b70e4b01fc33230d3ee\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:39:09.976Z\">2.39pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>(The paper has in fact been in touch with the government throughout the whole Snowden process.)&nbsp;</p> </div> </div> <div id=\"block-52726b49e4b01fc33230d3ed\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:38:32.790Z\">2.38pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>&quot;The Guardian has threatened the security of this country and today stands guilty potentially of treasonous behaviour,&quot; Smith says, in closing.</p> </div> </div> <div id=\"block-52726b03e4b0ad7c52b60493\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:37:41.208Z\">2.37pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Smith says if Huppert looks at witness statement 1 to the Miranda trial he would see the Guardian had not got government advice about some stories and had ignored government advice on others.</p> <p>He urges editor Alan Rusbridger to &quot;come clean&quot; with the government about what data the paper has, and to talk to the government about any further report.</p> </div> </div> <div id=\"block-52726acae4b01fc33230d3ec\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:36:35.965Z\">2.36pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The Guardian should be coming forward and telling the government what intelligence data it has overseas and what protections the paper has to look after it, Smith says.</p> <p>Huppert interrupts to say the Guardian has been talking to the government for months about this.</p> </div> </div> <div id=\"block-52726a4fe4b01fc33230d3eb\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:35:43.434Z\">2.35pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Smith says the Guardian editors have admitted online to sending detailed documents internationally. David Miranda's data was on a games console, he says.</p> <p>&quot;This data, on data dumps throughout the world, is still out there,&quot; he claims.</p> <p>Hackers have commented on this, Smith says.</p> <p>The Independent started reporting on this and then stopped because they realised how dangerous it was, he says.</p> <p>The Guardian is not talking to the government, he claims.</p> </div> </div> <div id=\"block-527269fde4b01fc33230d3ea\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:33:46.755Z\">2.33pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>This is not an attack on the Guardian's right to report on Snowden, Smith says.</p> <p>He refers to the Guardian's <a href=\"http://www.theguardian.com/world/2013/oct/04/nsa-gchq-attack-tor-network-encryption\">report on Tor</a>.&nbsp;</p> <p>He says the Guardian went into a level of detail that was wrong and would cause major issues when trying to pick up organised criminals in future.</p> </div> </div> <div id=\"block-527269c6e4b0ad7c52b60492\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:32:25.606Z\">2.32pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Smith says the press has challenged the intelligence services and reported on the Snowden leaks - but one newspaper, in seeking to raise important issues, has overstepped the mark to a degree that we are currently in a situation where national security is being threatened.</p> </div> </div> <div id=\"block-5272698ee4b01fc33230d3e9\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:31:31.123Z\">2.31pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Julian Smith says the oversight regime for the security services is one of the best in the world.</p> <p>The security services have been accused of no crime, he says.</p> <p>There are improvements that need to be made, particularly around metadata and who are the commissioners monitoring them - how about a retired bishop, he suggests.</p> </div> </div> <div id=\"block-5272696be4b0ad7c52b60491\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:30:29.254Z\">2.30pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He hopes the paper resists the pressure and &quot;blackmail&quot; the government is putting on it.</p> <p>This information should be in the public domain and he's glad it is.</p> </div> </div> <div id=\"block-52726905e4b01fc33230d3e8\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:29:48.952Z\">2.29pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Winnick says he would take the same view about any paper. &quot;That's a free press!&quot; he says passionately.</p> <p>He says he hopes the Guardian does not give way, and parliament backs it.</p> </div> </div> <div id=\"block-52726866e4b0ad7c52b60490\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:27:45.652Z\">2.27pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The use of this data in some ways dwarfs the ID cards issue, Winnick says.</p> <p>He quotes the PM's threat about D notices and injunctions made earlier this week.</p> <p>&quot;I think that is the most blatant threat to the press we've seen in recent times,&quot; Winnick says.</p> </div> </div> <div id=\"block-5272679ee4b01fc33230d3e7\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:25:35.187Z\">2.25pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The attitude of the establishment is that we shouldn't know about what the Guadian has published, he says.</p> <p>It is put to Winnick that if we had lot a city to nuclear terrorism he (Winnick) would see Snowden as a traitor.</p> <p>Winnick says there is no evidence the Guardian has caused any damage. &quot;Where's the evidence? Where's the evidence that that is so?&quot; he asks angrily.</p> <p>Why would the Guardian want to help terrorists, he asks.</p> <p>He brings up the monitoring of Merkel's phone. Is that information that would help the terrorists?</p> <p>Shouldn't we know that's occurred, he asks.</p> <p>Winnick says he opposed the Labour government over ID cards, because it was an intrusion into civil liberties and would not aid the fight against terrorism.</p> </div> </div> <div id=\"block-52726687e4b0ad7c52b6048f\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:21:26.584Z\">2.21pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Labour's David Winnick, who tried hard but was unable to speak in last week's debate, speaks next.&nbsp;</p> <p>He says he accepts the necessity of the security services and their activities.&nbsp;</p> <p>But there have been scandals in the past - Spycatcher, for example, or security service suspicions about Harold Wilson. In 2010 Binyam Mohamed was tortured in Pakistan, he says. The master of the rolls said MI5 had misled the ISC, he says.&nbsp;</p> </div> </div> <div id=\"block-52726667e4b01fc33230d3e5\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:17:25.589Z\">2.17pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The work of the security services must be placed on a firmer footing, he says.</p> </div> </div> <div id=\"block-52726626e4b0ad7c52b6048d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:16:52.439Z\">2.16pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He is not convinced the ISC is able to provide the oversight we need - he does not mean this to refer to particular members, but it does not have the tools to do its job.</p> <p>It needs to be a committee of the house, not of the executive, Raab says.</p> </div> </div> <div id=\"block-527265d4e4b0ad7c52b6048c\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:15:47.904Z\">2.15pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Parliament needs to look at surveillance powers, Raab says.&nbsp;</p> </div> </div> <div id=\"block-5272659fe4b0ad7c52b6048b\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:14:34.949Z\">2.14pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He mentions Feinstein's comments and the introduction of the USA Freedom Act to rein in surveillance techniques in the US.</p> <p>Congress and the public in the US have woken up to the scale of unfettered surveillance, he says. We need to do the same.</p> </div> </div> <div id=\"block-5272658ce4b01fc33230d3e2\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:13:47.872Z\">2.13pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He calls the idea that we have lost track of terrorist plotters as a result of these disclosures &quot;shrill and unsubstantiated&quot;.</p> </div> </div> <div id=\"block-527264d9e4b0ad7c52b6048a\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:12:45.021Z\">2.12pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Parker also lambasted the Guardian for handing terrorists a gift, and ministers have said the paper put lives at risk, he says.</p> <p>But Raab says that what they are objecting to is &quot;revealing our intelligence reach&quot; and he cannot accept that that causes such problems.</p> <p>Why has no one at the Guardian been charged or arrested? Why was David Miranda not arrested after his detention? Either law enforcement is very slow or national security is a fig leaf to close down debate, he says.</p> <p>He says national security has only been put at risk by the fact 850 people can access Tempora's data.&nbsp;</p> </div> </div> <div id=\"block-527264a9e4b0ad7c52b60489\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:10:21.626Z\">2.10pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Raab says the terrorist threat assessment shows that after a spike in 9/11 there was a dip. Andrew Parker, the head of MI5, said recently it hadn't got worse, Raab says.</p> </div> </div> <div id=\"block-52726427e4b0ad7c52b60487\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:09:01.469Z\">2.09pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Any democratic government must be accountable to its citizens, he says, especially if it impinges on their freedoms.</p> <p>Oversight is frayed, he says, and legitimate debate is being crowded out by untested assertions.</p> <p>The legal basis for Tempora looks thin at best and parliament had no idea of the extent of its powers, he says.</p> </div> </div> <div id=\"block-527263cfe4b0ad7c52b60486\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:07:14.460Z\">2.07pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Tory Dominic Raab speaks next. He says he is glad this is a cross-party debate.</p> <p>He pays tribute to the security services and says he worked with them at the Home Office.</p> </div> </div> <div id=\"block-527263bfe4b0ad7c52b60485\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:06:04.060Z\">2.06pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He suggests UK data may be used to help the US carry out drone strikes - that can't be right.</p> </div> </div> <div id=\"block-52726342e4b0ad7c52b60484\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:04:22.527Z\">2.04pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The security services have made the trade-off that the intelligence is worth the damage to privacy, Watson says.</p> <p>Have telecoms companies been voluntarily drawn in to this system, or were they compelled?</p> </div> </div> <div id=\"block-5272630de4b0ad7c52b60483\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:03:01.954Z\">2.03pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Parliament has a right to know what data is handed over and why, Watson says.</p> </div> </div> <div id=\"block-52726263e4b01fc33230d3e0\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T14:00:11.800Z\">2.00pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p><a href=\"http://www.parliamentlive.tv/Main/Player.aspx?meetingId=13973\">You can watch the meeting live here</a>.</p> </div> </div> <div id=\"block-52726234e4b01fc33230d3df\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:59:42.671Z\">1.59pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He says the Guardian and Edward SNowden have acted courageously and in the public interest.</p> <p>We would never have known about Tempora without them, he says.</p> </div> </div> <div id=\"block-5272617ae4b01fc33230d3dc\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:58:29.018Z\">1.58pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Labour's Tom Watson speaks next. He says data and information are so important and they must not get into the wrong hands. We should no more tamper with an individual's data than tamper with their vote, he says.&nbsp;</p> <p>In the UK unlike other countries parties have ignored this debate, he says.&nbsp;</p> </div> </div> <div id=\"block-52726165e4b01fc33230d3db\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:56:02.148Z\">1.56pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>There will now be a 10-minute limit on each speech.</p> </div> </div> <div id=\"block-5272610ce4b0ad7c52b60481\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:55:23.737Z\">1.55pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>We should pro-actively publish details of surveillance requests made, with no identifying details, he says.</p> <p>Security service actions should not be at a disproportionate cost to liberty and privacy, he says.</p> </div> </div> <div id=\"block-527260cee4b0ad7c52b6047f\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:54:12.528Z\">1.54pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>We need independent post legislative scrutiny to the&nbsp;Regulation of Investigatory Powers Act&nbsp;and the Intelligence Services Act, Huppert says.</p> </div> </div> <div id=\"block-52726087e4b0ad7c52b6047d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:53:15.020Z\">1.53pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert says if the US asks for something, the UK has to provide it, and there is no oversight of this process.</p> </div> </div> <div id=\"block-5272601be4b0ad7c52b6047b\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:51:23.567Z\">1.51pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert says part of the Coalition agreement was about ending the storing of email and internet records.&nbsp;</p> <p>The communications and data bill (now stalled) would have reversed that.</p> </div> </div> <div id=\"block-52725fade4b0ad7c52b60478\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:50:08.426Z\">1.50pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The ISC is under-resourced, Huppert says. He says he is not certain there is enough technical support for MPs on the committee.&nbsp;</p> </div> </div> <div id=\"block-52725f67e4b0ad7c52b60477\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:48:24.375Z\">1.48pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The debate is much busier and more well-attended - by MPs and the public - than last week's debate on the Guardian's role, although so far it has covered some of the same ground.</p> </div> </div> <div id=\"block-52725eede4b01fc33230d3d9\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:46:54.887Z\">1.46pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>We need to have oversight, he says. While he is pleased the heads of security services are coming to a public forum, it has been very difficult to make that happen.</p> <p>Hazel Blears (Labour) says the balance between security and liberty and privacy is central to this debate.</p> <p>There is a real danger that we have this big debate in a vacuum, he says.</p> <p>It is essential for the security services to have these powers to foil terrorist plots, she says.</p> <p>Huppert says he wants an informed debate.</p> </div> </div> <div id=\"block-52725e99e4b0cdcad3c04074\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:44:10.013Z\">1.44pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert says if parliament does not know what is happening it is hard for it to scrutinise legislation.</p> </div> </div> <div id=\"block-52725e5fe4b0cdcad3c04073\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:43:49.796Z\">1.43pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert is told that the problem with the mass release of stolen documents that nobody knows the details within them before they release them.&nbsp;</p> <p>Huppert says the Guardian has &quot;very explicitly not done&quot; this.</p> <p>There has been no WikiLeaks-style publication, he points out.</p> <p>The real security worry is how many people the NSA were allowing to access this material, he says.</p> </div> </div> <div id=\"block-52725e24e4b0bde9b4af6e25\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:42:28.807Z\">1.42pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>None of us want to see the details of techniques publicised, but we need to have a discussion about where the line should be drawn, Huppert says. The National Security Council didn't even know that, he says.</p> <p>If that leads to public debate and legal challenge, so be it.</p> </div> </div> <div id=\"block-52725dd3e4b0cdcad3c04072\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:41:12.401Z\">1.41pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>In Germany there is a loud debate, he says. They have the history of the Stasi.</p> <p>I am sure no member of our intelligence agencies would dream of following the Stasi, but in Germany they are aware of this danger, Huppert says.</p> </div> </div> <div id=\"block-52725da4e4b0bde9b4af6e24\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:40:15.286Z\">1.40pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Dianne Feinstein in the US has said a total review of all intelligence programmes is necessary, he points out.</p> <p>Has the UK chair of the ISC (Malcolm Rifkind) said the same, he asks.</p> </div> </div> <div id=\"block-52725d71e4b0bde9b4af6e23\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:39:39.997Z\">1.39pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Individual surveillance is one thing, but the mass hoovering up of information changes the picture completely, Huppert says.</p> <p>&quot;In the new approach, we are all suspects&quot; whose personal information is to be looked through if we ever face suspicion, he says.</p> </div> </div> <div id=\"block-52725d2ae4b0bde9b4af6e22\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:38:31.130Z\">1.38pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert is asked if every intelligence system is trying to break such encryption.</p> <p>Huppert says the UK and US are trying to break the system itself. How would we react if it was the Chinese who had been doing this, not the UK or US? Would we say this is business as usual?</p> </div> </div> <div id=\"block-52725ce0e4b0cdcad3c04070\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:37:20.309Z\">1.37pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert says he is glad the heads of the intelligence services are going to give evidence to the ISC next week.</p> <p>He says it is a problem when the US and UK break encryption systems for intelligence purposes - it makes it easier for anyone else to do it.</p> </div> </div> <div id=\"block-52725c9ae4b0cdcad3c0406e\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:35:54.673Z\">1.35pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert says Barack Obama has called for additional constraints on security services.&nbsp;</p> <p>This is a global issue acknowledged by world leaders - we should be talking about it, Huppert says.&nbsp;</p> </div> </div> <div id=\"block-52725c69e4b0bde9b4af6e1f\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:34:51.657Z\">1.34pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Caroline Lucas of the Greens says this obsession with the Guardian is extraordinary. We should be talking about the issues raised instead - as they are in America.</p> </div> <p class=\"block-time updated-time\">Updated <time datetime=\"2013-10-31T13:36:28.233Z\">at 1.36pm GMT</time></p> </div> <div id=\"block-52725c2de4b0bde9b4af6e1e\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:34:13.759Z\">1.34pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert is told by another MP that he is taking the Guardian's word that safety has not been endangered.</p> <p>Huppert says you could make that argument about &quot;absolutely anything at all&quot;.</p> <p>The Guardian has spoken to the security services and has been &quot;deeply responsible&quot;, Huppert says.</p> </div> </div> <div id=\"block-52725c0ee4b0cdcad3c0406d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:33:19.940Z\">1.33pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Tory Julian Smith chips in to say that the brave security officials have been put at threat by the Guardian's reporting.</p> <p>Huppert disagrees with that.</p> </div> </div> <div id=\"block-52725bf8e4b0bde9b4af6e1d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:32:43.915Z\">1.32pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He says he supports the security services and they deserve to be recognised while keeping us safe.</p> </div> </div> <div id=\"block-52725bcbe4b0cdcad3c0406c\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:32:20.170Z\">1.32pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>We carry GPS devices around with us everywhere - phones, he says.&nbsp;</p> <p>Democratic legitimacy demands supervision of the services be set on a firm legal basis.</p> </div> </div> <div id=\"block-52725bb0e4b0cdcad3c0406a\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:31:45.940Z\">1.31pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Huppert says if we chip away at our liberties, the terrorists have won.</p> </div> </div> <div id=\"block-52725b64e4b0cdcad3c04069\" class=\"block is-key-event\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T13:30:47.322Z\">1.30pm <span class=\"timezone\">GMT</span></time> </p> <h2 class=\"block-title\">Westminster Hall debate</h2> <div class=\"block-elements\"> <p>I'm in the Commons now for the debate on oversight of the security services.</p> <p>Lib Dem Julian Huppert opens the debate.</p> </div> </div> <div id=\"block-52724671e4b0cdcad3c04060\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T12:03:44.430Z\">12.03pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Here are the basic structures of oversight of the UK security services:</p> <h2>GCHQ</h2> <p>The UK’s version of NSA, gathering signals intelligence for the British government and armed forces, GCHQ spies in the interests of national security, crime, and the economy. It <a href=\"http://www.gchq.gov.uk/AboutUs/Pages/index.aspx\">answers to</a> William Hague, the foreign secretary, with oversight from the intelligence and security committee, the independent commissioners for oversight (the intelligence services commissioner and the interception of communications commissioner), and the investigatory powers tribunal.&nbsp;</p> <figure class=\"element element-image\" data-media-id=\"gu-fc-fe9510f5-c763-4f74-92c8-04bdf19b114d\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382544676820/Government-Communications-008.jpg\" alt=\"Government Communications Headquarters GCHQ at Cheltenham\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>GCHQ in Cheltenham. Photograph: EPA</figcaption> </figure> <h2>MI5</h2> <p>The Security Service is the UK’s domestic counter-intelligence and security agency. It <a href=\"https://www.mi5.gov.uk/home/about-us/how-mi5-is-governed/oversight.html\">answers to</a> Theresa May, the home secretary, and is overseen by the intelligence and security committee, the interception of communications commissioner and the intelligence services commissioner, plus the investigatory powers tribunal. </p> <figure class=\"element element-image\" data-media-id=\"gu-fc-2e731c1e-b035-4258-b4f1-a9c961f12b09\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/24/1372099206371/MI5--HQ-London-010.jpg\" alt=\"MI5  HQ London\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>MI5's headquarters on the Thames in London. Photograph: Murdo Macleod</figcaption> </figure> <h2>MI6</h2> <p>The Secret Intelligence Service is Britain’s foreign intelligence agency. It <a href=\"https://www.sis.gov.uk/about-us/legislation-and-accountability/ministerial-oversight.html\">answers to</a> the foreign secretary and is overseen by the ISC, the interception of communications commissioner and the intelligence services commissioner, and the investigatory powers tribunal.</p> <figure class=\"element element-image\" data-media-id=\"gu-fc-848b25d1-0bd9-4dab-83be-f1c30f1c71e5\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/10/28/1288246827931/Police-boat-on-patrol-nea-006.jpg\" alt=\"Police boat on patrol near the MI6 headquarters in London\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>MI6 headquarters on the Thames in London. Photograph: Lennart Preiss/AP</figcaption> </figure> </div> </div> <div id=\"block-52723f2ae4b0bde9b4af6e13\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T11:29:54.175Z\">11.29am <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>In the US, state legislatures have started proposing privacy laws, in the absence of action from Washington, <a href=\"http://www.nytimes.com/2013/10/31/technology/no-us-action-so-states-move-on-privacy-law.html?nl=todaysheadlines&amp;emc=edit_th_20131031&amp;_r=0\">the New York Times reports</a>.</p> <p>“Many lawmakers say that news reports of widespread surveillance by the National Security Agency have led to more support for the bills among constituents,” the paper reports.</p> </div> </div> <div id=\"block-52723b5de4b0cdcad3c0405d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T11:17:23.397Z\">11.17am <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Here are this morning's headlines:</p> <p><strong>• Google and<a href=\"http://www.theguardian.com/technology/yahoo\"> Yahoo</a>, two of the world's biggest tech companies, <a href=\"http://www.theguardian.com/technology/2013/oct/30/google-reports-nsa-secretly-intercepts-data-links\">reacted angrily</a> to a report on Wednesday that the National Security Agency has secretly intercepted the main communication links that carry their users' data around the world.</strong></p> <blockquote class=\"quoted\"> <p>Citing documents obtained from former<a href=\"http://www.theguardian.com/world/nsa\"> NSA</a> contractor Edward Snowden and interviews with officials,<a href=\"http://www.washingtonpost.com/world/national-security/nsa-infiltrates-links-to-yahoo-google-data-centers-worldwide-snowden-documents-say/2013/10/30/e51d661e-4166-11e3-8b74-d89d714ca4dd_story.html\"> the Washington Post claimed</a> the agency could collect information &quot;at will&quot; from among hundreds of millions of user accounts.</p> <p>The documents suggest that the NSA, in partnership with its British counterpart GCHQ, is copying large amounts of data as it flows across fiber-optic cables that carry information between the worldwide data centers of the Silicon Valley giants. The intelligence activities of the NSA outside the US are subject to fewer legal constraints than its domestic actions.</p> <p>The story is likely to put further strain on the already difficult relations between the tech firms and Washington. The internet giants are furious about the damage done to their reputation in the wake of Snowden's revelations.</p> </blockquote> <p><strong>•&nbsp;The director of the National Security Agency <a href=\"http://www.theguardian.com/world/2013/oct/30/nsa-director-surveillance-foreign-leaders\">conceded</a> that it may need to scale back some of its surveillance operations on foreign leaders, in the wake of an international outcry.</strong></p> <blockquote class=\"quoted\"> <p>Launching a public defence of the NSA for the second time in as many days, Keith Alexander acknowledged that limiting the programme may be necessary in order to maintain diplomatic relations. “I think in some cases the partnerships are more important,&quot; he told an audience in Washington.</p> <p>Partnerships between Washington and several European nations, particularly Germany, have come under extreme strain since chancellor Angela Merkel confronted the US about the NSA intercepting her phone calls.</p> <p>The White House, evidently chastened by the fallout in recent days, has begun suggesting that some restrictions on foreign-focused surveillance are forthcoming – something that US legislators have balked at, despite months of wide-ranging leaks from Snowden.</p> </blockquote> <p><strong>• The widespread surveillance of Spanish citizens by the<a href=\"http://www.theguardian.com/world/us-national-security\"> US National Security</a> Agency, which caused outrage when it was<a href=\"http://www.theguardian.com/world/2013/oct/28/spain-summons-us-ambassador-nsa-calls\"> reported this week</a>, was the product of a collaboration with<a href=\"http://www.theguardian.com/world/spain\"> Spain</a>'s intelligence services, <a href=\"http://www.theguardian.com/world/2013/oct/30/spain-colluded-nsa-spying-citizens-spanish-el-mundo-us\">according to one Spanish newspaper</a>.</strong></p> <p>•&nbsp;<strong>Meanwhile <a href=\"http://www.theguardian.com/world/2013/oct/30/nsa-dismisses-false-reports-of-mass-european-surveillance-live#block-52710aebe4b08c7e086ff1c9\">Le Monde reported</a> that the DGSE, France's external intelligence agency, may have established a “protocol” of exchanging data with the US at around the end of 2011 and beginning of 2012.</strong> The paper said part of this agreement involved exchanging data from under-sea cables which came from Africa and Afghanistan into France. The reports about France and Spain come a day after NSA director Alexander testified before the US house intelligence committee that suggestions the agency monitored millions of calls in Spain, France and Italy were &quot;completely false&quot; and that this data had been at least partially collected by the intelligence services of those countries and then passed on to the NSA.</p> <p><strong>•&nbsp;Key documents relating to the police detention of<a href=\"http://www.theguardian.com/world/david-miranda\"> David Miranda</a>, the partner of the Guardian journalist Glenn Greenwald, have been handed over to his lawyers, <a href=\"http://www.theguardian.com/world/2013/oct/30/david-miranda-documents-schedule-7\">the high court was told on Wednesday</a>.</strong></p> <blockquote class=\"quoted\"> <p>Judges turned down an application for more material to be released on the grounds that further disclosure was not necessary and would not be in the national interest. The decision was announced at the end of a preliminary hearing before next week's challenge of the lawfulness of the police decision to hold Miranda under<a href=\"http://www.theguardian.com/law/schedule-7\"> schedule 7</a> of the Terrorism Act 2000.</p> <p>The Brazilian national was detained for nine hours as he passed through Heathrow airport on 18 August this year. He was in transit between Berlin, where he had met the film-maker Laura Poitras who has been involved breaking revelations based on documents leaked by Edward Snowden, and Rio de Janeiro.</p> <p>Miranda's lawyers claim that the Metropolitan police misused schedule 7 and that his detention was a violation of his human rights. They sought information about why Miranda was stopped and why his laptop, phone and electronic equipment were seized.</p> </blockquote> <p>•<strong><a href=\"http://www.theguardian.com/politics/2013/oct/30/boris-johnson-defends-guardian-nsa\"> Boris Johnson put himself at odds with the prime minister by issuing a staunch defence of the Guardian's &quot;salient and interesting&quot; revelations about the activities of US and UK intelligence agencies.</a> </strong>Speaking at the<a href=\"http://www.huffingtonpost.co.uk/2013/10/30/boris-johnson-london_n_4176482.html\"> World Islamic Economic Forum</a> the mayor of London said: &quot;I think the public deserves to know. The world is better for government being kept under the beady-eyed scrutiny of the media and for salient and interesting facts about public<a href=\"http://www.theguardian.com/world/espionage\"> espionage</a> being brought into the public domain.&quot;</p> <p><strong>• Lib Dem MP Julian Huppert <a href=\"http://www.theguardian.com/commentisfree/2013/oct/30/nsa-britain-balance-security-privacy\">explains</a> why he called this afternoon’s debate on oversight of the security services.</strong></p> <blockquote class=\"quoted\"> <p>British politicians must step up and discuss an issue that is crucial now and will only loom larger in the coming years, as more and more information becomes electronic, and the ability to collect it, store it and analyse it grows rapidly. We need to discuss publicly what we think the rules should be for state surveillance, how it should be controlled, and what the limits must be.</p> <p>There is no doubt in my mind that we benefit from the intelligence and security agencies. Their work does help to keep us safe. However, we must ensure that as parliamentarians and lawmakers we give the agencies a clear framework to operate in and proper oversight, scrutiny and evaluation to keep them on track. They too should welcome this.</p> <p>It is of course not possible to have total privacy and total security, and there is a balance to be struck. Tracking a specific individual of genuine concern is very different from sweeping everyone into a net. Critically, parliament must be given a say in how this balance is achieved. Our starting point should have the scales tipped in favour of liberty and privacy. This is what western democracy is based on, and if we reject this, those seeking to destroy the fabric of our society will have already won.</p> </blockquote> <p>He explains what he feels needs fixing:</p> <blockquote class=\"quoted\"> <p>The<a href=\"http://www.theguardian.com/law/justice-and-security\"> intelligence and security committee</a>, which is supposed to examine the policy and operations of the agencies, consists of a small number of parliamentarians, handpicked by the prime minister, and includes ex-ministers who effectively scrutinise their own past decisions. It is not clear to me they all understand the technical capabilities they are supposed to comment on.</p> <p>We have to fix our legislation urgently. One central piece,<a href=\"http://www.theguardian.com/commentisfree/libertycentral/2009/jan/14/regulation-investigatory-powers-act\"> Ripa</a>, is<a href=\"http://www.theguardian.com/uk/2009/feb/28/surveillance-government-public\"> known to be broken</a> – it was used to<a href=\"http://www.theguardian.com/society/2009/nov/05/council-spying-school-catchment-area\"> allow council officials to find out whether families lived in school catchment areas</a>. Others give the secretary of state sweeping and authoritarian powers, with the limits of that power kept secret. We should also create a new, beefed-up body including more independent people to scrutinise what is happening, based on Obama's<a href=\"http://www.theguardian.com/world/2013/aug/23/us-surveillance-rules-30-years\"> privacy and civil liberties oversight board</a>.</p> </blockquote> <p>You can catch up with <a href=\"http://www.theguardian.com/world/2013/oct/30/nsa-dismisses-false-reports-of-mass-european-surveillance-live\">all yesterday’s developments here</a>.</p> </div> </div> <div id=\"block-527229f8e4b0cdcad3c04055\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-10-31T09:59:57.831Z\">9.59am <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Good morning. Last week Tory MP Julian Smith called <a href=\"http://www.theguardian.com/world/2013/oct/21/nsa-files-live-coverage-developments-reaction#block-52669656e4b027bac8ef9915\">a Westminster Hall debate</a> on whether the Guardian had endangered national security by publishing leaks on surveillance from Edward Snowden.</p> <p>Today a cross-party trio of MPs – Lib Dem Julian Huppert, Tory Dominic Raab, and Labour’s Tom Watson – have called a debate looking into the implications of what the Guardian revealed. In <a href=\"http://www.parliament.uk/business/committees/committees-a-z/commons-select/backbench-business-committee/news/debate-announced-for-31-october/\">Westminster Hall from 1.30pm-4.30pm</a> MPs will discuss whether oversight of the intelligence and security services is sufficient.</p> <p>Last week <a href=\"http://www.theguardian.com/world/2013/oct/14/nsa-files-live-coverage-of-all-developments-and-reaction#block-525ff006e4b0bbc67cfff419\">Huppert told me</a> why he was pushing for such a debate:</p> <blockquote class=\"quoted\"> <p>I think the information that has been revealed by the Guardian has shown just how much the security services have been doing which the public have been unaware of.</p> <p>Of course it’s not up to us to know all the details … but the principles and the frameworks should be discussed and broadly accepted by the public.</p> </blockquote> <p>I’ll be covering the debate live from parliament from 1.30pm. Plus I’ll keep track of all the latest fallout from the Snowden revelations as usual throughout the day.</p> </div> </div><!-- Guardian Watermark: internal-code/content/421352730|2013-11-05T11:03:51Z|89df537294df9f0c609f34ce5e2166f29f2a9429 -->",
+        "showInRelatedContent":"false",
+        "lastModified":"2013-10-31T16:33:42Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725056/e8a957d3-640c-40dc-b0df-314256fe8ec9-140x84.jpeg",
+        "standfirst":"Westminster Hall hosts three-hour debate on whether Britain&rsquo;s security services are sufficiently well supervised in wake of Guardian Snowden revelations<br />&bull; <a href=\"http://www.theguardian.com/world/2013/oct/31/nsa-files-mps-debate-oversight-of-the-intelligence-services#block-52728287e4b0ad7c52b604ab\">Read a summary of today's key events</a><br />&bull; <a href=\"http://www.theguardian.com/world/the-nsa-files\">New readers start here</a>",
+        "displayHint":"news",
+        "shortUrl":"http://gu.com/p/3k26q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725056/e8a957d3-640c-40dc-b0df-314256fe8ec9-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421352730",
+        "allowUgc":"false",
+        "internalComposerCode":"527223a4e4b0cdcad3c0404d",
+        "isPremoderated":"false",
+        "byline":"Paul Owen",
+        "displayRelativeTimes":"true",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989629",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T10:02:21Z"
+      },
+      "tags":[{
+        "id":"world/series/nsa-files-live",
+        "type":"series",
+        "webTitle":"NSA files live",
+        "webUrl":"http://www.theguardian.com/world/series/nsa-files-live",
+        "apiUrl":"http://content.guardianapis.com/world/series/nsa-files-live",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/the-nsa-files",
+        "type":"keyword",
+        "webTitle":"The NSA files",
+        "webUrl":"http://www.theguardian.com/world/the-nsa-files",
+        "apiUrl":"http://content.guardianapis.com/world/the-nsa-files",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/prism",
+        "type":"keyword",
+        "webTitle":"Prism",
+        "webUrl":"http://www.theguardian.com/world/prism",
+        "apiUrl":"http://content.guardianapis.com/world/prism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-national-security",
+        "type":"keyword",
+        "webTitle":"US national security",
+        "webUrl":"http://www.theguardian.com/world/us-national-security",
+        "apiUrl":"http://content.guardianapis.com/world/us-national-security",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/espionage",
+        "type":"keyword",
+        "webTitle":"Espionage",
+        "webUrl":"http://www.theguardian.com/world/espionage",
+        "apiUrl":"http://content.guardianapis.com/world/espionage",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/spain",
+        "type":"keyword",
+        "webTitle":"Spain",
+        "webUrl":"http://www.theguardian.com/world/spain",
+        "apiUrl":"http://content.guardianapis.com/world/spain",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/germany",
+        "type":"keyword",
+        "webTitle":"Germany",
+        "webUrl":"http://www.theguardian.com/world/germany",
+        "apiUrl":"http://content.guardianapis.com/world/germany",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/gchq",
+        "type":"keyword",
+        "webTitle":"GCHQ",
+        "webUrl":"http://www.theguardian.com/uk/gchq",
+        "apiUrl":"http://content.guardianapis.com/uk/gchq",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uksecurity",
+        "type":"keyword",
+        "webTitle":"UK security and counter-terrorism",
+        "webUrl":"http://www.theguardian.com/uk/uksecurity",
+        "apiUrl":"http://content.guardianapis.com/uk/uksecurity",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/houseofcommons",
+        "type":"keyword",
+        "webTitle":"House of Commons",
+        "webUrl":"http://www.theguardian.com/politics/houseofcommons",
+        "apiUrl":"http://content.guardianapis.com/politics/houseofcommons",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/theguardian",
+        "type":"keyword",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/media/theguardian",
+        "apiUrl":"http://content.guardianapis.com/media/theguardian",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/newspapers",
+        "type":"keyword",
+        "webTitle":"Newspapers",
+        "webUrl":"http://www.theguardian.com/media/newspapers",
+        "apiUrl":"http://content.guardianapis.com/media/newspapers",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/press-freedom",
+        "type":"keyword",
+        "webTitle":"Press freedom",
+        "webUrl":"http://www.theguardian.com/media/press-freedom",
+        "apiUrl":"http://content.guardianapis.com/media/press-freedom",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"politics/blog",
+        "type":"blog",
+        "webTitle":"Politics blog",
+        "webUrl":"http://www.theguardian.com/politics/blog",
+        "apiUrl":"http://content.guardianapis.com/politics/blog",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.theguardian.com/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paulowen",
+        "type":"contributor",
+        "webTitle":"Paul Owen",
+        "webUrl":"http://www.theguardian.com/profile/paulowen",
+        "apiUrl":"http://content.guardianapis.com/profile/paulowen",
+        "bio":"<p>Paul Owen is a Guardian journalist. He has also written for the Times Literary Supplement, the Times, and the Independent, among others. He is co-editor of the book <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up: The Guardian Guide to the Greatest TV Show Ever Made</a>. In 2011 he was nominated at the Amnesty International and the Foreign Press Association awards for his work on the <a href=\"http://www.guardian.co.uk/world/middle-east-live\">Middle East live blog</a>. Follow him on Twitter @<a href=\"https://twitter.com/#!/PaulTOwen\">paultowen</a> or email him at <a href=\"mailto:paul.owen@guardian.co.uk\">paul.owen@guardian.co.uk</a></p>",
+        "r2ContributorId":"19197",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Politics/Pix/pictures/2008/01/17/Paul_Owen.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725056/e8a957d3-640c-40dc-b0df-314256fe8ec9-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725056/e8a957d3-640c-40dc-b0df-314256fe8ec9-140x84.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"84",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725397/e8a957d3-640c-40dc-b0df-314256fe8ec9-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725397/e8a957d3-640c-40dc-b0df-314256fe8ec9-460x276.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"276",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725653/e8a957d3-640c-40dc-b0df-314256fe8ec9-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213725653/e8a957d3-640c-40dc-b0df-314256fe8ec9-220x132.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"132",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213726197/e8a957d3-640c-40dc-b0df-314256fe8ec9-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213726197/e8a957d3-640c-40dc-b0df-314256fe8ec9-2060x1236.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"1236",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727070/e8a957d3-640c-40dc-b0df-314256fe8ec9-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727070/e8a957d3-640c-40dc-b0df-314256fe8ec9-1020x612.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"612",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727355/e8a957d3-640c-40dc-b0df-314256fe8ec9-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727355/e8a957d3-640c-40dc-b0df-314256fe8ec9-300x180.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"180",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727504/e8a957d3-640c-40dc-b0df-314256fe8ec9-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727504/e8a957d3-640c-40dc-b0df-314256fe8ec9-540x324.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"324",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727735/e8a957d3-640c-40dc-b0df-314256fe8ec9-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727735/e8a957d3-640c-40dc-b0df-314256fe8ec9-68x68.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"68",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727890/e8a957d3-640c-40dc-b0df-314256fe8ec9-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213727890/e8a957d3-640c-40dc-b0df-314256fe8ec9-380x228.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"228",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213728474/e8a957d3-640c-40dc-b0df-314256fe8ec9-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213728474/e8a957d3-640c-40dc-b0df-314256fe8ec9-2048x1536.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"1536",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213729335/e8a957d3-640c-40dc-b0df-314256fe8ec9-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213729335/e8a957d3-640c-40dc-b0df-314256fe8ec9-620x372.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"372",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213729604/e8a957d3-640c-40dc-b0df-314256fe8ec9-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383213729604/e8a957d3-640c-40dc-b0df-314256fe8ec9-1024x768.jpeg",
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Westminster Hall in the Houses of Parliament.",
+            "height":"768",
+            "credit":"Rex Features/Rex Features",
+            "caption":"Westminster Hall in the Houses of Parliament. Photograph: Rex Features",
+            "mediaId":"gu-fc-8a1c338e-2bec-4d0f-b01b-c3d2705314a1",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-55e8d17f-d48b-4fa0-bb2e-bd6731095f7d",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/8/22/1345643283780/Dominic-Raab---People-who-010.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2012/8/22/1345643283780/Dominic-Raab---People-who-010.jpg",
+            "source":"Sutton-Hibbert / Rex Features",
+            "altText":"Dominic Raab … 'People who are coasting – it should be easier to let them go.'",
+            "height":"276",
+            "credit":"Sutton-Hibbert / Rex Features",
+            "caption":"Dominic Raab. Photograph: Sutton-Hibbert / Rex Features",
+            "mediaId":"gu-fc-55e8d17f-d48b-4fa0-bb2e-bd6731095f7d",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-fc-fe9510f5-c763-4f74-92c8-04bdf19b114d",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382544676820/Government-Communications-008.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/23/1382544676820/Government-Communications-008.jpg",
+            "source":"EPA",
+            "photographer":"GCHQ / BRITISH MINISTRY OF DEFENCE / HANDOUT",
+            "altText":"Government Communications Headquarters GCHQ at Cheltenham",
+            "height":"276",
+            "credit":"GCHQ / BRITISH MINISTRY OF DEFENCE / HANDOUT/EPA",
+            "caption":"GCHQ in Cheltenham. Photograph: EPA",
+            "mediaId":"gu-fc-fe9510f5-c763-4f74-92c8-04bdf19b114d",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-fc-2e731c1e-b035-4258-b4f1-a9c961f12b09",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/24/1372099206371/MI5--HQ-London-010.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/24/1372099206371/MI5--HQ-London-010.jpg",
+            "source":"Murdo Macleod",
+            "photographer":"Murdo Macleod",
+            "altText":"MI5  HQ London",
+            "height":"276",
+            "credit":"Murdo Macleod/Murdo Macleod",
+            "caption":"MI5's headquarters on the Thames in London. Photograph: Murdo Macleod",
+            "mediaId":"gu-fc-2e731c1e-b035-4258-b4f1-a9c961f12b09",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-fc-848b25d1-0bd9-4dab-83be-f1c30f1c71e5",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/10/28/1288246827931/Police-boat-on-patrol-nea-006.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2010/10/28/1288246827931/Police-boat-on-patrol-nea-006.jpg",
+            "source":"AP",
+            "photographer":"Lennart Preiss",
+            "altText":"Police boat on patrol near the MI6 headquarters in London",
+            "height":"276",
+            "credit":"Lennart Preiss/AP",
+            "caption":"MI6 headquarters on the Thames in London. Photograph: Lennart Preiss/AP",
+            "mediaId":"gu-fc-848b25d1-0bd9-4dab-83be-f1c30f1c71e5",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>CommonJS Modules 1.1 loading test</title>
+<title>package-specific config test</title>
 
 <script>
 
 	curl = {
-		baseUrl: '.',
+		baseUrl: '',
 		paths: {
 			curl: '../src/curl'
 		},
@@ -39,7 +39,8 @@
 			'commonjs/nakedDependentCjsm1.1',
 			'commonjs/nakedSimpleCjsm1.1',
 			'commonjs/return-config',
-			'hybrid/module'
+			'hybrid/module',
+			'domReady!' // wait here since code inside test changes baseUrl, foiling fetch of domReady! in call to write()
 		]
 	).then(
 		function (dep, simple, cfg, module) {

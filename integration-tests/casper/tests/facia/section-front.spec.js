@@ -10,13 +10,14 @@ casper.test.setUp(function() {
 });
 
 /**
-* Scenario: Popular collection appears at the bottom of the page
+* Scenario: Popular container appears at the bottom of the page
 *    Given I visit the network front
-*    Then I should see the popular collection
+*    Then I should see the popular container
 **/
 casper.test.begin('Popular collection appears at the bottom of the page', function(test) {
-    casper.waitForSelector('.collection--popular', function(){
-        test.assertElementCount('.collection--popular', 1, 'exactly one popular collection should be displayed');
+    var popContainerSelector = '.container--popular';
+    casper.waitForSelector(popContainerSelector, function(){
+        test.assertElementCount(popContainerSelector, 1, 'exactly one popular container should be displayed');
     });
 
     casper.run(function() {
