@@ -145,6 +145,14 @@ define([
 
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
+               
+                // prefix the r2alpha
+                if (Cookies.get('GU_ALPHA') === "true") {
+                    var alphaTag = 'r2alpha,';
+                    s.prop51  = alphaTag + s.prop51;
+                    s.eVar51  = alphaTag + s.eVar51;
+                }
+
                 s.events = s.apl(s.events,'event58',',');
             }
 
@@ -168,8 +176,6 @@ define([
             s.prop67    = "nextgen-served";
 
             s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
-
-            s.prop92    = (Cookies.get('GU_ALPHA') === "true") ? 1 : 0;
 
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
