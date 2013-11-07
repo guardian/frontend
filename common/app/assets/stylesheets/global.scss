@@ -52,6 +52,8 @@
 @import "module/facia/_mixins";
 @import "module/containers/_popular";
 @import "module/_commercial-components";
+@import "module/trails/_trailblock";
+@import "module/trails/_trail";
 
 /* ==========================================================================
    External modules
@@ -69,9 +71,9 @@
    ========================================================================== */
 
 @import "module/experiments/_ab-inline-link-card";
-@import "module/experiments/_ab-expandable-trails";
-@import "module/experiments/_ears";
-@import "module/experiments/_bar";
+//@import "module/experiments/_ab-expandable-trails";
+//@import "module/experiments/_ears";
+//@import "module/experiments/_bar";
 
 
 /* ==========================================================================

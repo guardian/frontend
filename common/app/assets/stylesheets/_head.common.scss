@@ -44,23 +44,8 @@
 @import "module/nav/_nav";
 @import "module/nav/_control";
 @import "module/_adslot";
-@import "module/trails/_trailblock";
-@import "module/trails/_trail";
 @import "module/_media";
-@import "module/_article";
 @import "module/_headers";
-@import "module/_social";
-    @include socialOnPageLoad;
-
-
-/* ==========================================================================
-   External modules
-   ========================================================================== */
-
-// These are for styling HTML that we get from external sources
-// and may contain more specific selectors than we would usually like
-
-@import "module/external/_from-content-api";
 
 
 /* ==========================================================================
@@ -84,5 +69,10 @@
    ========================================================================== */
 
 @import "theme/_global-icons-sprite";
+
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
 
 @import "module/_release-message";
