@@ -1,6 +1,13 @@
+$item-top-border-height: 2px;
+
 @mixin first-row($first-row-size) {
     .item:nth-child(-n+#{$first-row-size}) {
         margin-top: 0;
+
+        &:before {
+            top: $item-top-border-height; // align vertical separator with top border
+        }
+
         .item__link {
             border-top-style: none;
         }
@@ -9,9 +16,29 @@
         }
     }
 }
+@mixin item-separator-vertical($side: left, $side-only: false) {
+    &:before {
+        @if $side-only {
+            #{$side}: 0;
+        } @else {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0; #{$side}: 0; bottom: 0;
+            width: 1px;
+            height: 100%;
+            border-left: 1px dotted $c-neutral5;
+        }
+    }
+}
+@mixin hide-item-separator-vertical {
+    &:before {
+        display: none !important;
+    }
+}
 @mixin row-start {
-    border-left-style: none !important;
     clear: left;
+    @include hide-item-separator-vertical;
 }
 @mixin row($row-size, $first-row-size: $row-size) {
     // styling for first row
@@ -26,6 +53,7 @@
 $metaHeight: 14px;
 @mixin card-mobile($with-image: false) {
     padding-bottom: $metaHeight;
+
     .item__title {
         @include fs-headline(3, $size-only: true);
     }
@@ -55,6 +83,7 @@ $metaHeight: 14px;
     float: left;
     width: 100%;
     margin-top: $gs-baseline*(5/3);
+
     .item__title {
         @include fs-headline(1, $size-only: true);
     }
@@ -74,8 +103,9 @@ $metaHeight: 14px;
     width: 50%;
     min-height: gs-height(3);
     padding-bottom: $metaHeight;
-    border-left: 1px dotted $c-neutral5;
     float: left;
+    @include item-separator-vertical;
+
     .item__title {
         @include fs-headline(1, $size-only: true);
         @include mq(mobileLandscape) {

@@ -32,7 +32,7 @@ $c-live: #e81818;
     @include mq(tablet) {
         margin-top: $gs-baseline*2;
         margin-bottom: $gs-baseline;
-        border-top-width: 2px;
+        border-top-width: $item-top-border-height;
         background-color: transparent !important;
         line-height: 1em;
     }
@@ -63,6 +63,7 @@ $c-live: #e81818;
     background-color: transparent;
     padding: 0;
     @include fs-data(4, $size-only: true);
+
     .container__toggle__text {
         position: relative;
         top: -6px;
@@ -70,6 +71,7 @@ $c-live: #e81818;
     @include mq($to: tablet) {
         border-left: 1px solid #ffffff;
         color: #ffffff;
+
         i {
             @include transform(rotate(180deg));
         }
@@ -83,6 +85,7 @@ $c-live: #e81818;
     @include mq(tablet) {
         text-align: right;
         color: $c-neutral2;
+
         i {
             display: none;
         }
@@ -105,16 +108,16 @@ $c-live: #e81818;
     @include mq(tablet) {
         display: inline-block;
         vertical-align: top;
-        border-left: 1px dotted $c-neutral5;
+        @include item-separator-vertical;
     }
 }
 .item:first-child {
-    border-left-style: none;
     clear: left;
+    @include hide-item-separator-vertical;
 }
 .item__link {
     display: block;
-    border-top: 2px solid $c-newsAccent;
+    border-top: $item-top-border-height solid $c-newsAccent;
     color: $c-neutral1;
 
     .item:first-child & {
