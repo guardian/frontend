@@ -16,17 +16,13 @@ $item-top-border-height: 2px;
         }
     }
 }
-@mixin item-separator-vertical($side: left, $side-only: false, $force: false) {
+@mixin item-separator-vertical($side: left, $side-only: false) {
     &:before {
         @if $side-only {
             #{$side}: 0;
         } @else {
             content: '';
-            @if $force {
-                display: block !important;
-            } @else {
-                display: block;
-            }
+            display: block;
             position: absolute;
             top: 0; #{$side}: 0; bottom: 0;
             width: 1px;
