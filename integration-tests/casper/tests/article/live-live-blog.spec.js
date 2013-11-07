@@ -57,5 +57,5 @@ casper.test.begin("Auto update toggle on / off", function(test) {
 });
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get("xunit") + "live-blog.xml");
+    this.test.renderResults(true, 0, this.cli.get("xunit") + "live-live-blog.xml");
 });
