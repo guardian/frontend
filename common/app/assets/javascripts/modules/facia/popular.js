@@ -70,7 +70,7 @@ define([
                     });
                     bonzo(bonzo.create(containerTmpl))
                         .append($collection)
-                        .insertAfter('.container');
+                        .insertAfter(common.$g('.container').last());
                     // add show more button
                     new CollectionShowMore($collection[0])
                         .addShowMore();
