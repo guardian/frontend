@@ -4,6 +4,7 @@
     <section class="container container--@style.containerType js-container--toggle tone-@style.tone"
              data-link-name="block | @config.id"
              data-id="@config.id"
+             data-link-context="@config.section"
              data-type="@style.containerType">
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>

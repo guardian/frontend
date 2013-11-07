@@ -5,23 +5,23 @@ define([
     //Current tests
     'modules/experiments/tests/aa',
     'modules/experiments/tests/live-blog-show-more',
-    'modules/experiments/tests/alpha-adverts-data',
-    'modules/experiments/tests/commercial-components'
+    'modules/experiments/tests/alpha-adverts',
+    'modules/experiments/tests/commercial-components',
 ], function (
     common,
     store,
 
     Aa,
     LiveBlogShowMore,
-    AlphaAdvertsData,
+    AlphaAdverts,
     CommercialComponentsTest
     ) {
 
     var TESTS = [
             new Aa(),
             new LiveBlogShowMore(),
-            new AlphaAdvertsData(),
-            new CommercialComponentsTest()
+            new AlphaAdverts(),
+            new CommercialComponentsTest(),
         ],
         participationsKey = 'gu.ab.participations';
 
