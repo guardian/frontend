@@ -83,6 +83,10 @@ object Switches extends Collections {
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
     "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
+  
+  val LiveStatsSwitch = Switch("Analytics", "live-stats",
+    "Turns on our real-time KPIs",
+    safeState = On)
 
   // Discussion Switches
 
@@ -170,9 +174,13 @@ object Switches extends Collections {
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = Off)
+  
+  val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
+    "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
+    safeState = Off)
 
-  val FollowItemRedirectsFromApiSwitch = Switch("Feature Switches", "follow-item-redirects",
-    "If this switch is on then content api redirects on items will be sent back to the end user.",
+  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
+    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off)
 
   // A/B Test Switches
@@ -197,11 +205,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
-  val ABUltimateParagraphSpacing = Switch("A/B Tests", "ab-ultimate-paragraph-spacing",
-    "If this is switched on an AB test runs to trial the impact of spacing and indents between paragraphs on user engagement",
-    safeState = Off)
-
-  val ABAlphaAdvertsData = Switch("A/B Tests", "ab-alpha-adverts-data",
+  val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
 
@@ -270,6 +274,7 @@ object Switches extends Collections {
     ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
+    ClientSideErrorSwitch,
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
@@ -277,21 +282,20 @@ object Switches extends Collections {
     ExternalLinksCardsSwitch,
     LiveSummarySwitch,
     LiveCricketSwitch,
+    LiveStatsSwitch,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
-    ABUltimateParagraphSpacing,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
-    ABAlphaAdvertsData,
-    FollowItemRedirectsFromApiSwitch,
+    ABAlphaAdverts,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
-    ABIdentityFacebookMobileAutoSignin
+   FacebookAutoSigninSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

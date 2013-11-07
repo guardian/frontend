@@ -36,7 +36,9 @@ define([
     "modules/lightbox-gallery",
     "modules/swipe/ears",
     "modules/swipe/bar",
-    "modules/facia/images"
+    "modules/facia/images",
+    "modules/onward/history",
+    "modules/identity/autosignin"
 ], function (
     common,
     ajax,
@@ -74,7 +76,9 @@ define([
     LightboxGallery,
     ears,
     SwipeBar,
-    faciaImages
+    faciaImages,
+    History,
+    AutoSignin
 ) {
 
     var modules = {
@@ -343,6 +347,28 @@ define([
                     }
                 });
             }
+        },
+
+        logReadingHistory : function() {
+            common.mediator.on('page:common:ready', function(config) {
+                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                    return new History().log({
+                        id: config.page.shortUrl.replace('http://gu.com', ''),
+                        meta: {
+                            section: config.page.section,
+                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                        }
+                    });
+                }
+            });
+        },
+
+        initAutoSignin : function() {
+            common.mediator.on('page:common:ready', function(config) {
+                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                    new AutoSignin(config).init();
+                }
+            });
         }
     };
 
@@ -384,6 +410,8 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage(config);
+            modules.logReadingHistory();
+            modules.initAutoSignin(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };

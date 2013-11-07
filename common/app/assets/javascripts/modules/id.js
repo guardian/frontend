@@ -6,7 +6,7 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
      * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
      */
     var Id = {},
-        userFromCookieCache = "empty";
+        userFromCookieCache = null;
 
     Id.cookieName = 'GU_U';
 
@@ -25,7 +25,7 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
      */
     Id.reset = function() {
         Id.getUserFromApi.reset();
-        userFromCookieCache = "empty";
+        userFromCookieCache = null;
     };
 
     /**
@@ -34,7 +34,7 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
      * @return {?Object} the user information
      */
     Id.getUserFromCookie = function() {
-        if(userFromCookieCache === "empty") {
+        if(userFromCookieCache === null ) {
             var cookieData = Cookies.get(Id.cookieName),
             userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
@@ -44,8 +44,6 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
                     displayName: userData[2],
                     rawResponse: cookieData
                 };
-            } else {
-                userFromCookieCache = null;
             }
         }
 
@@ -112,7 +110,7 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
         var cookieData = Cookies.get(Id.signOutCookieName);
 
         if(cookieData) {
-          return((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
+            return((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
         }
         return false;
     };
@@ -121,8 +119,8 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hous
      */
     Id.shouldAutoSigninInUser = function() {
-      var signedInUser = Cookies.get(Id.cookieName) ? true : false;
-      return !signedInUser && !this._hasUserSignedOutInTheLast24Hours();
+        var signedInUser = Cookies.get(Id.cookieName) ? true : false;
+        return !signedInUser && !this._hasUserSignedOutInTheLast24Hours();
     };
 
     return Id;

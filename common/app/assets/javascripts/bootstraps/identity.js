@@ -3,13 +3,15 @@ define([
     "modules/identity",
     "modules/password-strength",
     "modules/id",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "modules/detect"
 ], function(
     common,
     Identity,
     PasswordStrength,
     Id,
-    UserAdTargeting
+    UserAdTargeting,
+    detect
 ) {
 
     var modules = {
@@ -50,7 +52,7 @@ define([
             common.mediator.on('page:identity:ready', function(config, context) {
                 UserAdTargeting.requestUserSegmentsFromId();
             });
-        }
+        },
     };
 
     var ready = function (config, context) {
@@ -63,6 +65,7 @@ define([
             modules.usernameAvailable();
             modules.idConfig(config);
             modules.userAdTargeting();
+            modules.facebookAutoSignin();
         }
         common.mediator.emit("page:identity:ready", config, context);
     };

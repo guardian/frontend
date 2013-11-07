@@ -96,5 +96,39 @@ define(['modules/cookies', 'modules/id', 'ajax'], function(Cookies, Id, ajax) {
             expect(ajax.reqwest.getCall(0).args[0]["type"]).toBe("jsonp");
             expect(ajax.reqwest.getCall(0).args[0]["crossOrigin"]).toBe(true)
         });
+
+        it("should attempt to autosigin an user is not signed in and has not signed out", function(){
+            Cookies.get.withArgs("GU_U").returns(null);
+            Cookies.get.withArgs("GU_SO").returns(null);
+
+            expect(Id.shouldAutoSigninInUser()).toBe(true);
+        });
+
+        it("should not attempt to autosignin a signed it user", function(){
+            Cookies.get.withArgs("GU_U").returns(cookieData);
+
+            expect(Id.shouldAutoSigninInUser()).toBe(false);
+        });
+
+        it("should attempt to autosignin a user who has signed out more than 24 hours ago", function() {
+            var today = new Date(),
+                theDayBeforeYesterday = new Date();
+            theDayBeforeYesterday.setDate(today.getDate() - 2);
+            var timeStampInSeconds = theDayBeforeYesterday.getTime() / 1000;
+            Cookies.get.withArgs("GU_SO").returns(timeStampInSeconds.toString);
+
+            expect(Id.shouldAutoSigninInUser()).toBe(true);
+        });
+
+        it("should not attempt to autosignin a user who has signed out within the last 24 hours", function() {
+            var today = new Date(),
+                fourHoursAgo = new Date();
+            fourHoursAgo.setHours(today.getHours() - 4);
+            var timeStampInSeconds = fourHoursAgo.getTime() / 1000;
+
+            Cookies.get.withArgs("GU_SO").returns(timeStampInSeconds.toString());
+
+            expect(Id.shouldAutoSigninInUser()).toBe(false);
+        });
     });
 })

@@ -4,6 +4,7 @@ import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
 import implicits.Requests
 import model.{MostPopularLifecycle, AdminLifecycle}
+
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
 // obviously this is only for devbuild and should never end up in one of our

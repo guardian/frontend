@@ -69,7 +69,7 @@ define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
         };
 
         function getNameAndCacheKey(style) {
-            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.js$/);
+            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.json$/);
             nameAndCacheKey.shift();
             return nameAndCacheKey;
         }

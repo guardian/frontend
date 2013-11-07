@@ -6,10 +6,10 @@ define('bootstraps/app', [
     "ajax",
     'modules/detect',
     'modules/errors',
+    'modules/analytics/livestats',
     'modules/fonts',
     'modules/debug',
     "modules/router",
-    "modules/detect",
     'modules/discussion/api',
     "bootstraps/common",
     "bootstraps/facia",
@@ -22,7 +22,6 @@ define('bootstraps/app', [
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
-    "bootstraps/facebook",
     "bootstraps/section",
     "bootstraps/imagecontent",
     "modules/id",
@@ -34,10 +33,10 @@ define('bootstraps/app', [
     ajax,
     detect,
     Errors,
+    LiveStats,
     Fonts,
     Debug,
     Router,
-    Detect,
     DiscussionApi,
     bootstrapCommon,
     Facia,
@@ -50,7 +49,6 @@ define('bootstraps/app', [
     ab,
     pageConfig,
     Tag,
-    Facebook,
     Section,
     ImageContent,
     Id,
@@ -68,6 +66,9 @@ define('bootstraps/app', [
         },
 
         attachGlobalErrorHandler: function (config) {
+            if (!config.switches.clientSideErrors) {
+                return false;
+            }
             var e = new Errors({
                 window: window,
                 isDev: config.page.isDev,
@@ -76,7 +77,14 @@ define('bootstraps/app', [
             e.init();
             common.mediator.on("module:error", e.log);
         },
-
+        
+        liveStats: function (config) {
+            if (!config.switches.liveStats) {
+                return false;
+            }
+            new LiveStats({ beaconUrl: config.page.beaconUrl }).log();
+        },
+        
         initialiseAbTest: function (config) {
             var forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
@@ -125,6 +133,7 @@ define('bootstraps/app', [
             modules.showDebug();
             modules.initId(config);
             modules.initUserAdTargeting();
+            modules.liveStats(config);
 
             var pageRoute = function(config, context, contextHtml) {
 
@@ -175,10 +184,6 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "ImageContent") {
                     ImageContent.init(config, context);
-                }
-
-                if ( Detect.getLayoutMode() !== 'mobile') {
-                    Facebook.init(config, context);
                 }
 
                 //Kick it all off

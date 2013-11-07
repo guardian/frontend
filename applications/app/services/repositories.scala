@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.{ElasticSearchContentApi, ContentApi}
+import conf.{SwitchingContentApi, ElasticSearchContentApi, ContentApi}
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.ItemResponse
@@ -53,7 +53,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
   }
 
   def index(edition: Edition, path: String)(implicit request: RequestHeader) = {
-    ContentApi.item(path, edition)
+    SwitchingContentApi().item(path, edition)
       .pageSize(20)
       .showEditorsPicks(true)
       .response.map {response =>
