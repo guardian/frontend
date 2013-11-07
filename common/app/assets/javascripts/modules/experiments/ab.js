@@ -26,7 +26,7 @@ define([
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
-        return store.get(participationsKey) || {};
+        return store.local.get(participationsKey) || {};
     }
 
     function isParticipating(test) {
@@ -39,17 +39,17 @@ define([
         participations[test.id] = {
             variant: variantId
         };
-        store.set(participationsKey, participations);
+        store.local.set(participationsKey, participations);
     }
 
     function removeParticipation(test) {
         var participations = getParticipations();
         delete participations[test.id];
-        store.set(participationsKey, participations);
+        store.local.set(participationsKey, participations);
     }
 
     function clearParticipations() {
-        return store.remove(participationsKey);
+        return store.local.remove(participationsKey);
     }
 
     function getActiveTests() {
