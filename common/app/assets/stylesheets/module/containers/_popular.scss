@@ -11,7 +11,7 @@
             content: counter(popular) ".";
             counter-increment: popular;
             position: absolute;
-            left: 0;
+            left: $gs-gutter/2;
             color: $c-neutral2;
         }
         @include first-row(1);
