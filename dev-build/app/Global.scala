@@ -1,4 +1,4 @@
-import common.ExecutionContexts
+import common.{DiagnosticsLifecycle, ExecutionContexts}
 import conf.RequestMeasurementMetrics
 import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
@@ -51,4 +51,5 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 object Global extends WithFilters(
   DevJsonExtensionFilter :: DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*
-) with MostPopularLifecycle with CommercialLifecycle with FrontLifecycle with DevParametersLifecycle with AdminLifecycle
+) with MostPopularLifecycle with CommercialLifecycle with FrontLifecycle
+  with DevParametersLifecycle with AdminLifecycle with DiagnosticsLifecycle
