@@ -146,7 +146,7 @@ define([
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
                
-                // prefix the r2alpha
+                // prefix all the MVT tests with the alpha user tag if present
                 if (Cookies.get('GU_ALPHA') === "true") {
                     var alphaTag = 'r2alpha,';
                     s.prop51  = alphaTag + s.prop51;
