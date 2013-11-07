@@ -6,11 +6,11 @@
             @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
                 @if(block._2.items.nonEmpty){
                     @FindStyle(faciaTrailblock.id, block._1) match {
-                        case style: MastheadContainer => { @containers.masthead(block._1, dedupe(4, block._2), style, index) }
-                        case style: NewsContainer     => { @containers.news(block._1,  dedupe(block._2), style, index) }
-                        case style: CommentContainer  => { @containers.comment(block._1,  dedupe(block._2), style, index) }
-                        case style: FeaturesContainer => { @containers.features(block._1,  dedupe(block._2), style, index) }
-                        case style                    => { @containers.section(block._1,  dedupe(block._2), style, index) }
+                       case style: MastheadContainer => { @containers.masthead(block._1, dedupe(5, block._2), style, index) }
+                       case style: NewsContainer     => { @containers.news(block._1,  dedupe(5, block._2), style, index) }
+                       case style: CommentContainer  => { @containers.comment(block._1,  dedupe(5, block._2), style, index) }
+                       case style: FeaturesContainer => { @containers.features(block._1,  dedupe(5, block._2), style, index) }
+                       case style                    => { @containers.section(block._1,  dedupe(5, block._2), style, index) }
                     }
                 }
             }
