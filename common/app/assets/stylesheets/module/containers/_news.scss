@@ -91,7 +91,7 @@
             .collection--without-sport-stats {
                 .item:nth-child(2),
                 .item:nth-child(3),
-                .item:nth-child(3n+1) {
+                .item:nth-child(3n+4) {
                     @include row-start;
                 }
             }
