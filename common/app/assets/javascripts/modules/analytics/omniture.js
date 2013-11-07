@@ -5,14 +5,16 @@ define([
     'modules/experiments/ab',
     'modules/storage',
     'modules/id',
-    'modules/errors'
+    'modules/errors',
+    'modules/cookies'
 ], function(
     common,
     detect,
     ab,
     storage,
     id,
-    Errors
+    Errors,
+    Cookies
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -166,6 +168,8 @@ define([
             s.prop67    = "nextgen-served";
 
             s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
+
+            s.prop92    = (Cookies.get('GU_ALPHA') === "true") ? 1 : 0;
 
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
