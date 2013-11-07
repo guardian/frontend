@@ -4,7 +4,6 @@ define([
     "modules/password-strength",
     "modules/id",
     "modules/adverts/userAdTargeting",
-    "modules/identity/autosignin",
     "modules/detect"
 ], function(
     common,
@@ -12,7 +11,6 @@ define([
     PasswordStrength,
     Id,
     UserAdTargeting,
-    AutoSignin,
     detect
 ) {
 
@@ -55,13 +53,6 @@ define([
                 UserAdTargeting.requestUserSegmentsFromId();
             });
         },
-        facebookAutoSignin : function() {
-            common.mediator.on('page:identity:ready', function(config, context) {
-                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
-                    new AutoSignin(config).init();
-                }
-            });
-        }
     };
 
     var ready = function (config, context) {

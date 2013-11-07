@@ -37,7 +37,8 @@ define([
     "modules/swipe/ears",
     "modules/swipe/bar",
     "modules/facia/images",
-    "modules/onward/history"
+    "modules/onward/history",
+    "modules/identity/autosignin",
 ], function (
     common,
     ajax,
@@ -76,7 +77,8 @@ define([
     ears,
     SwipeBar,
     faciaImages,
-    History
+    History,
+    AutoSignin
 ) {
 
     var modules = {
@@ -359,6 +361,14 @@ define([
                     });
                 }
             });
+        },
+
+        initAutoSignin : function() {
+            common.mediator.on('page:common:ready', function(config) {
+                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                    new AutoSignin(config).init();
+                }
+            });
         }
     };
 
@@ -401,6 +411,7 @@ define([
             modules.optIn();
             modules.displayReleaseMessage(config);
             modules.logReadingHistory();
+            modules.initAutoSignin(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };
