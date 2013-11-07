@@ -16,37 +16,6 @@ $item-top-border-height: 2px;
         }
     }
 }
-@mixin item-separator-vertical {
-    &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 1px;
-        height: 100%;
-        border-left: 1px dotted $c-neutral5;
-    }
-}
-@mixin hide-item-separator-vertical {
-    &:before {
-        display: none !important;
-    }
-}
-@mixin row-start {
-    clear: left;
-    @include hide-item-separator-vertical;
-}
-@mixin row($row-size, $first-row-size: $row-size) {
-    // styling for first row
-    @include first-row($row-size);
-    // stylings for begining and end of rows
-    .item:first-child,
-    .item:nth-child(#{$row-size}n+#{$first-row-size + 1}) {
-        @include row-start;
-    }
-}
 
 $metaHeight: 14px;
 @mixin card-mobile($with-image: false) {
@@ -102,7 +71,6 @@ $metaHeight: 14px;
     min-height: gs-height(3);
     padding-bottom: $metaHeight;
     float: left;
-    @include item-separator-vertical;
 
     .item__title {
         @include fs-headline(1, $size-only: true);

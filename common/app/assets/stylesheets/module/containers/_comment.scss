@@ -55,11 +55,9 @@
                 @include fs-header(4, $size-only: true);
             }
         }
-        .item:nth-child(3n+2) {
-            @include row-start;
-        }
     }
     @include mq(desktop) {
+        @include first-row(3);
         .item:first-child {
             @include card-double-width;
         }
@@ -69,10 +67,6 @@
         .item:nth-child(2),
         .item:nth-child(3) {
             @include card-image;
-        }
-        @include first-row(3);
-        .item:nth-child(4n+6) {
-            @include row-start;
         }
     }
 }

@@ -8,9 +8,6 @@
         .item:nth-child(3) {
             @include card-half-width($with-image: true);
         }
-        .item:nth-child(2) {
-            @include row-start;
-        }
         .item:nth-child(n+4) {
             @include card-headline;
         }
@@ -30,10 +27,6 @@
         .item:nth-child(n+2):nth-child(-n+4)  {
             @include card-image;
         }
-        @include first-row(1);
-        .item:nth-child(3n+2) {
-            @include row-start;
-        }
     }
     @include mq(desktop) {
         .item:first-child {
@@ -45,10 +38,6 @@
         .item:nth-child(2),
         .item:nth-child(3) {
             @include card-image;
-        }
-        @include first-row(2);
-        .item:nth-child(4n+4) {
-            @include row-start;
         }
     }
 }
