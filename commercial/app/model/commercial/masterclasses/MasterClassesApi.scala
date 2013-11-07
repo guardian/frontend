@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import conf.CommercialConfiguration
 
 object MasterClassesApi extends ExecutionContexts {
-  lazy val apiId = CommercialConfiguration.masterclasses.apiId
+  lazy val apiId = "3497465071"
   lazy val apiKey = CommercialConfiguration.masterclasses.apiKey
 
   def extractEventsFromFeed(jsValue: JsValue) = jsValue \\ "event"
