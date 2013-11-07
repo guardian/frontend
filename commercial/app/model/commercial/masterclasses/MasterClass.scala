@@ -10,6 +10,7 @@ object MasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
 
   def apply(block: JsValue): Option[MasterClass] = {
+    val id = (block \ "id").as[Long]
     val title = (block \ "title").as[String]
     val literalDate = (block \ "start_date").as[String]
     val startDate: DateTime = datePattern.parseDateTime(literalDate)
@@ -28,14 +29,15 @@ object MasterClass {
     val elements: Array[Element] = doc.select("a[href^=http://www.theguardian.com/]:contains(Click here)").toArray map {_.asInstanceOf[Element]}
 
     val result: Array[MasterClass] = elements map { element =>
-      new MasterClass(title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"))
+      new MasterClass(id.toString, title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"))
     }
 
     return result.headOption
   }
 }
 
-case class MasterClass(name: String,
+case class MasterClass(id: String,
+                       name: String,
                        startDate: DateTime,
                        url: String,
                        description: String,
