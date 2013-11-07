@@ -2,7 +2,7 @@
     Module: storage.js
     Description: Wrapper around localStorage functionality
 */
-define(['common'], function (common) {
+define(['utils/mediator'], function (mediator) {
     
     var w = window;
     
@@ -22,7 +22,7 @@ define(['common'], function (common) {
                 w.localStorage.removeItem(testKey);
                 return true;
             } catch (e) {
-                common.mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'modules/storage.js');
+                mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'modules/storage.js');
                 return false;
             }
         },

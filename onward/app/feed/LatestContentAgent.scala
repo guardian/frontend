@@ -14,7 +14,7 @@ object LatestContentAgent extends Logging with ExecutionContexts {
 
   def update() {
     log.info("Updating latest content.")
-    Edition.all foreach update
+    update(Edition.defaultEdition)
   }
 
   private def update(edition: Edition) {
@@ -30,6 +30,8 @@ object LatestContentAgent extends Logging with ExecutionContexts {
         })
 
         services.RecentlyPublished.publish(content)
+
+        log.info(s"Publishing ${content.url}, it was published at: ${content.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")}.")
       }
     })
   }

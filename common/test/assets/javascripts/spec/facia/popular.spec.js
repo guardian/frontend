@@ -16,12 +16,12 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
 
         var server,
             response = JSON.stringify({
-                fullTrails: [1, 2, 3, 4].map(function(itemNum) {
+                trails: [1, 2, 3, 4].map(function(itemNum) {
                     return {
                         headline: 'A Headline',
                         trailText: 'Some trailtext',
-                        published: {
-                            unix: '1'
+                        webPublicationDate: {
+                            timestamp: '1'
                         },
                         mainPicture: {
                             item: 'item.jpg',

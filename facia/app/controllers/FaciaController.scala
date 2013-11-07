@@ -5,7 +5,7 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
-import play.api.libs.json.Json
+import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
 
 
@@ -175,7 +175,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
               val html = views.html.fragments.frontBody(frontPage, faciaPage)
               JsonComponent(
                 "html" -> html,
-                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
+                "trails" -> JsArray(faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(TrailToJson(_)))),
                 "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
               )
             }
