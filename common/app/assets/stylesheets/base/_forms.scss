@@ -1,6 +1,13 @@
 /* Base form styles
    ========================================================================== */
 
+@if $old-ie {
+   // IE 8 won't display webfonts in password fields…
+   [type=password] {
+      font-family: sans-serif !important;
+   }
+}
+
 .form {
     margin-top: $baseline*6;
     margin-bottom: $baseline*6;
