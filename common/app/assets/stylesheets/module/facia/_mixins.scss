@@ -16,19 +16,17 @@ $item-top-border-height: 2px;
         }
     }
 }
-@mixin item-separator-vertical($side: left, $side-only: false) {
+@mixin item-separator-vertical {
     &:before {
-        @if $side-only {
-            #{$side}: 0;
-        } @else {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0; #{$side}: 0; bottom: 0;
-            width: 1px;
-            height: 100%;
-            border-left: 1px dotted $c-neutral5;
-        }
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        border-left: 1px dotted $c-neutral5;
     }
 }
 @mixin hide-item-separator-vertical {

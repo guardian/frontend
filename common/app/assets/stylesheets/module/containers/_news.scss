@@ -53,7 +53,7 @@
         }
         &:nth-of-type(even) .item:first-child {
             float: right;
-            @include first-row(2);
+
             &:before {
                 display: block !important;
             }
