@@ -3,7 +3,6 @@ package model.commercial.masterclasses
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import play.api.libs.json._
-import model.commercial.masterclasses.MasterClassesApi
 
 class MasterClassFeedParsingTest extends FlatSpec with Matchers {
   val rawEventBriteFeed = """{ "events" : [ { "event" : { "background_color" : "FFFFFF",
