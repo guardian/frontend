@@ -4,7 +4,6 @@ module.exports = function (grunt) {
         jasmineSpec = grunt.option('spec') || '*',
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/'),
         staticTargetDir = 'static/target/';
 
     if (isDev) {
@@ -535,12 +534,14 @@ module.exports = function (grunt) {
         s3: {
             options: {
                 bucket: 'aws-frontend-store',
-                access: 'public-read'
+                access: 'public-read',
+                gzip: true
             },
-            upload: {
+            screenshots: {
                 upload: [{
-                    src: screenshotsDir + '/*.png',
-                    dest: env.toUpperCase() + '/screenshots/' + timestampDir
+                    src: screenshotsDir + '/**/*.png',
+                    dest: '<%= env.casperjs.ENVIRONMENT.toUpperCase() %>/screenshots/',
+                    rel : screenshotsDir
                 }]
             }
         },
@@ -649,5 +650,5 @@ module.exports = function (grunt) {
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
-    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:upload']);
+    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
 };
