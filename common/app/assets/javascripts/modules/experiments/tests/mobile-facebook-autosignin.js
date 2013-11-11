@@ -26,9 +26,9 @@ define([
              {
                  id: 'mobile-auto-facebook-signin',
                  test: function() {
-                    if (Detect.getLayoutMode() === 'mobile') {
-                       new AutoSignin(_config).init();
-                    }
+                     if ( _config.switches && _config.switches.facebookAutosignin && Detect.getLayoutMode() === 'mobile') {
+                         new AutoSignin(_config).init();
+                     }
                  }
              }
          ];
