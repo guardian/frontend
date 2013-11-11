@@ -5,7 +5,6 @@ import tools.FaciaApi
 import controllers.Identity
 import org.joda.time.DateTime
 import play.api.templates.HtmlFormat
-import common.InputValidation
 
 trait JsonShape
 
