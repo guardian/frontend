@@ -7,6 +7,7 @@ define([
     'modules/experiments/tests/live-blog-show-more',
     'modules/experiments/tests/alpha-adverts',
     'modules/experiments/tests/commercial-components',
+    'modules/experiments/tests/story-package-question'
 ], function (
     common,
     store,
@@ -14,7 +15,8 @@ define([
     Aa,
     LiveBlogShowMore,
     AlphaAdverts,
-    CommercialComponentsTest
+    CommercialComponentsTest,
+    StoryPackageQuestion
     ) {
 
     var TESTS = [
@@ -22,6 +24,7 @@ define([
             new LiveBlogShowMore(),
             new AlphaAdverts(),
             new CommercialComponentsTest(),
+            new StoryPackageQuestion()
         ],
         participationsKey = 'gu.ab.participations';
 
