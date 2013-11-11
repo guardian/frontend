@@ -59,7 +59,7 @@ trait ParseConfig extends ExecutionContexts with Logging {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
-  sealed case class CollectionItem(id: String, headline: Option[String])
+  case class CollectionItem(id: String, headline: Option[String])
 
   def requestCollection(id: String): Future[Response] = {
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
