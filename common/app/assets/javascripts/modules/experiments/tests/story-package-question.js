@@ -16,7 +16,7 @@ define([
     });
 
     function cleanUrl(url) {
-        return url.replace('http://www.theguardian.com', '');
+        return '/' + url.split('/').slice(3).join('/');
     }
 
     function getTrailUrl(trail) {
@@ -33,18 +33,34 @@ define([
         });
     }
 
+    function getHeadline(trail) {
+        return trail.querySelector('.trail__headline a').innerHTML;
+    }
+
+    function isQuestion(headline) {
+        return (['Who', 'What', 'Where', 'Why'].some(function(word) {
+            return headline.indexOf(word) === 0;
+        }) || headline.indexOf('?'));
+    }
+
     function append(trail) {
         bonzo(trail).detach().appendTo(container);
     }
 
+    function prepend(trail) {
+        bonzo(trail).detach().prependTo(container);
+    }
+
     var Question = function () {
+
+        var self = this;
 
         this.id = 'StoryPackageQuestion';
         this.expiry = '2013-11-30';
         this.audience = 0.1;
         this.description = 'Test effectiveness of question based trails in storypackages';
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return (config.page.contentType === 'Article' && document.querySelector('.more-on-this-story'));
         };
         this.variants = [
             {
@@ -55,12 +71,17 @@ define([
                             append(trail);
                         }
                     });
+                    return true;
                 }
             },
             {
                 id: 'Question',
                 test: function() {
-
+                    getTrails().forEach(function(trail) {
+                        if(isQuestion(getHeadline(trail))) {
+                            prepend(trail);
+                        }
+                    });
                     return true;
                 }
             },
@@ -73,10 +94,19 @@ define([
                 }
             },
             {
+                id: 'All',
+                test: function() {
+                    self.variants.forEach(function(variant){
+                        if(variant.id === 'Read' || variant.id === 'Question') {
+                            variant.test.call(self);
+                        }
+                    });
+                    return true;
+                }
+            },
+            {
                 id: 'control',
                 test: function() {
-
-
                     return true;
                 }
             }
