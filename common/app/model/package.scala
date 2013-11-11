@@ -50,7 +50,12 @@ object `package` {
     lazy val toHttpDateTimeString: String = date.toString(HTTPDateFormat)
   }
 
+  lazy val DateTimeWithMillis = """.*\d\d:\d\d\.(\d+)\+.*""".r
+
   implicit class ISODateTimeStringNoMillis2DateTime(s: String) {
-    lazy val parseISODateTimeNoMillis = ISODateTimeFormat.dateTimeNoMillis.parseDateTime(s)
+    lazy val parseISODateTimeNoMillis = s match {
+      case DateTimeWithMillis(_) => ISODateTimeFormat.dateTime.parseDateTime(s)
+      case _ => ISODateTimeFormat.dateTimeNoMillis.parseDateTime(s)
+    }
   }
 }
