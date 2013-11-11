@@ -35,16 +35,17 @@
             }
         }
     }
-    @include mq(tablet, desktop) {
-        .item:first-child {
-            @include card-full-width;
-        }
+    @include mq(tablet) {
         .item:nth-child(n+2) {
             @include card;
         }
-        .item:nth-child(2),
-        .item:nth-child(4) {
+        .item:nth-child(2) {
             @include card-image;
+        }
+    }
+    @include mq(tablet, desktop) {
+        .item:first-child {
+            @include card-full-width;
         }
         .item:nth-child(3) {
             min-height: gs-height(6) - $metaHeight;
@@ -55,24 +56,17 @@
                 @include fs-header(4, $size-only: true);
             }
         }
-        .item:nth-child(3n+2) {
-            @include row-start;
+        .item:nth-child(4) {
+            @include card-image;
         }
     }
     @include mq(desktop) {
+        @include first-row(3);
         .item:first-child {
             @include card-double-width;
         }
-        .item:nth-child(n+2) {
-            @include card;
-        }
-        .item:nth-child(2),
         .item:nth-child(3) {
             @include card-image;
-        }
-        @include first-row(3);
-        .item:nth-child(4n+6) {
-            @include row-start;
         }
     }
 }
