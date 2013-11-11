@@ -65,12 +65,12 @@ class RecentlyPublished extends Actor with Logging {
     
     case Subscribe => {
       if(members > 200) {
-        log.info("Cannot subcribe to recently published, connections exhausted.")
+        log.info("Cannot subscribe to recently published, connections exhausted.")
         sender ! CannotConnect("Max number of connections made")
       } else {
         members = members + 1
         sender ! Connected(contentEnumerator)
-        log.info(s"Subcribed to recently published success. Members = $members")
+        log.info(s"Subscribed to recently published success. Members = $members")
       }
     }
 
@@ -87,7 +87,7 @@ class RecentlyPublished extends Actor with Logging {
 
     case Quit => {
       members = members - 1
-      log.info(s"Unsubcribed from recently published. Members = $members")
+      log.info(s"Unsubscribed from recently published. Members = $members")
     }
   }
 }
