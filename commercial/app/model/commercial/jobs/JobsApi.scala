@@ -3,7 +3,7 @@ package model.commercial.jobs
 import scala.concurrent.Future
 import common.{Logging, ExecutionContexts}
 import org.joda.time.format.DateTimeFormat
-import scala.xml.Elem
+import scala.xml.{XML, Elem}
 import play.api.libs.ws.WS
 import conf.CommercialConfiguration
 
@@ -21,9 +21,18 @@ object JobsApi extends ExecutionContexts with Logging {
     }
 
     buildUrl map {
-      WS.url(_) withRequestTimeout 60000 get() map {
-        response => response.xml
-      }
+      url =>
+        val xml = WS.url(url) withRequestTimeout 60000 get() map {
+          response =>
+            val body = response.body.replace(0x001b.toChar, ' ')
+            XML.loadString(body)
+        }
+
+        xml onFailure {
+          case e: Exception => log.error(s"Loading job ads failed: ${e.getMessage}")
+        }
+
+        xml
     } getOrElse {
       log.error("No Jobs API config properties set")
       Future(<jobs/>)
