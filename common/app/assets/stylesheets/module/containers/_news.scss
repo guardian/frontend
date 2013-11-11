@@ -157,8 +157,14 @@
             border-style: none;
             border-top: 2px solid $c-newsAccent;
         }
+        .matches {
+            margin-bottom: 0;
+        }
         .match-desc__result {
             width: 20%;
+        }
+        .cta {
+            margin-bottom: 0;
         }
         .cta-small {
             padding-bottom: 0;
