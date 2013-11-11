@@ -1,15 +1,22 @@
 @charset "UTF-8";
 
-/* ==========================================================================
-   Common head
-   ========================================================================== */
-
 @import "_head.common";
 
 
 /* ==========================================================================
-   Identity core
+   Global modules
    ========================================================================== */
 
-@import "base/_forms";
-@import "module/_identity";
+@import "module/_article";
+@import "module/_social";
+    @include socialOnPageLoad;
+
+
+/* ==========================================================================
+   External modules
+   ========================================================================== */
+
+// These are for styling HTML that we get from external sources
+// and may contain more specific selectors than we would usually like
+
+@import "module/external/_from-content-api";
