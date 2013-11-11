@@ -151,8 +151,7 @@ trait UpdateActions {
       trail <- trailList
       metaMap <- trail.meta.orElse(Option(Map.empty[String, String]))
     } yield {
-      val validatedMetaMap = (metaMap ++ newMetaMap).mapValues(s => InputValidation.sanitize(s))
-      if (id == trail.id) trail.copy(meta = Some(validatedMetaMap)) else trail
+      if (id == trail.id) trail.copy(meta = Some(metaMap ++ newMetaMap)) else trail
     }
   }
 
