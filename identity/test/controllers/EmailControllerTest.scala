@@ -86,7 +86,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
       val thirdPartyMarketing = "true"
       val emailFormat = "Text"
       val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
-        .withFormUrlEncodedBody("receive_gnm_marketing" -> gnmMarketing, "receive_third_party_marketing" -> thirdPartyMarketing, "email_format" -> emailFormat )
+        .withFormUrlEncodedBody("statusFields.receiveGnmMarketing" -> gnmMarketing, "statusFields.receive3rdPartyMarketing" -> thirdPartyMarketing, "htmlPreference" -> emailFormat, "csrfToken" -> "abc")
       val authRequest = AuthRequest(fakeRequest, user, testAuth)
 
       "with successful api calls" - {
