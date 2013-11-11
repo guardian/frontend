@@ -17,12 +17,12 @@ case class Switch(group: String, name: String, description: String, safeState: S
   def isSwitchedOn: Boolean = delegate.isSwitchedOn
 
   def switchOn() {
-    if (delegate.isSwitchedOff) {
+    if (isSwitchedOff) {
       delegate.switchOn()
     }
   }
   def switchOff() {
-    if (delegate.isSwitchedOn) {
+    if (isSwitchedOn) {
       delegate.switchOff()
     }
   }
