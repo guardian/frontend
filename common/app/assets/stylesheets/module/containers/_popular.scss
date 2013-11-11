@@ -1,0 +1,50 @@
+.container--popular {
+    @include mq($to: tablet) {
+        counter-reset: popular;
+        .item__link {
+            border-top: 1px dotted $c-neutral5;
+        }
+        .item > * {
+            padding-left: 24px;
+        }
+        .item__title:before {
+            content: counter(popular) ".";
+            counter-increment: popular;
+            position: absolute;
+            left: $gs-gutter/2;
+            color: $c-neutral2;
+        }
+        @include first-row(1);
+        .item:nth-child(-n+5) {
+            @include card-mobile;
+        }
+        .item:nth-child(n+2):nth-child(-n+5),{
+            .item__title {
+                @include fs-headline(2, $size-only: true);
+                @include mq(mobileLandscape) {
+                    @include fs-headline(3, $size-only: true);
+                }
+            }
+        }
+        .item:nth-child(n+6) {
+            @include card-headline;
+        }
+    }
+    @include mq(tablet) {
+        .item {
+            @include card;
+        }
+    }
+    @include mq(tablet, desktop) {
+        @include row(3);
+        .item:nth-child(-n+3) {
+            @include card-image;
+        }
+    }
+    @include mq(desktop) {
+        @include row(4);
+        .item:nth-child(-n+4) {
+            @include card-image;
+        }
+    }
+}

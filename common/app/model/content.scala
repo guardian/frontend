@@ -8,8 +8,9 @@ import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
+import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 
-class Content protected (override val delegate: ApiContent) extends Trail with Tags with MetaData {
+class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val publication: String = fields.get("publication").getOrElse("")
   lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
@@ -109,17 +110,26 @@ class Content protected (override val delegate: ApiContent) extends Trail with T
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
   )
+
+  override def elementsMap(elementType: String): Map[String,List[Element]] = {
+    // Find the elements associated with a given element type, keyed by a relation string.
+    // Example relations are gallery, thumbnail, main, body
+    delegate.elements.map(_.filter(_.elementType == elementType)
+      .groupBy(_.relation)
+      .mapValues(_.zipWithIndex.collect{case (element:ApiElement, index:Int) => Element(element, index)})
+    ).getOrElse(Map.empty).withDefaultValue(Nil)
+  }
 }
 
 object Content {
 
   def apply(delegate: ApiContent): Content = {
     delegate match {
-      // article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
+      // liveblog / article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
+      case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
       case gallery if delegate.isGallery => new Gallery(delegate)
       case video if delegate.isVideo => new Video(delegate)
-      case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case picture if delegate.isImageContent => new ImageContent(delegate)
       case _ => new Content(delegate)
     }

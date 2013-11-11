@@ -1,0 +1,34 @@
+@(env: String, charts: Seq[tools.RequestCountGraph])
+
+@admin_main("Dashboard", env, isAuthed = true) {
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+        @charts.filter(_.hasData).map{ chart =>
+        new google.visualization.LineChart(document.getElementById('@chart.id'))
+        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+        title: '@chart.name',
+        colors: ['#FF8000'],
+        legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
+        });
+        }
+    }
+    </script>
+
+    @* some servers have no data *@
+    @defining(charts.filterNot(_.hasData).map(_.name).mkString(", ")){ noData =>
+        @if(noData.nonEmpty){
+            <p>No data for: <strong>@noData</strong></p>
+        }
+    }
+
+
+    @* placeholders for charts *@
+    @charts.filter(_.hasData).map{ chart =>
+        <div id="@chart.id" style="max-width: 900px"></div>
+    }
+}

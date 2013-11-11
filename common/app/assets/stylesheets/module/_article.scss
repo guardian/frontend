@@ -199,21 +199,24 @@
         -webkit-font-smoothing: antialiased;
         margin-bottom: $baseline*4;
     }
+
+    > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > li {
+            @include faux-bullet-point;
+
+            + li {
+                margin-top: .5em;
+            }
+        }
+    }
 }
 .article-body {
     @include mq(tablet) {
         margin-bottom: $baseline*4;
-    }
-}
-
-.bullet {
-    font-size: 13px;
-    display: inline-block;
-    color: #999999;
-    margin: $baseline/2 4px $baseline/-2 0;
-
-    &:first-of-type {
-        margin-top: $baseline;
     }
 }
 
@@ -343,7 +346,7 @@ video {
     margin-top: $baseline*3;
     margin-bottom: $baseline*3;
 
-    .ab-paragraph-spacing--indents & {
+    .paragraph-spacing--indents & {
         margin-top: $baseline*5;
     }
 }

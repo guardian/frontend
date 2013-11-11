@@ -1,23 +1,20 @@
 /* Local navigation - Global container overrides
 ========================================================================== */
-#preloads.has-localnav {
 
+#preloads.has-localnav {
     @include mq(tablet) {
         margin-top: 156px;
     }
-
     .parts__head {
         @include mq(tablet) {
             padding-top: $baseline*12;
         }
     }
-
     .parts__body {
         @include mq(tablet) {
             margin-top: 0;
         }
     }
-
     .ad-slot-top-banner-ad {
         padding-top: 5px;
         background-color: #eee;
@@ -27,35 +24,30 @@
             background-color: #ffffff;
         }
     }
-
     h2.article-zone:only-child,
     .parts__body > .article-zone,
     .hide-on-mobile-if-localnav,
-    .section-head,
-    .front-section:first-child .sub-section-head {
+    .section-head {
         display: none;
 
         @include mq(tablet) {
             display: block;
         }
     }
-
+    .article__headline {
+        border-top: 0;
+    }
 }
 
 
 /* Local navigation popup
    ========================================================================== */
+
 .nav-popup-localnav {
     top: 171px;
     border-color: $c-neutral5;
 
-    .nav__link {
-        color: #333333;
-    }
-
     .is-active .nav__link {
         font-family: $serifheadline;
-        line-height: 20px;
-        font-weight: bold;
     }
 }

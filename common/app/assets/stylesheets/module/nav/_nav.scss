@@ -7,7 +7,7 @@
  * Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction
  *
  * The root component nav and >li>a selectors should not be modified directly,
- * instead use modifier classes such as "nav--stacked"
+ * instead use modifier classes such as "nav--columns"
  */
 
 .nav {
@@ -34,23 +34,11 @@
    Nav Modifiers
    ========================================================================== */
 
-/* Stacked
-   ========================================================================== */
-
-.nav--stacked > li {
-    display: list-item;
-
-    a {
-        display: block;
-    }
-}
-
-
 /* Columns
    ========================================================================== */
 
 .nav--columns {
-    padding: $baseline $gs-gutter/2;
+    padding: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
@@ -91,44 +79,6 @@
     border-top: none;
     padding-top: 0;
 }
-
-
-/* Section divider
-   ========================================================================== */
-
-.nav-popup--small .nav--section-divider {
-    margin: 0;
-    background-color: $c-neutral7;
-    padding: 0 $gs-gutter/2 $baseline*2;
-
-    .nav .nav__item + .nav__item {
-        .nav__link {
-            border-bottom: 0;
-            border-top: 1px solid $c-neutral5;
-        }
-    }
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-    @include mq(tablet) {
-        margin-top: -5px !important;
-        border-top: $baseline*3 solid #ffffff;
-
-        .nav__item { margin: 0; }
-    }
-    @include mq(desktop) {
-        border-top: none;
-        margin-top: -13px !important;
-    }
-}
-
-    .control--sections .i-nav-divider {
-        @include mq(tablet) {
-            border-left: 0;
-        }
-    }
 
 
 /* Global navigation
@@ -184,7 +134,7 @@
     }
 
     .nav__link {
-        color: $c-neutral1; // This is here because the below selectors are too specific for zone-color to work
+        color: $c-neutral1;
         display: block;
         margin: 10px 0 $baseline*3;
         padding: 2px 9px 0 9px;
@@ -247,9 +197,8 @@
     .nav__item {
         float: left;
     }
-
     .nav__link {
-        color: #333333; // This is here because the below selectors are too specific for zone-color to work
+        color: $c-neutral2;
         display: block;
         margin: $baseline*4 0 $baseline*3 0;
         padding: 2px 9px 0;
@@ -257,15 +206,14 @@
         font-size: 14px;
         font-size: 1.4rem;
         font-weight: bold;
-    }
 
-    .nav__link,
-    .nav__link:focus,
-    .nav__link:active,
-    .nav__link:hover {
-        text-decoration: none;
+        &,
+        &:focus,
+        &:active,
+        &:hover {
+            text-decoration: none;
+        }
     }
-
     .is-active .nav__link {
         font-family: $serifheadline !important;
         line-height: 18px !important;
@@ -273,7 +221,7 @@
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
-    .nav__item:last-child .nav__link { border-right: none; }
+    .nav__item:last-child  .nav__link { border-right: none; }
 }
 
 
@@ -328,7 +276,7 @@
     width: 100%;
     float: left;
     border: 0 !important;
-    height: $gs-column-height + $baseline !important;
+    height: $gs-column-height + $baseline - 3 !important;
     padding-left: 0 !important;
 }
 
@@ -352,7 +300,6 @@
         &:last-child { border-right: none; }
         &.is-active { text-decoration: underline; }
     }
-
     .nav__link,
     .nav__link:active,
     .nav__link:focus,
@@ -367,6 +314,9 @@
    ========================================================================== */
 
 .nav .nav__item .nav__link--faded {
+    color: $c-neutral2;
+}
+.nav .nav__item .nav__link--faded-footer {
     color: #9DBBD4;
 }
 
@@ -377,4 +327,27 @@
 .nav--no-horizontal-spacing {
     padding-left: 0;
     padding-right: 0;
+}
+
+
+/* Overrides for the sections menu
+   ========================================================================== */
+
+@include mq(tablet) {
+    .nav--additional-sections {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+
+        > .nav__item {
+            clear: none !important;
+            padding-left: $gs-gutter/2 !important;
+            padding-right: $gs-gutter/2 !important;
+        }
+    }
+    .nav--guardian-services {
+         .nav__link {
+             position: relative;
+             top: -1px;
+         }
+    }
 }

@@ -7,7 +7,7 @@
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
     </h2>
-    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) paragraph-spacing--indents">
         <article id="article" class="article @if(article.isLive){is-live}"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__inner article__inner--head">
@@ -17,7 +17,7 @@
                     @if(LiveCricketSwitch.isSwitchedOn) {
                         @article.cricketMatch.map { id =>
                             <div class="after-headline">
-                                <a class="cta-small zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                                <a class="cta-small c-neutral1" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
                                     itemprop="significantLink"
                                     id="schema-WebPage">View full scorecard<i class="i i-sport-arrow-small"></i></a>
                             </div>

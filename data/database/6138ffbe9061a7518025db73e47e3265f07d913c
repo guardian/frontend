@@ -1,0 +1,2408 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":86779,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":8678,
+    "orderBy":"newest",
+    "edition":{
+      "id":"au/commentisfree",
+      "webTitle":"Comment is free",
+      "webUrl":"http://www.theguardian.com/au/commentisfree",
+      "apiUrl":"http://content.guardianapis.com/au/commentisfree",
+      "code":"au"
+    },
+    "section":{
+      "id":"commentisfree",
+      "webTitle":"Comment is free",
+      "webUrl":"http://www.theguardian.com/commentisfree",
+      "apiUrl":"http://content.guardianapis.com/commentisfree",
+      "editions":[{
+        "id":"commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree",
+        "code":"default"
+      },{
+        "id":"uk/commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/uk/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/uk/commentisfree",
+        "code":"uk"
+      },{
+        "id":"us/commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/us/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/us/commentisfree",
+        "code":"us"
+      },{
+        "id":"au/commentisfree",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/au/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/au/commentisfree",
+        "code":"au"
+      }]
+    },
+    "results":[{
+      "id":"commentisfree/2013/nov/01/russell-brand-robert-webb-to-help-dispossessed",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T16:30:10Z",
+      "webTitle":"Russell Brand might be better off actually trying to help the dispossessed | Russell Brand",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/russell-brand-robert-webb-to-help-dispossessed",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/russell-brand-robert-webb-to-help-dispossessed",
+      "fields":{
+        "trailText":"<strong>Deborah Orr | </strong>It's nice to see celebrities such as Brand and Robert Webb engaged in political debate, but few in showbusiness could even begin to handle the level of contempt that politicians face",
+        "headline":"Russell Brand might be better off actually trying to help the dispossessed",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3k393",
+        "wordcount":"1322",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:30:10Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"culture/russell-brand",
+        "type":"keyword",
+        "webTitle":"Russell Brand",
+        "webUrl":"http://www.theguardian.com/culture/russell-brand",
+        "apiUrl":"http://content.guardianapis.com/culture/russell-brand",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tv-and-radio/robert-webb",
+        "type":"keyword",
+        "webTitle":"Robert Webb",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/robert-webb",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/robert-webb",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"media/jeremy-paxman",
+        "type":"keyword",
+        "webTitle":"Jeremy Paxman",
+        "webUrl":"http://www.theguardian.com/media/jeremy-paxman",
+        "apiUrl":"http://content.guardianapis.com/media/jeremy-paxman",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"tv-and-radio/tv-and-radio",
+        "type":"keyword",
+        "webTitle":"Television & radio",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/tv-and-radio",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/saturday",
+        "type":"newspaper-book-section",
+        "webTitle":"Saturday",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/saturday",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/saturday",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"profile/deborah-orr",
+        "type":"contributor",
+        "webTitle":"Deborah Orr",
+        "webUrl":"http://www.theguardian.com/profile/deborah-orr",
+        "apiUrl":"http://content.guardianapis.com/profile/deborah-orr",
+        "bio":"<p>Deborah Orr is one of Britain's leading social and political commentators. She has a weekly column in the Guardian</p>",
+        "r2ContributorId":"34235",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/11/15/1321377785993/deborah_orr.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421453903",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/11/1/1383310432622/Russell-Brands-New-States-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"New Statesman",
+            "altText":"Russell Brand's New Statesman guest edit",
+            "height":"168",
+            "credit":"New Statesman/PA",
+            "caption":"I like Brand, I see his appeal, but I also find his hypocrisy absurd. Photograph: New Statesman/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/11/1/1383310435350/Russell-Brands-New-States-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"New Statesman",
+            "altText":"Russell Brand's New Statesman guest edit",
+            "height":"180",
+            "credit":"New Statesman/PA",
+            "caption":"I like Brand, I see his appeal, but I also find his hypocrisy absurd. Photograph: New Statesman/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/11/1/1383310436877/Russell-Brands-New-States-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"New Statesman",
+            "altText":"Russell Brand's New Statesman guest edit",
+            "height":"228",
+            "credit":"New Statesman/PA",
+            "caption":"I like Brand, I see his appeal, but I also find his hypocrisy absurd. Photograph: New Statesman/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/11/1/1383310438282/Russell-Brands-New-States-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"New Statesman",
+            "altText":"Russell Brand's New Statesman guest edit",
+            "height":"276",
+            "credit":"New Statesman/PA",
+            "caption":"I like Brand, I see his appeal, but I also find his hypocrisy absurd. Photograph: New Statesman/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/11/1/1383310439616/Russell-Brands-New-States-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"New Statesman",
+            "altText":"Russell Brand's New Statesman guest edit",
+            "height":"372",
+            "credit":"New Statesman/PA",
+            "caption":"I like Brand, I see his appeal, but I also find his hypocrisy absurd. Photograph: New Statesman/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/11/1/1383310438282/Russell-Brands-New-States-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"New Statesman",
+            "altText":"Russell Brand's New Statesman guest edit",
+            "height":"276",
+            "credit":"New Statesman/PA",
+            "caption":"I like Brand, I see his appeal, but I also find his hypocrisy absurd. Photograph: New Statesman/PA",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/obamacare-romneycare-healthcare-reform-comparison",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T16:15:00Z",
+      "webTitle":"Obamacare and Romneycare: same framework doesn't mean same results | Gabrielle Gurley",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/obamacare-romneycare-healthcare-reform-comparison",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/obamacare-romneycare-healthcare-reform-comparison",
+      "fields":{
+        "trailText":"<p><strong>Gabrielle Gurley:</strong> Obama touted the success of the Romney model this week. They're similar, but it's unclear if we'll see success nationally</p>",
+        "headline":"Obamacare and Romneycare: same framework doesn't mean same results",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3e7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/11/2/1351882109232/Barack-Obama-and-Mitt-Rom-003.jpg",
+        "wordcount":"865",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:15:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/healthcare",
+        "type":"keyword",
+        "webTitle":"US healthcare",
+        "webUrl":"http://www.theguardian.com/world/healthcare",
+        "apiUrl":"http://content.guardianapis.com/world/healthcare",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/gabrielle-gurley",
+        "type":"contributor",
+        "webTitle":"Gabrielle Gurley",
+        "webUrl":"http://www.theguardian.com/profile/gabrielle-gurley",
+        "apiUrl":"http://content.guardianapis.com/profile/gabrielle-gurley",
+        "bio":"<p>Gabrielle Gurley is a Philadelphia native and reports on Massachusetts state politics and public policy for <a href=\"http://www.commonwealthmagazine.org/About.aspx\">CommonWealth magazine</a> in Boston</p>",
+        "r2ContributorId":"28513",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2011/8/5/1312567667830/gabriellegurley_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.theguardian.com/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/mittromney",
+        "type":"keyword",
+        "webTitle":"Mitt Romney",
+        "webUrl":"http://www.theguardian.com/world/mittromney",
+        "apiUrl":"http://content.guardianapis.com/world/mittromney",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.theguardian.com/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/massachusetts",
+        "type":"keyword",
+        "webTitle":"Massachusetts",
+        "webUrl":"http://www.theguardian.com/world/massachusetts",
+        "apiUrl":"http://content.guardianapis.com/world/massachusetts",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usdomesticpolicy",
+        "type":"keyword",
+        "webTitle":"US domestic policy",
+        "webUrl":"http://www.theguardian.com/world/usdomesticpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usdomesticpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/healthcare",
+        "type":"keyword",
+        "webTitle":"Healthcare industry",
+        "webUrl":"http://www.theguardian.com/business/healthcare",
+        "apiUrl":"http://content.guardianapis.com/business/healthcare",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421468540",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/11/2/1351882115066/Barack-Obama-and-Mitt-Rom-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Jason Reed",
+            "altText":"Barack Obama and Mitt Romney",
+            "height":"276",
+            "credit":"Jason Reed/Reuters",
+            "caption":"Obama's speech in Boston this week sought to showcase the similarities between Obamacare and Romneycare. Photograph: Jason Reed/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421468541",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/11/2/1351882109232/Barack-Obama-and-Mitt-Rom-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Jason Reed",
+            "altText":"Barack Obama and Mitt Romney",
+            "height":"84",
+            "credit":"Jason Reed/Reuters",
+            "caption":"'Some on the left see little difference between Obama and Romney. Big mistake.' Photograph: Jason Reed/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/dog-tail-wagging-scientists-emotions-communication",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T15:58:54Z",
+      "webTitle":"How I feel when scientists examine the wagging of dogs' tails | Michele Hanson",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/dog-tail-wagging-scientists-emotions-communication",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/dog-tail-wagging-scientists-emotions-communication",
+      "fields":{
+        "trailText":"<strong>Michele Hanson:</strong> Researchers are discovering what pet owners already know – that humans don't have a monopoly on emotions and complex communication",
+        "headline":"How I feel when scientists examine the wagging of dogs' tails",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3k3e6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317051969/A-dog-holds-on-to-its-tai-003.jpg",
+        "wordcount":"600",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:58:54Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"science/animalbehaviour",
+        "type":"keyword",
+        "webTitle":"Animal behaviour",
+        "webUrl":"http://www.theguardian.com/science/animalbehaviour",
+        "apiUrl":"http://content.guardianapis.com/science/animalbehaviour",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"lifeandstyle/dogs",
+        "type":"keyword",
+        "webTitle":"Dogs",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/dogs",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/dogs",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/pets",
+        "type":"keyword",
+        "webTitle":"Pets",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/pets",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/pets",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/michelehanson",
+        "type":"contributor",
+        "webTitle":"Michele Hanson",
+        "webUrl":"http://www.theguardian.com/profile/michelehanson",
+        "apiUrl":"http://content.guardianapis.com/profile/michelehanson",
+        "bio":"<p>Michele Hanson is an author and Guardian columnist. Her book about dogs, <a href=\"http://books.simonandschuster.co.uk/Absolutely-Barking/Michele-Hanson/9780857204912\">Absolutely Barking</a>, is published by Simon &amp; Schuster</p>",
+        "rcsId":"GNL009491",
+        "r2ContributorId":"16141",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/15/michele_hanson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"science/neuroscience",
+        "type":"keyword",
+        "webTitle":"Neuroscience",
+        "webUrl":"http://www.theguardian.com/science/neuroscience",
+        "apiUrl":"http://content.guardianapis.com/science/neuroscience",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421469653",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317048375/A-dog-holds-on-to-its-tai-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"54",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317050644/A-dog-holds-on-to-its-tai-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"130",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317051969/A-dog-holds-on-to-its-tai-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"84",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317053331/A-dog-holds-on-to-its-tai-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"132",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317054602/A-dog-holds-on-to-its-tai-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"168",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317055846/A-dog-holds-on-to-its-tai-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"180",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317057129/A-dog-holds-on-to-its-tai-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"228",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317058416/A-dog-holds-on-to-its-tai-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"276",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317058416/A-dog-holds-on-to-its-tai-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"276",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"Neuroscientific research suggests that dogs wag their tails with a bias to the right when they're happy. Photograph: Philippe Mcclelland/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421469654",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383317051969/A-dog-holds-on-to-its-tai-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Philippe Mcclelland",
+            "altText":"A dog holds on to its tail",
+            "height":"84",
+            "credit":"Philippe Mcclelland/Getty Images",
+            "caption":"'Anyone reasonably sensitive who owns a dog knows that they can be fearful, anxious, happy, fed up and excited.' Photograph: Philippe Mcclelland/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/xojane-birth-like-chimpanzee-science-denying",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T15:27:12Z",
+      "webTitle":"xoJane isn't doing women any favors with its 'birth like chimpanzees' story | Jill Filipovic",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/xojane-birth-like-chimpanzee-science-denying",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/xojane-birth-like-chimpanzee-science-denying",
+      "fields":{
+        "trailText":"<p><strong>Jill Filipovic:</strong> Women's magazines and sites should stop giving science-denying wackadoodles a platform. We deserve better</p>",
+        "headline":"xoJane isn't doing women any favors with its 'birth like chimpanzees' story",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3fa",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/06/27/chimp.jpg",
+        "wordcount":"1462",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:27:12Z"
+      },
+      "tags":[{
+        "id":"commentisfree/series/on-gender-and-other-agendas",
+        "type":"series",
+        "webTitle":"On gender and other agendas",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/on-gender-and-other-agendas",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/on-gender-and-other-agendas",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/educationsgendergap",
+        "type":"keyword",
+        "webTitle":"The gender gap",
+        "webUrl":"http://www.theguardian.com/education/educationsgendergap",
+        "apiUrl":"http://content.guardianapis.com/education/educationsgendergap",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"profile/jill-filipovic",
+        "type":"contributor",
+        "webTitle":"Jill Filipovic",
+        "webUrl":"http://www.theguardian.com/profile/jill-filipovic",
+        "apiUrl":"http://content.guardianapis.com/profile/jill-filipovic",
+        "bio":"<p>Jill Filipovic is a regular columnist for the Guardian's Comment is free and a blogger at <a href=\"http://feministe.us/blog\">Feministe</a>. She holds a JD and BA from New York University</p>",
+        "r2ContributorId":"30417",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/13/1355411214003/jillfilipovic_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421467634",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/5/1378381705025/148acd0c-24e7-4313-af03-338b3a3c2a85-460x276.jpeg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Nick Ut",
+            "altText":"A baby chimpanzee holds to her mother as they stay in the shade to avoid the hot weather at Los Angeles Zoo and Botanical Gardens, US.",
+            "height":"276",
+            "credit":"Nick Ut/AP",
+            "caption":"A baby chimpanzee holds to her mother as they stay in the shade to avoid the hot weather at Los Angeles Zoo and Botanical Gardens, US. Photograph: Nick Ut/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421467635",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/06/27/chimp.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Tom Gilbert",
+            "altText":" Jodi a mother chimpanzee, holds her one-month-old baby, at the Tulsa Zoo in Tulsa, Okla., Wednesday, March 21, 2007",
+            "height":"84",
+            "credit":"Tom Gilbert/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/woman-models-mens-clothes-casey-legler",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T15:16:53Z",
+      "webTitle":"I'm a woman who models men's clothes. But this isn't about gender | Casey Legler",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/woman-models-mens-clothes-casey-legler",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/woman-models-mens-clothes-casey-legler",
+      "fields":{
+        "trailText":"<strong>Casey Legler:</strong> My responsibility is to kids who might feel shame – might be ostracised from society – just for being different",
+        "headline":"I'm a woman who models men's clothes. But this isn't about gender",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3k39g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310119291/Casey-Legler-008.jpg",
+        "wordcount":"790",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:16:53Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/youngpeople",
+        "type":"keyword",
+        "webTitle":"Young people",
+        "webUrl":"http://www.theguardian.com/society/youngpeople",
+        "apiUrl":"http://content.guardianapis.com/society/youngpeople",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/sexuality",
+        "type":"keyword",
+        "webTitle":"Sexuality",
+        "webUrl":"http://www.theguardian.com/society/sexuality",
+        "apiUrl":"http://content.guardianapis.com/society/sexuality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"fashion/models",
+        "type":"keyword",
+        "webTitle":"Models",
+        "webUrl":"http://www.theguardian.com/fashion/models",
+        "apiUrl":"http://content.guardianapis.com/fashion/models",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"fashion/fashion-industry",
+        "type":"keyword",
+        "webTitle":"Fashion industry",
+        "webUrl":"http://www.theguardian.com/fashion/fashion-industry",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion-industry",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/casey-legler",
+        "type":"contributor",
+        "webTitle":"Casey Legler",
+        "webUrl":"http://www.theguardian.com/profile/casey-legler",
+        "apiUrl":"http://content.guardianapis.com/profile/casey-legler",
+        "bio":"<p>Casey Legler is a model and artist, raised in France and based in New York. Her work has appeared in French Vogue, Numero Homme, Vmagazine, GLU, Sleek, Vogue Brazil and US Vogue</p>",
+        "r2ContributorId":"59426",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383318593245/Casey-Legler.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421454204",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310109737/Casey-Legler-001.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"220",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310111559/Casey-Legler-002.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"425",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310115554/Casey-Legler-005.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"54",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310116814/Casey-Legler-006.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"340",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310118051/Casey-Legler-007.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"130",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310119291/Casey-Legler-008.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"84",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310120510/Casey-Legler-009.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"132",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310121743/Casey-Legler-010.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"168",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310122951/Casey-Legler-011.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"180",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310124764/Casey-Legler-012.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"228",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310126070/Casey-Legler-013.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"276",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310127317/Casey-Legler-014.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"372",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310126070/Casey-Legler-013.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"276",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421454205",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310687680/Casey-Legler-001.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Julian Broad",
+            "altText":"Casey Legler",
+            "height":"330",
+            "credit":"Julian Broad/Observer",
+            "caption":"Casey Legler in an Observer Magazine menswear shoot. Photograph: Julian Broad for the Observer",
+            "width":"220"
+          }
+        }]
+      },{
+        "id":"gu-image-421454206",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310119291/Casey-Legler-008.jpg",
+          "typeData":{
+            "source":"Startraks Photo/Rex",
+            "altText":"Casey Legler",
+            "height":"84",
+            "credit":"Startraks Photo/Rex",
+            "caption":"Casey Legler: 'There is a historical tradition you should know about and it is certainly not about gender. It is about being fierce.' Photograph: Startraks Photo/Rex",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421454207",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383310295781/Casey-Legler-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ilya S Savenok",
+            "altText":"Casey Legler",
+            "height":"132",
+            "credit":"Ilya S Savenok/Getty Images",
+            "caption":"Casey Legler backstage at the Michael Bastian fashion show, February 2013. Photograph: Ilya Savenok/Getty Images",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/gchq-national-security-intelligence-dominic-raab",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T14:44:36Z",
+      "webTitle":"GCHQ leaks: we can't just guillotine all debate with the phrase 'national security' | Dominic Raab",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/gchq-national-security-intelligence-dominic-raab",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/gchq-national-security-intelligence-dominic-raab",
+      "fields":{
+        "trailText":"<strong>Dominic Raab:</strong> Ministers and intelligence chiefs must provide a coherent explanation of the damage to national security, not just vague and opaque assertions",
+        "headline":"GCHQ leaks: we can't just guillotine all debate with the phrase 'national security'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3k3aj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311320089/The-Houses-of-Parliament--003.jpg",
+        "wordcount":"1483",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T14:44:36Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"uk/gchq",
+        "type":"keyword",
+        "webTitle":"GCHQ",
+        "webUrl":"http://www.theguardian.com/uk/gchq",
+        "apiUrl":"http://content.guardianapis.com/uk/gchq",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-national-security",
+        "type":"keyword",
+        "webTitle":"US national security",
+        "webUrl":"http://www.theguardian.com/world/us-national-security",
+        "apiUrl":"http://content.guardianapis.com/world/us-national-security",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uksecurity",
+        "type":"keyword",
+        "webTitle":"UK security and counter-terrorism",
+        "webUrl":"http://www.theguardian.com/uk/uksecurity",
+        "apiUrl":"http://content.guardianapis.com/uk/uksecurity",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"profile/dominic-raab",
+        "type":"contributor",
+        "webTitle":"Dominic Raab",
+        "webUrl":"http://www.theguardian.com/profile/dominic-raab",
+        "apiUrl":"http://content.guardianapis.com/profile/dominic-raab",
+        "bio":"<p>Dominic Raab is Conservative MP for Esher and Walton and a member of the joint committee on human rights</p>",
+        "r2ContributorId":"41974",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/1/6/1294331626075/Dominic-Raab.jpg",
+        "references":[]
+      },{
+        "id":"world/freedom-of-speech",
+        "type":"keyword",
+        "webTitle":"Freedom of speech",
+        "webUrl":"http://www.theguardian.com/world/freedom-of-speech",
+        "apiUrl":"http://content.guardianapis.com/world/freedom-of-speech",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421455238",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311316610/The-Houses-of-Parliament--001.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"54",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311318887/The-Houses-of-Parliament--002.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"130",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311320089/The-Houses-of-Parliament--003.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"84",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311321314/The-Houses-of-Parliament--004.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"132",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311322568/The-Houses-of-Parliament--005.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"168",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311323909/The-Houses-of-Parliament--006.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"180",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311325127/The-Houses-of-Parliament--007.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"228",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311326398/The-Houses-of-Parliament--008.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"276",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311326398/The-Houses-of-Parliament--008.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"276",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421455239",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383311320089/The-Houses-of-Parliament--003.jpg",
+          "typeData":{
+            "source":"AFP",
+            "photographer":"Jim Watson",
+            "altText":"The Houses of Parliament at sunset",
+            "height":"84",
+            "credit":"Jim Watson/AFP",
+            "caption":"'Congress have woken up to the scale of unfettered surveillance, and it is time that we in the House of Commons did the same.' Photograph: Jim Watson/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/heidi-klum-halloween-costume-old-woman",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T14:27:47Z",
+      "webTitle":"Heidi Klum's 'old woman' Halloween costume isn't funny | Invisible Woman",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/heidi-klum-halloween-costume-old-woman",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/heidi-klum-halloween-costume-old-woman",
+      "fields":{
+        "trailText":"<strong>Invisible Woman:</strong> I hoped for a minute that she was parodying the whole eternal youth myth. But no, the supermodel was just ridiculing the old",
+        "headline":"Heidi Klum's 'old woman' Halloween costume isn't funny",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3k3cb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313956746/Heidi-Klum-003.jpg",
+        "wordcount":"681",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T14:27:47Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/older-people",
+        "type":"keyword",
+        "webTitle":"Older people",
+        "webUrl":"http://www.theguardian.com/society/older-people",
+        "apiUrl":"http://content.guardianapis.com/society/older-people",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"profile/invisible-woman",
+        "type":"contributor",
+        "webTitle":"Invisible Woman",
+        "webUrl":"http://www.theguardian.com/profile/invisible-woman",
+        "apiUrl":"http://content.guardianapis.com/profile/invisible-woman",
+        "bio":"<p>Our blogger, writing as 'Invisible Woman', may have many years behind her, but she isn't ready to hang up her love of style just yet</p>",
+        "r2ContributorId":"46686",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/10/20/1287573446022/Anonymous-woman-002.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"fashion/models",
+        "type":"keyword",
+        "webTitle":"Models",
+        "webUrl":"http://www.theguardian.com/fashion/models",
+        "apiUrl":"http://content.guardianapis.com/fashion/models",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421461644",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313952908/Heidi-Klum-001.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"54",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313955137/Heidi-Klum-002.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"130",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313956746/Heidi-Klum-003.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"84",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313958588/Heidi-Klum-004.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"132",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313960145/Heidi-Klum-005.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"168",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313961905/Heidi-Klum-006.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"180",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313963537/Heidi-Klum-007.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"228",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313965121/Heidi-Klum-008.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"276",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313965121/Heidi-Klum-008.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"276",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421461645",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313956746/Heidi-Klum-003.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Raymond Hall",
+            "altText":"Heidi Klum",
+            "height":"84",
+            "credit":"Raymond Hall/FilmMagic",
+            "caption":"'Lines, wrinkles, veins, scars are all badges of survival – signs of a life lived. How dare Heidi Klum make light of that.' Photograph: Raymond Hall/FilmMagic",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/women-work-harder-favors-never-counted",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T14:24:00Z",
+      "webTitle":"Little surprise here: women expected to do more at home – and at work | Heidi Moore",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/women-work-harder-favors-never-counted",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/women-work-harder-favors-never-counted",
+      "fields":{
+        "trailText":"<p><strong>Heidi Moore:</strong> A new study illuminates how 'favors' are expected of women at work, but they often go unacknowledged, keeping women down</p>",
+        "headline":"Little surprise here: women expected to do more at home – and at work",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3c2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/31/1338464844545/British-business-woman-re-004.jpg",
+        "wordcount":"1120",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T14:24:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/series/heidi-moore-on-business-and-economics",
+        "type":"series",
+        "webTitle":"Heidi Moore: On business and economics",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/heidi-moore-on-business-and-economics",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/heidi-moore-on-business-and-economics",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"profile/heidi-moore",
+        "type":"contributor",
+        "webTitle":"Heidi Moore",
+        "webUrl":"http://www.theguardian.com/profile/heidi-moore",
+        "apiUrl":"http://content.guardianapis.com/profile/heidi-moore",
+        "bio":"<p>Heidi Moore is the Guardian's US finance and economics editor. Formerly, she was New York bureau chief and Wall Street correspondent for Marketplace, from American Public Media</p>",
+        "r2ContributorId":"51002",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/23/1358972490699/heidimoore_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"money/work-careers-us",
+        "type":"keyword",
+        "webTitle":"US work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-careers-us",
+        "apiUrl":"http://content.guardianapis.com/money/work-careers-us",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421462169",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/31/1338464851750/British-business-woman-re-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"UK Stock Images Ltd / Alamy",
+            "altText":"British business woman reading newspaper the city London UK professional director",
+            "height":"276",
+            "credit":"UK Stock Images Ltd / Alamy/Alamy",
+            "caption":"A new Columbia Business School study highlights the expectation of favors from female workers. Photograph: UK Stock Images Ltd /Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421462170",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/31/1338464844545/British-business-woman-re-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"UK Stock Images Ltd / Alamy",
+            "altText":"British business woman reading newspaper the city London UK professional director",
+            "height":"84",
+            "credit":"UK Stock Images Ltd / Alamy/Alamy",
+            "caption":"Some 68% of charity sector workers are women, so it's disappointing that only 25% of the top 100 charities have female chief executives. Photograph: UK Stock Images Ltd / Alamy/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/google-yahoo-nsa-surveillance-reform",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T13:30:00Z",
+      "webTitle":"Google, Yahoo et al have the power to fight back against the NSA | Dan Gillmor",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/google-yahoo-nsa-surveillance-reform",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/google-yahoo-nsa-surveillance-reform",
+      "fields":{
+        "trailText":"<p><strong>Dan Gillmor:</strong> The tech billionaires should create the anti-surveillance, pro-security equivalent of the National Rifle Association</p>",
+        "headline":"Google, Yahoo et al have the power (and money) to fight back against the NSA",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k335",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742143719/Google-search-003.jpg",
+        "wordcount":"1015",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T13:30:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/series/on-digital-being",
+        "type":"series",
+        "webTitle":"On digital being",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/on-digital-being",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/on-digital-being",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/yahoo",
+        "type":"keyword",
+        "webTitle":"Yahoo",
+        "webUrl":"http://www.theguardian.com/technology/yahoo",
+        "apiUrl":"http://content.guardianapis.com/technology/yahoo",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"profile/dangillmor",
+        "type":"contributor",
+        "webTitle":"Dan Gillmor",
+        "webUrl":"http://www.theguardian.com/profile/dangillmor",
+        "apiUrl":"http://content.guardianapis.com/profile/dangillmor",
+        "bio":"<p>Dan Gillmor is director of the <a href=\"http://startupmedia.org/\">Knight centre for digital media entrepreneurship</a> at Arizona State University's <a href=\"http://cronkite.asu.edu/\">Walter Cronkite school of journalism and mass communication</a>. His most recent book is <a href=\"http://mediactive.com/\">Mediactive</a> (2010), also a <a href=\"http://mediactive.com/\">blog</a> of the same name, about how people can be empowered as new media users. Follow Dan on Twitter <a href=\"http://www.twitter.com/dangillmor\">@dangillmor</a></p>",
+        "r2ContributorId":"27295",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2011/5/11/1305125502959/dangillmoor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421462231",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382637884688/Google--008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Jeff J Mitchell",
+            "altText":"Google ",
+            "height":"276",
+            "credit":"Jeff J Mitchell/Getty Images",
+            "caption":"Reports indicate that the NSA has been secretly intercepting data from internet giants like Google. Photograph: Jeff J Mitchell/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421462232",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/14/1381742143719/Google-search-003.jpg",
+          "typeData":{
+            "source":"Jonathan Hordle / Rex Features",
+            "photographer":"Jonathan Hordle / Rex Features",
+            "altText":"Google search",
+            "height":"84",
+            "credit":"Jonathan Hordle / Rex Features/Jonathan Hordle / Rex Features",
+            "caption":"Google's new Hummingbird search algorithm will affect 90% of searches.  Photograph: Jonathan Hordle / Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/ukip-british-political-compass-authoritarian-right",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T13:18:38Z",
+      "webTitle":"Ukip has chanced upon the neglected part of British politics | Alex Andreou",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/ukip-british-political-compass-authoritarian-right",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/ukip-british-political-compass-authoritarian-right",
+      "fields":{
+        "trailText":"<strong>Alex Andreou:</strong> To understand the appeal of Ukip it helps to think about the four quadrants of the political compass. Who else covers the authoritarian right?",
+        "headline":"Ukip has chanced upon the neglected part of British politics",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3k38a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308722398/Nigal-Farage-003.jpg",
+        "wordcount":"704",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T13:18:38Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"politics/ukip",
+        "type":"keyword",
+        "webTitle":"UK Independence party (Ukip)",
+        "webUrl":"http://www.theguardian.com/politics/ukip",
+        "apiUrl":"http://content.guardianapis.com/politics/ukip",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/alex-andreou",
+        "type":"contributor",
+        "webTitle":"Alex Andreou",
+        "webUrl":"http://www.theguardian.com/profile/alex-andreou",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-andreou",
+        "bio":"<p>Greek-born, Alex Andreou has a background in law and economics. He runs the Sturdy Beggars Theatre Company and blogs at <a href=\"http://sturdyblog.wordpress.com/\">Sturdyblog</a>. <br />Twitter: <a href=\"http://twitter.com/sturdyalex\">@sturdyalex</a></p>",
+        "r2ContributorId":"52077",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/7/27/1343391526273/Alex-Andreou.jpg",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"politics/liberaldemocrats",
+        "type":"keyword",
+        "webTitle":"Liberal Democrats",
+        "webUrl":"http://www.theguardian.com/politics/liberaldemocrats",
+        "apiUrl":"http://content.guardianapis.com/politics/liberaldemocrats",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/labour",
+        "type":"keyword",
+        "webTitle":"Labour",
+        "webUrl":"http://www.theguardian.com/politics/labour",
+        "apiUrl":"http://content.guardianapis.com/politics/labour",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/voterapathy",
+        "type":"keyword",
+        "webTitle":"Voter apathy",
+        "webUrl":"http://www.theguardian.com/politics/voterapathy",
+        "apiUrl":"http://content.guardianapis.com/politics/voterapathy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421455678",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308718827/Nigal-Farage-001.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"54",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308720875/Nigal-Farage-002.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"130",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308722398/Nigal-Farage-003.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"84",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308724069/Nigal-Farage-004.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"132",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308725617/Nigal-Farage-005.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"168",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308727225/Nigal-Farage-006.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"180",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308728825/Nigal-Farage-007.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"228",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308730583/Nigal-Farage-008.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"276",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308730583/Nigal-Farage-008.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"276",
+            "credit":"David Levene/David Levene",
+            "caption":"Britain's relationship with Europe is the top issue for only, roughly, a quarter of the people considering voting Ukip, led by Nigel Farage. Photograph: David Levene for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421455679",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308722398/Nigal-Farage-003.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Nigal Farage",
+            "height":"84",
+            "credit":"David Levene/David Levene",
+            "caption":"'And yet the surge in support is a phenomenon that remains, to paraphrase Churchill, a riddle, wrapped in a mystery, inside the enigma that is Nigel Farage.' Photograph: David Levene",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421455680",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305693607/Political-chart-001.jpg",
+          "typeData":{
+            "source":"Unknown",
+            "altText":"Political chart",
+            "height":"502",
+            "credit":"Unknown",
+            "caption":"Political chart",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

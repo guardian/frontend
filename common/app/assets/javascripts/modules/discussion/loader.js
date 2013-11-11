@@ -62,44 +62,71 @@ Loader.prototype.commentBox = null;
 /** @type {CommentBox} */
 Loader.prototype.bottomCommentBox = null;
 
-/** @type {Object.<srtring.*>} */
+/** @type {Object.<string.*>} */
 Loader.prototype.user = null;
 
 /** @type {boolean} */
 Loader.prototype.canComment = false;
 
-/** @override */
+/**
+ * @override
+ * We need the user for comments
+ * We also need them for the comment bar
+ * So the flow is essentially:
+ * 1. fetch user
+ * 2. fetch comments
+ * 3. render comment bar
+ */
 Loader.prototype.ready = function() {
-    var id = this.getDiscussionId();
+    var id = this.getDiscussionId(),
+        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        commentsElem = this.getElem('comments'),
+        self = this;
 
-    // TODO (jamesgorrie): Move this into the Comments module
-    this.getElem('comments').innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
-    ajax({
-        url: '/discussion'+ id +'.json',
-        type: 'json',
-        method: 'get',
-        crossOrigin: true
-    }).then(this.renderDiscussion.bind(this), this.loadingError.bind(this));
+    bonzo(loadingElem).insertAfter(commentsElem);
+
+    this.on('user:loaded', function(user) {
+        var self = this;
+
+        this.comments = new Comments(this.context, this.mediator, {
+            initialShow: 2,
+            discussionId: this.getDiscussionId(),
+            user: this.user
+        });
+
+        // Doing this makes sure there is only one redraw
+        // Within comments there is adding of reply buttons etc
+        bonzo(commentsElem).addClass('u-h');
+        this.comments
+            .fetch(commentsElem)
+            .then(function killLoadingMessage() {
+                bonzo(loadingElem).remove();
+                self.renderCommentBar(user);
+                bonzo(commentsElem).removeClass('u-h');
+            });
+    });
+    this.getUser();
+
+    this.renderCommentCount();
+
     bonzo(this.getElem('show')).remove();
     DiscussionAnalytics.init();
-    this.renderCommentCount();
 };
 
-/**
- * @param {Object} resp
- */
-Loader.prototype.renderDiscussion = function(resp) {
-    var commentsElem = this.getElem('comments');
+/** @return {Reqwest|null} */
+Loader.prototype.getUser = function() {
+    var self = this;
 
-    // comments
-    commentsElem.innerHTML = resp.html;
-    this.comments = new Comments(this.context, this.mediator, {
-        initialShow: 2,
-        discussionId: this.getDiscussionId()
-    });
-    this.comments.attachTo(commentsElem);
-
-    this.renderCommentBar();
+    if (Id.getUserFromCookie()) {
+        return DiscussionApi
+            .getUser()
+            .then(function(resp) {
+                self.user = resp.userProfile;
+                self.emit('user:loaded', resp.userProfile);
+            });
+    } else {
+        self.emit('user:loaded');
+    }
 };
 
 /**
@@ -109,25 +136,6 @@ Loader.prototype.renderDiscussion = function(resp) {
  */
 Loader.prototype.loadingError = function() {
     bonzo(this.elem).remove();
-};
-
-/**
- * If discussion is closed -> render closed
- * If not signed in -> render signin,
- * Else render comment box
- */
-Loader.prototype.renderCommentBar = function() {
-    var user = Id.getUserFromCookie();
-
-    if (this.getDiscussionClosed()) {
-        this.renderDiscussionClosedMessage();
-    } else if (!user) {
-        this.renderSignin();
-    } else {
-        this.renderCommentBox();
-        this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
-        this.canComment = true;
-    }
 };
 
 /** TODO: This logic will be moved to the Play app renderer */
@@ -146,33 +154,46 @@ Loader.prototype.renderSignin = function() {
         '</div>';
 };
 
-/** TODO: This logic will be moved to the Play app renderer */
-Loader.prototype.renderCommentBox = function() {
-    var success = function(resp) {
-        var user = resp.userProfile;
-        this.user = user;
-        // If this privateFields aren't there,
-        // they're not the right person
-        // More a sanity check than anything
-        if (!user.privateFields) {
-            this.renderSignin();
-        } else if (!user.privateFields.canPostComment) {
-            this.renderUserBanned();
-        } else {
-            this.commentBox = new CommentBox(this.context, this.mediator, {
-                discussionId: this.getDiscussionId()
-            });
-            this.commentBox.render(this.getElem('commentBox'));
-            if (!user.privateFields.isPremoderated) {
-                bonzo(qwery('.d-comment-box__premod'), this.commentBox.elem).remove();
-            }
-            this.commentBox.on('post:success', this.addComment.bind(this));
-        }
-    };
+/**
+ * If discussion is closed -> render closed
+ * If not signed in -> render signin,
+ * Else render comment box
+ */
+Loader.prototype.renderCommentBar = function() {
+    if (this.getDiscussionClosed()) {
+        this.renderDiscussionClosedMessage();
+    } else if (!Id.getUserFromCookie()) {
+        this.renderSignin();
+    } else {
+        this.renderCommentBox();
+        this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
+    }
+};
 
-    DiscussionApi
-        .getUser()
-        .then(success.bind(this));
+/**
+ * TODO: This logic will be moved to the Play app renderer
+ */
+Loader.prototype.renderCommentBox = function() {
+    // If this privateFields aren't there,
+    // they're not the right person
+    // More a sanity check than anything
+    if (!this.user.privateFields) {
+        this.renderSignin();
+    } else if (!this.user.privateFields.canPostComment) {
+        this.renderUserBanned();
+    } else {
+        this.commentBox = new CommentBox(this.context, this.mediator, {
+            discussionId: this.getDiscussionId(),
+            premod: this.user.privateFields.isPremoderated
+        });
+        this.commentBox.render(this.getElem('commentBox'));
+        this.commentBox.on('post:success', this.comments.addComment.bind(this.comments));
+        this.canComment = true;
+    }
+};
+
+Loader.prototype.renderUserBanned = function() {
+    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
 };
 
 /**
@@ -180,62 +201,14 @@ Loader.prototype.renderCommentBox = function() {
  * When you load more comments
  */
 Loader.prototype.renderBottomCommentBox = function() {
-    var commentBoxElem = bonzo(this.commentBox.elem).clone()[0];
-    bonzo(this.getElem('commentBoxBottom')).append(commentBoxElem);
-
     this.bottomCommentBox = new CommentBox(this.context, this.mediator, {
-        discussionId: this.getDiscussionId()
+        discussionId: this.getDiscussionId(),
+        premod: this.user.privateFields.isPremoderated
     });
-    this.bottomCommentBox.attachTo(commentBoxElem);
-    this.bottomCommentBox.on('post:success', this.addComment.bind(this));
-};
-
-/**
- * TODO (jamesgorrie): Move this functionality over to component
- * It hasn't been done yet as I don't have a comment component
- * @param {object.<string.*>} comment
- */
-Loader.prototype.addComment = function(comment) {
-    var key, val, selector, elem,
-        attr,
-        map = {
-            username: 'd-comment__author',
-            timestamp: 'js-timestamp',
-            body: 'd-comment__body',
-            report: 'd-comment__action--report',
-            avatar: 'd-comment__avatar'
-        },
-        values = {
-            username: this.user.displayName,
-            timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
-            report: {
-                href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
-            },
-            avatar: {
-                src: this.user.avatar
-            }
-        },
-        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
-
-    for (key in map) {
-        if (map.hasOwnProperty(key)) {
-            selector = map[key];
-            val = values[key];
-            elem = qwery('.'+ selector, commentElem)[0];
-            if (typeof val === 'string') {
-                elem.innerHTML = val;
-            } else {
-                for (attr in val) {
-                    elem.setAttribute(attr, val[attr]);
-                }
-            }
-        }
-    }
-    commentElem.id = 'comment-'+ comment.id;
-    bonzo(this.comments.getElem('comments')).prepend(commentElem);
-    window.location.hash = '';
-    window.location.hash = '#comment-'+ comment.id;
+    this.bottomCommentBox.render(this.getElem('commentBoxBottom'));
+    this.bottomCommentBox.on('post:success', function(comment) {
+        this.comments.addComment(comment, true);
+    }.bind(this));
 };
 
 /**

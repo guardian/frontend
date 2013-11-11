@@ -8,6 +8,9 @@
 /* Core elements
    ========================================================================== */
 
+.from-content-api {
+   word-wrap: break-word;
+}
 .from-content-api,
 .from-content-api .block-elements {
 
@@ -48,20 +51,13 @@
         }
     }
     > ul > li {
-        text-indent: 20px;
+        @include faux-bullet-point;
     }
-    > ul > li:before {
-        font-size: 48px;
-        content: "\2022";
-        color: $c-neutral5;
-        position: absolute;
-        left: -22px;
-        top: 1px;
-    }
+
     > ol > li,
     > ul > li {
         position: relative;
-        margin-bottom: 0.8em;
+        margin-bottom: .8em;
     }
     h2 {
         @include fs-header(2);
@@ -93,9 +89,6 @@
             margin-top: $baseline*3;
         }
     }
-}
-.no-indent {
-    text-indent: 0 !important;
 }
 
 .from-content-api--small {
@@ -151,6 +144,24 @@
                 margin-left: 44px;
             }
         }
+    }
+}
+
+
+/* Bullet points
+   ========================================================================== */
+
+.no-indent {
+    text-indent: 0 !important;
+}
+.bullet {
+    font-size: 13px;
+    display: inline-block;
+    color: $c-neutral3;
+    margin: $baseline/2 4px $baseline/-2 0;
+
+    &:first-of-type {
+        margin-top: $baseline;
     }
 }
 
@@ -306,3 +317,45 @@ p + video {
     }
 }
 
+
+/* Paragraph spacing
+   ========================================================================== */
+
+.paragraph-spacing--indents {
+    .from-content-api,
+    .from-content-api .block-elements {
+        > p {
+            margin-bottom: 0;
+
+            + .card-wrapper + p, // Inline link cards are inserted between paragraphs
+            + .inline-image + p,
+            + p {
+                // Indent consecutive paragraphs
+                // by the value of the line-height
+                text-indent: 24px;
+                text-indent: 2.4rem;
+
+                @include mq(tablet) {
+                    text-indent: 28px;
+                    text-indent: 2.8rem;
+                }
+            }
+        }
+    }
+    .from-content-api blockquote.quoted {
+        text-indent: 0;
+
+        @include mq(tablet) {
+            text-indent: 0;
+        }
+
+        p {
+            margin-bottom: 0;
+            text-indent: 40px;
+
+            @include mq(tablet) {
+                text-indent: 42px;
+            }
+        }
+    }
+}

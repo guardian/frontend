@@ -2,13 +2,146 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":427,
+    "total":428,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
     "pages":22,
     "orderBy":"newest",
     "results":[{
+      "id":"childrens-books-site/2013/oct/27/review-harry-potter-philosophers-stone-j-k-rowling",
+      "sectionId":"childrens-books-site",
+      "sectionName":"Children's books",
+      "webPublicationDate":"2013-10-27T09:00:00Z",
+      "webTitle":"Harry Potter and the Philosopher's Stone by JK Rowling - review",
+      "webUrl":"http://www.theguardian.com/childrens-books-site/2013/oct/27/review-harry-potter-philosophers-stone-j-k-rowling",
+      "apiUrl":"http://content.guardianapis.com/childrens-books-site/2013/oct/27/review-harry-potter-philosophers-stone-j-k-rowling",
+      "fields":{
+        "trailText":"<p><strong>Beth, Millennium RIOT Readers:</strong> 'Every time I read these books I come away with something new'</p>",
+        "headline":"Harry Potter and the Philosopher's Stone by JK Rowling - review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jkah",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Books/Pix/covers/2013/10/18/1382096940737/Harry-Potter-and-the-Philoso.jpg",
+        "wordcount":"241",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-27T09:00:00Z"
+      },
+      "tags":[{
+        "id":"childrens-books-site/childrens-books-site",
+        "type":"blog",
+        "webTitle":"Children's books",
+        "webUrl":"http://www.theguardian.com/childrens-books-site/childrens-books-site",
+        "apiUrl":"http://content.guardianapis.com/childrens-books-site/childrens-books-site",
+        "sectionId":"childrens-books-site",
+        "sectionName":"Children's books",
+        "references":[]
+      },{
+        "id":"books/booksforchildrenandteenagers",
+        "type":"keyword",
+        "webTitle":"Children and teenagers",
+        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
+        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/childrens-user-reviews",
+        "type":"tone",
+        "webTitle":"Children's user reviews",
+        "webUrl":"http://www.theguardian.com/tone/childrens-user-reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/childrens-user-reviews",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/childrens-books-8-12-years",
+        "type":"keyword",
+        "webTitle":"Children's books: 8-12 years",
+        "webUrl":"http://www.theguardian.com/books/childrens-books-8-12-years",
+        "apiUrl":"http://content.guardianapis.com/books/childrens-books-8-12-years",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/teen-books",
+        "type":"keyword",
+        "webTitle":"Teen books",
+        "webUrl":"http://www.theguardian.com/books/teen-books",
+        "apiUrl":"http://content.guardianapis.com/books/teen-books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/jkrowling",
+        "type":"keyword",
+        "webTitle":"JK Rowling",
+        "webUrl":"http://www.theguardian.com/books/jkrowling",
+        "apiUrl":"http://content.guardianapis.com/books/jkrowling",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/witches-wizards-magic",
+        "type":"keyword",
+        "webTitle":"Witches, wizards and magic",
+        "webUrl":"http://www.theguardian.com/books/witches-wizards-magic",
+        "apiUrl":"http://content.guardianapis.com/books/witches-wizards-magic",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/harrypotter",
+        "type":"keyword",
+        "webTitle":"Harry Potter",
+        "webUrl":"http://www.theguardian.com/books/harrypotter",
+        "apiUrl":"http://content.guardianapis.com/books/harrypotter",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420631559",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/covers/2013/10/18/1382096940737/Harry-Potter-and-the-Philoso.jpg",
+          "typeData":{
+            "source":"Public Domain",
+            "altText":"J. K. Rowling, Harry Potter and the Philosopher's Stone",
+            "height":"130",
+            "credit":"Public Domain",
+            "caption":"J. K. Rowling, Harry Potter and the Philosopher's Stone",
+            "width":"84"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"film/2013/sep/30/harry-potter-quidditch-fantastic-beasts",
       "sectionId":"film",
       "sectionName":"Film",
@@ -2609,6 +2742,15 @@
         "sectionName":"Books",
         "references":[]
       },{
+        "id":"books/adventure",
+        "type":"keyword",
+        "webTitle":"Adventure (children and teens)",
+        "webUrl":"http://www.theguardian.com/books/adventure",
+        "apiUrl":"http://content.guardianapis.com/books/adventure",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -3789,6 +3931,15 @@
         "sectionName":"Books",
         "references":[]
       },{
+        "id":"books/vampires",
+        "type":"keyword",
+        "webTitle":"Vampires (children and teens)",
+        "webUrl":"http://www.theguardian.com/books/vampires",
+        "apiUrl":"http://content.guardianapis.com/books/vampires",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
         "id":"books/harrypotter",
         "type":"keyword",
         "webTitle":"Harry Potter",
@@ -4278,150 +4429,6 @@
             "height":"84",
             "credit":"Rex Features/Rex Features",
             "caption":"JK Rowling's first novel for adults, The Casual Vacancy, goes on sale this Thursday. Photograph: Rex Features",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"childrens-books-site/2012/sep/25/pottermore-jk-rowling-latest-additions",
-      "sectionId":"childrens-books-site",
-      "sectionName":"Children's books",
-      "webPublicationDate":"2012-09-25T10:14:00Z",
-      "webTitle":"Pottermore: the latest verdict on JK Rowling's web wonderland",
-      "webUrl":"http://www.theguardian.com/childrens-books-site/2012/sep/25/pottermore-jk-rowling-latest-additions",
-      "apiUrl":"http://content.guardianapis.com/childrens-books-site/2012/sep/25/pottermore-jk-rowling-latest-additions",
-      "fields":{
-        "trailText":"<p>Our Pottermore correspondent, Shoshana Kessler, reports on the latest additions to JK Rowling's magical online world, from Cornish pixies to crashing browsers</p>",
-        "headline":"Pottermore: the latest verdict on JK Rowling's web wonderland",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3ak4f",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Admin/BkFill/Default_image_group/2011/7/5/1309864834856/JK-Rowling-at-the-launch--001.jpg",
-        "wordcount":"720",
-        "liveBloggingNow":"false",
-        "commentCloseDate":"2012-09-25T10:14:12Z"
-      },
-      "tags":[{
-        "id":"childrens-books-site/childrens-books-site",
-        "type":"blog",
-        "webTitle":"Children's books",
-        "webUrl":"http://www.theguardian.com/childrens-books-site/childrens-books-site",
-        "apiUrl":"http://content.guardianapis.com/childrens-books-site/childrens-books-site",
-        "sectionId":"childrens-books-site",
-        "sectionName":"Children's books",
-        "references":[]
-      },{
-        "id":"books/booksforchildrenandteenagers",
-        "type":"keyword",
-        "webTitle":"Children and teenagers",
-        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
-        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/childrens-books-7-and-under",
-        "type":"keyword",
-        "webTitle":"Children's books: 7 and under",
-        "webUrl":"http://www.theguardian.com/books/childrens-books-7-and-under",
-        "apiUrl":"http://content.guardianapis.com/books/childrens-books-7-and-under",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/childrens-books-8-12-years",
-        "type":"keyword",
-        "webTitle":"Children's books: 8-12 years",
-        "webUrl":"http://www.theguardian.com/books/childrens-books-8-12-years",
-        "apiUrl":"http://content.guardianapis.com/books/childrens-books-8-12-years",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/teen-books",
-        "type":"keyword",
-        "webTitle":"Teen books",
-        "webUrl":"http://www.theguardian.com/books/teen-books",
-        "apiUrl":"http://content.guardianapis.com/books/teen-books",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/books",
-        "type":"keyword",
-        "webTitle":"Books",
-        "webUrl":"http://www.theguardian.com/books/books",
-        "apiUrl":"http://content.guardianapis.com/books/books",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"books/harrypotter",
-        "type":"keyword",
-        "webTitle":"Harry Potter",
-        "webUrl":"http://www.theguardian.com/books/harrypotter",
-        "apiUrl":"http://content.guardianapis.com/books/harrypotter",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/jkrowling",
-        "type":"keyword",
-        "webTitle":"JK Rowling",
-        "webUrl":"http://www.theguardian.com/books/jkrowling",
-        "apiUrl":"http://content.guardianapis.com/books/jkrowling",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-396644121",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/16/1334579782329/Pottermore-website-008.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Pottermore website",
-            "height":"276",
-            "credit":"PR",
-            "caption":"Inside the Pottermore website: has it lived up to expectations?",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-396644122",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Admin/BkFill/Default_image_group/2011/7/5/1309864834856/JK-Rowling-at-the-launch--001.jpg",
-          "typeData":{
-            "source":"Reuters",
-            "photographer":"Suzanne Plunkett",
-            "altText":"JK Rowling at the launch of the Pottermore website",
-            "height":"84",
-            "credit":"Suzanne Plunkett/Reuters",
-            "caption":"New technology is not killing the book but liberating it. Above, JK Rowling at the launch of Pottermore.com, an interactive website that allows users to navigate the Harry Potter books.  Photograph: Suzanne Plunkett/Reuters",
             "width":"140"
           }
         }]

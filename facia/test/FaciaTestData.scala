@@ -11,18 +11,13 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 
 case class TestTrail(url: String) extends Trail {
   def webPublicationDate: DateTime = DateTime.now
+  def shortUrl: String = ""
   def linkText: String = ""
   def headline: String = ""
   def trailText: Option[String] = None
   def section: String = ""
   def sectionName: String = ""
   def isLive: Boolean = true
-
-  override def delegate = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some trail",
-    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    "http://content.guardianapis.com/foo/2012/jan/07/bar",
-    elements = None,
-    fields = None)
 }
 
 class TestPageFront(override val id: String, edition: Edition, faciaPage: FaciaPage) extends PageFront(id, edition) {

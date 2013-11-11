@@ -1,35 +1,39 @@
 package model.commercial.jobs
 
-import common.{AkkaAgent, ExecutionContexts, Logging}
-import model.commercial.Keyword
+import common.{ExecutionContexts, Logging}
+import model.commercial.{AdAgent, Keyword}
 import conf.ContentApi
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import scala.util.Try
+import play.api.Play
+import services.S3
+import scala.xml.XML
+import play.api.Play.current
 
-object JobsAgent extends ExecutionContexts with Logging {
-
-  private lazy val agent = AkkaAgent[Seq[Job]](Nil)
-
-  def jobs(keywords: Seq[String], jobsToChooseFrom: Seq[Job] = currentJobs) = {
-    jobsToChooseFrom filter {
-      job =>
-        val intersect = keywords.map(_.toLowerCase).toSet & job.keywords.map(_.name.toLowerCase)
-        intersect.size > 0
-    }
-  }
-
-  def currentJobs: Seq[Job] = agent()
+object JobsAgent extends AdAgent[Job] with ExecutionContexts with Logging {
 
   def refresh() {
+
+    val currentJobs =
+      if (Play.isDev) {
+        val jobAdData = Try(S3.get("DEV/commercial/job-ads.xml")) getOrElse None
+        jobAdData.map {
+          content =>
+            val xml = Future(XML.loadString(content))
+            JobsApi.getCurrentJobs(xml)
+        }.getOrElse(Future(Nil))
+      }
+      else JobsApi.getCurrentJobs()
+
     for {
-      untaggedJobs <- JobsApi.getCurrentJobs()
+      untaggedJobs <- currentJobs
       (unchangedJobs, newUntaggedJobs) = unchangedJobsAndNewUntaggedJobs(untaggedJobs)
       jobs = unchangedJobs ++ tagWithKeywords(newUntaggedJobs)
-    } yield agent send jobs
+    } updateCurrentAds(jobs)
   }
 
-  def unchangedJobsAndNewUntaggedJobs(newJobs: Seq[Job], currJobs: Seq[Job] = currentJobs): (Seq[Job], Seq[Job]) = {
+  def unchangedJobsAndNewUntaggedJobs(newJobs: Seq[Job], currJobs: Seq[Job] = currentAds): (Seq[Job], Seq[Job]) = {
     val currentUntaggedJobs = currJobs map (_.copy(keywords = Set()))
     val (unchangedUntaggedJobs, newUntaggedJobs) = newJobs partition {
       job => currentUntaggedJobs contains job

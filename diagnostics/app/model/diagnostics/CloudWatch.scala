@@ -6,8 +6,11 @@ import conf.Configuration
 import com.amazonaws.services.cloudwatch.model._
 import scala.collection.JavaConversions._
 import common.Logging
+import Configuration._
 
 trait CloudWatch extends Logging {
+
+  lazy val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch = {
     val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
@@ -35,7 +38,9 @@ trait CloudWatch extends Logging {
             .withValue(count)
             .withMetricName(name)
             .withUnit("Count")
+            .withDimensions(stage)
         })
+
       cloudwatch.putMetricDataAsync(request, asyncHandler)
   }
 }

@@ -4,7 +4,6 @@ module.exports = function (grunt) {
         jasmineSpec = grunt.option('spec') || '*',
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/'),
         staticTargetDir = 'static/target/';
 
     if (isDev) {
@@ -56,11 +55,17 @@ module.exports = function (grunt) {
                         "EventEmitter": "components/eventEmitter/EventEmitter",
                         "qwery": "components/qwery/mobile/qwery-mobile",
                         "reqwest": "components/reqwest/src/reqwest",
-                        "domwrite": "components/dom-write/dom-write",
+                        "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
-                        "swipeview": "components/swipeview/src/swipeview"
+                        "swipeview": "components/swipeview/src/swipeview",
+                        "lodash": "components/lodash-amd/modern"
                     },
-                    "wrap" : {
+                    shim: {
+                        "postscribe": {
+                            exports: "postscribe"
+                        }
+                    },
+                    wrap: {
                         "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         "endFile": "common/app/assets/javascripts/bootstraps/go.js"
                     },
@@ -75,7 +80,7 @@ module.exports = function (grunt) {
         webfontjson: {
             WebAgateSansWoff: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebAgateSans.woff.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -88,7 +93,7 @@ module.exports = function (grunt) {
             },
             WebAgateSansTtf: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebAgateSans.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebAgateSans.ttf.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -101,7 +106,7 @@ module.exports = function (grunt) {
             },
             WebEgyptianWoff: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebEgyptian.woff.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.woff.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -146,7 +151,7 @@ module.exports = function (grunt) {
             },
             WebEgyptianTtf: {
                 options: {
-                    "filename": staticTargetDir + "fonts/WebEgyptian.ttf.js",
+                    "filename": staticTargetDir + "fonts/WebEgyptian.ttf.json",
                     "callback": "guFont",
                     "fonts": [
                         {
@@ -351,6 +356,7 @@ module.exports = function (grunt) {
                             swipe:        'components/swipe/swipe',
                             swipeview:    'components/swipeview/src/swipeview',
                             moment:       'components/moment/moment',
+                            lodash:       'components/lodash-amd/modern',
                             omniture:     '../../../app/public/javascripts/vendor/omniture',
                             fixtures:     '../../../test/assets/javascripts/fixtures',
                             helpers:      '../../../test/assets/javascripts/helpers'
@@ -430,7 +436,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
-                    src: ['**/*.js', '!components/**', '!common.js']
+                    src: ['**/*.js', '!components/**', '!utils/atob.js']
                 }]
             }
         },
@@ -478,7 +484,7 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/gallery/*.spec.js']
             },
             article: {
-                src: []
+                src: ['integration-tests/casper/tests/article/article.spec.js']
             },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
@@ -528,12 +534,14 @@ module.exports = function (grunt) {
         s3: {
             options: {
                 bucket: 'aws-frontend-store',
-                access: 'public-read'
+                access: 'public-read',
+                gzip: true
             },
-            upload: {
+            screenshots: {
                 upload: [{
-                    src: screenshotsDir + '/*.png',
-                    dest: env.toUpperCase() + '/screenshots/' + timestampDir
+                    src: screenshotsDir + '/**/*.png',
+                    dest: '<%= env.casperjs.ENVIRONMENT.toUpperCase() %>/screenshots/',
+                    rel : screenshotsDir
                 }]
             }
         },
@@ -642,5 +650,5 @@ module.exports = function (grunt) {
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
-    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:upload']);
+    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
 };

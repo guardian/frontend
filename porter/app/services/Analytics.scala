@@ -4,7 +4,7 @@ import common.Logging
 import conf.PorterConfiguration
 import scala.slick.jdbc.StaticQuery
 import scala.slick.session.Session
-import org.joda.time.DateMidnight
+import org.joda.time.{DateMidnight, DateTime}
 
 object Analytics extends Logging with implicits.Dates with implicits.Collections with implicits.Tuples with implicits.Statistics {
 
@@ -91,18 +91,19 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
  
   def getPageviewsByOperatingSystemAndBrowser(): Map[String, Long] = {
-    val pageviews: List[(String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
-      StaticQuery.queryNA[(String, String, String, String, Long)]( """
-        select os_family, os_version_major, browser_family, browser_version_major, count(*) as total
+    val pageviews: List[(String, String, String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      StaticQuery.queryNA[(String, String, String, String, String, String, Long)]( s"""
+        select os_family, os_version_major, browser_family, browser_version_major, month, year, count(*) as total
         from pageviews
-        group by os_family, os_version_major, browser_family, browser_version_major
+        where month = ${new DateTime().minusMonths(1).getMonthOfYear} and year = ${new DateTime().minusMonths(1).getYear}
+        group by os_family, os_version_major, browser_family, browser_version_major, month, year
         order by total desc
         limit 1000
        """).list()
     }
 
     val relabeled: List[(String, Long)] = pageviews map {
-      case (operatingSystem, operatingSystemVersion, browser, browserVersionMajor, total) =>
+      case (operatingSystem, operatingSystemVersion, browser, browserVersionMajor, month, year, total) =>
         (s"$operatingSystem ${Option(operatingSystemVersion).getOrElse("(unknown)")} $browser ${Option(browserVersionMajor).getOrElse("(unknown)")}".trim, total)
     }
 
@@ -110,18 +111,19 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getPageviewsByOperatingSystem(): Map[String, Long] = {
-    val pageviews: List[(String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
-      StaticQuery.queryNA[(String, String, Long)]( """
-        select os_family, os_version_major, count(*) as total
+    val pageviews: List[(String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      StaticQuery.queryNA[(String, String, String, String, Long)]( s"""
+        select os_family, os_version_major, month, year, count(*) as total
         from pageviews
-        group by os_family, os_version_major
+        where month = ${new DateTime().minusMonths(1).getMonthOfYear} and year = ${new DateTime().minusMonths(1).getYear}
+        group by os_family, os_version_major, month, year
         order by total desc
         limit 64
        """).list()
     }
 
     val relabeled: List[(String, Long)] = pageviews map {
-      case (operatingSystem, operatingSystemVersion, total) =>
+      case (operatingSystem, operatingSystemVersion, month, year, total) =>
         (s"$operatingSystem ${Option(operatingSystemVersion).getOrElse("(unknown)")}".trim, total)
     }
 
@@ -129,18 +131,19 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getPageviewsByBrowser(): Map[String, Long] = {
-    val pageviews: List[(String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
-      StaticQuery.queryNA[(String, String, Long)]( """
-        select browser_family, browser_version_major, count(*) as total
+    val pageviews: List[(String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      StaticQuery.queryNA[(String, String, String, String, Long)]( s"""
+        select browser_family, browser_version_major, month, year, count(*) as total
         from pageviews
-        group by browser_family, browser_version_major
+        where month = ${new DateTime().minusMonths(1).getMonthOfYear} and year = ${new DateTime().minusMonths(1).getYear}
+        group by browser_family, browser_version_major, month, year
         order by total desc
         limit 64
        """).list()
     }
 
     val relabeled: List[(String, Long)] = pageviews map {
-      case (browser, browserVersionMajor, total) =>
+      case (browser, browserVersionMajor, month, year, total) =>
         (s"$browser ${Option(browserVersionMajor).getOrElse("(unknown)")}".trim, total)
     }
 

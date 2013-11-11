@@ -6,6 +6,7 @@ import common.{ExecutionContexts, Logging}
 import implicits.Strings
 import play.api.mvc._
 import play.api.libs.ws.WS
+import model.NoCache
 
 object Api extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
@@ -19,7 +20,7 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
     log("Proxying tag API query to: %s" format url, request)
 
     WS.url(url).get().map { response =>
-      Ok(response.body).as("application/javascript")
+      NoCache(Ok(response.body).as("application/javascript"))
     }
   }
 
@@ -34,7 +35,7 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
     log("Proxying tag API query to: %s" format url, request)
 
     WS.url(url).get().map { response =>
-      Ok(response.body).as("application/javascript")
+      NoCache(Ok(response.body).as("application/javascript"))
     }
   }
 
@@ -49,7 +50,7 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
     log("Proxying item API query to: %s" format url, request)
 
     WS.url(url).get().map { response =>
-      Ok(response.body).as("application/javascript")
+      NoCache(Ok(response.body).as("application/javascript"))
     }
   }
 
@@ -57,7 +58,7 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
     log("Proxying json request to: %s" format url, request)
 
     WS.url(url).get().map { response =>
-      Ok(response.body).as("application/json")
+      NoCache(Ok(response.body).as("application/json"))
     }
   }
 }

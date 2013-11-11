@@ -1,7 +1,6 @@
 /* Fronts/Sections/tags
    ========================================================================== */
 
-.front-section-head,
 .sub-section-head {
     position: relative;
     overflow: hidden;
@@ -24,10 +23,6 @@
             padding-right: $gs-gutter;
         }
     }
-}
-
-.front-section-head a {
-    color: #ffffff;
 }
 
 .sub-section-head {
@@ -65,12 +60,6 @@
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
         padding-left: 0;
-    }
-
-    &.zone-color {
-        @include mq(tablet) {
-            border-top: none;
-        }
     }
 }
 

@@ -17,9 +17,11 @@ case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int
   def bestFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.url).map{ url => ImgSrc(url, this) }
 
-
   def captionFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.caption)
+
+  def altTextFor(image: ImageContainer): Option[String] =
+    elementFor(image).flatMap(_.altText)
 }
 
 // Configuration of our different image profiles

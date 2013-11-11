@@ -1,5 +1,6 @@
 .collection--container {
     @include mq(tablet) {
+        @include first-row(2);
         .items {
             overflow: hidden;
         }
@@ -8,19 +9,6 @@
         }
         .item:nth-child(n+2) {
             @include card;
-        }
-        .item:nth-child(2) {
-            @include card-image;
-        }
-    }
-    @include mq(tablet, desktop) {
-        .item:first-child,
-        .item:nth-child(2n+2) {
-            @include row-start;
-        }
-        .item:first-child,
-        .item:nth-child(2n+3) {
-            @include row-end;
         }
     }
     @include mq(desktop, wide) {
@@ -32,11 +20,6 @@
         .item:nth-child(3n+4) {
             @include row-start;
         }
-        .item:nth-child(2),
-        .item:nth-child(3),
-        .item:nth-child(3n+6) {
-            @include row-end;
-        }
     }
     @include mq(wide) {
         @include first-row(3);
@@ -47,11 +30,6 @@
         .item:first-child,
         .item:nth-child(4n+6) {
             @include row-start;
-        }
-        .item:nth-child(3),
-        .item:nth-child(5),
-        .item:nth-child(4n+9) {
-            @include row-end;
         }
     }
     .item--sport-stats {
@@ -95,7 +73,6 @@
         @include first-row(1);
     }
 }
-.collection--news,
 .collection--sport {
     @include mq($to: tablet) {
         .item:first-child {
@@ -115,10 +92,6 @@
             .item:nth-child(2),
             .item:nth-child(4) {
                 @include row-start;
-            }
-            .item:nth-child(3),
-            .item:nth-child(5) {
-                @include row-end;
             }
             .item:nth-child(n+6) {
                 @include card-headline;
@@ -141,10 +114,6 @@
             .item:nth-child(5) {
                 @include row-start;
             }
-            .item:nth-child(4),
-            .item:nth-child(6) {
-                @include row-end;
-            }
             .item:nth-child(n+7) {
                 @include card-headline;
             }
@@ -156,7 +125,11 @@
         }
     }
     @include mq(tablet, desktop) {
-        .item:nth-child(n+3):nth-child(-n+5) {
+        .item:nth-child(3n+1) {
+            @include row-start;
+        }
+        .item:nth-child(2),
+        .item:nth-child(n+4):nth-child(-n+6) {
             @include card-image;
         }
     }
@@ -207,9 +180,6 @@
         }
         .item:nth-child(2) {
             @include row-start;
-        }
-        .item:nth-child(3) {
-            @include row-end;
         }
     }
 }
