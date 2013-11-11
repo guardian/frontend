@@ -107,6 +107,7 @@ $c-live: #e81818;
     @include box-sizing(border-box);
     padding-left: $gs-gutter/2;
     padding-right: $gs-gutter/2;
+    padding-bottom: 14px;
 
     @include mq(tablet) {
         display: inline-block;

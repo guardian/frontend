@@ -48,7 +48,7 @@
             @include card-full-width;
         }
         .item:nth-child(3) {
-            min-height: gs-height(6) - $metaHeight;
+            min-height: gs-height(6);
             .item__title {
                 @include fs-headline(3, $size-only: true);
             }
