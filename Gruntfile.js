@@ -366,20 +366,7 @@ module.exports = function (grunt) {
             },
             common: {
                 options: {
-                    specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js', [
-                            // works, but slow
-                            '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
-                            '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
-                            '!common/test/assets/javascripts/spec/Fonts.spec.js',
-                            // needs fixture data
-                            '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
-                            '!common/test/assets/javascripts/spec/MatchNav.spec.js',
-                            '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
-                            '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
-                            '!common/test/assets/javascripts/spec/ProfileNav.spec.js'
-                        ]
-                    )
+                    specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js'
                 }
             },
             facia: {
