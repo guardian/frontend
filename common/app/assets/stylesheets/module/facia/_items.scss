@@ -3,10 +3,7 @@ $c-live: #e81818;
 .container {
     position: relative;
     overflow: hidden;
-    @include mq($to: tablet) {
-        margin-top: $gs-baseline;
-
-    }
+    margin-top: $gs-baseline;
     @include mq(tablet) {
         margin-top: $gs-baseline*2;
     }
