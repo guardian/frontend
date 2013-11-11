@@ -1,19 +1,24 @@
 package controllers.commercial
 
 import play.api.mvc._
-import common.ExecutionContexts
-import model.commercial.travel.OffersAgent
-import scala.util.Random
+import common.{JsonComponent, ExecutionContexts}
 import play.api.libs.ws.{Response, WS}
-import scala.concurrent.Future
 import model.commercial.masterclasses.{MasterClassAgent, MasterClass, MasterClassesApi}
 import scala.util.Random
 
 object MasterClasses extends Controller with ExecutionContexts {
 
   def list = Action {
-    val upcoming: List[MasterClass] = MasterClassAgent.getUpcoming
-    val display = views.html.masterclasses(Random.shuffle(upcoming).take(3))
-    Ok(display)
+    implicit request =>
+
+      val upcoming: List[MasterClass] = MasterClassAgent.getUpcoming
+
+      if (!upcoming.isEmpty) {
+        JsonComponent {
+          "html" -> views.html.masterclasses(Random.shuffle(upcoming).take(3))
+        } withHeaders ("Cache-Control" -> "max-age=60")
+      } else {
+        Ok("No masterclasses") withHeaders ("Cache-Control" -> "max-age=60")
+      }
   }
 }
