@@ -37,10 +37,8 @@ define([
         return trail.querySelector('.trail__headline a').innerHTML;
     }
 
-    function isQuestion(headline) {
-        return (['Who', 'What', 'Where', 'Why'].some(function(word) {
-            return headline.indexOf(word) === 0;
-        }) || headline.indexOf('?'));
+    function isQuestion(trail) {
+        return getHeadline(trail).indexOf('?') > -1;
     }
 
     function append(trail) {
@@ -49,6 +47,10 @@ define([
 
     function prepend(trail) {
         bonzo(trail).detach().prependTo(container);
+    }
+
+    function labelAsQuestion(trail) {
+        trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | question');
     }
 
     var Question = function () {
@@ -60,7 +62,16 @@ define([
         this.audience = 0.1;
         this.description = 'Test effectiveness of question based trails in storypackages';
         this.canRun = function(config) {
-            return (config.page.contentType === 'Article' && document.querySelector('.more-on-this-story'));
+            if(config.page.contentType === 'Article' && document.querySelector('.more-on-this-story')){
+                getTrails().forEach(function(trail) {
+                    if(isQuestion(trail)) {
+                        labelAsQuestion(trail);
+                    }
+                });
+                return true;
+            } else {
+                return false;
+            }
         };
         this.variants = [
             {
@@ -78,7 +89,7 @@ define([
                 id: 'Question',
                 test: function() {
                     getTrails().forEach(function(trail) {
-                        if(isQuestion(getHeadline(trail))) {
+                        if(isQuestion(trail)) {
                             prepend(trail);
                         }
                     });
