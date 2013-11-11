@@ -26,18 +26,18 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with U
 
   feature("Contributor pages") {
 
-//    scenario("Should display the profile images") {
-//
-//      Given("I visit the 'Jemima Kiss' contributor page")
-//      Switches.ImageServerSwitch.switchOn()
-//
-//      HtmlUnit("/profile/jemimakiss") { browser =>
-//        import browser._
-//        Then("I should see her profile image")
-//        val profileImage = findFirst(".profile-img img")
-//        profileImage.getAttribute("src") should be(s"${Configuration.images.path}/c/sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg")
-//      }
-//    }
+    scenario("Should display the profile images") {
+
+      Given("I visit the 'Jemima Kiss' contributor page")
+      Switches.ImageServerSwitch.switchOn()
+
+      HtmlUnit("/profile/jemimakiss") { browser =>
+        import browser._
+        Then("I should see her profile image")
+        val profileImage = findFirst(".profile-img img")
+        profileImage.getAttribute("src") should be(s"${Configuration.images.path}/c/sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg")
+      }
+    }
 
     scenario("Should not not display profiles where they don't exist") {
       Given("I visit the 'Sam Jones' contributor page")

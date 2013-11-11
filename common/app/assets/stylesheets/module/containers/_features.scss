@@ -11,9 +11,6 @@
         .item:nth-child(2) {
             @include row-start;
         }
-        .item:nth-child(3) {
-            @include row-end;
-        }
         .item:nth-child(n+4) {
             @include card-headline;
         }
@@ -37,10 +34,6 @@
         .item:nth-child(3n+2) {
             @include row-start;
         }
-        .item:first-child,
-        .item:nth-child(3n+4) {
-            @include row-end;
-        }
     }
     @include mq(desktop) {
         .item:first-child {
@@ -56,11 +49,6 @@
         @include first-row(2);
         .item:nth-child(4n+4) {
             @include row-start;
-        }
-        .item:nth-child(2),
-        .item:nth-child(3),
-        .item:nth-child(4n+7) {
-            @include row-end;
         }
     }
 }

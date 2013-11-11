@@ -8,6 +8,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import services.{ Notification, Audit }
 import tools.Store
+import model.NoCache
 
 object SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
@@ -28,7 +29,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
       }
 
       val lastModified = switchesWithLastModified.map(_._2).map(_.getMillis).getOrElse(System.currentTimeMillis)
-      Ok(views.html.switchboard(Configuration.environment.stage, lastModified))
+      NoCache(Ok(views.html.switchboard(Configuration.environment.stage, lastModified)))
     }
   }
 
@@ -40,7 +41,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
 
     if (remoteLastModified.exists(_.getMillis > localLastModified)) {
       Future {
-        Redirect(routes.SwitchboardController.renderSwitchboard()).flashing("error" -> "A more recent change to the switch has been found, please refresh and try again.")
+        NoCache(Redirect(routes.SwitchboardController.renderSwitchboard()).flashing("error" -> "A more recent change to the switch has been found, please refresh and try again."))
       }
     } else {
       log("saving switchboard", request)

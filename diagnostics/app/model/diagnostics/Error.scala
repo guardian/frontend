@@ -27,19 +27,34 @@ object Error extends Logging {
   }
 
   def report(queryString: Map[String, Seq[String]], userAgent: String) {
+      
       val qs = queryString.map { case (k,v) => k -> v.mkString }
       val osFamily = getOperatingSystem(userAgent).toString
-      
-      if (qs.contains("type") && !isHealthCheck(userAgent)) {
-      
-        // temporary log to the application logs until we find a decent log
-        // analysis tool to send this output
+      val platform = qs.get("platform")
 
-        log.error(s"""${osFamily}\t${qs.values.mkString("\t")}\t${userAgent}""")
+      if (qs.contains("type") && !isHealthCheck(userAgent)) {
         
-        qs.get("type").get.toString match {
-          case "js" => Metric.increment(s"js.${osFamily}") 
-          case "ads" => Metric.increment("ads") 
+        qs.get("type") match {
+          case Some("js") => Metric.increment(s"js.${osFamily}") 
+          case Some("ads") => Metric.increment("ads") 
+          case Some("session") => {
+            platform match {
+              case Some("desktop") =>
+                DesktopSession.increment
+                DesktopView.increment
+              case Some("responsive") =>
+                ResponsiveSession.increment
+                ResponsiveView.increment
+              case _ => {}
+            }
+          }
+          case Some("view") => {
+            platform match {
+              case Some("desktop") => DesktopView.increment
+              case Some("responsive") => ResponsiveView.increment
+              case _ => {}
+            }
+          }
           case _ => {}
         }
       }

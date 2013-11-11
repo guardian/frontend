@@ -24,7 +24,7 @@ define([
                     '<a href="@trail.url" class="item__link tone-accent-border"><h2 class="item__title">@trail.headline</h2></a>' +
                     '<div class="item__standfirst"><p>@trail.trailText</p></div>' +
                     '<div class="item__meta item__meta--grey">' +
-                        '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix" data-relativeformat="short">' +
+                        '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.webPublicationDate.datetime" data-timestamp="@trail.webPublicationDate.timestamp" data-relativeformat="short">' +
                             '<i class="i i-clock-light-grey"></i><span class="timestamp__text"></span>' +
                         '</time>' +
                     '</div>' +
@@ -49,11 +49,11 @@ define([
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    if (!resp || !resp.fullTrails || resp.fullTrails.length === 0) {
+                    if (!resp || !resp.trails || resp.trails.length === 0) {
                         return;
                     }
                     var $collection = bonzo(bonzo.create('<ul class="unstyled collection"></ul>'));
-                    resp.fullTrails.forEach(function(trail, index) {
+                    resp.trails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(
                             itemTmpl(trail)
                         ));
@@ -68,10 +68,9 @@ define([
                         // add item to the items
                         $collection.append($item);
                     });
-                    // add the popular collection before the last collection
                     bonzo(bonzo.create(containerTmpl))
                         .append($collection)
-                        .insertAfter('.container:last-child');
+                        .insertAfter(common.$g('.container').last());
                     // add show more button
                     new CollectionShowMore($collection[0])
                         .addShowMore();
