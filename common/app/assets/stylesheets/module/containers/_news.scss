@@ -78,6 +78,9 @@
 
     .item--sport-stats {
         padding-bottom: 0 !important;
+        .matches {
+            margin-bottom: 0;
+        }
         .match-desc__result {
             width: 20%;
         }
