@@ -8,8 +8,10 @@ import org.jsoup.nodes.{Element, Document}
 
 object MasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
+  private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
   def apply(block: JsValue): Option[MasterClass] = {
+    val id = (block \ "id").as[Long]
     val title = (block \ "title").as[String]
     val literalDate = (block \ "start_date").as[String]
     val startDate: DateTime = datePattern.parseDateTime(literalDate)
@@ -25,17 +27,18 @@ object MasterClass {
     }
 
     val doc: Document = Jsoup.parse(description)
-    val elements: Array[Element] = doc.select("a[href^=http://www.theguardian.com/]:contains(Click here)").toArray map {_.asInstanceOf[Element]}
+    val elements: Array[Element] = doc.select(s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)").toArray map {_.asInstanceOf[Element]}
 
     val result: Array[MasterClass] = elements map { element =>
-      new MasterClass(title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"))
+      new MasterClass(id.toString, title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"))
     }
 
     return result.headOption
   }
 }
 
-case class MasterClass(name: String,
+case class MasterClass(id: String,
+                       name: String,
                        startDate: DateTime,
                        url: String,
                        description: String,
@@ -43,7 +46,7 @@ case class MasterClass(name: String,
                        tickets: List[Ticket],
                        capacity: Int,
                        guardianUrl: String) {
-  def isOpen = status == "Live"
+  def isOpen = {status == "Live"}
 
   lazy val displayPrice = {
     val priceList = tickets.map(_.price).sorted.distinct

@@ -119,7 +119,7 @@ GET         /radiator/pingdom                                                   
 GET         /radiator/commit/*hash                                                                           controllers.admin.RadiatorController.commitDetail(hash)
 GET         /radiator/livestats                                                                              controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
-
+GET         /admin/commercial                                                                                controllers.admin.CommercialComponentsController.renderCommercialComponents()
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers

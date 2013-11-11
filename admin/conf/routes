@@ -55,3 +55,6 @@ GET           /radiator/livestats              controllers.admin.RadiatorControl
 
 # Football Troubleshooter
 GET           /troubleshoot/football           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
+
+# Commercial Components Harness
+GET           /admin/commercial                controllers.admin.CommercialComponentsController.renderCommercialComponents()
