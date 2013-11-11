@@ -1,0 +1,59 @@
+@(env: String)
+
+@admin_main("Commercial Components", env, isAuthed = true) {
+    <style>
+        .components li {
+            overflow: hidden;
+        }
+
+        .w300,
+        .w600 {
+            float: left;
+            margin-right: 8px;
+        }
+
+        .w300 {
+            width: 300px;
+        }
+
+        .w600 {
+            width: 600px;
+        }
+    </style>
+    <script>
+        $(function() {
+            var components = {
+                masterclasses : '/commercial/masterclasses.json',
+                travel :        '/commercial/travel.json',
+                jobs :          '/commercial/jobs.json'
+            };
+
+            Object.keys(components).forEach(function(key) {
+                var componentType = key,
+                    endpoint      = components[key];
+
+                $.get(endpoint).done(function(response) {
+                   $('.'+componentType).html(response);
+                });
+            });
+        })
+    </script>
+
+    <ul class="components unstyled">
+        <li>
+            <h2>Masterclasses</h2>
+            <div class="masterclasses w300"></div>
+            <div class="masterclasses w600"></div>
+        </li>
+        <li>
+            <h2>Jobs</h2>
+            <div class="jobs w300"></div>
+            <div class="jobs w600"></div>
+        </li>
+        <li>
+            <h2>Travel</h2>
+            <div class="travel w300"></div>
+            <div class="travel w600"></div>
+        </li>
+    </ul>
+}
