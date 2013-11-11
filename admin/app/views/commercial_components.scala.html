@@ -24,7 +24,7 @@
         $(function() {
             var components = {
                 masterclasses : '/commercial/masterclasses.json',
-                travel :        '/commercial/travel.json',
+                travel :        '/commercial/travel/offers.json?k=canada&seg=repeat',
                 jobs :          '/commercial/jobs.json'
             };
 
@@ -32,10 +32,12 @@
                 var componentType = key,
                     endpoint      = components[key];
 
-                $.get(endpoint).done(function(response) {
-                   $('.'+componentType).html(response);
+                $.getJSON(endpoint).done(function(response) {
+                   $('.'+componentType).html(response.html);
                 });
             });
+
+
         })
     </script>
 
