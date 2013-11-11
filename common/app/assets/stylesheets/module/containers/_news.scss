@@ -93,7 +93,7 @@
     }
     .competition-table {
         padding-top: 0;
-        border-style: none;
+        border-bottom-style: none;
         border-top: 2px solid $c-newsAccent;
     }
     @include mq(tablet) {
