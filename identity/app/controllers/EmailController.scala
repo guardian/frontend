@@ -29,9 +29,9 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   val emailPrefsForm = Form(
     Forms.tuple(
-      "receive_gnm_marketing" -> Forms.boolean,
-      "receive_third_party_marketing" -> Forms.boolean,
-      "email_format" -> Forms.text().verifying(List("HTML", "Text").contains(_))
+      "statusFields.receiveGnmMarketing" -> Forms.boolean,
+      "statusFields.receive3rdPartyMarketing" -> Forms.boolean,
+      "htmlPreference" -> Forms.text().verifying(List("HTML", "Text").contains(_))
     )
   )
 
@@ -76,8 +76,8 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
             api.updateUserEmails(request.user.getId(), subscriber, request.auth, idRequest.trackingData)
           ) map {
             case Left(errors) => {
-              logger.warn(s"Error while saving user email prefs: ${errors.map(_.message)}")
-              val formWithErrors = errors.foldLeft(emailPrefsForm) { case (form, Error(message, description, _, context)) =>
+              logger.warn(s"Error while saving user email prefs: ${errors}")
+              val formWithErrors = errors.foldLeft(boundForm) { case (form, Error(message, description, _, context)) =>
                 form.withError(context.getOrElse(""), description)
               }
               Ok(views.html.profile.email_prefs(page, idRequest, idUrlBuilder, formWithErrors))
