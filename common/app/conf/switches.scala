@@ -44,7 +44,7 @@ object Switches extends Collections {
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
-    safeState = On)
+    safeState = Off)
 
   val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
     "If this switch is on, then extra logging will be done for edition redirects.",
