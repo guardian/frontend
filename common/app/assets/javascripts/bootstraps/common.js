@@ -386,10 +386,10 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.upgradeImages();
+            modules.runAbTests();
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();

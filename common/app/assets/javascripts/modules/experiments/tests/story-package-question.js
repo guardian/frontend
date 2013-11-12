@@ -2,14 +2,14 @@ define([
     'qwery',
     'bonzo',
     'ajax',
-    'utils/mediator',
+    'common',
     'utils/to-array',
     'modules/onward/history'
 ], function (
     qwery,
     bonzo,
     ajax,
-    mediator,
+    common,
     toArray,
     History
 ) {
@@ -47,7 +47,7 @@ define([
     }
 
     function append(trail) {
-        bonzo(trail).detach().appendTo(container);
+        bonzo(container).append(bonzo(trail).detach());
     }
 
     function prepend(trail) {
@@ -68,10 +68,12 @@ define([
         this.description = 'Test effectiveness of question based trails in storypackages';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article' && document.querySelector('.more-on-this-story')){
-                getTrails().forEach(function(trail) {
-                    if(isQuestion(trail)) {
-                        labelAsQuestion(trail);
-                    }
+                common.mediator.on('modules:related:loaded', function() {
+                    getTrails().forEach(function(trail) {
+                        if(isQuestion(trail)) {
+                            labelAsQuestion(trail);
+                        }
+                    });
                 });
                 return true;
             } else {
@@ -82,61 +84,64 @@ define([
             {
                 id: 'Read',
                 test: function() {
-                    getTrails().forEach(function(trail) {
-                        if(isInHistory(getTrailUrl(trail))) {
-                            append(trail);
-                        }
+                    common.mediator.on('modules:related:loaded', function() {
+                        getTrails().forEach(function(trail) {
+                            if(isInHistory(getTrailUrl(trail))) {
+                                append(trail);
+                            }
+                        });
                     });
-                    return true;
                 }
             },
             {
                 id: 'Question',
                 test: function() {
-                    getTrails().forEach(function(trail) {
-                        if(isQuestion(trail)) {
-                            prepend(trail);
-                        }
+                    common.mediator.on('modules:related:loaded', function() {
+                        getTrails().forEach(function(trail) {
+                            if(isQuestion(trail)) {
+                                prepend(trail);
+                            }
+                        });
                     });
-                    return true;
                 }
             },
             {
                 id: 'Popular',
                 test: function() {
-                    ajax({
-                        url: mostPopularUrl,
-                        type: 'json',
-                        crossOrigin: true
-                    }).then(
-                        function(resp) {
-                            if(resp && 'trails' in resp) {
-                                resp.trails.forEach(function(trail) {
-                                    if(isInHistory(trail)) {
-                                        append(trail);
-                                    } else {
-                                        prepend(trail);
-                                    }
-                                });
+                    common.mediator.on('modules:related:loaded', function() {
+                        ajax({
+                            url: mostPopularUrl,
+                            type: 'json',
+                            crossOrigin: true
+                        }).then(
+                            function(resp) {
+                                if(resp && 'trails' in resp) {
+                                    resp.trails.forEach(function(trail) {
+                                        if(isInHistory(trail)) {
+                                            append(trail);
+                                        } else {
+                                            prepend(trail);
+                                        }
+                                    });
+                                }
+                            },
+                            function(req) {
+                                common.mediator.emit('module:error', 'Failed to load most popular onward journey' + req, 'modules/experiments/tests/story-question.js');
                             }
-                        },
-                        function(req) {
-                            mediator.emit('modules:error', 'Failed to load most popular onward journey' + req);
-                        }
-                    );
-
-                    return true;
+                        );
+                    });
                 }
             },
             {
                 id: 'All',
                 test: function() {
-                    self.variants.forEach(function(variant){
-                        if(variant.id === 'Read' || variant.id === 'Question') {
-                            variant.test.call(self);
-                        }
+                    common.mediator.on('modules:related:loaded', function() {
+                        self.variants.forEach(function(variant){
+                            if(variant.id === 'Read' || variant.id === 'Question') {
+                                variant.test.call(self);
+                            }
+                        });
                     });
-                    return true;
                 }
             },
             {
