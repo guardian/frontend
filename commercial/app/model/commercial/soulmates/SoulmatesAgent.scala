@@ -1,64 +1,48 @@
 package model.commercial.soulmates
 
-import common.{ExecutionContexts, Logging}
 import model.commercial.AdAgent
+import scala.concurrent.Future
+import common.ExecutionContexts
 
-object SoulmatesAggregatingAgent extends ExecutionContexts with Logging {
+object SoulmatesAggregatingAgent {
 
   private val soulmatesAgents =
     Seq(SoulmatesMixedAgent, SoulmatesMenAgent, SoulmatesWomenAgent, SoulmatesGayAgent, SoulmatesLesbianAgent)
 
   def refresh() {
-    soulmatesAgents foreach (_.refresh)
+    soulmatesAgents foreach (_.refresh())
   }
 
 }
 
-object SoulmatesMixedAgent extends AdAgent[Member] with ExecutionContexts with Logging {
+trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {
+
+  def getMembers: Future[Seq[Member]]
 
   def refresh() {
     for {
-      members <- SoulmatesApi.getMixedMembers()
+      members <- getMembers
     } updateCurrentAds(members)
   }
 
 }
 
-object SoulmatesMenAgent extends AdAgent[Member] with ExecutionContexts with Logging {
-
-  def refresh() {
-    for {
-      members <- SoulmatesApi.getMenMembers()
-    } updateCurrentAds(members)
-  }
-
+object SoulmatesMixedAgent extends SoulmatesAgent {
+  def getMembers = SoulmatesApi.getMixedMembers()
 }
 
-object SoulmatesWomenAgent extends AdAgent[Member] with ExecutionContexts with Logging {
-
-  def refresh() {
-    for {
-      members <- SoulmatesApi.getWomenMembers()
-    } updateCurrentAds(members)
-  }
-
+object SoulmatesMenAgent extends SoulmatesAgent {
+  def getMembers = SoulmatesApi.getMenMembers()
 }
 
-object SoulmatesGayAgent extends AdAgent[Member] with ExecutionContexts with Logging {
-
-  def refresh() {
-    for {
-      members <- SoulmatesApi.getGayMembers()
-    } updateCurrentAds(members)
-  }
+object SoulmatesWomenAgent extends SoulmatesAgent {
+  def getMembers = SoulmatesApi.getWomenMembers()
 }
 
-object SoulmatesLesbianAgent extends AdAgent[Member] with ExecutionContexts with Logging {
+object SoulmatesGayAgent extends SoulmatesAgent {
+  def getMembers = SoulmatesApi.getGayMembers()
+}
 
-  def refresh() {
-    for {
-      members <- SoulmatesApi.getLesbianMembers()
-    } updateCurrentAds(members)
-  }
-
+object SoulmatesLesbianAgent extends SoulmatesAgent {
+  def getMembers = SoulmatesApi.getLesbianMembers()
 }
