@@ -1,50 +1,49 @@
 package model.commercial.jobs
 
-import model.commercial.{Ad, Segment}
+import org.joda.time.DateTime
+import model.commercial.{Ad, Segment, Keyword}
 import model.commercial.Utils._
 
 case class Job(id: Int,
+               adType: String,
+               adStartDate: DateTime,
+               adExpiryDate: DateTime,
+               isPremium: Boolean,
+               positionType: String,
                title: String,
                shortDescription: String,
-               recruiterName: String,
+               salary: String,
+               location: Option[String],
                recruiterLogoUrl: Option[String],
-               sectorIds: Set[Int])
+               employerLogoUrl: Option[String],
+               listingUrl: String,
+               applyUrl: String,
+               sectorTags: Seq[String],
+               locationTags: Seq[String],
+               keywords: Set[Keyword] = Set())
   extends Ad {
 
-  def listingUrl = s"http://guardianv3-web.madgexjbtest.com/job/$id"
+  def isCurrent = adExpiryDate.isAfterNow
 
   def matches(segment: Segment): Boolean = {
     val sectionMatches = segment.context.section exists {
-      section => intersects(sectorIds.toSet, Job.matchingSectorIds(section))
+      section => intersects(sectorTags.toSet, Job.matchingSectorTags(section))
     }
-    sectionMatches
+    val someKeywordsMatch = intersects(keywords.map(_.name), segment.context.keywords.toSet)
+    sectionMatches || someKeywordsMatch
   }
 
 }
 
 object Job {
 
-  private val sectorIdSectionsMap = Map[Int, Set[String]](
-    111 -> Set("business", "community"),
-    112 -> Set("business", "law", "money")
+  private val sectionSectorTagsMap = Map[String, Set[String]](
+    "society" -> Set("Housing", "Property & estate agency"),
+    "law" -> Set("Legal")
   )
 
-  private val sectionSectorIdsMap = {
-    val sectionSectorIdPairs = sectorIdSectionsMap.map(_.swap).map {
-      case (sections, sectorId) => sections map ((_, sectorId))
-    }.flatten.toSet
-
-    sectionSectorIdPairs.groupBy {
-      case (section, sectorId) => section
-    }.mapValues {
-      _.map {
-        case (section, sectorId) => sectorId
-      }
-    }
-  }
-
-  def matchingSectorIds(section: String): Set[Int] = {
-    sectionSectorIdsMap getOrElse(section, Set())
+  def matchingSectorTags(section: String): Set[String] = {
+    sectionSectorTagsMap getOrElse(section, Set())
   }
 
 }

@@ -13,6 +13,7 @@ object CommercialConfiguration {
   object jobsApi {
     lazy val url = configuration.getStringProperty("jobs.api.url")
     lazy val key = configuration.getStringProperty("jobs.api.key")
+    lazy val lightFeedUrl = configuration.getStringProperty("jobs.api.lightfeedurl")
   }
 
 }
