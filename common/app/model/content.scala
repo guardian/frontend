@@ -13,7 +13,7 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>Api
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val publication: String = fields.get("publication").getOrElse("")
-  lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
+  lazy val lastModified: DateTime = fields("lastModified").parseISODateTime
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
@@ -47,7 +47,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
-  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTimeNoMillis.isAfterNow)
+  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
     val souped = body flatMap { body =>
