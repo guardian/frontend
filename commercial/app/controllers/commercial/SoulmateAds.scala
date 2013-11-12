@@ -2,9 +2,10 @@ package controllers.commercial
 
 import play.api.mvc._
 import scala.util.Random
-import common.ExecutionContexts
-import model.commercial.soulmates.{SoulmatesWomenAgent, SoulmatesMixedAgent, SoulmatesMenAgent, Member}
+import common.{JsonComponent, ExecutionContexts}
+import model.commercial.soulmates._
 import model.commercial.AdAgent
+import model.commercial.soulmates.Member
 
 object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegmentInRequests {
 
@@ -15,10 +16,8 @@ object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegment
         Ok("No members") withHeaders ("Cache-Control" -> "max-age=60")
       } else {
         val shuffled = Random.shuffle(matching)
-        //JsonComponent {
-        Ok {
-          //"html" -> views.html.soulmates(shuffled take 5)
-          views.html.soulmates(shuffled take 5)
+        JsonComponent {
+          "html" -> views.html.soulmates(shuffled take 5)
         } withHeaders ("Cache-Control" -> "max-age=60")
       }
   }
@@ -33,6 +32,14 @@ object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegment
 
   def women = action {
     SoulmatesWomenAgent
+  }
+
+  def gay = action {
+    SoulmatesGayAgent
+  }
+
+  def lesbian = action {
+    SoulmatesLesbianAgent
   }
 
 }

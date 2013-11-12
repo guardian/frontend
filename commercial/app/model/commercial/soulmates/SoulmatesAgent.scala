@@ -5,7 +5,8 @@ import model.commercial.AdAgent
 
 object SoulmatesAggregatingAgent extends ExecutionContexts with Logging {
 
-  private val soulmatesAgents = Seq(SoulmatesMixedAgent, SoulmatesMenAgent, SoulmatesWomenAgent)
+  private val soulmatesAgents =
+    Seq(SoulmatesMixedAgent, SoulmatesMenAgent, SoulmatesWomenAgent, SoulmatesGayAgent, SoulmatesLesbianAgent)
 
   def refresh() {
     soulmatesAgents foreach (_.refresh)
@@ -38,6 +39,25 @@ object SoulmatesWomenAgent extends AdAgent[Member] with ExecutionContexts with L
   def refresh() {
     for {
       members <- SoulmatesApi.getWomenMembers()
+    } updateCurrentAds(members)
+  }
+
+}
+
+object SoulmatesGayAgent extends AdAgent[Member] with ExecutionContexts with Logging {
+
+  def refresh() {
+    for {
+      members <- SoulmatesApi.getGayMembers()
+    } updateCurrentAds(members)
+  }
+}
+
+object SoulmatesLesbianAgent extends AdAgent[Member] with ExecutionContexts with Logging {
+
+  def refresh() {
+    for {
+      members <- SoulmatesApi.getLesbianMembers()
     } updateCurrentAds(members)
   }
 
