@@ -6,8 +6,17 @@ import com.amazonaws.services.cloudwatch.model._
 import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
 import common.Logging
+import Configuration._
 
-trait CloudWatch {
+object CloudWatch {
+
+  val stage = new Dimension().withName("Stage").withValue(environment.stage)
+
+  lazy val cloudClient = {
+    val c = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+    c.setEndpoint("monitoring.eu-west-1.amazonaws.com")
+    c
+  }
 
   val primaryLoadBalancers = Seq(
     ("frontend-RouterLo-1HHMP4C9L33QJ", "Router"),
@@ -37,14 +46,30 @@ trait CloudWatch {
     ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
-  private lazy val cloudClient = {
-    val c = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
-    c.setEndpoint("monitoring.eu-west-1.amazonaws.com")
-    c
+
+  def shortStack = latency(primaryLoadBalancers)
+  def fullStack = shortStack ++ latency(secondaryLoadBalancers)
+
+  object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging
+  {
+    def onError(exception: Exception)
+    {
+      log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}}")
+    }
+    def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult )
+    {
+    }
   }
 
-  def latencyShortStack = latency(primaryLoadBalancers)
-  def latencyFullStack = latencyShortStack ++ latency(secondaryLoadBalancers)
+  def shutdown() {
+    cloudClient.shutdown()
+    defaultCloudClient.shutdown()
+  }
+
+
+  // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit
+
+
 
   private def latency(loadBalancers: Seq[(String,String)]): Seq[LatencyGraph] = {
     loadBalancers.map{ case (loadBalancer, name) =>
@@ -96,6 +121,18 @@ trait CloudWatch {
         asyncHandler)
     )
   }.toSeq
+  
+  def liveStats(statistic: String) = new LiveStatsGraph(
+    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(6).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(120)
+      .withStatistics("Average")
+      .withNamespace("Diagnostics")
+      .withMetricName(statistic)
+      .withDimensions(stage),
+      asyncHandler))
+
 
   // charges are only available from the 'default' region
   private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
@@ -135,21 +172,4 @@ trait CloudWatch {
     )
   }.toSeq
 
-  object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging
-  {
-    def onError(exception: Exception)
-    {
-      log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}}")
-    }
-    def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult )
-    {
-    }
-  }
-
-  def shutdown() {
-    cloudClient.shutdown()
-    defaultCloudClient.shutdown()
-  }
 }
-
-object CloudWatch extends CloudWatch

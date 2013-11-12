@@ -1,0 +1,282 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"music/2013/nov/06/justin-bieber-graffiti-brazil-police-rio-tour",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-11-06T18:45:29Z",
+      "webTitle":"Justin Bieber graffiti incident in Brazil investigated by police",
+      "webUrl":"http://www.theguardian.com/music/2013/nov/06/justin-bieber-graffiti-brazil-police-rio-tour",
+      "apiUrl":"http://content.guardianapis.com/music/2013/nov/06/justin-bieber-graffiti-brazil-police-rio-tour",
+      "fields":{
+        "newspaperPageNumber":"26",
+        "trailText":"The singer, in Rio de Janeiro as part of his South American tour, was photographed painting a wall outside an upscale hotel",
+        "headline":"Justin Bieber graffiti incident in Brazil investigated by police",
+        "body":"<p>Police in Rio de Janeiro on Wednesday said they were investigating whether the Canadian teen singer Justin Bieber had illegally spray-painted graffiti on an exterior wall of a beachside hotel.</p><p>The 19-year-old singer, in Brazil as part of his ongoing South American tour, was photographed early Tuesday, along with members of his entourage, painting the wall outside an upscale hotel in Rio's São Conrado neighbourhood.</p><p>After complaints by the local paparazzi that Bieber's bodyguards had accosted them, Rio police said they would look into the incident and determine whether Bieber had broken Brazilian laws against the destruction of property.</p><p>In a statement, Brazil's civil police force said they had already interviewed a Bieber representative and would continue gathering details about the incident.</p><p>Brazil's federal police, the force charged with immigration matters, denied local media reports that investigators had sought to prevent Bieber, bound on Wednesday for a show in Asuncion, Paraguay, from leaving the country.</p><p>The incident follows a whirlwind of tabloid headlines during Bieber's Brazilian stay, including reports that he had attended a Rio nightclub that in the past has been shuttered for prostitution. Tabloids published photos they said were of the singer, wrapped in a bedsheet to conceal his identity, leaving the Centaurus club over the weekend.</p><figure data-media-id='gu-image-421845095'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383763056590/justin-bieber-graffiti-008.jpg' alt='justin bieber graffiti' width='460' height='276' class='gu-image'/><figcaption>A local graffiti artist paints over graffiti made by  Justin Bieber in a tunnel of Bogota, Colombia. Photograph: Mauricio Duenas Castaneda/EPA</figcaption></figure><p>Melissa Victor, a publicist for Bieber at Universal Music Group in New York, did not return a phone call for comment. Bieber is signed to Island Def Jam Music Group, one of the labels owned by Universal, which itself is a unit of French media and telecommunications company Vivendi SA.</p><!-- Guardian Watermark: internal-code/content/421842625|2013-11-11T15:34:05Z|b886eaf4ef7b6bcb70fb56251d267dad7d7bb43d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-07T00:07:05Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762509322/Justin-Bieber-graffiti-br-003.jpg",
+        "standfirst":"The singer, in Rio de Janeiro as part of his South American tour, was photographed painting a wall outside an upscale hotel",
+        "shortUrl":"http://gu.com/p/3k736",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762509322/Justin-Bieber-graffiti-br-003.jpg",
+        "wordcount":"253",
+        "commentable":"false",
+        "internalContentCode":"421842625",
+        "allowUgc":"false",
+        "internalOctopusCode":"8290497",
+        "isPremoderated":"false",
+        "byline":"Reuters",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-11-07",
+        "internalPageCode":"1993173",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-09T18:45:29Z"
+      },
+      "tags":[{
+        "id":"music/justin-bieber",
+        "type":"keyword",
+        "webTitle":"Justin Bieber",
+        "webUrl":"http://www.theguardian.com/music/justin-bieber",
+        "apiUrl":"http://content.guardianapis.com/music/justin-bieber",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"world/brazil",
+        "type":"keyword",
+        "webTitle":"Brazil",
+        "webUrl":"http://www.theguardian.com/world/brazil",
+        "apiUrl":"http://content.guardianapis.com/world/brazil",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/americas",
+        "type":"keyword",
+        "webTitle":"Americas",
+        "webUrl":"http://www.theguardian.com/world/americas",
+        "apiUrl":"http://content.guardianapis.com/world/americas",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421845094",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762505601/Justin-Bieber-graffiti-br-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"54",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762507890/Justin-Bieber-graffiti-br-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"130",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762509322/Justin-Bieber-graffiti-br-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"84",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762510676/Justin-Bieber-graffiti-br-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"132",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762512255/Justin-Bieber-graffiti-br-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"168",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762513600/Justin-Bieber-graffiti-br-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"180",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762515028/Justin-Bieber-graffiti-br-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"228",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762516656/Justin-Bieber-graffiti-br-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"276",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762516656/Justin-Bieber-graffiti-br-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"276",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performing in Panama City as part of his world tour. Defacing buildings is a crime in Brazil punishable by up to one year in jail. Photograph: Arnulfo Franco/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421845095",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383763056590/justin-bieber-graffiti-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Mauricio Duenas Castaneda",
+            "altText":"justin bieber graffiti",
+            "height":"276",
+            "credit":"Mauricio Duenas Castaneda/EPA",
+            "caption":"A local graffiti artist paints over graffiti made by  Justin Bieber in a tunnel of Bogota, Colombia. Photograph: Mauricio Duenas Castaneda/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421845096",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383762509322/Justin-Bieber-graffiti-br-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Arnulfo Franco",
+            "altText":"Justin Bieber graffiti brazil police",
+            "height":"84",
+            "credit":"Arnulfo Franco/AP",
+            "caption":"Justin Bieber performs during his Believe world tour in Panama City. Defacing buildings is a crime in Brazil punishable by up to one year in jail and a fine. Photograph: Arnulfo Franco/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

@@ -69,9 +69,7 @@ trait Football extends Collections {
     def hasTeam(teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
   }
 
-  implicit class Match2trail(m: FootballMatch) extends Trail {
-
-    override val delegate: ApiContent = ApiContent("", None, None, new DateTime, "", "", "", elements = None, fields = None)
+  implicit class Match2Trail(m: FootballMatch) extends Trail {
 
     private def text = if (m.isFixture) {
       s"${m.homeTeam.name} v ${m.awayTeam.name}"

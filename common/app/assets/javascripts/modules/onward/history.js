@@ -28,11 +28,11 @@ define([
     };
 
     History.prototype.set = function(data) {
-        return storage.set(this.config.storageKey, data);
+        return storage.local.set(this.config.storageKey, data);
     };
 
     History.prototype.get = function() {
-        var hist = storage.get(this.config.storageKey);
+        var hist = storage.local.get(this.config.storageKey);
         return (hist === null) ? [] : hist;
     };
 

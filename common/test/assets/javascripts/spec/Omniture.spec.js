@@ -20,7 +20,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         });
 
         afterEach(function(){
-            localStorage.removeItem('gu.analytics.referrerVars')
+            sessionStorage.removeItem('gu.analytics.referrerVars')
         });
 
         it("should correctly set the Omniture account", function(){
@@ -186,7 +186,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             o.go(config);
             runs(function() {
                 common.mediator.emit('module:clickstream:click', clickSpec);
-                expect(JSON.parse(localStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+                expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
             });
 
         });

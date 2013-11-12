@@ -42,7 +42,7 @@ define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
                                 var nameAndCacheKey = getNameAndCacheKey(style);
 
                                 that.clearFont(nameAndCacheKey[0]);
-                                storage.set(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1], json.css);
+                                storage.local.set(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1], json.css);
                                 common.mediator.emit('modules:fonts:loaded', [json.name]);
                             };
                         }(style))
@@ -61,11 +61,11 @@ define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
         };
 
         this.clearFont = function(name) {
-            storage.clearByPrefix(storagePrefix + name);
+            storage.local.clearByPrefix(storagePrefix + name);
         };
 
         this.clearAllFontsFromStorage = function() {
-            storage.clearByPrefix(storagePrefix);
+            storage.local.clearByPrefix(storagePrefix);
         };
 
         function getNameAndCacheKey(style) {
@@ -77,9 +77,9 @@ define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
         function fontIsRequired(style) {
             // A final check for storage (is it full, disabled, any other error).
             // Because it would be horrible if people downloaded fonts and then couldn't cache them.
-            if (storage.isAvailable()) {
+            if (storage.local.isAvailable()) {
                 var nameAndCacheKey =  getNameAndCacheKey(style);
-                var cachedValue = storage.get(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]);
+                var cachedValue = storage.local.get(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]);
 
                 var widthMatches = true;
                 var minWidth = style.getAttribute('data-min-width');

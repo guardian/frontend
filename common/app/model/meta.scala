@@ -1,7 +1,6 @@
 package model
 
 import common.ManifestData
-import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import conf.Configuration
 
 trait MetaData {
@@ -60,17 +59,6 @@ object Page {
 }
 
 trait Elements {
-  /*
-    Now I know you might THINK that you want to change this. The people around you might have convinced you
-    that there is some magic formula. There might even be a 'Business Stakeholder' involved...
-
-    But know this... I WILL find you, I WILL hunt you down, and you WILL be sorry.
-
-    If you need to express a hack, express it somewhere where you are not pretending it is the Main Picture
-
-    You probably want the TRAIL PICTURE
-  */
-  protected def delegate: ApiContent
 
   // Find a main picture crop which matches this aspect ratio.
   def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPicture.flatMap{ main =>
@@ -83,6 +71,18 @@ trait Elements {
   // trail picture is used on index pages (i.e. Fronts and tag pages)
   def trailPicture: Option[ImageContainer] = mainPicture.orElse(thumbnail)
 
+
+  /*
+  Now I know you might THINK that you want to change how we get the main picture.
+  The people around you might have convinced you that there is some magic formula.
+  There might even be a 'Business Stakeholder' involved...
+
+  But know this... I WILL find you, I WILL hunt you down, and you WILL be sorry.
+
+  If you need to express a hack, express it somewhere where you are not pretending it is the Main Picture
+
+  You probably want the TRAIL PICTURE
+*/
   // main picture is used on the content page (i.e. the article page or the video page)
   def mainPicture: Option[ImageContainer] = imageElements.headOption
   lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
@@ -98,14 +98,8 @@ trait Elements {
   private lazy val images: List[ImageElement] = imageMap("main")
   private lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
   private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
-  private def elementsMap(elementType: String): Map[String,List[Element]] = {
-    // Find the elements associated with a given element type, keyed by a relation string.
-    // Example relations are gallery, thumbnail, main, body
-    delegate.elements.map(_.filter(_.elementType == elementType)
-      .groupBy(_.relation)
-      .mapValues(_.zipWithIndex.collect{case (element:ApiElement, index:Int) => Element(element, index)})
-    ).getOrElse(Map.empty).withDefaultValue(Nil)
-  }
+
+  def elementsMap(elementType: String): Map[String,List[Element]] = Map.empty.withDefaultValue(Nil)
 
   protected lazy val imageMap: Map[String,List[ImageElement]] = {
     elementsMap("image").collect {

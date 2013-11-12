@@ -2,7 +2,7 @@ package model.diagnostics
 
 import com.google.common.util.concurrent.AtomicDouble
 
-class User {
+abstract class User {
   
   private lazy val metric = new AtomicDouble()
 

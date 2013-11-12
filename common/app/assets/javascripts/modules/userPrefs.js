@@ -1,7 +1,7 @@
 define(['modules/storage'], function(storage) {
 
     var storagePrefix = 'gu.prefs.',
-        store = storage;
+        store = storage.local;
 
     function set(name, value) {
         store.set(storagePrefix + name, value);

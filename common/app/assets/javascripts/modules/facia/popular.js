@@ -68,10 +68,9 @@ define([
                         // add item to the items
                         $collection.append($item);
                     });
-                    // add the popular collection before the last collection
                     bonzo(bonzo.create(containerTmpl))
                         .append($collection)
-                        .insertAfter('.container:last-child');
+                        .insertAfter(common.$g('.container').last());
                     // add show more button
                     new CollectionShowMore($collection[0])
                         .addShowMore();

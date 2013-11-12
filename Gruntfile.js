@@ -4,7 +4,6 @@ module.exports = function (grunt) {
         jasmineSpec = grunt.option('spec') || '*',
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/'),
         staticTargetDir = 'static/target/';
 
     if (isDev) {
@@ -367,20 +366,7 @@ module.exports = function (grunt) {
             },
             common: {
                 options: {
-                    specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js', [
-                            // works, but slow
-                            '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
-                            '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
-                            '!common/test/assets/javascripts/spec/Fonts.spec.js',
-                            // needs fixture data
-                            '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
-                            '!common/test/assets/javascripts/spec/MatchNav.spec.js',
-                            '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
-                            '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
-                            '!common/test/assets/javascripts/spec/ProfileNav.spec.js'
-                        ]
-                    )
+                    specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js'
                 }
             },
             facia: {
@@ -535,12 +521,14 @@ module.exports = function (grunt) {
         s3: {
             options: {
                 bucket: 'aws-frontend-store',
-                access: 'public-read'
+                access: 'public-read',
+                gzip: true
             },
-            upload: {
+            screenshots: {
                 upload: [{
-                    src: screenshotsDir + '/*.png',
-                    dest: env.toUpperCase() + '/screenshots/' + timestampDir
+                    src: screenshotsDir + '/**/*.png',
+                    dest: '<%= env.casperjs.ENVIRONMENT.toUpperCase() %>/screenshots/',
+                    rel : screenshotsDir
                 }]
             }
         },
@@ -649,5 +637,5 @@ module.exports = function (grunt) {
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
-    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:upload']);
+    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
 };

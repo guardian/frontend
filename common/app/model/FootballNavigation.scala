@@ -43,6 +43,7 @@ object FootballNavigation {
     )
   } else {
     Seq(
+      Link(s"$competition/table", "tables", "Tables"), // note if there is no table for this comp it will redirect to /football/tables
       Link(s"$competition/live", "livescores", "Live scores"),
       Link(s"$competition/fixtures", "fixtures", "Fixtures"),
       Link(s"$competition/results", "results", "Results"),

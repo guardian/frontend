@@ -30,10 +30,10 @@ object JobsAgent extends AdAgent[Job] with ExecutionContexts with Logging {
       untaggedJobs <- currentJobs
       (unchangedJobs, newUntaggedJobs) = unchangedJobsAndNewUntaggedJobs(untaggedJobs)
       jobs = unchangedJobs ++ tagWithKeywords(newUntaggedJobs)
-    } yield agent send jobs
+    } updateCurrentAds(jobs)
   }
 
-  def unchangedJobsAndNewUntaggedJobs(newJobs: Seq[Job], currJobs: Seq[Job] = agent()): (Seq[Job], Seq[Job]) = {
+  def unchangedJobsAndNewUntaggedJobs(newJobs: Seq[Job], currJobs: Seq[Job] = currentAds): (Seq[Job], Seq[Job]) = {
     val currentUntaggedJobs = currJobs map (_.copy(keywords = Set()))
     val (unchangedUntaggedJobs, newUntaggedJobs) = newJobs partition {
       job => currentUntaggedJobs contains job
