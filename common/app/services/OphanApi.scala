@@ -40,6 +40,10 @@ object OphanApi extends ExecutionContexts with Logging {
   }
 
   def getMostRead(hours: Int): Future[JsValue] = {
-    getBodyAsJson(s"mostread?hours=$hours")
+    getBodyAsJson(s"mostread?hours=$hours&count=50")
+  }
+
+  def getMostPopularOnward(path: String): Future[JsValue] = {
+    getBodyAsJson(s"onward?path=/$path&is-content=true&hours=3&count=10")
   }
 }
