@@ -2,6 +2,7 @@ package controllers
 
 import org.scalatest.{ShouldMatchers, path}
 import services._
+import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mock.MockitoSugar
