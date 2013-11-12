@@ -12,7 +12,7 @@ import services.S3FrontsApi
 import views.support.Style
 
 
-trait Trail extends Elements with Tags {
+trait Trail extends Elements with Tags with FaciaFields {
   def webPublicationDate: DateTime
   def linkText: String
   def headline: String
@@ -26,7 +26,11 @@ trait Trail extends Elements with Tags {
   def isClosedForComments: Boolean = false
   def leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
   def byline: Option[String] = None
-  def trailType: Option[String] = None  //Facia tool values
+  def trailType: Option[String] = None
+}
+
+//Facia tool values
+trait FaciaFields {
   def group: Option[String] = None
 }
 
