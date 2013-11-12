@@ -53,7 +53,7 @@ object `package` {
   lazy val DateTimeWithMillis = """.*\d\d:\d\d\.(\d+)\+.*""".r
 
   implicit class ISODateTimeStringNoMillis2DateTime(s: String) {
-    lazy val parseISODateTimeNoMillis = s match {
+    lazy val parseISODateTime = s match {
       case DateTimeWithMillis(_) => ISODateTimeFormat.dateTime.parseDateTime(s)
       case _ => ISODateTimeFormat.dateTimeNoMillis.parseDateTime(s)
     }
