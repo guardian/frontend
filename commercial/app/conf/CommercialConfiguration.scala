@@ -18,6 +18,7 @@ object CommercialConfiguration {
   object soulmatesApi {
     lazy val mixedUrl = configuration.getStringProperty("soulmates.api.mixed.url")
     lazy val menUrl = configuration.getStringProperty("soulmates.api.men.url")
+    lazy val womenUrl = configuration.getStringProperty("soulmates.api.women.url")
   }
 
 }

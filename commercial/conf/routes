@@ -14,6 +14,7 @@ GET    /commercial/jobs.json                                    controllers.comm
 # Soulmates
 GET    /commercial/soulmates/mixed.json                         controllers.commercial.SoulmateAds.mixed
 GET    /commercial/soulmates/men.json                           controllers.commercial.SoulmateAds.men
+GET    /commercial/soulmates/women.json                         controllers.commercial.SoulmateAds.women
 
 # Simple advert tests
 GET    /commercial/$advert<(masterclasses)>.json                controllers.commercial.SimpleAdvert.render(advert)

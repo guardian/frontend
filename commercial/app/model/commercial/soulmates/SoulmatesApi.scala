@@ -53,8 +53,14 @@ object SoulmatesApi extends ExecutionContexts with Logging {
     CommercialConfiguration.soulmatesApi.menUrl
   }
 
-  def getMixedMembers(json: => Future[JsValue] = loadMixedMembers): Future[Seq[Member]] = getMembers(json)
+  private def loadWomenMembers(): Future[JsValue] = loadMembers {
+    CommercialConfiguration.soulmatesApi.womenUrl
+  }
 
-  def getMenMembers(json: => Future[JsValue] = loadMenMembers): Future[Seq[Member]] = getMembers(json)
+  def getMixedMembers(json: => Future[JsValue] = loadMixedMembers()): Future[Seq[Member]] = getMembers(json)
+
+  def getMenMembers(json: => Future[JsValue] = loadMenMembers()): Future[Seq[Member]] = getMembers(json)
+
+  def getWomenMembers(json: => Future[JsValue] = loadWomenMembers()): Future[Seq[Member]] = getMembers(json)
 
 }

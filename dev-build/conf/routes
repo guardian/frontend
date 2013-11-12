@@ -130,6 +130,7 @@ GET         /commercial/jobs.json                                               
 GET         /commercial/$advert<(masterclasses)>.json                                                        controllers.commercial.SimpleAdvert.render(advert)
 GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
 GET         /commercial/soulmates/men.json                                                                   controllers.commercial.SoulmateAds.men
+GET         /commercial/soulmates/women.json                                                                 controllers.commercial.SoulmateAds.women
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")

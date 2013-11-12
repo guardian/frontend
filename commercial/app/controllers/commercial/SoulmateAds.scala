@@ -3,7 +3,7 @@ package controllers.commercial
 import play.api.mvc._
 import scala.util.Random
 import common.ExecutionContexts
-import model.commercial.soulmates.{SoulmatesMixedAgent, SoulmatesMenAgent, Member}
+import model.commercial.soulmates.{SoulmatesWomenAgent, SoulmatesMixedAgent, SoulmatesMenAgent, Member}
 import model.commercial.AdAgent
 
 object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegmentInRequests {
@@ -29,6 +29,10 @@ object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegment
 
   def men = action {
     SoulmatesMenAgent
+  }
+
+  def women = action {
+    SoulmatesWomenAgent
   }
 
 }
