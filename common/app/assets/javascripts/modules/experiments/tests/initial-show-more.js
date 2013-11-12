@@ -4,7 +4,7 @@ define(['utils/mediator'], function(mediator) {
 
         this.id = 'InitialShowMore';
         this.expiry = '2013-11-30';
-        this.audience = 1;
+        this.audience = 0.1;
         this.description = 'Test how many items to initially show in the news container';
         this.canRun = function(config) {
             return config.page.contentType === 'Network Front';
@@ -17,7 +17,7 @@ define(['utils/mediator'], function(mediator) {
                 }
             },
             {
-                id: 'initial-show-more',
+                id: 'show-first-page',
                 test: function (context) {
                     mediator.addOnceListener('modules:collectionShowMore:renderButton', function(collectionShowMore) {
                         collectionShowMore.showMore();
