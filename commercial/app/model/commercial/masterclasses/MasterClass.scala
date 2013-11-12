@@ -8,7 +8,9 @@ import org.jsoup.nodes.{Element, Document}
 
 object MasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
-  private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
+  //private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
+
+  private val guardianUrlLinkText = "Click here"
 
   def apply(block: JsValue): Option[MasterClass] = {
     val id = (block \ "id").as[Long]

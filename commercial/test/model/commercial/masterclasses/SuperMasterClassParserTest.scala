@@ -15,6 +15,7 @@ class SuperMasterClassParserTest extends FlatSpec with Matchers with ExecutionCo
 
       val events = Await.result(futureChicken, 30 seconds)
 
+    events.size should be (3)
     events.exists( _.id == "8996505791") should be (true)
     events.exists( _.id == "8956345671") should be (true)
     events.exists( _.id == "9205787759") should be (true)

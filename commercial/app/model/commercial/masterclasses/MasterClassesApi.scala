@@ -1,6 +1,6 @@
 package model.commercial.masterclasses
 
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import play.api.libs.ws.WS
 import play.api.libs.json.{JsNull, JsValue}
 import scala.concurrent.Future
