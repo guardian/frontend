@@ -13,7 +13,11 @@ object LightJobsApi extends ExecutionContexts with Logging {
     def buildUrl: Option[String] = {
       for {
         url <- CommercialConfiguration.jobsApi.lightFeedUrl
-      } yield s"$url"
+      } yield {
+        val feedUrl = s"$url"
+        log.info(s"Using job ads feed URL: $feedUrl")
+        feedUrl
+      }
     }
 
     buildUrl map {
