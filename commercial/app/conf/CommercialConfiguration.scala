@@ -15,4 +15,8 @@ object CommercialConfiguration {
     lazy val key = configuration.getStringProperty("jobs.api.key")
   }
 
+  object soulmatesApi {
+    lazy val popularUrl = configuration.getStringProperty("soulmates.api.popularUrl")
+  }
+
 }
