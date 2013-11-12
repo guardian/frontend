@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormat
 import scala.xml.{XML, Elem}
 import play.api.libs.ws.WS
 import conf.CommercialConfiguration
+import model.commercial.Utils.OptString
 
 object JobsApi extends ExecutionContexts with Logging {
 
@@ -76,8 +77,4 @@ object JobsApi extends ExecutionContexts with Logging {
     getAllJobs(xml) map (_ filter (_.isCurrent))
   }
 
-}
-
-object OptString {
-  def apply(s: String): Option[String] = Option(s) filter (_.trim.nonEmpty)
 }
