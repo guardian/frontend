@@ -1,4 +1,4 @@
-define([], function() {
+define(['utils/mediator'], function(mediator) {
 
     return function() {
 
@@ -10,15 +10,18 @@ define([], function() {
             return config.page.contentType === 'Network Front';
         };
         this.variants = [
-//            {
-//                id: 'control',
-//                test: function () {
-//                    return true;
-//                }
-//            },
+            {
+                id: 'control',
+                test: function () {
+                    return true;
+                }
+            },
             {
                 id: 'initial-show-more',
                 test: function (context) {
+                    mediator.addOnceListener('modules:collectionShowMore:renderButton', function(collectionShowMore) {
+                        collectionShowMore.showMore();
+                    });
                 }
             }
         ];
