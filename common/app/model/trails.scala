@@ -26,7 +26,8 @@ trait Trail extends Elements with Tags {
   def isClosedForComments: Boolean = false
   def leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
   def byline: Option[String] = None
-  def trailType: Option[String] = None
+  def trailType: Option[String] = None  //Facia tool values
+  def group: Option[String] = None
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])

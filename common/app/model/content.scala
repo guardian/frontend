@@ -135,9 +135,9 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, headline: Option[String]): Content = {
-    headline match {
-      case Some(title) => new ContentWithHeadline(delegate, title)
+  def apply(delegate: ApiContent, metaData: Option[Map[String, String]]): Content = {
+    metaData match {
+      case Some(metaData) => new ContentWithMetaData(delegate, metaData)
       case _ => apply(delegate)
     }
   }
@@ -266,6 +266,7 @@ class ImageContent(content: ApiContent) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
 }
 
-class ContentWithHeadline(content: ApiContent, title: String) extends Content(content) {
-  override lazy val headline: String = title
+class ContentWithMetaData(content: ApiContent, metaData: Map[String, String]) extends Content(content) {
+  override lazy val headline: String = metaData.get("headline").getOrElse(super.headline)
+  override lazy val group: Option[String] = None//metaData.get("group")
 }
