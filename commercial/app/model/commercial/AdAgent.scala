@@ -22,4 +22,6 @@ trait AdAgent[T <: Ad] {
     adsToChooseFrom filter (_.matches(segment))
   }
 
+  def refresh()
+
 }

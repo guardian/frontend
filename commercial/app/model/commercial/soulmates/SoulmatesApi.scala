@@ -8,10 +8,10 @@ import play.api.libs.json.{JsArray, JsString, JsValue}
 
 object SoulmatesApi extends ExecutionContexts with Logging {
 
-  private def loadPopularMembers: Future[JsValue] = {
-    CommercialConfiguration.soulmatesApi.popularUrl map {
-      url =>
-        val json = WS.url(url) withRequestTimeout 2000 get() map {
+  private def loadMembers(url: => Option[String]): Future[JsValue] = {
+    url map {
+      u =>
+        val json = WS.url(u) withRequestTimeout 2000 get() map {
           response => response.json
         }
 
@@ -29,7 +29,7 @@ object SoulmatesApi extends ExecutionContexts with Logging {
     }
   }
 
-  def getPopularMembers(json: => Future[JsValue] = loadPopularMembers): Future[Seq[Member]] = {
+  private def getMembers(json: => Future[JsValue]): Future[Seq[Member]] = {
     json map {
       case JsArray(members) =>
         members map {
@@ -44,5 +44,17 @@ object SoulmatesApi extends ExecutionContexts with Logging {
       case other => Nil
     }
   }
+
+  private def loadMixedMembers(): Future[JsValue] = loadMembers {
+    CommercialConfiguration.soulmatesApi.mixedUrl
+  }
+
+  private def loadMenMembers(): Future[JsValue] = loadMembers {
+    CommercialConfiguration.soulmatesApi.menUrl
+  }
+
+  def getMixedMembers(json: => Future[JsValue] = loadMixedMembers): Future[Seq[Member]] = getMembers(json)
+
+  def getMenMembers(json: => Future[JsValue] = loadMenMembers): Future[Seq[Member]] = getMembers(json)
 
 }

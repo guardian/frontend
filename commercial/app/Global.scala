@@ -2,7 +2,7 @@ import common.{Logging, AkkaAsync, CommercialMetrics, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.jobs.JobsAgent
-import model.commercial.soulmates.SoulmatesAgent
+import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.OffersAgent
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
@@ -38,13 +38,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     val soulmatesRefreshSchedule = randomStartSchedule
     log.info(s"Soulmates refresh on schedule $soulmatesRefreshSchedule")
     Jobs.schedule("SoulmatesRefreshJob", soulmatesRefreshSchedule, CommercialMetrics.SoulmatesLoadTimingMetric) {
-      SoulmatesAgent.refresh()
+      SoulmatesAggregatingAgent.refresh()
     }
 
     AkkaAsync {
       OffersAgent.refresh()
       JobsAgent.refresh()
-      SoulmatesAgent.refresh()
+      SoulmatesAggregatingAgent.refresh()
     }
   }
 

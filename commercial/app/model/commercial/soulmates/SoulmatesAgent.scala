@@ -3,11 +3,31 @@ package model.commercial.soulmates
 import common.{ExecutionContexts, Logging}
 import model.commercial.AdAgent
 
-object SoulmatesAgent extends AdAgent[Member] with ExecutionContexts with Logging {
+object SoulmatesAggregatingAgent extends ExecutionContexts with Logging {
+
+  private val soulmatesAgents = Seq(SoulmatesMixedAgent, SoulmatesMenAgent)
+
+  def refresh() {
+    soulmatesAgents foreach (_.refresh)
+  }
+
+}
+
+object SoulmatesMixedAgent extends AdAgent[Member] with ExecutionContexts with Logging {
 
   def refresh() {
     for {
-      members <- SoulmatesApi.getPopularMembers()
+      members <- SoulmatesApi.getMixedMembers()
+    } updateCurrentAds(members)
+  }
+
+}
+
+object SoulmatesMenAgent extends AdAgent[Member] with ExecutionContexts with Logging {
+
+  def refresh() {
+    for {
+      members <- SoulmatesApi.getMenMembers()
     } updateCurrentAds(members)
   }
 

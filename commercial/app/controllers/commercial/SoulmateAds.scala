@@ -2,22 +2,33 @@ package controllers.commercial
 
 import play.api.mvc._
 import scala.util.Random
-import common.{JsonComponent, ExecutionContexts}
-import model.commercial.soulmates.SoulmatesAgent
+import common.ExecutionContexts
+import model.commercial.soulmates.{SoulmatesMixedAgent, SoulmatesMenAgent, Member}
+import model.commercial.AdAgent
 
 object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegmentInRequests {
 
-  def popular = Action {
+  private def action(agent: AdAgent[Member]) = Action {
     implicit request =>
-      val popular = SoulmatesAgent.matchingAds(segment)
-      if (popular.isEmpty) {
+      val matching = agent.matchingAds(segment)
+      if (matching.isEmpty) {
         Ok("No members") withHeaders ("Cache-Control" -> "max-age=60")
       } else {
-        val shuffled = Random.shuffle(popular)
-        JsonComponent {
-          "html" -> views.html.soulmates(shuffled take 5)
+        val shuffled = Random.shuffle(matching)
+        //JsonComponent {
+        Ok {
+          //"html" -> views.html.soulmates(shuffled take 5)
+          views.html.soulmates(shuffled take 5)
         } withHeaders ("Cache-Control" -> "max-age=60")
       }
+  }
+
+  def mixed = action {
+    SoulmatesMixedAgent
+  }
+
+  def men = action {
+    SoulmatesMenAgent
   }
 
 }
