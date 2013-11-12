@@ -58,6 +58,8 @@ object Frontend extends Build with Prototypes {
     templatesImport ++= Seq("discussion._", "discussion.model._")
   )
 
+  val callToAction = application("call-to-action").dependsOn(commonWithTests).aggregate(common)
+
   val router = application("router")
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
@@ -133,6 +135,7 @@ object Frontend extends Build with Prototypes {
       sport,
       coreNavigation,
       discussion,
+      callToAction,
       router,
       diagnostics,
       identity,
@@ -149,6 +152,7 @@ object Frontend extends Build with Prototypes {
     coreNavigation,
     image,
     discussion,
+    callToAction,
     router,
     diagnostics,
     admin,
