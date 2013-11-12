@@ -19,6 +19,8 @@
     padding-bottom: $baseline*6;
 }
 
+.site-message__message--tall { padding-bottom: $baseline*11; }
+
 .site-message__actions {
     width: 100%;
     border-top: 1px dotted $c-neutral2;

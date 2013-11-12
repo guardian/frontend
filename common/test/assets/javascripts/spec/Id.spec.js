@@ -1,4 +1,16 @@
-define(['modules/cookies', 'modules/id', 'ajax'], function(Cookies, Id, ajax) {
+define([
+    'common',
+    'modules/cookies',
+    'modules/id',
+    'modules/storage',
+    'ajax'
+], function(
+    common,
+    Cookies,
+    Id,
+    Storage,
+    ajax
+) {
     describe('Get user data', function() {
         var cookieData = 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMTU5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY';
         var config = {
@@ -13,6 +25,7 @@ define(['modules/cookies', 'modules/id', 'ajax'], function(Cookies, Id, ajax) {
             sinon.stub(ajax, 'reqwest');
             sinon.stub(reqwestReturn, 'then');
             sinon.stub(Cookies, 'get');
+            localStorage.clear();
 
             ajax.reqwest.returns(reqwestReturn);
             ajax.init(config);
@@ -97,20 +110,20 @@ define(['modules/cookies', 'modules/id', 'ajax'], function(Cookies, Id, ajax) {
             expect(ajax.reqwest.getCall(0).args[0]["crossOrigin"]).toBe(true)
         });
 
-        it("should attempt to autosigin an user is not signed in and has not signed out", function(){
+        it("should attempt to autosigin an user who is not signed in and has not signed out", function(){
             Cookies.get.withArgs("GU_U").returns(null);
             Cookies.get.withArgs("GU_SO").returns(null);
 
             expect(Id.shouldAutoSigninInUser()).toBe(true);
         });
 
-        it("should not attempt to autosignin a signed it user", function(){
+        it("should not attempt to autosignin a signed in user", function(){
             Cookies.get.withArgs("GU_U").returns(cookieData);
 
             expect(Id.shouldAutoSigninInUser()).toBe(false);
         });
 
-        it("should attempt to autosignin a user who has signed out more than 24 hours ago", function() {
+        it("should attempt to autosignin a user who has signed out more than 24 hours ago after the facebook check has ellapsed", function() {
             var today = new Date(),
                 theDayBeforeYesterday = new Date();
             theDayBeforeYesterday.setDate(today.getDate() - 2);
@@ -120,10 +133,19 @@ define(['modules/cookies', 'modules/id', 'ajax'], function(Cookies, Id, ajax) {
             expect(Id.shouldAutoSigninInUser()).toBe(true);
         });
 
+        it("should not attempt to autosignin a user who has signed out more than 24 hours ago before the facebook check has ellapsed", function() {
+            var theDayBeforeYesterday = new Date();
+            theDayBeforeYesterday.setDate(new Date().getDate() - 2);
+            var timeStampInSeconds = theDayBeforeYesterday.getTime() / 1000;
+            Cookies.get.withArgs("GU_SO").returns(timeStampInSeconds.toString);
+            Storage.local.set("gu.id.nextFbCheck","blah|blah");
+
+            expect(Id.shouldAutoSigninInUser()).toBe(false);
+        });
+
         it("should not attempt to autosignin a user who has signed out within the last 24 hours", function() {
-            var today = new Date(),
-                fourHoursAgo = new Date();
-            fourHoursAgo.setHours(today.getHours() - 4);
+            var fourHoursAgo = new Date();
+            fourHoursAgo.setHours(new Date().getHours() - 4);
             var timeStampInSeconds = fourHoursAgo.getTime() / 1000;
 
             Cookies.get.withArgs("GU_SO").returns(timeStampInSeconds.toString());

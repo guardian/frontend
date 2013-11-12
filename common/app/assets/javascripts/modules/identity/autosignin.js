@@ -4,7 +4,10 @@ define([
     "common",
     "modules/id",
     "modules/identity/facebook-authorizer",
-    "modules/navigation/profile"
+    "modules/navigation/profile",
+    "modules/storage",
+    "modules/userPrefs",
+    "modules/time"
 ],
 function(
     ajax,
@@ -12,7 +15,10 @@ function(
     common,
     Id,
     FacebookAuthorizer,
-    Profile
+    Profile,
+    Storage,
+    UserPrefs,
+    time
 ) {
 
     function AutoSignin(config) {
@@ -21,6 +27,8 @@ function(
         self.header = document.body;
 
         this.init = function() {
+
+            var fbCheckKey = "gu.id.nextFbCheck";
 
             if( Id.shouldAutoSigninInUser() ) {
                 var appId = this.config.page.fbAppId;
@@ -35,6 +43,17 @@ function(
                         }
                     });
                 });
+
+                authorizer.onNotLoggedIn.then( function() {
+                    var today = time.currentDate();
+                    Storage.set(fbCheckKey,{},{expires: today.setDate(today.getDate() + 1)});
+                });
+
+                authorizer.onNotAuthorized.then( function() {
+                    var today = time.currentDate();
+                    Storage.set(fbCheckKey,{},{expires: today.setMonth(today.getMonth() + 1)});
+                });
+
             }
         };
 
@@ -51,27 +70,39 @@ function(
                 success: function(response) {
                     self.writeFacebookWelcome(name);
                     if(response.status === "ok") {
-                       var profile = new Profile(
-                         self.header,{
-                         url: self.config.page.idUrl
-                       });
-                       profile.init();
+                        var profile = new Profile(
+                            self.header,{
+                            url: self.config.page.idUrl
+                        });
+                        profile.init();
                     }
                 }
             });
         };
 
         this.writeFacebookWelcome = function(name) {
-            var element = document.body;
 
-            var html = '<div class="site-message" data-link-name="facebook autosign message">' +
-                '<div class="site-message__inner">' +
-                '<p class="site-message__message">' +
-                'Welcome ' + name + ', you\'re signed into the Guardian using Facebook, click here to ' +
-                '<a href="' + self.config.page.idUrl + '/signout"/>Sign out</a>.' +
-                '</p></div></div>';
+            var showReleaseMessage = !!UserPrefs.get('releaseMessage');
 
-            var divBlock = bonzo(element).prepend(bonzo.create(html));
+            if ( !showReleaseMessage ) {
+                var alphaMessage = bonzo(common.$g('.site-message__message')).remove(),
+                    p_message = bonzo(bonzo.create('<p class="site-message__message site-message__message--tall">' +
+                    'Welcome ' + name + ', you\'re signed into the Guardian using Facebook, or' +
+                    '<a href="' + self.config.page.idUrl + '/signout"/> sign out</a>.</p>'));
+
+                bonzo(common.$g('.site-message__inner')).prepend(p_message);
+                bonzo(common.$g('.site-message__actions')).remove();
+            } else {
+                var element = document.body,
+                    html = '<div class="site-message" data-link-name="facebook autosign message">' +
+                    '<div class="site-message__inner">' +
+                    '<p class="site-message__message">' +
+                    'Welcome ' + name + ', you\'re signed into the Guardian using Facebook, or' +
+                    '<a href="' + self.config.page.idUrl + '/signout"/> sign out</a>.' +
+                    '</p></div></div>';
+
+                bonzo(element).prepend(bonzo.create(html));
+            }
             common.$g('#header').addClass('js-site-message');
         };
     }
