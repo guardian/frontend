@@ -1,16 +1,21 @@
 define([
     'qwery',
     'bonzo',
+    'ajax',
+    'utils/mediator',
     'utils/to-array',
     'modules/onward/history'
 ], function (
     qwery,
     bonzo,
+    ajax,
+    mediator,
     toArray,
     History
 ) {
 
-    var container = document.querySelector('.trailblock'),
+    var mostPopularUrl = 'http://foo.com',
+        container = document.querySelector('.trailblock'),
         history = new History().get().map(function(item) {
         return item.id;
     });
@@ -99,7 +104,26 @@ define([
             {
                 id: 'Popular',
                 test: function() {
-
+                    ajax({
+                        url: mostPopularUrl,
+                        type: 'json',
+                        crossOrigin: true
+                    }).then(
+                        function(resp) {
+                            if(resp && 'trails' in resp) {
+                                resp.trails.forEach(function(trail) {
+                                    if(isInHistory(trail)) {
+                                        append(trail);
+                                    } else {
+                                        prepend(trail);
+                                    }
+                                });
+                            }
+                        },
+                        function(req) {
+                            mediator.emit('modules:error', 'Failed to load most popular onward journey' + req);
+                        }
+                    );
 
                     return true;
                 }
