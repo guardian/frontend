@@ -15,8 +15,17 @@ case class Switch(group: String, name: String, description: String, safeState: S
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn
-  def switchOn() { delegate.switchOn() }
-  def switchOff() { delegate.switchOff() }
+
+  def switchOn() {
+    if (isSwitchedOff) {
+      delegate.switchOn()
+    }
+  }
+  def switchOff() {
+    if (isSwitchedOn) {
+      delegate.switchOff()
+    }
+  }
 }
 
 object Switches extends Collections {
