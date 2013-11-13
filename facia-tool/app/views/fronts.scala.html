@@ -133,14 +133,14 @@
                     <a class="draft-warning" data-bind="
                         click: $root.setModeDraft,
                         visible: $root.liveMode">
-                        <span class="tool draft-publish draft-warning">!</span> Show Unpublished Draft</a>
+                        <span class="tool draft-publish draft-warning">!</span> Unpublished edits exist</a>
 
                     <div data-bind="visible: !$root.liveMode()">
                         <a class="tool draft-publish" data-bind="
-                            click: publishDraft">Publish this Draft</a>
+                            click: publishDraft">Publish this container's edits</a>
                             
                         <a class="tool draft-discard" data-bind="
-                            click: discardDraft">Discard it</a>
+                            click: discardDraft">Discard edits</a>
                     </div>
                 </div>
             </div>
@@ -193,32 +193,38 @@
                 </a>
 
                 <div class="trail__meta">
-                    <span data-bind="html: humanDate"></span>
+                    <span data-bind="text: humanDate"></span>
                 </div>
             </div>
 
             <!-- ko if: state.editingTitle -->
             <div class="trail_tweaks u-cf">
                 <input type="text" data-bind="
-                    value: webTitleInput,
-                    attr: {placeholder: props.webTitle}"/>
+                    value: headlineInput,
+                    attr: {placeholder: fields.headline}"/>
                 <div>
                     <a data-bind="click: saveTitleEdit">Save Title</a>
                     <a data-bind="click: cancelTitleEdit">Cancel</a>
                     <a data-bind="
                         click: revertTitleEdit,
-                        attr: {title: props.webTitle},
-                        visible: meta.webTitle">Revert</a>
+                        attr: {title: fields.headline},
+                        visible: meta.headline">Revert</a>
                 </div>
             </div>
             <!-- /ko -->
 
-            <a class="webTitle" target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + props.id()},
-                html: meta.webTitle() || props.webTitle(),
-                css: {'webTitle--override': meta.webTitle},
-                click: startTitleEdit,
-                visible: !state.editingTitle()"></a>
+            <div class="web-title" data-bind="
+                    visible: !state.editingTitle()">
+
+                <a target="article" data-bind="
+                    click: function() { return false; },
+                    attr: {href: 'http://www.theguardian.com/' + props.id()},
+                    text: meta.headline() || fields.headline()"></a>
+
+                <i class="web-title--editable icon-pencil" data-bind="
+                    click: startTitleEdit,
+                    css: {'web-title--editor': !meta.headline(), 'web-title--edited': meta.headline}"></i>
+            </div>
 
         </div>
     </script>

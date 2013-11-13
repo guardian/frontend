@@ -63,7 +63,7 @@ define([
                         if (hiddenCollection) {
                             var $items = common.$g('.item:nth-last-child(-n+2)', $collection[0])
                                             .remove();
-                            hiddenCollection.extraItems.unshift($items[0], $items[1]);
+                            hiddenCollection.addExtraItems($items);
                         }
                     });
                     new FootballFixtures({
