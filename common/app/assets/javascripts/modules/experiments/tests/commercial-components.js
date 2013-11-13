@@ -60,9 +60,9 @@ define([
     function loadComponents(opts) {
 
         var endpoints = [
-            "/commercial/travel/offers?" + opts.keywordsParams,
-            "/commercial/masterclasses?" + opts.keywordsParams,
-            "/commercial/jobs?k=Engineering"
+            "/commercial/travel/offers.json?seg=repeat&" + opts.keywordsParams,
+            "/commercial/masterclasses.json?seg=repeat&" + opts.keywordsParams,
+            "/commercial/jobs.json?seg=repeat&k=Engineering"
         ];
 
         var slots = [
@@ -73,7 +73,6 @@ define([
         var slotTargets = {};
         slots.forEach(function(slot, i) {
             var rnd = Math.floor(Math.random() * (endpoints.length));
-
             slotTargets[slots[i]] = endpoints[rnd];
         });
 
@@ -90,11 +89,11 @@ define([
             if ($slot) {
                 ajax({
                     url: urlPath,
-                    type: 'html',
+                    type: 'json',
                     method: 'get',
                     crossOrigin: true,
                     success: function(response) {
-                        $slot.append(response);
+                        $slot.append(response.html);
                         common.mediator.emit('modules:commercial:loaded');
                     }
                 });
