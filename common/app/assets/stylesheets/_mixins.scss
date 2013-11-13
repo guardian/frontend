@@ -1,10 +1,5 @@
 @import "_mq";
 
-// Remove the unit from a number
-@function strip-unit($num){
-    @return $num / ($num * 0 + 1);
-}
-
 // Transform a value into rem
 // Assuming baseline is set to 10px on :root/html
 @function rem($value, $baseline: 10px) {
