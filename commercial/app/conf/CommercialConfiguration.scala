@@ -16,11 +16,12 @@ object CommercialConfiguration {
   }
 
   object soulmatesApi {
-    lazy val mixedUrl = configuration.getStringProperty("soulmates.api.mixed.url")
-    lazy val menUrl = configuration.getStringProperty("soulmates.api.men.url")
-    lazy val womenUrl = configuration.getStringProperty("soulmates.api.women.url")
-    lazy val gayUrl = configuration.getStringProperty("soulmates.api.gay.url")
-    lazy val lesbianUrl = configuration.getStringProperty("soulmates.api.lesbian.url")
+    private lazy val apiUrl: Option[String] = configuration.getStringProperty("soulmates.api.url")
+    lazy val mixedUrl = apiUrl map (url => s"$url/popular/")
+    lazy val menUrl = apiUrl map (url => s"$url/popular/men")
+    lazy val womenUrl = apiUrl map (url => s"$url/popular/women")
+    lazy val gayUrl = apiUrl map (url => s"$url/popular/gay")
+    lazy val lesbianUrl = apiUrl map (url => s"$url/popular/lesbian")
   }
 
 }
