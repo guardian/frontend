@@ -68,7 +68,7 @@ define([
         }
 
         model.previewUrl = ko.computed(function() {
-            return common.config.previewUrlBase[Config.env] + '/' + model.config() + '?view=mobile';
+            return common.config.viewer[Config.env] + 'env=' + Config.env + '&url=' + model.config() + encodeURIComponent('?view=mobile');
         })
 
         function fetchConfigsList() {
