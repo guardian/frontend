@@ -1,5 +1,5 @@
-import common.{AkkaAsync, CommercialMetrics, Jobs}
-import conf.RequestMeasurementMetrics
+import common.{CloudWatchApplicationMetrics, AkkaAsync, Jobs}
+import conf.{Management, RequestMeasurementMetrics}
 import dev.DevParametersLifecycle
 import model.commercial.jobs.{LightJobsAgent, JobsAgent}
 import model.commercial.travel.OffersAgent
@@ -18,12 +18,12 @@ trait CommercialLifecycle extends GlobalSettings {
 
 
     // fire every 15 mins
-    Jobs.schedule("TravelOffersRefreshJob", "0 2/15 * * * ?", CommercialMetrics.TravelOffersLoadTimingMetric) {
+    Jobs.schedule("TravelOffersRefreshJob", "0 2/15 * * * ?") {
       OffersAgent.refresh()
     }
 
     // fire every 15 mins
-    Jobs.schedule("JobsRefreshJob", "0 7/15 * * * ?", CommercialMetrics.JobsLoadTimingMetric) {
+    Jobs.schedule("JobsRefreshJob", "0 7/15 * * * ?") {
       JobsAgent.refresh()
     }
 
@@ -43,6 +43,7 @@ trait CommercialLifecycle extends GlobalSettings {
 
 
 object Global
-  extends WithFilters(RequestMeasurementMetrics.asFilters: _*)
-  with CommercialLifecycle
-  with DevParametersLifecycle
+  extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with CommercialLifecycle with DevParametersLifecycle
+                                                                                    with CloudWatchApplicationMetrics {
+  override lazy val applicationName = Management.applicationName
+}

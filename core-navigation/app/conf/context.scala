@@ -10,7 +10,7 @@ class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-core-navigation"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.coreNavigation
+  val metrics = Metrics.contentApi ++ Metrics.common
 
   lazy val pages = List(
     new ManifestPage,
