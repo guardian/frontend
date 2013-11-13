@@ -7,6 +7,7 @@
     overflow: hidden;
     min-height: 250px;
     width: 100%;
+    position: relative;
 }
 
 .commercial__title {
@@ -92,4 +93,21 @@
 
 .product__description {
     @include fs-bodyCopy(1);
+}
+
+
+
+/* ==========================================================================
+   Background
+   ========================================================================== */
+
+
+.commercial__background {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100%;
+    z-index: -10;
+    -webkit-filter: blur(10px);
+    -webkit-transform: scale(3);
 }
