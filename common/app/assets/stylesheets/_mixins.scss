@@ -15,6 +15,7 @@
         }
         @return $result;
     } @else {
+        @if $value == 0 { @return 0; }
         @return if(unit($value) == px, $value / $baseline * 1rem, $value);
     }
 }
@@ -25,7 +26,9 @@
 // or http://sassmeister.com/gist/7451284
 @mixin rem($properties) {
     @each $property, $value in $properties {
-        $value: if(unitless($value), $value * 1px, $value);
+        @if (type-of($value) == number and $value != 0) {
+            $value: if(unitless($value), $value * 1px, $value);
+        }
 
         #{$property}: $value;
         #{$property}: rem($value);
