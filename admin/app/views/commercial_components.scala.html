@@ -1,33 +1,61 @@
 @(env: String)
 
 @admin_main("Commercial Components", env, isAuthed = true) {
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+
     <style>
+        .components {
+            max-width: 1300px;
+            margin: 0 auto;
+            list-style-type: none;
+        }
         .components li {
             overflow: hidden;
         }
 
-        .w300,
-        .w600 {
+        .component {
             float: left;
             margin-right: 8px;
         }
 
-        .w300 {
-            width: 300px;
+        .component--small {
+            width: 30%;
         }
 
-        .w600 {
-            width: 600px;
+        .component--large {
+            width: 60%;
         }
     </style>
     <script>
-        $(function() {
+        curl(['bonzo', 'bean', 'Reqwest'], function(bonzo, bean, reqwest) {
             var guCommercial = {
 
+                className: 'commercial',
+
+                breakpoints: [300, 400, 500, 600],
+
                 components: {
-                    masterclasses : '/commercial/masterclasses.json',
-                    travel :        '/commercial/travel/offers.json?k=canada&seg=repeat',
-                    jobs :          '/commercial/jobs.json'
+                    masterclasses: '/commercial/masterclasses.json',
+                    travel:        '/commercial/travel/offers.json?k=turkey&seg=repeat',
+                    jobs:          '/commercial/jobs.json?k=health&seg=repeat'
+                },
+
+                applyBreakpointClassnames: function() {
+                    var self = this,
+                        $nodes = bonzo(document.getElementsByClassName(this.className));
+
+                    $nodes.each(function(el) {
+                        var width = el.offsetWidth;
+                        el.className = el.className.replace(/(commercial--w\d{1,3})\s?/g, '');
+                        self.breakpoints.forEach(function(breakpointWidth) {
+                            if (width >= breakpointWidth) {
+                                bonzo(el).addClass(self.className+'--w' + breakpointWidth);
+                            }
+                        });
+
+                        el.setAttribute('data-width', width);
+                    });
                 },
 
                 debounce: function(fn, delay) {
@@ -47,35 +75,43 @@
                         var componentType = key,
                             endpoint      = self.components[key];
 
-                        $.getJSON(endpoint).done(function(response) {
-                            $('.'+componentType).html(response.html);
+                        reqwest({
+                            url:  endpoint,
+                            type: 'json',
+                            success: function(response) {
+                                bonzo(document.querySelectorAll('.'+componentType)).html(response.html);
+                                self.applyBreakpointClassnames();
+                            }
                         });
                     });
+
+                    bean.on(window, 'resize', this.debounce(function() {
+                        self.applyBreakpointClassnames();
+                    }, 100));
                 }
             };
 
             guCommercial.init();
-
         })
     </script>
 
 
 
-    <ul class="components unstyled">
+    <ul class="components">
         <li>
-            <h2>Masterclasses</h2>
-            <div class="masterclasses w300"></div>
-            <div class="masterclasses w600"></div>
+            <h2>Travel</h2>
+            <div class="travel component component--small"></div>
+            <div class="travel component component--large"></div>
         </li>
         <li>
             <h2>Jobs</h2>
-            <div class="jobs w300"></div>
-            <div class="jobs w600"></div>
+            <div class="jobs component component--small"></div>
+            <div class="jobs component component--large"></div>
         </li>
         <li>
-            <h2>Travel</h2>
-            <div class="travel w300"></div>
-            <div class="travel w600"></div>
+            <h2>Masterclasses</h2>
+            <div class="masterclasses component component--small"></div>
+            <div class="masterclasses component component--large"></div>
         </li>
     </ul>
 }
