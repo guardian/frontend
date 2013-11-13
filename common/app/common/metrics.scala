@@ -223,12 +223,12 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     CloudWatch.put("ApplicationSystemMetrics", metrics)
   }
 
-  override def onStart(implicit app: PlayApp) {
+  override def onStart(app: PlayApp) {
     Jobs.deschedule("ApplicationSystemMetricsJob")
     super.onStart(app)
 
     // don't fire off metrics during test runs
-    if (!Play.isTest) {
+    if (!Play.isTest(app)) {
       Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
         report()
       }
