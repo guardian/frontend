@@ -39,11 +39,11 @@ object OphanApi extends ExecutionContexts with Logging {
     getBodyAsJson(s"mostread?referrer=$referrer&hours=$hours")
   }
 
-  def getMostRead(hours: Int): Future[JsValue] = {
-    getBodyAsJson(s"mostread?hours=$hours&count=50")
+  def getMostRead(hours: Int, count: Int): Future[JsValue] = {
+    getBodyAsJson(s"mostread?hours=$hours&count=$count")
   }
 
-  def getMostPopularOnward(path: String): Future[JsValue] = {
+  def getMostPopularOnward(path: String, hours: Int, count: Int, isContent: Boolean): Future[JsValue] = {
     getBodyAsJson(s"onward?path=/$path&is-content=true&hours=3&count=10")
   }
 }

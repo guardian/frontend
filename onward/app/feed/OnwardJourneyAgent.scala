@@ -20,7 +20,7 @@ object OnwardJourneyAgent extends Logging with ExecutionContexts {
 
     log.info("Adding onward journeys")
 
-    val ophanQuery = OphanApi.getMostRead(3)
+    val ophanQuery = OphanApi.getMostRead(hours = 3, count = 50)
     ophanQuery.map { ophanResults =>
 
       // Parse ophan results into a sequence of objects.
@@ -42,7 +42,7 @@ object OnwardJourneyAgent extends Logging with ExecutionContexts {
 
     remainingMostRead.take(3).map( id => {
 
-      val onwardQuery = OphanApi.getMostPopularOnward(id.url)
+      val onwardQuery = OphanApi.getMostPopularOnward(path = id.url, hours = 3, count = 10, isContent = true)
       onwardQuery.map { ophanResults =>
 
         // Parse ophan results into a sequence, the Map value.
