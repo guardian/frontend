@@ -1,7 +1,7 @@
 @(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, profileForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])])(implicit request: RequestHeader)
 
 @import tracking.TrackingParams
-@import views.html.fragments.form.inputField
+@import views.html.fragments.form.{inputField, textareaField}
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
 @import form.IdFormHelpers._
@@ -22,17 +22,17 @@
             @inputField(Input(profileForm("publicFields.location"), '_label -> "Location"))
             @select(
                 profileForm("privateFields.gender"),
-                List(("Male", "Male"), ("Female", "Female"), ("prefer not to say","unknown")),
+                List("Male" -> "Male", "Female" -> "Female", "unknown" -> "prefer not to say"),
                 '_label -> "Gender",
                 '_default -> ""
             )
 
-            @inputField(Input(profileForm("publicFields.aboutMe"), '_label -> "About me"))
-            @inputField(Input(profileForm("publicFields.interests"), '_label -> "Interests"))
-            @inputField(Input(profileForm("publicFields.webPage"), '_label -> "Website"))
+            @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me")))
+            @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
+            @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website")))
 
             <li>
-                <button type="submit" class="submit-input" data-link-name="Create account">Create account</button>
+                <button type="submit" class="submit-input" data-link-name="Create account">Save</button>
             </li>
         </ul>
     </form>

@@ -36,6 +36,10 @@ object IdFormHelpers {
     new Input("radio", field, ('_values -> values :: args.toList):_*)
   }
 
+  def Textarea(field: Field, args: (Symbol, Any)*): Input = {
+    new Input("textarea", field, args:_*)
+  }
+
   private def updateArgs(args: Seq[(Symbol, Any)], defaults: (Symbol, Any)*): Seq[(Symbol, Any)] = {
     val argsMap = collection.mutable.Map(args:_*)
     defaults.foreach { case (symbol, default) =>
