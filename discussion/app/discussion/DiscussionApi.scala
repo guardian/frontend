@@ -33,10 +33,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
   }
 
-  def topCommentsFor(key: String, page: String, pageSize: String = ""): Future[CommentPage] = {
-    val size = if (pageSize != "") pageSize else if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
-    val apiUrl = s"$apiRoot/discussion/$key/highlights?pageSize=$size&page=$page&orderBy=newest&showSwitches=true"
-
+  private def getJsonForUri(key: String, apiUrl: String): Future[CommentPage] = {
     def onError(r: Response) =
       s"Error loading comments id: $key status: ${r.status} message: ${r.statusText}"
 
@@ -67,36 +64,15 @@ trait DiscussionApi extends ExecutionContexts with Logging {
   }
 
   def commentsFor(key: String, page: String, pageSize: String = ""): Future[CommentPage] = {
-    val size = if (pageSize != "") pageSize else if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
-    val apiUrl = s"$apiRoot/discussion/$key?pageSize=$size&page=$page&orderBy=newest&showSwitches=true"
+    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
+  }
 
-    def onError(r: Response) =
-      s"Error loading comments id: $key status: ${r.status} message: ${r.statusText}"
+  def topCommentsFor(key: String, page: String, pageSize: String = ""): Future[CommentPage] = {
+    getJsonForUri(key, s"$apiRoot/discussion/$key/highlights?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
+  }
 
-    getJsonOrError(apiUrl, onError) map {
-      json =>
-        val comments = (json \\ "comments")(0).asInstanceOf[JsArray].value map {
-          commentJson =>
-            val responses = (commentJson \\ "responses").headOption map {
-              responsesJson =>
-                responsesJson.asInstanceOf[JsArray].value map {
-                  responseJson =>
-                    Comment(responseJson)
-                }
-            } getOrElse Nil
-            Comment(commentJson, responses)
-        }
-
-        CommentPage(
-          id = s"discussion/$key",
-          title = (json \ "discussion" \ "title").as[String],
-          contentUrl = (json \ "discussion" \ "webUrl").as[String],
-          comments = comments,
-          currentPage = (json \ "currentPage").as[Int],
-          pages = (json \ "pages").as[Int],
-          isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean]
-        )
-    }
+  private def getPageSize(pageSize: String): String = {
+    if (pageSize != "") pageSize else if (ShortDiscussionSwitch.isSwitchedOn) "10" else "50"
   }
 
   def myProfile(headers: Headers): Future[Profile] ={
