@@ -2,17 +2,17 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial commercial--jobs">
+<div class="commercial jobs-component">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian<span>jobs</span></h3>
     </div>
     <div class="commercial__body">
-        <ul class="unstyled">
+        <ul class="products unstyled">
             @for(job <- jobs) {
-                <li>
+                <li class="product">
                     @job.employerLogoUrl.map{ url => <img src="@url" />}
-                    <h3 class="title"><a href="@job.listingUrl">@job.title</a></h3>
-                    <p class="description">@Html(job.shortDescription)</p>
+                    <h3 class="product__title"><a href="@job.listingUrl">@job.title</a></h3>
+                    <p class="product__description">@Html(job.shortDescription)</p>
                     <a href="@job.applyUrl" class="cta">Apply</a>
                 </li>
             }
