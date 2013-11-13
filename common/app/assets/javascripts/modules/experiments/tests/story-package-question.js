@@ -1,3 +1,4 @@
+/*global guardian */
 define([
     'qwery',
     'bonzo',
@@ -16,7 +17,7 @@ define([
     History
 ) {
 
-    var mostPopularUrl = 'http://foo.com',
+    var mostPopularUrl = '/onward/popular-onward/',
         container = document.querySelector('.trailblock'),
         history = new History().get().map(function(item) {
             return item.id;
@@ -131,7 +132,7 @@ define([
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
                         ajax({
-                            url: mostPopularUrl,
+                            url: mostPopularUrl + guardian.config.page.pageId + '.json',
                             type: 'json',
                             crossOrigin: true
                         }).then(
