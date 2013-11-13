@@ -1,11 +1,32 @@
 @import "_mq";
 
-//Output based on body font-size being 10px
+// Remove the unit from a number
+@function strip-unit($num){
+    @return $num / ($num * 0 + 1);
+}
+
+// Transform a value into rem
+// Assuming baseline is set to 10px on :root/html
+@function rem($value, $baseline: 10) {
+    @return strip-unit($value) / $baseline + rem;
+}
+
+// Output rem units with px fallback
+// Expects $properties to be a Sass map
+// Usage: see font-size mixin below
+// or http://sassmeister.com/gist/7451284
+@mixin rem($properties) {
+    @each $property, $value in $properties {
+        #{$property}: $value;
+        #{$property}: rem($value);
+    }
+}
+
 @mixin font-size($size, $line-height: $size) {
-    font-size: $size*1px;
-    font-size: ($size / 10)*1rem;
-    line-height: $line-height*1px;
-    line-height: ($line-height / 10)*1rem;
+    @include rem((
+        font-size: $size,
+        line-height: $line-height
+    ));
 }
 
 @mixin font($family, $weight, $size, $line-height: $size) {
