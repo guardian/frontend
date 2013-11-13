@@ -46,12 +46,12 @@ function(
 
                 authorizer.onNotLoggedIn.then( function() {
                     var today = time.currentDate();
-                    Storage.set(fbCheckKey,{},{expires: today.setDate(today.getDate() + 1)});
+                    Storage.local.set(fbCheckKey,{},{expires: today.setDate(today.getDate() + 1)});
                 });
 
                 authorizer.onNotAuthorized.then( function() {
                     var today = time.currentDate();
-                    Storage.set(fbCheckKey,{},{expires: today.setMonth(today.getMonth() + 1)});
+                    Storage.local.set(fbCheckKey,{},{expires: today.setMonth(today.getMonth() + 1)});
                 });
 
             }

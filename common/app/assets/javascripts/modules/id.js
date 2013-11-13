@@ -127,9 +127,6 @@ define(['common',
         return false;
     };
 
-    Id._fbCheckGracePeriodHasEllapsed = function() {
-        var checkIfAfter = Storage.get(Id.fbCheckKey);
-    };
     /**
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hous
      */
