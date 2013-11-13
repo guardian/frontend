@@ -26,7 +26,7 @@
 @mixin rem($properties) {
     @each $property, $value in $properties {
         #{$property}: $value;
-        #{$property}: remCalc($value);
+        #{$property}: rem($value);
     }
 }
 
