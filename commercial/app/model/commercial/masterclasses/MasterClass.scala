@@ -10,6 +10,8 @@ object MasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
+//  private val guardianUrlLinkText = "Click here"
+
   def apply(block: JsValue): Option[MasterClass] = {
     val id = (block \ "id").as[Long]
     val title = (block \ "title").as[String]
@@ -29,8 +31,10 @@ object MasterClass {
     val doc: Document = Jsoup.parse(description)
     val elements: Array[Element] = doc.select(s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)").toArray map {_.asInstanceOf[Element]}
 
+    val paragraphs: Array[Element] = doc.select("p").toArray map {_.asInstanceOf[Element]}
+
     val result: Array[MasterClass] = elements map { element =>
-      new MasterClass(id.toString, title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"))
+      new MasterClass(id.toString, title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"), paragraphs.head.text)
     }
 
     return result.headOption
@@ -45,7 +49,8 @@ case class MasterClass(id: String,
                        status: String,
                        tickets: List[Ticket],
                        capacity: Int,
-                       guardianUrl: String) {
+                       guardianUrl: String,
+                       firstParagraph: String = "") {
   def isOpen = {status == "Live"}
 
   lazy val displayPrice = {

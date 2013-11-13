@@ -16,10 +16,6 @@ trait CommercialLifecycle extends GlobalSettings {
     Jobs.deschedule("JobsRefreshJob")
     Jobs.deschedule("MasterClassRefreshJob")
 
-    OffersAgent.refresh()
-    JobsAgent.refresh()
-    MasterClassAgent.refresh()
-
     // fire every 15 mins
     Jobs.schedule("TravelOffersRefreshJob", "0 2/15 * * * ?", CommercialMetrics.TravelOffersLoadTimingMetric) {
       OffersAgent.refresh()
@@ -30,16 +26,16 @@ trait CommercialLifecycle extends GlobalSettings {
       JobsAgent.refresh()
     }
 
-    AkkaAsync{
-      OffersAgent.refresh()
-      JobsAgent.refresh()
-    }
-
     // fire every 15 minutes
     Jobs.schedule("MasterClassRefreshJob", "0 4/15 * * * ?", CommercialMetrics.MasterClassesLoadTimingMetric) {
       MasterClassAgent.refresh()
     }
 
+    AkkaAsync{
+      OffersAgent.refresh()
+      JobsAgent.refresh()
+      MasterClassAgent.refresh()
+    }
   }
 
   override def onStop(app: PlayApp) {

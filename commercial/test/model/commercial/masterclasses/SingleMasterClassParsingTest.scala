@@ -28,6 +28,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
     result.isOpen should be (true)
     result.displayPrice should be ("400.00")
     result.guardianUrl should be ("http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course")
+    result.firstParagraph should be("This is the first paragraph of this event.")
 
 
     result.capacity should be (18)
@@ -57,7 +58,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
                |  "capacity" : 18,
                |  "category" : "seminars,conferences",
                |  "created" : "2013-02-15 09:50:35",
-               |  "description" : "<P>A bunch of HTML goes here. <a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>Full course and returns information on the Masterclasses website</a></P>",
+               |  "description" : "<p>This is the first paragraph of this event.</p><P>A bunch of HTML goes here. <a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>Full course and returns information on the Masterclasses website</a></P>",
                |  "end_date" : "2013-04-21 17:00:00",
                |  "id" : 112342566,
                |  "link_color" : "EE6600",
