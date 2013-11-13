@@ -4,6 +4,7 @@ import common._
 import play.api.mvc.{Action, Controller}
 import model.Cached
 import feed.{MostRead, MostPopularOnward, OnwardJourneyAgent}
+import play.api.libs.json.JsArray
 
 object MostPopularOnwardController extends Controller with Logging with ExecutionContexts {
 
@@ -12,7 +13,7 @@ object MostPopularOnwardController extends Controller with Logging with Executio
     val onwardContent: Seq[MostPopularOnward] = OnwardJourneyAgent.mostPopularOnward()(path)
 
     Cached(900) {
-      JsonComponent("popularOnward" -> onwardContent.map(_.url).toList)
+      JsonComponent("popularOnward" -> JsArray(onwardContent.map{ onward => TrailToJson(onward.trail) }))
     }
   }
 
