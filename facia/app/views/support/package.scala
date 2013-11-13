@@ -11,7 +11,7 @@ object FindStyle {
     "epic-story" -> MastheadContainer(),
     "major-story" -> MastheadContainer(),
     "regular-stories" -> SectionContainer(),
-    "feature-stories" -> FeaturesContainer(),
+    "feature-stories" -> FeaturesContainer(headerLink = false),
     "special-story" -> NewsContainer()
   )
 
