@@ -11,6 +11,21 @@
     @return strip-unit($value) / $baseline + rem;
 }
 
+// Converts a list of values into rem
+@function remCalc($values) {
+    $max: length($values);
+    $remValues: '';
+
+    @for $i from 1 through $max {
+        $value: nth($values, $i);
+        $remValues: #{$remValues + rem($value)};
+        @if $i < $max {
+            $remValues: #{$remValues + " "};
+        }
+    }
+    @return $remValues;
+}
+
 // Output rem units with px fallback
 // Expects $properties to be a Sass map
 // Usage: see font-size mixin below
@@ -18,7 +33,7 @@
 @mixin rem($properties) {
     @each $property, $value in $properties {
         #{$property}: $value;
-        #{$property}: rem($value);
+        #{$property}: remCalc($value);
     }
 }
 
