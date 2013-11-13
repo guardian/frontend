@@ -5,7 +5,7 @@
     <head>
         <title></title>
 
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.css")" />
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.default.css")" />
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
 
         <style>
@@ -55,7 +55,8 @@
                     components: {
                         masterclasses: '/commercial/masterclasses.json',
                         travel:        '/commercial/travel/offers.json?k=turkey&seg=repeat',
-                        jobs:          '/commercial/jobs.json?k=health&seg=repeat'
+                        jobs:          '/commercial/jobs.json?k=health&seg=repeat',
+                        soulmates:     '/commercial/soulmates/mixed.json'
                     },
 
                     applyBreakpointClassnames: function() {
@@ -135,6 +136,11 @@
                 <h2>Masterclasses</h2>
                 <div class="masterclasses component component--small"></div>
                 <div class="masterclasses component component--large"></div>
+            </li>
+            <li>
+                <h2>Soulmates</h2>
+                <div class="soulmates component component--small"></div>
+                <div class="soulmates component component--large"></div>
             </li>
         </ul>
 

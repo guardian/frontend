@@ -2,21 +2,21 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial commercial--masterclasses">
+<div class="commercial soulmates-component">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian <span>soulmates</span></h3>
     </div>
     <div class="commercial__body">
-        <table>
+        <ul class="products unstyled">
             @for(member <- members) {
-                <tr>
-                    <td><img src="@member.profilePhoto" /></td>
-                    <td>@member.username</td>
-                    <td>@member.gender</td>
-                    <td>@member.age</td>
-                </tr>
+                <li class="product">
+                    <p><img src="@member.profilePhoto" /></p>
+                    <p>@member.username</p>
+                    <p>@member.gender</p>
+                    <p>@member.age</p>
+                </li>
             }
-        </table>
+        </ul>
     </div>
     <div class="commercial__foot"></div>
 </div>
