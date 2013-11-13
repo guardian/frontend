@@ -1,6 +1,7 @@
 define([
     "modules/detect",
-    "modules/identity/autosignin"],
+    "modules/identity/autosignin",
+    "modules/analytics/identity"],
  function(
    Detect,
    AutoSignin
@@ -13,8 +14,7 @@ define([
          this.audience = 0.2;
          this.description = 'Performs an facebook autosignin on mobile where the user has alreadyg accepted the guardian facebook app';
          this.canRun = function(config) {
-             _config = config;
-             return config.page ? true : false;
+             return config.switches && config.switches.facebookAutosignin && Detect.getLayoutMode() === 'mobile';
          };
          this.variants = [
              {
@@ -26,10 +26,9 @@ define([
              {
                  id: 'mobile-auto-facebook-signin',
                  test: function() {
-                     if ( _config.switches && _config.switches.facebookAutosignin && Detect.getLayoutMode() === 'mobile') {
-                         new AutoSignin(_config).init();
-                     }
+                     new AutoSignin(_config).init();
                  }
+
              }
          ];
      };

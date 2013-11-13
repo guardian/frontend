@@ -21,8 +21,9 @@ function(
     time
 ) {
 
-    function AutoSignin(config) {
+    function AutoSignin(config, context) {
         this.config = config;
+        this.context = context;
         var self = this;
         self.header = document.body;
 
@@ -76,6 +77,7 @@ function(
                         });
                         profile.init();
                     }
+                    common.mediator.emit("identity:facebook-autosignin:success", self.config, self.context);
                 }
             });
         };
