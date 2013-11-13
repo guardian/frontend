@@ -25,6 +25,8 @@
 // or http://sassmeister.com/gist/7451284
 @mixin rem($properties) {
     @each $property, $value in $properties {
+        $value: if(unitless($value), $value * 1px, $value);
+
         #{$property}: $value;
         #{$property}: rem($value);
     }
