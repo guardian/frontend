@@ -28,9 +28,7 @@
             }
         }
         @trail.trailText.map { text =>
-            <div class="item__standfirst">
-                <p>@cleanTrailText(text)(Edition(request))</p>
-            </div>
+            <div class="item__standfirst">@Html(text)</div>
         }
         <div class="item__meta">
             <time class="item__timestamp js-item__timestamp"

@@ -25,7 +25,7 @@
             <ul class="form-fields">
 
                 @idInput(Email(registrationForm("user.primaryEmailAddress"), '_label -> "Email address"))
-                @idInput(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only", 'class -> "js-register-username"))
+                @idInput(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only"))
                 @idInput(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength"))
 
                 <li>

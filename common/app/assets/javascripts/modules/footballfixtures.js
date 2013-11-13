@@ -39,6 +39,7 @@ define([
                 if(options.expandable) {
                     var expandable = new Expandable({
                         dom: '.front-competition-fixtures',
+                        buttonAfterEl: document.querySelector('.front-competition-fixtures .panel'),
                         expanded: false
                     });
                     expandable.init();

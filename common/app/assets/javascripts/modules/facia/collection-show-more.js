@@ -5,8 +5,9 @@ define([
     'qwery',
     'modules/detect',
     'modules/relativedates',
-    'modules/facia/images'
-], function (common, bonzo, bean, qwery, detect, relativeDates, faciaImages) {
+    'modules/facia/images',
+    'modules/discussion/commentCount'
+], function (common, bonzo, bean, qwery, detect, relativeDates, faciaImages, commentCount) {
 
     return function(collection) {
 
@@ -48,6 +49,21 @@ define([
                     mobile: 5
                 }[detect.getBreakpoint()];
             },
+            _showMore = function($collection, extraItems, count, upgradeImages) {
+                var items = extraItems.splice(0, count);
+                if (!items.length) {
+                    return;
+                }
+                // NOTE: wrapping in div so can be passed to commentCount, relativeDates, etc.
+                var wrappedItems = bonzo(bonzo.create('<div></div>'))
+                                       .append(items)[0];
+                relativeDates.init(wrappedItems);
+                commentCount.init(wrappedItems);
+                if (upgradeImages === true) {
+                    faciaImages.upgrade(wrappedItems);
+                }
+                $collection.append(items);
+            },
             _renderToggle = function($collection, extraItems) {
                 var buttonText = 'Show more',
                     $button = bonzo(bonzo.create(
@@ -67,10 +83,7 @@ define([
                     $button.attr('data-link-name', newDataAttr);
 
                     // show x more, depending on current breakpoint
-                    bonzo(extraItems.splice(0, _getShowMoreSize())).each(function(extraItem) {
-                            relativeDates.init(extraItem);
-                            $collection.append(extraItem);
-                        });
+                    _showMore($collection, extraItems, _getShowMoreSize());
 
                     if (extraItems.length === 0) {
                         // listen to the clickstream, as happens later, before removing
@@ -100,10 +113,7 @@ define([
             bonzo(excess).remove();
 
             // if we are showing less items than necessary, show more
-            bonzo(this.extraItems.splice(0, initalShowSize - qwery('.item', collection).length))
-                .appendTo($collection);
-
-            faciaImages.upgrade($collection[0]);
+            _showMore($collection, this.extraItems, initalShowSize - qwery('.item', collection).length, true);
 
             // add toggle button, if they are extra items left to show
             if (this.extraItems.length) {
