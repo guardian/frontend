@@ -8,9 +8,6 @@
   <ul class="d-thread d-thread--top-level">
       @page.comments.map{ comment =>
           @fragments.topComment(comment, page.isClosedForRecommendation)
-          @fragments.topComment(comment, page.isClosedForRecommendation)
-          @fragments.topComment(comment, page.isClosedForRecommendation)                    
-          @fragments.topComment(comment, page.isClosedForRecommendation)          
       }
   </ul>
     @if(page.currentPage + 1 <= page.pages){

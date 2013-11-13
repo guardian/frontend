@@ -363,8 +363,6 @@
 /* Top Comments
    ========================================================================== */
 
-$comment_background: #f6f6f5;
-
 .discussion__comments__top__container { // Section
     
     .discussion__comments__top { // Container
@@ -372,18 +370,19 @@ $comment_background: #f6f6f5;
         //height: 500px;
         -moz-column-width: 290px;
         -webkit-column-width: 290px;
-        -moz-column-gap: 16px;
-        -webkit-column-gap: 16px; 
+        -moz-column-gap: $gutter;
+        -webkit-column-gap: $gutter; 
 
 
         .d-comment   { // Comment
-            background-color: $comment_background;
-            padding: 6px;
+            background-color: $c-neutral7;
+            padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;
             border: none;
             width: 290px;
             //float: left;
+            position: relative;
             display: inline-block;
-            margin-bottom: 16px;
+            margin-bottom: $baseline*10;
 
             .d-comment__avatar-wrapper {
                 -webkit-border-radius: 50px;
@@ -393,6 +392,43 @@ $comment_background: #f6f6f5;
                 .d-comment__avatar {
                     padding: 0;
                 }
+            }
+
+            .d-comment__meta {
+                .d-comment__author {
+                    //font-weight: bold;
+                }
+            }
+
+
+            &:before { // pointer
+                top: 100%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+                border-color: rgba(136, 183, 213, 0);
+                border-top-color: $c-neutral7;
+                border-width: 30px;
+                left: 23px ;
+                margin-left: -30px;
+            }
+
+            &:after { // Mask
+                top: 100%;
+                content: " ";
+                height: 24px;
+                width: 24px;
+                position: absolute;
+                pointer-events: none;
+                background-color: #ffffff;
+                left: -5px;
+                transform: skew(-10deg); 
+                -o-transform: skew(-10deg); 
+                -moz-transform: skew(-10deg); 
+                -webkit-transform: skew(-10deg);                
             }
 
         }
