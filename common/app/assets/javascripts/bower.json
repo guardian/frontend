@@ -12,7 +12,7 @@
     "reqwest": "git@github.com:ironsidevsquincy/reqwest.git",
     "swipe": "git://github.com/guardian/Swipe.git",
     "swipeview": "git@github.com:guardian/SwipeView.git",
-    "imager.js": "git@github.com:ironsidevsquincy/Imager.js.git#feature-separation",
+    "imager.js": "git@github.com:oncletom/Imager.js.git#feature-separation",
     "lodash-amd": "2.2.1"
   }
 }
