@@ -11,7 +11,7 @@
             content: counter(popular) ".";
             counter-increment: popular;
             position: absolute;
-            left: 0;
+            left: $gs-gutter/2;
             color: $c-neutral2;
         }
         @include first-row(1);
@@ -36,13 +36,13 @@
         }
     }
     @include mq(tablet, desktop) {
-        @include row(3);
+        @include first-row(3);
         .item:nth-child(-n+3) {
             @include card-image;
         }
     }
     @include mq(desktop) {
-        @include row(4);
+        @include first-row(4);
         .item:nth-child(-n+4) {
             @include card-image;
         }

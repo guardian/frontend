@@ -20,8 +20,8 @@ trait CommercialLifecycle extends GlobalSettings {
       OffersAgent.refresh()
     }
 
-    // fire at 6.03am and 6.03pm
-    Jobs.schedule("JobsRefreshJob", "0 3 6,18 * * ?", CommercialMetrics.JobsLoadTimingMetric) {
+    // fire every 15 mins
+    Jobs.schedule("JobsRefreshJob", "0 7/15 * * * ?", CommercialMetrics.JobsLoadTimingMetric) {
       JobsAgent.refresh()
     }
 

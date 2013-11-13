@@ -20,11 +20,6 @@
         .item:nth-child(3n+4) {
             @include row-start;
         }
-        .item:nth-child(2),
-        .item:nth-child(3),
-        .item:nth-child(3n+6) {
-            @include row-end;
-        }
     }
     @include mq(wide) {
         @include first-row(3);
@@ -35,11 +30,6 @@
         .item:first-child,
         .item:nth-child(4n+6) {
             @include row-start;
-        }
-        .item:nth-child(3),
-        .item:nth-child(5),
-        .item:nth-child(4n+9) {
-            @include row-end;
         }
     }
     .item--sport-stats {
@@ -103,10 +93,6 @@
             .item:nth-child(4) {
                 @include row-start;
             }
-            .item:nth-child(3),
-            .item:nth-child(5) {
-                @include row-end;
-            }
             .item:nth-child(n+6) {
                 @include card-headline;
             }
@@ -128,10 +114,6 @@
             .item:nth-child(5) {
                 @include row-start;
             }
-            .item:nth-child(4),
-            .item:nth-child(6) {
-                @include row-end;
-            }
             .item:nth-child(n+7) {
                 @include card-headline;
             }
@@ -145,10 +127,6 @@
     @include mq(tablet, desktop) {
         .item:nth-child(3n+1) {
             @include row-start;
-        }
-        .item:nth-child(2),
-        .item:nth-child(3n+3) {
-            @include row-end;
         }
         .item:nth-child(2),
         .item:nth-child(n+4):nth-child(-n+6) {
@@ -202,9 +180,6 @@
         }
         .item:nth-child(2) {
             @include row-start;
-        }
-        .item:nth-child(3) {
-            @include row-end;
         }
     }
 }

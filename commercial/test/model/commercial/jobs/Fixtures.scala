@@ -1,8 +1,6 @@
 package model.commercial.jobs
 
 import org.joda.time.DateTime
-import scala.Predef._
-import scala.Some
 import model.commercial.Keyword
 
 object Fixtures {

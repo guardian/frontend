@@ -1,0 +1,3048 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/nov/11/iran-nuclear-deal-john-kerry",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-11T10:30:23Z",
+      "webTitle":"Iran balked at Geneva nuclear deal, says John Kerry",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/11/iran-nuclear-deal-john-kerry",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/11/iran-nuclear-deal-john-kerry",
+      "fields":{
+        "trailText":"US secretary of state says major powers were united but Iran was not able to accept deal 'at that particular moment'",
+        "headline":"Iran balked at Geneva nuclear deal, says John Kerry",
+        "body":"<p>The US secretary of state, John Kerry, has said the major powers were unified on an Iran nuclear deal during weekend talks in Geneva but the Iranians were unable to accept it. He said critics of the plan should withhold their comments until a deal was reached.</p><p>Earlier reports said the talks fell apart because France refused to accept the proposed deal. Kerry said the major powers reached an agreement but Iran was not able to accept the deal \"at that particular moment\".</p><p>\"The French signed off on it, we signed off on it,\" he said in Abu Dhabi. \"There was unity but Iran couldn't take it.\"</p><p>Kerry said the rejection by the Israeli prime minister, Binyamin Netanyahu, of a deal to limit Iran's nuclear ambitions was premature. \"The time to oppose it is when you see what it is, not to oppose the effort to find out what is possible.\"</p><p>He said the US had been meeting constantly with the Israelis to understand the progress Iran had made in its nuclear programme. \"We are confident that what we are doing can actually protect Israel more effectively and provide greater security,\" he said.</p><p>Kerry said there was no \"end game\" in motion and the Geneva talks were a first step in longer process of possible give and take.</p><p>Iran has been eager to reach an agreement to ease international sanctions that have halted most oil exports and crippled its economy.</p><!-- Guardian Watermark: internal-code/content/422175767|2013-11-11T15:34:05Z|d776c457382ef44cd2645fc197f5b36dab6659ab -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T11:06:24Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+        "standfirst":"US secretary of state says major powers were united but Iran was not able to accept deal 'at that particular moment'",
+        "shortUrl":"http://gu.com/p/3k9nv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+        "wordcount":"234",
+        "commentable":"false",
+        "internalContentCode":"422175767",
+        "allowUgc":"false",
+        "internalOctopusCode":"8306943",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Abu Dhabi",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995165",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T10:30:23Z"
+      },
+      "tags":[{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/john-kerry",
+        "type":"keyword",
+        "webTitle":"John Kerry",
+        "webUrl":"http://www.theguardian.com/world/john-kerry",
+        "apiUrl":"http://content.guardianapis.com/world/john-kerry",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422175833",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164530577/John-Kerry-in-Abu-Dhabi-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"54",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164533036/John-Kerry-in-Abu-Dhabi-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"130",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"84",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164536208/John-Kerry-in-Abu-Dhabi-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"132",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164537738/John-Kerry-in-Abu-Dhabi-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"168",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164539334/John-Kerry-in-Abu-Dhabi-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"180",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164540999/John-Kerry-in-Abu-Dhabi-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"228",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164542642/John-Kerry-in-Abu-Dhabi-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"276",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164542642/John-Kerry-in-Abu-Dhabi-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"276",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422175834",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"84",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/video/2013/nov/08/binyamin-netanyahu-iran-nuclear-deal-geneva-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-08T11:21:14Z",
+      "webTitle":"Binyamin Netanyahu expresses dismay over Iran's 'very bad deal' in Geneva - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/nov/08/binyamin-netanyahu-iran-nuclear-deal-geneva-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/nov/08/binyamin-netanyahu-iran-nuclear-deal-geneva-video",
+      "fields":{
+        "trailText":"<p>Israeli prime minister Binyamin Netanyahu strongly criticises and rejects Iran's historic breakthrough deal over their nuclear plans</p>",
+        "headline":"Binyamin Netanyahu expresses dismay over Iran's 'very bad deal' in Geneva - video",
+        "body":"<video data-media-id=\"gu-video-421994865\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906363588/Iranian-Foreign-Minister--007.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/11/08/131108Binyamin-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/11/08/131108Binyamin_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/11/08/131108Binyamin_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/11/08/131108Binyamin/131108Binyamin.m3u8\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/421994865|2013-11-11T15:34:05Z|0fe1aa506a773e3833ec98e6d52332c9e3065689 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-08T12:14:35Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906355905/Iranian-Foreign-Minister--001.jpg",
+        "standfirst":"Israeli prime minister Binyamin Netanyahu strongly criticises and rejects Iran's historic breakthrough deal in Geneva over its nuclear plans. He says the rival state got the 'deal of the century', but it is a 'very bad deal' for the international community. Netanyahu's criticism of the negotiations with Iran in Geneva comes ahead of the Israeli PM's meeting with the US secretary of state on Friday, representing the third meeting with John Kerry in barely 48 hours",
+        "shortUrl":"http://gu.com/p/3k8c3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906355905/Iranian-Foreign-Minister--001.jpg",
+        "commentable":"false",
+        "internalContentCode":"421994865",
+        "allowUgc":"false",
+        "internalOctopusCode":"8297456",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1994142",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-11T11:21:14Z"
+      },
+      "tags":[{
+        "id":"world/binyamin-netanyahu",
+        "type":"keyword",
+        "webTitle":"Binyamin Netanyahu",
+        "webUrl":"http://www.theguardian.com/world/binyamin-netanyahu",
+        "apiUrl":"http://content.guardianapis.com/world/binyamin-netanyahu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/eu",
+        "type":"keyword",
+        "webTitle":"European Union",
+        "webUrl":"http://www.theguardian.com/world/eu",
+        "apiUrl":"http://content.guardianapis.com/world/eu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/israel",
+        "type":"keyword",
+        "webTitle":"Israel",
+        "webUrl":"http://www.theguardian.com/world/israel",
+        "apiUrl":"http://content.guardianapis.com/world/israel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/palestinian-territories",
+        "type":"keyword",
+        "webTitle":"Palestinian territories",
+        "webUrl":"http://www.theguardian.com/world/palestinian-territories",
+        "apiUrl":"http://content.guardianapis.com/world/palestinian-territories",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421994865",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906355905/Iranian-Foreign-Minister--001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"84",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906357386/Iranian-Foreign-Minister--002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"132",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906358664/Iranian-Foreign-Minister--003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"168",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906359872/Iranian-Foreign-Minister--004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"180",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906361058/Iranian-Foreign-Minister--005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"228",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906362356/Iranian-Foreign-Minister--006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"276",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906363588/Iranian-Foreign-Minister--007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"372",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906364967/Iranian-Foreign-Minister--008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"360",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906366378/Iranian-Foreign-Minister--009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"720",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906367715/Iranian-Foreign-Minister--010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"54",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906368947/Iranian-Foreign-Minister--011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"130",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906370217/Iranian-Foreign-Minister--012.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"340",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906371488/Iranian-Foreign-Minister--013.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"90",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906373037/Iranian-Foreign-Minister--014.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"225",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906374476/Iranian-Foreign-Minister--015.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"360",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906375833/Iranian-Foreign-Minister--016.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"720",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"960"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/11/08/131108Binyamin-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/08/131108Binyamin_8297456.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/08/131108Binyamin_8297456.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/11/08/131108Binyamin_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/08/131108Binyamin_8297456.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/08/131108Binyamin_8297456.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/11/08/131108Binyamin_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/08/131108Binyamin_8297456.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/08/131108Binyamin_8297456.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/11/08/131108Binyamin/131108Binyamin.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/08/131108Binyamin_8297456.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/08/131108Binyamin_8297456.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        }]
+      },{
+        "id":"gu-image-422000062",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/8/1383906355905/Iranian-Foreign-Minister--001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Martial Trezzini",
+            "altText":"Iranian Foreign Minister Mohammed Javad Zarif",
+            "height":"84",
+            "credit":"Martial Trezzini/AP",
+            "caption":"Iranian Foreign Minister Mohammed Javad Zarif Photograph: Martial Trezzini/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/nov/09/iran-nuclear-talks-very-good-progress-says-hague-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-09T11:51:37Z",
+      "webTitle":"Iran nuclear talks: very good progress made, says Hague - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/nov/09/iran-nuclear-talks-very-good-progress-says-hague-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/nov/09/iran-nuclear-talks-very-good-progress-says-hague-video",
+      "fields":{
+        "trailText":"<p>William Hague makes a brief statement in Geneva on Saturday following three days of diplomatic talks over Iran's nuclear programme</p>",
+        "headline":"Iran nuclear talks: very good progress made, says Hague - video",
+        "body":"<video data-media-id=\"gu-video-422069284\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996981684/Ministers-Hague-Zari-West-008.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/11/09/131108Hauge-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/11/09/131108Hauge/131108Hauge.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/11/09/131108Hauge_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/11/09/131108Hauge_3gpSml16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/422069284|2013-11-11T15:34:05Z|fabcc06ae2dcd622ab958054fe3204488cf24dff -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-09T11:53:17Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996969464/Ministers-Hague-Zari-West-001.jpg",
+        "standfirst":"William Hague makes a brief statement in Geneva on Saturday following three days of diplomatic talks over Iran's nuclear programme. The aim of the talks is to agree a joint statement laying out a roadmap towards a peaceful resolution of the standoff over Iran's nuclear plans. The foreign secretary says It's too early to say that we will reach a successful conclusion, but claims good progress has already been made",
+        "shortUrl":"http://gu.com/p/3k96n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996969464/Ministers-Hague-Zari-West-001.jpg",
+        "commentable":"false",
+        "internalContentCode":"422069284",
+        "allowUgc":"false",
+        "internalOctopusCode":"8302799",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1994729",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-12T11:51:37Z"
+      },
+      "tags":[{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/williamhague",
+        "type":"keyword",
+        "webTitle":"William Hague",
+        "webUrl":"http://www.theguardian.com/politics/williamhague",
+        "apiUrl":"http://content.guardianapis.com/politics/williamhague",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-422069284",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996969464/Ministers-Hague-Zari-West-001.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"84",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996974328/Ministers-Hague-Zari-West-002.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"132",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996975475/Ministers-Hague-Zari-West-003.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"168",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996976741/Ministers-Hague-Zari-West-004.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"180",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996978085/Ministers-Hague-Zari-West-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"228",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996979310/Ministers-Hague-Zari-West-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"276",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996980494/Ministers-Hague-Zari-West-007.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"230",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996981684/Ministers-Hague-Zari-West-008.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"372",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996983011/Ministers-Hague-Zari-West-009.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"360",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996984373/Ministers-Hague-Zari-West-010.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"720",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996985752/Ministers-Hague-Zari-West-011.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"54",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996986940/Ministers-Hague-Zari-West-012.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"130",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996988219/Ministers-Hague-Zari-West-013.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"340",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996989478/Ministers-Hague-Zari-West-014.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"90",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996990761/Ministers-Hague-Zari-West-015.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"225",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996991936/Ministers-Hague-Zari-West-016.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"360",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996993392/Ministers-Hague-Zari-West-017.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"720",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"960"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/11/09/131108Hauge-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/09/131108Hauge_8302799.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/09/131108Hauge_8302799.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/11/09/131108Hauge_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/09/131108Hauge_8302799.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/09/131108Hauge_8302799.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/11/09/131108Hauge_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/09/131108Hauge_8302799.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/09/131108Hauge_8302799.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/11/09/131108Hauge/131108Hauge.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/09/131108Hauge_8302799.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/09/131108Hauge_8302799.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        }]
+      },{
+        "id":"gu-image-422069463",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1383996969464/Ministers-Hague-Zari-West-001.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Jason Reed",
+            "altText":"Ministers Hague, Zari, Westerwelle and Catherine Ashton",
+            "height":"84",
+            "credit":"Jason Reed/REUTERS",
+            "caption":"Ministers Hague, Zari, Westerwelle and Catherine Ashton Photograph: Jason Reed/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/10/iran-nuclear-deal-stalls-reactor-plutonium-france",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-10T07:32:00Z",
+      "webTitle":"Geneva talks end without deal on Iran's nuclear programme",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/10/iran-nuclear-deal-stalls-reactor-plutonium-france",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/10/iran-nuclear-deal-stalls-reactor-plutonium-france",
+      "fields":{
+        "newspaperPageNumber":"27",
+        "trailText":"<p>Diplomats said to be furious after France objected to a stopgap deal being presented as a <em>fait accompli</em></p>",
+        "headline":"Geneva talks end without deal on Iran's nuclear programme",
+        "body":"<p>Three gruelling days of high-level and high-stakes diplomacy came to an end in Geneva with no agreement on Iran's nuclear programme, after France blocked a stopgap deal aimed at defusing tensions and buying more time for negotiations.</p><p>A six-nation group of major powers and Iran agreed only to meet again on 20 November, but on a lower level – senior diplomats rather than foreign ministers. The EU foreign policy chief, Catherine Ashton, said: &quot;A lot of concrete progress has been achieved, but differences remain.&quot; Asked about the part France had played, Ashton said that all parties to the talks had played an important role.</p><p>The Iranian foreign minister, Mohammad Javad Zarif, also sought to play down the disagreements that had surfaced with France, and the divisions between the six-nation group, known as the P5+1. &quot;It was natural when we started dealing the details there could be differences of views,&quot; Zarif said. &quot;But we are working together and hopeful we will be able to reach agreement when we meet again. What we were looking for was political will and determination, in order to end this phase and move to an end game. I think we are all on the same wavelength.&quot;</p><p>Privately, however, other diplomats at the talks were furious with the role of the French foreign minister, Laurent Fabius, whom they accused of breaking ranks by revealing details of the negotiations as soon as he arrived in Geneva on Saturday morning, and then breaking protocol again by declaring the results to the press before Ashton and Zarif had arrived at the final press conference.</p><p>Iran's president Hassan Rouhani said on Sunday that its &quot;rights to enrichment&quot; of uranium were &quot;red lines&quot; that would not be crossed and that the Islamic Republic had acted rationally and tactfully during the negotiations, according to Iranian media reports quoted by Reuters.</p><p>&quot;We have said to the negotating sides that we will not answer to any threat, sanction, humiliation or discrimination. The Islamic Republic has not and will not bow its head to threats from any authority,&quot; he said during a speech at the National Assembly, Iran's student news agency said.</p><p>French opposition was focused on a draft text agreement that laid out a short-term deal to slow down or stop elements of the Iranian nuclear programme in return for limited sanctions relief. The French complained that the text, which they said was mostly drafted by Iran and the US, had been presented as a <em>fait accompli</em> and they did not want to be stampeded into agreement.</p><p>Fabius told France Inter radio yesterday morning that Paris would not accept a &quot;fools' game&quot;. &quot;As I speak to you, I cannot say there is any certainty that we can conclude,&quot; he said.</p><p>Iranian officials insisted that the draft had been written in close collaboration with western officials, and said France was single-handedly holding up progress by dividing the &quot;P5+1&quot; negotiating group, comprising the US, UK, France, Germany, Russia and China.</p><p>Zarif would not comment on the French role directly but said: &quot;Although the questions of the P5+1 should be addressed, a great deal of time is being spent on negotiations within the P5+1 group. This is normal because they are six nations with different views and their own national interests and they need to agree.&quot; He said that when the P5+1 was ready to agree, &quot;we are ready to find a solution&quot;.</p><p>Fabius said one of the key issues was Iran's heavy water reactor at Arak, which is due to reach completion next year after many delays. The west and Israel have called for construction work to stop as part of an interim deal aimed at buying time for negotiations on a more comprehensive long-term deal.</p><p>Iran says the reactor's purpose is to produce nuclear isotopes that are useful for medical and agricultural purposes. But when operating it would produce plutonium as a by-product in its spent fuel, and that plutonium would represent a serious proliferation risk, giving an alternative route to making a bomb that would not depend on uranium enrichment. Israel has threatened to bomb the reactor before it starts operations, pointing out that once it is fuelled, bombing becomes impossible as it would scatter radioactive fallout around a large region.</p><p>On the sidelines of the talks, which shifted from Geneva's Palais des Nations to the five-star Intercontinental Hotel after the foreign ministers arrived yesterday, some western officials accused France of sabotaging the hopes of a deal to curry favour with Israel and the Gulf Arab states.</p><p>There was little doubt that the talks had reached a climactic moment of a sort not witnessed in a decade of on-off negotiations with Iran over its nuclear programme.</p><p>Six foreign ministers and one deputy minister converged on Switzerland in a bid to break the deadlock. Russia's senior diplomat, Sergey Lavrov, arrived yesterday morning to join Fabius, Zarif, the US secretary of state, John Kerry, Britain's foreign secretary, William Hague, and the German foreign minister, Guido Westerwelle. China sent its vice foreign minister, Li Baodong.</p><p>&quot;These negotiations have made good progress and continue to make good progress,&quot; Hague said. &quot;But there are still important issues to resolve.&quot;</p><!-- Guardian Watermark: internal-code/content/422095518|2013-11-11T15:34:05Z|83b2a318b4a8903dfdcf12fb3dfb3a4157c5803d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-10T07:35:56Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040775072/French-Foreign-Minister-L-003.jpg",
+        "standfirst":"Diplomats said to be furious after France objected to a stopgap deal being presented as a <em>fait accompli</em>",
+        "shortUrl":"http://gu.com/p/3k9b5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040775072/French-Foreign-Minister-L-003.jpg",
+        "wordcount":"844",
+        "commentable":"true",
+        "internalContentCode":"422095518",
+        "allowUgc":"false",
+        "internalOctopusCode":"8303586",
+        "isPremoderated":"false",
+        "byline":"Julian Borger and Saeed Kamali Dehghan in Geneva",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-11-10",
+        "internalPageCode":"1994846",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-13T01:09:00Z"
+      },
+      "tags":[{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/unitednations",
+        "type":"keyword",
+        "webTitle":"United Nations",
+        "webUrl":"http://www.theguardian.com/world/unitednations",
+        "apiUrl":"http://content.guardianapis.com/world/unitednations",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theobserver/news/worldnews",
+        "type":"newspaper-book-section",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/theobserver/news/worldnews",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news/worldnews",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/news",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theobserver/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"profile/saeedkamalidehghan",
+        "type":"contributor",
+        "webTitle":"Saeed Kamali Dehghan",
+        "webUrl":"http://www.theguardian.com/profile/saeedkamalidehghan",
+        "apiUrl":"http://content.guardianapis.com/profile/saeedkamalidehghan",
+        "bio":"<p>Saeed Kamali Dehghan is an Iranian journalist for the Guardian. He has previously written from the Iranian capital, Tehran, and was there during the<br />crisis following the disputed presidential election in 2009. He is now based in London and was named 2010 <a href=\"http://www.guardian.co.uk/culture/2010/nov/24/guardian-journalist-award-iranian-protests\">Journalist of the Year</a> at the Foreign Press Association Awards. His email is saeed.kamali.dehghan<br />@theguardian.com</p>",
+        "r2ContributorId":"27142",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/29/1359471686287/Saeed-Kamali-Dehghan_2.jpg",
+        "references":[]
+      },{
+        "id":"profile/julianborger",
+        "type":"contributor",
+        "webTitle":"Julian Borger",
+        "webUrl":"http://www.theguardian.com/profile/julianborger",
+        "apiUrl":"http://content.guardianapis.com/profile/julianborger",
+        "bio":"<p>Julian Borger is the Guardian's diplomatic editor. He was previously a correspondent in the US, the Middle East, eastern Europe and the Balkans</p>",
+        "rcsId":"GNL001547",
+        "r2ContributorId":"15924",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/julian_borger_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422103312",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040771119/French-Foreign-Minister-L-001.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"54",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040773820/French-Foreign-Minister-L-002.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"130",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040775072/French-Foreign-Minister-L-003.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"84",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040776383/French-Foreign-Minister-L-004.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"132",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040777615/French-Foreign-Minister-L-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"168",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040779088/French-Foreign-Minister-L-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"180",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040780400/French-Foreign-Minister-L-007.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"228",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040781681/French-Foreign-Minister-L-008.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"276",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040781681/French-Foreign-Minister-L-008.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"276",
+            "credit":"Pool/REUTERS",
+            "caption":"Foreign minister Laurent Fabius told France Inter radio yesterday that Paris would not accept a 'fools’ game'. Photograph: Pool/REUTERS",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422103313",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/9/1384040775072/French-Foreign-Minister-L-003.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"French Foreign Minister Laurent Fabius",
+            "height":"84",
+            "credit":"Pool/REUTERS",
+            "caption":"French foreign minister Laurent Fabius: 'As I speak to you, I cannot say there is any certainty that we can conclude.' Photograph: Pool/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/10/john-kerry-iran-nuclear-talks-skepticism",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-10T15:12:45Z",
+      "webTitle":"Kerry skeptical of Iran: 'We are not blind, and I don't think we're stupid' ",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/10/john-kerry-iran-nuclear-talks-skepticism",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/10/john-kerry-iran-nuclear-talks-skepticism",
+      "fields":{
+        "trailText":"<p>Secretary of state says sanctions will remain while McCain voices hard line as Senate prepares to pass new measures</p>",
+        "headline":"Kerry skeptical of Iran: 'We are not blind, and I don't think we're stupid'",
+        "body":"<p>US secretary of state John Kerry said on Sunday that the United States continues to be skeptical of Iran's willingness to dismantle its nuclear program and <a href=\"http://www.theguardian.com/world/2013/nov/10/iran-nuclear-deal-stalls-reactor-plutonium-france\">will keep sanctions in place as talks continue</a>. </p><p>\"We are not blind, and I don't think we're stupid. I think we have a pretty strong sense of how to measure whether or not we are acting in the interests of our country and of the globe,\" Kerry said on NBC's Meet the Press. </p><p>The United States and its allies narrowed their differences with Tehran in talks over the weekend, but were not able to reach a deal <a href=\"http://www.theguardian.com/world/2013/nov/10/iran-anger-france-geneva-nuclear-deal\">as France believed the proposal did not adequately neutralize the risk of an Iranian atom bomb</a>. Israel has also voiced skepticism, warning that the Iran cannot be trusted until it dismantles its nuclear program. </p><p>Kerry said the United States is aiming to get Tehran to halt further nuclear development as a first step toward a complete dismantling of the program. Washington will keep sanctions in place in the meantime, he said. </p><p>\"Nobody has talked about getting rid of the current architecture of sanctions. The pressure will remain,\" he said.</p><p>Kerry has now moved on to Abu Dhabi, where he will focus on Iran and Syria during meetings with Emirati officials. He arrived in the United Arab Emirates on Sunday. The UAE is a valuable American partner in the Gulf. Like other Arab states in the region, it is deeply concerned about Iran's nuclear ambitions.</p><p>Kerry plans to return to Washington on Monday.</p><p>Also on Sunday, Senator John McCain continued to voice a hard line on Iran and the prospect of easing sanctions in return for a deal on nuclear weapons. McCain has been a leading voice in Congress against any deal with Iran. The Senate is set to pass new sanctions that threaten to derail the talks before they get to their planned next round in 10 days' time.</p><figure data-media-id='gu-image-422139445'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381951368477/John-McCain-008.jpg' alt='John McCain' width='460' height='276' class='gu-image'/><figcaption>Senator John McCain gave an interview to the German news weekly Der Spiegel. Photograph: Alex Wong/Getty Images</figcaption></figure><p>Speaking to the German news weekly Der Spiegel, in an interview in which he discussed the Edward Snowden leaks <a href=\"http://www.theguardian.com/world/2013/nov/10/john-mccain-nsa-keith-alexander-snowden\">and called for the resignation of the head of the National Security Agency, General Keith Alexander</a>, the 2008 presidential candidate said: \"I am very skeptical about the situation with Iran. </p><p>\"I've seen this 'confidence-building measures' movie many times. The reality is you have a nation, Iran, embarked on spreading their brand of Islam throughout the Middle East and the world. They are still dedicated to wiping Israel off the map.</p><p>\"We don't need any confidence-building measures which are going to include easing some of the sanctions. That's the Iranians' goal. They either stop the enrichment or they don't.\"</p><!-- Guardian Watermark: internal-code/content/422119988|2013-11-11T15:34:05Z|60c57d8786fd25c5a8336721a9f2f147fda7cfac -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-10T20:06:01Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/5/1383644748063/eee2263f-4f35-4a8f-a21c-25cde0229a7c-140x84.jpeg",
+        "standfirst":"Secretary of state says sanctions will remain while McCain voices hard line as Senate prepares to pass new measures",
+        "shortUrl":"http://gu.com/p/3k9e4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/5/1383644748063/eee2263f-4f35-4a8f-a21c-25cde0229a7c-140x84.jpeg",
+        "wordcount":"434",
+        "commentable":"true",
+        "internalContentCode":"422119988",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Guardian staff and agencies",
+        "publication":"theguardian.com",
+        "internalPageCode":"1994926",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-13T15:12:00Z"
+      },
+      "tags":[{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/john-kerry",
+        "type":"keyword",
+        "webTitle":"John Kerry",
+        "webUrl":"http://www.theguardian.com/world/john-kerry",
+        "apiUrl":"http://content.guardianapis.com/world/john-kerry",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/unitednations",
+        "type":"keyword",
+        "webTitle":"United Nations",
+        "webUrl":"http://www.theguardian.com/world/unitednations",
+        "apiUrl":"http://content.guardianapis.com/world/unitednations",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422139443",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/3/1383494110672/John-Kerry-010.jpg",
+          "typeData":{
+            "source":"Nameer Galal/NurPhoto/REX",
+            "photographer":"Nameer Galal/NurPhoto/REX",
+            "altText":"John Kerry",
+            "height":"276",
+            "credit":"Nameer Galal/NurPhoto/REX/Nameer Galal/NurPhoto/REX",
+            "caption":"John Kerry led US and Iranian negotiations in Geneva this week. Photograph: Nameer Galal/NurPhoto/Rex",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422139444",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/5/1383644748063/eee2263f-4f35-4a8f-a21c-25cde0229a7c-140x84.jpeg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"PAWEL SUPERNAK",
+            "altText":"John Kerry in Warsaw on 5 November 2013.",
+            "height":"84",
+            "credit":"PAWEL SUPERNAK/EPA",
+            "caption":"John Kerry in Warsaw on 5 November 2013. Photograph: Pawel Supernak/EPA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-422139445",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/16/1381951368477/John-McCain-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Alex Wong",
+            "altText":"John McCain",
+            "height":"276",
+            "credit":"Alex Wong/Getty Images",
+            "caption":"Senator John McCain gave an interview to the German news weekly Der Spiegel. Photograph: Alex Wong/Getty Images",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/10/geneva-talks-mountain-climb-editorial",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-10T22:16:46Z",
+      "webTitle":"Geneva talks: a mountain to climb | Editorial",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/10/geneva-talks-mountain-climb-editorial",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/10/geneva-talks-mountain-climb-editorial",
+      "fields":{
+        "newspaperPageNumber":"26",
+        "trailText":"<strong>Editorial: </strong>Ending up with no deal would be a disaster for everyone living in the region, including Israel",
+        "headline":"Geneva talks: a mountain to climb",
+        "body":"<p>From his hotel room in Geneva, Iran's foreign minister Mohammad Javad Zarif had a good view of Mont Blanc. The sight did not calm him after the failure to reach an interim deal in Geneva on Sunday – it only reminded him that he faces, as the saying in Iran goes, a mountain of challenges. Everyone talks about a ticking clock to the Iranian uranium enrichment programme. But there is a political clock for Mr Zarif and his president, <a href=\"http://www.theguardian.com/world/hassan-rouhani\" title=\"\">Hassan Rouhani</a>, too, both of whom are moderates on the political spectrum at home. Each time they fail to bring home a deal, which for Iran means some alleviation of the sanctions, the pressure from hawks builds. The capacity to build a bomb, which Iran has always denied, is for the hawks the ultimate insurance policy against regime change. They take the lesson from Libya. Colonel Gaddafi became vulnerable only after he handed over his WMD.</p><p>The failure to sign an interim deal must seem doubly puzzling to Mr Zarif. Much of the atmospherics were good. Iranian and US diplomats spent more time talking to each other in 72 hours in Geneva than they had in the previous three decades. They were the most extensive talks the two countries had had with each other since the Islamic revolution in 1979. As if to confirm that a bridge had been crossed, Mr Zarif and Catherine Ashton, the EU foreign policy chief, appeared together for the first time to deliver the final statement. Both America and Iran seemed comfortable with the draft text of an agreement, which still remains secret. Yesterday, William Hague said that a deal was \"on the table\" and that the differences were narrow.</p><p>What few expected was the <a href=\"http://www.theguardian.com/world/2013/nov/10/iran-nuclear-deal-stalls-reactor-plutonium-france\" title=\"\">behaviour of France</a> in these negotiations. As a former prime minister, Laurent Fabius cannot be considered a parvenu on the international stage. Nor would one expect Mr Fabius, as a minister of François Hollande's government, to feel bound by the foreign policy of Nicolas Sarkozy. And yet from the moment he arrived, Mr Fabius saw his role as the plug-puller in chief. His first act was to reveal details of negotiations that were meant to have been kept secret. His second was to tell France Inter radio that Paris would not accept a \"fool's game\"; and his third was to declare the results of the talks before Lady Ashton and Mr Zarif could do so jointly.</p><p>The French are worried about Iran's heavy-water reactor at Arak, which will produce plutonium as a byproduct in its spent fuel, and presents a proliferation risk. Arak, however, is at least one year away from starting, and the purpose of the Geneva framework agreement is to buy time for further negotiations to take place, in which Arak would feature large. Obviously, these are complex negotiations and the failure to come to an interim agreement is not just about the role played by one participant. But Mr Fabius is a reminder that the challenge facing Washington as it attempts to close the book on a decade of failed intervention comes from allies as well as from its foes. Barack Obama is losing trust and credibility. He needs to push back, particularly against his friends.</p><p><a href=\"http://www.theguardian.com/world/2013/nov/08/hawks-iran-nuclear-deal-us-israel-middle-east\" title=\"\">Binyamin Netanyahu launched a furious tirade</a> against a possible deal before the US secretary of state, John Kerry, had departed for Geneva. Israel considers a bad deal with Iran to be worse than no deal at all. \"Bad\" would be any deal which leaves the Iranian capacity for making enriched uranium intact – Israel wants Iran to surrender the centrifuges it has created to enrich uranium. \"Good\" would be anything that sets the enrichment clock back. Mr Netanyahu is frightened that once an interim deal is signed, it will become harder for Israel to define and act on its own red lines with Iran.</p><p>Geneva must not be the end of the story. Ending up with no deal would be a disaster for everyone living in the region, including Israel. It would almost certainly push Saudi Arabia to acquire a bomb from Pakistan, and other Gulf states would follow. Any conceivable deal would involve the presence of more international inspectors, and build more trust. For those reasons alone, it must be pursued.</p><!-- Guardian Watermark: internal-code/content/422146604|2013-11-11T15:34:05Z|1a556d471f94ca3e520819b6644f335e726a2adf -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T00:05:58Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"Ending up with no deal would be a disaster for everyone living in the region, including Israel",
+        "shortUrl":"http://gu.com/p/3k9tt",
+        "wordcount":"705",
+        "commentable":"true",
+        "internalContentCode":"422146604",
+        "allowUgc":"false",
+        "internalOctopusCode":"8298567",
+        "isPremoderated":"false",
+        "byline":"Editorial",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-11",
+        "internalPageCode":"1995048",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-13T22:16:46Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/foreignpolicy",
+        "type":"keyword",
+        "webTitle":"Foreign policy",
+        "webUrl":"http://www.theguardian.com/politics/foreignpolicy",
+        "apiUrl":"http://content.guardianapis.com/politics/foreignpolicy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/israel",
+        "type":"keyword",
+        "webTitle":"Israel",
+        "webUrl":"http://www.theguardian.com/world/israel",
+        "apiUrl":"http://content.guardianapis.com/world/israel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/editorial",
+        "type":"contributor",
+        "webTitle":"Editorial",
+        "webUrl":"http://www.theguardian.com/profile/editorial",
+        "apiUrl":"http://content.guardianapis.com/profile/editorial",
+        "bio":"<p>Editorials from the Guardian. All Guardian and Observer editorials can be found <a href=\"http://www.guardian.co.uk/tone/editorials\">here</a></p>",
+        "r2ContributorId":"56303",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367609515569/guardianlogo_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"world/2013/nov/10/iran-anger-france-geneva-nuclear-deal",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-10T14:12:49Z",
+      "webTitle":"Iranians angry and bewildered after French torpedo Geneva nuclear entente",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/10/iran-anger-france-geneva-nuclear-deal",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/10/iran-anger-france-geneva-nuclear-deal",
+      "fields":{
+        "newspaperPageNumber":"13",
+        "trailText":"France should replace US as <em>le grand satan</em>, joke some inside Iran after Paris defies Washington and blocks stopgap deal",
+        "headline":"Iranians angry and bewildered after French torpedo Geneva nuclear entente",
+        "body":"<p>France's role in Geneva talks that ended with no agreement over Tehran's nuclear programme has prompted bewilderment and anger inside Iran.</p><p>Iranians, who stayed awake all night to find out whether their negotiators have reached a breakthrough with the west, were disappointed that France was prepared to defy the Americans and block a stopgap deal, and that western sanction would not end any time soon.</p><p>The Irna state  news agency reported that Iranian businessmen were considering reducing their trade ties with France, saying they no longer considered it as a good partner because of its \"adventurist and immature behaviour\" at Geneva.</p><p>\"A group of Tehran-based industrialists held a meeting here on Sunday focusing on reduction of Tehran-Paris trade ties,\" reported Irna. \"They believe that the imbalanced policies of Paris on Tehran have stripped Paris of its status as a good economic partner of Iran.\"</p><p>Iran's president, Hassan Rouhani, reacting to news from Geneva, said Tehran would not bow to \"sanctions, threats, contempt and discrimination\", the state-run Press TV reported. Rouhani was speaking to the members of Iran's parliament, Majlis, where he was defending his nominee for the sports ministry, Nasrollah Sajjadi.</p><p>\"For us, red lines are not to be crossed. The rights of the Iranian nation and [our] national interests are our red lines,\" he said. Without directly referring to France, Rouhani added: \"The Islamic Republic of Iran has not bowed and will not bow to threats by any power.\"</p><p>In reaction to the Geneva talks, the Twitter account believed to be run by the office of Ayatollah Ali Khamenei posted old remarks  Iran's supreme leader made about France in a speech in March.</p><p>\"French officials have been openly hostile towards the Iranian nation over the past few years; this is an imprudent and inept move,\" the tweet says. \"A wise man, particularly a wise politician, should never have the motivation to turn a neutral entity into an enemy.\" That speech in the eastern city of Mashhad, east Iran, was the first time Khamenei referred to France as Iran's enemy along with the US and Britain.</p><p>As France's hardline stance in Geneva became public on Saturday, Iranian web users posted their disgust on the official Facebook page of the French foreign minister, Laurent Fabius. \"Shame of you,\" read one comment. Another one said: \"Mr. Fabius ...Why?\"</p><p>Some in Iran also joked that the recent developments will make France Iran's top enemy, perhaps replacing the US as <em>le grand satan</em>.</p><p>Iran's ultra-conservative newspaper Keyhan, whose director is appointed by Khamenei, published an article on Sunday describing Fabius as \"the servant of the zionist regime\".</p><p>It continued: \"The disgraceful behaviour of the French foreign minister in the Geneva talks and his remarks on behalf of the zionist regime once again shows the national interests of French people are taken hostage [by Israel].\"</p><p>\"Exhausted but hopeful\", read the headline of the reformist newspaper Shargh next to the image of the Iranian foreign minister, Mohammad Javad Zarif, talking at a press conference alongside his EU counterpart, Catherine Ashton.</p><p>The Geneva talks dominated the front pages of almost all Iranian publications on Sunday, with many printing second or third editions. \"Agreement in suspension\", read the headline of the reformist Etemaad.</p><!-- Guardian Watermark: internal-code/content/422117232|2013-11-11T15:34:05Z|0c3b50d95af584126af1fb3d10771b885a80d5e8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T00:06:39Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092674008/French-Foreign-minister-L-006.jpg",
+        "standfirst":"France should replace US as <em>le grand satan</em>, joke some inside Iran after Paris defies Washington and blocks stopgap deal",
+        "shortUrl":"http://gu.com/p/3k9dj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092674008/French-Foreign-minister-L-006.jpg",
+        "wordcount":"522",
+        "commentable":"false",
+        "internalContentCode":"422117232",
+        "allowUgc":"false",
+        "internalOctopusCode":"8305019",
+        "isPremoderated":"false",
+        "byline":"Saeed Kamali Dehghan in Geneva",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-11-11",
+        "internalPageCode":"1994914",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-13T14:12:49Z"
+      },
+      "tags":[{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/saeedkamalidehghan",
+        "type":"contributor",
+        "webTitle":"Saeed Kamali Dehghan",
+        "webUrl":"http://www.theguardian.com/profile/saeedkamalidehghan",
+        "apiUrl":"http://content.guardianapis.com/profile/saeedkamalidehghan",
+        "bio":"<p>Saeed Kamali Dehghan is an Iranian journalist for the Guardian. He has previously written from the Iranian capital, Tehran, and was there during the<br />crisis following the disputed presidential election in 2009. He is now based in London and was named 2010 <a href=\"http://www.guardian.co.uk/culture/2010/nov/24/guardian-journalist-award-iranian-protests\">Journalist of the Year</a> at the Foreign Press Association Awards. His email is saeed.kamali.dehghan<br />@theguardian.com</p>",
+        "r2ContributorId":"27142",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/29/1359471686287/Saeed-Kamali-Dehghan_2.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422118386",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092665182/French-Foreign-minister-L-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"54",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092667596/French-Foreign-minister-L-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"340",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092668934/French-Foreign-minister-L-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"130",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092670282/French-Foreign-minister-L-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"720",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092672152/French-Foreign-minister-L-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"1536",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092674008/French-Foreign-minister-L-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"84",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092675269/French-Foreign-minister-L-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"132",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092676561/French-Foreign-minister-L-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"168",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092677891/French-Foreign-minister-L-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"180",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092679152/French-Foreign-minister-L-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"228",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092680484/French-Foreign-minister-L-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"276",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092681767/French-Foreign-minister-L-012.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"372",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092683310/French-Foreign-minister-L-013.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"1116",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092685507/French-Foreign-minister-L-014.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"1536",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092680484/French-Foreign-minister-L-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"276",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, was accused by Iran's ultra-conservative media of being a 'servant' of Israel. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422118387",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384092674008/French-Foreign-minister-L-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"French Foreign minister Laurent Fabius",
+            "height":"84",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"France's foreign minister, Laurent Fabius, is accused by Iran's ultra-conservative media of being a 'servant' of Irsael after Geneva nuclear talks fail. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/10/iran-nuclear-talks-at-risk",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-11T09:34:00Z",
+      "webTitle":"Iran nuclear programme deal in danger of unravelling",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/10/iran-nuclear-talks-at-risk",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/10/iran-nuclear-talks-at-risk",
+      "fields":{
+        "newspaperPageNumber":"13",
+        "trailText":"<p>US negotiator leaves talks to reassure Israeli prime minister after France sinks bid to seal temporary agreement</p>",
+        "headline":"Iran nuclear programme deal in danger of unravelling",
+        "body":"<p>The diplomatic progress that brought six foreign ministers tantalisingly close to a historic agreement on the Iranian nuclear programme is in danger of unravelling before negotiators meet again this month, officials and analysts warned on Sunday.</p><p>In a bid to contain the danger, the lead US negotiator, Wendy Sherman, flew straight from the talks in Geneva to Israel to reassure Binyamin Netanyahu's government that the intended deal would not harm his country's national interests.</p><p>The hastily arranged trip represented an acknowledgement of Netanyahu's power to block a deal through his influence in the US Congress and in Europe. Egged on by the Israelis, the US Senate is poised to pass new sanctions that threaten to derail the talks before they get to their planned next round in 10 days' time.</p><p>The US secretary of state, John Kerry, said on Sunday that America was sufficiently sceptical of Iran's willingness to dismantle its nuclear programme and would keep sanctions in place as talks continue.</p><p>\"We are not blind and I don't think we're stupid. We have a pretty strong sense of how to measure whether or not we are acting in the interests of our country and of the globe,\" Kerry said on NBC's Meet the Press.</p><p>More immediately, Netanyahu demonstrated over the weekend that he could sway the Geneva talks from the inside through his relationship with Paris. It has emerged that after a call from Barack Obama on Friday evening asking him not to oppose the planned Geneva deal, Netanyahu did the opposite. He called British prime minister, David Cameron, Russian president Vladimir Putin, German chancellor Angela Merkel and French president François Hollande, asking them to block it.</p><p>Hollande, whose government shared some of Israel's concerns,  agreed. It was French opposition that finally sank the bid to seal a temporary nuclear accord, after three days of intense bargaining, in the early hours of Sunday morning, but Netanyahu was quick to claim credit.</p><p>Netanyahu told cabinet colleagues: \"I told them that according to the information Israel has, the impending deal is bad and dangerous – not just for us but for them too. I asked them what was the rush and I suggested that they wait and consider the matter seriously.</p><p>\"The deal at once lifts the pressure of sanctions which have taken years to put in place, and leaves Iran with its nuclear and enrichment capabilities intact. Not one centrifuge is to be dismantled. These are historic decisions. I asked that they wait and I'm pleased they have decided [to do] so.\"</p><p>The French roadblock took Washington by surprise. There had been an initial day of discussions in Geneva on Thursday involving the Iranian foreign minister, Mohammad Javad Zarif, the EU foreign policy chief, Lady Ashton, and senior diplomats from the US, the UK, France, Germany, Russia and China, the six-nation group known as the P5+1 that has led the nuclear negotiations since 2006.</p><p>There had been an understanding that if the talks looked close to agreement, Kerry, who was in the Middle East last week, would come to Geneva to push them over the finishing line. But on Thursday night the Iranians forced his hand. Zarif announced that work on drafting an agreement would start the next morning and officials told the press Kerry would fly in the same day – putting the US secretary of state in a bind. If he stayed away and the talks failed, he would be blamed. He was weighing the possibility of personal intervention anyway, officials in Geneva said, but would have preferred to have chosen the timing and made the announcement himself.</p><p>Kerry had an uncomfortable meeting with Netanyahu at Ben Gurion airport on Friday morning in which the Israeli prime minister lectured him on the dangers of deal with Iran which loosened sanctions without halting the nuclear project. The atmosphere was so sour, the Americans opted out of a joint press appearance.</p><p>Kerry took off for Geneva, but before he landed the draft agreement was under public attack from another, more unexpected quarter. The French foreign minister, Laurent Fabius, told a French radio station that Paris would not accept a <em>jeu des dupes</em> – a fools' game, casting doubt on when a deal could be concluded.</p><p>He broke an agreement not to discuss the content of the negotiations in public, outlining what France saw as the sticking points: Iran's heavy-water reactor in Arak and its stock of medium-enriched uranium, which are alternative pathways to making a bomb. The 20% uranium could be easily turned into weapons-grade material if Tehran should decide to make a warhead, but Iran was refusing to ship it out of the country. The negotiators had been looking at compromises such as diluting it or turning it into oxide reactor fuel, which would make it more difficult to enrich further. But Paris was concerned that such options did not give the same level of assurance that the stockpile would not one day used for a bomb.</p><p>France's unease about Arak was even greater. Once operational, the heavy water reactor would produce plutonium with its spent fuel. It was due to be completed next year, and Iran refused to halt production, saying it was essential for producing isotopes used in medicine, agriculture and other scientific research.</p><p>A compromise was being hatched by US and Iranian officials that would allow the Iranians to carry on building the reactor over the six-month period of the interim agreement, but only to test it with dummy fuel rods and ordinary water.</p><p>The French and the Israelis believed that was too high-risk a solution that would allow the Iranians to get so close to completion that they would be able to insert enriched uranium into the reactor with very little notice and present the world with a fait accompli. Once that was done, bombing the reactor would not be an option because it would send a radioactive plume across the region.</p><p>Kerry had been hoping to address the French reservations within P5+1, but Fabius refused to back down during a session of the foreign ministers that went late into Saturday morning. Zarif observed wryly that the P5+1 seemed to need more time to negotiate with each other than with Iran.</p><p>Other western officials were furious with what they saw as a French breach of the P5+1's jealously guarded unity.</p><p>\"This is about France's interests in the Gulf and the fact that Hollande is going to Israel later this month and he doesn't want the trip to turn into a nightmare,\" one official said. French officials said the text drafted principally by the US and Iran was significantly different from the one discussed by the P5+1. \"There are two parallel processes going on here, a multilateral one that has been going on for seven years, and a bilateral one, and the two have not come together properly. The cogs have got jammed,\" said an European official in Geneva.</p><p>France has long suspected the Obama administration of being too ready to make a deal with Iran for short-term diplomatic gains, but as recently as a year ago a senior French official told the Guardian that ultimately an agreement would have to be made between Washington and Tehran. Paris, whatever its reservations, would not stand in its way.</p><p>That calculation clearly no longer applies. Following the two countries' falling-out over Syria, in which the French believed the Obama administration was dithering, France now feels strong enough to oppose Washington on America's most pressing foreign policy issue – a measure perhaps of America's waning influence in the world.</p><!-- Guardian Watermark: internal-code/content/422137400|2013-11-11T15:34:05Z|d1ab905554b4ce9b7036485f01ec5e8cc11949f7 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T09:36:16Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113051108/iran-nuclear-talks-at-ris-004.jpg",
+        "standfirst":"US negotiator leaves talks to reassure Israeli prime minister after France sinks bid to seal temporary agreement",
+        "shortUrl":"http://gu.com/p/3k9hk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113051108/iran-nuclear-talks-at-ris-004.jpg",
+        "wordcount":"1239",
+        "commentable":"true",
+        "internalContentCode":"422137400",
+        "allowUgc":"false",
+        "internalOctopusCode":"8305952",
+        "isPremoderated":"false",
+        "byline":"Julian Borger in Geneva and Harriet Sherwood in Jerusalem",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-11",
+        "internalPageCode":"1995023",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-13T19:58:00Z"
+      },
+      "tags":[{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/israel",
+        "type":"keyword",
+        "webTitle":"Israel",
+        "webUrl":"http://www.theguardian.com/world/israel",
+        "apiUrl":"http://content.guardianapis.com/world/israel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/john-kerry",
+        "type":"keyword",
+        "webTitle":"John Kerry",
+        "webUrl":"http://www.theguardian.com/world/john-kerry",
+        "apiUrl":"http://content.guardianapis.com/world/john-kerry",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/binyamin-netanyahu",
+        "type":"keyword",
+        "webTitle":"Binyamin Netanyahu",
+        "webUrl":"http://www.theguardian.com/world/binyamin-netanyahu",
+        "apiUrl":"http://content.guardianapis.com/world/binyamin-netanyahu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/julianborger",
+        "type":"contributor",
+        "webTitle":"Julian Borger",
+        "webUrl":"http://www.theguardian.com/profile/julianborger",
+        "apiUrl":"http://content.guardianapis.com/profile/julianborger",
+        "bio":"<p>Julian Borger is the Guardian's diplomatic editor. He was previously a correspondent in the US, the Middle East, eastern Europe and the Balkans</p>",
+        "rcsId":"GNL001547",
+        "r2ContributorId":"15924",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/julian_borger_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/harrietsherwood",
+        "type":"contributor",
+        "webTitle":"Harriet Sherwood",
+        "webUrl":"http://www.theguardian.com/profile/harrietsherwood",
+        "apiUrl":"http://content.guardianapis.com/profile/harrietsherwood",
+        "bio":"<p>Harriet Sherwood is the Guardian's Jerusalem correspondent. She was previously foreign editor and home editor</p>",
+        "rcsId":"GNL004655",
+        "r2ContributorId":"15693",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/21/1316606449487/Harriet-Sherwood.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/francois-hollande",
+        "type":"keyword",
+        "webTitle":"François Hollande",
+        "webUrl":"http://www.theguardian.com/world/francois-hollande",
+        "apiUrl":"http://content.guardianapis.com/world/francois-hollande",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422172489",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113046217/iran-nuclear-talks-at-ris-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"54",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113048595/iran-nuclear-talks-at-ris-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"340",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113049929/iran-nuclear-talks-at-ris-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"130",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113051108/iran-nuclear-talks-at-ris-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"84",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113052406/iran-nuclear-talks-at-ris-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"132",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113053637/iran-nuclear-talks-at-ris-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"168",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113054940/iran-nuclear-talks-at-ris-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"180",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113056173/iran-nuclear-talks-at-ris-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"228",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113057441/iran-nuclear-talks-at-ris-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"276",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113058863/iran-nuclear-talks-at-ris-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"372",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113057441/iran-nuclear-talks-at-ris-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"276",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422172490",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384113051108/iran-nuclear-talks-at-ris-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Pool",
+            "altText":"iran-nuclear-talks-at-risk",
+            "height":"84",
+            "credit":"Pool/Getty Images",
+            "caption":"Binyamin Netanyahu, centre, and Israeli cabinet members meet at a kibbutz in the Negev desert to express alarm about the Iran talks. Photograph: Pool/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/11/iran-nuclear-deal-john-kerry",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-11T10:30:23Z",
+      "webTitle":"Iran balked at Geneva nuclear deal, says John Kerry",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/11/iran-nuclear-deal-john-kerry",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/11/iran-nuclear-deal-john-kerry",
+      "fields":{
+        "trailText":"US secretary of state says major powers were united but Iran was not able to accept deal 'at that particular moment'",
+        "headline":"Iran balked at Geneva nuclear deal, says John Kerry",
+        "body":"<p>The US secretary of state, John Kerry, has said the major powers were unified on an Iran nuclear deal during weekend talks in Geneva but the Iranians were unable to accept it. He said critics of the plan should withhold their comments until a deal was reached.</p><p>Earlier reports said the talks fell apart because France refused to accept the proposed deal. Kerry said the major powers reached an agreement but Iran was not able to accept the deal \"at that particular moment\".</p><p>\"The French signed off on it, we signed off on it,\" he said in Abu Dhabi. \"There was unity but Iran couldn't take it.\"</p><p>Kerry said the rejection by the Israeli prime minister, Binyamin Netanyahu, of a deal to limit Iran's nuclear ambitions was premature. \"The time to oppose it is when you see what it is, not to oppose the effort to find out what is possible.\"</p><p>He said the US had been meeting constantly with the Israelis to understand the progress Iran had made in its nuclear programme. \"We are confident that what we are doing can actually protect Israel more effectively and provide greater security,\" he said.</p><p>Kerry said there was no \"end game\" in motion and the Geneva talks were a first step in longer process of possible give and take.</p><p>Iran has been eager to reach an agreement to ease international sanctions that have halted most oil exports and crippled its economy.</p><!-- Guardian Watermark: internal-code/content/422175767|2013-11-11T15:34:05Z|d776c457382ef44cd2645fc197f5b36dab6659ab -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T11:06:24Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+        "standfirst":"US secretary of state says major powers were united but Iran was not able to accept deal 'at that particular moment'",
+        "shortUrl":"http://gu.com/p/3k9nv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+        "wordcount":"234",
+        "commentable":"false",
+        "internalContentCode":"422175767",
+        "allowUgc":"false",
+        "internalOctopusCode":"8306943",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Abu Dhabi",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995165",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T10:30:23Z"
+      },
+      "tags":[{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/john-kerry",
+        "type":"keyword",
+        "webTitle":"John Kerry",
+        "webUrl":"http://www.theguardian.com/world/john-kerry",
+        "apiUrl":"http://content.guardianapis.com/world/john-kerry",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422175833",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164530577/John-Kerry-in-Abu-Dhabi-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"54",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164533036/John-Kerry-in-Abu-Dhabi-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"130",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"84",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164536208/John-Kerry-in-Abu-Dhabi-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"132",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164537738/John-Kerry-in-Abu-Dhabi-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"168",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164539334/John-Kerry-in-Abu-Dhabi-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"180",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164540999/John-Kerry-in-Abu-Dhabi-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"228",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164542642/John-Kerry-in-Abu-Dhabi-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"276",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164542642/John-Kerry-in-Abu-Dhabi-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"276",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422175834",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384164534631/John-Kerry-in-Abu-Dhabi-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ali Haider",
+            "altText":"John Kerry in Abu Dhabi",
+            "height":"84",
+            "credit":"Ali Haider/EPA",
+            "caption":"John Kerry in Abu Dhabi. Photograph: Ali Haider/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/11/iran-allows-nuclear-inspectors-iaea",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-11T13:31:05Z",
+      "webTitle":"Iran allows inspectors to visit two key nuclear sites",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/11/iran-allows-nuclear-inspectors-iaea",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/11/iran-allows-nuclear-inspectors-iaea",
+      "fields":{
+        "trailText":"IAEA granted permission to enter long-unseen facilities as Tehran seeks to show co-operation after failure of Geneva talks",
+        "headline":"Iran allows inspectors to visit two key nuclear sites",
+        "body":"<p>Iran has agreed to allow inspectors from the International Atomic Energy Agency to enter long-unseen nuclear sites – the key Gchine uranium mine and a heavy-water reactor in Arak.</p><p>Days after arduous negotiations in Geneva ended without a decisive agreement between Iranian ministers and six world powers on Iran's nuclear future, Ali Akbar Salehi, the head of Iran's atomic energy organisation, met the IAEA chief, Yukiya Amano, in Tehran and agreed a roadmap for greater co-operation.</p><p>A joint statement issued by the IAEA and Iran said both sides had agreed \"to strengthen their co-operation and dialogue aimed at ensuring the exclusively peaceful nature of Iran's nuclear programme\".</p><p>\"It is foreseen that Iran's co-operation will include providing the IAEA with timely information about its nuclear facilities and in regard to the implementation of transparency measures,\" the statement said. \"Activities will proceed in a step-by-step manner.\"</p><p>While parallel talks inGeneva ended without agreement at the weekend, both sides stresseda great deal of progress had been made. Talks are due to resume in 10 days, with more junior officials, to fine-tune the text prepared in last week's negotiations.</p><p>\"The joint statement that was signed today represents a road map that specifies bilateral steps in relation to resolving outstanding issues,\" Salehi said during a news conference in Tehran with Amano on Monday.</p><p>\"I have received permission for inspectors to visit the Arak heavy-water plant and the Gchine mine, which has been requested by the agency, and Iran has voluntarily announced its readiness for this,\" Salehi said, according to the semi-official ISNA news agency.</p><p>\"Iran and the IAEA will co-operate further with respect to verification activities to be undertaken by the IAEA to resolve all present and past issues,\" Amano said, according to Iran's state-run English-language television, Press TV. \"The practical measures will be implemented in the next three months, starting from today.\"</p><p>The US secretary of state, John Kerry, has played down France's role in blocking a stop-gap deal on Sunday, <a href=\"http://www.theguardian.com/world/2013/nov/11/iran-nuclear-deal-john-kerry\" title=\"\">shifting blame towards Iranian negotiators</a>, headed by the foreign minister, Mohammed Zarif. \"The French signed off on it, we signed off on it,\" Kerry said in Abu Dhabi. \"There was unity but Iran couldn't take it.\"</p><p>The British foreign secretary, William Hague, and the EU foreign policy chief, Lady Ashton, took pains to say the Geneva talks had not failed and there was still a deal to be done.</p><p>\"On the question of will [a final agreement] happen in the next few weeks, there is a good chance of that,\" Hague told the BBC's Andrew Marr show on Sunday. \"A deal is on the table and it can be done. But it is a formidably difficult negotiation, I can't say exactly when it will conclude.</p><p>\"They are narrow gaps. You asked what went wrong, I would say that a great deal went right.\"</p><p>In the provisional agreement reached in Tehran on Monday, several sticking points were notably not addressed. Significantly absent was an agreement on the Parchin military site south-east of the Iranian capital, which is at the heart of the nuclear dispute between Tehran and the west. The IAEA has not been permitted to access Parchin since 2005, despite repeated requests from the international community.</p><!-- Guardian Watermark: internal-code/content/422198728|2013-11-11T15:34:05Z|2d2c23f727a859549cb1d9e0ab5e6d57c1118023 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T14:46:37Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176627125/Ali-Akbar-Salehi-Yukiya-A-004.jpg",
+        "standfirst":"IAEA granted permission to enter long-unseen facilities as Tehran seeks to show co-operation after failure of Geneva talks",
+        "shortUrl":"http://gu.com/p/3ka25",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176627125/Ali-Akbar-Salehi-Yukiya-A-004.jpg",
+        "wordcount":"521",
+        "commentable":"false",
+        "internalContentCode":"422198728",
+        "allowUgc":"false",
+        "internalOctopusCode":"8307540",
+        "isPremoderated":"false",
+        "byline":"Saeed Kamali Dehghan",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995332",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T13:31:05Z"
+      },
+      "tags":[{
+        "id":"world/iran",
+        "type":"keyword",
+        "webTitle":"Iran",
+        "webUrl":"http://www.theguardian.com/world/iran",
+        "apiUrl":"http://content.guardianapis.com/world/iran",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iaea",
+        "type":"keyword",
+        "webTitle":"International Atomic Energy Agency (IAEA)",
+        "webUrl":"http://www.theguardian.com/world/iaea",
+        "apiUrl":"http://content.guardianapis.com/world/iaea",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/nuclearpower",
+        "type":"keyword",
+        "webTitle":"Nuclear power",
+        "webUrl":"http://www.theguardian.com/environment/nuclearpower",
+        "apiUrl":"http://content.guardianapis.com/environment/nuclearpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/foreignpolicy",
+        "type":"keyword",
+        "webTitle":"Foreign policy",
+        "webUrl":"http://www.theguardian.com/politics/foreignpolicy",
+        "apiUrl":"http://content.guardianapis.com/politics/foreignpolicy",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/john-kerry",
+        "type":"keyword",
+        "webTitle":"John Kerry",
+        "webUrl":"http://www.theguardian.com/world/john-kerry",
+        "apiUrl":"http://content.guardianapis.com/world/john-kerry",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/williamhague",
+        "type":"keyword",
+        "webTitle":"William Hague",
+        "webUrl":"http://www.theguardian.com/politics/williamhague",
+        "apiUrl":"http://content.guardianapis.com/politics/williamhague",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/saeedkamalidehghan",
+        "type":"contributor",
+        "webTitle":"Saeed Kamali Dehghan",
+        "webUrl":"http://www.theguardian.com/profile/saeedkamalidehghan",
+        "apiUrl":"http://content.guardianapis.com/profile/saeedkamalidehghan",
+        "bio":"<p>Saeed Kamali Dehghan is an Iranian journalist for the Guardian. He has previously written from the Iranian capital, Tehran, and was there during the<br />crisis following the disputed presidential election in 2009. He is now based in London and was named 2010 <a href=\"http://www.guardian.co.uk/culture/2010/nov/24/guardian-journalist-award-iranian-protests\">Journalist of the Year</a> at the Foreign Press Association Awards. His email is saeed.kamali.dehghan<br />@theguardian.com</p>",
+        "r2ContributorId":"27142",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/29/1359471686287/Saeed-Kamali-Dehghan_2.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422199194",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176622784/Ali-Akbar-Salehi-Yukiya-A-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"54",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176624739/Ali-Akbar-Salehi-Yukiya-A-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"340",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176625955/Ali-Akbar-Salehi-Yukiya-A-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"130",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176627125/Ali-Akbar-Salehi-Yukiya-A-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"84",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176628359/Ali-Akbar-Salehi-Yukiya-A-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"132",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176629622/Ali-Akbar-Salehi-Yukiya-A-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"168",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176630812/Ali-Akbar-Salehi-Yukiya-A-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"180",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176632005/Ali-Akbar-Salehi-Yukiya-A-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"228",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176633198/Ali-Akbar-Salehi-Yukiya-A-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"276",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176634545/Ali-Akbar-Salehi-Yukiya-A-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"372",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176633198/Ali-Akbar-Salehi-Yukiya-A-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"276",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422199195",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384176627125/Ali-Akbar-Salehi-Yukiya-A-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Mehdi Ghasemi",
+            "altText":"Ali Akbar Salehi, Yukiya Amano",
+            "height":"84",
+            "credit":"Mehdi Ghasemi/AP",
+            "caption":"The head of Iran's Atomic Energy Organisation, Ali Akbar Salehi, and the IAEA's director-general, Yukiya Amano, in Tehran on Monday. Photograph: Mehdi Ghasemi/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}
