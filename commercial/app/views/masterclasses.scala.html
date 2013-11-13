@@ -19,7 +19,7 @@
             @for(event <- events) {
                 <li class="product">
                     <h3 class="product__title"><a href="@event.url">@event.name</a></h3>
-                    <div class="product__description">@event.description</p>
+                    <div class="product__description">@event.firstParagraph</p>
                 </li>
             }
         </ul>
