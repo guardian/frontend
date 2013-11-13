@@ -1,5 +1,5 @@
 /*global Event:true */
-define([], function () {
+define(['modules/cookies'], function (Cookies) {
 
     var Session = function () {
         
@@ -23,6 +23,7 @@ define([], function () {
         var c = config || {},
             url = config.beaconUrl,
             path = '/px.gif',
+            inAlphaTest = !!Cookies.get('GU_ALPHA'),
             body = document.body,
             platform = 'responsive',
             sessionLength = 30,
@@ -41,6 +42,9 @@ define([], function () {
                 return path + '?' + query.join('&');
             },
             log = function() {
+                if (!inAlphaTest) {
+                    return false;
+                }
                 if (new Session().isNewSession()) {
                     url += makeUrl({ type: 'session', platform: platform });
                 } else {

@@ -5,8 +5,9 @@ import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
+import common.UsesElasticSearch
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
 
   implicit val config = Configuration
 

@@ -58,7 +58,7 @@ define([
                 authorizer.getLoginStatus();
                 whenTheScriptLoads();
                 expect(FB.init.callCount).toEqual(1);
-                authorizer.getLoginStatus();    1
+                authorizer.getLoginStatus();
                 expect(FB.init.callCount).toEqual(1);
             });
 

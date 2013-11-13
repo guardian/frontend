@@ -1,4 +1,4 @@
-define(['common', 'modules/storage'], function(common, storage) {
+define(['utils/mediator', 'modules/storage'], function(mediator, storage) {
 
     describe('Storage', function() {
 
@@ -10,7 +10,7 @@ define(['common', 'modules/storage'], function(common, storage) {
         };
 
         beforeEach(function() {
-            sinon.spy(common.mediator, 'emit');
+            sinon.spy(mediator, 'emit');
            date = new Date;
         });
 
@@ -21,30 +21,30 @@ define(['common', 'modules/storage'], function(common, storage) {
                     window.localStorage[prop].restore();
                 }
             }
-            storage._setWindow(window);
-            common.mediator.emit.restore();
+            storage.local.setWindow(window);
+            mediator.emit.restore();
         });
-        
+
         function setWindowLocalStorage(winLocalStorage) {
-            storage._setWindow({localStorage: winLocalStorage})
+            storage.local.setWindow({localStorage: winLocalStorage})
         }
-        
+
         function testSetAndGet(key, data, dataAsString) {
             setWindowLocalStorage({
                 setItem: sinon.stub().withArgs(key, dataAsString).returns(true),
                 getItem: sinon.stub().withArgs(key).returns(dataAsString),
                 removeItem: sinon.stub().withArgs(dataAsString)
             });
-            expect(storage.set(key, data)).toBeTruthy();
-            expect(storage.get(key)).toEqual(data);
+            expect(storage.local.set(key, data)).toBeTruthy();
+            expect(storage.local.get(key)).toEqual(data);
         }
 
         it('shouldn\'t be available if can\'t set data', function() {
             setWindowLocalStorage({
                 setItem: sinon.stub().throws()
             });
-            expect(storage.isAvailable()).toBeFalsy();
-            expect(common.mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage: Error', 'modules/storage.js');
+            expect(storage.local.isAvailable()).toBeFalsy();
+            expect(mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage: Error', 'modules/storage.js');
         });
 
         it('should save and retrieve data', function() {
@@ -52,9 +52,9 @@ define(['common', 'modules/storage'], function(common, storage) {
         });
 
         it('should not save if local storage unavailavble', function() {
-            sinon.stub(storage, 'isAvailable').returns(false);
-            expect(storage.set('foo', 'bar')).toBeFalsy();
-            storage.isAvailable.restore();
+            sinon.stub(storage.local, 'isAvailable').returns(false);
+            expect(storage.local.set('foo', 'bar')).toBeFalsy();
+            storage.local.isAvailable.restore();
         });
 
         it('should be able to remove item', function() {
@@ -62,35 +62,35 @@ define(['common', 'modules/storage'], function(common, storage) {
             setWindowLocalStorage({
                 removeItem: sinon.stub().withArgs(key).returns(true)
             });
-            expect(storage.remove(key)).toBeTruthy();
+            expect(storage.local.remove(key)).toBeTruthy();
         });
 
         it('should be able to clear data', function() {
             setWindowLocalStorage({
                 clear: sinon.stub().returns(true)
             });
-            expect(storage.removeAll()).toBeTruthy();
+            expect(storage.local.removeAll()).toBeTruthy();
         });
 
         it('should return if key not set', function() {
             setWindowLocalStorage({
                 getItem: sinon.stub().returns(null)
             });
-            expect(storage.get('foo')).toBe(null);
+            expect(storage.local.get('foo')).toBe(null);
         });
 
         it('should return number of items in storage', function() {
-            storage.removeAll();
-            storage.set('foo',' bar');
-            expect(storage.length()).toBe(1);
-            storage.set('foo2',' bar2');
-            expect(storage.length()).toBe(2);
+            storage.local.removeAll();
+            storage.local.set('foo',' bar');
+            expect(storage.local.length()).toBe(1);
+            storage.local.set('foo2',' bar2');
+            expect(storage.local.length()).toBe(2);
         });
 
         it('should return item by index', function() {
-            storage.removeAll();
-            storage.set('foo',' bar');
-            expect(storage.getKey(0)).toBe('foo');
+            storage.local.removeAll();
+            storage.local.set('foo',' bar');
+            expect(storage.local.getKey(0)).toBe('foo');
         });
 
         it('should handle migrating non-stringified data', function() {
@@ -98,9 +98,9 @@ define(['common', 'modules/storage'], function(common, storage) {
                 getItem: sinon.stub().withArgs('foo').returns('bar|string'),
                 removeItem: sinon.stub().withArgs('foo')
             });
-            expect(storage.get('foo')).toBeNull();
+            expect(storage.local.get('foo')).toBeNull();
         });
-        
+
         describe('Expiration', function() {
 
             it('should delete if expired', function() {
@@ -116,10 +116,10 @@ define(['common', 'modules/storage'], function(common, storage) {
                     removeItem: removeItemSpy
                 });
 
-                storage.set(key, value, {expires: expires});
+                storage.local.set(key, value, {expires: expires});
 
                 // expectations
-                expect(storage.get(key)).toBeNull();
+                expect(storage.local.get(key)).toBeNull();
                 expect(setItemSpy).toHaveBeenCalledWith(key, storedData);
                 expect(removeItemSpy).toHaveBeenCalledWith(key);
             });
@@ -134,10 +134,10 @@ define(['common', 'modules/storage'], function(common, storage) {
                     removeItem: removeItemSpy
                 });
 
-                storage.set(key, value, {expires: expires});
+                storage.local.set(key, value, {expires: expires});
 
                 // expectations
-                expect(storage.get(key)).toBe(value);
+                expect(storage.local.get(key)).toBe(value);
                 expect(removeItemSpy).not.toHaveBeenCalledWith(key);
             });
 

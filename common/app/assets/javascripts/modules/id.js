@@ -1,5 +1,15 @@
 /*global escape:true */
-define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], function(common, Cookies, asyncCallMerger, ajax) {
+define(['common',
+        'modules/cookies',
+        'modules/asyncCallMerger',
+        'modules/storage',
+        'ajax'
+], function(
+    common,
+    Cookies,
+    asyncCallMerger,
+    Storage,
+    ajax) {
     /**
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change
@@ -9,8 +19,9 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
         userFromCookieCache = null;
 
     Id.cookieName = 'GU_U';
+    Id.signOutCookieName = 'GU_SO',
+    Id.fbCheckKey = "gu.id.nextFbCheck";
 
-    Id.signOutCookieName = 'GU_SO';
     var idApiRoot = null,
         idUrl = null;
 
@@ -71,6 +82,7 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
         return idUrl;
     };
 
+
     /**
      * Gets the currently logged in user data from the identity api
      * @param {function} callback
@@ -115,12 +127,16 @@ define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], functio
         return false;
     };
 
+    Id._fbCheckGracePeriodHasEllapsed = function() {
+        var checkIfAfter = Storage.get(Id.fbCheckKey);
+    };
     /**
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hous
      */
     Id.shouldAutoSigninInUser = function() {
-        var signedInUser = Cookies.get(Id.cookieName) ? true : false;
-        return !signedInUser && !this._hasUserSignedOutInTheLast24Hours();
+        var signedInUser = !!Cookies.get(Id.cookieName);
+        var checkFacebook = !!Storage.local.get(Id.fbCheckKey);
+        return !signedInUser && !checkFacebook && !this._hasUserSignedOutInTheLast24Hours();
     };
 
     return Id;

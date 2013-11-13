@@ -26,7 +26,7 @@ define([
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
-        return store.get(participationsKey) || {};
+        return store.local.get(participationsKey) || {};
     }
 
     function isParticipating(test) {
@@ -39,17 +39,28 @@ define([
         participations[test.id] = {
             variant: variantId
         };
-        store.set(participationsKey, participations);
+        store.local.set(participationsKey, participations);
     }
 
     function removeParticipation(test) {
         var participations = getParticipations();
         delete participations[test.id];
-        store.set(participationsKey, participations);
+        store.local.set(participationsKey, participations);
     }
 
     function clearParticipations() {
-        return store.remove(participationsKey);
+        return store.local.remove(participationsKey);
+    }
+
+    function cleanParticipations(config) {
+        // Removes any tests from localstorage that have been
+        // renamed/deleted from the backend
+        var participations = getParticipations();
+        Object.keys(participations).forEach(function (k) {
+            if (typeof(config.switches['ab' + k]) === 'undefined') {
+                removeParticipation({ id: k });
+            }
+        });
     }
 
     function getActiveTests() {
@@ -159,6 +170,8 @@ define([
 
         run: function(config, context, options) {
             var opts = options || {};
+
+            cleanParticipations(config);
 
             getActiveTests().forEach(function(test) {
                 run(test, config, context);

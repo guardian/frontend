@@ -6,6 +6,9 @@
 GET         /assets/internal/*file                                                                           controllers.Assets.at(path="/public", file)
 GET         /assets/*path                                                                                    dev.DevAssetsController.at(path)
 
+# Diagnostics
+GET         /px.gif                                                                                          controllers.ErrorController.px
+
 # Discussion
 GET         /discussion/comment-box.json                                                                     controllers.DiscussionApp.commentBox()
 GET         /discussion/comment-counts                                                                       controllers.DiscussionApp.commentCount(shortUrls: String)
@@ -111,9 +114,13 @@ GET         /analytics/browsers                                                 
 GET         /analytics/abtests                                                                               controllers.admin.AnalyticsController.abtests()
 GET         /metrics/loadbalancers                                                                           controllers.admin.DashboardController.renderDashboard()
 GET         /metrics/fastly                                                                                  controllers.admin.FastlyController.renderFastly()
+GET         /metrics/errors                                                                                  controllers.admin.DashboardController.renderErrors()
+GET         /metrics/errors/4xx                                                                              controllers.admin.DashboardController.render4XX()
+GET         /metrics/errors/5xx                                                                              controllers.admin.DashboardController.render5XX()
 GET         /radiator                                                                                        controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                           controllers.admin.RadiatorController.commitDetail(hash)
+GET         /radiator/livestats                                                                              controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 
 

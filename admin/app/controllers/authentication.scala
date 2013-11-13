@@ -4,6 +4,7 @@ import common.ExecutionContexts
 import conf.Configuration
 import controllers.{AuthAction, LoginController}
 import play.api.mvc._
+import model.NoCache
 
 object Authenticated extends AuthAction(routes.Login.login.url)
 
@@ -19,6 +20,6 @@ object Login extends LoginController with Controller with ExecutionContexts {
   def login = Action {
     request =>
       val error = request.flash.get("error")
-      Ok(views.html.auth.login(error, Configuration.environment.stage))
+      NoCache(Ok(views.html.auth.login(error, Configuration.environment.stage)))
   }
 }

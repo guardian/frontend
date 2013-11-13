@@ -3,7 +3,7 @@ define(['modules/cookies', 'modules/storage'], function(Cookies, storage) {
     var revenueScienceUrl = "js!http://js.revsci.net/gateway/gw.js?csid=E05516";
 
     function getSegments() {
-        var segments = storage.get("gu.ads.audsci");
+        var segments = storage.local.get("gu.ads.audsci");
         return (segments) ? segments : [];
     }
 
@@ -22,7 +22,7 @@ define(['modules/cookies', 'modules/storage'], function(Cookies, storage) {
             }
         };
         window.DM_onSegsAvailable = function(segments, id) {
-            storage.set("gu.ads.audsci", processSegments(segments));
+            storage.local.set("gu.ads.audsci", processSegments(segments));
             // Kill any legacy cookies
             Cookies.cleanUp(["rsi_segs"]);
         };

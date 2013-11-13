@@ -10,7 +10,7 @@ case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: Str
 
   def matches(segment: Segment): Boolean = {
     val someKeywordsMatch = intersects(keywords.map(_.name).toSet, segment.context.keywords.toSet)
-    segment.isRepeatVisitor && someKeywordsMatch
+    someKeywordsMatch
   }
 
 }

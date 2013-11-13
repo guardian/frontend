@@ -248,6 +248,14 @@ case class FastlyMetricGraph(
   )
 }
 
+case class LiveStatsGraph(metricResults: Future[GetMetricStatisticsResult]) {
+    private lazy val dataPoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
+    lazy val dataset = dataPoints.map(d => DataPoint(
+      new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
+    )
+    lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.1)
+}
+
 case class CostMetric(costMetric: Future[GetMetricStatisticsResult]) {
   lazy val cost = costMetric.get().getDatapoints.headOption.map(_.getMaximum.toInt).getOrElse(0)
 }

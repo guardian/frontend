@@ -1,5 +1,5 @@
-var collection = '.collection--sport',
-    button = collection + ' .collection__display-toggle';
+var container = '.container:nth-child(2)',
+    button = container + ' .container__toggle';
 
 /**
  *
@@ -13,17 +13,17 @@ casper.test.setUp(function() {
 });
 
 /**
- * Scenario: Users can hide collections
+ * Scenario: Users can hide container
  *    Given I visit the network front
- *    When I hide and show a collection
- *    Then the collection will be hidden and shown
+ *    When I hide and show a container
+ *    Then the container will be hidden and shown
  **/
-casper.test.begin('Users can hide and show collections', function(test) {
+casper.test.begin('Users can hide and show container', function(test) {
     casper.waitForSelector(button, function() {
         this.click(button);
-        test.assertNotVisible(collection + ' .items', 'collection is hidden');
+        test.assertNotVisible(container + ' .collection', 'container is hidden');
         this.click(button);
-        test.assertVisible(collection + ' .items', 'collection is shown');
+        test.assertVisible(container + ' .collection', 'container is shown');
     });
 
     casper.run(function() {
@@ -32,18 +32,18 @@ casper.test.begin('Users can hide and show collections', function(test) {
 });
 
 /**
-* Scenario: Collection state remembers user's preference
-*    Given I've previously closed a collection on the network front
+* Scenario: Container state remembers user's preference
+*    Given I've previously closed a container on the network front
 *    When I visit the network front
-*    Then the collection should be closed
+*    Then the container should be closed
 **/
-casper.test.begin('Collections remember user\'s preference of state', function(test) {
+casper.test.begin('Containers remember user\'s preference of state', function(test) {
     casper.waitForSelector(button, function(){
         this.click(button);
         this.reload();
     });
-    casper.waitWhileVisible(collection + ' .items', function(){
-        test.assertNotVisible(collection + ' .items', 'collection is hidden');
+    casper.waitWhileVisible(container + ' .collection', function(){
+        test.assertNotVisible(container + ' .collection', 'container is hidden');
     });
 
     casper.run(function() {
@@ -52,18 +52,19 @@ casper.test.begin('Collections remember user\'s preference of state', function(t
 });
 
 /**
-* Scenario: Can show more items in collection
+* Scenario: Can show more items in a collection
 *    Given I visit the network front
 *        And a collection has hidden items
 *    When I click 'Show More'
 *    Then hidden items should be show
 **/
 casper.test.begin('Users can show more items in a collection', function(test) {
-    var showMoreSelector = '.collection--news .items__show-more';
-    casper.waitForSelector(showMoreSelector, function() {
-        var currentItemsShown = this.evaluate(function() { return document.querySelectorAll('.collection--news .item:not(.u-h)').length; })
-        this.click(showMoreSelector);
-        test.assertNotEquals('.collection--news .item:not(.u-h)', currentItemsShown, 'showing more items');
+    var firstContainerSelector = '.container:first-child',
+        firstShowMoreSelector = firstContainerSelector + ' .collection__show-more';
+    casper.waitForSelector(firstContainerSelector, function() {
+        var currentItemsShown = this.evaluate(function() { return document.querySelectorAll(firstContainerSelector + '.item').length; })
+        this.click(firstShowMoreSelector);
+        test.assertNotEquals(firstContainerSelector + ' .item', currentItemsShown, 'showing more items');
     });
 
     casper.run(function() {
@@ -72,33 +73,18 @@ casper.test.begin('Users can show more items in a collection', function(test) {
 });
 
 /**
-* Scenario: First item in each collection has an image
+* Scenario: First item in a collection has an image
 *    Given I visit the network front
-*    Then the first item in each collection should have an image
+*    Then the first item in a collection should have an image
 **/
 /*
 casper.test.begin('First item in a collection displays an image', function(test) {
-    casper.waitWhileSelector('.collection .item:first-child.item--no-image', function() {
-        test.assertDoesntExist('.collection .item:first-child.item--no-image', 'item\'s image shown');
-    });
-
-    casper.run(function() {
-        test.done();
-    })
-});
-*/
-
-/**
- * Scenario: First item in each container has a main image
- *    Given I visit the network front
- *    Then the first item in each container should have a main image
- **/
-/*
-casper.test.begin('First item in a container displays a main image', function(test) {
-    casper.waitWhileSelector('.collection .item:first-child.item--no-image', function() {
-        this.getElementsInfo('.collection[data-type] .item:first-child .item__image').forEach(function(elementInfo) {
-            test.assertEquals(elementInfo.attributes.src, elementInfo.attributes['data-src-main-mobile'], 'item\'s main image shown');
-        });
+    var itemSelector = '.container:first-child .item:first-child.item--has-image';
+    casper.thenBypassUnless(function() {
+        return this.exists(itemSelector);
+    }, 1);
+    casper.waitForSelector(itemSelector + ' img', function() {
+        test.assertExist(itemSelector + ' img', 'item\'s image shown');
     });
 
     casper.run(function() {
@@ -140,14 +126,15 @@ casper.test.begin('Items display their comment count', function(test) {
 */
 
 /**
-* Scenario: Popular collection appears at the bottom of the page
+* Scenario: Popular container appears at the bottom of the page
 *    Given I visit the network front
-*    Then I should see the popular collection
+*    Then I should see the popular container
 **/
-casper.test.begin('Popular collection appears at the bottom of the page', function(test) {
-    casper.waitForSelector('.collection--popular', function(){
-        test.assertExists('.collection--popular', 'popular collection displayed');
-        test.assertElementCount('.collection--popular .item:nth-child(-n+3):not(.u-h)', 3, 'first three items visible');
+casper.test.begin('Popular container appears at the bottom of the page', function(test) {
+    var popContainerSelector = '.container--popular';
+    casper.waitForSelector(popContainerSelector, function(){
+        test.assertExists(popContainerSelector, 'popular container displayed');
+        test.assertElementCount(popContainerSelector+ ' .item', 5, 'first five items visible');
     });
 
     casper.run(function() {

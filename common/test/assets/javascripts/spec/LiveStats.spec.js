@@ -1,4 +1,4 @@
-define(['common', 'modules/analytics/livestats'], function(common, LiveStats) {
+define(['common', 'modules/analytics/livestats', 'modules/cookies'], function(common, LiveStats) {
 
     describe("LiveStats", function() {
        
@@ -6,7 +6,8 @@ define(['common', 'modules/analytics/livestats'], function(common, LiveStats) {
        
         beforeEach(function() {
             window.sessionStorage.clear();
-            common.$g('#js-livestats').remove(); 
+            document.cookie="GU_ALPHA=true;expires=" + new Date(2054,1,1).toUTCString();
+            common.$g('#js-livestats').remove();
             ls = new LiveStats({ beaconUrl: 'beacon.gu.com' });
         });
         
