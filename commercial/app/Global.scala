@@ -1,10 +1,12 @@
 import common.{AkkaAsync, CommercialMetrics, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
-import model.commercial.jobs.JobsAgent
+import model.commercial.jobs.{LightJobsAgent, JobsAgent}
 import model.commercial.travel.OffersAgent
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
+import play.api.Play
+import play.api.Play.current
 
 trait CommercialLifecycle extends GlobalSettings {
 
@@ -25,9 +27,10 @@ trait CommercialLifecycle extends GlobalSettings {
       JobsAgent.refresh()
     }
 
-    AkkaAsync{
+    AkkaAsync {
       OffersAgent.refresh()
       JobsAgent.refresh()
+      if (Play.isDev) LightJobsAgent.refresh()
     }
   }
 
