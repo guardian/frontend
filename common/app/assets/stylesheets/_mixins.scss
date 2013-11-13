@@ -7,23 +7,16 @@
 
 // Transform a value into rem
 // Assuming baseline is set to 10px on :root/html
-@function rem($value, $baseline: 10) {
-    @return strip-unit($value) / $baseline + rem;
-}
-
-// Converts a list of values into rem
-@function remCalc($values) {
-    $max: length($values);
-    $remValues: '';
-
-    @for $i from 1 through $max {
-        $value: nth($values, $i);
-        $remValues: #{$remValues + rem($value)};
-        @if $i < $max {
-            $remValues: #{$remValues + " "};
+@function rem($value, $baseline: 10px) {
+    @if type-of($value) == list {
+        $result: ();
+        @each $e in $value {
+            $result: append($result, rem($e));
         }
+        @return $result;
+    } @else {
+        @return if(unit($value) == px, $value / $baseline * 1rem, $value);
     }
-    @return $remValues;
 }
 
 // Output rem units with px fallback
