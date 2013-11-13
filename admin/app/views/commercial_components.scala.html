@@ -22,24 +22,44 @@
     </style>
     <script>
         $(function() {
-            var components = {
-                masterclasses : '/commercial/masterclasses.json',
-                travel :        '/commercial/travel/offers.json?k=canada&seg=repeat',
-                jobs :          '/commercial/jobs.json'
+            var guCommercial = {
+
+                components: {
+                    masterclasses : '/commercial/masterclasses.json',
+                    travel :        '/commercial/travel/offers.json?k=canada&seg=repeat',
+                    jobs :          '/commercial/jobs.json'
+                },
+
+                debounce: function(fn, delay) {
+                    var timer = null;
+                    return function () {
+                        var context = this, args = arguments;
+                        clearTimeout(timer);
+                        timer = setTimeout(function () {
+                            fn.apply(context, args);
+                        }, delay);
+                    };
+                },
+
+                init: function() {
+                    var self = this;
+                    Object.keys(this.components).forEach(function(key) {
+                        var componentType = key,
+                            endpoint      = self.components[key];
+
+                        $.getJSON(endpoint).done(function(response) {
+                            $('.'+componentType).html(response.html);
+                        });
+                    });
+                }
             };
 
-            Object.keys(components).forEach(function(key) {
-                var componentType = key,
-                    endpoint      = components[key];
-
-                $.getJSON(endpoint).done(function(response) {
-                   $('.'+componentType).html(response.html);
-                });
-            });
-
+            guCommercial.init();
 
         })
     </script>
+
+
 
     <ul class="components unstyled">
         <li>
