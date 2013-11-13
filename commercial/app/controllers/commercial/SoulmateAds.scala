@@ -13,11 +13,11 @@ object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegment
     implicit request =>
       val matching = agent.matchingAds(segment)
       if (matching.isEmpty) {
-        Ok("No members") withHeaders ("Cache-Control" -> "max-age=60")
+        noMatchingSegmentsResult
       } else {
         val shuffled = Random.shuffle(matching)
         JsonComponent {
-          "html" -> views.html.soulmates(shuffled take 5)
+          views.html.soulmates(shuffled take 5)
         } withHeaders ("Cache-Control" -> "max-age=60")
       }
   }

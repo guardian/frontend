@@ -3,6 +3,8 @@ package controllers.commercial
 import model.commercial.Context
 import model.commercial.Segment
 import play.api.mvc._
+import common.JsonComponent
+import play.api.libs.json.JsObject
 
 trait ExpectsSegmentInRequests {
 
@@ -13,5 +15,9 @@ trait ExpectsSegmentInRequests {
     val userSegments = params getOrElse("seg", Nil)
     Segment(Context(section, keywords), userSegments)
   }
+
+  def noMatchingSegmentsResult(implicit request: Request[AnyContent]) = JsonComponent {
+    JsObject(Nil)
+  } withHeaders ("Cache-Control" -> "max-age=60")
 
 }

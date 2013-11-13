@@ -11,11 +11,11 @@ object JobAds extends Controller with ExecutionContexts with ExpectsSegmentInReq
     implicit request =>
       val jobs = JobsAgent.matchingAds(segment)
       if (jobs.isEmpty) {
-        Ok("No jobs") withHeaders ("Cache-Control" -> "max-age=60")
+        noMatchingSegmentsResult
       } else {
         val shuffled = Random.shuffle(jobs)
         JsonComponent {
-          "html" -> views.html.jobs(shuffled take 5)
+          views.html.jobs(shuffled take 5)
         } withHeaders ("Cache-Control" -> "max-age=60")
       }
   }
@@ -25,11 +25,11 @@ object JobAds extends Controller with ExecutionContexts with ExpectsSegmentInReq
     implicit request =>
       val jobs = LightJobsAgent.matchingAds(segment)
       if (jobs.isEmpty) {
-        Ok("No jobs") withHeaders ("Cache-Control" -> "max-age=60")
+        noMatchingSegmentsResult
       } else {
         val shuffled = Random.shuffle(jobs)
         JsonComponent {
-          "html" -> views.html.lightjobs(shuffled take 5)
+          views.html.lightjobs(shuffled take 5)
         } withHeaders ("Cache-Control" -> "max-age=60")
       }
   }
