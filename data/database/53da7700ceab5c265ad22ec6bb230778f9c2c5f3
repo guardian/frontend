@@ -1,0 +1,1918 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/nov/07/ghana-accra-technology-startup-robot",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-07T10:30:00Z",
+      "webTitle":"'Could the next Google come from Africa?' ",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/07/ghana-accra-technology-startup-robot",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/07/ghana-accra-technology-startup-robot",
+      "fields":{
+        "newspaperPageNumber":"24",
+        "trailText":"<p>Ghana is a country of technological contradictions.  In many schools, IT is taught in classrooms with no electricity yet mobile penetration exceeds 100%. Tech start-ups are using the challenges and opportunities as a spring board and achieving way beyond expectation</p>",
+        "headline":"'Could the next Google come from Africa?'",
+        "body":"<p>In East Legon, a smart suburb of Ghana's capital, Accra, two men and a woman in their 20s stand in front of a slick ad featuring a large plane in mid-flight. They are pitching a business idea for a website that would allow travellers to compare ticket prices, then book and pay for airline tickets on domestic flights.</p><p>The pitch has sparked a lively debate among the pupils who sit in a darkened classroom, with the words \"generosity, positivity, standards\" emblazoned on the wall. The students, who nod seriously at the feedback, are on the first year of an intensive training programme at the Meltwater Entrepreneurial School of Technology (Mest), a postgraduate school that offers university graduates – some with no prior experience at all – a two-year course in software programming and business development.</p><p>Mest provides its students with housing, pocket money, meals, transport and a laptop – free of cost – and, in return, it expects full concentration for two years of full-time study. Its teaching staff say that the transformation after students have been through the process is extreme. \"When they join, they probably haven't written two lines of code before. Next year they are creating apps left and right,\" says Unni Krishnan, senior faculty member at Mest.</p><p>It is widely acknowledged that intensive training of this kind – which Mest says is producing world-class software engineers and businesses – is exactly what is needed in West Africa. But, like many of its neighbours, Ghana is still a country of contradictions, with pockets of world-class innovation coexisting alongside chronic poverty.</p><p>The mobile penetration rate in Ghana, which is now a lower-middle income country, exceeds 100%. Of a population of 24 million, 17 million people own a total of 27 million mobile phones. The six telecommunication companies operating in the country earn an <a href=\" http://www.ghanaweb.com/GhanaHomePage/NewsArchive\" title=\"\">average daily income</a> of about $10m (£6.2m).</p><p>The Ghanaian company <a href=\"http://www.rlgghana.com/\" title=\"\">RLG</a> is increasingly popular in West Africa with its locally manufactured laptops, smartphones and tablets. Last month it added a Ghanaian tablet, <a href=\"http://www.ghanaweb.com/GhanaHomePage/NewsArchive/artikel.php?ID=289637\" title=\"\">the \"G slab\"</a>, invented by a 28-year old as a rival to Apple's iPad and Samsung's Galaxy tablet.</p><p>Yet the Ghanaian education system still teaches through a Victorian English-inspired system of rote learning. In many schools, IT is taught in classrooms with no electricity, let alone access to computers, and pupils are asked to copy out pictures of a desk monitor and keyboard into their notebooks.</p><p>\"The Ghanaian education system is not generally producing people who are innovative,\" says Mac-Jordan Degadjor, a <a href=\"http://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CC4QFjAA&amp;url=http%3A%2F%2Fmacjordangh.com%2F&amp;ei=ZuZ4Uo2CHOeq0QWl-oHQCA&amp;usg=AFQjCNGZvmAp9ay2lr0S9cbmKkhko5TnrQ&amp;bvm=bv.55980276,d.d2k\" title=\"\">tech blogger</a> and entrepreneur who has raised the profile of tech startups in Ghana. \"We need to start focusing on entrepreneurial skills as a topic within schools, and make sure that by the time you get to university, you are not just thinking about applying for jobs, but starting something for yourself.\"</p><p>But, like those of many African countries, Ghana's tech entrepreneurs are thriving in spite of what is often perceived as a far from ideal environment.</p><p><a href=\"http://bit.ly/1d2Iykk\" title=\"\">Mobile applications for money transfers</a>, bypassing the lack of access to formal banking for many rural dwellers, and for farmers who need <a href=\"http://www.esoko.com/about/news.php\" title=\"\">real-time updates</a> about prices and help accessing marketplaces, are examples of how developing country problems have only created opportunities for local entrepreneurs to come up with innovative problem-solving.</p><p>\"The exciting thing is that there's a new generation of technology entrepreneurs in Ghana who are starting to transform the country,\" says Dr Sipho Moyo, Africa director for <a href=\"http://www.one.org/us/\" title=\"\">anti-poverty charity One</a>, which is supporting tech innovation in Ghana. \"I have high hopes that their innovation can accelerate progress right across the continent, thus shaping its future.\"</p><p>\"Could the next Google come from Africa? Why not?\" says Richard Tanksley, entrepreneur and senior faculty member at <a href=\"http://www.meltwater.org/who-we-are/faculty\" title=\"\">Mest</a>. \"Our whole business model is to produce a globally successful software company in the next five years, and we have every reason to think it will happen.</p><p>\"There is so much focus on Africa as a place to invest, to build businesses, there is no reason why you couldn't have multimillion dollar software companies coming out of here.\"</p><h2><strong>Eyram Tawia, </strong>Leti Arts</h2><p>Walking into the office of <a href=\"http://www.letiarts.com/\" title=\"\">Leti Arts</a> is a bit like walking into a teenager's bedroom. Behind a closed door, on the ground floor of what is still a partly residential building, a room opens up, the walls plastered with giant comic figures of superheroes, dressed in bright Lycra with clenched fists and coloured lights emanating from their eyes.</p><p>But the half-dozen people sitting in this office are not playing games. They are working on a project they believe will revolutionise the way Africans relate to their folklore and history, by modernising ancient stories for a younger audience through games and comic strips on mobile phones.</p><p>\"We are not even good at preserving our history and folklore – we watch Thor, the Nordic god of thunder, or Superman, Spiderman, Captain America, Batman,\" says Eyram Tawia, 29, co-founder of Leti Arts.</p><p>\"But Africa has a lot of stories, voodoo and tradition that have been almost lost and can be brought back. Why not bring back a pharaoh from Egypt and turn him into a fantasy character? Why not bring back Yaa Asantewaa, the famous Ghanaian female warrior?\"</p><p>Yaa Asantewaa – who led Ghana's Ashanti people into battle, famously defeating the imperial British army – has until now only been accessible through oral history and dense academic tracts. But, reinvented, she looms large on the wall of the Leti Arts office, appearing as never seen before with a tiny waist, ample cleavage, six-pack and bulging biceps in the unmistakable guise of a female superheroine.</p><p>\"History in school is so boring,\" says Tawia. \"You have to read through 1,000 pages of textbook to learn about Yaa Asantewaa. You have to listen to about 15 cassettes to learn about Shaka Zulu. Modernising culture is very necessary to preserve the story for the new generation.\"</p><p>The Leti team designs games, which Tawia codes himself, and has produced \"Africa's Legends\" comic editions – described as an \"African Avengers\" – available on mobile devices through a free app, with some comics free and some paid-for.</p><p>The company is already generating its own revenue by building technology which it licenses to other companies, including a game for training health professionals on childbirth and a greeting card app made from a customised version of its server.</p><p>Leti Arts is already a viable business but Tawia says he hopes it will be much more than that. \"We are getting exceptional people to do really innovative things,\" he says. \"We are not just creating a company, we are building a whole new industry. Nobody has had job titles like 'lead illustrator' or 'game developer' in Ghana before. Now when I go to conferences, I meet lawyers, doctors, I say I'm a 'game developer' – it feels good.\"</p><h2><strong>Mac-Jordan Degadjor, </strong>tech blogger</h2><p>For tech people anywhere in Africa, this is a familiar sight. A dapper, 6ft 4in young Ghanaian, wearing Ray-Bans, a smart navy blue suit and brown beads around his wrist, sits engrossed in a laptop emblazoned with \"Make Fufu not War!\" and a sticker marked \"I do not consent to the search of this laptop\".</p><p>\"They tried to search it once!\" exclaims Mac-Jordan Degadjor, referring to when Dutch authorities insisted on gaining access to his laptop at Schipol airport. His beloved machine now bears the sticker as a form of protest.</p><p>Degadjor is no stranger to run-ins with the authorities. The 28-year old  first began his blog, <a href=\"http://macjordangh.com/\" title=\"\">macjordangh.com</a> – now renowned as one of the best tech blogs in Africa – as a young student in Ukraine, frustrated with persistent racism and unwanted attention from the authorities.</p><p>\"I started blogging because of the way the Ukraine police were targeting African students – harassing them and extorting money from them if they were not carrying their passport,\" he says. When he returned to Ghana, he realised that there was very little blogging going on back home, and what there was was not engaged with tech and innovation.</p><p>\"In Ghana we are still talking about political parties, about corruption,\" he says. \"We are behind other countries. Kenya has a goal to achieve broadband penetration of 100% by 2015.  We are still below 20%.\"</p><p>Degadjor's blog is now at the forefront of a change in Ghana. Despite the undoubted challenges in a country where basic infrastructure is still lacking – with erratic water and electricity supply even in major cities and poor roads – the Mac-Jordan Degadjor blog is a hub of startup tours, hackathons, tech ideas, and good news for those who care about Africa's place in a tech-driven world.</p><p>\"There are challenges, but the tech revolution is happening all over Africa,\" says Degadjor. \"Day in, day out people are getting together at hacker spaces or innovation centres, and gradually ideas are coming up from these hubs.\"</p><p>Now Degadjor is working on a project called AfroPreneus Web-series: How We Made It – a web series of 30-minute interviews with up-and-coming entrepreneurs across tech, fashion and social ventures, with a particular emphasis on featuring female-led businesses.</p><p>\"This is about celebrating African entrepreneurs,\" he says. \"So our target is to share these stories across the blogosphere, so that other young people coming up in Africa can know that when they finish school, they don't have to struggle to get a job, when there is so much unemployment – they can start their own company.\"</p><h2><strong>Nicole Amarteifio, </strong>social media strategist and online TV creator</h2><figure data-media-id='gu-image-422073252'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383819303262/Nicole-Amarteifio-001.jpg' alt='Nicole Amarteifio' width='220' height='324' class='gu-image'/><figcaption>Nicole Amarteifio, creator of An African City: 'By putting my show online I have the creative freedom to talk about sexual politics.' Photograph: Nyani Quarmyne/Panos Pictures</figcaption></figure><p>In 2010, <a href=\"http://blogs.worldbank.org/team/nicole-amarteifio\" title=\"\">Nicole Amarteifio</a> was sitting in a class for her masters degree at Georgetown university in Washington DC, feeling upset. She was studying corporate communications, and a guest lecturer had come to discuss development.</p><p>\"This American woman did a presentation on development communications, and every African woman in it had a pot on her head and was half naked except for strings of beads\" says Amarteifio. \"I was very upset. Afterwards I told my professor; this is not the story of the African woman. It is only part of it.\"</p><p>For Amarteifio, whose Ghanaian parents raised her in London and the US from infancy, the sense that what was really happening in Africa was not being communicated was the catalyst she needed. After graduating, she went on to become a social media strategist on Africa at the World Bank.</p><p>\"Social media has really changed the discourse for young people in Africa,\" she says. \"The Africa region of the World Bank has been there – we had the first Facebook page, the first Twitter page – we are online, talking to young people on the continent, we are in their space. Africans are excited about it. Now you can tweet your president. The gap was so big before.\"</p><p>Using social media to involve Africans in a global discourse about their own future – which Amarteifio continues to do as a consultant – was part of her project to bridge the gap between the Africa she knows and the one the rest of the world sees.</p><p>But there was another side to life as an African woman Amarteifio felt was still not being communicated – life as a single, young woman living in the Ghanaian capital Accra – or what Amarteifio describes as a kind of African <em>Sex And the City</em>.</p><p>\"When I first saw <em>Sex And The City</em>, I just thought these women were so authentic – they are discovering their sexuality and talking in such an open way. But the gap between their experiences and my experience discovering the same things in Africa was so big.\"</p><p>In 2009, Amarteifio began writing her own series, <em>An African City</em>, set in Accra with characters from all over sub-Saharan Africa. But despite interest from TV channels, she is deliberately broadcasting the first series entirely online.</p><p>\"By going online, I don't have to be dictated by TV networks about what they do or don't want to see,\" she says. \"My show certainly pushes the boundaries – it is about five women who talk authentically about love and life, and that includes sensuality.</p><p>\"People will be shocked, and some people will be angry – especially some African men. But by putting my show online I have the creative freedom to talk about these sexual politics. It is all about the conversation.\"</p><h2><strong>Ben Nortey, </strong>robotics innovator</h2><p>Ben Nortey's sixth-floor office is one of the last places you would expect to find robots. Next to Makola market, the chaotic, pulsing centre of urban Accra, the Metro Institute of Innovation and Technology (Mint) is just one, neat room in a tower block which is surrounded by the commotion of traders, hawkers and shoppers on one side, the vast, misty Atlantic ocean to the other, and Accra's slow-trawling traffic all around.</p><p>But inside is a rare oasis of scientific order. Bookshelves lined with titles such as <em>Algorithms from P to NP</em> and <em>Programming Language: Concepts and Constructs</em> sit side-by-side with a neat array of robots – most made from scrap materials such as plastic bottles, colourfully painted, alongside electronics equipment, tools and robotics kits.</p><p>Nortey, an energetic 27-year old Ghanaian computer science graduate with an infectious smile, loves robots. \"As a child I had a lot of interest in these kinds of creatures – I loved movies like <em>Transformers</em>,\" he says.</p><p>Since there is virtually no robotics teaching in Ghana, Nortey taught himself. \"I worked out how to build robots by reading books, and by looking at what other people are doing on the internet and experimenting,\" he says. \"I spent hours on the internet – it has been a serious resource for me. And I have taken online courses on open platforms, like one from MIT and one from Stanford.\"</p><p>Nortey's vision is that in 20 years' time he will be building sophisticated robots in Ghana: \"In this part of the world, we start everything too late. In Ghana, many computer science students write their first computer program code during their first year in university. But I read stories of 12-year- olds in other countries who have built apps, put them in a store online and made loads of money. I want to transfer this knowledge.\"</p><p>Nortey's company runs <a href=\"http://themintoftech.net/\" title=\"\">private classes</a> for young people with a natural passion and interest in robotics, as well as other computer programming areas such as creating apps and gaming. One of his proudest achievements is teaching a five-year-old how to write code.</p><p>\"This five-year old learned how to program motors and micro-controllers. He could understand concepts like loops which some people find quite complex,\" Nortey explains. \"He is exactly the kind of child I want to work with!\"</p><p>Nortey is going to present a new TV programme called <em>Scrapbot</em> which will be a kind of <em>Blue Peter</em>-style \"how to\" show about building robots from scrap for children. So far Mint has trained around 2,500 people in Ghana, and Nortey hopes that through <em>Scrapbot</em>, they will reach many thousands more.</p><p>\"I'm currently looking at an intelligent system to help deal with the traffic situation,\" he says, gesturing towards the gridlocked roads outside.</p><p>\"And we have oil and gas in Ghana, but we have not harnessed the potential of technology to monitor the environmental effects – we could be embedding sensors into microcontrollers and collecting real-time data.</p><p>\"It is possible for Ghana to produce this kind of technology – we just have to take it seriously.\"</p><!-- Guardian Watermark: internal-code/content/421692829|2013-11-11T15:34:05Z|ff9c194e111ef3f0bc171b088a6f642cee1e9b26 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-10T00:06:19Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+        "standfirst":"Ghana is a country of technological contradictions.  In many schools, IT is taught in classrooms with no electricity yet mobile penetration exceeds 100%. Tech start-ups are using the challenges and opportunities as a spring board and achieving way beyond expectation",
+        "shortUrl":"http://gu.com/p/3k5dc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+        "wordcount":"2510",
+        "commentable":"true",
+        "internalContentCode":"421692829",
+        "allowUgc":"false",
+        "internalOctopusCode":"8264740",
+        "isPremoderated":"false",
+        "byline":"Afua Hirsch",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-11-10",
+        "internalPageCode":"1991991",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-10T10:30:00Z"
+      },
+      "tags":[{
+        "id":"world/ghana",
+        "type":"keyword",
+        "webTitle":"Ghana",
+        "webUrl":"http://www.theguardian.com/world/ghana",
+        "apiUrl":"http://content.guardianapis.com/world/ghana",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/startups",
+        "type":"keyword",
+        "webTitle":"Technology startups",
+        "webUrl":"http://www.theguardian.com/technology/startups",
+        "apiUrl":"http://content.guardianapis.com/technology/startups",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/telecoms",
+        "type":"keyword",
+        "webTitle":"Telecoms",
+        "webUrl":"http://www.theguardian.com/technology/telecoms",
+        "apiUrl":"http://content.guardianapis.com/technology/telecoms",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/telecoms",
+        "type":"keyword",
+        "webTitle":"Telecommunications industry",
+        "webUrl":"http://www.theguardian.com/business/telecoms",
+        "apiUrl":"http://content.guardianapis.com/business/telecoms",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/afuahirsch",
+        "type":"contributor",
+        "webTitle":"Afua Hirsch",
+        "webUrl":"http://www.theguardian.com/profile/afuahirsch",
+        "apiUrl":"http://content.guardianapis.com/profile/afuahirsch",
+        "bio":"<p>Afua Hirsch is the Guardian's west Africa correspondent based in Ghana</p>",
+        "r2ContributorId":"28094",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/8/1289231487480/afua-hirsch.jpg",
+        "references":[]
+      },{
+        "id":"technology/robots",
+        "type":"keyword",
+        "webTitle":"Robots",
+        "webUrl":"http://www.theguardian.com/technology/robots",
+        "apiUrl":"http://content.guardianapis.com/technology/robots",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"theobserver/observer-tech-monthly/observer-tech-monthly",
+        "type":"newspaper-book-section",
+        "webTitle":"Observer Tech Monthly",
+        "webUrl":"http://www.theguardian.com/theobserver/observer-tech-monthly/observer-tech-monthly",
+        "apiUrl":"http://content.guardianapis.com/theobserver/observer-tech-monthly/observer-tech-monthly",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"theobserver/observer-tech-monthly",
+        "type":"newspaper-book",
+        "webTitle":"Observer Tech Monthly",
+        "webUrl":"http://www.theguardian.com/theobserver/observer-tech-monthly",
+        "apiUrl":"http://content.guardianapis.com/theobserver/observer-tech-monthly",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422073250",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649746862/Mac-Jordan-Degadjor-001.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"54",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649749385/Mac-Jordan-Degadjor-002.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"340",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649750978/Mac-Jordan-Degadjor-003.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"130",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"84",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649754219/Mac-Jordan-Degadjor-005.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"132",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649755916/Mac-Jordan-Degadjor-006.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"168",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649757472/Mac-Jordan-Degadjor-007.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"180",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649759052/Mac-Jordan-Degadjor-008.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"228",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649760644/Mac-Jordan-Degadjor-009.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"276",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649762208/Mac-Jordan-Degadjor-010.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"372",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649760644/Mac-Jordan-Degadjor-009.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"276",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422073251",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"84",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-422073252",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383819303262/Nicole-Amarteifio-001.jpg",
+          "typeData":{
+            "source":"Nyani Quarmyne/Panos Pictures",
+            "altText":"Nicole Amarteifio",
+            "height":"324",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Nicole Amarteifio, creator of An African City: 'By putting my show online I have the creative freedom to talk about sexual politics.' Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"technology/2013/nov/06/google-remove-max-mosley-orgy-pictures",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-06T19:14:09Z",
+      "webTitle":"Google ordered to remove Max Mosley orgy pictures",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/06/google-remove-max-mosley-orgy-pictures",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/06/google-remove-max-mosley-orgy-pictures",
+      "fields":{
+        "trailText":"Decision in French court comes after former head of Formula One said that showing images breaches his privacy",
+        "headline":"Google ordered to remove Max Mosley orgy pictures",
+        "body":"<p>A French court has ordered Google to find a way to remove recurring links to nine images of former Formula One chief Max Mosley, who was photographed in 2008 at an orgy.</p><p>The civil dispute in the Paris superior court relates to photographs of Mosley published by the defunct London British tabloid News of the World that were accompanied by an article suggesting he had organised a \"sick Nazi orgy\".</p><p>Mosley has acknowledged that he engaged in sadomasochistic activity with five women and paid them £2,500 ($4,000), but denied the orgy was Nazi-themed and said showing the images breached his privacy. The 73-year-old won earlier privacy cases against the tabloid both in Britain and in France.</p><p>The decision is a setback to Google as it tries to defend a global stance that the search engine is merely a platform that delivers links to content and it should not be responsible for policing them.</p><p>Although Google can delete images on its website, it cannot prevent others reposting them, resulting in a constant game of catch-up.</p><p>In a statement, Google said the court's request would require it to build a new software filter to continuously catch new versions of the posted images and remove them.</p><p>\"This is a troubling ruling with serious consequences for free expression and we will appeal it,\" said Google's associate general counsel Daphne Keller in a statement.</p><p>\"Even though we already provide a fast and effective way of removing unlawful material from our search index, the French court has instructed us to build what we believe amounts to a censorship machine.\"</p><p>In this case Mosley said Google had not done enough to remove images that could still be seen on the search engine.</p><p>The court ordered the company to \"remove and cease, for a period of five years beginning two months after this decision, the appearance of nine images identified by Max Mosley in the Google Images search engine results\".</p><p>Google, which did not say whether it planned to appeal, was ordered to pay a token €1 in damages and Mosley €5,000 costs.</p><p>The company's existing system to remove content that breaches individuals' privacy laws is \"an effective way of helping Mr Mosley\", Keller added.</p><p>In a blogpost published in September, Google said it had already removed \"hundreds of pages for Mr Mosley\" as part of a process that helps people delete specific pages from Google's search results after they have been shown to violate the law.</p><p>Google, along with other technology companies, has lobbied against a draft European law in Brussels that would give consumers greater rights to ask that their content be removed from websites.</p><!-- Guardian Watermark: internal-code/content/421846743|2013-11-11T15:34:05Z|cdf183a53c4a27cdc95a50394da1622e95da7c30 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-06T21:00:43Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765188644/Max-Mosley--004.jpg",
+        "standfirst":"Decision in French court comes after former head of Formula One said that showing images breaches his privacy",
+        "shortUrl":"http://gu.com/p/3k74k",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765188644/Max-Mosley--004.jpg",
+        "wordcount":"426",
+        "commentable":"false",
+        "internalContentCode":"421846743",
+        "allowUgc":"false",
+        "internalOctopusCode":"8290861",
+        "isPremoderated":"false",
+        "byline":"Reuters in Paris",
+        "publication":"theguardian.com",
+        "internalPageCode":"1993214",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-09T19:14:09Z"
+      },
+      "tags":[{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy & the media",
+        "webUrl":"http://www.theguardian.com/media/privacy",
+        "apiUrl":"http://content.guardianapis.com/media/privacy",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/mosley",
+        "type":"keyword",
+        "webTitle":"Max Mosley",
+        "webUrl":"http://www.theguardian.com/media/mosley",
+        "apiUrl":"http://content.guardianapis.com/media/mosley",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.theguardian.com/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421846903",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765183030/Max-Mosley--001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"54",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765185654/Max-Mosley--002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"340",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765187309/Max-Mosley--003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"130",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765188644/Max-Mosley--004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"84",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765190052/Max-Mosley--005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"132",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765191349/Max-Mosley--006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"168",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765192705/Max-Mosley--007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"180",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765194086/Max-Mosley--008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"228",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765195438/Max-Mosley--009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"276",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765196803/Max-Mosley--010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"372",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765195438/Max-Mosley--009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"276",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley said that Google did not do enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421846904",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/6/1383765188644/Max-Mosley--004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Carl Court",
+            "altText":"Max Mosley ",
+            "height":"84",
+            "credit":"Carl Court/AFP/Getty Images",
+            "caption":"Max Mosley says that Google has not done enough to remove images of an orgy that could still be seen on the search engine. Photograph: Carl Court/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/06/google-barge-mystery-solved-interactive-learning-center",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-06T22:57:50Z",
+      "webTitle":"Google barge mystery solved: they're for 'interactive learning centers'",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/06/google-barge-mystery-solved-interactive-learning-center",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/06/google-barge-mystery-solved-interactive-learning-center",
+      "fields":{
+        "trailText":"<p>Statement ends weeks of speculation about the purpose of two floating barges being built in San Francisco and Portland, Maine</p>",
+        "headline":"Google barge mystery solved: they're for 'interactive learning centers'",
+        "body":"<p>Internet giant Google says it is exploring using two large barges on the east and west coasts as interactive learning centers.</p><p>A statement released Wednesday from Google's press center helps end <a href=\"http://www.theguardian.com/technology/2013/oct/30/google-secret-floating-data-centers-california-maine\">weeks of speculation</a> about the purpose of structures on two barges, one being built in the San Francisco Bay, another now floating off Portland, Maine.</p><p>\"Google Barge ... A floating data center? A wild party boat? A barge housing the last remaining dinosaur? Sadly, none of the above,\" says the statement.</p><p>\"Although it's still early days and things may change, we're exploring using the barge as an interactive space where people can learn about new technology.\"</p><p>In a follow-up, a Google spokeswoman said the company was referring to both barges.</p><p>Google has been building a four-storey structure in the heart of the San Francisco Bay for several weeks, but managed to conceal its purpose by constructing it on docked barges instead of on land, where city building permits and public plans are mandatory.</p><p>Until now, San Francisco city officials responsible for land use and state officials responsible for the bay have said they didn't know what was being built there. US Coast Guard inspectors who visited the construction sites could not discuss what they saw. Lt Anna Dixon said non-disclosure agreements were signed, but that those were not necessary, and that the Coast Guard, as a practice, doesn't share proprietary information it sees during inspections.</p><p>If Google wants to operate an on-barge interactive learning center in the San Francisco Bay, the firm will eventually need to get permission from the San Francisco Bay Conservation and Development Commission.</p><p>The East Coast barge, built in a New London, Connecticut, harbor in July was recently towed to Maine.</p><p>Last year Google proposed building a land-based \"Google Experience Center\" which would operate as a private museum and demo space as part of new $120 billion Googleplex headquarters it is building in Mountain View, California, where it is headquartered.</p><!-- Guardian Watermark: internal-code/content/421855790|2013-11-11T15:34:05Z|e632fe4215ee1f1fa2e55b8d6b94c35c78878238 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-06T22:57:50Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/6/1383778325381/Google-barge-005.jpg",
+        "standfirst":"Statement ends weeks of speculation about the purpose of two floating barges being built in San Francisco and Portland, Maine",
+        "shortUrl":"http://gu.com/p/3k76q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/6/1383778325381/Google-barge-005.jpg",
+        "wordcount":"316",
+        "commentable":"true",
+        "internalContentCode":"421855790",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1993274",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-09T22:57:50Z"
+      },
+      "tags":[{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/maine",
+        "type":"keyword",
+        "webTitle":"Maine",
+        "webUrl":"http://www.theguardian.com/world/maine",
+        "apiUrl":"http://content.guardianapis.com/world/maine",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/san-francisco",
+        "type":"keyword",
+        "webTitle":"San Francisco",
+        "webUrl":"http://www.theguardian.com/world/san-francisco",
+        "apiUrl":"http://content.guardianapis.com/world/san-francisco",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421861177",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/6/1383778334878/Google-barge-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Justin Sullivan",
+            "altText":"Google barge",
+            "height":"276",
+            "credit":"Justin Sullivan/Getty Images",
+            "caption":"Google said: 'We're exploring using the barge as an interactive space where people can learn about new technology.' Photograph: Justin Sullivan/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421861178",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/6/1383778325381/Google-barge-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Justin Sullivan",
+            "altText":"Google barge",
+            "height":"84",
+            "credit":"Justin Sullivan/Getty Images",
+            "caption":"Google barge. Photograph: Justin Sullivan/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/07/ghana-accra-technology-startup-robot",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-07T10:30:00Z",
+      "webTitle":"'Could the next Google come from Africa?' ",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/07/ghana-accra-technology-startup-robot",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/07/ghana-accra-technology-startup-robot",
+      "fields":{
+        "newspaperPageNumber":"24",
+        "trailText":"<p>Ghana is a country of technological contradictions.  In many schools, IT is taught in classrooms with no electricity yet mobile penetration exceeds 100%. Tech start-ups are using the challenges and opportunities as a spring board and achieving way beyond expectation</p>",
+        "headline":"'Could the next Google come from Africa?'",
+        "body":"<p>In East Legon, a smart suburb of Ghana's capital, Accra, two men and a woman in their 20s stand in front of a slick ad featuring a large plane in mid-flight. They are pitching a business idea for a website that would allow travellers to compare ticket prices, then book and pay for airline tickets on domestic flights.</p><p>The pitch has sparked a lively debate among the pupils who sit in a darkened classroom, with the words \"generosity, positivity, standards\" emblazoned on the wall. The students, who nod seriously at the feedback, are on the first year of an intensive training programme at the Meltwater Entrepreneurial School of Technology (Mest), a postgraduate school that offers university graduates – some with no prior experience at all – a two-year course in software programming and business development.</p><p>Mest provides its students with housing, pocket money, meals, transport and a laptop – free of cost – and, in return, it expects full concentration for two years of full-time study. Its teaching staff say that the transformation after students have been through the process is extreme. \"When they join, they probably haven't written two lines of code before. Next year they are creating apps left and right,\" says Unni Krishnan, senior faculty member at Mest.</p><p>It is widely acknowledged that intensive training of this kind – which Mest says is producing world-class software engineers and businesses – is exactly what is needed in West Africa. But, like many of its neighbours, Ghana is still a country of contradictions, with pockets of world-class innovation coexisting alongside chronic poverty.</p><p>The mobile penetration rate in Ghana, which is now a lower-middle income country, exceeds 100%. Of a population of 24 million, 17 million people own a total of 27 million mobile phones. The six telecommunication companies operating in the country earn an <a href=\" http://www.ghanaweb.com/GhanaHomePage/NewsArchive\" title=\"\">average daily income</a> of about $10m (£6.2m).</p><p>The Ghanaian company <a href=\"http://www.rlgghana.com/\" title=\"\">RLG</a> is increasingly popular in West Africa with its locally manufactured laptops, smartphones and tablets. Last month it added a Ghanaian tablet, <a href=\"http://www.ghanaweb.com/GhanaHomePage/NewsArchive/artikel.php?ID=289637\" title=\"\">the \"G slab\"</a>, invented by a 28-year old as a rival to Apple's iPad and Samsung's Galaxy tablet.</p><p>Yet the Ghanaian education system still teaches through a Victorian English-inspired system of rote learning. In many schools, IT is taught in classrooms with no electricity, let alone access to computers, and pupils are asked to copy out pictures of a desk monitor and keyboard into their notebooks.</p><p>\"The Ghanaian education system is not generally producing people who are innovative,\" says Mac-Jordan Degadjor, a <a href=\"http://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CC4QFjAA&amp;url=http%3A%2F%2Fmacjordangh.com%2F&amp;ei=ZuZ4Uo2CHOeq0QWl-oHQCA&amp;usg=AFQjCNGZvmAp9ay2lr0S9cbmKkhko5TnrQ&amp;bvm=bv.55980276,d.d2k\" title=\"\">tech blogger</a> and entrepreneur who has raised the profile of tech startups in Ghana. \"We need to start focusing on entrepreneurial skills as a topic within schools, and make sure that by the time you get to university, you are not just thinking about applying for jobs, but starting something for yourself.\"</p><p>But, like those of many African countries, Ghana's tech entrepreneurs are thriving in spite of what is often perceived as a far from ideal environment.</p><p><a href=\"http://bit.ly/1d2Iykk\" title=\"\">Mobile applications for money transfers</a>, bypassing the lack of access to formal banking for many rural dwellers, and for farmers who need <a href=\"http://www.esoko.com/about/news.php\" title=\"\">real-time updates</a> about prices and help accessing marketplaces, are examples of how developing country problems have only created opportunities for local entrepreneurs to come up with innovative problem-solving.</p><p>\"The exciting thing is that there's a new generation of technology entrepreneurs in Ghana who are starting to transform the country,\" says Dr Sipho Moyo, Africa director for <a href=\"http://www.one.org/us/\" title=\"\">anti-poverty charity One</a>, which is supporting tech innovation in Ghana. \"I have high hopes that their innovation can accelerate progress right across the continent, thus shaping its future.\"</p><p>\"Could the next Google come from Africa? Why not?\" says Richard Tanksley, entrepreneur and senior faculty member at <a href=\"http://www.meltwater.org/who-we-are/faculty\" title=\"\">Mest</a>. \"Our whole business model is to produce a globally successful software company in the next five years, and we have every reason to think it will happen.</p><p>\"There is so much focus on Africa as a place to invest, to build businesses, there is no reason why you couldn't have multimillion dollar software companies coming out of here.\"</p><h2><strong>Eyram Tawia, </strong>Leti Arts</h2><p>Walking into the office of <a href=\"http://www.letiarts.com/\" title=\"\">Leti Arts</a> is a bit like walking into a teenager's bedroom. Behind a closed door, on the ground floor of what is still a partly residential building, a room opens up, the walls plastered with giant comic figures of superheroes, dressed in bright Lycra with clenched fists and coloured lights emanating from their eyes.</p><p>But the half-dozen people sitting in this office are not playing games. They are working on a project they believe will revolutionise the way Africans relate to their folklore and history, by modernising ancient stories for a younger audience through games and comic strips on mobile phones.</p><p>\"We are not even good at preserving our history and folklore – we watch Thor, the Nordic god of thunder, or Superman, Spiderman, Captain America, Batman,\" says Eyram Tawia, 29, co-founder of Leti Arts.</p><p>\"But Africa has a lot of stories, voodoo and tradition that have been almost lost and can be brought back. Why not bring back a pharaoh from Egypt and turn him into a fantasy character? Why not bring back Yaa Asantewaa, the famous Ghanaian female warrior?\"</p><p>Yaa Asantewaa – who led Ghana's Ashanti people into battle, famously defeating the imperial British army – has until now only been accessible through oral history and dense academic tracts. But, reinvented, she looms large on the wall of the Leti Arts office, appearing as never seen before with a tiny waist, ample cleavage, six-pack and bulging biceps in the unmistakable guise of a female superheroine.</p><p>\"History in school is so boring,\" says Tawia. \"You have to read through 1,000 pages of textbook to learn about Yaa Asantewaa. You have to listen to about 15 cassettes to learn about Shaka Zulu. Modernising culture is very necessary to preserve the story for the new generation.\"</p><p>The Leti team designs games, which Tawia codes himself, and has produced \"Africa's Legends\" comic editions – described as an \"African Avengers\" – available on mobile devices through a free app, with some comics free and some paid-for.</p><p>The company is already generating its own revenue by building technology which it licenses to other companies, including a game for training health professionals on childbirth and a greeting card app made from a customised version of its server.</p><p>Leti Arts is already a viable business but Tawia says he hopes it will be much more than that. \"We are getting exceptional people to do really innovative things,\" he says. \"We are not just creating a company, we are building a whole new industry. Nobody has had job titles like 'lead illustrator' or 'game developer' in Ghana before. Now when I go to conferences, I meet lawyers, doctors, I say I'm a 'game developer' – it feels good.\"</p><h2><strong>Mac-Jordan Degadjor, </strong>tech blogger</h2><p>For tech people anywhere in Africa, this is a familiar sight. A dapper, 6ft 4in young Ghanaian, wearing Ray-Bans, a smart navy blue suit and brown beads around his wrist, sits engrossed in a laptop emblazoned with \"Make Fufu not War!\" and a sticker marked \"I do not consent to the search of this laptop\".</p><p>\"They tried to search it once!\" exclaims Mac-Jordan Degadjor, referring to when Dutch authorities insisted on gaining access to his laptop at Schipol airport. His beloved machine now bears the sticker as a form of protest.</p><p>Degadjor is no stranger to run-ins with the authorities. The 28-year old  first began his blog, <a href=\"http://macjordangh.com/\" title=\"\">macjordangh.com</a> – now renowned as one of the best tech blogs in Africa – as a young student in Ukraine, frustrated with persistent racism and unwanted attention from the authorities.</p><p>\"I started blogging because of the way the Ukraine police were targeting African students – harassing them and extorting money from them if they were not carrying their passport,\" he says. When he returned to Ghana, he realised that there was very little blogging going on back home, and what there was was not engaged with tech and innovation.</p><p>\"In Ghana we are still talking about political parties, about corruption,\" he says. \"We are behind other countries. Kenya has a goal to achieve broadband penetration of 100% by 2015.  We are still below 20%.\"</p><p>Degadjor's blog is now at the forefront of a change in Ghana. Despite the undoubted challenges in a country where basic infrastructure is still lacking – with erratic water and electricity supply even in major cities and poor roads – the Mac-Jordan Degadjor blog is a hub of startup tours, hackathons, tech ideas, and good news for those who care about Africa's place in a tech-driven world.</p><p>\"There are challenges, but the tech revolution is happening all over Africa,\" says Degadjor. \"Day in, day out people are getting together at hacker spaces or innovation centres, and gradually ideas are coming up from these hubs.\"</p><p>Now Degadjor is working on a project called AfroPreneus Web-series: How We Made It – a web series of 30-minute interviews with up-and-coming entrepreneurs across tech, fashion and social ventures, with a particular emphasis on featuring female-led businesses.</p><p>\"This is about celebrating African entrepreneurs,\" he says. \"So our target is to share these stories across the blogosphere, so that other young people coming up in Africa can know that when they finish school, they don't have to struggle to get a job, when there is so much unemployment – they can start their own company.\"</p><h2><strong>Nicole Amarteifio, </strong>social media strategist and online TV creator</h2><figure data-media-id='gu-image-422073252'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383819303262/Nicole-Amarteifio-001.jpg' alt='Nicole Amarteifio' width='220' height='324' class='gu-image'/><figcaption>Nicole Amarteifio, creator of An African City: 'By putting my show online I have the creative freedom to talk about sexual politics.' Photograph: Nyani Quarmyne/Panos Pictures</figcaption></figure><p>In 2010, <a href=\"http://blogs.worldbank.org/team/nicole-amarteifio\" title=\"\">Nicole Amarteifio</a> was sitting in a class for her masters degree at Georgetown university in Washington DC, feeling upset. She was studying corporate communications, and a guest lecturer had come to discuss development.</p><p>\"This American woman did a presentation on development communications, and every African woman in it had a pot on her head and was half naked except for strings of beads\" says Amarteifio. \"I was very upset. Afterwards I told my professor; this is not the story of the African woman. It is only part of it.\"</p><p>For Amarteifio, whose Ghanaian parents raised her in London and the US from infancy, the sense that what was really happening in Africa was not being communicated was the catalyst she needed. After graduating, she went on to become a social media strategist on Africa at the World Bank.</p><p>\"Social media has really changed the discourse for young people in Africa,\" she says. \"The Africa region of the World Bank has been there – we had the first Facebook page, the first Twitter page – we are online, talking to young people on the continent, we are in their space. Africans are excited about it. Now you can tweet your president. The gap was so big before.\"</p><p>Using social media to involve Africans in a global discourse about their own future – which Amarteifio continues to do as a consultant – was part of her project to bridge the gap between the Africa she knows and the one the rest of the world sees.</p><p>But there was another side to life as an African woman Amarteifio felt was still not being communicated – life as a single, young woman living in the Ghanaian capital Accra – or what Amarteifio describes as a kind of African <em>Sex And the City</em>.</p><p>\"When I first saw <em>Sex And The City</em>, I just thought these women were so authentic – they are discovering their sexuality and talking in such an open way. But the gap between their experiences and my experience discovering the same things in Africa was so big.\"</p><p>In 2009, Amarteifio began writing her own series, <em>An African City</em>, set in Accra with characters from all over sub-Saharan Africa. But despite interest from TV channels, she is deliberately broadcasting the first series entirely online.</p><p>\"By going online, I don't have to be dictated by TV networks about what they do or don't want to see,\" she says. \"My show certainly pushes the boundaries – it is about five women who talk authentically about love and life, and that includes sensuality.</p><p>\"People will be shocked, and some people will be angry – especially some African men. But by putting my show online I have the creative freedom to talk about these sexual politics. It is all about the conversation.\"</p><h2><strong>Ben Nortey, </strong>robotics innovator</h2><p>Ben Nortey's sixth-floor office is one of the last places you would expect to find robots. Next to Makola market, the chaotic, pulsing centre of urban Accra, the Metro Institute of Innovation and Technology (Mint) is just one, neat room in a tower block which is surrounded by the commotion of traders, hawkers and shoppers on one side, the vast, misty Atlantic ocean to the other, and Accra's slow-trawling traffic all around.</p><p>But inside is a rare oasis of scientific order. Bookshelves lined with titles such as <em>Algorithms from P to NP</em> and <em>Programming Language: Concepts and Constructs</em> sit side-by-side with a neat array of robots – most made from scrap materials such as plastic bottles, colourfully painted, alongside electronics equipment, tools and robotics kits.</p><p>Nortey, an energetic 27-year old Ghanaian computer science graduate with an infectious smile, loves robots. \"As a child I had a lot of interest in these kinds of creatures – I loved movies like <em>Transformers</em>,\" he says.</p><p>Since there is virtually no robotics teaching in Ghana, Nortey taught himself. \"I worked out how to build robots by reading books, and by looking at what other people are doing on the internet and experimenting,\" he says. \"I spent hours on the internet – it has been a serious resource for me. And I have taken online courses on open platforms, like one from MIT and one from Stanford.\"</p><p>Nortey's vision is that in 20 years' time he will be building sophisticated robots in Ghana: \"In this part of the world, we start everything too late. In Ghana, many computer science students write their first computer program code during their first year in university. But I read stories of 12-year- olds in other countries who have built apps, put them in a store online and made loads of money. I want to transfer this knowledge.\"</p><p>Nortey's company runs <a href=\"http://themintoftech.net/\" title=\"\">private classes</a> for young people with a natural passion and interest in robotics, as well as other computer programming areas such as creating apps and gaming. One of his proudest achievements is teaching a five-year-old how to write code.</p><p>\"This five-year old learned how to program motors and micro-controllers. He could understand concepts like loops which some people find quite complex,\" Nortey explains. \"He is exactly the kind of child I want to work with!\"</p><p>Nortey is going to present a new TV programme called <em>Scrapbot</em> which will be a kind of <em>Blue Peter</em>-style \"how to\" show about building robots from scrap for children. So far Mint has trained around 2,500 people in Ghana, and Nortey hopes that through <em>Scrapbot</em>, they will reach many thousands more.</p><p>\"I'm currently looking at an intelligent system to help deal with the traffic situation,\" he says, gesturing towards the gridlocked roads outside.</p><p>\"And we have oil and gas in Ghana, but we have not harnessed the potential of technology to monitor the environmental effects – we could be embedding sensors into microcontrollers and collecting real-time data.</p><p>\"It is possible for Ghana to produce this kind of technology – we just have to take it seriously.\"</p><!-- Guardian Watermark: internal-code/content/421692829|2013-11-11T15:34:05Z|ff9c194e111ef3f0bc171b088a6f642cee1e9b26 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-10T00:06:19Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+        "standfirst":"Ghana is a country of technological contradictions.  In many schools, IT is taught in classrooms with no electricity yet mobile penetration exceeds 100%. Tech start-ups are using the challenges and opportunities as a spring board and achieving way beyond expectation",
+        "shortUrl":"http://gu.com/p/3k5dc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+        "wordcount":"2510",
+        "commentable":"true",
+        "internalContentCode":"421692829",
+        "allowUgc":"false",
+        "internalOctopusCode":"8264740",
+        "isPremoderated":"false",
+        "byline":"Afua Hirsch",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-11-10",
+        "internalPageCode":"1991991",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-10T10:30:00Z"
+      },
+      "tags":[{
+        "id":"world/ghana",
+        "type":"keyword",
+        "webTitle":"Ghana",
+        "webUrl":"http://www.theguardian.com/world/ghana",
+        "apiUrl":"http://content.guardianapis.com/world/ghana",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/startups",
+        "type":"keyword",
+        "webTitle":"Technology startups",
+        "webUrl":"http://www.theguardian.com/technology/startups",
+        "apiUrl":"http://content.guardianapis.com/technology/startups",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/telecoms",
+        "type":"keyword",
+        "webTitle":"Telecoms",
+        "webUrl":"http://www.theguardian.com/technology/telecoms",
+        "apiUrl":"http://content.guardianapis.com/technology/telecoms",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/telecoms",
+        "type":"keyword",
+        "webTitle":"Telecommunications industry",
+        "webUrl":"http://www.theguardian.com/business/telecoms",
+        "apiUrl":"http://content.guardianapis.com/business/telecoms",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/afuahirsch",
+        "type":"contributor",
+        "webTitle":"Afua Hirsch",
+        "webUrl":"http://www.theguardian.com/profile/afuahirsch",
+        "apiUrl":"http://content.guardianapis.com/profile/afuahirsch",
+        "bio":"<p>Afua Hirsch is the Guardian's west Africa correspondent based in Ghana</p>",
+        "r2ContributorId":"28094",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/8/1289231487480/afua-hirsch.jpg",
+        "references":[]
+      },{
+        "id":"technology/robots",
+        "type":"keyword",
+        "webTitle":"Robots",
+        "webUrl":"http://www.theguardian.com/technology/robots",
+        "apiUrl":"http://content.guardianapis.com/technology/robots",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"theobserver/observer-tech-monthly/observer-tech-monthly",
+        "type":"newspaper-book-section",
+        "webTitle":"Observer Tech Monthly",
+        "webUrl":"http://www.theguardian.com/theobserver/observer-tech-monthly/observer-tech-monthly",
+        "apiUrl":"http://content.guardianapis.com/theobserver/observer-tech-monthly/observer-tech-monthly",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"theobserver/observer-tech-monthly",
+        "type":"newspaper-book",
+        "webTitle":"Observer Tech Monthly",
+        "webUrl":"http://www.theguardian.com/theobserver/observer-tech-monthly",
+        "apiUrl":"http://content.guardianapis.com/theobserver/observer-tech-monthly",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422073250",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649746862/Mac-Jordan-Degadjor-001.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"54",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649749385/Mac-Jordan-Degadjor-002.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"340",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649750978/Mac-Jordan-Degadjor-003.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"130",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"84",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649754219/Mac-Jordan-Degadjor-005.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"132",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649755916/Mac-Jordan-Degadjor-006.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"168",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649757472/Mac-Jordan-Degadjor-007.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"180",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649759052/Mac-Jordan-Degadjor-008.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"228",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649760644/Mac-Jordan-Degadjor-009.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"276",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649762208/Mac-Jordan-Degadjor-010.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"372",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649760644/Mac-Jordan-Degadjor-009.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"276",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422073251",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/11/5/1383649752671/Mac-Jordan-Degadjor-004.jpg",
+          "typeData":{
+            "source":"Panos Pictures",
+            "photographer":"Nyani Quarmyne",
+            "altText":"Mac-Jordan Degadjor",
+            "height":"84",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Mac-Jordan Degadjor has one of the most popular tech blogs in Ghana. Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-422073252",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383819303262/Nicole-Amarteifio-001.jpg",
+          "typeData":{
+            "source":"Nyani Quarmyne/Panos Pictures",
+            "altText":"Nicole Amarteifio",
+            "height":"324",
+            "credit":"Nyani Quarmyne/Panos Pictures",
+            "caption":"Nicole Amarteifio, creator of An African City: 'By putting my show online I have the creative freedom to talk about sexual politics.' Photograph: Nyani Quarmyne/Panos Pictures",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/08/hermann-rorschach-google-doodle-inkblot-test",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-08T10:52:00Z",
+      "webTitle":"Hermann Rorschach Google doodle asks users to interpret inkblot test",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/08/hermann-rorschach-google-doodle-inkblot-test",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/08/hermann-rorschach-google-doodle-inkblot-test",
+      "fields":{
+        "trailText":"Swiss psychiatrist, born 129 years ago, invented – and gave his name to – inkblot test often used in psychoanalysis",
+        "headline":"Hermann Rorschach Google doodle asks users to interpret inkblot test",
+        "body":"<p>Google has celebrated the 129th birthday of Swiss psychiatrist Hermann Rorschach with a doodle showing his famous inkblot test.</p><p>The black and white doodle features a cartoon of the psychoanalyst taking notes as disembodied hands hover holding a card displaying an inkblot.</p><p>Different inkblots can be seen by clicking on the card. They include some spoofs – including a pair of gnomes, a pair of T-Rex-like dinosaurs and a butterfly hovering above a cat's face.</p><p>Users are prompted to share their interpretation of the inkblots on social media, including Facebook and Twitter.</p><p>Rorschach was born on 8 November 1884 in Zurich, Switzerland and developed his famous test in 1921.</p><p><a href=\"http://www.theguardian.com/science/2009/jul/29/rorschach-answers-wikipedia\" title=\"\">It comprises 10 inkblot images, which patients must look at and describe what they see.</a></p><p>In some cases, focusing on tiny details around the edges of the images is seen as evidence of obsessive behaviour.</p><p>After years of conducting the inkblot test on hospital patients, Rorschach wrote a book called Psychodiagnostik that describes how it could be an effective tool in psychoanalysis.</p><p>He died less than a year later, aged just 37, after a ruptured appendix led to peritonitis.</p><p>Advocates of the Rorschach test say it can reveal underlying mental issues that patients themselves may not be aware of, but critics dismiss it as out-of-date and it is rarely used in the UK.</p><!-- Guardian Watermark: internal-code/content/421973283|2013-11-11T15:34:05Z|f724a2891afeda9bc874cfd3e646d1625c699ad0 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-08T15:32:21Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873984123/google-doodle-hermann-ror-004.jpg",
+        "standfirst":"Swiss psychiatrist, born 129 years ago, invented – and gave his name to – inkblot test often used in psychoanalysis",
+        "shortUrl":"http://gu.com/p/3k88x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873984123/google-doodle-hermann-ror-004.jpg",
+        "wordcount":"213",
+        "commentable":"true",
+        "internalContentCode":"421973283",
+        "allowUgc":"false",
+        "internalOctopusCode":"8297126",
+        "isPremoderated":"false",
+        "byline":"Guardian staff",
+        "publication":"theguardian.com",
+        "internalPageCode":"1994032",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-11T01:28:00Z"
+      },
+      "tags":[{
+        "id":"technology/google-doodle",
+        "type":"keyword",
+        "webTitle":"Google doodle",
+        "webUrl":"http://www.theguardian.com/technology/google-doodle",
+        "apiUrl":"http://content.guardianapis.com/technology/google-doodle",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/searchengines",
+        "type":"keyword",
+        "webTitle":"Search engines",
+        "webUrl":"http://www.theguardian.com/technology/searchengines",
+        "apiUrl":"http://content.guardianapis.com/technology/searchengines",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/psychology",
+        "type":"keyword",
+        "webTitle":"Psychology",
+        "webUrl":"http://www.theguardian.com/science/psychology",
+        "apiUrl":"http://content.guardianapis.com/science/psychology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421982906",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873979881/google-doodle-hermann-ror-001.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"54",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873981716/google-doodle-hermann-ror-002.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"340",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873982966/google-doodle-hermann-ror-003.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"130",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873984123/google-doodle-hermann-ror-004.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"84",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873985267/google-doodle-hermann-ror-005.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"132",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873986519/google-doodle-hermann-ror-006.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"168",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873987738/google-doodle-hermann-ror-007.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"180",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873988913/google-doodle-hermann-ror-008.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"228",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873990128/google-doodle-hermann-ror-009.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"276",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873991313/google-doodle-hermann-ror-010.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"372",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873990128/google-doodle-hermann-ror-009.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"276",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421982907",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/8/1383873984123/google-doodle-hermann-ror-004.jpg",
+          "typeData":{
+            "source":"Screen grab",
+            "altText":"google doodle hermann rorschach",
+            "height":"84",
+            "credit":"Screen grab",
+            "caption":"Hermann Rorschach Google doodle. Photograph: Screen grab",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/grrlscientist/2013/nov/08/mount-mabu-google-earth-maps-video",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-11-08T14:30:00Z",
+      "webTitle":"How Google Earth helped find Mozambique's lost forest of Mount Mabu | video | @GrrlScientist",
+      "webUrl":"http://www.theguardian.com/science/grrlscientist/2013/nov/08/mount-mabu-google-earth-maps-video",
+      "apiUrl":"http://content.guardianapis.com/science/grrlscientist/2013/nov/08/mount-mabu-google-earth-maps-video",
+      "fields":{
+        "trailText":"<p><strong>GrrlScientist:</strong>In a time and on a planet where we think we know everything, Kew Gardens scientists used Google Earth to identify a lost world perched on a lonely mountain in Africa. Now you can see the film that documents how they made this discovery.</p>",
+        "headline":"How Google Earth helped find Mozambique's lost forest of Mount Mabu | video",
+        "body":"<p>Deep within the heart of the African nation of Mozambique there stands a mountain. Unknown to scientists and mostly undisturbed by humans since, well, since perhaps the dawn of our species, this mysterious mountain, clothed in dense green virgin rainforest, rises up from a golden ocean of savannah. In addition to the ecological isolation by the surrounding savannah, the mountain is isolated due to political events; the civil war that ravaged parts of Mozambique from 1977 to 1992 also helped preserve this area, untouched. </p><p>Mount Mabu stands approximately 1,700m (5,600ft) high and is home to what is <a href=\"http://www.theguardian.com/world/2009/jun/27/mozambique-conservation\">believed to be the largest medium-altitude rainforest in southern Africa</a>. </p><p></p><p>The locals knew of this mountain, of course, but scientists had no knowledge of it before 2005. This is when scientists at <a href=\"http://www.kew.org/\">Kew Royal Botanical Gardens</a> first set eyes upon it, thanks to Google Earth's satellite maps. Google Earth collects and curates global satellite images and makes them freely searchable by the public. </p><p>It all started when Julian Bayliss, a conservation biologist for Kew Gardens and a technical adviser for the Government of Malawi, was searching Google Earth maps for potential unknown biodiversity hotspots in Africa. He was specifically looking for areas that were at least 1,600m (5,400ft) above sea level where there was a lot of rainfall since those conditions meant the place would likely be forested. Mount Mabu fulfilled all these criteria and further, due to its ecological isolation, it looked quite promising. Additionally, Mozambique's long-running civil war, the lack of accessible roads in the area and limited knowledge of the forest's existence also served to protect this region.</p><p>Further research revealed that Mount Mabu was unmapped, unexplored, unlogged and totally unrepresented in the scientific collections or literature anywhere in the world. The electronic discovery of this lost world was brimming over with intriguing possibilities. </p><p>Dr Bayliss made a number of trips to scope out the region to see if it was as good as it looked on Google Earth maps. It was: he confirmed that Mount Mabu was predominantly unexplored forest. </p><p>Planning the first follow-up expedition then fell upon the capable shoulders of Kew Gardens botanist Jonathan Timberlake. He assembled and led an international team of 28 scientists on the first expedition to Mount Mabu in October and November 2008. The team consisted of scientists and support staff from the UK, Mozambique, Malawi, Tanzania, Belgium and Switzerland, and they relied upon 70 porters to help them with their work. </p><p>The biodiversity was breathtaking.</p><p>\"The phenomenal diversity is just mind-boggling: seeing how things are adapted to little niches, to me this is the incredible thing. Even today we cannot say we know all of the world's key areas for biodiversity -- there are still new ones to discover\", Mr Timberlake was quoted as saying in a Kew Gardens press release. </p><p>Some of the plants they found included a rarely seen orchid, and they discovered a tropical mistletoe, <a href=\"http://www.kew.org/plants-fungi/Helixanthera-schizocalyx.htm\"><em>Helixanthera schizocalyx</em></a>, a hairless parasitic shrub that attaches to tree branches, growing up to 50 cm (1.6 ft) high. All together, the team collected and brought back more than 500 plant specimens, which are being studied in <a href=\"http://www.kew.org/visit-kew-gardens/garden-attractions-A-Z/herbarium.htm\">Kew's Herbarium</a>. </p><p>In addition to thousands of tropical plants, they also saw blue duiker antelope, samango monkeys, elephant shrews, and almost 200 different types of butterflies. </p><p>\"As we were going through the forest, we were just picking up specimens of plants, reptiles, butterflies, really rather opportunistically\", said Dr Bayliss. \"And from that we picked up some things that turned out to be new to science.\"</p><p>Mount Mabu is also home to a variety of birds, many rare or endangered, including a population of the vulnerable Swynnerton's robin, <em>Swynnertonia swynnertoni</em>, whose continued existence is threatened by habitat loss elsewhere. The Thyolo Alethe, <em>Alethe choloensis</em>, which is endangered elsewhere in its small range, is common throughout the Mabu forest. </p><p>\"This may be the most important population of Thyolo Alethe known\", said ornithologist Lincoln Fishpool, BirdLife's Global Important Bird Areas (IBA) Co-ordinator, who was also part of the expedition. </p><p>\"At other sites, forest is rapidly being lost or much of the habitat is sub-optimal\",  Dr Fishpool added.</p><p>Six other globally threatened bird species were among the 126 species identified on the first expedition. </p><p>In addition to rare birds, the team has discovered a new pygmy chameleon, <em>Nadzikambia baylissi</em>, which is the second species in what was previously thought to be a monotypic genus, <em>Nadzikambia</em>. They also discovered a previously unknown bush viper, <em>Atheris mabuensis</em>, and two more species of snakes that are new to science, four new butterfly species, a crab, and five plants. Further analysis will reveal whether they also discovered even more new species as the team members suspect, including a new shrew, a pseudo-scorpion, frogs, snails, bats, catfish, and a variety of insects.</p><p>On their first expedition, the team hiked up the mountain to its peak, documenting and collecting species along the way. Since that initial expedition, scientists have returned several times, and more expeditions are in the planning stages.</p><p>Equally exciting is the proactive stance of the Mozambique government: they announced in 2009 that they would establish conservation measures to prevent commercial logging in the Mabu forest. </p><p>According to Mr Timberlake, there is still much to learn about our planet. </p><p>\"We cannot say we have discovered all the biodiversity areas in the world\", said Mr Timberlake in a press release. </p><p>In fact, none of Mount Mabu's natural wonders would have been documented if Dr Bayliss hadn't used Google Earth maps to first go exploring. </p><p>In view of this example, it's not difficult to imagine that using Google Earth maps may reveal additional pockets of biodiversity, especially in areas like Mozambique or, in my favourite part of the world, Papua New Guinea.</p><p>\"People say there is nothing left to be discovered in this world\", said Dr Bayliss. \"But there are new species to be discovered. Lost worlds to be found.\" </p><p>\"You're always asking questions. As soon as you think you have the answers ... new doors open\", said Dr Bayliss. </p><p>\"That's the beauty of life.\"</p><p>In this film, we catch a glimpse of how Dr Bayliss used Google Earth technology to explore Mount Mabu, and where this discovery led him: </p><p>[<a href=\"http://youtu.be/mni8mSS4KDU\">Video link</a>]</p><p><strong>Sources:</strong></p><p>Kew Gardens <a href=\"http://www.kew.org/science/news/mount-mabu-mozambique.html\">press release</a> (2009).</p><p>Kew Gardens <a href=\"http://www.kew.org/news/mount-mabu.htm\">press release</a> (2011). </p><p>All images appear here by courtesy of Kew Gardens.</p><p>Thanks to Lucy Toms, who works at the advertising company, <a href=\"http://www.72andsunny.com/\">72andSunny</a>, for bringing this video to my attention. This video, of course, inspired me to write this piece. </p><p>.. .. .. .. .. .. .. .. .. .. .. </p><p>GrrlScientist can also be found here: <a href=\"http://www.scilogs.com/maniraptora/\">Maniraptora</a>. She's very active on twitter @<a href=\"https://twitter.com/GrrlScientist\">GrrlScientist</a> and sometimes lurks on social media: <a href=\"http://www.facebook.com/grrlscientist\">facebook</a>, <a href=\"http://gplus.to/grrlscientist\">G+</a>, <a href=\"http://www.linkedin.com/pub/grrl-scientist/15/324/b89\">LinkedIn</a> and <a href=\"http://pinterest.com/grrlscientist/\">Pinterest</a>.</p><!-- Guardian Watermark: internal-code/content/421989799|2013-11-11T15:34:05Z|3ccd0130326c4087802e47642bdcf7a16255cce2 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-09T10:38:24Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"In a time and on a planet where we think we know everything, Kew Gardens scientists used Google Earth to identify a lost world perched on a lonely mountain in Africa. Now you can see the film that documents how they made this discovery.",
+        "shortUrl":"http://gu.com/p/3k8aq",
+        "wordcount":"1106",
+        "commentable":"true",
+        "internalContentCode":"421989799",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"GrrlScientist",
+        "publication":"theguardian.com",
+        "internalPageCode":"1994111",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-15T14:30:00Z"
+      },
+      "tags":[{
+        "id":"science/grrlscientist",
+        "type":"blog",
+        "webTitle":"GrrlScientist",
+        "webUrl":"http://www.theguardian.com/science/grrlscientist",
+        "apiUrl":"http://content.guardianapis.com/science/grrlscientist",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/grrlscientist",
+        "type":"contributor",
+        "webTitle":"GrrlScientist",
+        "webUrl":"http://www.theguardian.com/profile/grrlscientist",
+        "apiUrl":"http://content.guardianapis.com/profile/grrlscientist",
+        "bio":"<p>GrrlScientist is an evolutionary biologist and ornithologist who writes about evolution, ethology and ecology, especially in birds</p>",
+        "r2ContributorId":"39344",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/8/6/1281118805708/GrrlScientist-profile-pic-002.jpg",
+        "references":[]
+      },{
+        "id":"environment/conservation",
+        "type":"keyword",
+        "webTitle":"Conservation",
+        "webUrl":"http://www.theguardian.com/environment/conservation",
+        "apiUrl":"http://content.guardianapis.com/environment/conservation",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"travel/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/travel/africa",
+        "apiUrl":"http://content.guardianapis.com/travel/africa",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"travel/mozambique",
+        "type":"keyword",
+        "webTitle":"Mozambique",
+        "webUrl":"http://www.theguardian.com/travel/mozambique",
+        "apiUrl":"http://content.guardianapis.com/travel/mozambique",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"science/plants",
+        "type":"keyword",
+        "webTitle":"Plants",
+        "webUrl":"http://www.theguardian.com/science/plants",
+        "apiUrl":"http://content.guardianapis.com/science/plants",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/kew-gardens",
+        "type":"keyword",
+        "webTitle":"Royal Botanic Gardens, Kew",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/kew-gardens",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/kew-gardens",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"environment/birds",
+        "type":"keyword",
+        "webTitle":"Birds",
+        "webUrl":"http://www.theguardian.com/environment/birds",
+        "apiUrl":"http://content.guardianapis.com/environment/birds",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/08/youtube-cofounder-why-the-fuck-do-i-need-a-google-account-to-comment",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-08T16:34:19Z",
+      "webTitle":"YouTube co-founder hurls abuse at Google over new YouTube comments",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/08/youtube-cofounder-why-the-fuck-do-i-need-a-google-account-to-comment",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/08/youtube-cofounder-why-the-fuck-do-i-need-a-google-account-to-comment",
+      "fields":{
+        "trailText":"Jawed Karim joins those slamming Google's changes to the site, which enforce use of its social network. By <strong>Alex Hern</strong>",
+        "headline":"YouTube co-founder hurls abuse at Google over new YouTube comments",
+        "body":"<p>After an eight-year silence, YouTube's co-founder Jawed Karim has made his second-ever post on the site &ndash; to fuel the controversy over Google's changes to its comments system.</p> <p>On April 23rd 2005, Karim uploaded YouTube's first video, <a href=\"http://www.youtube.com/watch?v=jNQXAC9IVRw\">of himself at the zoo</a>. Then he went silent until, eight years later, <a href=\"http://www.youtube.com/user/jawed\">he posted a question on his channel</a>:</p> <blockquote class=\"quoted\"> <p>why the fuck do i need a google+ account to comment on a video?</p> </blockquote> <p><a href=\"http://www.theguardian.com/technology/2013/nov/07/youtube-comments-trolls-moderation-google\">Google's overhaul of YouTube comments has sparked controversy</a>: the <a href=\"http://www.youtube.com/watch?v=bVGp8Z8Yb28\">YouTube video announcing the change</a>&nbsp;has nearly 30,000 comments, many including harsh criticism of the move through the medium of ASCII art.</p> <p>As Karim has noticed, the site now requires a Google+ account to comment. That has clearly angered him. Other commenters have said that they won't use Google+ to comment on YouTube videos &ndash; and so will stop commenting.</p> <p>The company argues that this is necessary to personalise comment sections for each viewer: \"You&rsquo;ll see posts at the top of the list from the video&rsquo;s creator, popular personalities, engaged discussions about the video, and people in your Google+ Circles,\" <a href=\"http://youtube-global.blogspot.co.uk/2013/11/youtube-new-comments.html\">Google explained in a blogpost</a>.</p> <p>But others suspect that its intention is to artificially boost the apparent number of users of its Google+ social network.</p> <p>Google+ has been the source of dissent for some users as Google first added a G+ account to every Gmail address, whether or not people wanted it, used it to reward peoples' position in searches, and then made it essential for commenting on Google Play reviews.</p> <p>However the company has been reluctant to share details about how many people actively use the network for social purposes, with one report <a href=\"http://jessicalessin.com/2013/10/31/why-google-doesnt-need-ads/\">suggesting</a>&nbsp;that there were fewer than 10 million daily users in mid-2012. Google has provided less clear \"activity\" figures &ndash; citing 540 million active users who take \"some sort\" of social action each month, and 300 million \"in stream\" monthly users. Adding YouTube comments could increase that enormously &ndash; perhaps to as much as Facebook's 1.2 billion monthly users.&nbsp;</p> <p>Karim was working at PayPal in 2005 when he met Chad Hurley and Steve Chen, the other co-founders of the company. But he took a back seat to the growing venture, instead enrolling in Stanford University as a computer science graduate student while acting as an advisor to the site. When YouTube was acquired by Google in 2007, <a href=\"http://www.nytimes.com/2007/02/07/technology/07cnd-google.html?ex=1328504400&amp;en=96fcc0326d0a7ef6&amp;ei=5088&amp;partner=rssnyt&amp;emc=rss&amp;_r=0\">Karin's payoff was worth around $65m</a>.</p> <p>&bull; <a href=\"http://www.theguardian.com/technology/blog/2013/jun/04/google-plus-the-matrix\"><strong>Google+ isn't a social network; it's the Matrix</strong></a></p><!-- Guardian Watermark: internal-code/content/422026447|2013-11-11T15:34:05Z|0df7bb4953443eafb9a4e4779a3602226285755b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-08T18:28:08Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975381/445b059b-ba62-474e-a776-3cafe1a85484-140x84.png",
+        "standfirst":"Jawed Karim joins those slamming Google's changes to video site, which enforce use of its Google+&nbsp;social network.",
+        "shortUrl":"http://gu.com/p/3k8m4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975381/445b059b-ba62-474e-a776-3cafe1a85484-140x84.png",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"422026447",
+        "allowUgc":"false",
+        "internalComposerCode":"527d039ce4b055987af675c8",
+        "isPremoderated":"false",
+        "byline":"Alex Hern",
+        "publication":"theguardian.com",
+        "internalPageCode":"1994413",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-11T16:34:19Z"
+      },
+      "tags":[{
+        "id":"technology/youtube",
+        "type":"keyword",
+        "webTitle":"YouTube",
+        "webUrl":"http://www.theguardian.com/technology/youtube",
+        "apiUrl":"http://content.guardianapis.com/technology/youtube",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/paypal",
+        "type":"keyword",
+        "webTitle":"PayPal",
+        "webUrl":"http://www.theguardian.com/technology/paypal",
+        "apiUrl":"http://content.guardianapis.com/technology/paypal",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/technology/television",
+        "apiUrl":"http://content.guardianapis.com/technology/television",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/social-media",
+        "type":"keyword",
+        "webTitle":"Social media",
+        "webUrl":"http://www.theguardian.com/media/social-media",
+        "apiUrl":"http://content.guardianapis.com/media/social-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/socialnetworking",
+        "type":"keyword",
+        "webTitle":"Social networking",
+        "webUrl":"http://www.theguardian.com/media/socialnetworking",
+        "apiUrl":"http://content.guardianapis.com/media/socialnetworking",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/video-on-demand",
+        "type":"keyword",
+        "webTitle":"Video on demand",
+        "webUrl":"http://www.theguardian.com/media/video-on-demand",
+        "apiUrl":"http://content.guardianapis.com/media/video-on-demand",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"profile/alex-hern",
+        "type":"contributor",
+        "webTitle":"Alex Hern",
+        "webUrl":"http://www.theguardian.com/profile/alex-hern",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-hern",
+        "bio":"<p>Alex Hern is a technology reporter for the Guardian</p>",
+        "r2ContributorId":"56277",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089603491/Alex-Hern-Guardian-staff--017.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975381/445b059b-ba62-474e-a776-3cafe1a85484-140x84.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975381/445b059b-ba62-474e-a776-3cafe1a85484-140x84.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"84",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975553/cf1de31d-ab91-4aa7-96b1-b46e128cb3ae-460x276.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975553/cf1de31d-ab91-4aa7-96b1-b46e128cb3ae-460x276.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"276",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975728/5298d921-a3ad-48f4-b6ce-af06294166c4-220x132.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975728/5298d921-a3ad-48f4-b6ce-af06294166c4-220x132.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"132",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975770/24f52ff7-eb3c-4fd8-a4a3-53ee8338f914-300x180.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975770/24f52ff7-eb3c-4fd8-a4a3-53ee8338f914-300x180.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"180",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975945/22bfee04-38c2-40d0-9109-bd150a3bad45-540x324.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975945/22bfee04-38c2-40d0-9109-bd150a3bad45-540x324.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"324",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976183/48dcaeb5-341e-4aee-9963-f8cf012b7bae-68x68.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976183/48dcaeb5-341e-4aee-9963-f8cf012b7bae-68x68.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"68",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976291/0f030b0b-b9ed-48e3-9811-8d34231c2318-380x228.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976291/0f030b0b-b9ed-48e3-9811-8d34231c2318-380x228.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"228",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976474/c9ba3f78-944e-4bc0-acc2-8e964978cdfa-620x372.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976474/c9ba3f78-944e-4bc0-acc2-8e964978cdfa-620x372.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"372",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975381/445b059b-ba62-474e-a776-3cafe1a85484-140x84.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975381/445b059b-ba62-474e-a776-3cafe1a85484-140x84.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"84",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975553/cf1de31d-ab91-4aa7-96b1-b46e128cb3ae-460x276.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975553/cf1de31d-ab91-4aa7-96b1-b46e128cb3ae-460x276.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"276",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975728/5298d921-a3ad-48f4-b6ce-af06294166c4-220x132.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975728/5298d921-a3ad-48f4-b6ce-af06294166c4-220x132.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"132",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975770/24f52ff7-eb3c-4fd8-a4a3-53ee8338f914-300x180.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975770/24f52ff7-eb3c-4fd8-a4a3-53ee8338f914-300x180.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"180",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975945/22bfee04-38c2-40d0-9109-bd150a3bad45-540x324.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924975945/22bfee04-38c2-40d0-9109-bd150a3bad45-540x324.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"324",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976183/48dcaeb5-341e-4aee-9963-f8cf012b7bae-68x68.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976183/48dcaeb5-341e-4aee-9963-f8cf012b7bae-68x68.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"68",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976291/0f030b0b-b9ed-48e3-9811-8d34231c2318-380x228.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976291/0f030b0b-b9ed-48e3-9811-8d34231c2318-380x228.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"228",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976474/c9ba3f78-944e-4bc0-acc2-8e964978cdfa-620x372.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/8/1383924976474/c9ba3f78-944e-4bc0-acc2-8e964978cdfa-620x372.png",
+            "source":"YouTube",
+            "altText":"YouTube cofounder Jared Karin asks \"why the fuck\"",
+            "height":"372",
+            "credit":"YouTube",
+            "caption":"YouTube cofounder Jared Karin speaks out. Photograph: /YouTube",
+            "mediaId":"gu-fc-d5912d6d-4248-4c4e-999f-e99bf02b16e6",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

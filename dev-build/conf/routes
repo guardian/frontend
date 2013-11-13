@@ -114,6 +114,9 @@ GET         /analytics/browsers                                                 
 GET         /analytics/abtests                                                                               controllers.admin.AnalyticsController.abtests()
 GET         /metrics/loadbalancers                                                                           controllers.admin.DashboardController.renderDashboard()
 GET         /metrics/fastly                                                                                  controllers.admin.FastlyController.renderFastly()
+GET         /metrics/errors                                                                                  controllers.admin.DashboardController.renderErrors()
+GET         /metrics/errors/4xx                                                                              controllers.admin.DashboardController.render4XX()
+GET         /metrics/errors/5xx                                                                              controllers.admin.DashboardController.render5XX()
 GET         /radiator                                                                                        controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                           controllers.admin.RadiatorController.commitDetail(hash)
@@ -125,6 +128,13 @@ GET         /admin/commercial                                                   
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                            controllers.commercial.JobAds.jobs
 GET         /commercial/masterclasses.json                                                                   controllers.commercial.MasterClasses.list
+# New light jobs feed available only in dev env
+GET         /commercial/lightjobs.json                                                                       controllers.commercial.JobAds.lightJobs
+GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
+GET         /commercial/soulmates/men.json                                                                   controllers.commercial.SoulmateAds.men
+GET         /commercial/soulmates/women.json                                                                 controllers.commercial.SoulmateAds.women
+GET         /commercial/soulmates/gay.json                                                                   controllers.commercial.SoulmateAds.gay
+GET         /commercial/soulmates/lesbian.json                                                               controllers.commercial.SoulmateAds.lesbian
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")

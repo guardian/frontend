@@ -14,7 +14,7 @@ class JobsApiTest extends FlatSpec with Matchers with ExecutionContexts {
       XML.loadString(Fixtures.xml)
     })
 
-    Await.result(jobs, atMost = 1.seconds) should be(Fixtures.untaggedJobs)
+    Await.result(jobs, atMost = 1.seconds) should be(Fixtures.jobs)
   }
 
 }

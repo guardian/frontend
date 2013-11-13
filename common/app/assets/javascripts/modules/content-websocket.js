@@ -4,7 +4,7 @@ define([
     'modules/detect'
 ], function (common, bonzo, detect) {
 
-    function init(config, context, options) {
+    function connect(config) {
 
         if (!detect.hasWebSocket()) {
             return;
@@ -13,6 +13,7 @@ define([
         var chatSocket = new window.WebSocket(config.page.onwardWebSocket);
 
         var receiveEvent = function(event) {
+
             if (event && 'data' in event) {
                 var data = JSON.parse(event.data);
 
@@ -28,10 +29,17 @@ define([
             }
         };
 
+        var disconnectEvent = function(event) {
+            chatSocket.close();
+            connect(config);
+        };
+
         chatSocket.onmessage = receiveEvent;
+        chatSocket.onerror = disconnectEvent;
+        chatSocket.onclose = disconnectEvent;
     }
 
     return {
-        init: init
+        connect: connect
     };
 });

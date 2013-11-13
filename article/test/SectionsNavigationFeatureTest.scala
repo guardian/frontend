@@ -8,8 +8,9 @@ import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
 import org.fluentlenium.core.filter.FilterConstructor._
 
 import conf.Configuration
+import common.UsesElasticSearch
 
-class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
 
   implicit val config = Configuration
 

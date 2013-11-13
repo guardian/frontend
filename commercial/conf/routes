@@ -13,3 +13,10 @@ GET    /commercial/jobs.json                                    controllers.comm
 
 # Masterclasses
 GET     /commercial/masterclasses.json                          controllers.commercial.MasterClasses.list
+
+# Soulmates
+GET    /commercial/soulmates/mixed.json                         controllers.commercial.SoulmateAds.mixed
+GET    /commercial/soulmates/men.json                           controllers.commercial.SoulmateAds.men
+GET    /commercial/soulmates/women.json                         controllers.commercial.SoulmateAds.women
+GET    /commercial/soulmates/gay.json                           controllers.commercial.SoulmateAds.gay
+GET    /commercial/soulmates/lesbian.json                       controllers.commercial.SoulmateAds.lesbian

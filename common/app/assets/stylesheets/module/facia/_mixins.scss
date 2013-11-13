@@ -7,7 +7,6 @@ $item-top-border-height: 2px;
         &:before {
             top: $item-top-border-height; // align vertical separator with top border
         }
-
         .item__link {
             border-top-style: none;
         }
@@ -16,42 +15,8 @@ $item-top-border-height: 2px;
         }
     }
 }
-@mixin item-separator-vertical {
-    &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 1px;
-        height: 100%;
-        border-left: 1px dotted $c-neutral5;
-    }
-}
-@mixin hide-item-separator-vertical {
-    &:before {
-        display: none !important;
-    }
-}
-@mixin row-start {
-    clear: left;
-    @include hide-item-separator-vertical;
-}
-@mixin row($row-size, $first-row-size: $row-size) {
-    // styling for first row
-    @include first-row($row-size);
-    // stylings for begining and end of rows
-    .item:first-child,
-    .item:nth-child(#{$row-size}n+#{$first-row-size + 1}) {
-        @include row-start;
-    }
-}
 
-$metaHeight: 14px;
 @mixin card-mobile($with-image: false) {
-    padding-bottom: $metaHeight;
-
     .item__title {
         @include fs-headline(3, $size-only: true);
     }
@@ -81,6 +46,7 @@ $metaHeight: 14px;
     float: left;
     width: 100%;
     margin-top: $gs-baseline*(5/3);
+    padding-bottom: 0;
 
     .item__title {
         @include fs-headline(1, $size-only: true);
@@ -100,9 +66,7 @@ $metaHeight: 14px;
 @mixin card-half-width($with-image: false) {
     width: 50%;
     min-height: gs-height(3);
-    padding-bottom: $metaHeight;
     float: left;
-    @include item-separator-vertical;
 
     .item__title {
         @include fs-headline(1, $size-only: true);
@@ -132,11 +96,9 @@ $metaHeight: 14px;
         display: block;
     }
 }
-
 @mixin card($with-image: false) {
     width: gs-span(3) + $gs-gutter;
     min-height: gs-height(3);
-    padding-bottom: $metaHeight;
 
     @include mq(wide) {
         width: gs-span(4) + $gs-gutter;
@@ -148,6 +110,7 @@ $metaHeight: 14px;
 }
 @mixin card-image {
     min-height: gs-height(6);
+
     @include mq(wide) {
         min-height: gs-height(8);
     }
@@ -161,6 +124,7 @@ $metaHeight: 14px;
     float: left;
     width: gs-span(6) + $gs-gutter;
     min-height: gs-height(9);
+
     @include mq(wide) {
         width: gs-span(8) + $gs-gutter;
         min-height: gs-height(12);
@@ -183,7 +147,6 @@ $metaHeight: 14px;
 }
 @mixin card-triple-width {
     float: left;
-    padding-bottom: $metaHeight;
     width: gs-span(9) + $gs-gutter;
     min-height: gs-height(12);
 
@@ -204,7 +167,6 @@ $metaHeight: 14px;
     }
 }
 @mixin card-full-width {
-    padding-bottom: $metaHeight;
     .connection--not-low &.item--has-image {
         min-height: gs-height(6);
         padding-left: gs-span(6) + $gs-gutter*1.5;
@@ -232,7 +194,7 @@ $metaHeight: 14px;
 }
 @mixin card-full-width-feature {
     width: 100%;
-    padding-bottom: $metaHeight;
+
     .item__image-container,
     .connection--not-low &.item--has-no-image .item__standfirst,
     .connection--low & .item__standfirst {
