@@ -45,7 +45,9 @@ TopComments.CONFIG = {
 
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
-        commentReply: 'd-comment__action--reply'
+        commentReply: 'd-comment__action--reply',
+
+        titleCounter: 'discussion__comments__top__counter'
     }
 };
 
@@ -131,6 +133,14 @@ TopComments.prototype.ready = function() {
     //     this.bindCommentEvents();
     //     this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     // }
+    
+    // Append top comment count to section title
+    bonzo(
+        qwery(
+            self.getClass('titleCounter')
+            )
+        ).removeClass('u-h')[0].innerHTML = "(" + this.topLevelComments.length + ")";
+
     this.emit('ready');
 };
 

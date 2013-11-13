@@ -1,15 +1,13 @@
-@(discussionClosed: Boolean, discussionId: String, topComments: Int)(implicit request: RequestHeader)
+@(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
 <div class="discussion"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
     
+    <!-- top comments container -->
     <div class="discussion__comments__top__container">
-        <h2 id="comments" class="page-sub-header tone-colour">Top Comments (@topComments)</h2>
-
+        <h2 id="comments" class="page-sub-header tone-colour">Top Comments <span class="u-h discussion__comments__top__counter"></span></h2>
         <div class="discussion__comments__top"></div>
-
     </div>
-
 
     <div class="discussion__comments__container">
         <h2 id="comments" class="page-sub-header tone-colour">Comments</h2>

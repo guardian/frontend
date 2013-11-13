@@ -365,6 +365,10 @@
 
 .discussion__comments__top__container { // Section
     
+    .discussion__comments__top__counter {
+        color: $c-neutral3;
+    }
+
     .discussion__comments__top { // Container
         
         //height: 500px;
@@ -401,7 +405,7 @@
             }
 
 
-            &:before { // pointer
+            &:before { // Pointer (equilateral triangle)
                 top: 100%;
                 border: solid transparent;
                 content: " ";
@@ -416,7 +420,7 @@
                 margin-left: -30px;
             }
 
-            &:after { // Mask
+            &:after { // Mask (right-skewed parellelogram)
                 top: 100%;
                 content: " ";
                 height: 24px;

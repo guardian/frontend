@@ -109,7 +109,7 @@
 
         <div class="article__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                @fragments.discussion(article.isClosedForComments, article.shortUrlId, 4)
+                @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             }
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" class="more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}" data-link-context="@article.section">
