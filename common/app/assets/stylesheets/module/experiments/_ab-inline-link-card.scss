@@ -52,8 +52,7 @@
 }
 .card__title {
     min-height: gs-height(1);
-    margin-bottom: $gs-baseline;
-    border-top: 2px solid $c-neutral2;
+    margin-bottom: $baseline*2;
 
     font-family: $serifheadline !important;
     font-size: 18px !important;
@@ -63,13 +62,14 @@
     @include box-sizing(border-box);
 }
 .card__body {
-    border-top: 1px solid $c-neutral2;
     padding: $baseline*1.5 0 $baseline*6;
     position: relative;
     @include box-sizing(border-box);
 }
 .card__meta {
-    min-height: gs-height(1);
+    padding-bottom: $baseline*2;
+    border-bottom: 1px solid $c-neutral4;
+    overflow: auto;
 
     .dateline {
         float: left;

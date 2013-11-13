@@ -4,6 +4,7 @@ define([
     'ajax',
     'common',
     'utils/to-array',
+    'modules/detect',
     'modules/onward/history'
 ], function (
     qwery,
@@ -11,6 +12,7 @@ define([
     ajax,
     common,
     toArray,
+    detect,
     History
 ) {
 
@@ -47,15 +49,24 @@ define([
     }
 
     function append(trail) {
-        bonzo(container).append(bonzo(trail).detach());
+        bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', container)));
     }
 
     function prepend(trail) {
-        bonzo(trail).detach().prependTo(container);
+        bonzo(trail).detach().prependTo(bonzo(qwery('ul:first-of-type', container)));
     }
 
     function labelAsQuestion(trail) {
         trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | question');
+    }
+
+    function cloneHeader()  {
+        //I know... This is very dirty
+        bonzo(document.getElementById('related-content-head'))
+            .text('Read next')
+            .clone()
+            .text((document.querySelector('.more-on-this-story')) ? 'More on this story' : 'Related content')
+            .insertAfter(getTrails()[0]);
     }
 
     var Question = function () {
@@ -67,7 +78,7 @@ define([
         this.audience = 0.1;
         this.description = 'Test effectiveness of question based trails in storypackages';
         this.canRun = function(config) {
-            if(config.page.contentType === 'Article' && document.querySelector('.more-on-this-story')){
+            if(config.page.contentType === 'Article'){
                 common.mediator.on('modules:related:loaded', function() {
                     getTrails().forEach(function(trail) {
                         if(isQuestion(trail)) {
@@ -77,6 +88,7 @@ define([
                 });
                 return true;
             } else {
+
                 return false;
             }
         };
@@ -90,6 +102,9 @@ define([
                                 append(trail);
                             }
                         });
+                        if(detect.getLayoutMode() === 'mobile') {
+                            cloneHeader();
+                        }
                     });
                 }
             },
@@ -102,6 +117,7 @@ define([
                                 prepend(trail);
                             }
                         });
+                        cloneHeader();
                     });
                 }
             },
@@ -129,6 +145,7 @@ define([
                                 common.mediator.emit('module:error', 'Failed to load most popular onward journey' + req, 'modules/experiments/tests/story-question.js');
                             }
                         );
+                        cloneHeader();
                     });
                 }
             },

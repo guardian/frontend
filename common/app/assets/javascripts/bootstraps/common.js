@@ -120,10 +120,8 @@ define([
             search.init(header);
         },
 
-        transcludeRelated: function () {
-            common.mediator.on("page:common:ready", function(config, context){
-                related(config, context);
-            });
+        transcludeRelated: function (config, context) {
+            related(config, context);
         },
 
         transcludePopular: function () {
@@ -183,10 +181,8 @@ define([
             });
         },
 
-        runAbTests: function () {
-            common.mediator.on('page:common:ready', function(config, context) {
-                ab.run(config, context);
-            });
+        runAbTests: function (config, context) {
+            ab.run(config, context);
         },
 
         loadAnalytics: function () {
@@ -385,13 +381,17 @@ define([
     var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
+
+            common.mediator.on("page:common:ready", function(config, context){
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
+            });
+
             modules.upgradeImages();
-            modules.runAbTests();
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
-            modules.transcludeRelated();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
