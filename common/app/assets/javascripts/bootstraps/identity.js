@@ -38,11 +38,6 @@ define([
                 Identity.passwordToggle(config, context);
             });
         },
-        usernameAvailable: function () {
-            common.mediator.on('page:identity:ready', function(config, context) {
-                Identity.usernameAvailable(config, context);
-            });
-        },
         idConfig : function (config) {
             common.mediator.on('page:identity:ready', function(config, context) {
                 Id.init(config);
@@ -62,7 +57,6 @@ define([
             modules.forgottenPassword();
             modules.passwordStrength();
             modules.passwordToggle();
-            modules.usernameAvailable();
             modules.idConfig(config);
             modules.userAdTargeting();
             modules.facebookAutoSignin();
