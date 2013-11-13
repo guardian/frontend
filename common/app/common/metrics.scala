@@ -198,19 +198,6 @@ object FaciaToolMetrics {
   )
 }
 
-object CommercialMetrics {
-
-  object JobsLoadTimingMetric extends TimingMetric(
-    "commercial",
-    "commercial-jobs-load",
-    "Commercial Jobs load timing",
-    "Time spent running job ad data load jobs",
-    None
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(JobsLoadTimingMetric)
-}
-
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all
 
@@ -221,7 +208,6 @@ object Metrics {
   lazy val admin = AdminMetrics.all
   lazy val facia = FaciaMetrics.all
   lazy val faciaTool = FaciaToolMetrics.all
-  lazy val commercial = CommercialMetrics.all
 }
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
