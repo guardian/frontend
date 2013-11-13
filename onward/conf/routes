@@ -5,8 +5,9 @@
 # For dev machines
 GET        /assets/*path                         dev.DevAssetsController.at(path)
 
-GET        /popular-onward/*path.json            controllers.MostPopularOnwardController.render(path)
-GET        /latest.json                          controllers.LatestContentController.renderLatest()
+GET        /onward/popular-onward/*path.json     controllers.MostPopularOnwardController.popularOnward(path)
+GET        /onward/most-read.json                controllers.MostPopularOnwardController.mostRead()
+GET        /onward/latest.json                   controllers.LatestContentController.renderLatest()
 
 # A websocket for recently published content
-GET        /recently-published                   controllers.LatestContentController.recentlyPublished()
+GET        /onward/recently-published            controllers.LatestContentController.recentlyPublished()

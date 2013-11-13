@@ -3,18 +3,25 @@ package controllers
 import common._
 import play.api.mvc.{Action, Controller}
 import model.Cached
-import feed.{MostRead, OnwardJourneyAgent}
+import feed.{MostRead, MostPopularOnward, OnwardJourneyAgent}
 
 object MostPopularOnwardController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
+  def popularOnward(path: String) = Action { implicit request =>
 
-    val mostPopular = OnwardJourneyAgent.mostPopular()
-    val popular: Option[MostRead] = mostPopular.get(path)
+    val onwardContent: Seq[MostPopularOnward] = OnwardJourneyAgent.mostPopularOnward()(path)
 
     Cached(900) {
-        JsonComponent("popularity" -> popular.map(_.count).getOrElse(s"$path url not found"),
-                      "mostPopular" -> mostPopular.toList.sortBy(_._2.count).take(3).map(_._2.url))
+      JsonComponent("popularOnward" -> onwardContent.map(_.url).toList)
+    }
+  }
+
+  def mostRead() = Action { implicit request =>
+
+    val mostReadContent: List[MostRead] = OnwardJourneyAgent.mostRead()
+
+    Cached(900) {
+      JsonComponent("mostRead" -> mostReadContent.map(_.url).toList)
     }
   }
 }

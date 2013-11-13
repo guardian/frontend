@@ -1,4 +1,4 @@
-define(['modules/facia/collection-show-more', 'bonzo', 'common', 'bean'], function(CollectionShowMore, bonzo, common, bean) {
+define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'bean'], function(CollectionShowMore, bonzo, $, mediator, bean) {
 
     describe('Collection Show More', function() {
 
@@ -17,8 +17,8 @@ define(['modules/facia/collection-show-more', 'bonzo', 'common', 'bean'], functi
                     '</ul>' +
                 '</section>'
             )[0];
-            collection = common.$g('ul', container)[0];
-            $template = common.$g('.collection--template', collection);
+            collection = $('ul', container)[0];
+            $template = $('.collection--template', collection);
             // add collection
             var i = 10;
             while(i--) {
@@ -34,7 +34,7 @@ define(['modules/facia/collection-show-more', 'bonzo', 'common', 'bean'], functi
 
         afterEach(function() {
             $style.remove();
-            common.mediator.off(clickstreamEvent);
+            mediator.removeAllListeners();
         });
 
         it('should be able to initialise', function() {
@@ -52,60 +52,67 @@ define(['modules/facia/collection-show-more', 'bonzo', 'common', 'bean'], functi
         });
 
         it('should not append button if displaying all collection', function() {
-            common.$g('.item:nth-child(n+2)', container).remove();
+            $('.item:nth-child(n+2)', container).remove();
             // create again, after culling fixture data
             var collectionShowMore = new CollectionShowMore(collection);
             collectionShowMore.addShowMore();
-            expect(common.$g('button', container).length).toEqual(0);
+            expect($('button', container).length).toEqual(0);
         });
 
         it('should show collection when button clicked', function() {
             collectionShowMore.addShowMore();
-            bean.fire(common.$g('button', container)[0], 'click');
-            expect(common.$g('.item', collection).hasClass('u-h')).toBeFalsy();
+            bean.fire($('button', container)[0], 'click');
+            expect($('.item', collection).hasClass('u-h')).toBeFalsy();
         });
 
         it('should update "data-link-name" after click', function() {
             collectionShowMore.addShowMore();
-            var $button = common.$g('button', container);
+            var $button = $('button', container);
             bean.fire($button[0], 'click');
             expect($button.attr('data-link-name')).toEqual('Show more | 1');
         });
 
         it('should remove button if no more collection, after clickstream event', function() {
             collectionShowMore.addShowMore();
-            var button = common.$g('button', container)[0];
+            var button = $('button', container)[0];
             bean.fire(button, 'click');
             bean.fire(button, 'click');
-            common.mediator.emit(clickstreamEvent, {target: button});
-            expect(common.$g('button', container).length).toEqual(0);
+            mediator.emit(clickstreamEvent, {target: button});
+            expect($('button', container).length).toEqual(0);
         });
 
         it('should not remove button if more collection', function() {
             $style.html('body:after { content: "mobile"; }');
             collectionShowMore.addShowMore();
-            bean.fire(common.$g('button', container)[0], 'click');
-            expect(common.$g('button', container).length).toEqual(1);
+            bean.fire($('button', container)[0], 'click');
+            expect($('button', container).length).toEqual(1);
         });
 
         it('should initially show 2 collection at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             collectionShowMore.addShowMore();
-            expect(common.$g('.item', collection).length).toEqual(2);
+            expect($('.item', collection).length).toEqual(2);
         });
 
         it('should initially 5 collection in the "news" container at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             bonzo(container).attr('data-type', 'news');
             collectionShowMore.addShowMore();
-            expect(common.$g('.item', collection).length).toEqual(5);
+            expect($('.item', collection).length).toEqual(5);
         });
 
         it('should show 5 more at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             collectionShowMore.addShowMore();
-            bean.fire(common.$g('button', container)[0], 'click');
-            expect(common.$g('.item', collection).length).toEqual(7);
+            bean.fire($('button', container)[0], 'click');
+            expect($('.item', collection).length).toEqual(7);
+        });
+
+        it('should emit "modules:collectionShowMore:renderButton" on render of button', function() {
+            var emitSpy = sinon.spy(mediator, 'emitEvent');
+            collectionShowMore.addShowMore();
+            expect(emitSpy).toHaveBeenCalledWith('modules:collectionShowMore:renderButton', [collectionShowMore]);
+            emitSpy.restore();
         });
 
     });
