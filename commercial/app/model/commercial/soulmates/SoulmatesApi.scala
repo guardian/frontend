@@ -4,7 +4,7 @@ import scala.concurrent.Future
 import common.{Logging, ExecutionContexts}
 import play.api.libs.ws.WS
 import conf.CommercialConfiguration
-import play.api.libs.json.{JsArray, JsString, JsValue}
+import play.api.libs.json.{JsNull, JsArray, JsValue}
 
 object SoulmatesApi extends ExecutionContexts with Logging {
 
@@ -25,7 +25,7 @@ object SoulmatesApi extends ExecutionContexts with Logging {
         json
     } getOrElse {
       log.warn("No Soulmates API config properties set")
-      Future(JsString("{}"))
+      Future(JsNull)
     }
   }
 
