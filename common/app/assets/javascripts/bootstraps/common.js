@@ -372,15 +372,19 @@ define([
         },
 
         windowEventListeners: function() {
-            bean.on(window, 'resize', debounce(function(e) {
-                mediator.emitEvent('window:resize', [e]);
-            }, 200));
-            bean.on(window, 'scroll', debounce(function(e) {
-                mediator.emitEvent('window:scroll', [e]);
-            }, 200));
-            bean.on(window, 'orientationchange', debounce(function(e) {
-                mediator.emitEvent('window:orientationchange', [e]);
-            }, 200));
+            var events = {
+                    resize: 'window:resize',
+                    scroll: 'window:scroll',
+                    orientationchange: 'window:orientationchange'
+                },
+                emitEvent = function(eventName) {
+                    return function(e) {
+                        mediator.emit(eventName, e);
+                    };
+                };
+            for (var event in events) {
+                bean.on(window, event, debounce(emitEvent(events[event]), 200));
+            }
         }
     };
 
