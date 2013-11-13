@@ -359,3 +359,20 @@
     float: right;
     margin-top: $baseline*3;
 }
+
+/* Top Comments
+   ========================================================================== */
+
+$comment_background: #f6f6f5;
+
+.discussion__comments__top__container { // Section
+    
+    .discussion__comments__top { // Container
+        
+        .d-comment   { // Comment
+            background-color: $comment_background;
+            padding: 6px;
+            border: none;
+        }
+    }
+}

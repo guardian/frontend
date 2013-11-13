@@ -1,0 +1,74 @@
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
+
+<li class="d-comment
+           @if(isResponse){d-comment--response}else{d-comment--top-level}
+           @if(comment.isBlocked){d-comment--blocked}
+           @if(comment.responses.nonEmpty){d-comment--has-replies}"
+           id="comment-@comment.id"
+           data-comment-id="@comment.id"
+           data-comment-author="@comment.profile.displayName"
+           data-comment-author-id="@comment.profile.userId">
+           THIS IS A TOP COMMENT
+    <div class="d-comment__inner">
+        @if(comment.isHighlighted && !comment.isBlocked){
+            <div class="d-comment__pick i i-guardian-picks"><span class="u-h">Guardian pick</span></div>
+        }
+
+        @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
+            <div
+                class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
+                data-comment-id="@comment.id"
+                data-user-id="@comment.profile.userId"
+                data-recommend-count="@comment.numRecommends"
+                title="@comment.numRecommends recommendations">
+                <i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
+            </div>
+        }
+        <div class="d-comment-header">
+            <div class="d-comment__media">
+                <span class="d-comment__avatar-wrapper"><img src="@comment.profile.avatar" alt="" class="d-comment__avatar" width="36" height="36" /></span>
+            </div>
+            <div class="d-comment__meta">
+                <div>
+                    <span class="d-comment__author">@comment.profile.displayName</span>
+                    @if(comment.profile.isContributor){<i class="d-badge d-badge--contributor d-comment__author-status" title="Contributor"><span class="d-badge__label">Contributor</span></i>}
+                    @if(comment.profile.isStaff){<i class="d-badge d-badge--guardian-staff d-comment__author-status" title="Guardian staff"><span class="d-badge__label">Guardian Staff</span></i>}
+                </div>
+
+                <div>
+                    <time class="d-meta-item d-comment__meta-item js-timestamp"
+                          datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
+                        @Format(comment.date, "d MMM y")
+                    </time>
+                </div>
+            </div>
+        </div>
+        <div class="d-comment__main">
+            <div class="d-comment__body">
+                @if(comment.isBlocked){
+                    This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
+                    Replies may also be deleted. For more detail see <a href="http://www.theguardian.com/community-faqs" data-link-name="FAQs">our FAQs</a>.
+                }else{
+                    @withJsoup(BulletCleaner(comment.body))(
+                        InBodyLinkCleaner("in body link")(Edition(request))
+                    )
+                }
+            </div>
+            @if(!comment.isBlocked){
+                <div class="d-comment__actions">
+                    <div class="d-comment__actions__main u-cf">
+                        <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if(comment.responses.nonEmpty){
+        <ul class="d-thread d-thread--responses" data-responses="@comment.responses.length">
+            @comment.responses.map{ response =>
+                @fragments.comment(response, isClosedForRecommendation, true)
+            }
+        </ul>
+    }
+</li>

@@ -7,6 +7,7 @@ define([
     'modules/id',
     'modules/discussion/api',
     'modules/discussion/comments',
+    'modules/discussion/topComments',
     'modules/discussion/comment-box'
 ], function(
     ajax,
@@ -17,6 +18,7 @@ define([
     Id,
     DiscussionApi,
     Comments,
+    TopComments,
     CommentBox
 ) {
 
@@ -49,7 +51,8 @@ Loader.CONFIG = {
         comments: 'discussion__comments',
         commentBox: 'discussion__comment-box',
         commentBoxBottom: 'discussion__comment-box--bottom',
-        show: 'd-show-cta'
+        show: 'd-show-cta',
+        topComments: 'discussion__comments__top'
     }
 };
 
@@ -80,10 +83,13 @@ Loader.prototype.canComment = false;
 Loader.prototype.ready = function() {
     var id = this.getDiscussionId(),
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        topLoadingElem = bonzo.create('<div class="preload-msg">Loading top comments…<div class="is-updating"></div></div>')[0],
         commentsElem = this.getElem('comments'),
+        topCommentsElem = this.getElem('topComments'),
         self = this;
 
     bonzo(loadingElem).insertAfter(commentsElem);
+    bonzo(topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
         var self = this;
@@ -104,6 +110,28 @@ Loader.prototype.ready = function() {
                 self.renderCommentBar(user);
                 bonzo(commentsElem).removeClass('u-h');
             });
+
+        // Top comments =========================================== //
+
+        this.topComments = new TopComments(this.context, this.mediator, {
+            initialShow: 2,
+            discussionId: this.getDiscussionId(),
+            user: this.user
+        });
+
+        bonzo(topCommentsElem).addClass('u-h');
+        this.topComments
+            .fetch(topCommentsElem)
+            .then(function appendTopComments() {
+                bonzo(topLoadingElem).remove();
+                // for (var i = 0; i < 3; i++) { // first 4
+                //     bonzo(topCommentsElem).append(
+                //         bonzo(self.topComments.topLevelComments[i]).removeClass('u-h')[0]
+                //     );
+                // }
+                bonzo(topCommentsElem).removeClass('u-h');
+            });
+
     });
     this.getUser();
 
