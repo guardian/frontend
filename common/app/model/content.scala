@@ -268,5 +268,5 @@ class ImageContent(content: ApiContent) extends Content(content) {
 
 class ContentWithMetaData(content: ApiContent, metaData: Map[String, String]) extends Content(content) {
   override lazy val headline: String = metaData.get("headline").getOrElse(super.headline)
-  override lazy val group: Option[String] = None//metaData.get("group")
+  override lazy val group: Option[String] = metaData.get("group")
 }
