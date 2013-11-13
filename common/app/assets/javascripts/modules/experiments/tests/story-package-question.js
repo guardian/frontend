@@ -50,7 +50,11 @@ define([
     }
 
     function append(trail) {
-        bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', container)));
+        if(typeof trail === 'string') {
+            bonzo(qwery('ul:last-of-type', container)).html(trail);
+        } else {
+            bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', container)));
+        }
     }
 
     function prepend(trail) {
@@ -70,8 +74,29 @@ define([
             .insertAfter(getTrails()[0]);
     }
 
-    function deportTrailToRight(trail) {
+    function trailToHTML(id, type) {
+        return ajax({
+            url: '/onward/' + type + id + '.json',
+            type: 'json',
+            crossOrigin: true
+        });
+    }
 
+    function upgradeTrail(url) {
+        if(detect.getLayoutMode() === 'mobile') {
+            trailToHTML(url, 'trail').then(function(resp) {
+                if('html' in resp) {
+                    append(resp.html);
+                }
+                cloneHeader();
+            });
+        } else {
+            trailToHTML(url, 'card').then(function(resp) {
+                if('html' in resp) {
+                    bonzo(qwery('.card--right')).html(resp.html);
+                }
+            });
+        }
     }
 
     var Question = function () {
@@ -106,11 +131,7 @@ define([
                                 append(trail);
                             }
                         });
-                        if(detect.getLayoutMode() === 'mobile') {
-                            cloneHeader();
-                        } else {
-                            deportTrailToRight(getTrails()[0]);
-                        }
+                        upgradeTrail(getTrailUrl(getTrails()[0]));
                     });
                 }
             },
@@ -123,7 +144,7 @@ define([
                                 prepend(trail);
                             }
                         });
-                        cloneHeader();
+                        upgradeTrail(getTrailUrl(getTrails()[0]));
                     });
                 }
             },
@@ -137,12 +158,10 @@ define([
                             crossOrigin: true
                         }).then(
                             function(resp) {
-                                if(resp && 'trails' in resp) {
-                                    resp.trails.forEach(function(trail) {
-                                        if(isInHistory(trail)) {
-                                            append(trail);
-                                        } else {
-                                            prepend(trail);
+                                if(resp && 'popularOnward' in resp) {
+                                    resp.popularOnward.some(function(trail) {
+                                        if(!isInHistory(trail.url)) {
+                                            upgradeTrail(trail.url);
                                         }
                                     });
                                 }
@@ -152,18 +171,6 @@ define([
                             }
                         );
                         cloneHeader();
-                    });
-                }
-            },
-            {
-                id: 'All',
-                test: function() {
-                    common.mediator.on('modules:related:loaded', function() {
-                        self.variants.forEach(function(variant){
-                            if(variant.id === 'Read' || variant.id === 'Question') {
-                                variant.test.call(self);
-                            }
-                        });
                     });
                 }
             },
