@@ -19,20 +19,8 @@ define([
     var mostPopularUrl = 'http://foo.com',
         container = document.querySelector('.trailblock'),
         history = new History().get().map(function(item) {
-        return item.id;
-    });
-
-    function generateCardTemplate(trail) {
-        return [
-            '<h2 class="card__title">Read next</h2>',
-            '<a href="', trail.url ,'" data-link-name="Story package card">',
-            '<img class="card__media" src="', trail.itemPicture,'" alt="" itemprop="contentURL" /></a>',
-            '<div class="card__body u-text-hyphenate">',
-            '<h3 class="card__headline"><a href="', trail.url, '" data-link-name="Story package card">', trail.headline, '</a> </h3> ',
-            '</div><div class="card__meta dateline"><div class="dateline"><i class="i i-clock-light-grey relative-timestamp__icon"></i>',
-            '<time datetime="',trail.webPublicationDate.datetime ,'" class="js-timestamp">', trail.webPublicationDate.datetimeShort, '</time></div></div>'
-        ].join();
-    }
+            return item.id;
+        });
 
     function cleanUrl(url) {
         return '/' + url.split('/').slice(3).join('/');
