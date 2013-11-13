@@ -13,7 +13,7 @@ object RelatedController extends Controller with Related with Logging with Execu
     val edition = Edition(request)
     related(edition, path) map {
       case Nil => JsonNotFound()
-      case trails => renderRelated(trails)
+      case trails => renderRelated(trails.sortBy(-_.webPublicationDate.getMillis))
     }
   }
 
