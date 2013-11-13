@@ -1,7 +1,6 @@
 define([
     "modules/detect",
-    "modules/identity/autosignin",
-    "modules/analytics/identity"],
+    "modules/identity/autosignin"],
  function(
    Detect,
    AutoSignin
@@ -24,11 +23,10 @@ define([
                  }
              },
              {
-                 id: 'mobile-auto-facebook-signin',
+                 id: 'auto-signin',
                  test: function() {
                      new AutoSignin(_config).init();
                  }
-
              }
          ];
      };

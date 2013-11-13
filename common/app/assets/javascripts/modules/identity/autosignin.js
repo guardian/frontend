@@ -77,7 +77,6 @@ function(
                         });
                         profile.init();
                     }
-                    common.mediator.emit("identity:facebook-autosignin:success", self.config, self.context);
                 }
             });
         };
