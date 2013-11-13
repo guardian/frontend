@@ -26,7 +26,8 @@ define([
        });
 
        afterEach(function(){
-           Id.shouldAutoSigninInUser.restore()
+           Id.shouldAutoSigninInUser.restore();
+           spy.restore();
        });
 
        it("Does not get the users facebook status when they are not eligible for autosignin", function(){
