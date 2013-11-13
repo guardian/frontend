@@ -95,8 +95,8 @@
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--collapse u-table__cell--bottom">
                                     <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
-                                    @if(storyPackage.nonEmpty) {
-                                        @fragments.cards.card(storyPackage.head, "right", "More on this story", "Story package card", "visible")
+                                    @storyPackage.headOption.map{ item =>
+                                        @fragments.cards.card(item, "right", "More on this story", "Story package card", "visible")
                                     }
                                 </div>
                             </div>
