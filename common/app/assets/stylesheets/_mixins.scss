@@ -15,7 +15,7 @@
         }
         @return $result;
     } @else {
-        @if $value == 0 { @return 0; }
+        @if $value == 0 { @return 0; } // 0px => 0
         @return if(unit($value) == px, $value / $baseline * 1rem, $value);
     }
 }
@@ -27,6 +27,7 @@
 @mixin rem($properties) {
     @each $property, $value in $properties {
         @if (type-of($value) == number and $value != 0) {
+            // Turn any value into pixels
             $value: if(unitless($value), $value * 1px, $value);
         }
 
