@@ -369,10 +369,32 @@ $comment_background: #f6f6f5;
     
     .discussion__comments__top { // Container
         
+        //height: 500px;
+        -moz-column-width: 290px;
+        -webkit-column-width: 290px;
+        -moz-column-gap: 16px;
+        -webkit-column-gap: 16px; 
+
+
         .d-comment   { // Comment
             background-color: $comment_background;
             padding: 6px;
             border: none;
+            width: 290px;
+            //float: left;
+            display: inline-block;
+            margin-bottom: 16px;
+
+            .d-comment__avatar-wrapper {
+                -webkit-border-radius: 50px;
+                -moz-border-radius: 50px;
+                border-radius: 50px;
+                overflow: hidden;
+                .d-comment__avatar {
+                    padding: 0;
+                }
+            }
+
         }
     }
 }

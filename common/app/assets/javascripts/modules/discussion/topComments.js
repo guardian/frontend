@@ -107,30 +107,30 @@ TopComments.prototype.ready = function() {
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
 
-    if (this.topLevelComments.length > 0) {
-        // Hide excess topLevelComments
-        qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
-            if (i >= initialShow) {
-                self.hasHiddenComments = true;
-                bonzo(elem).addClass('u-h');
-            }
-        });
+    // if (this.topLevelComments.length > 0) {
+    //     // Hide excess topLevelComments
+    //     qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
+    //         if (i >= initialShow) {
+    //             self.hasHiddenComments = true;
+    //             bonzo(elem).addClass('u-h');
+    //         }
+    //     });
 
-        if (this.topLevelComments.length > initialShow) {
-            if (!this.getElem('showMore')) {
-                bonzo(this.getElem('comments')).append(
-                    '<a class="js-show-more-comments cta" data-link-name="Show more comments" data-remove="true" href="/discussion'+
-                        this.options.discussionId +'?page=1">'+
-                        'Show more comments'+
-                    '</a>');
-            }
-            this.on('click', this.getElem('showMore'), this.showMore);
-        }
+    //     if (this.topLevelComments.length > initialShow) {
+    //         if (!this.getElem('showMore')) {
+    //             bonzo(this.getElem('comments')).append(
+    //                 '<a class="js-show-more-comments cta" data-link-name="Show more comments" data-remove="true" href="/discussion'+
+    //                     this.options.discussionId +'?page=1">'+
+    //                     'Show more comments'+
+    //                 '</a>');
+    //         }
+    //         this.on('click', this.getElem('showMore'), this.showMore);
+    //     }
 
-        this.hideExcessReplies();
-        this.bindCommentEvents();
-        this.on('click', this.getClass('showReplies'), this.showMoreReplies);
-    }
+    //     this.hideExcessReplies();
+    //     this.bindCommentEvents();
+    //     this.on('click', this.getClass('showReplies'), this.showMoreReplies);
+    // }
     this.emit('ready');
 };
 
