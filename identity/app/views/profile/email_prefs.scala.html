@@ -17,8 +17,11 @@
             <ul class="form-fields">
                 <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
                     <div class="label">How do you like to receive your emails?</div>
-                    <div class="form-field__note">HTML emails contain formatting and are generally prettier, and will contain images. Text emails are quicker to download, but don't contain images or formatting.
-                    <br>We recommend HTML emails.</div>
+                    <div class="form-field__note">
+                        HTML emails have formatted text, images and look better, but are a larger download. Text emails are quicker to download, but don't contain images or any formatting.
+                        <br />
+                        We recommend HTML emails.
+                    </div>
 
                     @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "Images & text (HTML)", "Text" -> "Text"))(nonInputFields)
                 </li>
