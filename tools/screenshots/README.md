@@ -6,7 +6,7 @@ Set-up
 Running
 -------
 
-    $ grunt snap
+    $ ENVIRONMENT=prod casperjs screenshot.js
 
 Running against a particular env
 
