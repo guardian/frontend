@@ -1,7 +1,6 @@
 package model.commercial.jobs
 
 import org.joda.time.DateTime
-import model.commercial.Keyword
 
 object Fixtures {
 
@@ -107,7 +106,7 @@ object Fixtures {
       |      |</Jobs>
       | """.stripMargin
 
-  val untaggedJobs = List(
+  val jobs = List(
 
     Job(4721342,
       "Volunteering",
@@ -124,8 +123,7 @@ object Fixtures {
       "http://jobs.theguardian.com/job/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
       "http://jobs.theguardian.com/apply/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
       List("Charities", "Health", "Social care", "Policy & research", "Social welfare", "Academic & research", "Support services", "Adult Care", "Family Support"),
-      List("UK", "England", "Greater London", "South London"),
-      Set()
+      List("UK", "England", "Greater London", "South London")
     ),
 
     Job(4726895,
@@ -143,8 +141,7 @@ object Fixtures {
       "http://jobs.theguardian.com/job/4726895/arc-worker/?TrackID=554176",
       "http://jobs.theguardian.com/apply/4726895/arc-worker/?TrackID=554176",
       List("Social care", "Children", "Youth", "Family Support"),
-      List("UK", "England", "South East", "Hertfordshire"),
-      Set()
+      List("UK", "England", "South East", "Hertfordshire")
     ),
 
     Job(4729001,
@@ -162,233 +159,8 @@ object Fixtures {
       "http://jobs.theguardian.com/job/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
       "http://jobs.theguardian.com/apply/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
       List("Marketing & PR", "Digital Marketing"),
-      List("UK"),
-      Set()
+      List("UK")
     )
-
-  )
-
-  val jobs =
-
-    List(
-      Job(4721342,
-        "Volunteering",
-        new DateTime("2013-10-10T08:00:00.000+01:00"),
-        new DateTime("2113-11-10T23:59:00.000Z"),
-        isPremium = false,
-        "Temp",
-        "Macmillan Cancer Support Social Care Programme Research & Communications Intern",
-        "We need an enthusiastic volunteer intern to provide project support to the busy Social Care Programme (SCP) within the dynamic Health and Social Care Team at Macmillan.",
-        "Unpaid Voluntary Work",
-        Some("Vauxhall, London"),
-        Some("http://jobs.theguardian.com/getasset/?uiAssetID=1f8c821a-6de6-4f5d-ac32-fee9b8fb0b42"),
-        None,
-        "http://jobs.theguardian.com/job/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
-        "http://jobs.theguardian.com/apply/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
-        List("Charities", "Health", "Social care", "Policy & research", "Social welfare", "Academic & research", "Support services", "Adult Care", "Family Support"),
-        List("UK", "England", "Greater London", "South London"),
-        Set(Keyword("id1", "name1"), Keyword("id2", "name2"), Keyword("id3", "name3"))
-      ),
-
-      Job(4726895,
-        "Job vacancy",
-        new DateTime("2013-10-18T08:00:00.000+01:00"),
-        new DateTime("2113-10-31T23:59:00.000Z"),
-        isPremium = false,
-        "Permanent",
-        "ARC Worker",
-        "We appreciate that not every teenager wants our help. But when they need a helping hand in life we hope we can offer them the support they need. The Adolescent Resource Centre is has been running since September 2009.",
-        "£18,453 - £24,646 PA Inclusive",
-        Some("Countywide"),
-        Some("http://jobs.theguardian.com/getasset/?uiAssetID=bfe4737e-06a3-4688-aa9c-aa4e952a4795"),
-        None,
-        "http://jobs.theguardian.com/job/4726895/arc-worker/?TrackID=554176",
-        "http://jobs.theguardian.com/apply/4726895/arc-worker/?TrackID=554176",
-        List("Social care", "Children", "Youth", "Family Support"),
-        List("UK", "England", "South East", "Hertfordshire"),
-        Set(Keyword("id1", "name1"), Keyword("id2", "name2"), Keyword("id3", "name3"))
-      ),
-
-      Job(4729001,
-        "Graduate scheme",
-        new DateTime("2013-09-24T00:03:00.000+01:00"),
-        new DateTime("2113-10-24T23:59:59.000+01:00"),
-        isPremium = false,
-        "Permanent",
-        "Graduate PR, Communications & Public Affairs",
-        "An ever-evolving heritage. A truly exciting future. Home to two of the world&rsquo;s most iconic brands. At Jaguar Land Rover we are continually redefining the benchmark for excellence and setting the standards that others want to follow. And with increas",
-        "Competitive",
-        None,
-        None,
-        None,
-        "http://jobs.theguardian.com/job/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-        "http://jobs.theguardian.com/apply/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-        List("Marketing & PR", "Digital Marketing"),
-        List("UK"),
-        Set(Keyword("id1", "name1"), Keyword("id2", "name2"), Keyword("id3", "name3"))
-      )
-    )
-
-  /*
-   * Same as untaggedJobs but with first job updated and last job new
-   */
-  val untaggedJobsLoad2 = List(
-
-    Job(4721342,
-      "Volunteering",
-      new DateTime("2013-10-10T08:00:00.000+01:00"),
-      new DateTime("2114-11-10T23:59:00.000Z"),
-      isPremium = false,
-      "Temp",
-      "Macmillan Cancer Support Social Care Programme Research & Communications Intern",
-      "We need an enthusiastic volunteer intern to provide project support to the busy Social Care Programme (SCP) within the dynamic Health and Social Care Team at Macmillan.",
-      "Unpaid Voluntary Work",
-      Some("Vauxhall, London"),
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=1f8c821a-6de6-4f5d-ac32-fee9b8fb0b42"),
-      None,
-      "http://jobs.theguardian.com/job/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
-      "http://jobs.theguardian.com/apply/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
-      List("Charities", "Health", "Social care", "Policy & research", "Social welfare", "Academic & research", "Support services", "Adult Care", "Family Support"),
-      List("UK", "England", "Greater London", "South London"),
-      Set()
-    ),
-
-    Job(4726895,
-      "Job vacancy",
-      new DateTime("2013-10-18T08:00:00.000+01:00"),
-      new DateTime("2113-10-31T23:59:00.000Z"),
-      isPremium = false,
-      "Permanent",
-      "ARC Worker",
-      "We appreciate that not every teenager wants our help. But when they need a helping hand in life we hope we can offer them the support they need. The Adolescent Resource Centre is has been running since September 2009.",
-      "£18,453 - £24,646 PA Inclusive",
-      Some("Countywide"),
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=bfe4737e-06a3-4688-aa9c-aa4e952a4795"),
-      None,
-      "http://jobs.theguardian.com/job/4726895/arc-worker/?TrackID=554176",
-      "http://jobs.theguardian.com/apply/4726895/arc-worker/?TrackID=554176",
-      List("Social care", "Children", "Youth", "Family Support"),
-      List("UK", "England", "South East", "Hertfordshire"),
-      Set()
-    ),
-
-    Job(4729001,
-      "Graduate scheme",
-      new DateTime("2013-09-24T00:03:00.000+01:00"),
-      new DateTime("2113-10-24T23:59:59.000+01:00"),
-      isPremium = false,
-      "Permanent",
-      "Graduate PR, Communications & Public Affairs",
-      "An ever-evolving heritage. A truly exciting future. Home to two of the world&rsquo;s most iconic brands. At Jaguar Land Rover we are continually redefining the benchmark for excellence and setting the standards that others want to follow. And with increas",
-      "Competitive",
-      None,
-      None,
-      None,
-      "http://jobs.theguardian.com/job/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-      "http://jobs.theguardian.com/apply/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-      List("Marketing & PR", "Digital Marketing"),
-      List("UK"),
-      Set()
-    ),
-
-    Job(4729002,
-      "Graduate scheme",
-      new DateTime("2013-09-24T00:03:00.000+01:00"),
-      new DateTime("2113-10-24T23:59:59.000+01:00"),
-      isPremium = false,
-      "Permanent",
-      "Graduate PR, Communications & Public Affairs",
-      "An ever-evolving heritage. A truly exciting future. Home to two of the world&rsquo;s most iconic brands. At Jaguar Land Rover we are continually redefining the benchmark for excellence and setting the standards that others want to follow. And with increas",
-      "Competitive",
-      None,
-      None,
-      None,
-      "http://jobs.theguardian.com/job/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-      "http://jobs.theguardian.com/apply/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-      List("Marketing & PR", "Digital Marketing"),
-      List("UK"),
-      Set()
-    )
-
-  )
-
-  val jobsLoad2 =     List(
-
-    Job(4721342,
-      "Volunteering",
-      new DateTime("2013-10-10T08:00:00.000+01:00"),
-      new DateTime("2114-11-10T23:59:00.000Z"),
-      isPremium = false,
-      "Temp",
-      "Macmillan Cancer Support Social Care Programme Research & Communications Intern",
-      "We need an enthusiastic volunteer intern to provide project support to the busy Social Care Programme (SCP) within the dynamic Health and Social Care Team at Macmillan.",
-      "Unpaid Voluntary Work",
-      Some("Vauxhall, London"),
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=1f8c821a-6de6-4f5d-ac32-fee9b8fb0b42"),
-      None,
-      "http://jobs.theguardian.com/job/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
-      "http://jobs.theguardian.com/apply/4721342/macmillan-cancer-support-social-care-programme-research-and-communications-intern/?TrackID=554176",
-      List("Charities", "Health", "Social care", "Policy & research", "Social welfare", "Academic & research", "Support services", "Adult Care", "Family Support"),
-      List("UK", "England", "Greater London", "South London"),
-      Set(Keyword("id1", "name1"), Keyword("id2", "name2"), Keyword("id3", "name3"))
-    ),
-
-  Job(4726895,
-    "Job vacancy",
-    new DateTime("2013-10-18T08:00:00.000+01:00"),
-    new DateTime("2113-10-31T23:59:00.000Z"),
-    isPremium = false,
-    "Permanent",
-    "ARC Worker",
-    "We appreciate that not every teenager wants our help. But when they need a helping hand in life we hope we can offer them the support they need. The Adolescent Resource Centre is has been running since September 2009.",
-    "£18,453 - £24,646 PA Inclusive",
-    Some("Countywide"),
-    Some("http://jobs.theguardian.com/getasset/?uiAssetID=bfe4737e-06a3-4688-aa9c-aa4e952a4795"),
-    None,
-    "http://jobs.theguardian.com/job/4726895/arc-worker/?TrackID=554176",
-    "http://jobs.theguardian.com/apply/4726895/arc-worker/?TrackID=554176",
-    List("Social care", "Children", "Youth", "Family Support"),
-    List("UK", "England", "South East", "Hertfordshire"),
-    Set(Keyword("id1", "name1"), Keyword("id2", "name2"), Keyword("id3", "name3"))
-  ),
-
-  Job(4729001,
-    "Graduate scheme",
-    new DateTime("2013-09-24T00:03:00.000+01:00"),
-    new DateTime("2113-10-24T23:59:59.000+01:00"),
-    isPremium = false,
-    "Permanent",
-    "Graduate PR, Communications & Public Affairs",
-    "An ever-evolving heritage. A truly exciting future. Home to two of the world&rsquo;s most iconic brands. At Jaguar Land Rover we are continually redefining the benchmark for excellence and setting the standards that others want to follow. And with increas",
-    "Competitive",
-    None,
-    None,
-    None,
-    "http://jobs.theguardian.com/job/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-    "http://jobs.theguardian.com/apply/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-    List("Marketing & PR", "Digital Marketing"),
-    List("UK"),
-    Set(Keyword("id1", "name1"), Keyword("id2", "name2"), Keyword("id3", "name3"))
-  ),
-
-  Job(4729002,
-    "Graduate scheme",
-    new DateTime("2013-09-24T00:03:00.000+01:00"),
-    new DateTime("2113-10-24T23:59:59.000+01:00"),
-    isPremium = false,
-    "Permanent",
-    "Graduate PR, Communications & Public Affairs",
-    "An ever-evolving heritage. A truly exciting future. Home to two of the world&rsquo;s most iconic brands. At Jaguar Land Rover we are continually redefining the benchmark for excellence and setting the standards that others want to follow. And with increas",
-    "Competitive",
-    None,
-    None,
-    None,
-    "http://jobs.theguardian.com/job/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-    "http://jobs.theguardian.com/apply/4729001/graduate-pr-communications-and-public-affairs/?TrackID=554176",
-    List("Marketing & PR", "Digital Marketing"),
-    List("UK"),
-    Set(Keyword("id1", "name1"), Keyword("id2", "name2"), Keyword("id3", "name3"))
-  )
 
   )
 

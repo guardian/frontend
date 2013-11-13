@@ -7,14 +7,14 @@ import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import scala.xml.XML
 
-class JobsApiTest extends FlatSpec with Matchers with ExecutionContexts {
+class LightJobsApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
   "getCurrentJobs" should "load all unexpired jobs from XML feed" in {
-    val jobs = JobsApi.getCurrentJobs(Future {
-      XML.loadString(Fixtures.xml)
+    val jobs = LightJobsApi.getCurrentJobs(Future {
+      XML.loadString(LightFixtures.xml)
     })
 
-    Await.result(jobs, atMost = 1.seconds) should be(Fixtures.jobs)
+    Await.result(jobs, atMost = 1.seconds) should be(LightFixtures.jobs)
   }
 
 }
