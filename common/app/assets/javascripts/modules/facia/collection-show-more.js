@@ -129,7 +129,7 @@ define([
                 var that = this;
                 // listen to the clickstream, as happens later, before removing
                 mediator.on('module:clickstream:click', function(clickSpec) {
-                    if (bonzo(clickSpec.target)[0] === that._$button[0]) {
+                    if (qwery(clickSpec.target)[0] === that._$button[0]) {
                         that._$button.remove();
                     }
                 });
