@@ -23,65 +23,44 @@ define([
 
 
     Commercial.prototype.DEFAULTS = {
-        context: document,
-        elCls: 'commercial',
-        smallAdWidth:  300,  // Up to, but excluding
-        mediumAdWidth: 600,
-        breakpoints: [300, 600] // Just testing this
+        context:     document,
+        className:   'commercial',
+        breakpoints: [300, 400, 500, 600]
     };
 
     Commercial.prototype.init = function() {
         var self = this;
 
         bean.on(window, 'resize', common.debounce(function() {
-            self.applyClassnames();
+            self.applyBreakpointClassnames();
         }, 250));
 
         common.mediator.on('modules:commercial:loaded', function() {
-            self.applyClassnames();
+            self.applyBreakpointClassnames();
         });
 
-        this.applyClassnames();
+        this.applyBreakpointClassnames();
 
         return this;
     };
 
 
-    Commercial.prototype.applyClassnames = function() {
+    Commercial.prototype.applyBreakpointClassnames = function() {
         var self = this,
-            classname = this.options.elCls;
+            $nodes = bonzo(document.getElementsByClassName(this.options.className)),
+            regex = new RegExp('('+self.options.className+'--w\\d{1,3})', 'g');
 
-        common.$g('.' + classname, this.options.context).each(function() {
-            var $node = bonzo(this),
-                width = $node.dim().width;
-
-            // Predefined breakpoint names
-            $node.removeClass(classname + '--small ' + classname + '--medium');
-
-            if (width > self.options.smallAdWidth) {
-                $node.addClass(classname + '--medium');
-            } else {
-                $node.addClass(classname + '--small');
-            }
-
-
-            // Specific width classnames
-            $node[0].className = $node[0].className.replace(/(commercial--w\d{1,3})\s?/g, '');
-
-            var matchedWidth = 0;
+        $nodes.each(function(el) {
+            var width = el.offsetWidth;
+            el.className = el.className.replace(regex, '');
             self.options.breakpoints.forEach(function(breakpointWidth) {
                 if (width >= breakpointWidth) {
-                    matchedWidth = breakpointWidth;
+                    bonzo(el).addClass(self.options.className+'--w' + breakpointWidth);
                 }
             });
 
-            if (matchedWidth > 0) {
-                $node.addClass(classname + '--w' + matchedWidth);
-            }
-
-            $node.attr('data-width', width);
+            el.setAttribute('data-width', width);
         });
-
     };
 
     return Commercial;
