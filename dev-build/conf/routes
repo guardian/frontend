@@ -127,6 +127,8 @@ GET         /troubleshoot/football                                              
 # Commercial
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                            controllers.commercial.JobAds.jobs
+# New light jobs feed available only in dev env
+GET         /commercial/lightjobs.json                                                                       controllers.commercial.JobAds.lightJobs
 GET         /commercial/$advert<(masterclasses)>.json                                                        controllers.commercial.SimpleAdvert.render(advert)
 GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
 GET         /commercial/soulmates/men.json                                                                   controllers.commercial.SoulmateAds.men

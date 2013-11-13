@@ -1,18 +1,20 @@
 import common.{Logging, AkkaAsync, CommercialMetrics, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
-import model.commercial.jobs.JobsAgent
+import model.commercial.jobs.{LightJobsAgent, JobsAgent}
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.OffersAgent
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
 import scala.util.Random
+import play.api.Play
+import play.api.Play.current
 
 trait CommercialLifecycle extends GlobalSettings with Logging {
 
   override def onStart(app: PlayApp) {
 
-    def randomStartSchedule = s"0 ${Random.nextInt(60)}/15 * * * ?"
+    def randomStartSchedule = s"0 ${Random.nextInt(15)}/15 * * * ?"
 
     super.onStart(app)
 
@@ -45,6 +47,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
       OffersAgent.refresh()
       JobsAgent.refresh()
       SoulmatesAggregatingAgent.refresh()
+      if (Play.isDev) LightJobsAgent.refresh()
     }
   }
 
