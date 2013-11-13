@@ -2,43 +2,40 @@
    Jobs component
    ========================================================================== */
 
-.commercial--jobs {
+.jobs-component {
 
-    ul, li {
-        @include box-sizing(border-box);
+    background-color: #E10686;
+    color: #ffffff;
+
+    .product {
+        width: 100%;
+        display: none;
     }
 
-    .title {
-        @include fs-bodyHeading(1);
-        margin-bottom: 0;
+    .product:first-child {
+        display: block;
     }
 
-    .description {
-        @include fs-bodyCopy(1);
-    }
-
-    &.commercial--small {
-        li {
-            width: 100%;
-        }
-
-        li:nth-child(2),
-        li:nth-child(3),
-        li:nth-child(4) {
-            display: none;
-        }
-    }
-
-
-    &.commercial--medium {
-        li {
+    &.commercial--w500 {
+        .product {
             width: 33%;
             float: left;
             padding-right: $gutter;
         }
 
-        li:nth-child(4) {
-            display: none;
+        .product:nth-child(2),
+        .product:nth-child(3) {
+            display: block;
+        }
+    }
+
+    &.commercial--w600 {
+        .product {
+            width: 25%;
+        }
+
+        .product:nth-child(4) {
+            display: block;
         }
     }
 }

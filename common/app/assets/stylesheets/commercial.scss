@@ -7,30 +7,6 @@
 @import "_vars";
 @import "_mixins";
 
-
-
-.commercial {
-    /* ==========================================================================
-       Reset/Normalize
-       ========================================================================== */
-
-    @import "_normalize";
-
-    /* ==========================================================================
-       Base
-       ========================================================================== */
-
-    @import "base/_base";
-    @import "base/_type";
-    @import "_extends-only";
-    @import "base/_links";
-    @import "base/_helpers";
-    @import "base/_lists";
-
-    @import "base/_forms";
-}
-
-
 @import "module/commercial/_commercial-component";
 @import "module/commercial/_masterclasses";
 @import "module/commercial/_travel";

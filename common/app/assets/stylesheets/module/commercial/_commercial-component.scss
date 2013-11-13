@@ -30,16 +30,14 @@
 
 
 .commercial__search {
-    @extend .text-input;
     width: 70%;
     float: left;
 }
 
 .commercial__submit {
-    @extend .submit-input;
     min-width: 0;
     width: 30%;
-    margin-right: 0;
+    margin: 0;
     float: left;
 }
 
@@ -86,4 +84,8 @@
 .product__image img {
     width: 100%;
     display: block;
+}
+
+.product__description {
+    @include fs-bodyCopy(1);
 }
