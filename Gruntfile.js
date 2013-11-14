@@ -16,6 +16,9 @@ module.exports = function (grunt) {
         /***********************************************************************
          * Compile
          **********************************************************************/
+        karma: {
+            configFile: 'karma.conf.js'
+        },
 
         sass: {
             compile: {
@@ -326,6 +329,12 @@ module.exports = function (grunt) {
          * Test
          **********************************************************************/
 
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
+        },
+
         jasmine: {
             options: {
                 template: require('grunt-template-jasmine-requirejs'),
@@ -579,6 +588,7 @@ module.exports = function (grunt) {
     });
 
     // Load the plugins
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-css-metrics');
     grunt.loadNpmTasks('grunt-contrib-jshint');

@@ -27,7 +27,7 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
                 both_tests_on: { switches: { abDummyTest: true, abDummyTest2: true }}
             };
 
-            controlSpy = sinon.spy(test.one.variants[0], 'test'),
+            controlSpy = sinon.spy(test.one.variants[0], 'test');
             variantSpy = sinon.spy(test.one.variants[1], 'test');
             
             ab.addTest(test.one);
@@ -64,6 +64,9 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             it('should put all non-participating users in a "not in test" group', function() {
                 test.one.audience = 0;
                 ab.segment(switches.test_one_on);
+                console.info('****');
+                console.info(controlSpy)
+                console.info('****');
                 expect(controlSpy).not.toHaveBeenCalled();
                 expect(getItem('DummyTest').variant).toBe("notintest");
             });
