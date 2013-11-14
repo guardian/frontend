@@ -1,5 +1,6 @@
 import com.google.inject.Guice
-import conf.{TestModule, DevModule, RequestMeasurementMetrics, ProdModule}
+import common.CloudWatchApplicationMetrics
+import conf._
 import filters.HeaderLoggingFilter
 import play.api.Play.current
 import play.api._
@@ -8,7 +9,11 @@ import play.api.mvc.Results._
 import scala.concurrent.Future
 import utils.SafeLogging
 
-object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetrics.asFilters: _*) with SafeLogging {
+object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetrics.asFilters: _*) with SafeLogging
+                                                                                    with CloudWatchApplicationMetrics {
+
+  override lazy val applicationName = Management.applicationName
+
   private lazy val injector = {
     val module =
       Play.mode match {

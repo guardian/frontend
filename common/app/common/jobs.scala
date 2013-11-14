@@ -17,7 +17,7 @@ object Jobs extends Logging {
 
   scheduler.start()
 
-  def schedule(name: String, cron: String, metric: TimingMetricLogging)(block: => Unit) {
+  def schedule(name: String, cron: String)(block: => Unit) {
     log.info(s"Scheduling $name")
     jobs.put(name, () => block)
 
