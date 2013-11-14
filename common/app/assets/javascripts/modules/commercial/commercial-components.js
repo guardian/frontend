@@ -1,12 +1,18 @@
 define([
-    'common',
+    '$',
+    'utils/mediator',
+    'lodash/objects/assign',
+    'lodash/functions/debounce',
     'qwery',
     'bonzo',
     'bean',
     'modules/adverts/document-write',
     'modules/storage'
 ], function (
-    common,
+    $,
+    mediator,
+    extend,
+    debounce,
     qwery,
     bonzo,
     bean,
@@ -15,7 +21,7 @@ define([
 ) {
 
     var Commercial = function(options) {
-        this.options        = common.extend(this.DEFAULTS, options);
+        this.options        = extend(this.DEFAULTS, options);
         this.keywords       = this.options.config.page.keywords.split(',');
         this.keywordsParams = documentWrite.getKeywords(this.options.config.page);
         this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
@@ -31,11 +37,11 @@ define([
     Commercial.prototype.init = function() {
         var self = this;
 
-        bean.on(window, 'resize', common.debounce(function() {
+        bean.on(window, 'resize', debounce(function() {
             self.applyBreakpointClassnames();
         }, 250));
 
-        common.mediator.on('modules:commercial:loaded', function() {
+        mediator.on('modules:commercial:loaded', function() {
             self.applyBreakpointClassnames();
         });
 

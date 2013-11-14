@@ -1,4 +1,4 @@
-package model.diagnostics  
+package model.diagnostics
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.handlers.AsyncHandler
@@ -17,7 +17,7 @@ trait CloudWatch extends Logging {
     client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
     client
   }
-  
+
   object asyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
   {
     def onError(exception: Exception)
@@ -31,17 +31,17 @@ trait CloudWatch extends Logging {
   }
 
   def put(namespace: String, metrics: Map[String, Double]) = {
-      val request = new PutMetricDataRequest().
-        withNamespace(namespace).
-        withMetricData(metrics.map{ case (name, count) => 
-          new MetricDatum()
-            .withValue(count)
-            .withMetricName(name)
-            .withUnit("Count")
-            .withDimensions(stage)
-        })
+    val request = new PutMetricDataRequest().
+      withNamespace(namespace).
+      withMetricData(metrics.map{ case (name, count) =>
+      new MetricDatum()
+        .withValue(count)
+        .withMetricName(name)
+        .withUnit("Count")
+        .withDimensions(stage)
+    })
 
-      cloudwatch.putMetricDataAsync(request, asyncHandler)
+    cloudwatch.putMetricDataAsync(request, asyncHandler)
   }
 }
 

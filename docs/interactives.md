@@ -78,9 +78,9 @@ Note, also how, in your web inspector network panel, the boot.js file is loaded,
 All of the frontend applications are packaged as standalone JARs, so we can download and execute them like so,
 
 ```
-wget -O interactive.zip "http://guest:@teamcity.gudev.gnl:8111/httpAuth/repository/download/bt1144/.lastSuccessful/artifacts.zip" 
-unzip interactive.zip
-java -DAPP_SECRET="" -jar packages/frontend-interactive/frontend-interactive.jar 
+wget -O applications.zip "http://guest:@teamcity.gudev.gnl:8111/httpAuth/repository/download/bt1193/.lastSuccessful/artifacts.zip" 
+unzip applications.zip
+java -DAPP_SECRET="" -jar packages/frontend-applications/frontend-applications.jar 
 ```
 
 Nb. `bt1144` is the project identifier in Team City.  

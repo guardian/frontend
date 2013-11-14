@@ -3,13 +3,13 @@
     Description: Display latest summary to the user
 */
 define([
-    'common',
-    'bonzo',
-    'bean'
+    'utils/mediator',
+    'utils/to-array',
+    'bonzo'
 ], function (
-    common,
-    bonzo,
-    bean
+    mediator,
+    toArray,
+    bonzo
 ) {
     'use strict';
 
@@ -18,10 +18,10 @@ define([
         this.maxSummaryHeight = 250;
         this.expandableClass = 'live-summary--expandable';
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
-        this.summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary'));
-        this.summaryContainers = common.toArray(this.context.getElementsByClassName('js-article__summary'));
-        this.hiddenSummaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
-        this.placeholders = common.toArray(this.context.getElementsByClassName('js-summary-placeholder'));
+        this.summaries = toArray(this.articleContainer.getElementsByClassName('is-summary'));
+        this.summaryContainers = toArray(this.context.getElementsByClassName('js-article__summary'));
+        this.hiddenSummaryContainers = toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
+        this.placeholders = toArray(this.context.getElementsByClassName('js-summary-placeholder'));
     }
 
     Summary.prototype.init = function() {
@@ -30,15 +30,16 @@ define([
         this.deportLatest();
         this.render();
 
-        common.mediator.on('modules:autoupdate:loaded', function() {
+        mediator.on('modules:autoupdate:loaded', function() {
             self.deportLatest.call(self);
             self.render.call(self);
         });
-        bean.on(window, 'resize', common.debounce(function() {
+
+        mediator.addListener('window:resize', function() {
             self.summaryContainers.forEach(function(element, index) {
                 self.expandable(element, self.maxSummaryHeight, self.expandableClass);
             });
-        }, 100));
+        });
     };
 
     Summary.prototype.render = function() {

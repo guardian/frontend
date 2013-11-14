@@ -1,5 +1,7 @@
-define(["bean",
-        "common",
+define(['$',
+        "bean",
+        "utils/mediator",
+        'lodash/functions/debounce',
         "ajax",
         "bonzo",
         "qwery",
@@ -8,8 +10,10 @@ define(["bean",
         "modules/overlay"
         ],
     function (
+        $,
         bean,
-        common,
+        mediator,
+        debounce,
         ajax,
         bonzo,
         qwery,
@@ -44,7 +48,7 @@ define(["bean",
 
             if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
                 // Apply tracking to links
-                common.$g(self.selector + ' a', context).attr('data-is-ajax', '1');
+                $(self.selector + ' a', context).attr('data-is-ajax', '1');
 
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     e.preventDefault();
@@ -96,7 +100,7 @@ define(["bean",
                     var currentItemEl = qwery('.js-gallery-item-'+currentImage, galleryNode)[0],
                         captionAreaHit = false;
 
-                    common.$g('.gallerycaption, .captioncontrol', currentItemEl).each(function(el) {
+                    $('.gallerycaption, .captioncontrol', currentItemEl).each(function(el) {
                         if (bonzo.isAncestor(el, e.target)) {
                             captionAreaHit = true;
                         }
@@ -132,18 +136,18 @@ define(["bean",
                 self.goTo(index);
             });
 
-            bean.on(window, 'orientationchange', common.debounce(function() {
+            mediator.addListener('window:orientationchange', function() {
                 self.layout();
                 if (detect.getOrientation() === 'landscape') {
                     self.jumpToContent();
                 }
-            }));
+            });
 
-            bean.on(window, 'resize', common.debounce(function() {
+            mediator.addListener('window:resize', function() {
                 self.layout();
-            }));
+            });
 
-            common.mediator.on('modules:overlay:close', function() {
+            mediator.on('modules:overlay:close', function() {
                 // Remove events
                 bean.off(overlay.toolbarNode, 'click');
                 bean.off(overlay.bodyNode, 'click touchmove touchend');
@@ -176,7 +180,7 @@ define(["bean",
                     // Remove keyboard handlers
                     bean.off(document.body, 'keydown', self.handleKeyEvents);
 
-                    common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+                    mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
                 }
             });
         };
@@ -216,8 +220,8 @@ define(["bean",
                     overlay.setBody(response.html);
 
                     galleryNode  = qwery('.gallery--lightbox', overlay.bodyNode)[0];
-                    $navArrows   = common.$g('.gallery__nav', galleryNode);
-                    $images      = common.$g('.gallery__img', galleryNode);
+                    $navArrows   = $('.gallery__nav', galleryNode);
+                    $images      = $('.gallery__img', galleryNode);
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
                     // Save the first state of the gallery
@@ -241,7 +245,7 @@ define(["bean",
                     bean.on(document.body, 'keydown', self.handleKeyEvents);
 
                     // Register this as a page view
-                    common.mediator.emit('module:lightbox-gallery:loaded', response.config, galleryNode);
+                    mediator.emit('module:lightbox-gallery:loaded', response.config, galleryNode);
                 },
                 error: function() {
                     var errorMsg = '<div class="preload-msg">Error loading gallery' +
@@ -278,7 +282,7 @@ define(["bean",
             overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
         };
 
-        this.removeOverlay = common.debounce(function(e){
+        this.removeOverlay = debounce(function(e){
             // Needs a delay to give time for analytics to fire before DOM removal
             overlay.remove();
             return true;
@@ -320,7 +324,7 @@ define(["bean",
                 index = totalImages;
             }
 
-            common.$g('.gallery__item', overlay.bodyNode).each(function(el) {
+            $('.gallery__item', overlay.bodyNode).each(function(el) {
                 var itemIndex = parseInt(el.getAttribute('data-index'), 10);
 
                 if (itemIndex === index) {
@@ -358,7 +362,7 @@ define(["bean",
             bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
             // Switch all images back to thumbnail versions
-            common.$g('.gallery__img', overlay.bodyNode).each(function(el) {
+            $('.gallery__img', overlay.bodyNode).each(function(el) {
                 el.src = el.getAttribute('data-src');
             });
 
@@ -419,8 +423,8 @@ define(["bean",
             }
 
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
-            $images = common.$g('.gallery__img', galleryNode);
-            var $items = common.$g('.gallery__item', galleryNode);
+            $images = $('.gallery__img', galleryNode);
+            var $items = $('.gallery__item', galleryNode);
 
 
             if (mode === 'fullimage') {
@@ -503,7 +507,7 @@ define(["bean",
 
         // send custom (eg non-link) interactions to omniture
         this.trackInteraction = function (str) {
-            common.mediator.emit('module:clickstream:interaction', str);
+            mediator.emit('module:clickstream:interaction', str);
         };
 
 
