@@ -15,11 +15,11 @@
             </a>
         </div>
 
-        <ul class="products unstyled">
+        <ul class="items">
             @for(event <- events) {
-                <li class="product">
-                    <h3 class="product__title"><a href="@event.url">@event.name</a></h3>
-                    <div class="product__description">@event.firstParagraph</p>
+                <li class="lineitem">
+                    <h4 class="lineitem__title"><a href="@event.url">@event.name</a></h4>
+                    <div class="lineitem__description">@event.firstParagraph</p>
                 </li>
             }
         </ul>

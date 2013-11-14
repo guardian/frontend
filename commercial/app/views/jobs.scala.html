@@ -7,13 +7,13 @@
         <h3 class="commercial__title">guardian<span>jobs</span></h3>
     </div>
     <div class="commercial__body">
-        <ul class="products unstyled">
+        <ul class="items">
             @for(job <- jobs) {
-                <li class="product">
+                <li class="lineitem">
                     @job.employerLogoUrl.map{ url => <img src="@url" />}
-                    <h3 class="product__title"><a href="@job.listingUrl">@job.title</a></h3>
-                    <p class="product__description">@Html(job.shortDescription)</p>
-                    <a href="@job.applyUrl" class="cta">Apply</a>
+                    <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
+                    <p class="lineitem__description">@Html(job.shortDescription)</p>
+                    <a href="@job.applyUrl" class="lineitem__link cta">Apply</a>
                 </li>
             }
         </ul>

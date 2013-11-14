@@ -4,7 +4,7 @@
 
 .travel-component {
 
-    //background-color: #006EC9;
+    background-color: #004A83;
     color: #ffffff;
 
     .commercial__promo {
@@ -12,17 +12,17 @@
     }
 
     &.commercial--w600 {
-        .products {
+        .items {
             width: 50%;
         }
 
-        .product {
+        .lineitem {
             width: 50%;
             padding-right: $gs-gutter/2;
             padding-bottom: $gs-baseline/2;
         }
 
-        .product__title {
+        .lineitem__title {
             display: none;
         }
 
@@ -30,5 +30,9 @@
             display: block;
         }
     }
-}
 
+
+    .commercial__submit {
+        background-color: #64C5F8;
+    }
+}

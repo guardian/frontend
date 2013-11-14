@@ -11,7 +11,7 @@
         color: #FF97DC;
     }
 
-    .product__title {
+    .lineitem__title {
         @include fs-header(1);
 
         a {
@@ -21,11 +21,11 @@
 
     &.commercial--w600 {
 
-        .products {
+        .items {
             width: 100%;
         }
 
-        .product {
+        .lineitem {
             width: 25%;
             padding-right: $gs-gutter/2;
             padding-bottom: $gs-baseline/2;

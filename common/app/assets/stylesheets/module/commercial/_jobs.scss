@@ -11,34 +11,34 @@
         color: #4A7801;
     }
 
-    .product {
+    .lineitem {
         width: 100%;
         display: none;
     }
 
-    .product:first-child {
+    .lineitem:first-child {
         display: block;
     }
 
-    .product__description {
+    .lineitem__description {
         display: none;
     }
 
     &.commercial--w300 {
-        .product__description {
+        .lineitem__description {
             display: block;
         }
     }
 
     &.commercial--w500 {
-        .product {
+        .lineitem {
             width: 33%;
             float: left;
             padding-right: $gutter;
         }
 
-        .product:nth-child(2),
-        .product:nth-child(3) {
+        .lineitem:nth-child(2),
+        .lineitem:nth-child(3) {
             display: block;
         }
     }
@@ -48,7 +48,7 @@
             width: 25%;
         }
 
-        .product:nth-child(4) {
+        .lineitem:nth-child(4) {
             display: block;
         }
     }

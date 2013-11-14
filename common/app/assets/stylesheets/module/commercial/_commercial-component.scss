@@ -8,9 +8,6 @@
     width: 100%;
     position: relative;
 
-    &.commercial--w300 {
-        min-height: 250px;
-    }
 }
 
 .commercial__title {
@@ -49,12 +46,17 @@ input.commercial__submit {
     float: left;
 }
 
+/* ==========================================================================
+   Breakpoints
+   ========================================================================== */
+.commercial--w300 {
+    min-height: 250px;
+}
+
 
 /* ==========================================================================
    Promo
    ========================================================================== */
-
-
 .commercial__promo {
     display: none;
 
@@ -68,9 +70,15 @@ input.commercial__submit {
 
 
 /* ==========================================================================
-   Products
+   Entries
    ========================================================================== */
-.product {
+.items {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+
+.lineitem {
     float: left;
     width: 100%;
     @include box-sizing(border-box);
@@ -85,37 +93,21 @@ input.commercial__submit {
     }
 }
 
-.product__title {
+.lineitem__title {
     @include fs-bodyHeading(1);
-    margin-bottom: 0;
+    padding: 0;
+    background-color: transparent;
 
     a {
         color: #FFFFFF;
     }
 }
 
-.product__image img {
+.lineitem__image img {
     width: 100%;
     display: block;
 }
 
-.product__description {
+.lineitem__description {
     @include fs-bodyCopy(1);
-}
-
-
-
-/* ==========================================================================
-   Background
-   ========================================================================== */
-
-
-.commercial__background {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 100%;
-    z-index: -10;
-    -webkit-filter: blur(10px);
-    -webkit-transform: scale(3);
 }

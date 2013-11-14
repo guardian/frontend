@@ -11,7 +11,7 @@
         color: #FF97DC;
     }
 
-    .product__title {
+    .lineitem__title {
         @include fs-header(1);
 
         a {
@@ -19,43 +19,43 @@
         }
     }
 
-    .product {
+    .lineitem {
         width: 100%;
         display: none;
     }
 
-    .product:nth-child(1) {
+    .lineitem:nth-child(1) {
         display: block;
     }
 
 
     &.commercial--w300 {
-        .product {
+        .lineitem {
             width: 50%;
         }
 
-        .product:nth-child(2) {
+        .lineitem:nth-child(2) {
             display: block;
         }
     }
 
     &.commercial--w400 {
-        .product {
+        .lineitem {
             width: 25%;
         }
 
-        .product:nth-child(3),
-        .product:nth-child(4) {
+        .lineitem:nth-child(3),
+        .lineitem:nth-child(4) {
             display: block;
         }
     }
 
     &.commercial--w600 {
-        .product {
+        .lineitem {
             width: 20%;
         }
 
-        .product:nth-child(5) {
+        .lineitem:nth-child(5) {
             display: block;
         }
     }
