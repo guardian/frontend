@@ -83,7 +83,12 @@ input.commercial__submit {
 }
 
 .product__title {
+    @include fs-bodyHeading(1);
     margin-bottom: 0;
+
+    a {
+        color: #FFFFFF;
+    }
 }
 
 .product__image img {
