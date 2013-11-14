@@ -340,6 +340,11 @@ define([
             }
         },
 
+        unshackleParagraphs: function (config, context) {
+            if (userPrefs.isOff('para-indents')) {
+                $('.paragraph-spacing--indents', context).removeClass('paragraph-spacing--indents');
+            }
+        },
 
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
@@ -438,6 +443,7 @@ define([
             modules.optIn();
             modules.displayReleaseMessage(config);
             modules.logReadingHistory();
+            modules.unshackleParagraphs(config, context);
         }
         mediator.emit("page:common:ready", config, context);
     };
